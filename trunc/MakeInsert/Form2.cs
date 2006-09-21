@@ -16,26 +16,24 @@ namespace MakeInsert
 	public class Form2 : System.Windows.Forms.Form
 	{
 		public System.Data.SqlClient.SqlConnection sqlConnection1;
-		private System.Windows.Forms.ListBox listBox1;
-		private System.Windows.Forms.ListBox listBox2;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button btnInsert;
+		private System.Windows.Forms.Button btnFieldList;
 		public System.Windows.Forms.ContextMenu contextMenu1;
-		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.Button btnCSV;
 		private System.Windows.Forms.MenuItem menuItem1;
 		private System.Windows.Forms.MenuItem menuItem2;
 		private System.Windows.Forms.MenuItem menuItem3;
 		private System.Windows.Forms.MenuItem menuItem4;
 		private System.Windows.Forms.MenuItem menuItem5;
 		private System.Windows.Forms.MenuItem menuItem6;
-		private System.Windows.Forms.RadioButton radioButton1;
+		private System.Windows.Forms.RadioButton rdoDspView;
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.RadioButton radioButton2;
+		private System.Windows.Forms.RadioButton rdoNotDspView;
 		private System.Windows.Forms.GroupBox groupBox2;
-		private System.Windows.Forms.RadioButton radioButton3;
-		private System.Windows.Forms.RadioButton radioButton4;
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.RadioButton rdoSortTable;
+		private System.Windows.Forms.RadioButton rdoSortOwnerTable;
+		private System.Windows.Forms.TextBox txtWhere;
+		private System.Windows.Forms.TextBox txtSort;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.MenuItem menuItem7;
@@ -43,34 +41,29 @@ namespace MakeInsert
 		private System.Windows.Forms.MenuItem menuItem9;
 		private System.Windows.Forms.MenuItem menuItem10;
 		private System.Windows.Forms.MenuItem menuItem12;
-		private System.Windows.Forms.Button button10;
+		private System.Windows.Forms.Button btnSelect;
 		private System.Windows.Forms.MenuItem menuItem11;
-		private System.Windows.Forms.ListBox listBox3;
-		private System.Windows.Forms.Button button11;
+		private System.Windows.Forms.Button btnDDL;
 		private System.Windows.Forms.MenuItem menuItem13;
 		private System.Windows.Forms.MenuItem menuItem14;
 		private System.Windows.Forms.MenuItem menuItem15;
-		private System.Windows.Forms.DataGrid dataGrid1;
-		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox chkDspData;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox textBox3;
+		private System.Windows.Forms.TextBox txtDspCount;
 		private System.Windows.Forms.GroupBox groupBox4;
-		private System.Windows.Forms.RadioButton radioButton5;
-		private System.Windows.Forms.RadioButton radioButton6;
 		private System.Windows.Forms.MenuItem menuItem16;
 		private System.Windows.Forms.MenuItem menuItem17;
 		private System.ComponentModel.IContainer components;
 		private System.Windows.Forms.GroupBox groupBox5;
-		private System.Windows.Forms.RadioButton radioButton7;
-		private System.Windows.Forms.RadioButton radioButton8;
-		private System.Windows.Forms.RadioButton radioButton9;
+		private System.Windows.Forms.RadioButton rdoClipboard;
+		private System.Windows.Forms.RadioButton rdoOutFile;
+		private System.Windows.Forms.RadioButton rdoOutFolder;
 		private System.Windows.Forms.TextBox textBox4;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.ListBox listBox4;
 		private System.Windows.Forms.ContextMenu contextMenu2;
 		private System.Windows.Forms.MenuItem menuItem18;
 		private System.Windows.Forms.MenuItem menuItem19;
@@ -81,9 +74,9 @@ namespace MakeInsert
 		private System.Windows.Forms.MenuItem menuItem22;
 		private System.Windows.Forms.MenuItem menuItem23;
 		private System.Windows.Forms.GroupBox groupBox6;
-		private System.Windows.Forms.RadioButton radioButton10;
-		private System.Windows.Forms.RadioButton radioButton11;
-		private System.Windows.Forms.RadioButton radioButton12;
+		private System.Windows.Forms.RadioButton rdoUnicode;
+		private System.Windows.Forms.RadioButton rdoSjis;
+		private System.Windows.Forms.RadioButton rdoUtf8;
 		private System.Windows.Forms.CheckBox checkBox2;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.ToolTip toolTip2;
@@ -106,10 +99,17 @@ namespace MakeInsert
 
 		public string servername = "";
 		Form4 Sqldlg = new Form4();
-		private System.Windows.Forms.Button button12;
-		private System.Windows.Forms.Button button13;
+		private System.Windows.Forms.Button btnIndex;
+		private System.Windows.Forms.Button btnRedisp;
 		Form5 Sqldlg2 = new Form5();
 		private System.Windows.Forms.Button btnTmpAllDsp;
+		private System.Windows.Forms.ListBox dbList;
+		private System.Windows.Forms.ListBox ownerListbox;
+		private System.Windows.Forms.ListBox tableList;
+		private System.Windows.Forms.ListBox fieldListbox;
+		private System.Windows.Forms.DataGrid dbGrid;
+		private System.Windows.Forms.RadioButton rdoDspSysUser;
+		private System.Windows.Forms.RadioButton rdoNotDspSysUser;
 
 		Form7 indexdlg = null;
 
@@ -157,8 +157,8 @@ namespace MakeInsert
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.listBox2 = new System.Windows.Forms.ListBox();
+			this.dbList = new System.Windows.Forms.ListBox();
+			this.tableList = new System.Windows.Forms.ListBox();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.menuItem16 = new System.Windows.Forms.MenuItem();
 			this.menuItem17 = new System.Windows.Forms.MenuItem();
@@ -179,41 +179,41 @@ namespace MakeInsert
 			this.menuItem11 = new System.Windows.Forms.MenuItem();
 			this.menuItem5 = new System.Windows.Forms.MenuItem();
 			this.menuItem6 = new System.Windows.Forms.MenuItem();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button5 = new System.Windows.Forms.Button();
-			this.radioButton1 = new System.Windows.Forms.RadioButton();
+			this.btnInsert = new System.Windows.Forms.Button();
+			this.btnFieldList = new System.Windows.Forms.Button();
+			this.btnCSV = new System.Windows.Forms.Button();
+			this.rdoDspView = new System.Windows.Forms.RadioButton();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.radioButton2 = new System.Windows.Forms.RadioButton();
+			this.rdoNotDspView = new System.Windows.Forms.RadioButton();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.radioButton4 = new System.Windows.Forms.RadioButton();
-			this.radioButton3 = new System.Windows.Forms.RadioButton();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.rdoSortOwnerTable = new System.Windows.Forms.RadioButton();
+			this.rdoSortTable = new System.Windows.Forms.RadioButton();
+			this.txtWhere = new System.Windows.Forms.TextBox();
+			this.txtSort = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.button10 = new System.Windows.Forms.Button();
-			this.listBox3 = new System.Windows.Forms.ListBox();
-			this.button11 = new System.Windows.Forms.Button();
-			this.dataGrid1 = new System.Windows.Forms.DataGrid();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.btnSelect = new System.Windows.Forms.Button();
+			this.ownerListbox = new System.Windows.Forms.ListBox();
+			this.btnDDL = new System.Windows.Forms.Button();
+			this.dbGrid = new System.Windows.Forms.DataGrid();
+			this.chkDspData = new System.Windows.Forms.CheckBox();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.txtDspCount = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.radioButton5 = new System.Windows.Forms.RadioButton();
-			this.radioButton6 = new System.Windows.Forms.RadioButton();
+			this.rdoNotDspSysUser = new System.Windows.Forms.RadioButton();
+			this.rdoDspSysUser = new System.Windows.Forms.RadioButton();
 			this.groupBox5 = new System.Windows.Forms.GroupBox();
 			this.button4 = new System.Windows.Forms.Button();
 			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.radioButton8 = new System.Windows.Forms.RadioButton();
-			this.radioButton7 = new System.Windows.Forms.RadioButton();
-			this.radioButton9 = new System.Windows.Forms.RadioButton();
+			this.rdoOutFile = new System.Windows.Forms.RadioButton();
+			this.rdoClipboard = new System.Windows.Forms.RadioButton();
+			this.rdoOutFolder = new System.Windows.Forms.RadioButton();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
-			this.listBox4 = new System.Windows.Forms.ListBox();
+			this.fieldListbox = new System.Windows.Forms.ListBox();
 			this.contextMenu2 = new System.Windows.Forms.ContextMenu();
 			this.menuItem18 = new System.Windows.Forms.MenuItem();
 			this.menuItem19 = new System.Windows.Forms.MenuItem();
@@ -221,9 +221,9 @@ namespace MakeInsert
 			this.menuItem23 = new System.Windows.Forms.MenuItem();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.radioButton12 = new System.Windows.Forms.RadioButton();
-			this.radioButton11 = new System.Windows.Forms.RadioButton();
-			this.radioButton10 = new System.Windows.Forms.RadioButton();
+			this.rdoUtf8 = new System.Windows.Forms.RadioButton();
+			this.rdoSjis = new System.Windows.Forms.RadioButton();
+			this.rdoUnicode = new System.Windows.Forms.RadioButton();
 			this.checkBox2 = new System.Windows.Forms.CheckBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
@@ -235,41 +235,41 @@ namespace MakeInsert
 			this.button8 = new System.Windows.Forms.Button();
 			this.label8 = new System.Windows.Forms.Label();
 			this.button9 = new System.Windows.Forms.Button();
-			this.button12 = new System.Windows.Forms.Button();
-			this.button13 = new System.Windows.Forms.Button();
+			this.btnIndex = new System.Windows.Forms.Button();
+			this.btnRedisp = new System.Windows.Forms.Button();
 			this.btnTmpAllDsp = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
 			this.groupBox3.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox5.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// listBox1
+			// dbList
 			// 
-			this.listBox1.ItemHeight = 12;
-			this.listBox1.Location = new System.Drawing.Point(60, 16);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(160, 52);
-			this.listBox1.TabIndex = 0;
-			this.listBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox1_KeyDown);
-			this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+			this.dbList.ItemHeight = 12;
+			this.dbList.Location = new System.Drawing.Point(60, 16);
+			this.dbList.Name = "dbList";
+			this.dbList.Size = new System.Drawing.Size(160, 52);
+			this.dbList.TabIndex = 0;
+			this.dbList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dbList_KeyDown);
+			this.dbList.SelectedIndexChanged += new System.EventHandler(this.dbList_SelectedIndexChanged);
 			// 
-			// listBox2
+			// tableList
 			// 
-			this.listBox2.ContextMenu = this.contextMenu1;
-			this.listBox2.HorizontalScrollbar = true;
-			this.listBox2.ItemHeight = 12;
-			this.listBox2.Location = new System.Drawing.Point(240, 16);
-			this.listBox2.Name = "listBox2";
-			this.listBox2.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.listBox2.Size = new System.Drawing.Size(256, 304);
-			this.listBox2.TabIndex = 11;
-			this.listBox2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox2_KeyDown);
-			this.listBox2.DoubleClick += new System.EventHandler(this.insertmake);
-			this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
+			this.tableList.ContextMenu = this.contextMenu1;
+			this.tableList.HorizontalScrollbar = true;
+			this.tableList.ItemHeight = 12;
+			this.tableList.Location = new System.Drawing.Point(240, 16);
+			this.tableList.Name = "tableList";
+			this.tableList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+			this.tableList.Size = new System.Drawing.Size(256, 304);
+			this.tableList.TabIndex = 11;
+			this.tableList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tableList_KeyDown);
+			this.tableList.DoubleClick += new System.EventHandler(this.insertmake);
+			this.tableList.SelectedIndexChanged += new System.EventHandler(this.tableList_SelectedIndexChanged);
 			// 
 			// contextMenu1
 			// 
@@ -317,19 +317,19 @@ namespace MakeInsert
 			// 
 			this.menuItem7.Index = 3;
 			this.menuItem7.Text = "INSERT文作成(DELETE文付き)";
-			this.menuItem7.Click += new System.EventHandler(this.button7_Click);
+			this.menuItem7.Click += new System.EventHandler(this.insertmakeDelete);
 			// 
 			// menuItem8
 			// 
 			this.menuItem8.Index = 4;
 			this.menuItem8.Text = "INSERT文作成(フィールドリストなし)";
-			this.menuItem8.Click += new System.EventHandler(this.button8_Click);
+			this.menuItem8.Click += new System.EventHandler(this.insertmakeNoField);
 			// 
 			// menuItem9
 			// 
 			this.menuItem9.Index = 5;
 			this.menuItem9.Text = "INSERT文作成(フィールドリストなし　DELETE文付き)";
-			this.menuItem9.Click += new System.EventHandler(this.button9_Click);
+			this.menuItem9.Click += new System.EventHandler(this.insertmakeNoFieldDelete);
 			// 
 			// menuItem10
 			// 
@@ -346,13 +346,13 @@ namespace MakeInsert
 			// 
 			this.menuItem3.Index = 8;
 			this.menuItem3.Text = "フィールドリスト改行作成";
-			this.menuItem3.Click += new System.EventHandler(this.button3_Click);
+			this.menuItem3.Click += new System.EventHandler(this.makefldListLF);
 			// 
 			// menuItem4
 			// 
 			this.menuItem4.Index = 9;
 			this.menuItem4.Text = "フィールドリストカンマなし作成";
-			this.menuItem4.Click += new System.EventHandler(this.button4_Click);
+			this.menuItem4.Click += new System.EventHandler(this.makefldListNoComma);
 			// 
 			// menuItem12
 			// 
@@ -369,19 +369,19 @@ namespace MakeInsert
 			// 
 			this.menuItem14.Index = 12;
 			this.menuItem14.Text = "定義文生成 DROP文付き";
-			this.menuItem14.Click += new System.EventHandler(this.button12_Click);
+			this.menuItem14.Click += new System.EventHandler(this.makeDDLDrop);
 			// 
 			// menuItem20
 			// 
 			this.menuItem20.Index = 13;
 			this.menuItem20.Text = "定義文生成([]付き)";
-			this.menuItem20.Click += new System.EventHandler(this.button13_Click);
+			this.menuItem20.Click += new System.EventHandler(this.makeDDLPare);
 			// 
 			// menuItem21
 			// 
 			this.menuItem21.Index = 14;
 			this.menuItem21.Text = "定義文生成( DROP []付き)";
-			this.menuItem21.Click += new System.EventHandler(this.button14_Click);
+			this.menuItem21.Click += new System.EventHandler(this.makeDDLDropPare);
 			// 
 			// menuItem15
 			// 
@@ -392,7 +392,7 @@ namespace MakeInsert
 			// 
 			this.menuItem11.Index = 16;
 			this.menuItem11.Text = "Select文生成";
-			this.menuItem11.Click += new System.EventHandler(this.button10_Click);
+			this.menuItem11.Click += new System.EventHandler(this.btnSelect_Click);
 			// 
 			// menuItem5
 			// 
@@ -404,48 +404,48 @@ namespace MakeInsert
 			// 
 			this.menuItem6.Index = 18;
 			this.menuItem6.Text = "CSV作成(”付き)";
-			this.menuItem6.Click += new System.EventHandler(this.button6_Click);
+			this.menuItem6.Click += new System.EventHandler(this.makeCSVQuote);
 			// 
-			// button1
+			// btnInsert
 			// 
-			this.button1.Location = new System.Drawing.Point(508, 16);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(132, 24);
-			this.button1.TabIndex = 12;
-			this.button1.Text = "INSERT文作成";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.btnInsert.Location = new System.Drawing.Point(508, 16);
+			this.btnInsert.Name = "btnInsert";
+			this.btnInsert.Size = new System.Drawing.Size(132, 24);
+			this.btnInsert.TabIndex = 12;
+			this.btnInsert.Text = "INSERT文作成";
+			this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
 			// 
-			// button2
+			// btnFieldList
 			// 
-			this.button2.Location = new System.Drawing.Point(508, 44);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(132, 24);
-			this.button2.TabIndex = 13;
-			this.button2.Text = "フィールドリスト作成";
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.btnFieldList.Location = new System.Drawing.Point(508, 44);
+			this.btnFieldList.Name = "btnFieldList";
+			this.btnFieldList.Size = new System.Drawing.Size(132, 24);
+			this.btnFieldList.TabIndex = 13;
+			this.btnFieldList.Text = "フィールドリスト作成";
+			this.btnFieldList.Click += new System.EventHandler(this.btnFieldList_Click);
 			// 
-			// button5
+			// btnCSV
 			// 
-			this.button5.Location = new System.Drawing.Point(508, 128);
-			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(132, 24);
-			this.button5.TabIndex = 16;
-			this.button5.Text = "CSV作成";
-			this.button5.Click += new System.EventHandler(this.button5_Click);
+			this.btnCSV.Location = new System.Drawing.Point(508, 128);
+			this.btnCSV.Name = "btnCSV";
+			this.btnCSV.Size = new System.Drawing.Size(132, 24);
+			this.btnCSV.TabIndex = 16;
+			this.btnCSV.Text = "CSV作成";
+			this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
 			// 
-			// radioButton1
+			// rdoDspView
 			// 
-			this.radioButton1.Location = new System.Drawing.Point(8, 16);
-			this.radioButton1.Name = "radioButton1";
-			this.radioButton1.Size = new System.Drawing.Size(88, 16);
-			this.radioButton1.TabIndex = 0;
-			this.radioButton1.Text = "表示する";
-			this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+			this.rdoDspView.Location = new System.Drawing.Point(8, 16);
+			this.rdoDspView.Name = "rdoDspView";
+			this.rdoDspView.Size = new System.Drawing.Size(88, 16);
+			this.rdoDspView.TabIndex = 0;
+			this.rdoDspView.Text = "表示する";
+			this.rdoDspView.CheckedChanged += new System.EventHandler(this.rdoDspView_CheckedChanged);
 			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.radioButton2);
-			this.groupBox1.Controls.Add(this.radioButton1);
+			this.groupBox1.Controls.Add(this.rdoNotDspView);
+			this.groupBox1.Controls.Add(this.rdoDspView);
 			this.groupBox1.Location = new System.Drawing.Point(8, 220);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(216, 40);
@@ -454,18 +454,18 @@ namespace MakeInsert
 			this.groupBox1.Text = "VIEWを一覧に";
 			this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
 			// 
-			// radioButton2
+			// rdoNotDspView
 			// 
-			this.radioButton2.Location = new System.Drawing.Point(112, 16);
-			this.radioButton2.Name = "radioButton2";
-			this.radioButton2.Size = new System.Drawing.Size(88, 16);
-			this.radioButton2.TabIndex = 1;
-			this.radioButton2.Text = "表示しない";
+			this.rdoNotDspView.Location = new System.Drawing.Point(112, 16);
+			this.rdoNotDspView.Name = "rdoNotDspView";
+			this.rdoNotDspView.Size = new System.Drawing.Size(88, 16);
+			this.rdoNotDspView.TabIndex = 1;
+			this.rdoNotDspView.Text = "表示しない";
 			// 
 			// groupBox2
 			// 
-			this.groupBox2.Controls.Add(this.radioButton4);
-			this.groupBox2.Controls.Add(this.radioButton3);
+			this.groupBox2.Controls.Add(this.rdoSortOwnerTable);
+			this.groupBox2.Controls.Add(this.rdoSortTable);
 			this.groupBox2.Location = new System.Drawing.Point(8, 264);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(216, 52);
@@ -473,40 +473,40 @@ namespace MakeInsert
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "ソート順";
 			// 
-			// radioButton4
+			// rdoSortOwnerTable
 			// 
-			this.radioButton4.Location = new System.Drawing.Point(112, 16);
-			this.radioButton4.Name = "radioButton4";
-			this.radioButton4.Size = new System.Drawing.Size(88, 32);
-			this.radioButton4.TabIndex = 1;
-			this.radioButton4.Text = "オーナー名・テーブル名";
+			this.rdoSortOwnerTable.Location = new System.Drawing.Point(112, 16);
+			this.rdoSortOwnerTable.Name = "rdoSortOwnerTable";
+			this.rdoSortOwnerTable.Size = new System.Drawing.Size(88, 32);
+			this.rdoSortOwnerTable.TabIndex = 1;
+			this.rdoSortOwnerTable.Text = "オーナー名・テーブル名";
 			// 
-			// radioButton3
+			// rdoSortTable
 			// 
-			this.radioButton3.Location = new System.Drawing.Point(8, 16);
-			this.radioButton3.Name = "radioButton3";
-			this.radioButton3.Size = new System.Drawing.Size(96, 32);
-			this.radioButton3.TabIndex = 0;
-			this.radioButton3.Text = "テーブル名のみ";
-			this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+			this.rdoSortTable.Location = new System.Drawing.Point(8, 16);
+			this.rdoSortTable.Name = "rdoSortTable";
+			this.rdoSortTable.Size = new System.Drawing.Size(96, 32);
+			this.rdoSortTable.TabIndex = 0;
+			this.rdoSortTable.Text = "テーブル名のみ";
+			this.rdoSortTable.CheckedChanged += new System.EventHandler(this.rdoSortTable_CheckedChanged);
 			// 
-			// textBox1
+			// txtWhere
 			// 
-			this.textBox1.Location = new System.Drawing.Point(72, 480);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(144, 19);
-			this.textBox1.TabIndex = 7;
-			this.textBox1.Text = "";
-			this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+			this.txtWhere.Location = new System.Drawing.Point(72, 480);
+			this.txtWhere.Name = "txtWhere";
+			this.txtWhere.Size = new System.Drawing.Size(144, 19);
+			this.txtWhere.TabIndex = 7;
+			this.txtWhere.Text = "";
+			this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
 			// 
-			// textBox2
+			// txtSort
 			// 
-			this.textBox2.Location = new System.Drawing.Point(72, 508);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(144, 19);
-			this.textBox2.TabIndex = 8;
-			this.textBox2.Text = "";
-			this.textBox2.Leave += new System.EventHandler(this.textBox2_Leave);
+			this.txtSort.Location = new System.Drawing.Point(72, 508);
+			this.txtSort.Name = "txtSort";
+			this.txtSort.Size = new System.Drawing.Size(144, 19);
+			this.txtSort.TabIndex = 8;
+			this.txtSort.Text = "";
+			this.txtSort.Leave += new System.EventHandler(this.txtSort_Leave);
 			// 
 			// label1
 			// 
@@ -524,76 +524,76 @@ namespace MakeInsert
 			this.label2.TabIndex = 14;
 			this.label2.Text = "order by";
 			// 
-			// button10
+			// btnSelect
 			// 
-			this.button10.Location = new System.Drawing.Point(508, 72);
-			this.button10.Name = "button10";
-			this.button10.Size = new System.Drawing.Size(132, 24);
-			this.button10.TabIndex = 14;
-			this.button10.Text = "Select 文生成";
-			this.button10.Click += new System.EventHandler(this.button10_Click);
+			this.btnSelect.Location = new System.Drawing.Point(508, 72);
+			this.btnSelect.Name = "btnSelect";
+			this.btnSelect.Size = new System.Drawing.Size(132, 24);
+			this.btnSelect.TabIndex = 14;
+			this.btnSelect.Text = "Select 文生成";
+			this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
 			// 
-			// listBox3
+			// ownerListbox
 			// 
-			this.listBox3.ItemHeight = 12;
-			this.listBox3.Location = new System.Drawing.Point(60, 80);
-			this.listBox3.Name = "listBox3";
-			this.listBox3.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.listBox3.Size = new System.Drawing.Size(160, 88);
-			this.listBox3.TabIndex = 1;
-			this.listBox3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox3_KeyDown);
-			this.listBox3.SelectedIndexChanged += new System.EventHandler(this.listBox3_SelectedIndexChanged);
+			this.ownerListbox.ItemHeight = 12;
+			this.ownerListbox.Location = new System.Drawing.Point(60, 80);
+			this.ownerListbox.Name = "ownerListbox";
+			this.ownerListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+			this.ownerListbox.Size = new System.Drawing.Size(160, 88);
+			this.ownerListbox.TabIndex = 1;
+			this.ownerListbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ownerListbox_KeyDown);
+			this.ownerListbox.SelectedIndexChanged += new System.EventHandler(this.ownerListbox_SelectedIndexChanged);
 			// 
-			// button11
+			// btnDDL
 			// 
-			this.button11.Location = new System.Drawing.Point(508, 100);
-			this.button11.Name = "button11";
-			this.button11.Size = new System.Drawing.Size(132, 24);
-			this.button11.TabIndex = 15;
-			this.button11.Text = "定義文生成";
-			this.button11.Click += new System.EventHandler(this.button11_Click);
+			this.btnDDL.Location = new System.Drawing.Point(508, 100);
+			this.btnDDL.Name = "btnDDL";
+			this.btnDDL.Size = new System.Drawing.Size(132, 24);
+			this.btnDDL.TabIndex = 15;
+			this.btnDDL.Text = "定義文生成";
+			this.btnDDL.Click += new System.EventHandler(this.btnDDL_Click);
 			// 
-			// dataGrid1
+			// dbGrid
 			// 
-			this.dataGrid1.AlternatingBackColor = System.Drawing.Color.Silver;
-			this.dataGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.dbGrid.AlternatingBackColor = System.Drawing.Color.Silver;
+			this.dbGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
-			this.dataGrid1.BackColor = System.Drawing.Color.White;
-			this.dataGrid1.CaptionBackColor = System.Drawing.Color.Gainsboro;
-			this.dataGrid1.CaptionFont = new System.Drawing.Font("Tahoma", 8F);
-			this.dataGrid1.CaptionForeColor = System.Drawing.Color.White;
-			this.dataGrid1.CaptionVisible = false;
-			this.dataGrid1.DataMember = "";
-			this.dataGrid1.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.dataGrid1.ForeColor = System.Drawing.Color.Black;
-			this.dataGrid1.GridLineColor = System.Drawing.Color.Silver;
-			this.dataGrid1.HeaderBackColor = System.Drawing.Color.Silver;
-			this.dataGrid1.HeaderFont = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
-			this.dataGrid1.HeaderForeColor = System.Drawing.Color.Black;
-			this.dataGrid1.LinkColor = System.Drawing.Color.Maroon;
-			this.dataGrid1.Location = new System.Drawing.Point(240, 364);
-			this.dataGrid1.Name = "dataGrid1";
-			this.dataGrid1.ParentRowsBackColor = System.Drawing.Color.Silver;
-			this.dataGrid1.ParentRowsForeColor = System.Drawing.Color.Black;
-			this.dataGrid1.SelectionBackColor = System.Drawing.Color.Maroon;
-			this.dataGrid1.SelectionForeColor = System.Drawing.Color.White;
-			this.dataGrid1.Size = new System.Drawing.Size(672, 212);
-			this.dataGrid1.TabIndex = 24;
-			this.dataGrid1.Paint += new System.Windows.Forms.PaintEventHandler(this.dataGrid1_Paint);
+			this.dbGrid.BackColor = System.Drawing.Color.White;
+			this.dbGrid.CaptionBackColor = System.Drawing.Color.Gainsboro;
+			this.dbGrid.CaptionFont = new System.Drawing.Font("Tahoma", 8F);
+			this.dbGrid.CaptionForeColor = System.Drawing.Color.White;
+			this.dbGrid.CaptionVisible = false;
+			this.dbGrid.DataMember = "";
+			this.dbGrid.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+			this.dbGrid.ForeColor = System.Drawing.Color.Black;
+			this.dbGrid.GridLineColor = System.Drawing.Color.Silver;
+			this.dbGrid.HeaderBackColor = System.Drawing.Color.Silver;
+			this.dbGrid.HeaderFont = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.dbGrid.HeaderForeColor = System.Drawing.Color.Black;
+			this.dbGrid.LinkColor = System.Drawing.Color.Maroon;
+			this.dbGrid.Location = new System.Drawing.Point(240, 364);
+			this.dbGrid.Name = "dbGrid";
+			this.dbGrid.ParentRowsBackColor = System.Drawing.Color.Silver;
+			this.dbGrid.ParentRowsForeColor = System.Drawing.Color.Black;
+			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
+			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
+			this.dbGrid.Size = new System.Drawing.Size(672, 212);
+			this.dbGrid.TabIndex = 24;
+			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
 			// 
-			// checkBox1
+			// chkDspData
 			// 
-			this.checkBox1.Location = new System.Drawing.Point(24, 548);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(52, 24);
-			this.checkBox1.TabIndex = 10;
-			this.checkBox1.Text = "表示";
-			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			this.chkDspData.Location = new System.Drawing.Point(24, 548);
+			this.chkDspData.Name = "chkDspData";
+			this.chkDspData.Size = new System.Drawing.Size(52, 24);
+			this.chkDspData.TabIndex = 10;
+			this.chkDspData.Text = "表示";
+			this.chkDspData.CheckedChanged += new System.EventHandler(this.chkDspData_CheckedChanged);
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.textBox3);
+			this.groupBox3.Controls.Add(this.txtDspCount);
 			this.groupBox3.Controls.Add(this.label3);
 			this.groupBox3.Location = new System.Drawing.Point(8, 532);
 			this.groupBox3.Name = "groupBox3";
@@ -602,19 +602,19 @@ namespace MakeInsert
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "データグリッド";
 			// 
-			// textBox3
+			// txtDspCount
 			// 
-			this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.textBox3.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-			this.textBox3.ImeMode = System.Windows.Forms.ImeMode.Disable;
-			this.textBox3.Location = new System.Drawing.Point(132, 16);
-			this.textBox3.MaxLength = 300;
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(72, 19);
-			this.textBox3.TabIndex = 0;
-			this.textBox3.Text = "1000";
-			this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
-			this.textBox3.Leave += new System.EventHandler(this.textBox3_Leave);
+			this.txtDspCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.txtDspCount.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+			this.txtDspCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
+			this.txtDspCount.Location = new System.Drawing.Point(132, 16);
+			this.txtDspCount.MaxLength = 300;
+			this.txtDspCount.Name = "txtDspCount";
+			this.txtDspCount.Size = new System.Drawing.Size(72, 19);
+			this.txtDspCount.TabIndex = 0;
+			this.txtDspCount.Text = "1000";
+			this.txtDspCount.TextChanged += new System.EventHandler(this.txtDspCount_TextChanged);
+			this.txtDspCount.Leave += new System.EventHandler(this.txtDspCount_Leave);
 			// 
 			// label3
 			// 
@@ -627,8 +627,8 @@ namespace MakeInsert
 			// 
 			// groupBox4
 			// 
-			this.groupBox4.Controls.Add(this.radioButton5);
-			this.groupBox4.Controls.Add(this.radioButton6);
+			this.groupBox4.Controls.Add(this.rdoNotDspSysUser);
+			this.groupBox4.Controls.Add(this.rdoDspSysUser);
 			this.groupBox4.Location = new System.Drawing.Point(8, 176);
 			this.groupBox4.Name = "groupBox4";
 			this.groupBox4.Size = new System.Drawing.Size(216, 40);
@@ -636,33 +636,33 @@ namespace MakeInsert
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "システムユーザーを";
 			// 
-			// radioButton5
+			// rdoNotDspSysUser
 			// 
-			this.radioButton5.Checked = true;
-			this.radioButton5.Location = new System.Drawing.Point(112, 16);
-			this.radioButton5.Name = "radioButton5";
-			this.radioButton5.Size = new System.Drawing.Size(88, 16);
-			this.radioButton5.TabIndex = 1;
-			this.radioButton5.TabStop = true;
-			this.radioButton5.Text = "表示しない";
-			this.radioButton5.CheckedChanged += new System.EventHandler(this.radioButton5_CheckedChanged);
+			this.rdoNotDspSysUser.Checked = true;
+			this.rdoNotDspSysUser.Location = new System.Drawing.Point(112, 16);
+			this.rdoNotDspSysUser.Name = "rdoNotDspSysUser";
+			this.rdoNotDspSysUser.Size = new System.Drawing.Size(88, 16);
+			this.rdoNotDspSysUser.TabIndex = 1;
+			this.rdoNotDspSysUser.TabStop = true;
+			this.rdoNotDspSysUser.Text = "表示しない";
+			this.rdoNotDspSysUser.CheckedChanged += new System.EventHandler(this.rdoNotDspSysUser_CheckedChanged);
 			// 
-			// radioButton6
+			// rdoDspSysUser
 			// 
-			this.radioButton6.Location = new System.Drawing.Point(8, 16);
-			this.radioButton6.Name = "radioButton6";
-			this.radioButton6.Size = new System.Drawing.Size(88, 16);
-			this.radioButton6.TabIndex = 0;
-			this.radioButton6.Text = "表示する";
-			this.radioButton6.CheckedChanged += new System.EventHandler(this.radioButton6_CheckedChanged);
+			this.rdoDspSysUser.Location = new System.Drawing.Point(8, 16);
+			this.rdoDspSysUser.Name = "rdoDspSysUser";
+			this.rdoDspSysUser.Size = new System.Drawing.Size(88, 16);
+			this.rdoDspSysUser.TabIndex = 0;
+			this.rdoDspSysUser.Text = "表示する";
+			this.rdoDspSysUser.CheckedChanged += new System.EventHandler(this.rdoDspSysUser_CheckedChanged);
 			// 
 			// groupBox5
 			// 
 			this.groupBox5.Controls.Add(this.button4);
 			this.groupBox5.Controls.Add(this.textBox4);
-			this.groupBox5.Controls.Add(this.radioButton8);
-			this.groupBox5.Controls.Add(this.radioButton7);
-			this.groupBox5.Controls.Add(this.radioButton9);
+			this.groupBox5.Controls.Add(this.rdoOutFile);
+			this.groupBox5.Controls.Add(this.rdoClipboard);
+			this.groupBox5.Controls.Add(this.rdoOutFolder);
 			this.groupBox5.Location = new System.Drawing.Point(8, 324);
 			this.groupBox5.Name = "groupBox5";
 			this.groupBox5.Size = new System.Drawing.Size(216, 84);
@@ -688,32 +688,32 @@ namespace MakeInsert
 			this.textBox4.Text = "";
 			this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
 			// 
-			// radioButton8
+			// rdoOutFile
 			// 
-			this.radioButton8.Location = new System.Drawing.Point(8, 32);
-			this.radioButton8.Name = "radioButton8";
-			this.radioButton8.Size = new System.Drawing.Size(88, 16);
-			this.radioButton8.TabIndex = 1;
-			this.radioButton8.Text = "単独ファイル";
-			this.radioButton8.CheckedChanged += new System.EventHandler(this.radioButton8_CheckedChanged);
+			this.rdoOutFile.Location = new System.Drawing.Point(8, 32);
+			this.rdoOutFile.Name = "rdoOutFile";
+			this.rdoOutFile.Size = new System.Drawing.Size(88, 16);
+			this.rdoOutFile.TabIndex = 1;
+			this.rdoOutFile.Text = "単独ファイル";
+			this.rdoOutFile.CheckedChanged += new System.EventHandler(this.rdoOutFile_CheckedChanged);
 			// 
-			// radioButton7
+			// rdoClipboard
 			// 
-			this.radioButton7.Location = new System.Drawing.Point(8, 12);
-			this.radioButton7.Name = "radioButton7";
-			this.radioButton7.Size = new System.Drawing.Size(88, 16);
-			this.radioButton7.TabIndex = 0;
-			this.radioButton7.Text = "クリップボード";
-			this.radioButton7.CheckedChanged += new System.EventHandler(this.radioButton7_CheckedChanged);
+			this.rdoClipboard.Location = new System.Drawing.Point(8, 12);
+			this.rdoClipboard.Name = "rdoClipboard";
+			this.rdoClipboard.Size = new System.Drawing.Size(88, 16);
+			this.rdoClipboard.TabIndex = 0;
+			this.rdoClipboard.Text = "クリップボード";
+			this.rdoClipboard.CheckedChanged += new System.EventHandler(this.rdoClipboard_CheckedChanged);
 			// 
-			// radioButton9
+			// rdoOutFolder
 			// 
-			this.radioButton9.Location = new System.Drawing.Point(104, 32);
-			this.radioButton9.Name = "radioButton9";
-			this.radioButton9.Size = new System.Drawing.Size(88, 16);
-			this.radioButton9.TabIndex = 2;
-			this.radioButton9.Text = "複数ファイル";
-			this.radioButton9.CheckedChanged += new System.EventHandler(this.radioButton9_CheckedChanged);
+			this.rdoOutFolder.Location = new System.Drawing.Point(104, 32);
+			this.rdoOutFolder.Name = "rdoOutFolder";
+			this.rdoOutFolder.Size = new System.Drawing.Size(88, 16);
+			this.rdoOutFolder.TabIndex = 2;
+			this.rdoOutFolder.Text = "複数ファイル";
+			this.rdoOutFolder.CheckedChanged += new System.EventHandler(this.rdoOutFolder_CheckedChanged);
 			// 
 			// label4
 			// 
@@ -731,19 +731,19 @@ namespace MakeInsert
 			this.label5.TabIndex = 25;
 			this.label5.Text = "owner/Role";
 			// 
-			// listBox4
+			// fieldListbox
 			// 
-			this.listBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.fieldListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
-			this.listBox4.ContextMenu = this.contextMenu2;
-			this.listBox4.HorizontalScrollbar = true;
-			this.listBox4.ItemHeight = 12;
-			this.listBox4.Location = new System.Drawing.Point(656, 40);
-			this.listBox4.Name = "listBox4";
-			this.listBox4.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.listBox4.Size = new System.Drawing.Size(240, 280);
-			this.listBox4.TabIndex = 23;
-			this.listBox4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBox4_KeyDown);
+			this.fieldListbox.ContextMenu = this.contextMenu2;
+			this.fieldListbox.HorizontalScrollbar = true;
+			this.fieldListbox.ItemHeight = 12;
+			this.fieldListbox.Location = new System.Drawing.Point(656, 40);
+			this.fieldListbox.Name = "fieldListbox";
+			this.fieldListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+			this.fieldListbox.Size = new System.Drawing.Size(240, 280);
+			this.fieldListbox.TabIndex = 23;
+			this.fieldListbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fieldListbox_KeyDown);
 			// 
 			// contextMenu2
 			// 
@@ -779,9 +779,9 @@ namespace MakeInsert
 			// 
 			// groupBox6
 			// 
-			this.groupBox6.Controls.Add(this.radioButton12);
-			this.groupBox6.Controls.Add(this.radioButton11);
-			this.groupBox6.Controls.Add(this.radioButton10);
+			this.groupBox6.Controls.Add(this.rdoUtf8);
+			this.groupBox6.Controls.Add(this.rdoSjis);
+			this.groupBox6.Controls.Add(this.rdoUnicode);
 			this.groupBox6.Location = new System.Drawing.Point(8, 412);
 			this.groupBox6.Name = "groupBox6";
 			this.groupBox6.Size = new System.Drawing.Size(216, 60);
@@ -789,32 +789,32 @@ namespace MakeInsert
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "出力文字コード";
 			// 
-			// radioButton12
+			// rdoUtf8
 			// 
-			this.radioButton12.Location = new System.Drawing.Point(8, 36);
-			this.radioButton12.Name = "radioButton12";
-			this.radioButton12.Size = new System.Drawing.Size(80, 16);
-			this.radioButton12.TabIndex = 2;
-			this.radioButton12.Text = "UTF-8";
-			this.radioButton12.CheckedChanged += new System.EventHandler(this.radioButton12_CheckedChanged);
+			this.rdoUtf8.Location = new System.Drawing.Point(8, 36);
+			this.rdoUtf8.Name = "rdoUtf8";
+			this.rdoUtf8.Size = new System.Drawing.Size(80, 16);
+			this.rdoUtf8.TabIndex = 2;
+			this.rdoUtf8.Text = "UTF-8";
+			this.rdoUtf8.CheckedChanged += new System.EventHandler(this.rdoUtf8_CheckedChanged);
 			// 
-			// radioButton11
+			// rdoSjis
 			// 
-			this.radioButton11.Location = new System.Drawing.Point(104, 16);
-			this.radioButton11.Name = "radioButton11";
-			this.radioButton11.Size = new System.Drawing.Size(80, 16);
-			this.radioButton11.TabIndex = 1;
-			this.radioButton11.Text = "ShiftJIS";
-			this.radioButton11.CheckedChanged += new System.EventHandler(this.radioButton11_CheckedChanged);
+			this.rdoSjis.Location = new System.Drawing.Point(104, 16);
+			this.rdoSjis.Name = "rdoSjis";
+			this.rdoSjis.Size = new System.Drawing.Size(80, 16);
+			this.rdoSjis.TabIndex = 1;
+			this.rdoSjis.Text = "ShiftJIS";
+			this.rdoSjis.CheckedChanged += new System.EventHandler(this.rdoSjis_CheckedChanged);
 			// 
-			// radioButton10
+			// rdoUnicode
 			// 
-			this.radioButton10.Location = new System.Drawing.Point(8, 16);
-			this.radioButton10.Name = "radioButton10";
-			this.radioButton10.Size = new System.Drawing.Size(92, 16);
-			this.radioButton10.TabIndex = 0;
-			this.radioButton10.Text = "UNICODE";
-			this.radioButton10.CheckedChanged += new System.EventHandler(this.radioButton10_CheckedChanged);
+			this.rdoUnicode.Location = new System.Drawing.Point(8, 16);
+			this.rdoUnicode.Name = "rdoUnicode";
+			this.rdoUnicode.Size = new System.Drawing.Size(92, 16);
+			this.rdoUnicode.TabIndex = 0;
+			this.rdoUnicode.Text = "UNICODE";
+			this.rdoUnicode.CheckedChanged += new System.EventHandler(this.rdoUnicode_CheckedChanged);
 			// 
 			// checkBox2
 			// 
@@ -897,23 +897,23 @@ namespace MakeInsert
 			this.button9.Text = "クエリ実効(Select以外)";
 			this.button9.Click += new System.EventHandler(this.button9_Click_1);
 			// 
-			// button12
+			// btnIndex
 			// 
-			this.button12.Location = new System.Drawing.Point(508, 212);
-			this.button12.Name = "button12";
-			this.button12.Size = new System.Drawing.Size(132, 23);
-			this.button12.TabIndex = 35;
-			this.button12.Text = "INDEX情報表示";
-			this.button12.Click += new System.EventHandler(this.button12_Click_1);
+			this.btnIndex.Location = new System.Drawing.Point(508, 212);
+			this.btnIndex.Name = "btnIndex";
+			this.btnIndex.Size = new System.Drawing.Size(132, 23);
+			this.btnIndex.TabIndex = 35;
+			this.btnIndex.Text = "INDEX情報表示";
+			this.btnIndex.Click += new System.EventHandler(this.btnIndex_Click);
 			// 
-			// button13
+			// btnRedisp
 			// 
-			this.button13.Location = new System.Drawing.Point(652, 336);
-			this.button13.Name = "button13";
-			this.button13.Size = new System.Drawing.Size(96, 20);
-			this.button13.TabIndex = 36;
-			this.button13.Text = "グリッド再描画";
-			this.button13.Click += new System.EventHandler(this.Redisp_Click);
+			this.btnRedisp.Location = new System.Drawing.Point(652, 336);
+			this.btnRedisp.Name = "btnRedisp";
+			this.btnRedisp.Size = new System.Drawing.Size(96, 20);
+			this.btnRedisp.TabIndex = 36;
+			this.btnRedisp.Text = "グリッド再描画";
+			this.btnRedisp.Click += new System.EventHandler(this.Redisp_Click);
 			// 
 			// btnTmpAllDsp
 			// 
@@ -929,8 +929,8 @@ namespace MakeInsert
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(928, 597);
 			this.Controls.Add(this.btnTmpAllDsp);
-			this.Controls.Add(this.button13);
-			this.Controls.Add(this.button12);
+			this.Controls.Add(this.btnRedisp);
+			this.Controls.Add(this.btnIndex);
 			this.Controls.Add(this.button9);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.button8);
@@ -941,25 +941,25 @@ namespace MakeInsert
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.checkBox2);
 			this.Controls.Add(this.groupBox6);
-			this.Controls.Add(this.listBox4);
+			this.Controls.Add(this.fieldListbox);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.groupBox5);
-			this.Controls.Add(this.checkBox1);
-			this.Controls.Add(this.dataGrid1);
-			this.Controls.Add(this.button11);
-			this.Controls.Add(this.listBox3);
-			this.Controls.Add(this.button10);
+			this.Controls.Add(this.chkDspData);
+			this.Controls.Add(this.dbGrid);
+			this.Controls.Add(this.btnDDL);
+			this.Controls.Add(this.ownerListbox);
+			this.Controls.Add(this.btnSelect);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
-			this.Controls.Add(this.textBox2);
-			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.txtSort);
+			this.Controls.Add(this.txtWhere);
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.button5);
-			this.Controls.Add(this.button2);
-			this.Controls.Add(this.button1);
-			this.Controls.Add(this.listBox2);
-			this.Controls.Add(this.listBox1);
+			this.Controls.Add(this.btnCSV);
+			this.Controls.Add(this.btnFieldList);
+			this.Controls.Add(this.btnInsert);
+			this.Controls.Add(this.tableList);
+			this.Controls.Add(this.dbList);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.label5);
@@ -970,7 +970,7 @@ namespace MakeInsert
 			this.Load += new System.EventHandler(this.Form2_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox4.ResumeLayout(false);
 			this.groupBox5.ResumeLayout(false);
@@ -992,7 +992,7 @@ namespace MakeInsert
 
 				foreach (DataRow row in ds.Tables["sysdatabases"].Rows )
 				{
-					this.listBox1.Items.Add(row["name"]);
+					this.dbList.Items.Add(row["name"]);
 				}
 			}
 			catch ( System.Data.SqlClient.SqlException se )
@@ -1001,73 +1001,73 @@ namespace MakeInsert
 			}
 			if( svdata.isShowsysuser == 0 )
 			{
-				this.radioButton5.Checked = true;
-				this.radioButton6.Checked = false;
+				this.rdoNotDspSysUser.Checked = true;
+				this.rdoDspSysUser.Checked = false;
 			}
 			else
 			{
-				this.radioButton5.Checked = false;
-				this.radioButton6.Checked = true;
+				this.rdoNotDspSysUser.Checked = false;
+				this.rdoDspSysUser.Checked = true;
 			}
 			if( svdata.sortKey == 0 )
 			{
-				this.radioButton3.Checked = false;
-				this.radioButton4.Checked = true;
+				this.rdoSortTable.Checked = false;
+				this.rdoSortOwnerTable.Checked = true;
 			}
 			else
 			{
-				this.radioButton3.Checked = true;
-				this.radioButton4.Checked = false;
+				this.rdoSortTable.Checked = true;
+				this.rdoSortOwnerTable.Checked = false;
 			}
 			if( svdata.showView == 0 )
 			{
-				this.radioButton1.Checked = false;
-				this.radioButton2.Checked = true;
+				this.rdoDspView.Checked = false;
+				this.rdoNotDspView.Checked = true;
 			}
 			else
 			{
-				this.radioButton1.Checked = true;
-				this.radioButton2.Checked = false;
+				this.rdoDspView.Checked = true;
+				this.rdoNotDspView.Checked = false;
 			}
 
 			// 前回の値を元にDB先を変更する
 			if(  svdata.lastdb != null && svdata.lastdb != "" )
 			{
-				for( int i = 0; i < this.listBox1.Items.Count; i++  )
+				for( int i = 0; i < this.dbList.Items.Count; i++  )
 				{
-					if( (string)this.listBox1.Items[i] == svdata.lastdb )
+					if( (string)this.dbList.Items[i] == svdata.lastdb )
 					{
-						this.listBox1.SetSelected(i,true);
-						this.listBox1.Focus();
+						this.dbList.SetSelected(i,true);
+						this.dbList.Focus();
 						break;
 					}
 				}
 			}
 			else
 			{
-				this.listBox1.SelectedIndex = 0;
+				this.dbList.SelectedIndex = 0;
 			}
-			gfont = this.dataGrid1.Font;
-			gcolor = this.dataGrid1.ForeColor;
+			gfont = this.dbGrid.Font;
+			gcolor = this.dbGrid.ForeColor;
 		}
 
-		private void listBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+		private void dbList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if( this.listBox1.SelectedItems.Count != 0 )
+			if( this.dbList.SelectedItems.Count != 0 )
 			{
-				svdata.lastdb = (string)this.listBox1.SelectedItem;
+				svdata.lastdb = (string)this.dbList.SelectedItem;
 			}
 			dsplist2();
 			displistowner();
 			if( svdata.dbopt[svdata.lastdb] != null )
 			{
 				// 該当DBの最後に選択したユーザーを選択する
-				for( int i = 0; i < this.listBox3.Items.Count; i++ )
+				for( int i = 0; i < this.ownerListbox.Items.Count; i++ )
 				{
-					if( (string)this.listBox3.Items[i] == (string)svdata.dbopt[svdata.lastdb] )
+					if( (string)this.ownerListbox.Items[i] == (string)svdata.dbopt[svdata.lastdb] )
 					{
-						this.listBox3.SetSelected(i, true);
-						this.listBox3.Focus();
+						this.ownerListbox.SetSelected(i, true);
+						this.ownerListbox.Focus();
 						break;
 					}
 				}
@@ -1079,28 +1079,28 @@ namespace MakeInsert
 				{
 					case	0:
 						//クリップボード
-						this.radioButton7.Checked = true;
-						this.radioButton8.Checked = false;
-						this.radioButton9.Checked = false;
+						this.rdoClipboard.Checked = true;
+						this.rdoOutFile.Checked = false;
+						this.rdoOutFolder.Checked = false;
 						break;
 					case	1:
-						this.radioButton7.Checked = false;
-						this.radioButton8.Checked = true;
-						this.radioButton9.Checked = false;
+						this.rdoClipboard.Checked = false;
+						this.rdoOutFile.Checked = true;
+						this.rdoOutFolder.Checked = false;
 						break;
 					case	2:
-						this.radioButton7.Checked = false;
-						this.radioButton8.Checked = false;
-						this.radioButton9.Checked = true;
+						this.rdoClipboard.Checked = false;
+						this.rdoOutFile.Checked = false;
+						this.rdoOutFolder.Checked = true;
 						break;
 				}
 			}
 			else
 			{
 				//標準はクリップボード
-				this.radioButton7.Checked = true;
-				this.radioButton8.Checked = false;
-				this.radioButton9.Checked = false;
+				this.rdoClipboard.Checked = true;
+				this.rdoOutFile.Checked = false;
+				this.rdoOutFolder.Checked = false;
 			}
 
 			if( svdata.outfile[svdata.lastdb] != null )
@@ -1117,58 +1117,58 @@ namespace MakeInsert
 			{
 				if( (int)svdata.showgrid[svdata.lastdb] == 0 )
 				{
-					this.checkBox1.CheckState = CheckState.Unchecked;
+					this.chkDspData.CheckState = CheckState.Unchecked;
 				}
 				else
 				{
-					this.checkBox1.CheckState = CheckState.Checked;
+					this.chkDspData.CheckState = CheckState.Checked;
 				}	
 			}
 			else
 			{
-				this.checkBox1.CheckState = CheckState.Checked;
+				this.chkDspData.CheckState = CheckState.Checked;
 			}
 
 			if( svdata.griddspcnt[svdata.lastdb] != null )
 			{
 				if( (string)svdata.griddspcnt[svdata.lastdb] != "" )
 				{
-					this.textBox3.Text = (string)svdata.griddspcnt[svdata.lastdb];
+					this.txtDspCount.Text = (string)svdata.griddspcnt[svdata.lastdb];
 				}
 				else
 				{
-					this.textBox3.Text = "";
+					this.txtDspCount.Text = "";
 				}
 			}
 			else
 			{
-				this.textBox3.Text = "1000";
+				this.txtDspCount.Text = "1000";
 			}
 
 			if( svdata.txtencode[svdata.lastdb] != null )
 			{
 				if( (int)svdata.txtencode[svdata.lastdb] == 0 )
 				{
-					this.radioButton10.Checked = true;
+					this.rdoUnicode.Checked = true;
 				}
 				else if( (int)svdata.txtencode[svdata.lastdb] == 1 )
 				{
-					this.radioButton11.Checked = true;
+					this.rdoSjis.Checked = true;
 				}
 				else
 				{
-					this.radioButton12.Checked = true;
+					this.rdoUtf8.Checked = true;
 				}
 			}
 			else
 			{
-				this.radioButton10.Checked = true;
+				this.rdoUnicode.Checked = true;
 			}
 			
 		}
 
 		// INSERT文生成
-		private void button1_Click(object sender, System.EventArgs e)
+		private void btnInsert_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
 												 this.menuItem16,
@@ -1190,7 +1190,7 @@ namespace MakeInsert
 			{
 				m.Visible = false;
 			}
-			this.contextMenu1.Show(this.button1,new Point(0,0));
+			this.contextMenu1.Show(this.btnInsert,new Point(0,0));
 			foreach( MenuItem m in list )
 			{
 				m.Visible = true;
@@ -1198,7 +1198,7 @@ namespace MakeInsert
 		}
 		
 		// フィールドリスト生成
-		private void button2_Click(object sender, System.EventArgs e)
+		private void btnFieldList_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
 												 this.menuItem16,
@@ -1221,7 +1221,7 @@ namespace MakeInsert
 			{
 				m.Visible = false;
 			}
-			this.contextMenu1.Show(this.button2,new Point(0,0));
+			this.contextMenu1.Show(this.btnFieldList,new Point(0,0));
 			foreach( MenuItem m in list )
 			{
 				m.Visible = true;
@@ -1229,7 +1229,7 @@ namespace MakeInsert
 		}
 
 		// CSV生成
-		private void button5_Click(object sender, System.EventArgs e)
+		private void btnCSV_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
 												 this.menuItem16,
@@ -1253,7 +1253,7 @@ namespace MakeInsert
 			{
 				m.Visible = false;
 			}
-			this.contextMenu1.Show(this.button5,new Point(0,0));
+			this.contextMenu1.Show(this.btnCSV,new Point(0,0));
 			foreach( MenuItem m in list )
 			{
 				m.Visible = true;
@@ -1261,7 +1261,7 @@ namespace MakeInsert
 		}
 
 		// 定義文生成
-		private void button11_Click(object sender, System.EventArgs e)
+		private void btnDDL_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
 												 this.menuItem16,
@@ -1283,7 +1283,7 @@ namespace MakeInsert
 			{
 				m.Visible = false;
 			}
-			this.contextMenu1.Show(this.button11,new Point(0,0));
+			this.contextMenu1.Show(this.btnDDL,new Point(0,0));
 			foreach( MenuItem m in list )
 			{
 				m.Visible = true;
@@ -1297,7 +1297,7 @@ namespace MakeInsert
 
 		private bool CheckFileSpec()
 		{
-			if( this.radioButton8.Checked == true ) 
+			if( this.rdoOutFile.Checked == true ) 
 			{
 				if( this.textBox4.Text == "" )
 				{
@@ -1324,7 +1324,7 @@ namespace MakeInsert
 					return false;
 				}
 			}
-			if( this.radioButton9.Checked == true )
+			if( this.rdoOutFolder.Checked == true )
 			{
 
 				if( this.textBox4.Text == "" )
@@ -1373,13 +1373,13 @@ namespace MakeInsert
 			try
 			{
 				// insert 文の作成
-				if( this.listBox2.SelectedItems.Count == 0 )
+				if( this.tableList.SelectedItems.Count == 0 )
 				{
 					return;
 				}
-				if( this.listBox2.SelectedItems.Count > 1 &&
-					this.textBox1.Text != null &&
-					this.textBox1.Text != "" )
+				if( this.tableList.SelectedItems.Count > 1 &&
+					this.txtWhere.Text != null &&
+					this.txtWhere.Text != "" )
 				{
 					if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 						== System.Windows.Forms.DialogResult.No )
@@ -1387,9 +1387,9 @@ namespace MakeInsert
 						return;
 					}
 				}
-				if( this.listBox2.SelectedItems.Count > 1 &&
-					this.textBox2.Text != null &&
-					this.textBox2.Text != "" )
+				if( this.tableList.SelectedItems.Count > 1 &&
+					this.txtSort.Text != null &&
+					this.txtSort.Text != "" )
 				{
 					if( MessageBox.Show("複数テーブルに同一の order by 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 						== System.Windows.Forms.DialogResult.No )
@@ -1409,18 +1409,18 @@ namespace MakeInsert
 				TextWriter	wr = new StringWriter(strline);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.radioButton7.Checked == true) 
+				if( this.rdoClipboard.Checked == true) 
 				{
 					wr = new StringWriter(strline);
 				}
-				else if( this.radioButton8.Checked == true ) 
+				else if( this.rdoOutFile.Checked == true ) 
 				{
 					StreamWriter sw = new StreamWriter(this.textBox4.Text,false,GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.textBox4.Text);
 				}
-				if( this.radioButton9.Checked == false ) 
+				if( this.rdoOutFolder.Checked == false ) 
 				{
 					wr.Write("SET NOCOUNT ON{0}GO{0}{0}",wr.NewLine);
 				}
@@ -1429,9 +1429,9 @@ namespace MakeInsert
 				SqlCommand	cm = new SqlCommand();
 			
 
-				foreach( String tbname in this.listBox2.SelectedItems )
+				foreach( String tbname in this.tableList.SelectedItems )
 				{
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".sql.tmp",false, GetEncode());
 						sw.AutoFlush = false;
@@ -1443,13 +1443,13 @@ namespace MakeInsert
 					string sqlstr;
 					sqlstr = string.Format("select  * from {0} ",gettbname(tbname));
 					//sqlstr = "select * from [" + tbname + "]";
-					if( this.textBox1.Text != "" )
+					if( this.txtWhere.Text != "" )
 					{
-						sqlstr += " where " + this.textBox1.Text;
+						sqlstr += " where " + this.txtWhere.Text;
 					}
-					if( this.textBox2.Text != "" )
+					if( this.txtSort.Text != "" )
 					{
-						sqlstr += " order by " + this.textBox2.Text;
+						sqlstr += " order by " + this.txtSort.Text;
 					}
 					cm.CommandText = sqlstr;
 					cm.Connection = this.sqlConnection1;
@@ -1477,9 +1477,9 @@ namespace MakeInsert
 						string delimStr = ".";
 						string []tbstr = tbname.Split(delimStr.ToCharArray(), 2);
 						wr.Write(string.Format("[{0}].[{1}]",tbstr[0],tbstr[1]));
-						if( this.textBox1.Text != "" )
+						if( this.txtWhere.Text != "" )
 						{
-							wr.Write( " where {0}", this.textBox1.Text );
+							wr.Write( " where {0}", this.txtWhere.Text );
 
 						}
 						wr.Write("{0}GO{0}",wr.NewLine );
@@ -1591,7 +1591,7 @@ namespace MakeInsert
 					{
 						wr.Write("GO{0}{0}",wr.NewLine );
 					}
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
 						if( trow > 0 )
@@ -1622,11 +1622,11 @@ namespace MakeInsert
 				}
 				else
 				{
-					if( this.radioButton9.Checked == false ) 
+					if( this.rdoOutFolder.Checked == false ) 
 					{
 						wr.Close();
 					}
-					if( this.radioButton7.Checked == true ) 
+					if( this.rdoClipboard.Checked == true ) 
 					{
 						Clipboard.SetDataObject(strline.ToString(),true );
 					}
@@ -1648,7 +1648,7 @@ namespace MakeInsert
 			try
 			{
 				// insert 文の作成
-				if( this.listBox2.SelectedItems.Count == 0 )
+				if( this.tableList.SelectedItems.Count == 0 )
 				{
 					return;
 				}
@@ -1662,11 +1662,11 @@ namespace MakeInsert
 				TextWriter	wr = new StringWriter(strline);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.radioButton7.Checked == true) 
+				if( this.rdoClipboard.Checked == true) 
 				{
 					wr = new StringWriter(strline);
 				}
-				else if( this.radioButton8.Checked == true ) 
+				else if( this.rdoOutFile.Checked == true ) 
 				{
 					StreamWriter sw = new StreamWriter(this.textBox4.Text,false, GetEncode());
 					sw.AutoFlush = false;
@@ -1674,9 +1674,9 @@ namespace MakeInsert
 					fname.Append(this.textBox4.Text);
 				}
 
-				foreach( String tbname in this.listBox2.SelectedItems )
+				foreach( String tbname in this.tableList.SelectedItems )
 				{
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".sql",false, GetEncode());
 						sw.AutoFlush = false;
@@ -1707,17 +1707,17 @@ namespace MakeInsert
 					}
 					wr.Write(wr.NewLine);
 
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
 					}
 				}
 
-				if( this.radioButton9.Checked == false ) 
+				if( this.rdoOutFolder.Checked == false ) 
 				{
 					wr.Close();
 				}
-				if( this.radioButton7.Checked == true ) 
+				if( this.rdoClipboard.Checked == true ) 
 				{
 					Clipboard.SetDataObject(strline.ToString(),true );
 				}
@@ -1739,7 +1739,7 @@ namespace MakeInsert
 		{
 			try
 			{
-				this.listBox4.Items.Clear();
+				this.fieldListbox.Items.Clear();
 				if( tbname == "" )
 				{
 					return;
@@ -1844,7 +1844,7 @@ namespace MakeInsert
 							}
 						}
 					}
-					this.listBox4.Items.Add(istr);
+					this.fieldListbox.Items.Add(istr);
 				}
 			}
 			catch( Exception exp )
@@ -1859,31 +1859,31 @@ namespace MakeInsert
 			crefldlst(false,true);
 		}
 
-		private void button3_Click(object sender, System.EventArgs e)
+		private void makefldListLF(object sender, System.EventArgs e)
 		{
 			crefldlst(true,true);
 		}
 
-		private void button4_Click(object sender, System.EventArgs e)
+		private void makefldListNoComma(object sender, System.EventArgs e)
 		{
 			crefldlst(true,false);
 		}
 
-		private void listBox2_SelectedIndexChanged(object sender, System.EventArgs e)
+		private void tableList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if( this.checkBox1.CheckState == CheckState.Checked &&
-				this.listBox2.SelectedItems.Count == 1 )
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.listBox2.SelectedItem.ToString());
+				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
 				DspData("");
 			}
-			if( this.listBox2.SelectedItems.Count == 1 )
+			if( this.tableList.SelectedItems.Count == 1 )
 			{
-				dspfldlist(this.listBox2.SelectedItem.ToString());
+				dspfldlist(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
@@ -1891,9 +1891,9 @@ namespace MakeInsert
 			}
 			if( indexdlg != null && indexdlg.Visible == true )
 			{
-				if( this.listBox2.SelectedItems.Count == 1 )
+				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					indexdlg.settabledsp(this.listBox2.SelectedItem.ToString());
+					indexdlg.settabledsp(this.tableList.SelectedItem.ToString());
 				}
 				else
 				{
@@ -1914,13 +1914,13 @@ namespace MakeInsert
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
 
-			if( this.listBox2.SelectedItems.Count == 0 )
+			if( this.tableList.SelectedItems.Count == 0 )
 			{
 				return;
 			}
-			if( this.listBox2.SelectedItems.Count > 1 &&
-				this.textBox1.Text != null &&
-				this.textBox1.Text != "" )
+			if( this.tableList.SelectedItems.Count > 1 &&
+				this.txtWhere.Text != null &&
+				this.txtWhere.Text != "" )
 			{
 				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 					== System.Windows.Forms.DialogResult.No )
@@ -1928,9 +1928,9 @@ namespace MakeInsert
 					return;
 				}
 			}
-			if( this.listBox2.SelectedItems.Count > 1 &&
-				this.textBox2.Text != null &&
-				this.textBox2.Text != "" )
+			if( this.tableList.SelectedItems.Count > 1 &&
+				this.txtSort.Text != null &&
+				this.txtSort.Text != "" )
 			{
 				if( MessageBox.Show("複数テーブルに同一の order by 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 					== System.Windows.Forms.DialogResult.No )
@@ -1952,11 +1952,11 @@ namespace MakeInsert
 				TextWriter	wr = new StringWriter(strline);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.radioButton7.Checked == true) 
+				if( this.rdoClipboard.Checked == true) 
 				{
 					wr = new StringWriter(strline);
 				}
-				else if( this.radioButton8.Checked == true ) 
+				else if( this.rdoOutFile.Checked == true ) 
 				{
 					StreamWriter sw = new StreamWriter(this.textBox4.Text,false, GetEncode());
 					sw.AutoFlush = false;
@@ -1964,10 +1964,10 @@ namespace MakeInsert
 					fname.Append(this.textBox4.Text);
 				}
 
-				foreach( String tbname in this.listBox2.SelectedItems )
+				foreach( String tbname in this.tableList.SelectedItems )
 				{
 
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".csv.tmp",false, GetEncode());
 						sw.AutoFlush = false;
@@ -1978,13 +1978,13 @@ namespace MakeInsert
 					string sqlstr;
 					sqlstr = string.Format("select  * from {0} ",gettbname(tbname));
 					//sqlstr = "select * from [" + tbname + "]";
-					if( this.textBox1.Text != "" )
+					if( this.txtWhere.Text != "" )
 					{
-						sqlstr += " where " + this.textBox1.Text;
+						sqlstr += " where " + this.txtWhere.Text;
 					}
-					if( this.textBox2.Text != "" )
+					if( this.txtSort.Text != "" )
 					{
-						sqlstr += " order by " + this.textBox2.Text;
+						sqlstr += " order by " + this.txtSort.Text;
 					}
 					cm.CommandText = sqlstr;
 					cm.Connection = this.sqlConnection1;
@@ -2100,7 +2100,7 @@ namespace MakeInsert
 					{
 						dr.Close();
 					}
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
 						if( trow > 0 )
@@ -2114,7 +2114,7 @@ namespace MakeInsert
 						File.Delete(this.textBox4.Text + "\\" + tbname + ".csv.tmp");
 					}
 				}
-				if( this.radioButton9.Checked == false ) 
+				if( this.rdoOutFolder.Checked == false ) 
 				{
 					wr.Close();
 				}
@@ -2124,7 +2124,7 @@ namespace MakeInsert
 				}
 				else
 				{
-					if( this.radioButton7.Checked == true ) 
+					if( this.rdoClipboard.Checked == true ) 
 					{
 						Clipboard.SetDataObject(strline.ToString(),true );
 					}
@@ -2155,7 +2155,7 @@ namespace MakeInsert
 			// set datas to clipboard
 		}
 
-		private void button6_Click(object sender, System.EventArgs e)
+		private void makeCSVQuote(object sender, System.EventArgs e)
 		{
 			crecsv(true);
 		}
@@ -2165,37 +2165,37 @@ namespace MakeInsert
 		
 		}
 
-		private void radioButton1_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoDspView_CheckedChanged(object sender, System.EventArgs e)
 		{
 			dsplist2();
 		}
 
-		private void radioButton3_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoSortTable_CheckedChanged(object sender, System.EventArgs e)
 		{
 			dsplist2();
 		}
 
-		private void button7_Click(object sender, System.EventArgs e)
+		private void insertmakeDelete(object sender, System.EventArgs e)
 		{
 			this.CreInsert( true, true );
 		}
 
-		private void button8_Click(object sender, System.EventArgs e)
+		private void insertmakeNoField(object sender, System.EventArgs e)
 		{
 			this.CreInsert(false,false );
 		}
 
-		private void button9_Click(object sender, System.EventArgs e)
+		private void insertmakeNoFieldDelete(object sender, System.EventArgs e)
 		{
 			this.CreInsert(false,true);
 		}
 
-		private void button10_Click(object sender, System.EventArgs e)
+		private void btnSelect_Click(object sender, System.EventArgs e)
 		{
 			// select 文の作成
 			try
 			{
-				if( this.listBox2.SelectedItems.Count == 0 )
+				if( this.tableList.SelectedItems.Count == 0 )
 				{
 					return;
 				}
@@ -2208,11 +2208,11 @@ namespace MakeInsert
 				TextWriter	wr = new StringWriter(strline);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.radioButton7.Checked == true) 
+				if( this.rdoClipboard.Checked == true) 
 				{
 					wr = new StringWriter(strline);
 				}
-				else if( this.radioButton8.Checked == true ) 
+				else if( this.rdoOutFile.Checked == true ) 
 				{
 					StreamWriter sw = new StreamWriter(this.textBox4.Text,false, GetEncode());
 					sw.AutoFlush = false;
@@ -2220,10 +2220,10 @@ namespace MakeInsert
 					fname.Append(this.textBox4.Text);
 				}
 
-				foreach( String tbname in this.listBox2.SelectedItems )
+				foreach( String tbname in this.tableList.SelectedItems )
 				{
 
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".sql",false, GetEncode());
 						sw.AutoFlush = false;
@@ -2249,25 +2249,25 @@ namespace MakeInsert
 					}
 					wr.Write(wr.NewLine);
 					wr.Write(" from {0}{1}", gettbname(tbname),wr.NewLine);
-					if( this.textBox1.Text != "" )
+					if( this.txtWhere.Text != "" )
 					{
-						wr.Write(" where {0}{1}", this.textBox1.Text,wr.NewLine);
+						wr.Write(" where {0}{1}", this.txtWhere.Text,wr.NewLine);
 					}
-					if( this.textBox2.Text != "" )
+					if( this.txtSort.Text != "" )
 					{
-						wr.Write(" order by {0}{1}", this.textBox2.Text,wr.NewLine);
+						wr.Write(" order by {0}{1}", this.txtSort.Text,wr.NewLine);
 					}
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
 					}
 				}
-				if( this.radioButton9.Checked == false ) 
+				if( this.rdoOutFolder.Checked == false ) 
 				{
 					wr.Close();
 				}
 
-				if( this.radioButton7.Checked == true ) 
+				if( this.rdoClipboard.Checked == true ) 
 				{
 					Clipboard.SetDataObject(strline.ToString(),true );
 				}
@@ -2284,12 +2284,12 @@ namespace MakeInsert
 			}
 		}
 
-		private void listBox3_SelectedIndexChanged(object sender, System.EventArgs e)
+		private void ownerListbox_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if( this.listBox3.SelectedItem != null )
+			if( this.ownerListbox.SelectedItem != null )
 			{
 				// 選択したDBの最終オーナーを記録する
-				svdata.dbopt[svdata.lastdb] = (string)this.listBox3.SelectedItem;
+				svdata.dbopt[svdata.lastdb] = (string)this.ownerListbox.SelectedItem;
 			}
 			dsplist2();
 		}
@@ -2300,16 +2300,16 @@ namespace MakeInsert
 			SqlCommand	cm = new SqlCommand();
 			try 
 			{
-				if( this.listBox1.SelectedItem == null )
+				if( this.dbList.SelectedItem == null )
 				{
 					return ;
 				}
-				this.sqlConnection1.ChangeDatabase((String)this.listBox1.SelectedItem);
+				this.sqlConnection1.ChangeDatabase((String)this.dbList.SelectedItem);
 				
 				// listbox2 にテーブル一覧を表示
 
 				string sortkey;
-				if( this.radioButton3.Checked == true )
+				if( this.rdoSortTable.Checked == true )
 				{
 					sortkey = " order by 1 ";
 				}
@@ -2318,7 +2318,7 @@ namespace MakeInsert
 					sortkey = " order by 2,1 ";
 				}
 
-				if( this.radioButton1.Checked == true )
+				if( this.rdoDspView.Checked == true )
 				{
 					cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
 				}
@@ -2327,12 +2327,12 @@ namespace MakeInsert
 					cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
 				}
 
-				if( this.listBox3.SelectedItem != null )
+				if( this.ownerListbox.SelectedItem != null )
 				{
 					bool	allsele = false;
 					// 選択があれば、そのOWNERのみのテーブルを表示する
 					string ownerlist = "";
-					foreach( String owname in this.listBox3.SelectedItems )
+					foreach( String owname in this.ownerListbox.SelectedItems )
 					{
 						if( owname == "全て" )
 						{
@@ -2355,10 +2355,10 @@ namespace MakeInsert
 
 				dr = cm.ExecuteReader();
 
-				this.listBox2.Items.Clear();
+				this.tableList.Items.Clear();
 				while ( dr.Read())
 				{
-					this.listBox2.Items.Add(dr["uname"] + "." + dr["tbname"]);
+					this.tableList.Items.Add(dr["uname"] + "." + dr["tbname"]);
 				}
 				dr.Close();
 			}
@@ -2382,18 +2382,18 @@ namespace MakeInsert
 			this.CreDDL(false, false);
 		}
 
-		private void button12_Click(object sender, System.EventArgs e)
+		private void makeDDLDrop(object sender, System.EventArgs e)
 		{
 			this.CreDDL(true, false);
 		}
 		
-		private void button13_Click(object sender, System.EventArgs e)
+		private void makeDDLPare(object sender, System.EventArgs e)
 		{
 			this.CreDDL(false, true);
 		
 		}
 
-		private void button14_Click(object sender, System.EventArgs e)
+		private void makeDDLDropPare(object sender, System.EventArgs e)
 		{
 			this.CreDDL(true, true);
 		}
@@ -2403,7 +2403,7 @@ namespace MakeInsert
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
 
-			if( this.listBox2.SelectedItems.Count == 0 )
+			if( this.tableList.SelectedItems.Count == 0 )
 			{
 				return;
 			}
@@ -2417,11 +2417,11 @@ namespace MakeInsert
 				TextWriter	wr = new StringWriter(strline);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.radioButton7.Checked == true) 
+				if( this.rdoClipboard.Checked == true) 
 				{
 					wr = new StringWriter(strline);
 				}
-				else if( this.radioButton8.Checked == true ) 
+				else if( this.rdoOutFile.Checked == true ) 
 				{
 					StreamWriter sw = new StreamWriter(this.textBox4.Text,false, GetEncode());
 					sw.AutoFlush = false;
@@ -2429,9 +2429,9 @@ namespace MakeInsert
 					fname.Append(this.textBox4.Text);
 				}
 
-				foreach( String tbname in this.listBox2.SelectedItems )
+				foreach( String tbname in this.tableList.SelectedItems )
 				{
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".sql",false, GetEncode());
 						sw.AutoFlush = false;
@@ -2530,16 +2530,16 @@ namespace MakeInsert
 						}
 					}
 					wr.Write("{0}){0}Go{0}",wr.NewLine);
-					if( this.radioButton9.Checked == true ) 
+					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
 					}
 				}
-				if( this.radioButton9.Checked == false ) 
+				if( this.rdoOutFolder.Checked == false ) 
 				{
 					wr.Close();
 				}
-				if( this.radioButton7.Checked == true ) 
+				if( this.rdoClipboard.Checked == true ) 
 				{
 					Clipboard.SetDataObject(strline.ToString(),true );
 				}
@@ -2567,19 +2567,19 @@ namespace MakeInsert
 			}
 		}
 
-		private void checkBox1_CheckedChanged(object sender, System.EventArgs e)
+		private void chkDspData_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.checkBox1.CheckState == CheckState.Checked &&
-				this.listBox2.SelectedItems.Count == 1 )
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.listBox2.SelectedItem.ToString());
+				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
 				DspData("");
 			}
-			if( this.checkBox1.CheckState == CheckState.Checked )
+			if( this.chkDspData.CheckState == CheckState.Checked )
 			{
 				svdata.showgrid[svdata.lastdb] = 1;
 			}
@@ -2600,7 +2600,7 @@ namespace MakeInsert
 			{
 				if( tbname == "" )
 				{
-					this.dataGrid1.Hide();
+					this.dbGrid.Hide();
 					this.button6.Enabled = false;
 					this.button7.Enabled = false;
 					this.button8.Enabled = false;
@@ -2608,9 +2608,9 @@ namespace MakeInsert
 				}
 
 				int	maxlines;
-				if( this.textBox3.Text != "" )
+				if( this.txtDspCount.Text != "" )
 				{
-					maxlines = int.Parse(this.textBox3.Text);
+					maxlines = int.Parse(this.txtDspCount.Text);
 				}
 				else
 				{
@@ -2627,17 +2627,17 @@ namespace MakeInsert
 
 				if( maxlines != 0 )
 				{
-					sqlstr += " TOP " + this.textBox3.Text;
+					sqlstr += " TOP " + this.txtDspCount.Text;
 				}
 
 				sqlstr += string.Format(" * from {0}",gettbname(tbname));
-				if( this.textBox1.Text != "" )
+				if( this.txtWhere.Text != "" )
 				{
-					sqlstr += " where " + this.textBox1.Text;
+					sqlstr += " where " + this.txtWhere.Text;
 				}
-				if( this.textBox2.Text != "" )
+				if( this.txtSort.Text != "" )
 				{
-					sqlstr += " order by " + this.textBox2.Text;
+					sqlstr += " order by " + this.txtSort.Text;
 				}
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				dspdt = new DataSet();
@@ -2696,17 +2696,17 @@ namespace MakeInsert
 				}
 
 				//テーブルスタイルをDataGridに追加する
-				this.dataGrid1.TableStyles.Clear();
-				this.dataGrid1.TableStyles.Add(ts);
+				this.dbGrid.TableStyles.Clear();
+				this.dbGrid.TableStyles.Add(ts);
 
 
 
-				this.dataGrid1.AllowSorting = true;
-				this.toolTip3.SetToolTip(this.dataGrid1,sqlstr);
-				this.dataGrid1.SetDataBinding(dspdt, "aaaa");
-				this.dataGrid1.Show();
+				this.dbGrid.AllowSorting = true;
+				this.toolTip3.SetToolTip(this.dbGrid,sqlstr);
+				this.dbGrid.SetDataBinding(dspdt, "aaaa");
+				this.dbGrid.Show();
 				this.button7.Text = "データ編集";
-				this.dataGrid1.ReadOnly = true;
+				this.dbGrid.ReadOnly = true;
 				this.button6.Enabled = true;
 				this.button7.Enabled = true;
 				this.button8.Enabled = true;
@@ -2717,13 +2717,13 @@ namespace MakeInsert
 			}
 		}
 
-		private void textBox3_Leave(object sender, System.EventArgs e)
+		private void txtDspCount_Leave(object sender, System.EventArgs e)
 		{
-			if( this.checkBox1.CheckState == CheckState.Checked &&
-				this.listBox2.SelectedItems.Count == 1 )
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.listBox2.SelectedItem.ToString());
+				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
@@ -2731,13 +2731,13 @@ namespace MakeInsert
 			}
 		}
 
-		private void textBox1_Leave(object sender, System.EventArgs e)
+		private void txtWhere_Leave(object sender, System.EventArgs e)
 		{
-			if( this.checkBox1.CheckState == CheckState.Checked &&
-				this.listBox2.SelectedItems.Count == 1 )
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.listBox2.SelectedItem.ToString());
+				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
@@ -2745,13 +2745,13 @@ namespace MakeInsert
 			}
 		}
 
-		private void textBox2_Leave(object sender, System.EventArgs e)
+		private void txtSort_Leave(object sender, System.EventArgs e)
 		{
-			if( this.checkBox1.CheckState == CheckState.Checked &&
-				this.listBox2.SelectedItems.Count == 1 )
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.listBox2.SelectedItem.ToString());
+				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
@@ -2759,7 +2759,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void radioButton6_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoDspSysUser_CheckedChanged(object sender, System.EventArgs e)
 		{
 			dsplist2();
 			displistowner();
@@ -2771,7 +2771,7 @@ namespace MakeInsert
 			SqlCommand	cm = new SqlCommand();
 			try 
 			{
-				if( radioButton6.Checked )
+				if( rdoDspSysUser.Checked )
 				{
 					cm.CommandText = "select * from sysusers order by name";
 				}
@@ -2783,11 +2783,11 @@ namespace MakeInsert
 
 				dr = cm.ExecuteReader();
 
-				this.listBox3.Items.Clear();
-				this.listBox3.Items.Add("全て");
+				this.ownerListbox.Items.Clear();
+				this.ownerListbox.Items.Add("全て");
 				while ( dr.Read())
 				{
-					this.listBox3.Items.Add(dr["name"]);
+					this.ownerListbox.Items.Add(dr["name"]);
 				}
 				dr.Close();
 			
@@ -2806,7 +2806,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void radioButton5_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoNotDspSysUser_CheckedChanged(object sender, System.EventArgs e)
 		{
 			dsplist2();
 			displistowner();
@@ -2823,10 +2823,10 @@ namespace MakeInsert
 		}
 		private void copytablename(bool addcomma)
 		{
-			if( this.listBox2.SelectedItems.Count > 0 )
+			if( this.tableList.SelectedItems.Count > 0 )
 			{
 				StringBuilder strline =  new StringBuilder();
-				foreach( string name in listBox2.SelectedItems )
+				foreach( string name in tableList.SelectedItems )
 				{
 					if( strline.Length != 0 )
 					{
@@ -2844,7 +2844,7 @@ namespace MakeInsert
 
 		private void Form2_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			if( this.radioButton5.Checked == true )
+			if( this.rdoNotDspSysUser.Checked == true )
 			{
 				svdata.isShowsysuser = 0;
 			}
@@ -2853,7 +2853,7 @@ namespace MakeInsert
 				svdata.isShowsysuser = 1;
 			}
 
-			if( this.radioButton4.Checked == true )
+			if( this.rdoSortOwnerTable.Checked == true )
 			{
 				svdata.sortKey = 0;
 			}
@@ -2861,7 +2861,7 @@ namespace MakeInsert
 			{
 				svdata.sortKey = 1;
 			}
-			if( this.radioButton1.Checked == false) 
+			if( this.rdoDspView.Checked == false) 
 			{
 				svdata.showView = 0;
 			}
@@ -2870,38 +2870,38 @@ namespace MakeInsert
 				svdata.showView = 1;
 			}
 
-			if( this.radioButton7.Checked == true) 
+			if( this.rdoClipboard.Checked == true) 
 			{
 				svdata.outdest[svdata.lastdb] = 0;
 			}
-			if( this.radioButton8.Checked == true) 
+			if( this.rdoOutFile.Checked == true) 
 			{
 				svdata.outdest[svdata.lastdb] = 1;
 			}
-			if( this.radioButton9.Checked == true) 
+			if( this.rdoOutFolder.Checked == true) 
 			{
 				svdata.outdest[svdata.lastdb] = 2;
 			}
 			svdata.outfile[svdata.lastdb] = this.textBox4.Text;
-			if( this.checkBox1.CheckState == CheckState.Checked ){
+			if( this.chkDspData.CheckState == CheckState.Checked ){
 				svdata.showgrid[svdata.lastdb] = 1;
 			}
 			else{
 				svdata.showgrid[svdata.lastdb] = 0;
 			}
-			if( this.radioButton10.Checked == true )
+			if( this.rdoUnicode.Checked == true )
 			{
 				svdata.txtencode[svdata.lastdb] = 0;
 			}
-			if( this.radioButton11.Checked == true )
+			if( this.rdoSjis.Checked == true )
 			{
 				svdata.txtencode[svdata.lastdb] = 1;
 			}
-			if( this.radioButton12.Checked == true )
+			if( this.rdoUtf8.Checked == true )
 			{
 				svdata.txtencode[svdata.lastdb] = 2;
 			}
-			svdata.griddspcnt[svdata.lastdb] = this.textBox3.Text;
+			svdata.griddspcnt[svdata.lastdb] = this.txtDspCount.Text;
 
 			if( this.sqlConnection1 != null )
 			{
@@ -2916,7 +2916,7 @@ namespace MakeInsert
 		protected void copyfldlist(bool lf, bool docomma)
 		{
 			StringBuilder str = new StringBuilder();
-			for( int i=0; i < this.listBox4.SelectedItems.Count; i++ )
+			for( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
 			{
 				if( i != 0 )
 				{
@@ -2943,7 +2943,7 @@ namespace MakeInsert
 						}
 					}
 				}
-				str.Append((string)this.listBox4.SelectedItems[i]);
+				str.Append((string)this.fieldListbox.SelectedItems[i]);
 			}
 			if( str.Length != 0 )
 			{
@@ -2961,48 +2961,48 @@ namespace MakeInsert
 			copyfldlist(false,true);
 		}
 
-		private void radioButton7_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoClipboard_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( radioButton7.Checked == true )
+			if( rdoClipboard.Checked == true )
 			{
 				this.textBox4.Enabled = false;
 				this.button4.Enabled = false;
 				svdata.outdest[svdata.lastdb] = 0;
-				this.radioButton10.Enabled = false;
-				this.radioButton11.Enabled = false;
-				this.radioButton12.Enabled = false;
+				this.rdoUnicode.Enabled = false;
+				this.rdoSjis.Enabled = false;
+				this.rdoUtf8.Enabled = false;
 			}
 		}
 
-		private void radioButton9_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoOutFolder_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.radioButton9.Checked == true )
+			if( this.rdoOutFolder.Checked == true )
 			{
 				this.textBox4.Enabled = true;
 				this.button4.Enabled = true;
 				svdata.outdest[svdata.lastdb] = 2;
-				this.radioButton10.Enabled = true;
-				this.radioButton11.Enabled = true;
-				this.radioButton12.Enabled = true;
+				this.rdoUnicode.Enabled = true;
+				this.rdoSjis.Enabled = true;
+				this.rdoUtf8.Enabled = true;
 			}
 		}
 
-		private void radioButton8_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoOutFile_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.radioButton8.Checked == true )
+			if( this.rdoOutFile.Checked == true )
 			{
 				this.textBox4.Enabled = true;
 				this.button4.Enabled = true;
 				svdata.outdest[svdata.lastdb] = 1;
-				this.radioButton10.Enabled = true;
-				this.radioButton11.Enabled = true;
-				this.radioButton12.Enabled = true;
+				this.rdoUnicode.Enabled = true;
+				this.rdoSjis.Enabled = true;
+				this.rdoUtf8.Enabled = true;
 			}
 		}
 
 		private void button4_Click_1(object sender, System.EventArgs e)
 		{
-			if( this.radioButton8.Checked == true )
+			if( this.rdoOutFile.Checked == true )
 			{
 				if( this.textBox4.Text != "" )
 				{
@@ -3071,7 +3071,7 @@ namespace MakeInsert
 			svdata.outfile[svdata.lastdb] = this.textBox4.Text;
 		}
 
-		private void listBox4_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		private void fieldListbox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			if( e.KeyCode == Keys.C &&
 				e.Control == true &&
@@ -3082,9 +3082,9 @@ namespace MakeInsert
 			}
 		}
 
-		private void textBox3_TextChanged(object sender, System.EventArgs e)
+		private void txtDspCount_TextChanged(object sender, System.EventArgs e)
 		{
-			svdata.griddspcnt[svdata.lastdb] = this.textBox3.Text;
+			svdata.griddspcnt[svdata.lastdb] = this.txtDspCount.Text;
 		}
 
 		private void menuItem22_Click(object sender, System.EventArgs e)
@@ -3097,37 +3097,37 @@ namespace MakeInsert
 			copyfldlist(false,false);
 		}
 
-		private void radioButton10_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoUnicode_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.radioButton10.Checked == true )
+			if( this.rdoUnicode.Checked == true )
 			{
 				svdata.txtencode[svdata.lastdb] = 0;
 			}
 		}
 
-		private void radioButton11_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoSjis_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.radioButton11.Checked == true )
+			if( this.rdoSjis.Checked == true )
 			{
 				svdata.txtencode[svdata.lastdb] = 1;
 			}
 		}
 
-		private void radioButton12_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoUtf8_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.radioButton12.Checked == true )
+			if( this.rdoUtf8.Checked == true )
 			{
 				svdata.txtencode[svdata.lastdb] = 2;
 			}
 		}
 		private System.Text.Encoding GetEncode()
 		{
-			if( this.radioButton10.Checked == true )
+			if( this.rdoUnicode.Checked == true )
 			{
 				// UNICODE
 				return new System.Text.UnicodeEncoding();
 			}
-			else if( this.radioButton11.Checked == true )
+			else if( this.rdoSjis.Checked == true )
 			{
 				// (MS932)ShiftJIS
 				return Encoding.GetEncoding("shift-jis");
@@ -3139,7 +3139,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void listBox2_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		private void tableList_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			if( e.KeyCode == Keys.C &&
 				e.Control == true &&
@@ -3152,9 +3152,9 @@ namespace MakeInsert
 
 		private void checkBox2_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.listBox2.SelectedItems.Count == 1 )
+			if( this.tableList.SelectedItems.Count == 1 )
 			{
-				dspfldlist(this.listBox2.SelectedItem.ToString());
+				dspfldlist(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
@@ -3226,19 +3226,19 @@ namespace MakeInsert
 					}
 
 					//テーブルスタイルをDataGridに追加する
-					this.dataGrid1.TableStyles.Clear();
-					this.dataGrid1.TableStyles.Add(ts);
+					this.dbGrid.TableStyles.Clear();
+					this.dbGrid.TableStyles.Add(ts);
 
-					this.dataGrid1.ReadOnly = true;
+					this.dbGrid.ReadOnly = true;
 					this.button7.Text = "データ編集";
 					this.button6.Enabled = true;
 					this.button7.Enabled = true;
 					this.button8.Enabled = true;
-					this.checkBox1.Checked = true;
-					this.dataGrid1.AllowSorting = true;
-					this.toolTip3.SetToolTip(this.dataGrid1,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
-					this.dataGrid1.SetDataBinding(dspdt,"aaaa");
-					this.dataGrid1.Show();
+					this.chkDspData.Checked = true;
+					this.dbGrid.AllowSorting = true;
+					this.toolTip3.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
+					this.dbGrid.SetDataBinding(dspdt,"aaaa");
+					this.dbGrid.Show();
 				}
 			}
 			catch( Exception exp)
@@ -3252,21 +3252,21 @@ namespace MakeInsert
 			SqlTransaction tran	= null;
 			try
 			{
-				if( this.checkBox1.CheckState == CheckState.Checked &&
-					this.listBox2.SelectedItems.Count == 1 &&
+				if( this.chkDspData.CheckState == CheckState.Checked &&
+					this.tableList.SelectedItems.Count == 1 &&
 					this.dspdt.GetChanges() != null &&
 					this.dspdt.GetChanges().Tables[0].Rows.Count > 0 &&
 					MessageBox.Show("本当に更新してよろしいですか","",MessageBoxButtons.YesNo) == DialogResult.Yes
 					)
 				{
 					// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-					string tbname = this.listBox2.SelectedItem.ToString();
+					string tbname = this.tableList.SelectedItem.ToString();
 					string sqlstr;
 					sqlstr = "select ";
 					int	maxlines;
-					if( this.textBox3.Text != "" )
+					if( this.txtDspCount.Text != "" )
 					{
-						maxlines = int.Parse(this.textBox3.Text);
+						maxlines = int.Parse(this.txtDspCount.Text);
 					}
 					else
 					{
@@ -3274,18 +3274,18 @@ namespace MakeInsert
 					}
 					if( maxlines != 0 )
 					{
-						sqlstr += " TOP " + this.textBox3.Text;
+						sqlstr += " TOP " + this.txtDspCount.Text;
 					}
 
 					sqlstr += string.Format(" * from {0}",gettbname(tbname));
 					//sqlstr += " * from [" + tbname + "]";
-					if( this.textBox1.Text != "" )
+					if( this.txtWhere.Text != "" )
 					{
-						sqlstr += " where " + this.textBox1.Text;
+						sqlstr += " where " + this.txtWhere.Text;
 					}
-					if( this.textBox2.Text != "" )
+					if( this.txtSort.Text != "" )
 					{
-						sqlstr += " order by " + this.textBox2.Text;
+						sqlstr += " order by " + this.txtSort.Text;
 					}
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 										
@@ -3295,7 +3295,7 @@ namespace MakeInsert
 					da.Update(dspdt, "aaaa");
 					tran.Commit();
 
-					this.dataGrid1.SetDataBinding(dspdt, "aaaa");
+					this.dbGrid.SetDataBinding(dspdt, "aaaa");
 				}
 			}
 			catch( Exception exp )
@@ -3310,10 +3310,10 @@ namespace MakeInsert
 		{
 			try
 			{
-				if( this.dataGrid1.ReadOnly == true )
+				if( this.dbGrid.ReadOnly == true )
 				{
 					// 編集可にする
-					this.dataGrid1.ReadOnly = false;
+					this.dbGrid.ReadOnly = false;
 					this.button7.Text = "データ編集終了";
 				}
 				else
@@ -3322,7 +3322,7 @@ namespace MakeInsert
 					if( this.dspdt.Tables["aaaa"].GetChanges() == null ||
 						this.dspdt.Tables["aaaa"].GetChanges().Rows.Count == 0 )
 					{
-						this.dataGrid1.ReadOnly = true;
+						this.dbGrid.ReadOnly = true;
 						this.button7.Text = "データ編集";
 					}
 					else
@@ -3331,9 +3331,9 @@ namespace MakeInsert
 						if( MessageBox.Show("変更を破棄してもよろしいですか?","",MessageBoxButtons.YesNo) == DialogResult.Yes )
 						{
 							this.dspdt.Tables["aaaa"].RejectChanges();
-							this.dataGrid1.SetDataBinding(dspdt, "aaaa");
-							this.dataGrid1.Show();
-							this.dataGrid1.ReadOnly = true;
+							this.dbGrid.SetDataBinding(dspdt, "aaaa");
+							this.dbGrid.Show();
+							this.dbGrid.ReadOnly = true;
 							this.button7.Text = "データ編集";
 						}
 					}
@@ -3345,7 +3345,7 @@ namespace MakeInsert
 				MessageBox.Show(exp.Message+":"+exp.StackTrace+":\n"+exp.ToString());
 			}
 		}
-		private void dataGrid1_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+		private void dbGrid_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
 		{
 			if( this.dspdt == null ||
 				this.dspdt.Tables.Count == 0 ||
@@ -3355,15 +3355,15 @@ namespace MakeInsert
 			}
 
 			int row = 0;
-			int yDelta = dataGrid1.GetCellBounds(row, 0).Height + 1;
-			int y = dataGrid1.GetCellBounds(row, 0).Top + 2;
+			int yDelta = dbGrid.GetCellBounds(row, 0).Height + 1;
+			int y = dbGrid.GetCellBounds(row, 0).Top + 2;
      
-			CurrencyManager cm = (CurrencyManager) this.BindingContext[dataGrid1.DataSource, dataGrid1.DataMember];
-			while(y < dataGrid1.Height - yDelta && row < cm.Count)
+			CurrencyManager cm = (CurrencyManager) this.BindingContext[dbGrid.DataSource, dbGrid.DataMember];
+			while(y < dbGrid.Height - yDelta && row < cm.Count)
 			{
 				//get & draw the header text...
 				string text = string.Format("{0}", row+1);
-				e.Graphics.DrawString(text, dataGrid1.Font, new SolidBrush(Color.Black), 12, y);
+				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 12, y);
 				y += yDelta;
 				row++;
 			}
@@ -3382,8 +3382,8 @@ namespace MakeInsert
 			{
 				this.gfont = dlg.gfont;
 				this.gcolor = dlg.gcolor;
-				this.dataGrid1.Font = this.gfont;
-				this.dataGrid1.ForeColor = this.gcolor;
+				this.dbGrid.Font = this.gfont;
+				this.dbGrid.ForeColor = this.gcolor;
 				this.NumFormat = dlg.NumFormat;
 				this.FloatFormat = dlg.FloatFormat;
 				this.DateFormat = dlg.DateFormat;
@@ -3394,7 +3394,7 @@ namespace MakeInsert
 		{
 		}
 
-		private void listBox1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		private void dbList_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			// DB名のコピー
 			if( e.KeyCode == Keys.C &&
@@ -3402,10 +3402,10 @@ namespace MakeInsert
 				e.Alt != true &&
 				e.Shift != true )
 			{
-				if( this.listBox1.SelectedItems.Count > 0 )
+				if( this.dbList.SelectedItems.Count > 0 )
 				{
 					StringBuilder strline =  new StringBuilder();
-					foreach( string name in listBox1.SelectedItems )
+					foreach( string name in dbList.SelectedItems )
 					{
 						if( strline.Length != 0 )
 						{
@@ -3419,7 +3419,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void listBox3_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		private void ownerListbox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			// DB名のコピー
 			if( e.KeyCode == Keys.C &&
@@ -3427,10 +3427,10 @@ namespace MakeInsert
 				e.Alt != true &&
 				e.Shift != true )
 			{
-				if( this.listBox3.SelectedItems.Count > 0 )
+				if( this.ownerListbox.SelectedItems.Count > 0 )
 				{
 					StringBuilder strline =  new StringBuilder();
-					foreach( string name in listBox3.SelectedItems )
+					foreach( string name in ownerListbox.SelectedItems )
 					{
 						if( strline.Length != 0 )
 						{
@@ -3491,11 +3491,11 @@ namespace MakeInsert
 		private void Redisp_Click(object sender, System.EventArgs e)
 		{
 			//再描画ボタン押下
-			if( this.checkBox1.CheckState == CheckState.Checked &&
-				this.listBox2.SelectedItems.Count == 1 )
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.listBox2.SelectedItem.ToString());
+				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
@@ -3517,15 +3517,15 @@ namespace MakeInsert
 			return fstr.Substring(0,termp);
 		}
 
-		private void button12_Click_1(object sender, System.EventArgs e)
+		private void btnIndex_Click(object sender, System.EventArgs e)
 		{
 			if( indexdlg == null )
 			{
 				indexdlg = new Form7();
 				indexdlg.sqlConnection = this.sqlConnection1;
-				if( this.listBox2.SelectedItems.Count == 1 )
+				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					indexdlg.dsptbname = this.listBox2.SelectedItem.ToString();
+					indexdlg.dsptbname = this.tableList.SelectedItem.ToString();
 				}
 				else
 				{
@@ -3543,11 +3543,11 @@ namespace MakeInsert
 		private void btnTmpAllDsp_Click(object sender, System.EventArgs e)
 		{
 			//再描画ボタン押下
-			if( this.checkBox1.CheckState == CheckState.Checked &&
-				this.listBox2.SelectedItems.Count == 1 )
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.listBox2.SelectedItem.ToString(),true);
+				DspData(this.tableList.SelectedItem.ToString(),true);
 			}
 			else
 			{
