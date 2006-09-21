@@ -109,6 +109,7 @@ namespace MakeInsert
 		private System.Windows.Forms.Button button12;
 		private System.Windows.Forms.Button button13;
 		Form5 Sqldlg2 = new Form5();
+		private System.Windows.Forms.Button btnTmpAllDsp;
 
 		Form7 indexdlg = null;
 
@@ -236,6 +237,7 @@ namespace MakeInsert
 			this.button9 = new System.Windows.Forms.Button();
 			this.button12 = new System.Windows.Forms.Button();
 			this.button13 = new System.Windows.Forms.Button();
+			this.btnTmpAllDsp = new System.Windows.Forms.Button();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
@@ -908,15 +910,25 @@ namespace MakeInsert
 			// 
 			this.button13.Location = new System.Drawing.Point(652, 336);
 			this.button13.Name = "button13";
-			this.button13.Size = new System.Drawing.Size(144, 20);
+			this.button13.Size = new System.Drawing.Size(96, 20);
 			this.button13.TabIndex = 36;
 			this.button13.Text = "グリッド再描画";
 			this.button13.Click += new System.EventHandler(this.Redisp_Click);
+			// 
+			// btnTmpAllDsp
+			// 
+			this.btnTmpAllDsp.Location = new System.Drawing.Point(752, 336);
+			this.btnTmpAllDsp.Name = "btnTmpAllDsp";
+			this.btnTmpAllDsp.Size = new System.Drawing.Size(148, 20);
+			this.btnTmpAllDsp.TabIndex = 37;
+			this.btnTmpAllDsp.Text = "一時的に全データを表示";
+			this.btnTmpAllDsp.Click += new System.EventHandler(this.btnTmpAllDsp_Click);
 			// 
 			// Form2
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(928, 597);
+			this.Controls.Add(this.btnTmpAllDsp);
 			this.Controls.Add(this.button13);
 			this.Controls.Add(this.button12);
 			this.Controls.Add(this.button9);
@@ -2576,7 +2588,13 @@ namespace MakeInsert
 				svdata.showgrid[svdata.lastdb] = 0;
 			}
 		}
+
 		protected void DspData(string tbname)
+		{
+			DspData(tbname,false);
+		}
+		
+		protected void DspData(string tbname, bool isAllDsp)
 		{
 			try
 			{
@@ -2595,6 +2613,10 @@ namespace MakeInsert
 					maxlines = int.Parse(this.textBox3.Text);
 				}
 				else
+				{
+					maxlines = 0;
+				}
+				if( isAllDsp == true )
 				{
 					maxlines = 0;
 				}
@@ -3515,6 +3537,21 @@ namespace MakeInsert
 			{
 				indexdlg.Show();
 				indexdlg.BringToFront();
+			}
+		}
+
+		private void btnTmpAllDsp_Click(object sender, System.EventArgs e)
+		{
+			//再描画ボタン押下
+			if( this.checkBox1.CheckState == CheckState.Checked &&
+				this.listBox2.SelectedItems.Count == 1 )
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				DspData(this.listBox2.SelectedItem.ToString(),true);
+			}
+			else
+			{
+				DspData("");
 			}
 		}
 	}
