@@ -80,22 +80,22 @@ namespace MakeInsert
 		private System.Windows.Forms.CheckBox checkBox2;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.ToolTip toolTip2;
-		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Button btnQuerySelect;
 		private ServerData svdata;
 		private System.Windows.Forms.ToolTip toolTip3;
-		private System.Windows.Forms.Button button6;
+		private System.Windows.Forms.Button btnDataUpdate;
 
 		private DataSet dspdt = new DataSet();
-		private System.Windows.Forms.Button button7;
+		private System.Windows.Forms.Button btnDataEdit;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Button button8;
+		private System.Windows.Forms.Button btnGridFormat;
 		private	Font	gfont;
 		private	Color	gcolor;
 		private	string	NumFormat;
 		private	string	FloatFormat;
 		private	string	DateFormat;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Button button9;
+		private System.Windows.Forms.Button btnQueryNonSelect;
 
 		public string servername = "";
 		Form4 Sqldlg = new Form4();
@@ -227,14 +227,14 @@ namespace MakeInsert
 			this.checkBox2 = new System.Windows.Forms.CheckBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
-			this.button3 = new System.Windows.Forms.Button();
+			this.btnQuerySelect = new System.Windows.Forms.Button();
 			this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
-			this.button6 = new System.Windows.Forms.Button();
-			this.button7 = new System.Windows.Forms.Button();
+			this.btnDataUpdate = new System.Windows.Forms.Button();
+			this.btnDataEdit = new System.Windows.Forms.Button();
 			this.label7 = new System.Windows.Forms.Label();
-			this.button8 = new System.Windows.Forms.Button();
+			this.btnGridFormat = new System.Windows.Forms.Button();
 			this.label8 = new System.Windows.Forms.Label();
-			this.button9 = new System.Windows.Forms.Button();
+			this.btnQueryNonSelect = new System.Windows.Forms.Button();
 			this.btnIndex = new System.Windows.Forms.Button();
 			this.btnRedisp = new System.Windows.Forms.Button();
 			this.btnTmpAllDsp = new System.Windows.Forms.Button();
@@ -836,32 +836,32 @@ namespace MakeInsert
 			this.label6.Text = "C info;";
 			this.toolTip2.SetToolTip(this.label6, "Copyright; Y.N(godz)  2004-2006");
 			// 
-			// button3
+			// btnQuerySelect
 			// 
-			this.button3.Location = new System.Drawing.Point(508, 156);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(132, 24);
-			this.button3.TabIndex = 17;
-			this.button3.Text = "クエリ指定結果表示";
-			this.button3.Click += new System.EventHandler(this.button3_Click_1);
+			this.btnQuerySelect.Location = new System.Drawing.Point(508, 156);
+			this.btnQuerySelect.Name = "btnQuerySelect";
+			this.btnQuerySelect.Size = new System.Drawing.Size(132, 24);
+			this.btnQuerySelect.TabIndex = 17;
+			this.btnQuerySelect.Text = "クエリ指定結果表示";
+			this.btnQuerySelect.Click += new System.EventHandler(this.btnQuerySelect_Click);
 			// 
-			// button6
+			// btnDataUpdate
 			// 
-			this.button6.Location = new System.Drawing.Point(508, 296);
-			this.button6.Name = "button6";
-			this.button6.Size = new System.Drawing.Size(132, 24);
-			this.button6.TabIndex = 21;
-			this.button6.Text = "データ更新";
-			this.button6.Click += new System.EventHandler(this.button6_Click_1);
+			this.btnDataUpdate.Location = new System.Drawing.Point(508, 296);
+			this.btnDataUpdate.Name = "btnDataUpdate";
+			this.btnDataUpdate.Size = new System.Drawing.Size(132, 24);
+			this.btnDataUpdate.TabIndex = 21;
+			this.btnDataUpdate.Text = "データ更新";
+			this.btnDataUpdate.Click += new System.EventHandler(this.btnDataUpdate_Click);
 			// 
-			// button7
+			// btnDataEdit
 			// 
-			this.button7.Location = new System.Drawing.Point(508, 268);
-			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(132, 24);
-			this.button7.TabIndex = 20;
-			this.button7.Text = "データ編集";
-			this.button7.Click += new System.EventHandler(this.button7_Click_1);
+			this.btnDataEdit.Location = new System.Drawing.Point(508, 268);
+			this.btnDataEdit.Name = "btnDataEdit";
+			this.btnDataEdit.Size = new System.Drawing.Size(132, 24);
+			this.btnDataEdit.TabIndex = 20;
+			this.btnDataEdit.Text = "データ編集";
+			this.btnDataEdit.Click += new System.EventHandler(this.btnDataEdit_Click);
 			// 
 			// label7
 			// 
@@ -871,14 +871,14 @@ namespace MakeInsert
 			this.label7.TabIndex = 31;
 			this.label7.Text = "見出しに★がある列はNULL可です。NULLのセルは水色に着色されます。";
 			// 
-			// button8
+			// btnGridFormat
 			// 
-			this.button8.Location = new System.Drawing.Point(508, 240);
-			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(132, 24);
-			this.button8.TabIndex = 19;
-			this.button8.Text = "書式グリッド表示指定";
-			this.button8.Click += new System.EventHandler(this.button8_Click_1);
+			this.btnGridFormat.Location = new System.Drawing.Point(508, 240);
+			this.btnGridFormat.Name = "btnGridFormat";
+			this.btnGridFormat.Size = new System.Drawing.Size(132, 24);
+			this.btnGridFormat.TabIndex = 19;
+			this.btnGridFormat.Text = "書式グリッド表示指定";
+			this.btnGridFormat.Click += new System.EventHandler(this.btnGridFormat_Click);
 			// 
 			// label8
 			// 
@@ -888,14 +888,14 @@ namespace MakeInsert
 			this.label8.TabIndex = 32;
 			this.label8.Text = "NULLを登録するにはCtrl+1 を、空文字列を登録するにはCtrl+2を押下します。";
 			// 
-			// button9
+			// btnQueryNonSelect
 			// 
-			this.button9.Location = new System.Drawing.Point(508, 184);
-			this.button9.Name = "button9";
-			this.button9.Size = new System.Drawing.Size(132, 24);
-			this.button9.TabIndex = 18;
-			this.button9.Text = "クエリ実効(Select以外)";
-			this.button9.Click += new System.EventHandler(this.button9_Click_1);
+			this.btnQueryNonSelect.Location = new System.Drawing.Point(508, 184);
+			this.btnQueryNonSelect.Name = "btnQueryNonSelect";
+			this.btnQueryNonSelect.Size = new System.Drawing.Size(132, 24);
+			this.btnQueryNonSelect.TabIndex = 18;
+			this.btnQueryNonSelect.Text = "クエリ実効(Select以外)";
+			this.btnQueryNonSelect.Click += new System.EventHandler(this.btnQueryNonSelect_Click);
 			// 
 			// btnIndex
 			// 
@@ -931,13 +931,13 @@ namespace MakeInsert
 			this.Controls.Add(this.btnTmpAllDsp);
 			this.Controls.Add(this.btnRedisp);
 			this.Controls.Add(this.btnIndex);
-			this.Controls.Add(this.button9);
+			this.Controls.Add(this.btnQueryNonSelect);
 			this.Controls.Add(this.label8);
-			this.Controls.Add(this.button8);
+			this.Controls.Add(this.btnGridFormat);
 			this.Controls.Add(this.label7);
-			this.Controls.Add(this.button7);
-			this.Controls.Add(this.button6);
-			this.Controls.Add(this.button3);
+			this.Controls.Add(this.btnDataEdit);
+			this.Controls.Add(this.btnDataUpdate);
+			this.Controls.Add(this.btnQuerySelect);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.checkBox2);
 			this.Controls.Add(this.groupBox6);
@@ -2601,9 +2601,9 @@ namespace MakeInsert
 				if( tbname == "" )
 				{
 					this.dbGrid.Hide();
-					this.button6.Enabled = false;
-					this.button7.Enabled = false;
-					this.button8.Enabled = false;
+					this.btnDataUpdate.Enabled = false;
+					this.btnDataEdit.Enabled = false;
+					this.btnGridFormat.Enabled = false;
 					return;
 				}
 
@@ -2705,11 +2705,11 @@ namespace MakeInsert
 				this.toolTip3.SetToolTip(this.dbGrid,sqlstr);
 				this.dbGrid.SetDataBinding(dspdt, "aaaa");
 				this.dbGrid.Show();
-				this.button7.Text = "データ編集";
+				this.btnDataEdit.Text = "データ編集";
 				this.dbGrid.ReadOnly = true;
-				this.button6.Enabled = true;
-				this.button7.Enabled = true;
-				this.button8.Enabled = true;
+				this.btnDataUpdate.Enabled = true;
+				this.btnDataEdit.Enabled = true;
+				this.btnGridFormat.Enabled = true;
 			}
 			catch( Exception exp)
 			{
@@ -3162,7 +3162,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void button3_Click_1(object sender, System.EventArgs e)
+		private void btnQuerySelect_Click(object sender, System.EventArgs e)
 		{
 			try
 			{
@@ -3230,10 +3230,10 @@ namespace MakeInsert
 					this.dbGrid.TableStyles.Add(ts);
 
 					this.dbGrid.ReadOnly = true;
-					this.button7.Text = "データ編集";
-					this.button6.Enabled = true;
-					this.button7.Enabled = true;
-					this.button8.Enabled = true;
+					this.btnDataEdit.Text = "データ編集";
+					this.btnDataUpdate.Enabled = true;
+					this.btnDataEdit.Enabled = true;
+					this.btnGridFormat.Enabled = true;
 					this.chkDspData.Checked = true;
 					this.dbGrid.AllowSorting = true;
 					this.toolTip3.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
@@ -3247,7 +3247,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void button6_Click_1(object sender, System.EventArgs e)
+		private void btnDataUpdate_Click(object sender, System.EventArgs e)
 		{
 			SqlTransaction tran	= null;
 			try
@@ -3306,7 +3306,7 @@ namespace MakeInsert
 
 		}
 
-		private void button7_Click_1(object sender, System.EventArgs e)
+		private void btnDataEdit_Click(object sender, System.EventArgs e)
 		{
 			try
 			{
@@ -3314,7 +3314,7 @@ namespace MakeInsert
 				{
 					// 編集可にする
 					this.dbGrid.ReadOnly = false;
-					this.button7.Text = "データ編集終了";
+					this.btnDataEdit.Text = "データ編集終了";
 				}
 				else
 				{
@@ -3323,7 +3323,7 @@ namespace MakeInsert
 						this.dspdt.Tables["aaaa"].GetChanges().Rows.Count == 0 )
 					{
 						this.dbGrid.ReadOnly = true;
-						this.button7.Text = "データ編集";
+						this.btnDataEdit.Text = "データ編集";
 					}
 					else
 					{
@@ -3334,7 +3334,7 @@ namespace MakeInsert
 							this.dbGrid.SetDataBinding(dspdt, "aaaa");
 							this.dbGrid.Show();
 							this.dbGrid.ReadOnly = true;
-							this.button7.Text = "データ編集";
+							this.btnDataEdit.Text = "データ編集";
 						}
 					}
 					
@@ -3369,7 +3369,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void button8_Click_1(object sender, System.EventArgs e)
+		private void btnGridFormat_Click(object sender, System.EventArgs e)
 		{
 			Form6 dlg = new Form6();
 			dlg.gfont = gfont;
@@ -3444,7 +3444,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void button9_Click_1(object sender, System.EventArgs e)
+		private void btnQueryNonSelect_Click(object sender, System.EventArgs e)
 		{
 			SqlTransaction tran	= null;
 			try
