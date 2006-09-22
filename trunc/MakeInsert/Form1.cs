@@ -15,19 +15,19 @@ namespace MakeInsert
 	/// <summary>
 	/// Form1 の概要の説明です。
 	/// </summary>
-	public class Form1 : System.Windows.Forms.Form
+	public class Form1 : sqaoBaseForm
 	{
-		private System.Windows.Forms.TextBox textBox1;
+		private System.Windows.Forms.TextBox txtServerName;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox textBox2;
+		private System.Windows.Forms.TextBox txtInstance;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.TextBox textBox4;
+		private System.Windows.Forms.TextBox txtUser;
+		private System.Windows.Forms.TextBox txtPassword;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnLogin;
 		private System.Data.SqlClient.SqlConnection sqlConnection1;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button btnServerHistory;
 		protected saveClass	initopt;
 		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.Label label5;
@@ -46,6 +46,8 @@ namespace MakeInsert
 			//
 			FileStream fs = null;
 
+			this.InitErrMessage();
+
 			initopt = new saveClass();
 			try
 			{
@@ -63,7 +65,7 @@ namespace MakeInsert
 			}
 			catch( Exception e )
 			{
-				MessageBox.Show(e.ToString()+ e.StackTrace);
+				this.SetErrorMessage(e);
 			}
 			finally
 			{
@@ -98,30 +100,37 @@ namespace MakeInsert
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.txtServerName = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.textBox2 = new System.Windows.Forms.TextBox();
+			this.txtInstance = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.txtUser = new System.Windows.Forms.TextBox();
+			this.txtPassword = new System.Windows.Forms.TextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.button1 = new System.Windows.Forms.Button();
+			this.btnLogin = new System.Windows.Forms.Button();
 			this.sqlConnection1 = new System.Data.SqlClient.SqlConnection();
-			this.button2 = new System.Windows.Forms.Button();
+			this.btnServerHistory = new System.Windows.Forms.Button();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
-			// textBox1
+			// msgArea
 			// 
-			this.textBox1.Location = new System.Drawing.Point(144, 56);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(208, 19);
-			this.textBox1.TabIndex = 1;
-			this.textBox1.Text = "(local)";
-			this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+			this.msgArea.Location = new System.Drawing.Point(144, 200);
+			this.msgArea.Name = "msgArea";
+			this.msgArea.Size = new System.Drawing.Size(376, 24);
+			this.msgArea.TabIndex = 9;
+			// 
+			// txtServerName
+			// 
+			this.txtServerName.Location = new System.Drawing.Point(144, 56);
+			this.txtServerName.Name = "txtServerName";
+			this.txtServerName.Size = new System.Drawing.Size(208, 19);
+			this.txtServerName.TabIndex = 1;
+			this.txtServerName.Text = "(local)";
+			this.txtServerName.TextChanged += new System.EventHandler(this.txtServerName_TextChanged);
 			// 
 			// label1
 			// 
@@ -140,13 +149,13 @@ namespace MakeInsert
 			this.label2.TabIndex = 2;
 			this.label2.Text = "インスタンス";
 			// 
-			// textBox2
+			// txtInstance
 			// 
-			this.textBox2.Location = new System.Drawing.Point(144, 96);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(208, 19);
-			this.textBox2.TabIndex = 3;
-			this.textBox2.Text = "";
+			this.txtInstance.Location = new System.Drawing.Point(144, 96);
+			this.txtInstance.Name = "txtInstance";
+			this.txtInstance.Size = new System.Drawing.Size(208, 19);
+			this.txtInstance.TabIndex = 3;
+			this.txtInstance.Text = "";
 			// 
 			// label3
 			// 
@@ -156,22 +165,22 @@ namespace MakeInsert
 			this.label3.TabIndex = 4;
 			this.label3.Text = "ユーザーID";
 			// 
-			// textBox3
+			// txtUser
 			// 
-			this.textBox3.Location = new System.Drawing.Point(144, 136);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(208, 19);
-			this.textBox3.TabIndex = 4;
-			this.textBox3.Text = "sa";
+			this.txtUser.Location = new System.Drawing.Point(144, 136);
+			this.txtUser.Name = "txtUser";
+			this.txtUser.Size = new System.Drawing.Size(208, 19);
+			this.txtUser.TabIndex = 4;
+			this.txtUser.Text = "sa";
 			// 
-			// textBox4
+			// txtPassword
 			// 
-			this.textBox4.Location = new System.Drawing.Point(144, 176);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.PasswordChar = '*';
-			this.textBox4.Size = new System.Drawing.Size(208, 19);
-			this.textBox4.TabIndex = 5;
-			this.textBox4.Text = "";
+			this.txtPassword.Location = new System.Drawing.Point(144, 176);
+			this.txtPassword.Name = "txtPassword";
+			this.txtPassword.PasswordChar = '*';
+			this.txtPassword.Size = new System.Drawing.Size(208, 19);
+			this.txtPassword.TabIndex = 5;
+			this.txtPassword.Text = "";
 			// 
 			// label4
 			// 
@@ -181,24 +190,24 @@ namespace MakeInsert
 			this.label4.TabIndex = 7;
 			this.label4.Text = "パスワード";
 			// 
-			// button1
+			// btnLogin
 			// 
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(40, 216);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(88, 24);
-			this.button1.TabIndex = 6;
-			this.button1.Text = "接続";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.btnLogin.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.btnLogin.Location = new System.Drawing.Point(40, 200);
+			this.btnLogin.Name = "btnLogin";
+			this.btnLogin.Size = new System.Drawing.Size(88, 24);
+			this.btnLogin.TabIndex = 6;
+			this.btnLogin.Text = "接続";
+			this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
 			// 
-			// button2
+			// btnServerHistory
 			// 
-			this.button2.Location = new System.Drawing.Point(40, 8);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(304, 24);
-			this.button2.TabIndex = 0;
-			this.button2.Text = "過去に接続したサーバーから選択";
-			this.button2.Click += new System.EventHandler(this.button2_Click);
+			this.btnServerHistory.Location = new System.Drawing.Point(40, 8);
+			this.btnServerHistory.Name = "btnServerHistory";
+			this.btnServerHistory.Size = new System.Drawing.Size(304, 24);
+			this.btnServerHistory.TabIndex = 0;
+			this.btnServerHistory.Text = "過去に接続したサーバーから選択";
+			this.btnServerHistory.Click += new System.EventHandler(this.btnServerHistory_Click);
 			// 
 			// checkBox1
 			// 
@@ -211,7 +220,7 @@ namespace MakeInsert
 			// label5
 			// 
 			this.label5.Font = new System.Drawing.Font("MS UI Gothic", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.label5.Location = new System.Drawing.Point(400, 224);
+			this.label5.Location = new System.Drawing.Point(8, 224);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(48, 16);
 			this.label5.TabIndex = 8;
@@ -220,18 +229,18 @@ namespace MakeInsert
 			// 
 			// Form1
 			// 
-			this.AcceptButton = this.button1;
+			this.AcceptButton = this.btnLogin;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(528, 245);
+			this.ClientSize = new System.Drawing.Size(528, 238);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.checkBox1);
-			this.Controls.Add(this.button2);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.btnServerHistory);
+			this.Controls.Add(this.btnLogin);
 			this.Controls.Add(this.label4);
-			this.Controls.Add(this.textBox4);
-			this.Controls.Add(this.textBox3);
-			this.Controls.Add(this.textBox2);
-			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.txtPassword);
+			this.Controls.Add(this.txtUser);
+			this.Controls.Add(this.txtInstance);
+			this.Controls.Add(this.txtServerName);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
@@ -239,6 +248,19 @@ namespace MakeInsert
 			this.Text = "SQL Add on Tool";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
 			this.Load += new System.EventHandler(this.Form1_Load);
+			this.Controls.SetChildIndex(this.label1, 0);
+			this.Controls.SetChildIndex(this.label2, 0);
+			this.Controls.SetChildIndex(this.label3, 0);
+			this.Controls.SetChildIndex(this.txtServerName, 0);
+			this.Controls.SetChildIndex(this.txtInstance, 0);
+			this.Controls.SetChildIndex(this.txtUser, 0);
+			this.Controls.SetChildIndex(this.txtPassword, 0);
+			this.Controls.SetChildIndex(this.label4, 0);
+			this.Controls.SetChildIndex(this.btnLogin, 0);
+			this.Controls.SetChildIndex(this.btnServerHistory, 0);
+			this.Controls.SetChildIndex(this.checkBox1, 0);
+			this.Controls.SetChildIndex(this.label5, 0);
+			this.Controls.SetChildIndex(this.msgArea, 0);
 			this.ResumeLayout(false);
 
 		}
@@ -258,7 +280,7 @@ namespace MakeInsert
 		
 		}
 
-		private void textBox1_TextChanged(object sender, System.EventArgs e)
+		private void txtServerName_TextChanged(object sender, System.EventArgs e)
 		{
 		
 		}
@@ -270,21 +292,22 @@ namespace MakeInsert
 			this.checkBox1.Checked = true;
 		}
 
-		private void button1_Click(object sender, System.EventArgs e)
+		private void btnLogin_Click(object sender, System.EventArgs e)
 		{
 			String myConnString;
-			if( this.textBox2.Text != "" )
+			if( this.txtInstance.Text != "" )
 			{
-				myConnString = "Server=" + this.textBox1.Text + @"\" + this.textBox2.Text + ";"
-					+"Database=master;User ID="+this.textBox3.Text
-					+";Password="+this.textBox4.Text;			}
+				myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
+					+"Database=master;User ID="+this.txtUser.Text
+					+";Password="+this.txtPassword.Text;			}
 			else
 			{
-				myConnString = "Server=" + this.textBox1.Text + ";"
-					+"Database=master;User ID="+this.textBox3.Text
-					+";Password="+this.textBox4.Text;
+				myConnString = "Server=" + this.txtServerName.Text + ";"
+					+"Database=master;User ID="+this.txtUser.Text
+					+";Password="+this.txtPassword.Text;
 			}
 			
+			this.InitErrMessage();
 
 			try 
 			{
@@ -293,8 +316,8 @@ namespace MakeInsert
 				con.Open();
 
 				ServerData sv = new ServerData();
-				sv.Servername = this.textBox1.Text;
-				sv.InstanceName = this.textBox2.Text;
+				sv.Servername = this.txtServerName.Text;
+				sv.InstanceName = this.txtInstance.Text;
 				if( initopt.ht[sv.KeyName] == null )
 				{
 					initopt.ht.Add(sv.KeyName,sv);
@@ -313,30 +336,29 @@ namespace MakeInsert
 					sv.isSaveKey = true;
 				}
 
-				Form2 fm2 = new Form2(sv);
-				fm2.servername = this.textBox1.Text;
-				if( this.textBox2.Text != "" )
+				MainForm mainForm = new MainForm(sv);
+				mainForm.servername = this.txtServerName.Text;
+				if( this.txtInstance.Text != "" )
 				{
-					fm2.servername = this.textBox1.Text + "@" + this.textBox2.Text;
+					mainForm.servername = this.txtServerName.Text + "@" + this.txtInstance.Text;
 				}
 				else
 				{
-					fm2.servername = this.textBox1.Text;
+					mainForm.servername = this.txtServerName.Text;
 				}
-				fm2.sqlConnection1 = con;
-				fm2.Show();
-				//fm2.ShowDialog();
+				mainForm.sqlConnection1 = con;
+				mainForm.Show();
 			}
 			catch ( System.Data.SqlClient.SqlException se)
 			{
-				MessageBox.Show(se.Message+":"+se.StackTrace+":\n"+se.ToString());
+				this.SetErrorMessage(se);
 			}
 			finally {
 				this.sqlConnection1.Close();
 			}
 		}
 
-		private void button2_Click(object sender, System.EventArgs e)
+		private void btnServerHistory_Click(object sender, System.EventArgs e)
 		{
 			if( this.initopt.ht.Count > 0 )
 			{
@@ -344,10 +366,10 @@ namespace MakeInsert
 			
 				if( dlg.ShowDialog() == DialogResult.OK	)
 				{
-					this.textBox1.Text = dlg.selectedServer;
-					this.textBox2.Text = dlg.selectedInstance;
-					this.textBox4.Text = "";
-					this.textBox4.Focus();
+					this.txtServerName.Text = dlg.selectedServer;
+					this.txtInstance.Text = dlg.selectedInstance;
+					this.txtPassword.Text = "";
+					this.txtPassword.Focus();
 				}
 			}
 		}
@@ -381,8 +403,8 @@ namespace MakeInsert
 					if( initopt.ht.Count == 0 )
 					{
 						ServerData sv = new ServerData();
-						sv.Servername = this.textBox1.Text;
-						sv.InstanceName = this.textBox2.Text;
+						sv.Servername = this.txtServerName.Text;
+						sv.InstanceName = this.txtInstance.Text;
 						initopt.ht.Add(sv.KeyName,sv);
 					}
 					sf.Serialize(fs,(object)initopt);
@@ -394,7 +416,7 @@ namespace MakeInsert
 			}
 			catch( Exception ex )
 			{
-				MessageBox.Show(ex.ToString()+ ex.StackTrace);
+				this.SetErrorMessage(ex);
 			}
 			finally
 			{
@@ -404,5 +426,7 @@ namespace MakeInsert
 				}
 			}
 		}
+
+
 	}
 }

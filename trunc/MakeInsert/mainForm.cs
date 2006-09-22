@@ -11,9 +11,9 @@ using System.IO;
 namespace MakeInsert
 {
 	/// <summary>
-	/// Form2 の概要の説明です。
+	/// MainForm の概要の説明です。
 	/// </summary>
-	public class Form2 : System.Windows.Forms.Form
+	public class MainForm : sqaoBaseForm
 	{
 		public System.Data.SqlClient.SqlConnection sqlConnection1;
 		private System.Windows.Forms.Button btnInsert;
@@ -27,9 +27,9 @@ namespace MakeInsert
 		private System.Windows.Forms.MenuItem menuItem5;
 		private System.Windows.Forms.MenuItem menuItem6;
 		private System.Windows.Forms.RadioButton rdoDspView;
-		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.GroupBox grpViewMode;
 		private System.Windows.Forms.RadioButton rdoNotDspView;
-		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.GroupBox grpSortMode;
 		private System.Windows.Forms.RadioButton rdoSortTable;
 		private System.Windows.Forms.RadioButton rdoSortOwnerTable;
 		private System.Windows.Forms.TextBox txtWhere;
@@ -48,18 +48,18 @@ namespace MakeInsert
 		private System.Windows.Forms.MenuItem menuItem14;
 		private System.Windows.Forms.MenuItem menuItem15;
 		private System.Windows.Forms.CheckBox chkDspData;
-		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.GroupBox grpDataDspMode;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.TextBox txtDspCount;
-		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.GroupBox grpSysUserMode;
 		private System.Windows.Forms.MenuItem menuItem16;
 		private System.Windows.Forms.MenuItem menuItem17;
 		private System.ComponentModel.IContainer components;
-		private System.Windows.Forms.GroupBox groupBox5;
+		private System.Windows.Forms.GroupBox grpOutputMode;
 		private System.Windows.Forms.RadioButton rdoClipboard;
 		private System.Windows.Forms.RadioButton rdoOutFile;
 		private System.Windows.Forms.RadioButton rdoOutFolder;
-		private System.Windows.Forms.TextBox textBox4;
+		private System.Windows.Forms.TextBox txtOutput;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
 		private System.Windows.Forms.Label label4;
@@ -69,7 +69,7 @@ namespace MakeInsert
 		private System.Windows.Forms.MenuItem menuItem19;
 		private System.Windows.Forms.MenuItem menuItem20;
 		private System.Windows.Forms.MenuItem menuItem21;
-		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.Button btnReference;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.MenuItem menuItem22;
 		private System.Windows.Forms.MenuItem menuItem23;
@@ -77,7 +77,7 @@ namespace MakeInsert
 		private System.Windows.Forms.RadioButton rdoUnicode;
 		private System.Windows.Forms.RadioButton rdoSjis;
 		private System.Windows.Forms.RadioButton rdoUtf8;
-		private System.Windows.Forms.CheckBox checkBox2;
+		private System.Windows.Forms.CheckBox chkDspFieldAttr;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.ToolTip toolTip2;
 		private System.Windows.Forms.Button btnQuerySelect;
@@ -113,7 +113,7 @@ namespace MakeInsert
 
 		Form7 indexdlg = null;
 
-		public Form2(ServerData sv)
+		public MainForm(ServerData sv)
 		{
 			//
 			// Windows フォーム デザイナ サポートに必要です。
@@ -183,9 +183,9 @@ namespace MakeInsert
 			this.btnFieldList = new System.Windows.Forms.Button();
 			this.btnCSV = new System.Windows.Forms.Button();
 			this.rdoDspView = new System.Windows.Forms.RadioButton();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.grpViewMode = new System.Windows.Forms.GroupBox();
 			this.rdoNotDspView = new System.Windows.Forms.RadioButton();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.grpSortMode = new System.Windows.Forms.GroupBox();
 			this.rdoSortOwnerTable = new System.Windows.Forms.RadioButton();
 			this.rdoSortTable = new System.Windows.Forms.RadioButton();
 			this.txtWhere = new System.Windows.Forms.TextBox();
@@ -197,15 +197,15 @@ namespace MakeInsert
 			this.btnDDL = new System.Windows.Forms.Button();
 			this.dbGrid = new System.Windows.Forms.DataGrid();
 			this.chkDspData = new System.Windows.Forms.CheckBox();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.grpDataDspMode = new System.Windows.Forms.GroupBox();
 			this.txtDspCount = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.grpSysUserMode = new System.Windows.Forms.GroupBox();
 			this.rdoNotDspSysUser = new System.Windows.Forms.RadioButton();
 			this.rdoDspSysUser = new System.Windows.Forms.RadioButton();
-			this.groupBox5 = new System.Windows.Forms.GroupBox();
-			this.button4 = new System.Windows.Forms.Button();
-			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.grpOutputMode = new System.Windows.Forms.GroupBox();
+			this.btnReference = new System.Windows.Forms.Button();
+			this.txtOutput = new System.Windows.Forms.TextBox();
 			this.rdoOutFile = new System.Windows.Forms.RadioButton();
 			this.rdoClipboard = new System.Windows.Forms.RadioButton();
 			this.rdoOutFolder = new System.Windows.Forms.RadioButton();
@@ -224,7 +224,7 @@ namespace MakeInsert
 			this.rdoUtf8 = new System.Windows.Forms.RadioButton();
 			this.rdoSjis = new System.Windows.Forms.RadioButton();
 			this.rdoUnicode = new System.Windows.Forms.RadioButton();
-			this.checkBox2 = new System.Windows.Forms.CheckBox();
+			this.chkDspFieldAttr = new System.Windows.Forms.CheckBox();
 			this.label6 = new System.Windows.Forms.Label();
 			this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
 			this.btnQuerySelect = new System.Windows.Forms.Button();
@@ -238,14 +238,20 @@ namespace MakeInsert
 			this.btnIndex = new System.Windows.Forms.Button();
 			this.btnRedisp = new System.Windows.Forms.Button();
 			this.btnTmpAllDsp = new System.Windows.Forms.Button();
-			this.groupBox1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.grpViewMode.SuspendLayout();
+			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
-			this.groupBox3.SuspendLayout();
-			this.groupBox4.SuspendLayout();
-			this.groupBox5.SuspendLayout();
+			this.grpDataDspMode.SuspendLayout();
+			this.grpSysUserMode.SuspendLayout();
+			this.grpOutputMode.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// msgArea
+			// 
+			this.msgArea.Location = new System.Drawing.Point(176, 580);
+			this.msgArea.Name = "msgArea";
+			this.msgArea.Size = new System.Drawing.Size(652, 16);
 			// 
 			// dbList
 			// 
@@ -442,17 +448,16 @@ namespace MakeInsert
 			this.rdoDspView.Text = "表示する";
 			this.rdoDspView.CheckedChanged += new System.EventHandler(this.rdoDspView_CheckedChanged);
 			// 
-			// groupBox1
+			// grpViewMode
 			// 
-			this.groupBox1.Controls.Add(this.rdoNotDspView);
-			this.groupBox1.Controls.Add(this.rdoDspView);
-			this.groupBox1.Location = new System.Drawing.Point(8, 220);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(216, 40);
-			this.groupBox1.TabIndex = 3;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "VIEWを一覧に";
-			this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
+			this.grpViewMode.Controls.Add(this.rdoNotDspView);
+			this.grpViewMode.Controls.Add(this.rdoDspView);
+			this.grpViewMode.Location = new System.Drawing.Point(8, 220);
+			this.grpViewMode.Name = "grpViewMode";
+			this.grpViewMode.Size = new System.Drawing.Size(216, 40);
+			this.grpViewMode.TabIndex = 3;
+			this.grpViewMode.TabStop = false;
+			this.grpViewMode.Text = "VIEWを一覧に";
 			// 
 			// rdoNotDspView
 			// 
@@ -462,16 +467,16 @@ namespace MakeInsert
 			this.rdoNotDspView.TabIndex = 1;
 			this.rdoNotDspView.Text = "表示しない";
 			// 
-			// groupBox2
+			// grpSortMode
 			// 
-			this.groupBox2.Controls.Add(this.rdoSortOwnerTable);
-			this.groupBox2.Controls.Add(this.rdoSortTable);
-			this.groupBox2.Location = new System.Drawing.Point(8, 264);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(216, 52);
-			this.groupBox2.TabIndex = 4;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "ソート順";
+			this.grpSortMode.Controls.Add(this.rdoSortOwnerTable);
+			this.grpSortMode.Controls.Add(this.rdoSortTable);
+			this.grpSortMode.Location = new System.Drawing.Point(8, 264);
+			this.grpSortMode.Name = "grpSortMode";
+			this.grpSortMode.Size = new System.Drawing.Size(216, 52);
+			this.grpSortMode.TabIndex = 4;
+			this.grpSortMode.TabStop = false;
+			this.grpSortMode.Text = "ソート順";
 			// 
 			// rdoSortOwnerTable
 			// 
@@ -591,16 +596,16 @@ namespace MakeInsert
 			this.chkDspData.Text = "表示";
 			this.chkDspData.CheckedChanged += new System.EventHandler(this.chkDspData_CheckedChanged);
 			// 
-			// groupBox3
+			// grpDataDspMode
 			// 
-			this.groupBox3.Controls.Add(this.txtDspCount);
-			this.groupBox3.Controls.Add(this.label3);
-			this.groupBox3.Location = new System.Drawing.Point(8, 532);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(216, 44);
-			this.groupBox3.TabIndex = 9;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "データグリッド";
+			this.grpDataDspMode.Controls.Add(this.txtDspCount);
+			this.grpDataDspMode.Controls.Add(this.label3);
+			this.grpDataDspMode.Location = new System.Drawing.Point(8, 532);
+			this.grpDataDspMode.Name = "grpDataDspMode";
+			this.grpDataDspMode.Size = new System.Drawing.Size(216, 44);
+			this.grpDataDspMode.TabIndex = 9;
+			this.grpDataDspMode.TabStop = false;
+			this.grpDataDspMode.Text = "データグリッド";
 			// 
 			// txtDspCount
 			// 
@@ -625,16 +630,16 @@ namespace MakeInsert
 			this.label3.TabIndex = 0;
 			this.label3.Text = "表示件数";
 			// 
-			// groupBox4
+			// grpSysUserMode
 			// 
-			this.groupBox4.Controls.Add(this.rdoNotDspSysUser);
-			this.groupBox4.Controls.Add(this.rdoDspSysUser);
-			this.groupBox4.Location = new System.Drawing.Point(8, 176);
-			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(216, 40);
-			this.groupBox4.TabIndex = 2;
-			this.groupBox4.TabStop = false;
-			this.groupBox4.Text = "システムユーザーを";
+			this.grpSysUserMode.Controls.Add(this.rdoNotDspSysUser);
+			this.grpSysUserMode.Controls.Add(this.rdoDspSysUser);
+			this.grpSysUserMode.Location = new System.Drawing.Point(8, 176);
+			this.grpSysUserMode.Name = "grpSysUserMode";
+			this.grpSysUserMode.Size = new System.Drawing.Size(216, 40);
+			this.grpSysUserMode.TabIndex = 2;
+			this.grpSysUserMode.TabStop = false;
+			this.grpSysUserMode.Text = "システムユーザーを";
 			// 
 			// rdoNotDspSysUser
 			// 
@@ -656,37 +661,37 @@ namespace MakeInsert
 			this.rdoDspSysUser.Text = "表示する";
 			this.rdoDspSysUser.CheckedChanged += new System.EventHandler(this.rdoDspSysUser_CheckedChanged);
 			// 
-			// groupBox5
+			// grpOutputMode
 			// 
-			this.groupBox5.Controls.Add(this.button4);
-			this.groupBox5.Controls.Add(this.textBox4);
-			this.groupBox5.Controls.Add(this.rdoOutFile);
-			this.groupBox5.Controls.Add(this.rdoClipboard);
-			this.groupBox5.Controls.Add(this.rdoOutFolder);
-			this.groupBox5.Location = new System.Drawing.Point(8, 324);
-			this.groupBox5.Name = "groupBox5";
-			this.groupBox5.Size = new System.Drawing.Size(216, 84);
-			this.groupBox5.TabIndex = 5;
-			this.groupBox5.TabStop = false;
-			this.groupBox5.Text = "出力先";
+			this.grpOutputMode.Controls.Add(this.btnReference);
+			this.grpOutputMode.Controls.Add(this.txtOutput);
+			this.grpOutputMode.Controls.Add(this.rdoOutFile);
+			this.grpOutputMode.Controls.Add(this.rdoClipboard);
+			this.grpOutputMode.Controls.Add(this.rdoOutFolder);
+			this.grpOutputMode.Location = new System.Drawing.Point(8, 324);
+			this.grpOutputMode.Name = "grpOutputMode";
+			this.grpOutputMode.Size = new System.Drawing.Size(216, 84);
+			this.grpOutputMode.TabIndex = 5;
+			this.grpOutputMode.TabStop = false;
+			this.grpOutputMode.Text = "出力先";
 			// 
-			// button4
+			// btnReference
 			// 
-			this.button4.Location = new System.Drawing.Point(168, 52);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(40, 20);
-			this.button4.TabIndex = 4;
-			this.button4.Text = "参照";
-			this.button4.Click += new System.EventHandler(this.button4_Click_1);
+			this.btnReference.Location = new System.Drawing.Point(168, 52);
+			this.btnReference.Name = "btnReference";
+			this.btnReference.Size = new System.Drawing.Size(40, 20);
+			this.btnReference.TabIndex = 4;
+			this.btnReference.Text = "参照";
+			this.btnReference.Click += new System.EventHandler(this.btnReference_Click);
 			// 
-			// textBox4
+			// txtOutput
 			// 
-			this.textBox4.Location = new System.Drawing.Point(8, 52);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(160, 19);
-			this.textBox4.TabIndex = 3;
-			this.textBox4.Text = "";
-			this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
+			this.txtOutput.Location = new System.Drawing.Point(8, 52);
+			this.txtOutput.Name = "txtOutput";
+			this.txtOutput.Size = new System.Drawing.Size(160, 19);
+			this.txtOutput.TabIndex = 3;
+			this.txtOutput.Text = "";
+			this.txtOutput.TextChanged += new System.EventHandler(this.txtOutput_TextChanged);
 			// 
 			// rdoOutFile
 			// 
@@ -816,14 +821,14 @@ namespace MakeInsert
 			this.rdoUnicode.Text = "UNICODE";
 			this.rdoUnicode.CheckedChanged += new System.EventHandler(this.rdoUnicode_CheckedChanged);
 			// 
-			// checkBox2
+			// chkDspFieldAttr
 			// 
-			this.checkBox2.Location = new System.Drawing.Point(652, 12);
-			this.checkBox2.Name = "checkBox2";
-			this.checkBox2.Size = new System.Drawing.Size(244, 20);
-			this.checkBox2.TabIndex = 22;
-			this.checkBox2.Text = "フィールド属性を表示";
-			this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+			this.chkDspFieldAttr.Location = new System.Drawing.Point(652, 12);
+			this.chkDspFieldAttr.Name = "chkDspFieldAttr";
+			this.chkDspFieldAttr.Size = new System.Drawing.Size(244, 20);
+			this.chkDspFieldAttr.TabIndex = 22;
+			this.chkDspFieldAttr.Text = "フィールド属性を表示";
+			this.chkDspFieldAttr.CheckedChanged += new System.EventHandler(this.chkDspFieldAttr_CheckedChanged);
 			// 
 			// label6
 			// 
@@ -886,7 +891,7 @@ namespace MakeInsert
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(392, 16);
 			this.label8.TabIndex = 32;
-			this.label8.Text = "NULLを登録するにはCtrl+1 を、空文字列を登録するにはCtrl+2を押下します。";
+			this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。";
 			// 
 			// btnQueryNonSelect
 			// 
@@ -924,7 +929,7 @@ namespace MakeInsert
 			this.btnTmpAllDsp.Text = "一時的に全データを表示";
 			this.btnTmpAllDsp.Click += new System.EventHandler(this.btnTmpAllDsp_Click);
 			// 
-			// Form2
+			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(928, 597);
@@ -939,11 +944,11 @@ namespace MakeInsert
 			this.Controls.Add(this.btnDataUpdate);
 			this.Controls.Add(this.btnQuerySelect);
 			this.Controls.Add(this.label6);
-			this.Controls.Add(this.checkBox2);
+			this.Controls.Add(this.chkDspFieldAttr);
 			this.Controls.Add(this.groupBox6);
 			this.Controls.Add(this.fieldListbox);
 			this.Controls.Add(this.label4);
-			this.Controls.Add(this.groupBox5);
+			this.Controls.Add(this.grpOutputMode);
 			this.Controls.Add(this.chkDspData);
 			this.Controls.Add(this.dbGrid);
 			this.Controls.Add(this.btnDDL);
@@ -953,35 +958,73 @@ namespace MakeInsert
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.txtSort);
 			this.Controls.Add(this.txtWhere);
-			this.Controls.Add(this.groupBox2);
-			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.grpSortMode);
+			this.Controls.Add(this.grpViewMode);
 			this.Controls.Add(this.btnCSV);
 			this.Controls.Add(this.btnFieldList);
 			this.Controls.Add(this.btnInsert);
 			this.Controls.Add(this.tableList);
 			this.Controls.Add(this.dbList);
-			this.Controls.Add(this.groupBox3);
-			this.Controls.Add(this.groupBox4);
+			this.Controls.Add(this.grpDataDspMode);
+			this.Controls.Add(this.grpSysUserMode);
 			this.Controls.Add(this.label5);
-			this.Name = "Form2";
+			this.Name = "MainForm";
 			this.ShowInTaskbar = false;
 			this.Text = "DataBase選択";
-			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form2_Closing);
-			this.Load += new System.EventHandler(this.Form2_Load);
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
+			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.Controls.SetChildIndex(this.label5, 0);
+			this.Controls.SetChildIndex(this.grpSysUserMode, 0);
+			this.Controls.SetChildIndex(this.grpDataDspMode, 0);
+			this.Controls.SetChildIndex(this.dbList, 0);
+			this.Controls.SetChildIndex(this.tableList, 0);
+			this.Controls.SetChildIndex(this.btnInsert, 0);
+			this.Controls.SetChildIndex(this.btnFieldList, 0);
+			this.Controls.SetChildIndex(this.btnCSV, 0);
+			this.Controls.SetChildIndex(this.grpViewMode, 0);
+			this.Controls.SetChildIndex(this.grpSortMode, 0);
+			this.Controls.SetChildIndex(this.txtWhere, 0);
+			this.Controls.SetChildIndex(this.txtSort, 0);
+			this.Controls.SetChildIndex(this.label1, 0);
+			this.Controls.SetChildIndex(this.label2, 0);
+			this.Controls.SetChildIndex(this.btnSelect, 0);
+			this.Controls.SetChildIndex(this.ownerListbox, 0);
+			this.Controls.SetChildIndex(this.btnDDL, 0);
+			this.Controls.SetChildIndex(this.dbGrid, 0);
+			this.Controls.SetChildIndex(this.chkDspData, 0);
+			this.Controls.SetChildIndex(this.grpOutputMode, 0);
+			this.Controls.SetChildIndex(this.label4, 0);
+			this.Controls.SetChildIndex(this.fieldListbox, 0);
+			this.Controls.SetChildIndex(this.groupBox6, 0);
+			this.Controls.SetChildIndex(this.chkDspFieldAttr, 0);
+			this.Controls.SetChildIndex(this.label6, 0);
+			this.Controls.SetChildIndex(this.btnQuerySelect, 0);
+			this.Controls.SetChildIndex(this.btnDataUpdate, 0);
+			this.Controls.SetChildIndex(this.btnDataEdit, 0);
+			this.Controls.SetChildIndex(this.label7, 0);
+			this.Controls.SetChildIndex(this.btnGridFormat, 0);
+			this.Controls.SetChildIndex(this.label8, 0);
+			this.Controls.SetChildIndex(this.btnQueryNonSelect, 0);
+			this.Controls.SetChildIndex(this.btnIndex, 0);
+			this.Controls.SetChildIndex(this.btnRedisp, 0);
+			this.Controls.SetChildIndex(this.btnTmpAllDsp, 0);
+			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.grpViewMode.ResumeLayout(false);
+			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
-			this.groupBox3.ResumeLayout(false);
-			this.groupBox4.ResumeLayout(false);
-			this.groupBox5.ResumeLayout(false);
+			this.grpDataDspMode.ResumeLayout(false);
+			this.grpSysUserMode.ResumeLayout(false);
+			this.grpOutputMode.ResumeLayout(false);
 			this.groupBox6.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
 		#endregion
 
-		private void Form2_Load(object sender, System.EventArgs e)
+		private void MainForm_Load(object sender, System.EventArgs e)
 		{
+
+			this.InitErrMessage();
 
 			try
 			{
@@ -997,7 +1040,7 @@ namespace MakeInsert
 			}
 			catch ( System.Data.SqlClient.SqlException se )
 			{
-				MessageBox.Show(se.Message+":"+se.StackTrace+":\n"+se.ToString());
+				this.SetErrorMessage(se);
 			}
 			if( svdata.isShowsysuser == 0 )
 			{
@@ -1105,11 +1148,11 @@ namespace MakeInsert
 
 			if( svdata.outfile[svdata.lastdb] != null )
 			{
-				this.textBox4.Text = (string)svdata.outfile[svdata.lastdb];
+				this.txtOutput.Text = (string)svdata.outfile[svdata.lastdb];
 			}
 			else
 			{
-				this.textBox4.Text = "";
+				this.txtOutput.Text = "";
 			}
 			
 
@@ -1299,26 +1342,26 @@ namespace MakeInsert
 		{
 			if( this.rdoOutFile.Checked == true ) 
 			{
-				if( this.textBox4.Text == "" )
+				if( this.txtOutput.Text == "" )
 				{
 					this.saveFileDialog1.CreatePrompt = true;
 					this.saveFileDialog1.Filter = "SQL|*.sql|CSV|*.csv|TXT|*.txt|全て|*.*";
 					DialogResult ret = this.saveFileDialog1.ShowDialog();
 					if( ret == DialogResult.OK )
 					{
-						this.textBox4.Text = this.saveFileDialog1.FileName;
+						this.txtOutput.Text = this.saveFileDialog1.FileName;
 					}
 				}
 				else
 				{
-					DirectoryInfo d = new DirectoryInfo(this.textBox4.Text);
+					DirectoryInfo d = new DirectoryInfo(this.txtOutput.Text);
 					if( d.Exists )
 					{
 						MessageBox.Show("指定されたファイル名はフォルダを指しています。ファイル名を指定してください。処理を中断します");
 						return false;
 					}
 				}
-				if( this.textBox4.Text == "" )
+				if( this.txtOutput.Text == "" )
 				{
 					MessageBox.Show("ファイル名が指定されていないので、処理を中断します");
 					return false;
@@ -1327,21 +1370,21 @@ namespace MakeInsert
 			if( this.rdoOutFolder.Checked == true )
 			{
 
-				if( this.textBox4.Text == "" )
+				if( this.txtOutput.Text == "" )
 				{
 					this.folderBrowserDialog1.SelectedPath = "";
 					this.folderBrowserDialog1.ShowNewFolderButton = true;
 					DialogResult ret = this.folderBrowserDialog1.ShowDialog();
 					if( ret == DialogResult.OK )
 					{
-						this.textBox4.Text = this.folderBrowserDialog1.SelectedPath;
+						this.txtOutput.Text = this.folderBrowserDialog1.SelectedPath;
 					}
 				}
 
-				if( this.textBox4.Text != "" )
+				if( this.txtOutput.Text != "" )
 				{
-					DirectoryInfo d = new DirectoryInfo(this.textBox4.Text);
-					FileInfo	f = new FileInfo(this.textBox4.Text);
+					DirectoryInfo d = new DirectoryInfo(this.txtOutput.Text);
+					FileInfo	f = new FileInfo(this.txtOutput.Text);
 					if( f.Exists )
 					{
 						MessageBox.Show("フォルダ名は指定されていますが、フォルダではありません。処理を中断します");
@@ -1349,8 +1392,8 @@ namespace MakeInsert
 					}
 					else if( !d.Exists )
 					{
-						Directory.CreateDirectory(this.textBox4.Text);
-						DirectoryInfo ff = new DirectoryInfo(this.textBox4.Text);
+						Directory.CreateDirectory(this.txtOutput.Text);
+						DirectoryInfo ff = new DirectoryInfo(this.txtOutput.Text);
 						if( !ff.Exists )
 						{
 							MessageBox.Show("フォルダ名は指定されていますが、作成できませんでした。処理を中断します");
@@ -1372,6 +1415,7 @@ namespace MakeInsert
 		{
 			try
 			{
+				this.InitErrMessage();
 				// insert 文の作成
 				if( this.tableList.SelectedItems.Count == 0 )
 				{
@@ -1415,10 +1459,10 @@ namespace MakeInsert
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.textBox4.Text,false,GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false,GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
-					fname.Append(this.textBox4.Text);
+					fname.Append(this.txtOutput.Text);
 				}
 				if( this.rdoOutFolder.Checked == false ) 
 				{
@@ -1433,7 +1477,7 @@ namespace MakeInsert
 				{
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".sql.tmp",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql.tmp",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						wr.Write("SET NOCOUNT ON{0}GO{0}{0}",wr.NewLine);
@@ -1596,13 +1640,13 @@ namespace MakeInsert
 						wr.Close();
 						if( trow > 0 )
 						{
-							fname.Append(this.textBox4.Text + "\\" + tbname + ".sql\r\n");
+							fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
 							// ファイルを作成したが、空になったので削除する	
-							File.Copy(this.textBox4.Text + "\\" + tbname + ".sql.tmp", 
-								this.textBox4.Text + "\\" + tbname + ".sql", 
+							File.Copy(this.txtOutput.Text + "\\" + tbname + ".sql.tmp", 
+								this.txtOutput.Text + "\\" + tbname + ".sql", 
 								true );
 						}
-						File.Delete(this.textBox4.Text + "\\" + tbname + ".sql.tmp");
+						File.Delete(this.txtOutput.Text + "\\" + tbname + ".sql.tmp");
 					}
 					if( dr != null && dr.IsClosed == false )
 					{
@@ -1639,7 +1683,7 @@ namespace MakeInsert
 			}
 			catch( Exception exp )
 			{
-				MessageBox.Show(exp.Message+exp.StackTrace);
+				this.SetErrorMessage(exp);
 			}
 		}
 
@@ -1647,6 +1691,8 @@ namespace MakeInsert
 		{
 			try
 			{
+				this.InitErrMessage();
+
 				// insert 文の作成
 				if( this.tableList.SelectedItems.Count == 0 )
 				{
@@ -1668,20 +1714,20 @@ namespace MakeInsert
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.textBox4.Text,false, GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
-					fname.Append(this.textBox4.Text);
+					fname.Append(this.txtOutput.Text);
 				}
 
 				foreach( String tbname in this.tableList.SelectedItems )
 				{
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".sql",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						fname.Append(this.textBox4.Text + "\\" + tbname + ".sql\r\n");
+						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
 					}
 
 					// get id 
@@ -1730,7 +1776,7 @@ namespace MakeInsert
 			}
 			catch( Exception exp )
 			{
-				MessageBox.Show(exp.Message+exp.StackTrace);
+				this.SetErrorMessage(exp);
 			}
 		}
 
@@ -1746,7 +1792,7 @@ namespace MakeInsert
 				}
 
 				bool	dodsp;
-				if( this.checkBox2.Checked == true )
+				if( this.chkDspFieldAttr.Checked == true )
 				{
 					dodsp = true;
 				}
@@ -1849,7 +1895,7 @@ namespace MakeInsert
 			}
 			catch( Exception exp )
 			{
-				MessageBox.Show(exp.Message+exp.StackTrace);
+				this.SetErrorMessage(exp);
 			}
 		}
 
@@ -1944,10 +1990,13 @@ namespace MakeInsert
 				return;
 			}
 
+			this.InitErrMessage();
+
 			int			rowcount = 0;
 			int			trow = 0;
 			try
 			{
+
 				StringBuilder strline =  new StringBuilder();
 				TextWriter	wr = new StringWriter(strline);
 				StringBuilder fname = new StringBuilder();
@@ -1958,10 +2007,10 @@ namespace MakeInsert
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.textBox4.Text,false, GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
-					fname.Append(this.textBox4.Text);
+					fname.Append(this.txtOutput.Text);
 				}
 
 				foreach( String tbname in this.tableList.SelectedItems )
@@ -1969,7 +2018,7 @@ namespace MakeInsert
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".csv.tmp",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv.tmp",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 					}
@@ -2066,10 +2115,10 @@ namespace MakeInsert
 							{
 								wr.Write( dr.GetDateTime(i).ToString() );
 							}
-//							else if( fldtypename.Equals("money") )
-//							{
-//								wr.Write( dr.GetDouble(i).ToString() );
-//							}
+								//							else if( fldtypename.Equals("money") )
+								//							{
+								//								wr.Write( dr.GetDouble(i).ToString() );
+								//							}
 							else if( fldtypename == "nvarchar" ||
 								fldtypename == "varchar" ||
 								fldtypename == "char" ||
@@ -2105,13 +2154,13 @@ namespace MakeInsert
 						wr.Close();
 						if( trow > 0 )
 						{
-							fname.Append(this.textBox4.Text + "\\" + tbname + ".csv\r\n");
+							fname.Append(this.txtOutput.Text + "\\" + tbname + ".csv\r\n");
 							// ファイルを作成したが、空になったので削除する	
-							File.Copy(this.textBox4.Text + "\\" + tbname + ".csv.tmp", 
-								this.textBox4.Text + "\\" + tbname + ".csv", 
+							File.Copy(this.txtOutput.Text + "\\" + tbname + ".csv.tmp", 
+								this.txtOutput.Text + "\\" + tbname + ".csv", 
 								true );
 						}
-						File.Delete(this.textBox4.Text + "\\" + tbname + ".csv.tmp");
+						File.Delete(this.txtOutput.Text + "\\" + tbname + ".csv.tmp");
 					}
 				}
 				if( this.rdoOutFolder.Checked == false ) 
@@ -2141,8 +2190,16 @@ namespace MakeInsert
 				{
 					dr.Close();
 				}
-				MessageBox.Show(se.Message+":"+se.StackTrace+":\n"+se.ToString());
+				this.SetErrorMessage(se);
 				return;
+			}
+			catch( Exception se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
 			}
 			finally 
 			{
@@ -2158,11 +2215,6 @@ namespace MakeInsert
 		private void makeCSVQuote(object sender, System.EventArgs e)
 		{
 			crecsv(true);
-		}
-
-		private void groupBox1_Enter(object sender, System.EventArgs e)
-		{
-		
 		}
 
 		private void rdoDspView_CheckedChanged(object sender, System.EventArgs e)
@@ -2193,6 +2245,9 @@ namespace MakeInsert
 		private void btnSelect_Click(object sender, System.EventArgs e)
 		{
 			// select 文の作成
+
+			this.InitErrMessage();
+
 			try
 			{
 				if( this.tableList.SelectedItems.Count == 0 )
@@ -2214,10 +2269,10 @@ namespace MakeInsert
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.textBox4.Text,false, GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
-					fname.Append(this.textBox4.Text);
+					fname.Append(this.txtOutput.Text);
 				}
 
 				foreach( String tbname in this.tableList.SelectedItems )
@@ -2225,10 +2280,10 @@ namespace MakeInsert
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".sql",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						fname.Append(this.textBox4.Text + "\\" + tbname + ".sql\r\n");
+						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
 					}
 					// get id 
 					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",gettbname(tbname)), this.sqlConnection1);
@@ -2280,7 +2335,7 @@ namespace MakeInsert
 			}
 			catch( Exception exp )
 			{
-				MessageBox.Show(exp.Message+exp.StackTrace);
+				this.SetErrorMessage(exp);
 			}
 		}
 
@@ -2298,6 +2353,9 @@ namespace MakeInsert
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
+
+			this.InitErrMessage();
+
 			try 
 			{
 				if( this.dbList.SelectedItem == null )
@@ -2368,7 +2426,15 @@ namespace MakeInsert
 				{
 					dr.Close();
 				}
-				MessageBox.Show(se.Message+":"+se.StackTrace+":\n"+se.ToString());
+				this.SetErrorMessage(se);
+			}
+			catch ( Exception se )
+			{
+				if( dr != null )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
 			}
 			finally 
 			{
@@ -2411,6 +2477,9 @@ namespace MakeInsert
 			{
 				return;
 			}
+			
+			this.InitErrMessage();
+
 			try
 			{
 				StringBuilder strline =  new StringBuilder();
@@ -2423,20 +2492,20 @@ namespace MakeInsert
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.textBox4.Text,false, GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
-					fname.Append(this.textBox4.Text);
+					fname.Append(this.txtOutput.Text);
 				}
 
 				foreach( String tbname in this.tableList.SelectedItems )
 				{
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.textBox4.Text + "\\" + tbname + ".sql",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						fname.Append(this.textBox4.Text + "\\" + tbname + ".sql\r\n");
+						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
 					}
 
 					if( bDrop )
@@ -2555,8 +2624,15 @@ namespace MakeInsert
 				{
 					dr.Close();
 				}
-				MessageBox.Show(se.Message+":"+se.StackTrace+":\n"+se.ToString());
-				return;
+				this.SetErrorMessage(se);
+			}
+			catch ( Exception se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
 			}
 			finally 
 			{
@@ -2598,6 +2674,8 @@ namespace MakeInsert
 		{
 			try
 			{
+				this.InitErrMessage();
+
 				if( tbname == "" )
 				{
 					this.dbGrid.Hide();
@@ -2713,7 +2791,7 @@ namespace MakeInsert
 			}
 			catch( Exception exp)
 			{
-				MessageBox.Show(exp.Message + "\r\n" + exp.StackTrace);
+				this.SetErrorMessage(exp);
 			}
 		}
 
@@ -2769,6 +2847,9 @@ namespace MakeInsert
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
+			
+			this.InitErrMessage();
+
 			try 
 			{
 				if( rdoDspSysUser.Checked )
@@ -2792,13 +2873,13 @@ namespace MakeInsert
 				dr.Close();
 			
 			}
-			catch ( System.Data.SqlClient.SqlException se )
+			catch ( Exception se )
 			{
 				if( dr != null )
 				{
 					dr.Close();
 				}
-				MessageBox.Show(se.Message+":"+se.StackTrace+":\n"+se.ToString());
+				this.SetErrorMessage(se);
 			}
 			finally 
 			{
@@ -2842,7 +2923,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void Form2_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			if( this.rdoNotDspSysUser.Checked == true )
 			{
@@ -2882,7 +2963,7 @@ namespace MakeInsert
 			{
 				svdata.outdest[svdata.lastdb] = 2;
 			}
-			svdata.outfile[svdata.lastdb] = this.textBox4.Text;
+			svdata.outfile[svdata.lastdb] = this.txtOutput.Text;
 			if( this.chkDspData.CheckState == CheckState.Checked ){
 				svdata.showgrid[svdata.lastdb] = 1;
 			}
@@ -2965,8 +3046,8 @@ namespace MakeInsert
 		{
 			if( rdoClipboard.Checked == true )
 			{
-				this.textBox4.Enabled = false;
-				this.button4.Enabled = false;
+				this.txtOutput.Enabled = false;
+				this.btnReference.Enabled = false;
 				svdata.outdest[svdata.lastdb] = 0;
 				this.rdoUnicode.Enabled = false;
 				this.rdoSjis.Enabled = false;
@@ -2978,8 +3059,8 @@ namespace MakeInsert
 		{
 			if( this.rdoOutFolder.Checked == true )
 			{
-				this.textBox4.Enabled = true;
-				this.button4.Enabled = true;
+				this.txtOutput.Enabled = true;
+				this.btnReference.Enabled = true;
 				svdata.outdest[svdata.lastdb] = 2;
 				this.rdoUnicode.Enabled = true;
 				this.rdoSjis.Enabled = true;
@@ -2991,8 +3072,8 @@ namespace MakeInsert
 		{
 			if( this.rdoOutFile.Checked == true )
 			{
-				this.textBox4.Enabled = true;
-				this.button4.Enabled = true;
+				this.txtOutput.Enabled = true;
+				this.btnReference.Enabled = true;
 				svdata.outdest[svdata.lastdb] = 1;
 				this.rdoUnicode.Enabled = true;
 				this.rdoSjis.Enabled = true;
@@ -3000,21 +3081,21 @@ namespace MakeInsert
 			}
 		}
 
-		private void button4_Click_1(object sender, System.EventArgs e)
+		private void btnReference_Click(object sender, System.EventArgs e)
 		{
 			if( this.rdoOutFile.Checked == true )
 			{
-				if( this.textBox4.Text != "" )
+				if( this.txtOutput.Text != "" )
 				{
-					DirectoryInfo d = new DirectoryInfo(this.textBox4.Text);
+					DirectoryInfo d = new DirectoryInfo(this.txtOutput.Text);
 					if( d.Exists )
 					{
-						this.saveFileDialog1.InitialDirectory = this.textBox4.Text;
+						this.saveFileDialog1.InitialDirectory = this.txtOutput.Text;
 						this.saveFileDialog1.FileName = "";
 					}
 					else
 					{
-						this.saveFileDialog1.FileName = this.textBox4.Text;
+						this.saveFileDialog1.FileName = this.txtOutput.Text;
 					}
 				}
 				// 単独ファイルの参照指定
@@ -3024,19 +3105,19 @@ namespace MakeInsert
 				DialogResult ret = this.saveFileDialog1.ShowDialog();
 				if( ret == DialogResult.OK )
 				{
-					this.textBox4.Text = this.saveFileDialog1.FileName;
+					this.txtOutput.Text = this.saveFileDialog1.FileName;
 				}
 			}
 			else
 			{
 				// 複数ファイルのディレクトリ参照指定
-				if( this.textBox4.Text != "" )
+				if( this.txtOutput.Text != "" )
 				{
-					FileInfo f = new FileInfo(this.textBox4.Text);
+					FileInfo f = new FileInfo(this.txtOutput.Text);
 					if( f.Exists &&
 						( f.Attributes & FileAttributes.Directory ) == FileAttributes.Directory)
 					{
-						this.folderBrowserDialog1.SelectedPath = this.textBox4.Text;
+						this.folderBrowserDialog1.SelectedPath = this.txtOutput.Text;
 					}
 					else if( f.Exists && (f.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
 					{
@@ -3044,7 +3125,7 @@ namespace MakeInsert
 					}
 					else if( !f.Exists )
 					{
-						this.folderBrowserDialog1.SelectedPath = this.textBox4.Text;
+						this.folderBrowserDialog1.SelectedPath = this.txtOutput.Text;
 					}
 					else
 					{
@@ -3060,15 +3141,15 @@ namespace MakeInsert
 				DialogResult ret = this.folderBrowserDialog1.ShowDialog();
 				if( ret == DialogResult.OK )
 				{
-					this.textBox4.Text = this.folderBrowserDialog1.SelectedPath;
+					this.txtOutput.Text = this.folderBrowserDialog1.SelectedPath;
 				}
 			}
 		}
 
-		private void textBox4_TextChanged(object sender, System.EventArgs e)
+		private void txtOutput_TextChanged(object sender, System.EventArgs e)
 		{
-			this.toolTip1.SetToolTip(this.textBox4,this.textBox4.Text);
-			svdata.outfile[svdata.lastdb] = this.textBox4.Text;
+			this.toolTip1.SetToolTip(this.txtOutput,this.txtOutput.Text);
+			svdata.outfile[svdata.lastdb] = this.txtOutput.Text;
 		}
 
 		private void fieldListbox_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -3150,7 +3231,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void checkBox2_CheckedChanged(object sender, System.EventArgs e)
+		private void chkDspFieldAttr_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if( this.tableList.SelectedItems.Count == 1 )
 			{
@@ -3166,6 +3247,8 @@ namespace MakeInsert
 		{
 			try
 			{
+				this.InitErrMessage();
+
 				if( Sqldlg.ShowDialog() == DialogResult.OK )
 				{
 					SqlDataAdapter da = new SqlDataAdapter(Sqldlg.SelectSql, this.sqlConnection1);
@@ -3243,7 +3326,7 @@ namespace MakeInsert
 			}
 			catch( Exception exp)
 			{
-				MessageBox.Show(exp.Message + "\r\n" + exp.StackTrace);
+				this.SetErrorMessage(exp);
 			}
 		}
 
@@ -3252,6 +3335,8 @@ namespace MakeInsert
 			SqlTransaction tran	= null;
 			try
 			{
+				this.InitErrMessage();
+
 				if( this.chkDspData.CheckState == CheckState.Checked &&
 					this.tableList.SelectedItems.Count == 1 &&
 					this.dspdt.GetChanges() != null &&
@@ -3300,7 +3385,7 @@ namespace MakeInsert
 			}
 			catch( Exception exp )
 			{
-				MessageBox.Show(exp.Message+":"+exp.StackTrace+":\n"+exp.ToString());
+				this.SetErrorMessage(exp);
 				tran.Rollback();
 			}
 
@@ -3310,6 +3395,8 @@ namespace MakeInsert
 		{
 			try
 			{
+				this.InitErrMessage();
+
 				if( this.dbGrid.ReadOnly == true )
 				{
 					// 編集可にする
@@ -3342,7 +3429,7 @@ namespace MakeInsert
 			}
 			catch( Exception exp )
 			{
-				MessageBox.Show(exp.Message+":"+exp.StackTrace+":\n"+exp.ToString());
+				this.SetErrorMessage(exp);
 			}
 		}
 		private void dbGrid_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
@@ -3449,6 +3536,8 @@ namespace MakeInsert
 			SqlTransaction tran	= null;
 			try
 			{
+				this.InitErrMessage();
+
 				if( Sqldlg2.ShowDialog() == DialogResult.OK )
 				{
 					tran = this.sqlConnection1.BeginTransaction();
@@ -3476,8 +3565,7 @@ namespace MakeInsert
 				{
 					tran.Rollback();
 				}
-				MessageBox.Show(exp.Message + "\r\n" + exp.StackTrace);
-
+				this.SetErrorMessage(exp);
 			}
 		}
 
@@ -3554,6 +3642,7 @@ namespace MakeInsert
 				DspData("");
 			}
 		}
+
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
 	{
