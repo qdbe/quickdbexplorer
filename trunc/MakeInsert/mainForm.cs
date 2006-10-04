@@ -11,108 +11,125 @@ using System.IO;
 namespace MakeInsert
 {
 	/// <summary>
-	/// MainForm の概要の説明です。
+	/// メインとなる画面
+	/// DBの選択、オーナーの選択、テーブルの選択、処理の選択などのメインとなる処理を全て実装している
 	/// </summary>
 	public class MainForm : sqaoBaseForm
 	{
-		public System.Data.SqlClient.SqlConnection sqlConnection1;
-		private System.Windows.Forms.Button btnInsert;
-		private System.Windows.Forms.Button btnFieldList;
-		public System.Windows.Forms.ContextMenu contextMenu1;
+		private System.ComponentModel.IContainer components;
 		private System.Windows.Forms.Button btnCSV;
-		private System.Windows.Forms.MenuItem menuItem1;
-		private System.Windows.Forms.MenuItem menuItem2;
-		private System.Windows.Forms.MenuItem menuItem3;
-		private System.Windows.Forms.MenuItem menuItem4;
-		private System.Windows.Forms.MenuItem menuItem5;
-		private System.Windows.Forms.MenuItem menuItem6;
-		private System.Windows.Forms.RadioButton rdoDspView;
-		private System.Windows.Forms.GroupBox grpViewMode;
-		private System.Windows.Forms.RadioButton rdoNotDspView;
+		private System.Windows.Forms.Button btnDDL;
+		private System.Windows.Forms.Button btnDataEdit;
+		private System.Windows.Forms.Button btnDataUpdate;
+		private System.Windows.Forms.Button btnFieldList;
+		private System.Windows.Forms.Button btnGridFormat;
+		private System.Windows.Forms.Button btnIndex;
+		private System.Windows.Forms.Button btnInsert;
+		private System.Windows.Forms.Button btnQueryNonSelect;
+		private System.Windows.Forms.Button btnQuerySelect;
+		private System.Windows.Forms.Button btnRedisp;
+		private System.Windows.Forms.Button btnReference;
+		private System.Windows.Forms.Button btnSelect;
+		private System.Windows.Forms.Button btnTmpAllDsp;
+		private System.Windows.Forms.CheckBox chkDspData;
+		private System.Windows.Forms.CheckBox chkDspFieldAttr;
+		private System.Windows.Forms.ContextMenu fldContextMenu;
+		private System.Windows.Forms.DataGrid dbGrid;
+		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+		private System.Windows.Forms.GroupBox grpCharaSet;
+		private System.Windows.Forms.GroupBox grpDataDspMode;
+		private System.Windows.Forms.GroupBox grpOutputMode;
 		private System.Windows.Forms.GroupBox grpSortMode;
-		private System.Windows.Forms.RadioButton rdoSortTable;
-		private System.Windows.Forms.RadioButton rdoSortOwnerTable;
-		private System.Windows.Forms.TextBox txtWhere;
-		private System.Windows.Forms.TextBox txtSort;
+		private System.Windows.Forms.GroupBox grpSysUserMode;
+		private System.Windows.Forms.GroupBox grpViewMode;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.MenuItem menuItem7;
-		private System.Windows.Forms.MenuItem menuItem8;
-		private System.Windows.Forms.MenuItem menuItem9;
-		private System.Windows.Forms.MenuItem menuItem10;
-		private System.Windows.Forms.MenuItem menuItem12;
-		private System.Windows.Forms.Button btnSelect;
-		private System.Windows.Forms.MenuItem menuItem11;
-		private System.Windows.Forms.Button btnDDL;
-		private System.Windows.Forms.MenuItem menuItem13;
-		private System.Windows.Forms.MenuItem menuItem14;
-		private System.Windows.Forms.MenuItem menuItem15;
-		private System.Windows.Forms.CheckBox chkDspData;
-		private System.Windows.Forms.GroupBox grpDataDspMode;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox txtDspCount;
-		private System.Windows.Forms.GroupBox grpSysUserMode;
-		private System.Windows.Forms.MenuItem menuItem16;
-		private System.Windows.Forms.MenuItem menuItem17;
-		private System.ComponentModel.IContainer components;
-		private System.Windows.Forms.GroupBox grpOutputMode;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.ListBox dbList;
+		private System.Windows.Forms.ListBox fieldListbox;
+		private System.Windows.Forms.ListBox ownerListbox;
+		private System.Windows.Forms.ListBox tableList;
+		private System.Windows.Forms.MenuItem fldmenuCopy;
+		private System.Windows.Forms.MenuItem fldmenuCopyNoCRLF;
+		private System.Windows.Forms.MenuItem fldmenuCopyNoCRLFNoComma;
+		private System.Windows.Forms.MenuItem fldmenuCopyNoComma;
+		private System.Windows.Forms.MenuItem menuDDL;
+		private System.Windows.Forms.MenuItem menuDDLDrop;
+		private System.Windows.Forms.MenuItem menuDDLDropPare;
+		private System.Windows.Forms.MenuItem menuDDLPare;
+		private System.Windows.Forms.MenuItem menuInsert;
+		private System.Windows.Forms.MenuItem menuInsertDelete;
+		private System.Windows.Forms.MenuItem menuInsertNoFld;
+		private System.Windows.Forms.MenuItem menuInsertNoFldDelete;
+		private System.Windows.Forms.MenuItem menuMakeCSV;
+		private System.Windows.Forms.MenuItem menuMakeCSVDQ;
+		private System.Windows.Forms.MenuItem menuMakeFld;
+		private System.Windows.Forms.MenuItem menuMakeFldCRLF;
+		private System.Windows.Forms.MenuItem menuMakeFldNoComma;
+		private System.Windows.Forms.MenuItem menuSelect;
+		private System.Windows.Forms.MenuItem menuSeparater1;
+		private System.Windows.Forms.MenuItem menuSeparater2;
+		private System.Windows.Forms.MenuItem menuSeparater3;
+		private System.Windows.Forms.MenuItem menuTableCopy;
+		private System.Windows.Forms.MenuItem menuTableCopyCsv;
+		private System.Windows.Forms.RadioButton rdoDspSysUser;
+		private System.Windows.Forms.RadioButton rdoNotDspSysUser;
+		private System.Windows.Forms.RadioButton rdoDspView;
+		private System.Windows.Forms.RadioButton rdoNotDspView;
 		private System.Windows.Forms.RadioButton rdoClipboard;
 		private System.Windows.Forms.RadioButton rdoOutFile;
 		private System.Windows.Forms.RadioButton rdoOutFolder;
-		private System.Windows.Forms.TextBox txtOutput;
-		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.ContextMenu contextMenu2;
-		private System.Windows.Forms.MenuItem menuItem18;
-		private System.Windows.Forms.MenuItem menuItem19;
-		private System.Windows.Forms.MenuItem menuItem20;
-		private System.Windows.Forms.MenuItem menuItem21;
-		private System.Windows.Forms.Button btnReference;
-		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.MenuItem menuItem22;
-		private System.Windows.Forms.MenuItem menuItem23;
-		private System.Windows.Forms.GroupBox groupBox6;
-		private System.Windows.Forms.RadioButton rdoUnicode;
+		private System.Windows.Forms.RadioButton rdoSortOwnerTable;
+		private System.Windows.Forms.RadioButton rdoSortTable;
 		private System.Windows.Forms.RadioButton rdoSjis;
+		private System.Windows.Forms.RadioButton rdoUnicode;
 		private System.Windows.Forms.RadioButton rdoUtf8;
-		private System.Windows.Forms.CheckBox chkDspFieldAttr;
-		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+		private System.Windows.Forms.TextBox txtDspCount;
+		private System.Windows.Forms.TextBox txtOutput;
+		private System.Windows.Forms.TextBox txtSort;
+		private System.Windows.Forms.TextBox txtWhere;
+		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.ToolTip toolTip2;
-		private System.Windows.Forms.Button btnQuerySelect;
-		private ServerData svdata;
 		private System.Windows.Forms.ToolTip toolTip3;
-		private System.Windows.Forms.Button btnDataUpdate;
 
+		private Form5 Sqldlg2 = new Form5();
+		private Form4 Sqldlg = new Form4();
 		private DataSet dspdt = new DataSet();
-		private System.Windows.Forms.Button btnDataEdit;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Button btnGridFormat;
+		private ServerData svdata;
 		private	Font	gfont;
 		private	Color	gcolor;
+		private Color	btnBackColor;
+		private Color	btnForeColor;
+		private	Form7 indexdlg = null;
 		private	string	NumFormat;
 		private	string	FloatFormat;
 		private	string	DateFormat;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Button btnQueryNonSelect;
 
+		/// <summary>
+		///  接続先のサーバー名。表示用にのみ利用
+		/// </summary>
 		public string servername = "";
-		Form4 Sqldlg = new Form4();
-		private System.Windows.Forms.Button btnIndex;
-		private System.Windows.Forms.Button btnRedisp;
-		Form5 Sqldlg2 = new Form5();
-		private System.Windows.Forms.Button btnTmpAllDsp;
-		private System.Windows.Forms.ListBox dbList;
-		private System.Windows.Forms.ListBox ownerListbox;
-		private System.Windows.Forms.ListBox tableList;
-		private System.Windows.Forms.ListBox fieldListbox;
-		private System.Windows.Forms.DataGrid dbGrid;
-		private System.Windows.Forms.RadioButton rdoDspSysUser;
-		private System.Windows.Forms.RadioButton rdoNotDspSysUser;
 
-		Form7 indexdlg = null;
+		/// <summary>
+		/// DB接続情報
+		/// </summary>
+		public System.Data.SqlClient.SqlConnection sqlConnection1;
+		
+		/// <summary>
+		/// メニュー情報
+		/// </summary>
+		public System.Windows.Forms.ContextMenu mainContextMenu;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="sv">前回最終処理の記憶値</param>
 		public MainForm(ServerData sv)
 		{
 			//
@@ -159,26 +176,26 @@ namespace MakeInsert
 			this.components = new System.ComponentModel.Container();
 			this.dbList = new System.Windows.Forms.ListBox();
 			this.tableList = new System.Windows.Forms.ListBox();
-			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
-			this.menuItem16 = new System.Windows.Forms.MenuItem();
-			this.menuItem17 = new System.Windows.Forms.MenuItem();
-			this.menuItem1 = new System.Windows.Forms.MenuItem();
-			this.menuItem7 = new System.Windows.Forms.MenuItem();
-			this.menuItem8 = new System.Windows.Forms.MenuItem();
-			this.menuItem9 = new System.Windows.Forms.MenuItem();
-			this.menuItem10 = new System.Windows.Forms.MenuItem();
-			this.menuItem2 = new System.Windows.Forms.MenuItem();
-			this.menuItem3 = new System.Windows.Forms.MenuItem();
-			this.menuItem4 = new System.Windows.Forms.MenuItem();
-			this.menuItem12 = new System.Windows.Forms.MenuItem();
-			this.menuItem13 = new System.Windows.Forms.MenuItem();
-			this.menuItem14 = new System.Windows.Forms.MenuItem();
-			this.menuItem20 = new System.Windows.Forms.MenuItem();
-			this.menuItem21 = new System.Windows.Forms.MenuItem();
-			this.menuItem15 = new System.Windows.Forms.MenuItem();
-			this.menuItem11 = new System.Windows.Forms.MenuItem();
-			this.menuItem5 = new System.Windows.Forms.MenuItem();
-			this.menuItem6 = new System.Windows.Forms.MenuItem();
+			this.mainContextMenu = new System.Windows.Forms.ContextMenu();
+			this.menuTableCopy = new System.Windows.Forms.MenuItem();
+			this.menuTableCopyCsv = new System.Windows.Forms.MenuItem();
+			this.menuInsert = new System.Windows.Forms.MenuItem();
+			this.menuInsertDelete = new System.Windows.Forms.MenuItem();
+			this.menuInsertNoFld = new System.Windows.Forms.MenuItem();
+			this.menuInsertNoFldDelete = new System.Windows.Forms.MenuItem();
+			this.menuSeparater1 = new System.Windows.Forms.MenuItem();
+			this.menuMakeFld = new System.Windows.Forms.MenuItem();
+			this.menuMakeFldCRLF = new System.Windows.Forms.MenuItem();
+			this.menuMakeFldNoComma = new System.Windows.Forms.MenuItem();
+			this.menuSeparater2 = new System.Windows.Forms.MenuItem();
+			this.menuDDL = new System.Windows.Forms.MenuItem();
+			this.menuDDLDrop = new System.Windows.Forms.MenuItem();
+			this.menuDDLPare = new System.Windows.Forms.MenuItem();
+			this.menuDDLDropPare = new System.Windows.Forms.MenuItem();
+			this.menuSeparater3 = new System.Windows.Forms.MenuItem();
+			this.menuSelect = new System.Windows.Forms.MenuItem();
+			this.menuMakeCSV = new System.Windows.Forms.MenuItem();
+			this.menuMakeCSVDQ = new System.Windows.Forms.MenuItem();
 			this.btnInsert = new System.Windows.Forms.Button();
 			this.btnFieldList = new System.Windows.Forms.Button();
 			this.btnCSV = new System.Windows.Forms.Button();
@@ -214,13 +231,13 @@ namespace MakeInsert
 			this.label4 = new System.Windows.Forms.Label();
 			this.label5 = new System.Windows.Forms.Label();
 			this.fieldListbox = new System.Windows.Forms.ListBox();
-			this.contextMenu2 = new System.Windows.Forms.ContextMenu();
-			this.menuItem18 = new System.Windows.Forms.MenuItem();
-			this.menuItem19 = new System.Windows.Forms.MenuItem();
-			this.menuItem22 = new System.Windows.Forms.MenuItem();
-			this.menuItem23 = new System.Windows.Forms.MenuItem();
+			this.fldContextMenu = new System.Windows.Forms.ContextMenu();
+			this.fldmenuCopy = new System.Windows.Forms.MenuItem();
+			this.fldmenuCopyNoCRLF = new System.Windows.Forms.MenuItem();
+			this.fldmenuCopyNoComma = new System.Windows.Forms.MenuItem();
+			this.fldmenuCopyNoCRLFNoComma = new System.Windows.Forms.MenuItem();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.grpCharaSet = new System.Windows.Forms.GroupBox();
 			this.rdoUtf8 = new System.Windows.Forms.RadioButton();
 			this.rdoSjis = new System.Windows.Forms.RadioButton();
 			this.rdoUnicode = new System.Windows.Forms.RadioButton();
@@ -244,7 +261,7 @@ namespace MakeInsert
 			this.grpDataDspMode.SuspendLayout();
 			this.grpSysUserMode.SuspendLayout();
 			this.grpOutputMode.SuspendLayout();
-			this.groupBox6.SuspendLayout();
+			this.grpCharaSet.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// msgArea
@@ -265,7 +282,7 @@ namespace MakeInsert
 			// 
 			// tableList
 			// 
-			this.tableList.ContextMenu = this.contextMenu1;
+			this.tableList.ContextMenu = this.mainContextMenu;
 			this.tableList.HorizontalScrollbar = true;
 			this.tableList.ItemHeight = 12;
 			this.tableList.Location = new System.Drawing.Point(240, 16);
@@ -277,140 +294,140 @@ namespace MakeInsert
 			this.tableList.DoubleClick += new System.EventHandler(this.insertmake);
 			this.tableList.SelectedIndexChanged += new System.EventHandler(this.tableList_SelectedIndexChanged);
 			// 
-			// contextMenu1
+			// mainContextMenu
 			// 
-			this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						 this.menuItem16,
-																						 this.menuItem17,
-																						 this.menuItem1,
-																						 this.menuItem7,
-																						 this.menuItem8,
-																						 this.menuItem9,
-																						 this.menuItem10,
-																						 this.menuItem2,
-																						 this.menuItem3,
-																						 this.menuItem4,
-																						 this.menuItem12,
-																						 this.menuItem13,
-																						 this.menuItem14,
-																						 this.menuItem20,
-																						 this.menuItem21,
-																						 this.menuItem15,
-																						 this.menuItem11,
-																						 this.menuItem5,
-																						 this.menuItem6});
-			this.contextMenu1.Popup += new System.EventHandler(this.contextMenu1_Popup);
+			this.mainContextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																						 this.menuTableCopy,
+																						 this.menuTableCopyCsv,
+																						 this.menuInsert,
+																						 this.menuInsertDelete,
+																						 this.menuInsertNoFld,
+																						 this.menuInsertNoFldDelete,
+																						 this.menuSeparater1,
+																						 this.menuMakeFld,
+																						 this.menuMakeFldCRLF,
+																						 this.menuMakeFldNoComma,
+																						 this.menuSeparater2,
+																						 this.menuDDL,
+																						 this.menuDDLDrop,
+																						 this.menuDDLPare,
+																						 this.menuDDLDropPare,
+																						 this.menuSeparater3,
+																						 this.menuSelect,
+																						 this.menuMakeCSV,
+																						 this.menuMakeCSVDQ});
+			this.mainContextMenu.Popup += new System.EventHandler(this.mainContextMenu_Popup);
 			// 
-			// menuItem16
+			// menuTableCopy
 			// 
-			this.menuItem16.Index = 0;
-			this.menuItem16.Text = "テーブル名コピー";
-			this.menuItem16.Click += new System.EventHandler(this.menuItem16_Click);
+			this.menuTableCopy.Index = 0;
+			this.menuTableCopy.Text = "テーブル名コピー";
+			this.menuTableCopy.Click += new System.EventHandler(this.menuTableCopy_Click);
 			// 
-			// menuItem17
+			// menuTableCopyCsv
 			// 
-			this.menuItem17.Index = 1;
-			this.menuItem17.Text = "テーブル名コピー カンマ付き";
-			this.menuItem17.Click += new System.EventHandler(this.menuItem17_Click);
+			this.menuTableCopyCsv.Index = 1;
+			this.menuTableCopyCsv.Text = "テーブル名コピー カンマ付き";
+			this.menuTableCopyCsv.Click += new System.EventHandler(this.menuTableCopyCsv_Click);
 			// 
-			// menuItem1
+			// menuInsert
 			// 
-			this.menuItem1.Index = 2;
-			this.menuItem1.Text = "ININSERT文作成";
-			this.menuItem1.Click += new System.EventHandler(this.insertmake);
+			this.menuInsert.Index = 2;
+			this.menuInsert.Text = "INSERT文作成";
+			this.menuInsert.Click += new System.EventHandler(this.insertmake);
 			// 
-			// menuItem7
+			// menuInsertDelete
 			// 
-			this.menuItem7.Index = 3;
-			this.menuItem7.Text = "INSERT文作成(DELETE文付き)";
-			this.menuItem7.Click += new System.EventHandler(this.insertmakeDelete);
+			this.menuInsertDelete.Index = 3;
+			this.menuInsertDelete.Text = "INSERT文作成(DELETE文付き)";
+			this.menuInsertDelete.Click += new System.EventHandler(this.insertmakeDelete);
 			// 
-			// menuItem8
+			// menuInsertNoFld
 			// 
-			this.menuItem8.Index = 4;
-			this.menuItem8.Text = "INSERT文作成(フィールドリストなし)";
-			this.menuItem8.Click += new System.EventHandler(this.insertmakeNoField);
+			this.menuInsertNoFld.Index = 4;
+			this.menuInsertNoFld.Text = "INSERT文作成(フィールドリストなし)";
+			this.menuInsertNoFld.Click += new System.EventHandler(this.insertmakeNoField);
 			// 
-			// menuItem9
+			// menuInsertNoFldDelete
 			// 
-			this.menuItem9.Index = 5;
-			this.menuItem9.Text = "INSERT文作成(フィールドリストなし　DELETE文付き)";
-			this.menuItem9.Click += new System.EventHandler(this.insertmakeNoFieldDelete);
+			this.menuInsertNoFldDelete.Index = 5;
+			this.menuInsertNoFldDelete.Text = "INSERT文作成(フィールドリストなし　DELETE文付き)";
+			this.menuInsertNoFldDelete.Click += new System.EventHandler(this.insertmakeNoFieldDelete);
 			// 
-			// menuItem10
+			// menuSeparater1
 			// 
-			this.menuItem10.Index = 6;
-			this.menuItem10.Text = "-";
+			this.menuSeparater1.Index = 6;
+			this.menuSeparater1.Text = "-";
 			// 
-			// menuItem2
+			// menuMakeFld
 			// 
-			this.menuItem2.Index = 7;
-			this.menuItem2.Text = "フィールドリスト作成";
-			this.menuItem2.Click += new System.EventHandler(this.makefldlist);
+			this.menuMakeFld.Index = 7;
+			this.menuMakeFld.Text = "フィールドリスト作成";
+			this.menuMakeFld.Click += new System.EventHandler(this.makefldlist);
 			// 
-			// menuItem3
+			// menuMakeFldCRLF
 			// 
-			this.menuItem3.Index = 8;
-			this.menuItem3.Text = "フィールドリスト改行作成";
-			this.menuItem3.Click += new System.EventHandler(this.makefldListLF);
+			this.menuMakeFldCRLF.Index = 8;
+			this.menuMakeFldCRLF.Text = "フィールドリスト改行作成";
+			this.menuMakeFldCRLF.Click += new System.EventHandler(this.makefldListLF);
 			// 
-			// menuItem4
+			// menuMakeFldNoComma
 			// 
-			this.menuItem4.Index = 9;
-			this.menuItem4.Text = "フィールドリストカンマなし作成";
-			this.menuItem4.Click += new System.EventHandler(this.makefldListNoComma);
+			this.menuMakeFldNoComma.Index = 9;
+			this.menuMakeFldNoComma.Text = "フィールドリストカンマなし作成";
+			this.menuMakeFldNoComma.Click += new System.EventHandler(this.makefldListNoComma);
 			// 
-			// menuItem12
+			// menuSeparater2
 			// 
-			this.menuItem12.Index = 10;
-			this.menuItem12.Text = "-";
+			this.menuSeparater2.Index = 10;
+			this.menuSeparater2.Text = "-";
 			// 
-			// menuItem13
+			// menuDDL
 			// 
-			this.menuItem13.Index = 11;
-			this.menuItem13.Text = "定義文生成";
-			this.menuItem13.Click += new System.EventHandler(this.makeDDL);
+			this.menuDDL.Index = 11;
+			this.menuDDL.Text = "定義文生成";
+			this.menuDDL.Click += new System.EventHandler(this.makeDDL);
 			// 
-			// menuItem14
+			// menuDDLDrop
 			// 
-			this.menuItem14.Index = 12;
-			this.menuItem14.Text = "定義文生成 DROP文付き";
-			this.menuItem14.Click += new System.EventHandler(this.makeDDLDrop);
+			this.menuDDLDrop.Index = 12;
+			this.menuDDLDrop.Text = "定義文生成 DROP文付き";
+			this.menuDDLDrop.Click += new System.EventHandler(this.makeDDLDrop);
 			// 
-			// menuItem20
+			// menuDDLPare
 			// 
-			this.menuItem20.Index = 13;
-			this.menuItem20.Text = "定義文生成([]付き)";
-			this.menuItem20.Click += new System.EventHandler(this.makeDDLPare);
+			this.menuDDLPare.Index = 13;
+			this.menuDDLPare.Text = "定義文生成([]付き)";
+			this.menuDDLPare.Click += new System.EventHandler(this.makeDDLPare);
 			// 
-			// menuItem21
+			// menuDDLDropPare
 			// 
-			this.menuItem21.Index = 14;
-			this.menuItem21.Text = "定義文生成( DROP []付き)";
-			this.menuItem21.Click += new System.EventHandler(this.makeDDLDropPare);
+			this.menuDDLDropPare.Index = 14;
+			this.menuDDLDropPare.Text = "定義文生成( DROP []付き)";
+			this.menuDDLDropPare.Click += new System.EventHandler(this.makeDDLDropPare);
 			// 
-			// menuItem15
+			// menuSeparater3
 			// 
-			this.menuItem15.Index = 15;
-			this.menuItem15.Text = "-";
+			this.menuSeparater3.Index = 15;
+			this.menuSeparater3.Text = "-";
 			// 
-			// menuItem11
+			// menuSelect
 			// 
-			this.menuItem11.Index = 16;
-			this.menuItem11.Text = "Select文生成";
-			this.menuItem11.Click += new System.EventHandler(this.btnSelect_Click);
+			this.menuSelect.Index = 16;
+			this.menuSelect.Text = "Select文生成";
+			this.menuSelect.Click += new System.EventHandler(this.btnSelect_Click);
 			// 
-			// menuItem5
+			// menuMakeCSV
 			// 
-			this.menuItem5.Index = 17;
-			this.menuItem5.Text = "CSV作成";
-			this.menuItem5.Click += new System.EventHandler(this.makeCSV);
+			this.menuMakeCSV.Index = 17;
+			this.menuMakeCSV.Text = "CSV作成";
+			this.menuMakeCSV.Click += new System.EventHandler(this.makeCSV);
 			// 
-			// menuItem6
+			// menuMakeCSVDQ
 			// 
-			this.menuItem6.Index = 18;
-			this.menuItem6.Text = "CSV作成(”付き)";
-			this.menuItem6.Click += new System.EventHandler(this.makeCSVQuote);
+			this.menuMakeCSVDQ.Index = 18;
+			this.menuMakeCSVDQ.Text = "CSV作成(”付き)";
+			this.menuMakeCSVDQ.Click += new System.EventHandler(this.makeCSVQuote);
 			// 
 			// btnInsert
 			// 
@@ -740,7 +757,7 @@ namespace MakeInsert
 			// 
 			this.fieldListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
-			this.fieldListbox.ContextMenu = this.contextMenu2;
+			this.fieldListbox.ContextMenu = this.fldContextMenu;
 			this.fieldListbox.HorizontalScrollbar = true;
 			this.fieldListbox.ItemHeight = 12;
 			this.fieldListbox.Location = new System.Drawing.Point(656, 40);
@@ -750,49 +767,49 @@ namespace MakeInsert
 			this.fieldListbox.TabIndex = 23;
 			this.fieldListbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fieldListbox_KeyDown);
 			// 
-			// contextMenu2
+			// fldContextMenu
 			// 
-			this.contextMenu2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						 this.menuItem18,
-																						 this.menuItem19,
-																						 this.menuItem22,
-																						 this.menuItem23});
+			this.fldContextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																						 this.fldmenuCopy,
+																						 this.fldmenuCopyNoCRLF,
+																						 this.fldmenuCopyNoComma,
+																						 this.fldmenuCopyNoCRLFNoComma});
 			// 
-			// menuItem18
+			// fldmenuCopy
 			// 
-			this.menuItem18.Index = 0;
-			this.menuItem18.Text = "コピー";
-			this.menuItem18.Click += new System.EventHandler(this.menuItem18_Click);
+			this.fldmenuCopy.Index = 0;
+			this.fldmenuCopy.Text = "コピー";
+			this.fldmenuCopy.Click += new System.EventHandler(this.fldmenuCopy_Click);
 			// 
-			// menuItem19
+			// fldmenuCopyNoCRLF
 			// 
-			this.menuItem19.Index = 1;
-			this.menuItem19.Text = "改行なしコピー";
-			this.menuItem19.Click += new System.EventHandler(this.menuItem19_Click);
+			this.fldmenuCopyNoCRLF.Index = 1;
+			this.fldmenuCopyNoCRLF.Text = "改行なしコピー";
+			this.fldmenuCopyNoCRLF.Click += new System.EventHandler(this.fldmenuCopyNoCRLF_Click);
 			// 
-			// menuItem22
+			// fldmenuCopyNoComma
 			// 
-			this.menuItem22.Index = 2;
-			this.menuItem22.Text = "コピーカンマなし";
-			this.menuItem22.Click += new System.EventHandler(this.menuItem22_Click);
+			this.fldmenuCopyNoComma.Index = 2;
+			this.fldmenuCopyNoComma.Text = "コピーカンマなし";
+			this.fldmenuCopyNoComma.Click += new System.EventHandler(this.fldmenuCopyNoComma_Click);
 			// 
-			// menuItem23
+			// fldmenuCopyNoCRLFNoComma
 			// 
-			this.menuItem23.Index = 3;
-			this.menuItem23.Text = "コピー改行・カンマなし";
-			this.menuItem23.Click += new System.EventHandler(this.menuItem23_Click);
+			this.fldmenuCopyNoCRLFNoComma.Index = 3;
+			this.fldmenuCopyNoCRLFNoComma.Text = "コピー改行・カンマなし";
+			this.fldmenuCopyNoCRLFNoComma.Click += new System.EventHandler(this.fldmenuCopyNoCRLFNoComma_Click);
 			// 
-			// groupBox6
+			// grpCharaSet
 			// 
-			this.groupBox6.Controls.Add(this.rdoUtf8);
-			this.groupBox6.Controls.Add(this.rdoSjis);
-			this.groupBox6.Controls.Add(this.rdoUnicode);
-			this.groupBox6.Location = new System.Drawing.Point(8, 412);
-			this.groupBox6.Name = "groupBox6";
-			this.groupBox6.Size = new System.Drawing.Size(216, 60);
-			this.groupBox6.TabIndex = 6;
-			this.groupBox6.TabStop = false;
-			this.groupBox6.Text = "出力文字コード";
+			this.grpCharaSet.Controls.Add(this.rdoUtf8);
+			this.grpCharaSet.Controls.Add(this.rdoSjis);
+			this.grpCharaSet.Controls.Add(this.rdoUnicode);
+			this.grpCharaSet.Location = new System.Drawing.Point(8, 412);
+			this.grpCharaSet.Name = "grpCharaSet";
+			this.grpCharaSet.Size = new System.Drawing.Size(216, 60);
+			this.grpCharaSet.TabIndex = 6;
+			this.grpCharaSet.TabStop = false;
+			this.grpCharaSet.Text = "出力文字コード";
 			// 
 			// rdoUtf8
 			// 
@@ -945,7 +962,7 @@ namespace MakeInsert
 			this.Controls.Add(this.btnQuerySelect);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.chkDspFieldAttr);
-			this.Controls.Add(this.groupBox6);
+			this.Controls.Add(this.grpCharaSet);
 			this.Controls.Add(this.fieldListbox);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.grpOutputMode);
@@ -995,7 +1012,7 @@ namespace MakeInsert
 			this.Controls.SetChildIndex(this.grpOutputMode, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.fieldListbox, 0);
-			this.Controls.SetChildIndex(this.groupBox6, 0);
+			this.Controls.SetChildIndex(this.grpCharaSet, 0);
 			this.Controls.SetChildIndex(this.chkDspFieldAttr, 0);
 			this.Controls.SetChildIndex(this.label6, 0);
 			this.Controls.SetChildIndex(this.btnQuerySelect, 0);
@@ -1015,7 +1032,7 @@ namespace MakeInsert
 			this.grpDataDspMode.ResumeLayout(false);
 			this.grpSysUserMode.ResumeLayout(false);
 			this.grpOutputMode.ResumeLayout(false);
-			this.groupBox6.ResumeLayout(false);
+			this.grpCharaSet.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1092,6 +1109,10 @@ namespace MakeInsert
 			}
 			gfont = this.dbGrid.Font;
 			gcolor = this.dbGrid.ForeColor;
+
+			// ボタンの表示色を記憶しておく
+			this.btnBackColor = this.btnDataEdit.BackColor;
+			this.btnForeColor = this.btnDataEdit.ForeColor;
 		}
 
 		private void dbList_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -1214,26 +1235,26 @@ namespace MakeInsert
 		private void btnInsert_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
-												 this.menuItem16,
-												 this.menuItem17,
-												 this.menuItem10,
-												 this.menuItem2,
-												 this.menuItem3,
-												 this.menuItem4,
-												 this.menuItem12,
-												 this.menuItem13,
-												 this.menuItem14,
-												 this.menuItem15,
-												 this.menuItem11,
-												 this.menuItem5,
-												 this.menuItem6,
-												 this.menuItem20,
-												 this.menuItem21};
+												 this.menuTableCopy,
+												 this.menuTableCopyCsv,
+												 this.menuSeparater1,
+												 this.menuMakeFld,
+												 this.menuMakeFldCRLF,
+												 this.menuMakeFldNoComma,
+												 this.menuSeparater2,
+												 this.menuDDL,
+												 this.menuDDLDrop,
+												 this.menuSeparater3,
+												 this.menuSelect,
+												 this.menuMakeCSV,
+												 this.menuMakeCSVDQ,
+												 this.menuDDLPare,
+												 this.menuDDLDropPare};
 			foreach( MenuItem m in list )
 			{
 				m.Visible = false;
 			}
-			this.contextMenu1.Show(this.btnInsert,new Point(0,0));
+			this.mainContextMenu.Show(this.btnInsert,new Point(0,0));
 			foreach( MenuItem m in list )
 			{
 				m.Visible = true;
@@ -1244,27 +1265,27 @@ namespace MakeInsert
 		private void btnFieldList_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
-												 this.menuItem16,
-												 this.menuItem17,
-												 this.menuItem1,
-												 this.menuItem7,
-												 this.menuItem8,
-												 this.menuItem9,
-												 this.menuItem10,
-												 this.menuItem12,
-												 this.menuItem13,
-												 this.menuItem14,
-												 this.menuItem15,
-												 this.menuItem11,
-												 this.menuItem5,
-												 this.menuItem6,
-												 this.menuItem20,
-												 this.menuItem21};
+												 this.menuTableCopy,
+												 this.menuTableCopyCsv,
+												 this.menuInsert,
+												 this.menuInsertDelete,
+												 this.menuInsertNoFld,
+												 this.menuInsertNoFldDelete,
+												 this.menuSeparater1,
+												 this.menuSeparater2,
+												 this.menuDDL,
+												 this.menuDDLDrop,
+												 this.menuSeparater3,
+												 this.menuSelect,
+												 this.menuMakeCSV,
+												 this.menuMakeCSVDQ,
+												 this.menuDDLPare,
+												 this.menuDDLDropPare};
 			foreach( MenuItem m in list )
 			{
 				m.Visible = false;
 			}
-			this.contextMenu1.Show(this.btnFieldList,new Point(0,0));
+			this.mainContextMenu.Show(this.btnFieldList,new Point(0,0));
 			foreach( MenuItem m in list )
 			{
 				m.Visible = true;
@@ -1275,28 +1296,28 @@ namespace MakeInsert
 		private void btnCSV_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
-												 this.menuItem16,
-												 this.menuItem17,
-												 this.menuItem1,
-												 this.menuItem7,
-												 this.menuItem8,
-												 this.menuItem9,
-												 this.menuItem10,
-												 this.menuItem2,
-												 this.menuItem3,
-												 this.menuItem4,
-												 this.menuItem12,
-												 this.menuItem13,
-												 this.menuItem14,
-												 this.menuItem15,
-												 this.menuItem11,
-												 this.menuItem20,
-												 this.menuItem21};
+												 this.menuTableCopy,
+												 this.menuTableCopyCsv,
+												 this.menuInsert,
+												 this.menuInsertDelete,
+												 this.menuInsertNoFld,
+												 this.menuInsertNoFldDelete,
+												 this.menuSeparater1,
+												 this.menuMakeFld,
+												 this.menuMakeFldCRLF,
+												 this.menuMakeFldNoComma,
+												 this.menuSeparater2,
+												 this.menuDDL,
+												 this.menuDDLDrop,
+												 this.menuSeparater3,
+												 this.menuSelect,
+												 this.menuDDLPare,
+												 this.menuDDLDropPare};
 			foreach( MenuItem m in list )
 			{
 				m.Visible = false;
 			}
-			this.contextMenu1.Show(this.btnCSV,new Point(0,0));
+			this.mainContextMenu.Show(this.btnCSV,new Point(0,0));
 			foreach( MenuItem m in list )
 			{
 				m.Visible = true;
@@ -1307,26 +1328,26 @@ namespace MakeInsert
 		private void btnDDL_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
-												 this.menuItem16,
-												 this.menuItem17,
-												 this.menuItem1,
-												 this.menuItem7,
-												 this.menuItem8,
-												 this.menuItem9,
-												 this.menuItem10,
-												 this.menuItem2,
-												 this.menuItem3,
-												 this.menuItem4,
-												 this.menuItem12,
-												 this.menuItem15,
-												 this.menuItem11,
-												 this.menuItem5,
-												 this.menuItem6};
+												 this.menuTableCopy,
+												 this.menuTableCopyCsv,
+												 this.menuInsert,
+												 this.menuInsertDelete,
+												 this.menuInsertNoFld,
+												 this.menuInsertNoFldDelete,
+												 this.menuSeparater1,
+												 this.menuMakeFld,
+												 this.menuMakeFldCRLF,
+												 this.menuMakeFldNoComma,
+												 this.menuSeparater2,
+												 this.menuSeparater3,
+												 this.menuSelect,
+												 this.menuMakeCSV,
+												 this.menuMakeCSVDQ};
 			foreach( MenuItem m in list )
 			{
 				m.Visible = false;
 			}
-			this.contextMenu1.Show(this.btnDDL,new Point(0,0));
+			this.mainContextMenu.Show(this.btnDDL,new Point(0,0));
 			foreach( MenuItem m in list )
 			{
 				m.Visible = true;
@@ -2785,6 +2806,10 @@ namespace MakeInsert
 				this.dbGrid.Show();
 				this.btnDataEdit.Text = "データ編集";
 				this.dbGrid.ReadOnly = true;
+				this.btnDataEdit.BackColor = this.btnBackColor;
+				this.btnDataEdit.ForeColor = this.btnForeColor;
+				this.btnTmpAllDsp.BackColor = this.btnBackColor;
+				this.btnTmpAllDsp.ForeColor = this.btnForeColor;
 				this.btnDataUpdate.Enabled = true;
 				this.btnDataEdit.Enabled = true;
 				this.btnGridFormat.Enabled = true;
@@ -2893,12 +2918,12 @@ namespace MakeInsert
 			displistowner();
 		}
 
-		private void menuItem16_Click(object sender, System.EventArgs e)
+		private void menuTableCopy_Click(object sender, System.EventArgs e)
 		{
 			copytablename(false);
 		}
 
-		private void menuItem17_Click(object sender, System.EventArgs e)
+		private void menuTableCopyCsv_Click(object sender, System.EventArgs e)
 		{
 			copytablename(true);
 		}
@@ -3032,12 +3057,12 @@ namespace MakeInsert
 			}
 		}
 
-		private void menuItem18_Click(object sender, System.EventArgs e)
+		private void fldmenuCopy_Click(object sender, System.EventArgs e)
 		{
 			copyfldlist(true,true);
 		}
 
-		private void menuItem19_Click(object sender, System.EventArgs e)
+		private void fldmenuCopyNoCRLF_Click(object sender, System.EventArgs e)
 		{
 			copyfldlist(false,true);
 		}
@@ -3168,12 +3193,12 @@ namespace MakeInsert
 			svdata.griddspcnt[svdata.lastdb] = this.txtDspCount.Text;
 		}
 
-		private void menuItem22_Click(object sender, System.EventArgs e)
+		private void fldmenuCopyNoComma_Click(object sender, System.EventArgs e)
 		{
 			copyfldlist(true,false);
 		}
 
-		private void menuItem23_Click(object sender, System.EventArgs e)
+		private void fldmenuCopyNoCRLFNoComma_Click(object sender, System.EventArgs e)
 		{
 			copyfldlist(false,false);
 		}
@@ -3313,6 +3338,10 @@ namespace MakeInsert
 					this.dbGrid.TableStyles.Add(ts);
 
 					this.dbGrid.ReadOnly = true;
+					this.btnDataEdit.BackColor = this.btnBackColor;
+					this.btnDataEdit.ForeColor = this.btnForeColor;
+					this.btnTmpAllDsp.BackColor = this.btnBackColor;
+					this.btnTmpAllDsp.ForeColor = this.btnForeColor;
 					this.btnDataEdit.Text = "データ編集";
 					this.btnDataUpdate.Enabled = true;
 					this.btnDataEdit.Enabled = true;
@@ -3402,6 +3431,8 @@ namespace MakeInsert
 					// 編集可にする
 					this.dbGrid.ReadOnly = false;
 					this.btnDataEdit.Text = "データ編集終了";
+					this.btnDataEdit.ForeColor = Color.WhiteSmoke;
+					this.btnDataEdit.BackColor = Color.Navy;
 				}
 				else
 				{
@@ -3411,6 +3442,8 @@ namespace MakeInsert
 					{
 						this.dbGrid.ReadOnly = true;
 						this.btnDataEdit.Text = "データ編集";
+						this.btnDataEdit.BackColor = this.btnBackColor;
+						this.btnDataEdit.ForeColor = this.btnForeColor;
 					}
 					else
 					{
@@ -3422,6 +3455,8 @@ namespace MakeInsert
 							this.dbGrid.Show();
 							this.dbGrid.ReadOnly = true;
 							this.btnDataEdit.Text = "データ編集";
+							this.btnDataEdit.BackColor = this.btnBackColor;
+							this.btnDataEdit.ForeColor = this.btnForeColor;
 						}
 					}
 					
@@ -3477,7 +3512,7 @@ namespace MakeInsert
 			}
 		}
 
-		private void contextMenu1_Popup(object sender, System.EventArgs e)
+		private void mainContextMenu_Popup(object sender, System.EventArgs e)
 		{
 		}
 
@@ -3636,6 +3671,8 @@ namespace MakeInsert
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
 				DspData(this.tableList.SelectedItem.ToString(),true);
+				this.btnTmpAllDsp.ForeColor = Color.WhiteSmoke;
+				this.btnTmpAllDsp.BackColor = Color.Navy;
 			}
 			else
 			{
