@@ -120,6 +120,9 @@ namespace MakeInsert
 		/// DB接続情報
 		/// </summary>
 		public System.Data.SqlClient.SqlConnection sqlConnection1;
+		private System.Windows.Forms.MenuItem menuSeparater4;
+		private System.Windows.Forms.MenuItem menuDepend;
+		private System.Windows.Forms.Button btnEtc;
 		
 		/// <summary>
 		/// メニュー情報
@@ -196,6 +199,8 @@ namespace MakeInsert
 			this.menuSelect = new System.Windows.Forms.MenuItem();
 			this.menuMakeCSV = new System.Windows.Forms.MenuItem();
 			this.menuMakeCSVDQ = new System.Windows.Forms.MenuItem();
+			this.menuSeparater4 = new System.Windows.Forms.MenuItem();
+			this.menuDepend = new System.Windows.Forms.MenuItem();
 			this.btnInsert = new System.Windows.Forms.Button();
 			this.btnFieldList = new System.Windows.Forms.Button();
 			this.btnCSV = new System.Windows.Forms.Button();
@@ -255,6 +260,7 @@ namespace MakeInsert
 			this.btnIndex = new System.Windows.Forms.Button();
 			this.btnRedisp = new System.Windows.Forms.Button();
 			this.btnTmpAllDsp = new System.Windows.Forms.Button();
+			this.btnEtc = new System.Windows.Forms.Button();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -289,7 +295,7 @@ namespace MakeInsert
 			this.tableList.Name = "tableList";
 			this.tableList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.tableList.Size = new System.Drawing.Size(256, 304);
-			this.tableList.TabIndex = 11;
+			this.tableList.TabIndex = 10;
 			this.tableList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tableList_KeyDown);
 			this.tableList.DoubleClick += new System.EventHandler(this.insertmake);
 			this.tableList.SelectedIndexChanged += new System.EventHandler(this.tableList_SelectedIndexChanged);
@@ -297,25 +303,27 @@ namespace MakeInsert
 			// mainContextMenu
 			// 
 			this.mainContextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						 this.menuTableCopy,
-																						 this.menuTableCopyCsv,
-																						 this.menuInsert,
-																						 this.menuInsertDelete,
-																						 this.menuInsertNoFld,
-																						 this.menuInsertNoFldDelete,
-																						 this.menuSeparater1,
-																						 this.menuMakeFld,
-																						 this.menuMakeFldCRLF,
-																						 this.menuMakeFldNoComma,
-																						 this.menuSeparater2,
-																						 this.menuDDL,
-																						 this.menuDDLDrop,
-																						 this.menuDDLPare,
-																						 this.menuDDLDropPare,
-																						 this.menuSeparater3,
-																						 this.menuSelect,
-																						 this.menuMakeCSV,
-																						 this.menuMakeCSVDQ});
+																							this.menuTableCopy,
+																							this.menuTableCopyCsv,
+																							this.menuInsert,
+																							this.menuInsertDelete,
+																							this.menuInsertNoFld,
+																							this.menuInsertNoFldDelete,
+																							this.menuSeparater1,
+																							this.menuMakeFld,
+																							this.menuMakeFldCRLF,
+																							this.menuMakeFldNoComma,
+																							this.menuSeparater2,
+																							this.menuDDL,
+																							this.menuDDLDrop,
+																							this.menuDDLPare,
+																							this.menuDDLDropPare,
+																							this.menuSeparater3,
+																							this.menuSelect,
+																							this.menuMakeCSV,
+																							this.menuMakeCSVDQ,
+																							this.menuSeparater4,
+																							this.menuDepend});
 			this.mainContextMenu.Popup += new System.EventHandler(this.mainContextMenu_Popup);
 			// 
 			// menuTableCopy
@@ -385,25 +393,25 @@ namespace MakeInsert
 			// menuDDL
 			// 
 			this.menuDDL.Index = 11;
-			this.menuDDL.Text = "定義文生成";
+			this.menuDDL.Text = "簡易定義文生成";
 			this.menuDDL.Click += new System.EventHandler(this.makeDDL);
 			// 
 			// menuDDLDrop
 			// 
 			this.menuDDLDrop.Index = 12;
-			this.menuDDLDrop.Text = "定義文生成 DROP文付き";
+			this.menuDDLDrop.Text = "簡易定義文生成 DROP文付き";
 			this.menuDDLDrop.Click += new System.EventHandler(this.makeDDLDrop);
 			// 
 			// menuDDLPare
 			// 
 			this.menuDDLPare.Index = 13;
-			this.menuDDLPare.Text = "定義文生成([]付き)";
+			this.menuDDLPare.Text = "簡易定義文生成([]付き)";
 			this.menuDDLPare.Click += new System.EventHandler(this.makeDDLPare);
 			// 
 			// menuDDLDropPare
 			// 
 			this.menuDDLDropPare.Index = 14;
-			this.menuDDLDropPare.Text = "定義文生成( DROP []付き)";
+			this.menuDDLDropPare.Text = "簡易定義文生成( DROP []付き)";
 			this.menuDDLDropPare.Click += new System.EventHandler(this.makeDDLDropPare);
 			// 
 			// menuSeparater3
@@ -429,12 +437,23 @@ namespace MakeInsert
 			this.menuMakeCSVDQ.Text = "CSV作成(”付き)";
 			this.menuMakeCSVDQ.Click += new System.EventHandler(this.makeCSVQuote);
 			// 
+			// menuSeparater4
+			// 
+			this.menuSeparater4.Index = 19;
+			this.menuSeparater4.Text = "-";
+			// 
+			// menuDepend
+			// 
+			this.menuDepend.Index = 20;
+			this.menuDepend.Text = "依存関係出力";
+			this.menuDepend.Click += new System.EventHandler(this.DependOutPut);
+			// 
 			// btnInsert
 			// 
 			this.btnInsert.Location = new System.Drawing.Point(508, 16);
 			this.btnInsert.Name = "btnInsert";
 			this.btnInsert.Size = new System.Drawing.Size(132, 24);
-			this.btnInsert.TabIndex = 12;
+			this.btnInsert.TabIndex = 11;
 			this.btnInsert.Text = "INSERT文作成";
 			this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
 			// 
@@ -443,7 +462,7 @@ namespace MakeInsert
 			this.btnFieldList.Location = new System.Drawing.Point(508, 44);
 			this.btnFieldList.Name = "btnFieldList";
 			this.btnFieldList.Size = new System.Drawing.Size(132, 24);
-			this.btnFieldList.TabIndex = 13;
+			this.btnFieldList.TabIndex = 12;
 			this.btnFieldList.Text = "フィールドリスト作成";
 			this.btnFieldList.Click += new System.EventHandler(this.btnFieldList_Click);
 			// 
@@ -452,7 +471,7 @@ namespace MakeInsert
 			this.btnCSV.Location = new System.Drawing.Point(508, 128);
 			this.btnCSV.Name = "btnCSV";
 			this.btnCSV.Size = new System.Drawing.Size(132, 24);
-			this.btnCSV.TabIndex = 16;
+			this.btnCSV.TabIndex = 15;
 			this.btnCSV.Text = "CSV作成";
 			this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
 			// 
@@ -551,7 +570,7 @@ namespace MakeInsert
 			this.btnSelect.Location = new System.Drawing.Point(508, 72);
 			this.btnSelect.Name = "btnSelect";
 			this.btnSelect.Size = new System.Drawing.Size(132, 24);
-			this.btnSelect.TabIndex = 14;
+			this.btnSelect.TabIndex = 13;
 			this.btnSelect.Text = "Select 文生成";
 			this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
 			// 
@@ -571,8 +590,8 @@ namespace MakeInsert
 			this.btnDDL.Location = new System.Drawing.Point(508, 100);
 			this.btnDDL.Name = "btnDDL";
 			this.btnDDL.Size = new System.Drawing.Size(132, 24);
-			this.btnDDL.TabIndex = 15;
-			this.btnDDL.Text = "定義文生成";
+			this.btnDDL.TabIndex = 14;
+			this.btnDDL.Text = "簡易定義文生成";
 			this.btnDDL.Click += new System.EventHandler(this.btnDDL_Click);
 			// 
 			// dbGrid
@@ -609,7 +628,7 @@ namespace MakeInsert
 			this.chkDspData.Location = new System.Drawing.Point(24, 548);
 			this.chkDspData.Name = "chkDspData";
 			this.chkDspData.Size = new System.Drawing.Size(52, 24);
-			this.chkDspData.TabIndex = 10;
+			this.chkDspData.TabIndex = 9;
 			this.chkDspData.Text = "表示";
 			this.chkDspData.CheckedChanged += new System.EventHandler(this.chkDspData_CheckedChanged);
 			// 
@@ -763,17 +782,17 @@ namespace MakeInsert
 			this.fieldListbox.Location = new System.Drawing.Point(656, 40);
 			this.fieldListbox.Name = "fieldListbox";
 			this.fieldListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.fieldListbox.Size = new System.Drawing.Size(240, 280);
+			this.fieldListbox.Size = new System.Drawing.Size(240, 268);
 			this.fieldListbox.TabIndex = 23;
 			this.fieldListbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fieldListbox_KeyDown);
 			// 
 			// fldContextMenu
 			// 
 			this.fldContextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						 this.fldmenuCopy,
-																						 this.fldmenuCopyNoCRLF,
-																						 this.fldmenuCopyNoComma,
-																						 this.fldmenuCopyNoCRLFNoComma});
+																						   this.fldmenuCopy,
+																						   this.fldmenuCopyNoCRLF,
+																						   this.fldmenuCopyNoComma,
+																						   this.fldmenuCopyNoCRLFNoComma});
 			// 
 			// fldmenuCopy
 			// 
@@ -860,10 +879,10 @@ namespace MakeInsert
 			// 
 			// btnQuerySelect
 			// 
-			this.btnQuerySelect.Location = new System.Drawing.Point(508, 156);
+			this.btnQuerySelect.Location = new System.Drawing.Point(508, 212);
 			this.btnQuerySelect.Name = "btnQuerySelect";
 			this.btnQuerySelect.Size = new System.Drawing.Size(132, 24);
-			this.btnQuerySelect.TabIndex = 17;
+			this.btnQuerySelect.TabIndex = 18;
 			this.btnQuerySelect.Text = "クエリ指定結果表示";
 			this.btnQuerySelect.Click += new System.EventHandler(this.btnQuerySelect_Click);
 			// 
@@ -895,10 +914,10 @@ namespace MakeInsert
 			// 
 			// btnGridFormat
 			// 
-			this.btnGridFormat.Location = new System.Drawing.Point(508, 240);
+			this.btnGridFormat.Location = new System.Drawing.Point(652, 320);
 			this.btnGridFormat.Name = "btnGridFormat";
-			this.btnGridFormat.Size = new System.Drawing.Size(132, 24);
-			this.btnGridFormat.TabIndex = 19;
+			this.btnGridFormat.Size = new System.Drawing.Size(132, 20);
+			this.btnGridFormat.TabIndex = 25;
 			this.btnGridFormat.Text = "書式グリッド表示指定";
 			this.btnGridFormat.Click += new System.EventHandler(this.btnGridFormat_Click);
 			// 
@@ -912,44 +931,54 @@ namespace MakeInsert
 			// 
 			// btnQueryNonSelect
 			// 
-			this.btnQueryNonSelect.Location = new System.Drawing.Point(508, 184);
+			this.btnQueryNonSelect.Location = new System.Drawing.Point(508, 240);
 			this.btnQueryNonSelect.Name = "btnQueryNonSelect";
 			this.btnQueryNonSelect.Size = new System.Drawing.Size(132, 24);
-			this.btnQueryNonSelect.TabIndex = 18;
+			this.btnQueryNonSelect.TabIndex = 19;
 			this.btnQueryNonSelect.Text = "クエリ実効(Select以外)";
 			this.btnQueryNonSelect.Click += new System.EventHandler(this.btnQueryNonSelect_Click);
 			// 
 			// btnIndex
 			// 
-			this.btnIndex.Location = new System.Drawing.Point(508, 212);
+			this.btnIndex.Location = new System.Drawing.Point(508, 156);
 			this.btnIndex.Name = "btnIndex";
 			this.btnIndex.Size = new System.Drawing.Size(132, 23);
-			this.btnIndex.TabIndex = 35;
+			this.btnIndex.TabIndex = 16;
 			this.btnIndex.Text = "INDEX情報表示";
 			this.btnIndex.Click += new System.EventHandler(this.btnIndex_Click);
 			// 
 			// btnRedisp
 			// 
-			this.btnRedisp.Location = new System.Drawing.Point(652, 336);
+			this.btnRedisp.Location = new System.Drawing.Point(652, 344);
 			this.btnRedisp.Name = "btnRedisp";
 			this.btnRedisp.Size = new System.Drawing.Size(96, 20);
-			this.btnRedisp.TabIndex = 36;
+			this.btnRedisp.TabIndex = 26;
 			this.btnRedisp.Text = "グリッド再描画";
 			this.btnRedisp.Click += new System.EventHandler(this.Redisp_Click);
 			// 
 			// btnTmpAllDsp
 			// 
-			this.btnTmpAllDsp.Location = new System.Drawing.Point(752, 336);
+			this.btnTmpAllDsp.Location = new System.Drawing.Point(752, 344);
 			this.btnTmpAllDsp.Name = "btnTmpAllDsp";
 			this.btnTmpAllDsp.Size = new System.Drawing.Size(148, 20);
-			this.btnTmpAllDsp.TabIndex = 37;
+			this.btnTmpAllDsp.TabIndex = 27;
 			this.btnTmpAllDsp.Text = "一時的に全データを表示";
 			this.btnTmpAllDsp.Click += new System.EventHandler(this.btnTmpAllDsp_Click);
+			// 
+			// btnEtc
+			// 
+			this.btnEtc.Location = new System.Drawing.Point(508, 184);
+			this.btnEtc.Name = "btnEtc";
+			this.btnEtc.Size = new System.Drawing.Size(132, 23);
+			this.btnEtc.TabIndex = 17;
+			this.btnEtc.Text = "その他";
+			this.btnEtc.Click += new System.EventHandler(this.btnEtc_Click);
 			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(928, 597);
+			this.Controls.Add(this.btnEtc);
 			this.Controls.Add(this.btnTmpAllDsp);
 			this.Controls.Add(this.btnRedisp);
 			this.Controls.Add(this.btnIndex);
@@ -1026,6 +1055,7 @@ namespace MakeInsert
 			this.Controls.SetChildIndex(this.btnRedisp, 0);
 			this.Controls.SetChildIndex(this.btnTmpAllDsp, 0);
 			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.btnEtc, 0);
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
@@ -1235,27 +1265,29 @@ namespace MakeInsert
 		private void btnInsert_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
-												 this.menuTableCopy,
-												 this.menuTableCopyCsv,
-												 this.menuSeparater1,
-												 this.menuMakeFld,
-												 this.menuMakeFldCRLF,
-												 this.menuMakeFldNoComma,
-												 this.menuSeparater2,
-												 this.menuDDL,
-												 this.menuDDLDrop,
-												 this.menuSeparater3,
-												 this.menuSelect,
-												 this.menuMakeCSV,
-												 this.menuMakeCSVDQ,
-												 this.menuDDLPare,
-												 this.menuDDLDropPare};
-			foreach( MenuItem m in list )
+												 this.menuInsert,
+												 this.menuInsertDelete,
+												 this.menuInsertNoFld,
+												 this.menuInsertNoFldDelete
+											 };
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
 			{
-				m.Visible = false;
+				bool isFound = false;
+				foreach( MenuItem mm in list )
+				{
+					if( m == mm )
+					{
+						isFound = true;
+					}
+				}
+				if( isFound == false )
+				{
+					m.Visible = false;
+				}
 			}
+
 			this.mainContextMenu.Show(this.btnInsert,new Point(0,0));
-			foreach( MenuItem m in list )
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
 			{
 				m.Visible = true;
 			}
@@ -1265,28 +1297,27 @@ namespace MakeInsert
 		private void btnFieldList_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
-												 this.menuTableCopy,
-												 this.menuTableCopyCsv,
-												 this.menuInsert,
-												 this.menuInsertDelete,
-												 this.menuInsertNoFld,
-												 this.menuInsertNoFldDelete,
-												 this.menuSeparater1,
-												 this.menuSeparater2,
-												 this.menuDDL,
-												 this.menuDDLDrop,
-												 this.menuSeparater3,
-												 this.menuSelect,
-												 this.menuMakeCSV,
-												 this.menuMakeCSVDQ,
-												 this.menuDDLPare,
-												 this.menuDDLDropPare};
-			foreach( MenuItem m in list )
+												 this.menuMakeFld,
+												 this.menuMakeFldCRLF,
+												 this.menuMakeFldNoComma
+											 };
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
 			{
-				m.Visible = false;
+				bool isFound = false;
+				foreach( MenuItem mm in list )
+				{
+					if( m == mm )
+					{
+						isFound = true;
+					}
+				}
+				if( isFound == false )
+				{
+					m.Visible = false;
+				}
 			}
 			this.mainContextMenu.Show(this.btnFieldList,new Point(0,0));
-			foreach( MenuItem m in list )
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
 			{
 				m.Visible = true;
 			}
@@ -1296,29 +1327,26 @@ namespace MakeInsert
 		private void btnCSV_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
-												 this.menuTableCopy,
-												 this.menuTableCopyCsv,
-												 this.menuInsert,
-												 this.menuInsertDelete,
-												 this.menuInsertNoFld,
-												 this.menuInsertNoFldDelete,
-												 this.menuSeparater1,
-												 this.menuMakeFld,
-												 this.menuMakeFldCRLF,
-												 this.menuMakeFldNoComma,
-												 this.menuSeparater2,
-												 this.menuDDL,
-												 this.menuDDLDrop,
-												 this.menuSeparater3,
-												 this.menuSelect,
-												 this.menuDDLPare,
-												 this.menuDDLDropPare};
-			foreach( MenuItem m in list )
+												 this.menuMakeCSV,
+												 this.menuMakeCSVDQ
+											 };
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
 			{
-				m.Visible = false;
+				bool isFound = false;
+				foreach( MenuItem mm in list )
+				{
+					if( m == mm )
+					{
+						isFound = true;
+					}
+				}
+				if( isFound == false )
+				{
+					m.Visible = false;
+				}
 			}
 			this.mainContextMenu.Show(this.btnCSV,new Point(0,0));
-			foreach( MenuItem m in list )
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
 			{
 				m.Visible = true;
 			}
@@ -1328,27 +1356,26 @@ namespace MakeInsert
 		private void btnDDL_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
-												 this.menuTableCopy,
-												 this.menuTableCopyCsv,
-												 this.menuInsert,
-												 this.menuInsertDelete,
-												 this.menuInsertNoFld,
-												 this.menuInsertNoFldDelete,
-												 this.menuSeparater1,
-												 this.menuMakeFld,
-												 this.menuMakeFldCRLF,
-												 this.menuMakeFldNoComma,
-												 this.menuSeparater2,
-												 this.menuSeparater3,
-												 this.menuSelect,
-												 this.menuMakeCSV,
-												 this.menuMakeCSVDQ};
-			foreach( MenuItem m in list )
+												 this.menuDDL,
+												 this.menuDDLDrop
+											 };
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
 			{
-				m.Visible = false;
+				bool isFound = false;
+				foreach( MenuItem mm in list )
+				{
+					if( m == mm )
+					{
+						isFound = true;
+					}
+				}
+				if( isFound == false )
+				{
+					m.Visible = false;
+				}
 			}
 			this.mainContextMenu.Show(this.btnDDL,new Point(0,0));
-			foreach( MenuItem m in list )
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
 			{
 				m.Visible = true;
 			}
@@ -3680,6 +3707,166 @@ namespace MakeInsert
 			}
 		}
 
+		/// <summary>
+		/// 選択されたテーブルに関する依存関係を出力する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DependOutPut(object sender, System.EventArgs e)
+		{
+			SqlCommand	cm = new SqlCommand();
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+			if( CheckFileSpec() == false )
+			{
+				return;
+			}
+			
+			this.InitErrMessage();
+
+			try
+			{
+				StringBuilder strline =  new StringBuilder();
+				TextWriter	wr = new StringWriter(strline);
+				StringBuilder fname = new StringBuilder();
+
+				if( this.rdoClipboard.Checked == true) 
+				{
+					wr = new StringWriter(strline);
+					wr.Write("テーブル名");
+					wr.Write(",依存関係先名称");
+					wr.Write(",種類");
+					wr.Write(",更新あり");
+					wr.Write(",selectでの利用");
+					wr.Write(",従属性が存在する列またはパラメータ");
+					wr.Write(wr.NewLine);
+				}
+				else if( this.rdoOutFile.Checked == true ) 
+				{
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+					sw.AutoFlush = false;
+					wr = sw;
+					fname.Append(this.txtOutput.Text);
+					wr.Write("テーブル名");
+					wr.Write(",依存関係先名称");
+					wr.Write(",種類");
+					wr.Write(",更新あり");
+					wr.Write(",selectでの利用");
+					wr.Write(",従属性が存在する列またはパラメータ");
+					wr.Write(wr.NewLine);
+				}
+
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
+						sw.AutoFlush = false;
+						wr = sw;
+						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
+						wr.Write("テーブル名");
+						wr.Write(",依存関係先名称");
+						wr.Write(",種類");
+						wr.Write(",更新あり");
+						wr.Write(",selectでの利用");
+						wr.Write(",従属性が存在する列またはパラメータ");
+						wr.Write(wr.NewLine);
+					}
+
+					// 依存関係の情報を取得し、
+
+					// get id 
+					string sqlstr;
+					// split owner.table -> owner, table
+
+					string delimStr = ".";
+					string []str = tbname.Split(delimStr.ToCharArray(), 2);
+					sqlstr = "sp_depends N'[" + str[0] +"].[" + str[1] + "]'";
+					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+					DataSet ds = new DataSet();
+					da.Fill(ds,tbname);
+
+					if(	ds.Tables.Count != 0 &&
+						ds.Tables[tbname].Rows != null &&
+						ds.Tables[tbname].Rows.Count != 0)
+					{
+						foreach(DataRow dr in ds.Tables[tbname].Rows)
+						{
+							// テーブル名
+							wr.Write(tbname);
+							foreach( DataColumn col in ds.Tables[tbname].Columns)
+							{
+								wr.Write(",");
+								wr.Write(dr[col.ColumnName].ToString());
+							}
+							wr.Write(wr.NewLine);
+						}
+					}
+
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						wr.Close();
+					}
+				}
+				if( this.rdoOutFolder.Checked == false ) 
+				{
+					wr.Close();
+				}
+				if( this.rdoClipboard.Checked == true ) 
+				{
+					Clipboard.SetDataObject(strline.ToString(),true );
+				}
+				else
+				{
+					Clipboard.SetDataObject(fname.ToString(),true );
+				}
+				MessageBox.Show("処理を完了しました");
+			}
+			catch ( Exception se )
+			{
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+
+		
+		}
+
+		private void btnEtc_Click(object sender, System.EventArgs e)
+		{
+			MenuItem[] list = new MenuItem[] {
+												 this.menuDepend
+											 };
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
+			{
+				bool isFound = false;
+				foreach( MenuItem mm in list )
+				{
+					if( m == mm )
+					{
+						isFound = true;
+					}
+				}
+				if( isFound == false )
+				{
+					m.Visible = false;
+				}
+			}
+			this.mainContextMenu.Show(this.btnEtc,new Point(0,0));
+			foreach( MenuItem m in this.mainContextMenu.MenuItems )
+			{
+				m.Visible = true;
+			}
+		
+		}
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
 	{
