@@ -3512,7 +3512,7 @@ namespace MakeInsert
 			{
 				//get & draw the header text...
 				string text = string.Format("{0}", row+1);
-				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 12, y);
+				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 5, y);
 				y += yDelta;
 				row++;
 			}
