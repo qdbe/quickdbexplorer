@@ -349,7 +349,6 @@ namespace MakeInsert
 				ServerData sv = new ServerData();
 				sv.Servername = this.txtServerName.Text;
 				sv.InstanceName = this.txtInstance.Text;
-				sv.IsUseTrust = this.chkTrust.Checked;
 				if( initopt.ht[sv.KeyName] == null )
 				{
 					initopt.ht.Add(sv.KeyName,sv);
@@ -367,6 +366,7 @@ namespace MakeInsert
 				{
 					sv.isSaveKey = true;
 				}
+				sv.IsUseTrust = this.chkTrust.Checked;
 
 				MainForm mainForm = new MainForm(sv);
 				mainForm.servername = this.txtServerName.Text;

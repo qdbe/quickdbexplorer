@@ -26,7 +26,6 @@ namespace MakeInsert
 		private System.Windows.Forms.Button btnGridFormat;
 		private System.Windows.Forms.Button btnIndex;
 		private System.Windows.Forms.Button btnInsert;
-		private System.Windows.Forms.Button btnQueryNonSelect;
 		private System.Windows.Forms.Button btnQuerySelect;
 		private System.Windows.Forms.Button btnRedisp;
 		private System.Windows.Forms.Button btnReference;
@@ -149,9 +148,15 @@ namespace MakeInsert
 		private System.Windows.Forms.MenuItem menuSeparater4;
 		private System.Windows.Forms.MenuItem menuDepend;
 		private System.Windows.Forms.Button btnEtc;
-		private System.Windows.Forms.MenuItem menuISQLW;
-		private System.Windows.Forms.ContextMenu contextMenu1;
 		private System.Windows.Forms.ContextMenu etcContextMenu;
+		private System.Windows.Forms.MenuItem menuQuery;
+		private System.Windows.Forms.ContextMenu contextMenu1;
+		private System.Windows.Forms.MenuItem menuProfile;
+		private System.Windows.Forms.MenuItem menuISQL;
+		private System.Windows.Forms.MenuItem menuISQLW;
+		private System.Windows.Forms.MenuItem menuDependBtn;
+		private System.Windows.Forms.MenuItem menuEPM;
+		private System.Windows.Forms.MenuItem menuRecordCount;
 		
 		/// <summary>
 		/// メニュー情報
@@ -286,13 +291,18 @@ namespace MakeInsert
 			this.label7 = new System.Windows.Forms.Label();
 			this.btnGridFormat = new System.Windows.Forms.Button();
 			this.label8 = new System.Windows.Forms.Label();
-			this.btnQueryNonSelect = new System.Windows.Forms.Button();
 			this.btnIndex = new System.Windows.Forms.Button();
 			this.btnRedisp = new System.Windows.Forms.Button();
 			this.btnTmpAllDsp = new System.Windows.Forms.Button();
 			this.btnEtc = new System.Windows.Forms.Button();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.etcContextMenu = new System.Windows.Forms.ContextMenu();
+			this.menuQuery = new System.Windows.Forms.MenuItem();
+			this.menuProfile = new System.Windows.Forms.MenuItem();
+			this.menuISQL = new System.Windows.Forms.MenuItem();
+			this.menuDependBtn = new System.Windows.Forms.MenuItem();
+			this.menuEPM = new System.Windows.Forms.MenuItem();
+			this.menuRecordCount = new System.Windows.Forms.MenuItem();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -482,7 +492,7 @@ namespace MakeInsert
 			// 
 			// menuISQLW
 			// 
-			this.menuISQLW.Index = 21;
+			this.menuISQLW.Index = -1;
 			this.menuISQLW.Text = "クエリアナライザ起動";
 			this.menuISQLW.Click += new System.EventHandler(this.CallISQLW);
 			// 
@@ -967,15 +977,6 @@ namespace MakeInsert
 			this.label8.TabIndex = 32;
 			this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。";
 			// 
-			// btnQueryNonSelect
-			// 
-			this.btnQueryNonSelect.Location = new System.Drawing.Point(508, 240);
-			this.btnQueryNonSelect.Name = "btnQueryNonSelect";
-			this.btnQueryNonSelect.Size = new System.Drawing.Size(132, 24);
-			this.btnQueryNonSelect.TabIndex = 19;
-			this.btnQueryNonSelect.Text = "クエリ実行(Select以外)";
-			this.btnQueryNonSelect.Click += new System.EventHandler(this.btnQueryNonSelect_Click);
-			// 
 			// btnIndex
 			// 
 			this.btnIndex.Location = new System.Drawing.Point(508, 156);
@@ -1012,6 +1013,52 @@ namespace MakeInsert
 			this.btnEtc.Text = "その他";
 			this.btnEtc.Click += new System.EventHandler(this.btnEtc_Click);
 			// 
+			// etcContextMenu
+			// 
+			this.etcContextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																						   this.menuQuery,
+																						   this.menuISQL,
+																						   this.menuProfile,
+																						   this.menuEPM,
+																						   this.menuDependBtn,
+																						   this.menuRecordCount});
+			// 
+			// menuQuery
+			// 
+			this.menuQuery.Index = 0;
+			this.menuQuery.Text = "簡易クエリ実行（Select以外）";
+			this.menuQuery.Click += new System.EventHandler(this.btnQueryNonSelect_Click);
+			// 
+			// menuProfile
+			// 
+			this.menuProfile.Index = 2;
+			this.menuProfile.Text = "プロファイラ起動";
+			this.menuProfile.Click += new System.EventHandler(this.CallProfile);
+			// 
+			// menuISQL
+			// 
+			this.menuISQL.Index = 1;
+			this.menuISQL.Text = "クエリアナライザ起動";
+			this.menuISQL.Click += new System.EventHandler(this.CallISQLW);
+			// 
+			// menuDependBtn
+			// 
+			this.menuDependBtn.Index = 4;
+			this.menuDependBtn.Text = "依存関係出力";
+			this.menuDependBtn.Click += new System.EventHandler(this.DependOutPut);
+			// 
+			// menuEPM
+			// 
+			this.menuEPM.Index = 3;
+			this.menuEPM.Text = "エンタープライズマネージャー起動";
+			this.menuEPM.Click += new System.EventHandler(this.CallEPM);
+			// 
+			// menuRecordCount
+			// 
+			this.menuRecordCount.Index = 5;
+			this.menuRecordCount.Text = "データ件数出力";
+			this.menuRecordCount.Click += new System.EventHandler(this.RecordCountOutPut);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -1020,7 +1067,6 @@ namespace MakeInsert
 			this.Controls.Add(this.btnTmpAllDsp);
 			this.Controls.Add(this.btnRedisp);
 			this.Controls.Add(this.btnIndex);
-			this.Controls.Add(this.btnQueryNonSelect);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.btnGridFormat);
 			this.Controls.Add(this.label7);
@@ -1088,7 +1134,6 @@ namespace MakeInsert
 			this.Controls.SetChildIndex(this.label7, 0);
 			this.Controls.SetChildIndex(this.btnGridFormat, 0);
 			this.Controls.SetChildIndex(this.label8, 0);
-			this.Controls.SetChildIndex(this.btnQueryNonSelect, 0);
 			this.Controls.SetChildIndex(this.btnIndex, 0);
 			this.Controls.SetChildIndex(this.btnRedisp, 0);
 			this.Controls.SetChildIndex(this.btnTmpAllDsp, 0);
@@ -3577,10 +3622,6 @@ namespace MakeInsert
 			}
 		}
 
-		private void mainContextMenu_Popup(object sender, System.EventArgs e)
-		{
-		}
-
 		private void dbList_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			// DB名のコピー
@@ -3801,7 +3842,7 @@ namespace MakeInsert
 				{
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
@@ -3878,11 +3919,179 @@ namespace MakeInsert
 		
 		}
 
+		/// <summary>
+		/// 選択されたテーブルに関するデータ件数を出力する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RecordCountOutPut(object sender, System.EventArgs e)
+		{
+			SqlDataReader dr = null;
+			SqlCommand	cm = new SqlCommand();
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+			if( this.tableList.SelectedItems.Count > 1 &&
+				this.txtWhere.Text != null &&
+				this.txtWhere.Text != "" )
+			{
+				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+					== System.Windows.Forms.DialogResult.No )
+				{
+					return;
+				}
+			}
+
+			if( CheckFileSpec() == false )
+			{
+				return;
+			}
+
+			this.InitErrMessage();
+
+			int			rowcount = 0;
+			int			trow = 0;
+			try
+			{
+
+				StringBuilder strline =  new StringBuilder();
+				TextWriter	wr = new StringWriter(strline);
+				StringBuilder fname = new StringBuilder();
+
+				if( this.rdoClipboard.Checked == true) 
+				{
+					wr = new StringWriter(strline);
+					wr.WriteLine("テーブル名,データ件数");
+				}
+				else if( this.rdoOutFile.Checked == true ) 
+				{
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+					sw.AutoFlush = false;
+					wr = sw;
+					fname.Append(this.txtOutput.Text);
+					wr.WriteLine("テーブル名,データ件数");
+				}
+
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv.tmp",false, GetEncode());
+						sw.AutoFlush = false;
+						wr = sw;
+						wr.WriteLine("テーブル名,データ件数");
+					}
+					trow = 0;
+					string sqlstr;
+					sqlstr = string.Format("select  count(1) from {0} ",gettbname(tbname));
+					if( this.txtWhere.Text != "" )
+					{
+						sqlstr += " where " + this.txtWhere.Text;
+					}
+
+					cm.CommandText = sqlstr;
+					cm.Connection = this.sqlConnection1;
+
+					dr = cm.ExecuteReader();
+
+					ArrayList fldname = new ArrayList();
+					ArrayList strint = new ArrayList();
+	
+					fldname.Clear();
+					strint.Clear();
+
+
+					// データの書き出し
+					while (dr.Read())
+					{
+						rowcount++;
+						trow++;
+						wr.Write(gettbname(tbname));
+						wr.Write(",");
+						if( dr.IsDBNull(0) )
+						{
+							wr.WriteLine( "0" );
+						}
+						else
+						{
+							wr.WriteLine( dr.GetValue(0).ToString() );
+						}
+					}
+					if( dr != null && dr.IsClosed == false )
+					{
+						dr.Close();
+					}
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						wr.Close();
+						if( trow > 0 )
+						{
+							fname.Append(this.txtOutput.Text + "\\" + tbname + ".csv\r\n");
+							// ファイルを作成したが、空になったので削除する	
+							File.Copy(this.txtOutput.Text + "\\" + tbname + ".csv.tmp", 
+								this.txtOutput.Text + "\\" + tbname + ".csv", 
+								true );
+						}
+						File.Delete(this.txtOutput.Text + "\\" + tbname + ".csv.tmp");
+					}
+				}
+				if( this.rdoOutFolder.Checked == false ) 
+				{
+					wr.Close();
+				}
+				if( rowcount == 0 )
+				{
+					MessageBox.Show("対象データがありませんでした");
+				}
+				else
+				{
+					if( this.rdoClipboard.Checked == true ) 
+					{
+						Clipboard.SetDataObject(strline.ToString(),true );
+					}
+					else
+					{
+						Clipboard.SetDataObject(fname.ToString(),true );
+					}
+					MessageBox.Show("処理を完了しました");
+				}
+			}
+			catch ( System.Data.SqlClient.SqlException se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+				return;
+			}
+			catch( Exception se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+
+			// set datas to clipboard
+		}
+
 		private void btnEtc_Click(object sender, System.EventArgs e)
 		{
-			this.etcContextMenu.MenuItems.Clear();
-			this.etcContextMenu.MenuItems.Add(this.menuDepend);
-			this.etcContextMenu.MenuItems.Add(this.menuISQLW);
+			//this.etcContextMenu.MenuItems.Clear();
+			//this.etcContextMenu.MenuItems.Add(this.menuDepend);
+			//this.etcContextMenu.MenuItems.Add(this.menuQuery);
 
 			this.etcContextMenu.Show(this.btnEtc,new Point(0,0));
 		}
@@ -3933,6 +4142,74 @@ namespace MakeInsert
 			}
 			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
 			isqlProcess.Start();
+		}
+
+		/// <summary>
+		/// 現在接続先のDBを初期値として、クエリアナライザを起動する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CallProfile(object sender, System.EventArgs e)
+		{
+			Process isqlProcess = new Process();
+			isqlProcess.StartInfo.FileName = "profiler.exe";
+			isqlProcess.StartInfo.ErrorDialog = true;
+			if( this.IsUseTruse == true )
+			{
+				if( this.dbList.SelectedItems.Count != 0 )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /D{1} /E ",
+						this.servername,
+						(string)this.dbList.SelectedItem
+						);
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /E ",
+						this.servername
+						);
+				}
+			}
+			else
+			{
+				if( this.dbList.SelectedItems.Count != 0 )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} D{1} /U{2} /P{3} ",
+						this.servername,
+						(string)this.dbList.SelectedItem,
+						this.loginUid,
+						this.loginPasswd );
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} /U{2} /P{3} ",
+						this.servername,
+						this.loginUid,
+						this.loginPasswd );
+				}
+			}
+			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			isqlProcess.Start();
+		}
+
+		/// <summary>
+		/// エンタープライズマネージャーを起動する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CallEPM(object sender, System.EventArgs e)
+		{
+			Process isqlProcess = new Process();
+			isqlProcess.StartInfo.FileName = "SQL Server Enterprise Manager.MSC";
+			isqlProcess.StartInfo.ErrorDialog = true;
+
+			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			isqlProcess.Start();
+		}
+
+		private void mainContextMenu_Popup(object sender, System.EventArgs e)
+		{
+		
 		}
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
