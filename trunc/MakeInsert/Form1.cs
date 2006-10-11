@@ -32,6 +32,7 @@ namespace MakeInsert
 		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.ToolTip toolTip1;
+		private System.Windows.Forms.CheckBox chkTrust;
 		private System.ComponentModel.IContainer components;
 
 		public Form1()
@@ -114,11 +115,12 @@ namespace MakeInsert
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.chkTrust = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(144, 200);
+			this.msgArea.Location = new System.Drawing.Point(144, 240);
 			this.msgArea.Name = "msgArea";
 			this.msgArea.Size = new System.Drawing.Size(376, 24);
 			this.msgArea.TabIndex = 9;
@@ -154,12 +156,12 @@ namespace MakeInsert
 			this.txtInstance.Location = new System.Drawing.Point(144, 96);
 			this.txtInstance.Name = "txtInstance";
 			this.txtInstance.Size = new System.Drawing.Size(208, 19);
-			this.txtInstance.TabIndex = 3;
+			this.txtInstance.TabIndex = 2;
 			this.txtInstance.Text = "";
 			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(40, 136);
+			this.label3.Location = new System.Drawing.Point(40, 168);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(88, 23);
 			this.label3.TabIndex = 4;
@@ -167,7 +169,7 @@ namespace MakeInsert
 			// 
 			// txtUser
 			// 
-			this.txtUser.Location = new System.Drawing.Point(144, 136);
+			this.txtUser.Location = new System.Drawing.Point(144, 168);
 			this.txtUser.Name = "txtUser";
 			this.txtUser.Size = new System.Drawing.Size(208, 19);
 			this.txtUser.TabIndex = 4;
@@ -175,7 +177,7 @@ namespace MakeInsert
 			// 
 			// txtPassword
 			// 
-			this.txtPassword.Location = new System.Drawing.Point(144, 176);
+			this.txtPassword.Location = new System.Drawing.Point(144, 208);
 			this.txtPassword.Name = "txtPassword";
 			this.txtPassword.PasswordChar = '*';
 			this.txtPassword.Size = new System.Drawing.Size(208, 19);
@@ -184,7 +186,7 @@ namespace MakeInsert
 			// 
 			// label4
 			// 
-			this.label4.Location = new System.Drawing.Point(40, 176);
+			this.label4.Location = new System.Drawing.Point(40, 208);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(88, 23);
 			this.label4.TabIndex = 7;
@@ -193,7 +195,7 @@ namespace MakeInsert
 			// btnLogin
 			// 
 			this.btnLogin.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.btnLogin.Location = new System.Drawing.Point(40, 200);
+			this.btnLogin.Location = new System.Drawing.Point(40, 232);
 			this.btnLogin.Name = "btnLogin";
 			this.btnLogin.Size = new System.Drawing.Size(88, 24);
 			this.btnLogin.TabIndex = 6;
@@ -214,24 +216,34 @@ namespace MakeInsert
 			this.checkBox1.Location = new System.Drawing.Point(368, 56);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(128, 16);
-			this.checkBox1.TabIndex = 2;
+			this.checkBox1.TabIndex = 1;
 			this.checkBox1.Text = "接続先を保存する";
 			// 
 			// label5
 			// 
 			this.label5.Font = new System.Drawing.Font("MS UI Gothic", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.label5.Location = new System.Drawing.Point(8, 224);
+			this.label5.Location = new System.Drawing.Point(8, 256);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(48, 16);
 			this.label5.TabIndex = 8;
 			this.label5.Text = "C Info;";
 			this.toolTip1.SetToolTip(this.label5, "Copyright; Y.N(godz)  2004-2006");
 			// 
+			// chkTrust
+			// 
+			this.chkTrust.Location = new System.Drawing.Point(40, 136);
+			this.chkTrust.Name = "chkTrust";
+			this.chkTrust.Size = new System.Drawing.Size(136, 16);
+			this.chkTrust.TabIndex = 3;
+			this.chkTrust.Text = "信頼関係接続を利用";
+			this.chkTrust.CheckedChanged += new System.EventHandler(this.chkTrust_CheckedChanged);
+			// 
 			// Form1
 			// 
 			this.AcceptButton = this.btnLogin;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(528, 238);
+			this.ClientSize = new System.Drawing.Size(528, 269);
+			this.Controls.Add(this.chkTrust);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.checkBox1);
 			this.Controls.Add(this.btnServerHistory);
@@ -260,6 +272,7 @@ namespace MakeInsert
 			this.Controls.SetChildIndex(this.btnServerHistory, 0);
 			this.Controls.SetChildIndex(this.checkBox1, 0);
 			this.Controls.SetChildIndex(this.label5, 0);
+			this.Controls.SetChildIndex(this.chkTrust, 0);
 			this.Controls.SetChildIndex(this.msgArea, 0);
 			this.ResumeLayout(false);
 
@@ -295,16 +308,34 @@ namespace MakeInsert
 		private void btnLogin_Click(object sender, System.EventArgs e)
 		{
 			String myConnString;
-			if( this.txtInstance.Text != "" )
+			if( this.chkTrust.Checked == false )
 			{
-				myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
-					+"Database=master;User ID="+this.txtUser.Text
-					+";Password="+this.txtPassword.Text;			}
+				// ユーザー名での接続
+				if( this.txtInstance.Text != "" )
+				{
+					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
+						+"Database=master;User ID="+this.txtUser.Text
+						+";Password="+this.txtPassword.Text;			}
+				else
+				{
+					myConnString = "Server=" + this.txtServerName.Text + ";"
+						+"Database=master;User ID="+this.txtUser.Text
+						+";Password="+this.txtPassword.Text;
+				}
+			}
 			else
 			{
-				myConnString = "Server=" + this.txtServerName.Text + ";"
-					+"Database=master;User ID="+this.txtUser.Text
-					+";Password="+this.txtPassword.Text;
+				// 信頼関係接続
+				if( this.txtInstance.Text != "" )
+				{
+					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
+						+"Database=master;Integrated Security=SSPI;";
+				}
+				else
+				{
+					myConnString = "Server=" + this.txtServerName.Text + ";"
+						+"Database=master;Integrated Security=SSPI;";
+				}
 			}
 			
 			this.InitErrMessage();
@@ -318,6 +349,7 @@ namespace MakeInsert
 				ServerData sv = new ServerData();
 				sv.Servername = this.txtServerName.Text;
 				sv.InstanceName = this.txtInstance.Text;
+				sv.IsUseTrust = this.chkTrust.Checked;
 				if( initopt.ht[sv.KeyName] == null )
 				{
 					initopt.ht.Add(sv.KeyName,sv);
@@ -338,6 +370,11 @@ namespace MakeInsert
 
 				MainForm mainForm = new MainForm(sv);
 				mainForm.servername = this.txtServerName.Text;
+				mainForm.serverRealName = this.txtServerName.Text;
+				mainForm.instanceName = this.txtInstance.Text;
+				mainForm.loginUid = this.txtUser.Text;
+				mainForm.loginPasswd = this.txtPassword.Text;
+				mainForm.IsUseTruse = this.chkTrust.Checked;
 				if( this.txtInstance.Text != "" )
 				{
 					mainForm.servername = this.txtServerName.Text + "@" + this.txtInstance.Text;
@@ -368,7 +405,21 @@ namespace MakeInsert
 				{
 					this.txtServerName.Text = dlg.selectedServer;
 					this.txtInstance.Text = dlg.selectedInstance;
-					this.txtPassword.Text = "";
+
+					ServerData sv = new ServerData();
+					sv.Servername = this.txtServerName.Text;
+					sv.InstanceName = this.txtInstance.Text;
+
+					ServerData selectSv = (ServerData)this.initopt.ht[sv.KeyName];
+					if( selectSv != null && selectSv.IsUseTrust == true )
+					{
+						this.chkTrust.Checked = true;
+					}
+					else
+					{
+						this.chkTrust.Checked = false;
+						this.txtPassword.Text = "";
+					}
 					this.txtPassword.Focus();
 				}
 			}
@@ -405,6 +456,7 @@ namespace MakeInsert
 						ServerData sv = new ServerData();
 						sv.Servername = this.txtServerName.Text;
 						sv.InstanceName = this.txtInstance.Text;
+						sv.IsUseTrust = this.chkTrust.Checked;
 						initopt.ht.Add(sv.KeyName,sv);
 					}
 					sf.Serialize(fs,(object)initopt);
@@ -427,6 +479,19 @@ namespace MakeInsert
 			}
 		}
 
+		private void chkTrust_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if( this.chkTrust.Checked == true )
+			{
+				this.txtUser.Enabled = false;
+				this.txtPassword.Enabled = false;
+			}
+			else
+			{
+				this.txtUser.Enabled = true;
+				this.txtPassword.Enabled = true;
+			}
+		}
 
 	}
 }

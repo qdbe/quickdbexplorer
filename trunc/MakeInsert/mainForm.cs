@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
 using System.IO;
+using System.Diagnostics;
 
 namespace MakeInsert
 {
@@ -117,12 +118,40 @@ namespace MakeInsert
 		public string servername = "";
 
 		/// <summary>
+		/// 接続先サーバーの本当の名前。インスタンス名を含まない
+		/// </summary>
+		public string serverRealName = "";
+
+		/// <summary>
+		/// 接続先サーバーのインスタンス名
+		/// </summary>
+		public string instanceName = "";
+
+		/// <summary>
+		/// ログインID
+		/// </summary>
+		public string loginUid = "";
+
+		/// <summary>
+		/// ログイン用パスワード
+		/// </summary>
+		public string loginPasswd = "";
+
+		/// <summary>
+		/// 信頼関係接続を利用するか否か
+		/// </summary>
+		public bool IsUseTruse = false;
+
+		/// <summary>
 		/// DB接続情報
 		/// </summary>
 		public System.Data.SqlClient.SqlConnection sqlConnection1;
 		private System.Windows.Forms.MenuItem menuSeparater4;
 		private System.Windows.Forms.MenuItem menuDepend;
 		private System.Windows.Forms.Button btnEtc;
+		private System.Windows.Forms.MenuItem menuISQLW;
+		private System.Windows.Forms.ContextMenu contextMenu1;
+		private System.Windows.Forms.ContextMenu etcContextMenu;
 		
 		/// <summary>
 		/// メニュー情報
@@ -201,6 +230,7 @@ namespace MakeInsert
 			this.menuMakeCSVDQ = new System.Windows.Forms.MenuItem();
 			this.menuSeparater4 = new System.Windows.Forms.MenuItem();
 			this.menuDepend = new System.Windows.Forms.MenuItem();
+			this.menuISQLW = new System.Windows.Forms.MenuItem();
 			this.btnInsert = new System.Windows.Forms.Button();
 			this.btnFieldList = new System.Windows.Forms.Button();
 			this.btnCSV = new System.Windows.Forms.Button();
@@ -261,6 +291,8 @@ namespace MakeInsert
 			this.btnRedisp = new System.Windows.Forms.Button();
 			this.btnTmpAllDsp = new System.Windows.Forms.Button();
 			this.btnEtc = new System.Windows.Forms.Button();
+			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
+			this.etcContextMenu = new System.Windows.Forms.ContextMenu();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -447,6 +479,12 @@ namespace MakeInsert
 			this.menuDepend.Index = 20;
 			this.menuDepend.Text = "依存関係出力";
 			this.menuDepend.Click += new System.EventHandler(this.DependOutPut);
+			// 
+			// menuISQLW
+			// 
+			this.menuISQLW.Index = 21;
+			this.menuISQLW.Text = "クエリアナライザ起動";
+			this.menuISQLW.Click += new System.EventHandler(this.CallISQLW);
 			// 
 			// btnInsert
 			// 
@@ -935,7 +973,7 @@ namespace MakeInsert
 			this.btnQueryNonSelect.Name = "btnQueryNonSelect";
 			this.btnQueryNonSelect.Size = new System.Drawing.Size(132, 24);
 			this.btnQueryNonSelect.TabIndex = 19;
-			this.btnQueryNonSelect.Text = "クエリ実効(Select以外)";
+			this.btnQueryNonSelect.Text = "クエリ実行(Select以外)";
 			this.btnQueryNonSelect.Click += new System.EventHandler(this.btnQueryNonSelect_Click);
 			// 
 			// btnIndex
@@ -3842,30 +3880,59 @@ namespace MakeInsert
 
 		private void btnEtc_Click(object sender, System.EventArgs e)
 		{
-			MenuItem[] list = new MenuItem[] {
-												 this.menuDepend
-											 };
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
+			this.etcContextMenu.MenuItems.Clear();
+			this.etcContextMenu.MenuItems.Add(this.menuDepend);
+			this.etcContextMenu.MenuItems.Add(this.menuISQLW);
+
+			this.etcContextMenu.Show(this.btnEtc,new Point(0,0));
+		}
+
+		/// <summary>
+		/// 現在接続先のDBを初期値として、クエリアナライザを起動する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CallISQLW(object sender, System.EventArgs e)
+		{
+			Process isqlProcess = new Process();
+			isqlProcess.StartInfo.FileName = "isqlw";
+			isqlProcess.StartInfo.ErrorDialog = true;
+			if( this.IsUseTruse == true )
 			{
-				bool isFound = false;
-				foreach( MenuItem mm in list )
+				if( this.dbList.SelectedItems.Count != 0 )
 				{
-					if( m == mm )
-					{
-						isFound = true;
-					}
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E ",
+						this.servername,
+						(string)this.dbList.SelectedItem
+						);
 				}
-				if( isFound == false )
+				else
 				{
-					m.Visible = false;
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E ",
+						this.servername
+						);
 				}
 			}
-			this.mainContextMenu.Show(this.btnEtc,new Point(0,0));
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
+			else
 			{
-				m.Visible = true;
+				if( this.dbList.SelectedItems.Count != 0 )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} ",
+						this.servername,
+						(string)this.dbList.SelectedItem,
+						this.loginUid,
+						this.loginPasswd );
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} ",
+						this.servername,
+						this.loginUid,
+						this.loginPasswd );
+				}
 			}
-		
+			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			isqlProcess.Start();
 		}
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn

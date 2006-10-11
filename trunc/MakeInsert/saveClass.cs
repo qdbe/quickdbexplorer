@@ -23,6 +23,7 @@ namespace MakeInsert
 		public 	Hashtable	griddspcnt;
 		public	Hashtable	txtencode;
 		public	bool	isSaveKey = true;
+		public	bool	IsUseTrust = false;
 
 		public ServerData()
 		{
@@ -30,6 +31,7 @@ namespace MakeInsert
 			isShowsysuser = 0;
 			sortKey = 0;
 			showView = 0;
+			IsUseTrust = false;
 			outdest =  new Hashtable();
 			outfile =  new Hashtable();
 			showgrid =  new Hashtable();
