@@ -150,13 +150,14 @@ namespace MakeInsert
 		private System.Windows.Forms.Button btnEtc;
 		private System.Windows.Forms.ContextMenu etcContextMenu;
 		private System.Windows.Forms.MenuItem menuQuery;
-		private System.Windows.Forms.ContextMenu contextMenu1;
 		private System.Windows.Forms.MenuItem menuProfile;
 		private System.Windows.Forms.MenuItem menuISQL;
 		private System.Windows.Forms.MenuItem menuISQLW;
 		private System.Windows.Forms.MenuItem menuDependBtn;
 		private System.Windows.Forms.MenuItem menuEPM;
 		private System.Windows.Forms.MenuItem menuRecordCount;
+		private System.Windows.Forms.MenuItem menuSeparater5;
+		private System.Windows.Forms.MenuItem menuSeparater6;
 		
 		/// <summary>
 		/// メニュー情報
@@ -295,14 +296,15 @@ namespace MakeInsert
 			this.btnRedisp = new System.Windows.Forms.Button();
 			this.btnTmpAllDsp = new System.Windows.Forms.Button();
 			this.btnEtc = new System.Windows.Forms.Button();
-			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.etcContextMenu = new System.Windows.Forms.ContextMenu();
 			this.menuQuery = new System.Windows.Forms.MenuItem();
-			this.menuProfile = new System.Windows.Forms.MenuItem();
 			this.menuISQL = new System.Windows.Forms.MenuItem();
-			this.menuDependBtn = new System.Windows.Forms.MenuItem();
+			this.menuProfile = new System.Windows.Forms.MenuItem();
 			this.menuEPM = new System.Windows.Forms.MenuItem();
+			this.menuDependBtn = new System.Windows.Forms.MenuItem();
 			this.menuRecordCount = new System.Windows.Forms.MenuItem();
+			this.menuSeparater5 = new System.Windows.Forms.MenuItem();
+			this.menuSeparater6 = new System.Windows.Forms.MenuItem();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -1017,9 +1019,11 @@ namespace MakeInsert
 			// 
 			this.etcContextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																						   this.menuQuery,
+																						   this.menuSeparater5,
 																						   this.menuISQL,
 																						   this.menuProfile,
 																						   this.menuEPM,
+																						   this.menuSeparater6,
 																						   this.menuDependBtn,
 																						   this.menuRecordCount});
 			// 
@@ -1029,35 +1033,45 @@ namespace MakeInsert
 			this.menuQuery.Text = "簡易クエリ実行（Select以外）";
 			this.menuQuery.Click += new System.EventHandler(this.btnQueryNonSelect_Click);
 			// 
-			// menuProfile
-			// 
-			this.menuProfile.Index = 2;
-			this.menuProfile.Text = "プロファイラ起動";
-			this.menuProfile.Click += new System.EventHandler(this.CallProfile);
-			// 
 			// menuISQL
 			// 
-			this.menuISQL.Index = 1;
+			this.menuISQL.Index = 2;
 			this.menuISQL.Text = "クエリアナライザ起動";
 			this.menuISQL.Click += new System.EventHandler(this.CallISQLW);
 			// 
-			// menuDependBtn
+			// menuProfile
 			// 
-			this.menuDependBtn.Index = 4;
-			this.menuDependBtn.Text = "依存関係出力";
-			this.menuDependBtn.Click += new System.EventHandler(this.DependOutPut);
+			this.menuProfile.Index = 3;
+			this.menuProfile.Text = "プロファイラ起動";
+			this.menuProfile.Click += new System.EventHandler(this.CallProfile);
 			// 
 			// menuEPM
 			// 
-			this.menuEPM.Index = 3;
+			this.menuEPM.Index = 4;
 			this.menuEPM.Text = "エンタープライズマネージャー起動";
 			this.menuEPM.Click += new System.EventHandler(this.CallEPM);
 			// 
+			// menuDependBtn
+			// 
+			this.menuDependBtn.Index = 6;
+			this.menuDependBtn.Text = "依存関係出力";
+			this.menuDependBtn.Click += new System.EventHandler(this.DependOutPut);
+			// 
 			// menuRecordCount
 			// 
-			this.menuRecordCount.Index = 5;
+			this.menuRecordCount.Index = 7;
 			this.menuRecordCount.Text = "データ件数出力";
 			this.menuRecordCount.Click += new System.EventHandler(this.RecordCountOutPut);
+			// 
+			// menuSeparater5
+			// 
+			this.menuSeparater5.Index = 1;
+			this.menuSeparater5.Text = "-";
+			// 
+			// menuSeparater6
+			// 
+			this.menuSeparater6.Index = 5;
+			this.menuSeparater6.Text = "-";
 			// 
 			// MainForm
 			// 
