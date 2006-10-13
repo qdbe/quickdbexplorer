@@ -3942,6 +3942,7 @@ namespace MakeInsert
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = 180;
 
 			if( this.tableList.SelectedItems.Count == 0 )
 			{
