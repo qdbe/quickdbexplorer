@@ -158,6 +158,8 @@ namespace MakeInsert
 		private System.Windows.Forms.MenuItem menuRecordCount;
 		private System.Windows.Forms.MenuItem menuSeparater5;
 		private System.Windows.Forms.MenuItem menuSeparater6;
+		private System.Windows.Forms.MenuItem menuMakeTab;
+		private System.Windows.Forms.MenuItem menuMakeTabDQ;
 		
 		/// <summary>
 		/// メニュー情報
@@ -298,13 +300,15 @@ namespace MakeInsert
 			this.btnEtc = new System.Windows.Forms.Button();
 			this.etcContextMenu = new System.Windows.Forms.ContextMenu();
 			this.menuQuery = new System.Windows.Forms.MenuItem();
+			this.menuSeparater5 = new System.Windows.Forms.MenuItem();
 			this.menuISQL = new System.Windows.Forms.MenuItem();
 			this.menuProfile = new System.Windows.Forms.MenuItem();
 			this.menuEPM = new System.Windows.Forms.MenuItem();
+			this.menuSeparater6 = new System.Windows.Forms.MenuItem();
 			this.menuDependBtn = new System.Windows.Forms.MenuItem();
 			this.menuRecordCount = new System.Windows.Forms.MenuItem();
-			this.menuSeparater5 = new System.Windows.Forms.MenuItem();
-			this.menuSeparater6 = new System.Windows.Forms.MenuItem();
+			this.menuMakeTab = new System.Windows.Forms.MenuItem();
+			this.menuMakeTabDQ = new System.Windows.Forms.MenuItem();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -366,6 +370,8 @@ namespace MakeInsert
 																							this.menuSelect,
 																							this.menuMakeCSV,
 																							this.menuMakeCSVDQ,
+																							this.menuMakeTab,
+																							this.menuMakeTabDQ,
 																							this.menuSeparater4,
 																							this.menuDepend});
 			this.mainContextMenu.Popup += new System.EventHandler(this.mainContextMenu_Popup);
@@ -483,12 +489,12 @@ namespace MakeInsert
 			// 
 			// menuSeparater4
 			// 
-			this.menuSeparater4.Index = 19;
+			this.menuSeparater4.Index = 21;
 			this.menuSeparater4.Text = "-";
 			// 
 			// menuDepend
 			// 
-			this.menuDepend.Index = 20;
+			this.menuDepend.Index = 22;
 			this.menuDepend.Text = "依存関係出力";
 			this.menuDepend.Click += new System.EventHandler(this.DependOutPut);
 			// 
@@ -1033,6 +1039,11 @@ namespace MakeInsert
 			this.menuQuery.Text = "簡易クエリ実行（Select以外）";
 			this.menuQuery.Click += new System.EventHandler(this.btnQueryNonSelect_Click);
 			// 
+			// menuSeparater5
+			// 
+			this.menuSeparater5.Index = 1;
+			this.menuSeparater5.Text = "-";
+			// 
 			// menuISQL
 			// 
 			this.menuISQL.Index = 2;
@@ -1051,6 +1062,11 @@ namespace MakeInsert
 			this.menuEPM.Text = "エンタープライズマネージャー起動";
 			this.menuEPM.Click += new System.EventHandler(this.CallEPM);
 			// 
+			// menuSeparater6
+			// 
+			this.menuSeparater6.Index = 5;
+			this.menuSeparater6.Text = "-";
+			// 
 			// menuDependBtn
 			// 
 			this.menuDependBtn.Index = 6;
@@ -1063,15 +1079,17 @@ namespace MakeInsert
 			this.menuRecordCount.Text = "データ件数出力";
 			this.menuRecordCount.Click += new System.EventHandler(this.RecordCountOutPut);
 			// 
-			// menuSeparater5
+			// menuMakeTab
 			// 
-			this.menuSeparater5.Index = 1;
-			this.menuSeparater5.Text = "-";
+			this.menuMakeTab.Index = 19;
+			this.menuMakeTab.Text = "Tab区切出力";
+			this.menuMakeTab.Click += new System.EventHandler(this.menuMakeTab_Click);
 			// 
-			// menuSeparater6
+			// menuMakeTabDQ
 			// 
-			this.menuSeparater6.Index = 5;
-			this.menuSeparater6.Text = "-";
+			this.menuMakeTabDQ.Index = 20;
+			this.menuMakeTabDQ.Text = "Tab区切出力(\"付き)";
+			this.menuMakeTabDQ.Click += new System.EventHandler(this.menuMakeTabDQ_Click);
 			// 
 			// MainForm
 			// 
@@ -1425,7 +1443,9 @@ namespace MakeInsert
 		{
 			MenuItem[] list = new MenuItem[] {
 												 this.menuMakeCSV,
-												 this.menuMakeCSVDQ
+												 this.menuMakeCSVDQ,
+												 this.menuMakeTab,
+												 this.menuMakeTabDQ
 											 };
 			foreach( MenuItem m in this.mainContextMenu.MenuItems )
 			{
@@ -2097,10 +2117,10 @@ namespace MakeInsert
 
 		private void makeCSV(object sender, System.EventArgs e)
 		{
-			crecsv(false);
+			crecsv(false, ",");
 		}
 
-		private void crecsv(bool isdquote)
+		private void crecsv(bool isdquote, string separater)
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
@@ -2204,7 +2224,7 @@ namespace MakeInsert
 					{
 						if( i != 0 )
 						{
-							wr.Write(",");
+							wr.Write(separater);
 						}
 						wr.Write( fldname[i] );
 					}
@@ -2220,7 +2240,7 @@ namespace MakeInsert
 						{
 							if( i != 0 )
 							{
-								wr.Write( "," );
+								wr.Write( separater );
 							}
 							fldtypename = dr.GetDataTypeName(i);
 							if( dr.IsDBNull(i) )
@@ -2359,7 +2379,7 @@ namespace MakeInsert
 
 		private void makeCSVQuote(object sender, System.EventArgs e)
 		{
-			crecsv(true);
+			crecsv(true,",");
 		}
 
 		private void rdoDspView_CheckedChanged(object sender, System.EventArgs e)
@@ -4225,6 +4245,16 @@ namespace MakeInsert
 		private void mainContextMenu_Popup(object sender, System.EventArgs e)
 		{
 		
+		}
+
+		private void menuMakeTab_Click(object sender, System.EventArgs e)
+		{
+			crecsv(false,"	");
+		}
+
+		private void menuMakeTabDQ_Click(object sender, System.EventArgs e)
+		{
+			crecsv(true,"	");
 		}
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
