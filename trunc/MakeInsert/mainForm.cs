@@ -1193,6 +1193,7 @@ namespace MakeInsert
 				this.Text = servername;
 				SqlDataAdapter da = new SqlDataAdapter("SELECT name FROM sysdatabases order by name", this.sqlConnection1);
 				DataSet ds = new DataSet();
+				ds.CaseSensitive = true;
 				da.Fill(ds,"sysdatabases");
 
 				foreach (DataRow row in ds.Tables["sysdatabases"].Rows )
@@ -1899,6 +1900,7 @@ namespace MakeInsert
 					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",gettbname(tbname)), this.sqlConnection1);
 
 					DataSet ds = new DataSet();
+					ds.CaseSensitive = true;
 					da.Fill(ds,tbname);
 	
 					wr.Write(tbname);
@@ -1974,16 +1976,19 @@ namespace MakeInsert
 				sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				DataSet ds = new DataSet();
+				ds.CaseSensitive = true;
 				da.Fill(ds,tbname);
 
 				sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
 					(int)ds.Tables[tbname].Rows[0]["id"] );
 				SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				DataSet idx = new DataSet();
+				idx.CaseSensitive = true;
 				daa.Fill(idx,tbname);
 
 				int indid = -1;
 				DataSet idkey = new DataSet();
+				idkey.CaseSensitive = true;
 				if( dodsp == true && idx.Tables[0].Rows.Count != 0 )
 				{
 					indid = (short)idx.Tables[0].Rows[0]["indid"];
@@ -2454,6 +2459,7 @@ namespace MakeInsert
 					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",gettbname(tbname)), this.sqlConnection1);
 
 					DataSet ds = new DataSet();
+					ds.CaseSensitive = true;
 					da.Fill(ds,tbname);
 	
 					wr.Write("select {0}",wr.NewLine);
@@ -2688,6 +2694,7 @@ namespace MakeInsert
 					sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 					DataSet ds = new DataSet();
+					ds.CaseSensitive = true;
 					da.Fill(ds,tbname);
 
 					int		maxRow = ds.Tables[tbname].Rows.Count;
@@ -2884,6 +2891,7 @@ namespace MakeInsert
 				}
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				dspdt = new DataSet();
+				dspdt.CaseSensitive = true;
 				da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 				da.Fill(dspdt, "aaaa");
 
@@ -3423,6 +3431,7 @@ namespace MakeInsert
 					SqlDataAdapter da = new SqlDataAdapter(Sqldlg.SelectSql, this.sqlConnection1);
 					da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 					dspdt = new DataSet();
+					dspdt.CaseSensitive = true;
 
 					da.Fill(dspdt,"aaaa");
 
@@ -3900,6 +3909,7 @@ namespace MakeInsert
 					sqlstr = "sp_depends N'[" + str[0] +"].[" + str[1] + "]'";
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 					DataSet ds = new DataSet();
+					ds.CaseSensitive = true;
 					da.Fill(ds,tbname);
 
 					if(	ds.Tables.Count != 0 &&
@@ -4141,19 +4151,28 @@ namespace MakeInsert
 			Process isqlProcess = new Process();
 			isqlProcess.StartInfo.FileName = "isqlw";
 			isqlProcess.StartInfo.ErrorDialog = true;
+			string serverstr = "";
+			if( this.instanceName != "" )
+			{
+				serverstr = this.serverRealName + "\\" + this.instanceName;
+			}
+			else
+			{
+				serverstr = this.serverRealName;
+			}
 			if( this.IsUseTruse == true )
 			{
 				if( this.dbList.SelectedItems.Count != 0 )
 				{
 					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E ",
-						this.servername,
+						serverstr,
 						(string)this.dbList.SelectedItem
 						);
 				}
 				else
 				{
 					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E ",
-						this.servername
+						serverstr
 						);
 				}
 			}
@@ -4162,7 +4181,7 @@ namespace MakeInsert
 				if( this.dbList.SelectedItems.Count != 0 )
 				{
 					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} ",
-						this.servername,
+						serverstr,
 						(string)this.dbList.SelectedItem,
 						this.loginUid,
 						this.loginPasswd );
@@ -4170,7 +4189,7 @@ namespace MakeInsert
 				else
 				{
 					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} ",
-						this.servername,
+						serverstr,
 						this.loginUid,
 						this.loginPasswd );
 				}
@@ -4189,19 +4208,28 @@ namespace MakeInsert
 			Process isqlProcess = new Process();
 			isqlProcess.StartInfo.FileName = "profiler.exe";
 			isqlProcess.StartInfo.ErrorDialog = true;
+			string serverstr = "";
+			if( this.instanceName != "" )
+			{
+				serverstr = this.serverRealName + "\\" + this.instanceName;
+			}
+			else
+			{
+				serverstr = this.serverRealName;
+			}
 			if( this.IsUseTruse == true )
 			{
 				if( this.dbList.SelectedItems.Count != 0 )
 				{
 					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /D{1} /E ",
-						this.servername,
+						serverstr,
 						(string)this.dbList.SelectedItem
 						);
 				}
 				else
 				{
 					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /E ",
-						this.servername
+						serverstr
 						);
 				}
 			}
@@ -4210,7 +4238,7 @@ namespace MakeInsert
 				if( this.dbList.SelectedItems.Count != 0 )
 				{
 					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} D{1} /U{2} /P{3} ",
-						this.servername,
+						serverstr,
 						(string)this.dbList.SelectedItem,
 						this.loginUid,
 						this.loginPasswd );
@@ -4218,7 +4246,7 @@ namespace MakeInsert
 				else
 				{
 					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} /U{2} /P{3} ",
-						this.servername,
+						serverstr,
 						this.loginUid,
 						this.loginPasswd );
 				}
