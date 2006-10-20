@@ -160,6 +160,9 @@ namespace MakeInsert
 		private System.Windows.Forms.MenuItem menuSeparater6;
 		private System.Windows.Forms.MenuItem menuMakeTab;
 		private System.Windows.Forms.MenuItem menuMakeTabDQ;
+		private System.Windows.Forms.Button btnWhereZoom;
+		private System.Windows.Forms.Button btnOrderZoom;
+		private System.Windows.Forms.Label label9;
 		
 		/// <summary>
 		/// メニュー情報
@@ -236,6 +239,8 @@ namespace MakeInsert
 			this.menuSelect = new System.Windows.Forms.MenuItem();
 			this.menuMakeCSV = new System.Windows.Forms.MenuItem();
 			this.menuMakeCSVDQ = new System.Windows.Forms.MenuItem();
+			this.menuMakeTab = new System.Windows.Forms.MenuItem();
+			this.menuMakeTabDQ = new System.Windows.Forms.MenuItem();
 			this.menuSeparater4 = new System.Windows.Forms.MenuItem();
 			this.menuDepend = new System.Windows.Forms.MenuItem();
 			this.menuISQLW = new System.Windows.Forms.MenuItem();
@@ -307,8 +312,9 @@ namespace MakeInsert
 			this.menuSeparater6 = new System.Windows.Forms.MenuItem();
 			this.menuDependBtn = new System.Windows.Forms.MenuItem();
 			this.menuRecordCount = new System.Windows.Forms.MenuItem();
-			this.menuMakeTab = new System.Windows.Forms.MenuItem();
-			this.menuMakeTabDQ = new System.Windows.Forms.MenuItem();
+			this.btnWhereZoom = new System.Windows.Forms.Button();
+			this.btnOrderZoom = new System.Windows.Forms.Button();
+			this.label9 = new System.Windows.Forms.Label();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -343,7 +349,7 @@ namespace MakeInsert
 			this.tableList.Name = "tableList";
 			this.tableList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.tableList.Size = new System.Drawing.Size(256, 304);
-			this.tableList.TabIndex = 10;
+			this.tableList.TabIndex = 11;
 			this.tableList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tableList_KeyDown);
 			this.tableList.DoubleClick += new System.EventHandler(this.insertmake);
 			this.tableList.SelectedIndexChanged += new System.EventHandler(this.tableList_SelectedIndexChanged);
@@ -487,6 +493,18 @@ namespace MakeInsert
 			this.menuMakeCSVDQ.Text = "CSV作成(”付き)";
 			this.menuMakeCSVDQ.Click += new System.EventHandler(this.makeCSVQuote);
 			// 
+			// menuMakeTab
+			// 
+			this.menuMakeTab.Index = 19;
+			this.menuMakeTab.Text = "Tab区切出力";
+			this.menuMakeTab.Click += new System.EventHandler(this.menuMakeTab_Click);
+			// 
+			// menuMakeTabDQ
+			// 
+			this.menuMakeTabDQ.Index = 20;
+			this.menuMakeTabDQ.Text = "Tab区切出力(\"付き)";
+			this.menuMakeTabDQ.Click += new System.EventHandler(this.menuMakeTabDQ_Click);
+			// 
 			// menuSeparater4
 			// 
 			this.menuSeparater4.Index = 21;
@@ -508,27 +526,27 @@ namespace MakeInsert
 			// 
 			this.btnInsert.Location = new System.Drawing.Point(508, 16);
 			this.btnInsert.Name = "btnInsert";
-			this.btnInsert.Size = new System.Drawing.Size(132, 24);
-			this.btnInsert.TabIndex = 11;
-			this.btnInsert.Text = "INSERT文作成";
+			this.btnInsert.Size = new System.Drawing.Size(136, 24);
+			this.btnInsert.TabIndex = 12;
+			this.btnInsert.Text = "INSERT文作成(&I)";
 			this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
 			// 
 			// btnFieldList
 			// 
 			this.btnFieldList.Location = new System.Drawing.Point(508, 44);
 			this.btnFieldList.Name = "btnFieldList";
-			this.btnFieldList.Size = new System.Drawing.Size(132, 24);
-			this.btnFieldList.TabIndex = 12;
-			this.btnFieldList.Text = "フィールドリスト作成";
+			this.btnFieldList.Size = new System.Drawing.Size(136, 24);
+			this.btnFieldList.TabIndex = 13;
+			this.btnFieldList.Text = "フィールドリスト作成(&F)";
 			this.btnFieldList.Click += new System.EventHandler(this.btnFieldList_Click);
 			// 
 			// btnCSV
 			// 
 			this.btnCSV.Location = new System.Drawing.Point(508, 128);
 			this.btnCSV.Name = "btnCSV";
-			this.btnCSV.Size = new System.Drawing.Size(132, 24);
-			this.btnCSV.TabIndex = 15;
-			this.btnCSV.Text = "CSV作成";
+			this.btnCSV.Size = new System.Drawing.Size(136, 24);
+			this.btnCSV.TabIndex = 16;
+			this.btnCSV.Text = "CSV作成(&C)";
 			this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
 			// 
 			// rdoDspView
@@ -592,7 +610,7 @@ namespace MakeInsert
 			this.txtWhere.Location = new System.Drawing.Point(72, 480);
 			this.txtWhere.Name = "txtWhere";
 			this.txtWhere.Size = new System.Drawing.Size(144, 19);
-			this.txtWhere.TabIndex = 7;
+			this.txtWhere.TabIndex = 6;
 			this.txtWhere.Text = "";
 			this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
 			// 
@@ -625,9 +643,9 @@ namespace MakeInsert
 			// 
 			this.btnSelect.Location = new System.Drawing.Point(508, 72);
 			this.btnSelect.Name = "btnSelect";
-			this.btnSelect.Size = new System.Drawing.Size(132, 24);
-			this.btnSelect.TabIndex = 13;
-			this.btnSelect.Text = "Select 文生成";
+			this.btnSelect.Size = new System.Drawing.Size(136, 24);
+			this.btnSelect.TabIndex = 14;
+			this.btnSelect.Text = "Select 文生成(&S)";
 			this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
 			// 
 			// ownerListbox
@@ -645,9 +663,9 @@ namespace MakeInsert
 			// 
 			this.btnDDL.Location = new System.Drawing.Point(508, 100);
 			this.btnDDL.Name = "btnDDL";
-			this.btnDDL.Size = new System.Drawing.Size(132, 24);
-			this.btnDDL.TabIndex = 14;
-			this.btnDDL.Text = "簡易定義文生成";
+			this.btnDDL.Size = new System.Drawing.Size(136, 24);
+			this.btnDDL.TabIndex = 15;
+			this.btnDDL.Text = "簡易定義文生成(&D)";
 			this.btnDDL.Click += new System.EventHandler(this.btnDDL_Click);
 			// 
 			// dbGrid
@@ -676,7 +694,7 @@ namespace MakeInsert
 			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
 			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
 			this.dbGrid.Size = new System.Drawing.Size(672, 212);
-			this.dbGrid.TabIndex = 24;
+			this.dbGrid.TabIndex = 27;
 			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
 			// 
 			// chkDspData
@@ -684,7 +702,7 @@ namespace MakeInsert
 			this.chkDspData.Location = new System.Drawing.Point(24, 548);
 			this.chkDspData.Name = "chkDspData";
 			this.chkDspData.Size = new System.Drawing.Size(52, 24);
-			this.chkDspData.TabIndex = 9;
+			this.chkDspData.TabIndex = 10;
 			this.chkDspData.Text = "表示";
 			this.chkDspData.CheckedChanged += new System.EventHandler(this.chkDspData_CheckedChanged);
 			// 
@@ -695,7 +713,7 @@ namespace MakeInsert
 			this.grpDataDspMode.Location = new System.Drawing.Point(8, 532);
 			this.grpDataDspMode.Name = "grpDataDspMode";
 			this.grpDataDspMode.Size = new System.Drawing.Size(216, 44);
-			this.grpDataDspMode.TabIndex = 9;
+			this.grpDataDspMode.TabIndex = 11;
 			this.grpDataDspMode.TabStop = false;
 			this.grpDataDspMode.Text = "データグリッド";
 			// 
@@ -773,7 +791,7 @@ namespace MakeInsert
 			this.btnReference.Name = "btnReference";
 			this.btnReference.Size = new System.Drawing.Size(40, 20);
 			this.btnReference.TabIndex = 4;
-			this.btnReference.Text = "参照";
+			this.btnReference.Text = "参照(&R)";
 			this.btnReference.Click += new System.EventHandler(this.btnReference_Click);
 			// 
 			// txtOutput
@@ -919,7 +937,7 @@ namespace MakeInsert
 			this.chkDspFieldAttr.Name = "chkDspFieldAttr";
 			this.chkDspFieldAttr.Size = new System.Drawing.Size(244, 20);
 			this.chkDspFieldAttr.TabIndex = 22;
-			this.chkDspFieldAttr.Text = "フィールド属性を表示";
+			this.chkDspFieldAttr.Text = "フィールド属性を表示(&Z)";
 			this.chkDspFieldAttr.CheckedChanged += new System.EventHandler(this.chkDspFieldAttr_CheckedChanged);
 			// 
 			// label6
@@ -937,9 +955,9 @@ namespace MakeInsert
 			// 
 			this.btnQuerySelect.Location = new System.Drawing.Point(508, 212);
 			this.btnQuerySelect.Name = "btnQuerySelect";
-			this.btnQuerySelect.Size = new System.Drawing.Size(132, 24);
-			this.btnQuerySelect.TabIndex = 18;
-			this.btnQuerySelect.Text = "クエリ指定結果表示";
+			this.btnQuerySelect.Size = new System.Drawing.Size(136, 24);
+			this.btnQuerySelect.TabIndex = 19;
+			this.btnQuerySelect.Text = "クエリ指定結果表示(&Q)";
 			this.btnQuerySelect.Click += new System.EventHandler(this.btnQuerySelect_Click);
 			// 
 			// btnDataUpdate
@@ -948,7 +966,7 @@ namespace MakeInsert
 			this.btnDataUpdate.Name = "btnDataUpdate";
 			this.btnDataUpdate.Size = new System.Drawing.Size(132, 24);
 			this.btnDataUpdate.TabIndex = 21;
-			this.btnDataUpdate.Text = "データ更新";
+			this.btnDataUpdate.Text = "データ更新(&U)";
 			this.btnDataUpdate.Click += new System.EventHandler(this.btnDataUpdate_Click);
 			// 
 			// btnDataEdit
@@ -957,7 +975,7 @@ namespace MakeInsert
 			this.btnDataEdit.Name = "btnDataEdit";
 			this.btnDataEdit.Size = new System.Drawing.Size(132, 24);
 			this.btnDataEdit.TabIndex = 20;
-			this.btnDataEdit.Text = "データ編集";
+			this.btnDataEdit.Text = "データ編集(&T)";
 			this.btnDataEdit.Click += new System.EventHandler(this.btnDataEdit_Click);
 			// 
 			// label7
@@ -970,11 +988,11 @@ namespace MakeInsert
 			// 
 			// btnGridFormat
 			// 
-			this.btnGridFormat.Location = new System.Drawing.Point(652, 320);
+			this.btnGridFormat.Location = new System.Drawing.Point(752, 320);
 			this.btnGridFormat.Name = "btnGridFormat";
-			this.btnGridFormat.Size = new System.Drawing.Size(132, 20);
-			this.btnGridFormat.TabIndex = 25;
-			this.btnGridFormat.Text = "書式グリッド表示指定";
+			this.btnGridFormat.Size = new System.Drawing.Size(156, 20);
+			this.btnGridFormat.TabIndex = 24;
+			this.btnGridFormat.Text = "書式グリッド表示指定(&G)";
 			this.btnGridFormat.Click += new System.EventHandler(this.btnGridFormat_Click);
 			// 
 			// label8
@@ -989,36 +1007,36 @@ namespace MakeInsert
 			// 
 			this.btnIndex.Location = new System.Drawing.Point(508, 156);
 			this.btnIndex.Name = "btnIndex";
-			this.btnIndex.Size = new System.Drawing.Size(132, 23);
-			this.btnIndex.TabIndex = 16;
-			this.btnIndex.Text = "INDEX情報表示";
+			this.btnIndex.Size = new System.Drawing.Size(136, 23);
+			this.btnIndex.TabIndex = 17;
+			this.btnIndex.Text = "INDEX情報表示(&N)";
 			this.btnIndex.Click += new System.EventHandler(this.btnIndex_Click);
 			// 
 			// btnRedisp
 			// 
-			this.btnRedisp.Location = new System.Drawing.Point(652, 344);
+			this.btnRedisp.Location = new System.Drawing.Point(640, 344);
 			this.btnRedisp.Name = "btnRedisp";
-			this.btnRedisp.Size = new System.Drawing.Size(96, 20);
-			this.btnRedisp.TabIndex = 26;
-			this.btnRedisp.Text = "グリッド再描画";
+			this.btnRedisp.Size = new System.Drawing.Size(108, 20);
+			this.btnRedisp.TabIndex = 25;
+			this.btnRedisp.Text = "グリッド再描画(&L)";
 			this.btnRedisp.Click += new System.EventHandler(this.Redisp_Click);
 			// 
 			// btnTmpAllDsp
 			// 
 			this.btnTmpAllDsp.Location = new System.Drawing.Point(752, 344);
 			this.btnTmpAllDsp.Name = "btnTmpAllDsp";
-			this.btnTmpAllDsp.Size = new System.Drawing.Size(148, 20);
-			this.btnTmpAllDsp.TabIndex = 27;
-			this.btnTmpAllDsp.Text = "一時的に全データを表示";
+			this.btnTmpAllDsp.Size = new System.Drawing.Size(156, 20);
+			this.btnTmpAllDsp.TabIndex = 26;
+			this.btnTmpAllDsp.Text = "一時的に全データを表示(&A)";
 			this.btnTmpAllDsp.Click += new System.EventHandler(this.btnTmpAllDsp_Click);
 			// 
 			// btnEtc
 			// 
 			this.btnEtc.Location = new System.Drawing.Point(508, 184);
 			this.btnEtc.Name = "btnEtc";
-			this.btnEtc.Size = new System.Drawing.Size(132, 23);
-			this.btnEtc.TabIndex = 17;
-			this.btnEtc.Text = "その他";
+			this.btnEtc.Size = new System.Drawing.Size(136, 23);
+			this.btnEtc.TabIndex = 18;
+			this.btnEtc.Text = "その他(&E)";
 			this.btnEtc.Click += new System.EventHandler(this.btnEtc_Click);
 			// 
 			// etcContextMenu
@@ -1079,22 +1097,36 @@ namespace MakeInsert
 			this.menuRecordCount.Text = "データ件数出力";
 			this.menuRecordCount.Click += new System.EventHandler(this.RecordCountOutPut);
 			// 
-			// menuMakeTab
+			// btnWhereZoom
 			// 
-			this.menuMakeTab.Index = 19;
-			this.menuMakeTab.Text = "Tab区切出力";
-			this.menuMakeTab.Click += new System.EventHandler(this.menuMakeTab_Click);
+			this.btnWhereZoom.Location = new System.Drawing.Point(220, 484);
+			this.btnWhereZoom.Name = "btnWhereZoom";
+			this.btnWhereZoom.Size = new System.Drawing.Size(16, 20);
+			this.btnWhereZoom.TabIndex = 7;
+			this.btnWhereZoom.Click += new System.EventHandler(this.btnWhereZoom_Click);
 			// 
-			// menuMakeTabDQ
+			// btnOrderZoom
 			// 
-			this.menuMakeTabDQ.Index = 20;
-			this.menuMakeTabDQ.Text = "Tab区切出力(\"付き)";
-			this.menuMakeTabDQ.Click += new System.EventHandler(this.menuMakeTabDQ_Click);
+			this.btnOrderZoom.Location = new System.Drawing.Point(220, 508);
+			this.btnOrderZoom.Name = "btnOrderZoom";
+			this.btnOrderZoom.Size = new System.Drawing.Size(16, 20);
+			this.btnOrderZoom.TabIndex = 9;
+			this.btnOrderZoom.Click += new System.EventHandler(this.btnOrderZoom_Click);
+			// 
+			// label9
+			// 
+			this.label9.Location = new System.Drawing.Point(644, 328);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(104, 16);
+			this.label9.TabIndex = 33;
+			this.label9.Text = "Ctrl+3で値拡大表示";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(928, 597);
+			this.Controls.Add(this.label9);
+			this.Controls.Add(this.btnWhereZoom);
 			this.Controls.Add(this.btnEtc);
 			this.Controls.Add(this.btnTmpAllDsp);
 			this.Controls.Add(this.btnRedisp);
@@ -1130,11 +1162,13 @@ namespace MakeInsert
 			this.Controls.Add(this.grpDataDspMode);
 			this.Controls.Add(this.grpSysUserMode);
 			this.Controls.Add(this.label5);
+			this.Controls.Add(this.btnOrderZoom);
 			this.Name = "MainForm";
 			this.ShowInTaskbar = false;
 			this.Text = "DataBase選択";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
 			this.Controls.SetChildIndex(this.label5, 0);
 			this.Controls.SetChildIndex(this.grpSysUserMode, 0);
 			this.Controls.SetChildIndex(this.grpDataDspMode, 0);
@@ -1171,6 +1205,8 @@ namespace MakeInsert
 			this.Controls.SetChildIndex(this.btnTmpAllDsp, 0);
 			this.Controls.SetChildIndex(this.msgArea, 0);
 			this.Controls.SetChildIndex(this.btnEtc, 0);
+			this.Controls.SetChildIndex(this.btnWhereZoom, 0);
+			this.Controls.SetChildIndex(this.label9, 0);
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
@@ -1589,7 +1625,7 @@ namespace MakeInsert
 				}
 				if( this.tableList.SelectedItems.Count > 1 &&
 					this.txtWhere.Text != null &&
-					this.txtWhere.Text != "" )
+					this.txtWhere.Text.Trim() != "" )
 				{
 					if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 						== System.Windows.Forms.DialogResult.No )
@@ -1599,7 +1635,7 @@ namespace MakeInsert
 				}
 				if( this.tableList.SelectedItems.Count > 1 &&
 					this.txtSort.Text != null &&
-					this.txtSort.Text != "" )
+					this.txtSort.Text.Trim() != "" )
 				{
 					if( MessageBox.Show("複数テーブルに同一の order by 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 						== System.Windows.Forms.DialogResult.No )
@@ -1653,13 +1689,13 @@ namespace MakeInsert
 					string sqlstr;
 					sqlstr = string.Format("select  * from {0} ",gettbname(tbname));
 					//sqlstr = "select * from [" + tbname + "]";
-					if( this.txtWhere.Text != "" )
+					if( this.txtWhere.Text.Trim() != "" )
 					{
-						sqlstr += " where " + this.txtWhere.Text;
+						sqlstr += " where " + this.txtWhere.Text.Trim();
 					}
-					if( this.txtSort.Text != "" )
+					if( this.txtSort.Text.Trim() != "" )
 					{
-						sqlstr += " order by " + this.txtSort.Text;
+						sqlstr += " order by " + this.txtSort.Text.Trim();
 					}
 					cm.CommandText = sqlstr;
 					cm.Connection = this.sqlConnection1;
@@ -1687,9 +1723,9 @@ namespace MakeInsert
 						string delimStr = ".";
 						string []tbstr = tbname.Split(delimStr.ToCharArray(), 2);
 						wr.Write(string.Format("[{0}].[{1}]",tbstr[0],tbstr[1]));
-						if( this.txtWhere.Text != "" )
+						if( this.txtWhere.Text.Trim() != "" )
 						{
-							wr.Write( " where {0}", this.txtWhere.Text );
+							wr.Write( " where {0}", this.txtWhere.Text.Trim() );
 
 						}
 						wr.Write("{0}GO{0}",wr.NewLine );
@@ -1770,10 +1806,10 @@ namespace MakeInsert
 							{
 								wr.Write( dr.GetDateTime(i).ToString() );
 							}
-//							else if( fldtypename.Equals("money") )
-//							{
-//								wr.Write( dr.GetDouble(i).ToString() );
-//							}
+								//							else if( fldtypename.Equals("money") )
+								//							{
+								//								wr.Write( dr.GetDouble(i).ToString() );
+								//							}
 							else if( fldtypename == "nvarchar" ||
 								fldtypename == "varchar" ||
 								fldtypename == "char" ||
@@ -2136,7 +2172,7 @@ namespace MakeInsert
 			}
 			if( this.tableList.SelectedItems.Count > 1 &&
 				this.txtWhere.Text != null &&
-				this.txtWhere.Text != "" )
+				this.txtWhere.Text.Trim() != "" )
 			{
 				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 					== System.Windows.Forms.DialogResult.No )
@@ -2146,7 +2182,7 @@ namespace MakeInsert
 			}
 			if( this.tableList.SelectedItems.Count > 1 &&
 				this.txtSort.Text != null &&
-				this.txtSort.Text != "" )
+				this.txtSort.Text.Trim() != "" )
 			{
 				if( MessageBox.Show("複数テーブルに同一の order by 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 					== System.Windows.Forms.DialogResult.No )
@@ -2197,13 +2233,13 @@ namespace MakeInsert
 					string sqlstr;
 					sqlstr = string.Format("select  * from {0} ",gettbname(tbname));
 					//sqlstr = "select * from [" + tbname + "]";
-					if( this.txtWhere.Text != "" )
+					if( this.txtWhere.Text.Trim() != "" )
 					{
-						sqlstr += " where " + this.txtWhere.Text;
+						sqlstr += " where " + this.txtWhere.Text.Trim();
 					}
-					if( this.txtSort.Text != "" )
+					if( this.txtSort.Text.Trim() != "" )
 					{
-						sqlstr += " order by " + this.txtSort.Text;
+						sqlstr += " order by " + this.txtSort.Text.Trim();
 					}
 					cm.CommandText = sqlstr;
 					cm.Connection = this.sqlConnection1;
@@ -2475,13 +2511,13 @@ namespace MakeInsert
 					}
 					wr.Write(wr.NewLine);
 					wr.Write(" from {0}{1}", gettbname(tbname),wr.NewLine);
-					if( this.txtWhere.Text != "" )
+					if( this.txtWhere.Text.Trim() != "" )
 					{
-						wr.Write(" where {0}{1}", this.txtWhere.Text,wr.NewLine);
+						wr.Write(" where {0}{1}", this.txtWhere.Text.Trim(),wr.NewLine);
 					}
-					if( this.txtSort.Text != "" )
+					if( this.txtSort.Text.Trim() != "" )
 					{
-						wr.Write(" order by {0}{1}", this.txtSort.Text,wr.NewLine);
+						wr.Write(" order by {0}{1}", this.txtSort.Text.Trim(),wr.NewLine);
 					}
 					if( this.rdoOutFolder.Checked == true ) 
 					{
@@ -2881,13 +2917,13 @@ namespace MakeInsert
 				}
 
 				sqlstr += string.Format(" * from {0}",gettbname(tbname));
-				if( this.txtWhere.Text != "" )
+				if( this.txtWhere.Text.Trim() != "" )
 				{
-					sqlstr += " where " + this.txtWhere.Text;
+					sqlstr += " where " + this.txtWhere.Text.Trim();
 				}
-				if( this.txtSort.Text != "" )
+				if( this.txtSort.Text.Trim() != "" )
 				{
-					sqlstr += " order by " + this.txtSort.Text;
+					sqlstr += " order by " + this.txtSort.Text.Trim();
 				}
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				dspdt = new DataSet();
@@ -2956,7 +2992,7 @@ namespace MakeInsert
 				this.toolTip3.SetToolTip(this.dbGrid,sqlstr);
 				this.dbGrid.SetDataBinding(dspdt, "aaaa");
 				this.dbGrid.Show();
-				this.btnDataEdit.Text = "データ編集";
+				this.btnDataEdit.Text = "データ編集(&T)";
 				this.dbGrid.ReadOnly = true;
 				this.btnDataEdit.BackColor = this.btnBackColor;
 				this.btnDataEdit.ForeColor = this.btnForeColor;
@@ -3141,10 +3177,12 @@ namespace MakeInsert
 				svdata.outdest[svdata.lastdb] = 2;
 			}
 			svdata.outfile[svdata.lastdb] = this.txtOutput.Text;
-			if( this.chkDspData.CheckState == CheckState.Checked ){
+			if( this.chkDspData.CheckState == CheckState.Checked )
+			{
 				svdata.showgrid[svdata.lastdb] = 1;
 			}
-			else{
+			else
+			{
 				svdata.showgrid[svdata.lastdb] = 0;
 			}
 			if( this.rdoUnicode.Checked == true )
@@ -3495,7 +3533,7 @@ namespace MakeInsert
 					this.btnDataEdit.ForeColor = this.btnForeColor;
 					this.btnTmpAllDsp.BackColor = this.btnBackColor;
 					this.btnTmpAllDsp.ForeColor = this.btnForeColor;
-					this.btnDataEdit.Text = "データ編集";
+					this.btnDataEdit.Text = "データ編集(&T)";
 					this.btnDataUpdate.Enabled = true;
 					this.btnDataEdit.Enabled = true;
 					this.btnGridFormat.Enabled = true;
@@ -3546,13 +3584,13 @@ namespace MakeInsert
 
 					sqlstr += string.Format(" * from {0}",gettbname(tbname));
 					//sqlstr += " * from [" + tbname + "]";
-					if( this.txtWhere.Text != "" )
+					if( this.txtWhere.Text.Trim() != "" )
 					{
-						sqlstr += " where " + this.txtWhere.Text;
+						sqlstr += " where " + this.txtWhere.Text.Trim();
 					}
-					if( this.txtSort.Text != "" )
+					if( this.txtSort.Text.Trim() != "" )
 					{
-						sqlstr += " order by " + this.txtSort.Text;
+						sqlstr += " order by " + this.txtSort.Text.Trim();
 					}
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 										
@@ -3583,7 +3621,7 @@ namespace MakeInsert
 				{
 					// 編集可にする
 					this.dbGrid.ReadOnly = false;
-					this.btnDataEdit.Text = "データ編集終了";
+					this.btnDataEdit.Text = "データ編集終了(&T)";
 					this.btnDataEdit.ForeColor = Color.WhiteSmoke;
 					this.btnDataEdit.BackColor = Color.Navy;
 				}
@@ -3594,7 +3632,7 @@ namespace MakeInsert
 						this.dspdt.Tables["aaaa"].GetChanges().Rows.Count == 0 )
 					{
 						this.dbGrid.ReadOnly = true;
-						this.btnDataEdit.Text = "データ編集";
+						this.btnDataEdit.Text = "データ編集(&T)";
 						this.btnDataEdit.BackColor = this.btnBackColor;
 						this.btnDataEdit.ForeColor = this.btnForeColor;
 					}
@@ -3607,7 +3645,7 @@ namespace MakeInsert
 							this.dbGrid.SetDataBinding(dspdt, "aaaa");
 							this.dbGrid.Show();
 							this.dbGrid.ReadOnly = true;
-							this.btnDataEdit.Text = "データ編集";
+							this.btnDataEdit.Text = "データ編集(&T)";
 							this.btnDataEdit.BackColor = this.btnBackColor;
 							this.btnDataEdit.ForeColor = this.btnForeColor;
 						}
@@ -3980,7 +4018,7 @@ namespace MakeInsert
 			}
 			if( this.tableList.SelectedItems.Count > 1 &&
 				this.txtWhere.Text != null &&
-				this.txtWhere.Text != "" )
+				this.txtWhere.Text.Trim() != "" )
 			{
 				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 					== System.Windows.Forms.DialogResult.No )
@@ -4032,9 +4070,9 @@ namespace MakeInsert
 					trow = 0;
 					string sqlstr;
 					sqlstr = string.Format("select  count(1) from {0} ",gettbname(tbname));
-					if( this.txtWhere.Text != "" )
+					if( this.txtWhere.Text.Trim() != "" )
 					{
-						sqlstr += " where " + this.txtWhere.Text;
+						sqlstr += " where " + this.txtWhere.Text.Trim();
 					}
 
 					cm.CommandText = sqlstr;
@@ -4284,6 +4322,37 @@ namespace MakeInsert
 		{
 			crecsv(true,"	");
 		}
+
+		private void btnWhereZoom_Click(object sender, System.EventArgs e)
+		{
+			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+			dlg.EditText = this.txtWhere.Text;
+			dlg.LableName = "where 指定";
+			dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+			dlg.Show();
+			dlg.BringToFront();
+			dlg.Focus();
+		}
+
+		private void dlgWhereZoom_Click(object sender, System.EventArgs e)
+		{
+			this.txtWhere.Text = ((ZoomDialog)sender).EditText;
+		}
+
+		private void btnOrderZoom_Click(object sender, System.EventArgs e)
+		{
+			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+			dlg.EditText = this.txtSort.Text;
+			dlg.LableName = "order by 指定";
+			dlg.Enter += new System.EventHandler(this.dlgSortZoom_Click);
+			dlg.Show();
+			dlg.BringToFront();
+			dlg.Focus();
+		}
+		private void dlgSortZoom_Click(object sender, System.EventArgs e)
+		{
+			this.txtSort.Text = ((ZoomDialog)sender).EditText;
+		}
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
 	{
@@ -4294,12 +4363,36 @@ namespace MakeInsert
 		public MyDataGridTextBoxColumn(bool canset)
 		{
 			this.NullText = "";
-			this.TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.setstringempty);
+			this.TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridKeyDownControler);
 			this.canSetEmptyString = canset;
 		}
 
-		private void setstringempty(object sender, System.Windows.Forms.KeyEventArgs e)
+		private void GridKeyDownControler(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
+			// Ctrl+3 で値の編集ダイアログを表示
+			if(	e.KeyCode == Keys.D3 &&
+				e.Control == true &&
+				e.Alt != true &&
+				e.Shift != true )
+			{
+				ZoomDialog dlg  = new ZoomDialog();
+				dlg.EditText = this.TextBox.Text;
+				if( this.TextBox.ReadOnly == true )
+				{
+					dlg.IsDispOnly = true;
+					dlg.LableName = "値参照";
+				}
+				else
+				{
+					dlg.LableName = "値編集";
+				}
+				if( dlg.ShowDialog() == DialogResult.OK &&
+					dlg.EditText != "" )
+				{
+					this.TextBox.Text = dlg.EditText;
+					SetColumnValueAtRow(this._sorce, this.editrow, dlg.EditText);
+				}
+			}
 			if( this.TextBox.ReadOnly == true )
 			{
 				return;

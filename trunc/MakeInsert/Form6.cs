@@ -96,7 +96,7 @@ namespace MakeInsert
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(72, 24);
 			this.button1.TabIndex = 0;
-			this.button1.Text = "–ß‚é";
+			this.button1.Text = "–ß‚é(&X)";
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// button2
@@ -105,7 +105,7 @@ namespace MakeInsert
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(72, 24);
 			this.button2.TabIndex = 1;
-			this.button2.Text = "Œˆ’è";
+			this.button2.Text = "Œˆ’è(&W)";
 			this.button2.Click += new System.EventHandler(this.button2_Click);
 			// 
 			// label2

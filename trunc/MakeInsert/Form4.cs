@@ -131,7 +131,7 @@ namespace MakeInsert
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(96, 24);
 			this.button1.TabIndex = 1;
-			this.button1.Text = "SQL実行";
+			this.button1.Text = "SQL実行(&W)";
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// button2
@@ -142,7 +142,7 @@ namespace MakeInsert
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(88, 24);
 			this.button2.TabIndex = 2;
-			this.button2.Text = "キャンセル";
+			this.button2.Text = "キャンセル(&X)";
 			// 
 			// Form4
 			// 

@@ -192,6 +192,26 @@
                     DependentUpon = "sqaoBaseForm.cs"
                     BuildAction = "EmbeddedResource"
                 />
+                <File
+                    RelPath = "ZoomDialog.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ZoomDialog.resx"
+                    DependentUpon = "ZoomDialog.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "ZoomFloatingDialog.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ZoomFloatingDialog.resx"
+                    DependentUpon = "ZoomFloatingDialog.cs"
+                    BuildAction = "EmbeddedResource"
+                />
             </Include>
         </Files>
     </CSHARP>

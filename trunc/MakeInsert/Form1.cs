@@ -199,7 +199,7 @@ namespace MakeInsert
 			this.btnLogin.Name = "btnLogin";
 			this.btnLogin.Size = new System.Drawing.Size(88, 24);
 			this.btnLogin.TabIndex = 6;
-			this.btnLogin.Text = "ê⁄ë±";
+			this.btnLogin.Text = "ê⁄ë±(&W)";
 			this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
 			// 
 			// btnServerHistory
