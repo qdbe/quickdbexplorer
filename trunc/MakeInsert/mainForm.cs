@@ -2894,6 +2894,7 @@ namespace MakeInsert
 				}
 
 				int	maxlines;
+				int	maxGetLines;
 				if( this.txtDspCount.Text != "" )
 				{
 					maxlines = int.Parse(this.txtDspCount.Text);
@@ -2911,9 +2912,11 @@ namespace MakeInsert
 				string sqlstr;
 				sqlstr = "select ";
 
+				maxGetLines = 0;
 				if( maxlines != 0 )
 				{
-					sqlstr += " TOP " + this.txtDspCount.Text;
+					maxGetLines = maxlines + 1;
+					sqlstr += " TOP " + maxGetLines.ToString();
 				}
 
 				sqlstr += string.Format(" * from {0}",gettbname(tbname));
@@ -2930,6 +2933,26 @@ namespace MakeInsert
 				dspdt.CaseSensitive = true;
 				da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 				da.Fill(dspdt, "aaaa");
+
+				if( maxlines != 0 )
+				{
+					if( dspdt.Tables["aaaa"].Rows.Count == maxGetLines )
+					{
+						this.btnTmpAllDsp.Enabled = true;
+						dspdt.Tables["aaaa"].Rows[maxGetLines-1].Delete();
+						dspdt.Tables["aaaa"].AcceptChanges();
+					}
+					else
+					{
+						// 取得したデータが表示件数に満たない為、一時的に全データを表示(&A) ボタンは無効でよい
+						this.btnTmpAllDsp.Enabled = false;
+					}
+				}
+				else
+				{
+					// 全件表示する為、一時的に全データを表示(&A) ボタンは無効でよい
+					this.btnTmpAllDsp.Enabled = false;
+				}
 
 				//新しいDataGridTableStyleの作成
 				DataGridTableStyle ts = new DataGridTableStyle();
@@ -3860,6 +3883,7 @@ namespace MakeInsert
 				DspData(this.tableList.SelectedItem.ToString(),true);
 				this.btnTmpAllDsp.ForeColor = Color.WhiteSmoke;
 				this.btnTmpAllDsp.BackColor = Color.Navy;
+				this.btnTmpAllDsp.Enabled = true;
 			}
 			else
 			{
