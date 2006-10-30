@@ -1836,7 +1836,15 @@ namespace dbAdpt
 								}
 								else
 								{
-									wr.Write( "'{0}'", dr.GetString(i) );
+									if( dr.GetString(i).IndexOf("'") >= 0 )
+									{
+										// ' ‚ª•¶š—ñ‚É“ü‚Á‚Ä‚¢‚éê‡‚Í '' ‚É‹­§“I‚É•ÏŠ·‚·‚é
+										wr.Write( "'{0}'", dr.GetString(i).Replace("'","''"));
+									}
+									else
+									{
+										wr.Write( "'{0}'", dr.GetString(i) );
+									}
 								}
 							}
 							else
