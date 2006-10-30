@@ -1830,7 +1830,7 @@ namespace dbAdpt
 								fldtypename == "ntext")
 							{
 								// •¶Žš—ñ
-								if( dr.GetString(i).Equals("") )
+								if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
 								{
 									wr.Write( "''" );
 								}
@@ -2345,7 +2345,18 @@ namespace dbAdpt
 								fldtypename == "ntext")
 							{
 								// •¶Žš—ñ
-								if( !dr.GetString(i).Equals("") )
+								if( dr.GetString(i).Equals("\0") )
+								{
+									if( isdquote )
+									{
+										wr.Write( "\"\"" );
+									}
+									else
+									{
+										wr.Write( "" );
+									}
+								}
+								else if( !dr.GetString(i).Equals("") )
 								{
 									if( isdquote )
 									{
