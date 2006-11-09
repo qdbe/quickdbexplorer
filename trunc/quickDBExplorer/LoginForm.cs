@@ -145,33 +145,33 @@ namespace dbAdpt
 			this.txtServerName.Location = new System.Drawing.Point(144, 56);
 			this.txtServerName.Name = "txtServerName";
 			this.txtServerName.Size = new System.Drawing.Size(208, 19);
-			this.txtServerName.TabIndex = 1;
+			this.txtServerName.TabIndex = 3;
 			this.txtServerName.Text = "(local)";
 			this.txtServerName.TextChanged += new System.EventHandler(this.txtServerName_TextChanged);
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(40, 56);
+			this.label1.Location = new System.Drawing.Point(32, 56);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(88, 23);
-			this.label1.TabIndex = 1;
-			this.label1.Text = "サーバーの指定";
+			this.label1.Size = new System.Drawing.Size(96, 23);
+			this.label1.TabIndex = 2;
+			this.label1.Text = "サーバーの指定(&S)";
 			this.label1.Click += new System.EventHandler(this.label1_Click);
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(40, 96);
+			this.label2.Location = new System.Drawing.Point(32, 96);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(88, 23);
-			this.label2.TabIndex = 2;
-			this.label2.Text = "インスタンス";
+			this.label2.Size = new System.Drawing.Size(96, 23);
+			this.label2.TabIndex = 4;
+			this.label2.Text = "インスタンス(&I)";
 			// 
 			// txtInstance
 			// 
 			this.txtInstance.Location = new System.Drawing.Point(144, 96);
 			this.txtInstance.Name = "txtInstance";
 			this.txtInstance.Size = new System.Drawing.Size(208, 19);
-			this.txtInstance.TabIndex = 2;
+			this.txtInstance.TabIndex = 5;
 			this.txtInstance.Text = "";
 			// 
 			// label3
@@ -179,15 +179,15 @@ namespace dbAdpt
 			this.label3.Location = new System.Drawing.Point(40, 168);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(88, 23);
-			this.label3.TabIndex = 4;
-			this.label3.Text = "ユーザーID";
+			this.label3.TabIndex = 7;
+			this.label3.Text = "ユーザーID(&U)";
 			// 
 			// txtUser
 			// 
 			this.txtUser.Location = new System.Drawing.Point(144, 168);
 			this.txtUser.Name = "txtUser";
 			this.txtUser.Size = new System.Drawing.Size(208, 19);
-			this.txtUser.TabIndex = 4;
+			this.txtUser.TabIndex = 8;
 			this.txtUser.Text = "sa";
 			// 
 			// txtPassword
@@ -196,7 +196,7 @@ namespace dbAdpt
 			this.txtPassword.Name = "txtPassword";
 			this.txtPassword.PasswordChar = '*';
 			this.txtPassword.Size = new System.Drawing.Size(208, 19);
-			this.txtPassword.TabIndex = 5;
+			this.txtPassword.TabIndex = 10;
 			this.txtPassword.Text = "";
 			// 
 			// label4
@@ -204,8 +204,8 @@ namespace dbAdpt
 			this.label4.Location = new System.Drawing.Point(40, 208);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(88, 23);
-			this.label4.TabIndex = 7;
-			this.label4.Text = "パスワード";
+			this.label4.TabIndex = 9;
+			this.label4.Text = "パスワード(&P)";
 			// 
 			// btnLogin
 			// 
@@ -213,7 +213,7 @@ namespace dbAdpt
 			this.btnLogin.Location = new System.Drawing.Point(40, 232);
 			this.btnLogin.Name = "btnLogin";
 			this.btnLogin.Size = new System.Drawing.Size(88, 24);
-			this.btnLogin.TabIndex = 6;
+			this.btnLogin.TabIndex = 11;
 			this.btnLogin.Text = "接続(&W)";
 			this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
 			// 
@@ -223,16 +223,16 @@ namespace dbAdpt
 			this.btnServerHistory.Name = "btnServerHistory";
 			this.btnServerHistory.Size = new System.Drawing.Size(304, 24);
 			this.btnServerHistory.TabIndex = 0;
-			this.btnServerHistory.Text = "過去に接続したサーバーから選択";
+			this.btnServerHistory.Text = "過去に接続したサーバーから選択(&H)";
 			this.btnServerHistory.Click += new System.EventHandler(this.btnServerHistory_Click);
 			// 
 			// checkBox1
 			// 
 			this.checkBox1.Location = new System.Drawing.Point(368, 56);
 			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(128, 16);
+			this.checkBox1.Size = new System.Drawing.Size(144, 16);
 			this.checkBox1.TabIndex = 1;
-			this.checkBox1.Text = "接続先を保存する";
+			this.checkBox1.Text = "接続先を保存する(&R)";
 			// 
 			// label5
 			// 
@@ -249,8 +249,8 @@ namespace dbAdpt
 			this.chkTrust.Location = new System.Drawing.Point(40, 136);
 			this.chkTrust.Name = "chkTrust";
 			this.chkTrust.Size = new System.Drawing.Size(136, 16);
-			this.chkTrust.TabIndex = 3;
-			this.chkTrust.Text = "信頼関係接続を利用";
+			this.chkTrust.TabIndex = 6;
+			this.chkTrust.Text = "信頼関係接続を利用(&T)";
 			this.chkTrust.CheckedChanged += new System.EventHandler(this.chkTrust_CheckedChanged);
 			// 
 			// LoginForm

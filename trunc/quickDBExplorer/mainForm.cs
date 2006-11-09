@@ -164,6 +164,7 @@ namespace dbAdpt
 		private System.Windows.Forms.Button btnOrderZoom;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.CheckBox useCheckBox;
+		private System.Windows.Forms.Label label10;
 		
 		/// <summary>
 		/// メニュー情報
@@ -317,6 +318,7 @@ namespace dbAdpt
 			this.btnOrderZoom = new System.Windows.Forms.Button();
 			this.label9 = new System.Windows.Forms.Label();
 			this.useCheckBox = new System.Windows.Forms.CheckBox();
+			this.label10 = new System.Windows.Forms.Label();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -331,6 +333,7 @@ namespace dbAdpt
 			this.msgArea.Location = new System.Drawing.Point(176, 580);
 			this.msgArea.Name = "msgArea";
 			this.msgArea.Size = new System.Drawing.Size(652, 16);
+			this.msgArea.TabIndex = 36;
 			// 
 			// dbList
 			// 
@@ -338,7 +341,7 @@ namespace dbAdpt
 			this.dbList.Location = new System.Drawing.Point(60, 16);
 			this.dbList.Name = "dbList";
 			this.dbList.Size = new System.Drawing.Size(160, 52);
-			this.dbList.TabIndex = 0;
+			this.dbList.TabIndex = 1;
 			this.dbList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dbList_KeyDown);
 			this.dbList.SelectedIndexChanged += new System.EventHandler(this.dbList_SelectedIndexChanged);
 			// 
@@ -347,11 +350,11 @@ namespace dbAdpt
 			this.tableList.ContextMenu = this.mainContextMenu;
 			this.tableList.HorizontalScrollbar = true;
 			this.tableList.ItemHeight = 12;
-			this.tableList.Location = new System.Drawing.Point(240, 16);
+			this.tableList.Location = new System.Drawing.Point(240, 20);
 			this.tableList.Name = "tableList";
 			this.tableList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.tableList.Size = new System.Drawing.Size(256, 304);
-			this.tableList.TabIndex = 13;
+			this.tableList.Size = new System.Drawing.Size(256, 292);
+			this.tableList.TabIndex = 19;
 			this.tableList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tableList_KeyDown);
 			this.tableList.DoubleClick += new System.EventHandler(this.insertmake);
 			this.tableList.SelectedIndexChanged += new System.EventHandler(this.tableList_SelectedIndexChanged);
@@ -529,7 +532,7 @@ namespace dbAdpt
 			this.btnInsert.Location = new System.Drawing.Point(508, 16);
 			this.btnInsert.Name = "btnInsert";
 			this.btnInsert.Size = new System.Drawing.Size(136, 24);
-			this.btnInsert.TabIndex = 14;
+			this.btnInsert.TabIndex = 20;
 			this.btnInsert.Text = "INSERT文作成(&I)";
 			this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
 			// 
@@ -538,7 +541,7 @@ namespace dbAdpt
 			this.btnFieldList.Location = new System.Drawing.Point(508, 44);
 			this.btnFieldList.Name = "btnFieldList";
 			this.btnFieldList.Size = new System.Drawing.Size(136, 24);
-			this.btnFieldList.TabIndex = 15;
+			this.btnFieldList.TabIndex = 21;
 			this.btnFieldList.Text = "フィールドリスト作成(&F)";
 			this.btnFieldList.Click += new System.EventHandler(this.btnFieldList_Click);
 			// 
@@ -547,7 +550,7 @@ namespace dbAdpt
 			this.btnCSV.Location = new System.Drawing.Point(508, 128);
 			this.btnCSV.Name = "btnCSV";
 			this.btnCSV.Size = new System.Drawing.Size(136, 24);
-			this.btnCSV.TabIndex = 18;
+			this.btnCSV.TabIndex = 24;
 			this.btnCSV.Text = "CSV作成(&C)";
 			this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
 			// 
@@ -567,7 +570,7 @@ namespace dbAdpt
 			this.grpViewMode.Location = new System.Drawing.Point(8, 220);
 			this.grpViewMode.Name = "grpViewMode";
 			this.grpViewMode.Size = new System.Drawing.Size(216, 40);
-			this.grpViewMode.TabIndex = 4;
+			this.grpViewMode.TabIndex = 6;
 			this.grpViewMode.TabStop = false;
 			this.grpViewMode.Text = "VIEWを一覧に";
 			// 
@@ -586,7 +589,7 @@ namespace dbAdpt
 			this.grpSortMode.Location = new System.Drawing.Point(8, 264);
 			this.grpSortMode.Name = "grpSortMode";
 			this.grpSortMode.Size = new System.Drawing.Size(216, 52);
-			this.grpSortMode.TabIndex = 5;
+			this.grpSortMode.TabIndex = 7;
 			this.grpSortMode.TabStop = false;
 			this.grpSortMode.Text = "ソート順";
 			// 
@@ -612,7 +615,7 @@ namespace dbAdpt
 			this.txtWhere.Location = new System.Drawing.Point(72, 480);
 			this.txtWhere.Name = "txtWhere";
 			this.txtWhere.Size = new System.Drawing.Size(144, 19);
-			this.txtWhere.TabIndex = 8;
+			this.txtWhere.TabIndex = 11;
 			this.txtWhere.Text = "";
 			this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
 			// 
@@ -621,33 +624,33 @@ namespace dbAdpt
 			this.txtSort.Location = new System.Drawing.Point(72, 508);
 			this.txtSort.Name = "txtSort";
 			this.txtSort.Size = new System.Drawing.Size(144, 19);
-			this.txtSort.TabIndex = 10;
+			this.txtSort.TabIndex = 14;
 			this.txtSort.Text = "";
 			this.txtSort.Leave += new System.EventHandler(this.txtSort_Leave);
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(16, 480);
+			this.label1.Location = new System.Drawing.Point(8, 480);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(48, 16);
-			this.label1.TabIndex = 13;
-			this.label1.Text = "where";
+			this.label1.Size = new System.Drawing.Size(52, 16);
+			this.label1.TabIndex = 10;
+			this.label1.Text = "where(&W)";
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(16, 508);
+			this.label2.Location = new System.Drawing.Point(8, 508);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(48, 16);
-			this.label2.TabIndex = 14;
-			this.label2.Text = "order by";
+			this.label2.Size = new System.Drawing.Size(64, 16);
+			this.label2.TabIndex = 13;
+			this.label2.Text = "order by(&S)";
 			// 
 			// btnSelect
 			// 
 			this.btnSelect.Location = new System.Drawing.Point(508, 72);
 			this.btnSelect.Name = "btnSelect";
 			this.btnSelect.Size = new System.Drawing.Size(136, 24);
-			this.btnSelect.TabIndex = 16;
-			this.btnSelect.Text = "Select 文生成(&S)";
+			this.btnSelect.TabIndex = 22;
+			this.btnSelect.Text = "Select 文生成(&X)";
 			this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
 			// 
 			// ownerListbox
@@ -657,7 +660,7 @@ namespace dbAdpt
 			this.ownerListbox.Name = "ownerListbox";
 			this.ownerListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.ownerListbox.Size = new System.Drawing.Size(160, 88);
-			this.ownerListbox.TabIndex = 2;
+			this.ownerListbox.TabIndex = 4;
 			this.ownerListbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ownerListbox_KeyDown);
 			this.ownerListbox.SelectedIndexChanged += new System.EventHandler(this.ownerListbox_SelectedIndexChanged);
 			// 
@@ -666,7 +669,7 @@ namespace dbAdpt
 			this.btnDDL.Location = new System.Drawing.Point(508, 100);
 			this.btnDDL.Name = "btnDDL";
 			this.btnDDL.Size = new System.Drawing.Size(136, 24);
-			this.btnDDL.TabIndex = 17;
+			this.btnDDL.TabIndex = 23;
 			this.btnDDL.Text = "簡易定義文生成(&D)";
 			this.btnDDL.Click += new System.EventHandler(this.btnDDL_Click);
 			// 
@@ -696,7 +699,7 @@ namespace dbAdpt
 			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
 			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
 			this.dbGrid.Size = new System.Drawing.Size(672, 212);
-			this.dbGrid.TabIndex = 29;
+			this.dbGrid.TabIndex = 35;
 			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
 			// 
 			// chkDspData
@@ -704,7 +707,7 @@ namespace dbAdpt
 			this.chkDspData.Location = new System.Drawing.Point(24, 548);
 			this.chkDspData.Name = "chkDspData";
 			this.chkDspData.Size = new System.Drawing.Size(52, 24);
-			this.chkDspData.TabIndex = 12;
+			this.chkDspData.TabIndex = 17;
 			this.chkDspData.Text = "表示";
 			this.chkDspData.CheckedChanged += new System.EventHandler(this.chkDspData_CheckedChanged);
 			// 
@@ -715,7 +718,7 @@ namespace dbAdpt
 			this.grpDataDspMode.Location = new System.Drawing.Point(8, 532);
 			this.grpDataDspMode.Name = "grpDataDspMode";
 			this.grpDataDspMode.Size = new System.Drawing.Size(216, 44);
-			this.grpDataDspMode.TabIndex = 11;
+			this.grpDataDspMode.TabIndex = 16;
 			this.grpDataDspMode.TabStop = false;
 			this.grpDataDspMode.Text = "データグリッド";
 			// 
@@ -728,7 +731,7 @@ namespace dbAdpt
 			this.txtDspCount.MaxLength = 300;
 			this.txtDspCount.Name = "txtDspCount";
 			this.txtDspCount.Size = new System.Drawing.Size(72, 19);
-			this.txtDspCount.TabIndex = 0;
+			this.txtDspCount.TabIndex = 1;
 			this.txtDspCount.Text = "1000";
 			this.txtDspCount.TextChanged += new System.EventHandler(this.txtDspCount_TextChanged);
 			this.txtDspCount.Leave += new System.EventHandler(this.txtDspCount_Leave);
@@ -749,7 +752,7 @@ namespace dbAdpt
 			this.grpSysUserMode.Location = new System.Drawing.Point(8, 176);
 			this.grpSysUserMode.Name = "grpSysUserMode";
 			this.grpSysUserMode.Size = new System.Drawing.Size(216, 40);
-			this.grpSysUserMode.TabIndex = 3;
+			this.grpSysUserMode.TabIndex = 5;
 			this.grpSysUserMode.TabStop = false;
 			this.grpSysUserMode.Text = "システムユーザーを";
 			// 
@@ -783,7 +786,7 @@ namespace dbAdpt
 			this.grpOutputMode.Location = new System.Drawing.Point(8, 324);
 			this.grpOutputMode.Name = "grpOutputMode";
 			this.grpOutputMode.Size = new System.Drawing.Size(216, 84);
-			this.grpOutputMode.TabIndex = 6;
+			this.grpOutputMode.TabIndex = 8;
 			this.grpOutputMode.TabStop = false;
 			this.grpOutputMode.Text = "出力先";
 			// 
@@ -837,16 +840,16 @@ namespace dbAdpt
 			this.label4.Location = new System.Drawing.Point(8, 28);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(48, 32);
-			this.label4.TabIndex = 25;
-			this.label4.Text = "DB";
+			this.label4.TabIndex = 0;
+			this.label4.Text = "DB(&B)";
 			// 
 			// label5
 			// 
 			this.label5.Location = new System.Drawing.Point(4, 80);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(48, 32);
-			this.label5.TabIndex = 25;
-			this.label5.Text = "owner/Role";
+			this.label5.TabIndex = 3;
+			this.label5.Text = "owner/Role(&O)";
 			// 
 			// fieldListbox
 			// 
@@ -859,7 +862,7 @@ namespace dbAdpt
 			this.fieldListbox.Name = "fieldListbox";
 			this.fieldListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.fieldListbox.Size = new System.Drawing.Size(240, 268);
-			this.fieldListbox.TabIndex = 25;
+			this.fieldListbox.TabIndex = 31;
 			this.fieldListbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fieldListbox_KeyDown);
 			// 
 			// fldContextMenu
@@ -902,7 +905,7 @@ namespace dbAdpt
 			this.grpCharaSet.Location = new System.Drawing.Point(8, 412);
 			this.grpCharaSet.Name = "grpCharaSet";
 			this.grpCharaSet.Size = new System.Drawing.Size(216, 60);
-			this.grpCharaSet.TabIndex = 7;
+			this.grpCharaSet.TabIndex = 9;
 			this.grpCharaSet.TabStop = false;
 			this.grpCharaSet.Text = "出力文字コード";
 			// 
@@ -935,10 +938,10 @@ namespace dbAdpt
 			// 
 			// chkDspFieldAttr
 			// 
-			this.chkDspFieldAttr.Location = new System.Drawing.Point(652, 12);
+			this.chkDspFieldAttr.Location = new System.Drawing.Point(656, 16);
 			this.chkDspFieldAttr.Name = "chkDspFieldAttr";
 			this.chkDspFieldAttr.Size = new System.Drawing.Size(244, 20);
-			this.chkDspFieldAttr.TabIndex = 24;
+			this.chkDspFieldAttr.TabIndex = 30;
 			this.chkDspFieldAttr.Text = "フィールド属性を表示(&Z)";
 			this.chkDspFieldAttr.CheckedChanged += new System.EventHandler(this.chkDspFieldAttr_CheckedChanged);
 			// 
@@ -958,7 +961,7 @@ namespace dbAdpt
 			this.btnQuerySelect.Location = new System.Drawing.Point(508, 212);
 			this.btnQuerySelect.Name = "btnQuerySelect";
 			this.btnQuerySelect.Size = new System.Drawing.Size(136, 24);
-			this.btnQuerySelect.TabIndex = 21;
+			this.btnQuerySelect.TabIndex = 27;
 			this.btnQuerySelect.Text = "クエリ指定結果表示(&Q)";
 			this.btnQuerySelect.Click += new System.EventHandler(this.btnQuerySelect_Click);
 			// 
@@ -967,7 +970,7 @@ namespace dbAdpt
 			this.btnDataUpdate.Location = new System.Drawing.Point(508, 296);
 			this.btnDataUpdate.Name = "btnDataUpdate";
 			this.btnDataUpdate.Size = new System.Drawing.Size(132, 24);
-			this.btnDataUpdate.TabIndex = 23;
+			this.btnDataUpdate.TabIndex = 29;
 			this.btnDataUpdate.Text = "データ更新(&U)";
 			this.btnDataUpdate.Click += new System.EventHandler(this.btnDataUpdate_Click);
 			// 
@@ -976,7 +979,7 @@ namespace dbAdpt
 			this.btnDataEdit.Location = new System.Drawing.Point(508, 268);
 			this.btnDataEdit.Name = "btnDataEdit";
 			this.btnDataEdit.Size = new System.Drawing.Size(132, 24);
-			this.btnDataEdit.TabIndex = 22;
+			this.btnDataEdit.TabIndex = 28;
 			this.btnDataEdit.Text = "データ編集(&T)";
 			this.btnDataEdit.Click += new System.EventHandler(this.btnDataEdit_Click);
 			// 
@@ -993,7 +996,7 @@ namespace dbAdpt
 			this.btnGridFormat.Location = new System.Drawing.Point(752, 320);
 			this.btnGridFormat.Name = "btnGridFormat";
 			this.btnGridFormat.Size = new System.Drawing.Size(156, 20);
-			this.btnGridFormat.TabIndex = 27;
+			this.btnGridFormat.TabIndex = 33;
 			this.btnGridFormat.Text = "書式グリッド表示指定(&G)";
 			this.btnGridFormat.Click += new System.EventHandler(this.btnGridFormat_Click);
 			// 
@@ -1010,7 +1013,7 @@ namespace dbAdpt
 			this.btnIndex.Location = new System.Drawing.Point(508, 156);
 			this.btnIndex.Name = "btnIndex";
 			this.btnIndex.Size = new System.Drawing.Size(136, 23);
-			this.btnIndex.TabIndex = 19;
+			this.btnIndex.TabIndex = 25;
 			this.btnIndex.Text = "INDEX情報表示(&N)";
 			this.btnIndex.Click += new System.EventHandler(this.btnIndex_Click);
 			// 
@@ -1019,7 +1022,7 @@ namespace dbAdpt
 			this.btnRedisp.Location = new System.Drawing.Point(640, 344);
 			this.btnRedisp.Name = "btnRedisp";
 			this.btnRedisp.Size = new System.Drawing.Size(108, 20);
-			this.btnRedisp.TabIndex = 26;
+			this.btnRedisp.TabIndex = 32;
 			this.btnRedisp.Text = "グリッド再描画(&L)";
 			this.btnRedisp.Click += new System.EventHandler(this.Redisp_Click);
 			// 
@@ -1028,7 +1031,7 @@ namespace dbAdpt
 			this.btnTmpAllDsp.Location = new System.Drawing.Point(752, 344);
 			this.btnTmpAllDsp.Name = "btnTmpAllDsp";
 			this.btnTmpAllDsp.Size = new System.Drawing.Size(156, 20);
-			this.btnTmpAllDsp.TabIndex = 28;
+			this.btnTmpAllDsp.TabIndex = 34;
 			this.btnTmpAllDsp.Text = "一時的に全データを表示(&A)";
 			this.btnTmpAllDsp.Click += new System.EventHandler(this.btnTmpAllDsp_Click);
 			// 
@@ -1037,7 +1040,7 @@ namespace dbAdpt
 			this.btnEtc.Location = new System.Drawing.Point(508, 184);
 			this.btnEtc.Name = "btnEtc";
 			this.btnEtc.Size = new System.Drawing.Size(136, 23);
-			this.btnEtc.TabIndex = 20;
+			this.btnEtc.TabIndex = 26;
 			this.btnEtc.Text = "その他(&E)";
 			this.btnEtc.Click += new System.EventHandler(this.btnEtc_Click);
 			// 
@@ -1104,7 +1107,7 @@ namespace dbAdpt
 			this.btnWhereZoom.Location = new System.Drawing.Point(220, 484);
 			this.btnWhereZoom.Name = "btnWhereZoom";
 			this.btnWhereZoom.Size = new System.Drawing.Size(16, 20);
-			this.btnWhereZoom.TabIndex = 9;
+			this.btnWhereZoom.TabIndex = 12;
 			this.btnWhereZoom.Click += new System.EventHandler(this.btnWhereZoom_Click);
 			// 
 			// btnOrderZoom
@@ -1112,7 +1115,7 @@ namespace dbAdpt
 			this.btnOrderZoom.Location = new System.Drawing.Point(220, 508);
 			this.btnOrderZoom.Name = "btnOrderZoom";
 			this.btnOrderZoom.Size = new System.Drawing.Size(16, 20);
-			this.btnOrderZoom.TabIndex = 11;
+			this.btnOrderZoom.TabIndex = 15;
 			this.btnOrderZoom.Click += new System.EventHandler(this.btnOrderZoom_Click);
 			// 
 			// label9
@@ -1128,14 +1131,23 @@ namespace dbAdpt
 			this.useCheckBox.Location = new System.Drawing.Point(0, 124);
 			this.useCheckBox.Name = "useCheckBox";
 			this.useCheckBox.Size = new System.Drawing.Size(56, 36);
-			this.useCheckBox.TabIndex = 1;
+			this.useCheckBox.TabIndex = 2;
 			this.useCheckBox.Text = "CheckList";
 			this.useCheckBox.CheckedChanged += new System.EventHandler(this.useCheckBox_CheckedChanged);
+			// 
+			// label10
+			// 
+			this.label10.Location = new System.Drawing.Point(240, 4);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(152, 16);
+			this.label10.TabIndex = 18;
+			this.label10.Text = "Table/View(&V)";
 			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(928, 597);
+			this.Controls.Add(this.label10);
 			this.Controls.Add(this.useCheckBox);
 			this.Controls.Add(this.label9);
 			this.Controls.Add(this.btnWhereZoom);
@@ -1220,6 +1232,7 @@ namespace dbAdpt
 			this.Controls.SetChildIndex(this.btnWhereZoom, 0);
 			this.Controls.SetChildIndex(this.label9, 0);
 			this.Controls.SetChildIndex(this.useCheckBox, 0);
+			this.Controls.SetChildIndex(this.label10, 0);
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
@@ -1839,17 +1852,17 @@ namespace dbAdpt
 									if( dr.GetString(i).IndexOf("'") >= 0 )
 									{
 										// ' が文字列に入っている場合は '' に強制的に変換する
-										wr.Write( "'{0}'", dr.GetString(i).Replace("'","''"));
+										wr.Write( "'{0}'", dr.GetString(i).Replace("'","''").Replace("\0",""));
 									}
 									else
 									{
-										wr.Write( "'{0}'", dr.GetString(i) );
+										wr.Write( "'{0}'", dr.GetString(i).Replace("\0","") );
 									}
 								}
 							}
 							else
 							{
-								wr.Write( dr.GetValue(i).ToString() );
+								wr.Write( dr.GetValue(i).ToString().Replace("\0","") );
 							}
 						}
 						wr.Write( " ) {0}",wr.NewLine );
@@ -2368,17 +2381,17 @@ namespace dbAdpt
 								{
 									if( isdquote )
 									{
-										wr.Write( "\"{0}\"", dr.GetString(i) );
+										wr.Write( "\"{0}\"", dr.GetString(i).Replace("\0","") );
 									}
 									else
 									{
-										wr.Write( dr.GetString(i) );
+										wr.Write( dr.GetString(i).Replace("\0","") );
 									}
 								}
 							}
 							else
 							{
-								wr.Write( dr.GetValue(i).ToString() );
+								wr.Write( dr.GetValue(i).ToString().Replace("\0","") );
 							}
 						}
 						wr.Write( wr.NewLine );
