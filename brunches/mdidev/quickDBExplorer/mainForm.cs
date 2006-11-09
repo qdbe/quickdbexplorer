@@ -1133,6 +1133,7 @@ namespace quickDBExplorer
 			this.useCheckBox.Size = new System.Drawing.Size(56, 36);
 			this.useCheckBox.TabIndex = 2;
 			this.useCheckBox.Text = "CheckList";
+			this.useCheckBox.Visible = false;
 			this.useCheckBox.CheckedChanged += new System.EventHandler(this.useCheckBox_CheckedChanged);
 			// 
 			// label10

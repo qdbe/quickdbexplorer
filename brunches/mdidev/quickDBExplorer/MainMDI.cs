@@ -131,6 +131,7 @@ namespace quickDBExplorer
 			}
 			logindlg.MdiParent = this;
 			logindlg.Show();
+			logindlg.Focus();
 		}
 	}
 }
