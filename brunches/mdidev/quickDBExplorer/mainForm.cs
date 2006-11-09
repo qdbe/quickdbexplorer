@@ -1190,6 +1190,7 @@ namespace quickDBExplorer
 			this.Name = "MainForm";
 			this.ShowInTaskbar = false;
 			this.Text = "DataBaseëIë";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
@@ -1436,7 +1437,7 @@ namespace quickDBExplorer
 			{
 				this.rdoUnicode.Checked = true;
 			}
-			
+			this.Text = servername + "@" + (string)this.dbList.SelectedItem;
 		}
 
 		// INSERTï∂ê∂ê¨

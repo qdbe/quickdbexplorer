@@ -128,13 +128,13 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "LoginForm.cs"
+                    RelPath = "LoginDialog.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "LoginForm.resx"
-                    DependentUpon = "LoginForm.cs"
+                    RelPath = "LoginDialog.resx"
+                    DependentUpon = "LoginDialog.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
@@ -145,6 +145,16 @@
                 <File
                     RelPath = "mainForm.resx"
                     DependentUpon = "mainForm.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "MainMDI.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "MainMDI.resx"
+                    DependentUpon = "MainMDI.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
