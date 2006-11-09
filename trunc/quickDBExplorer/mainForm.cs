@@ -165,6 +165,8 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.CheckBox useCheckBox;
 		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.MenuItem menuInsertDeleteTaihi;
+		private System.Windows.Forms.MenuItem menuInsertNoFldDeleteTaihi;
 		
 		/// <summary>
 		/// メニュー情報
@@ -228,6 +230,8 @@ namespace quickDBExplorer
 			this.menuInsertDelete = new System.Windows.Forms.MenuItem();
 			this.menuInsertNoFld = new System.Windows.Forms.MenuItem();
 			this.menuInsertNoFldDelete = new System.Windows.Forms.MenuItem();
+			this.menuInsertDeleteTaihi = new System.Windows.Forms.MenuItem();
+			this.menuInsertNoFldDeleteTaihi = new System.Windows.Forms.MenuItem();
 			this.menuSeparater1 = new System.Windows.Forms.MenuItem();
 			this.menuMakeFld = new System.Windows.Forms.MenuItem();
 			this.menuMakeFldCRLF = new System.Windows.Forms.MenuItem();
@@ -368,6 +372,8 @@ namespace quickDBExplorer
 																							this.menuInsertDelete,
 																							this.menuInsertNoFld,
 																							this.menuInsertNoFldDelete,
+																							this.menuInsertDeleteTaihi,
+																							this.menuInsertNoFldDeleteTaihi,
 																							this.menuSeparater1,
 																							this.menuMakeFld,
 																							this.menuMakeFldCRLF,
@@ -423,101 +429,113 @@ namespace quickDBExplorer
 			this.menuInsertNoFldDelete.Text = "INSERT文作成(フィールドリストなし　DELETE文付き)";
 			this.menuInsertNoFldDelete.Click += new System.EventHandler(this.insertmakeNoFieldDelete);
 			// 
+			// menuInsertDeleteTaihi
+			// 
+			this.menuInsertDeleteTaihi.Index = 6;
+			this.menuInsertDeleteTaihi.Text = "INSERT文作成(DELETE文付き、退避付き)";
+			this.menuInsertDeleteTaihi.Click += new System.EventHandler(this.menuInsertDeleteTaihi_Click);
+			// 
+			// menuInsertNoFldDeleteTaihi
+			// 
+			this.menuInsertNoFldDeleteTaihi.Index = 7;
+			this.menuInsertNoFldDeleteTaihi.Text = "INSERT文作成(フィールドなし DELETE文付き 退避付き)";
+			this.menuInsertNoFldDeleteTaihi.Click += new System.EventHandler(this.menuInsertNoFldDeleteTaihi_Click);
+			// 
 			// menuSeparater1
 			// 
-			this.menuSeparater1.Index = 6;
+			this.menuSeparater1.Index = 8;
 			this.menuSeparater1.Text = "-";
 			// 
 			// menuMakeFld
 			// 
-			this.menuMakeFld.Index = 7;
+			this.menuMakeFld.Index = 9;
 			this.menuMakeFld.Text = "フィールドリスト作成";
 			this.menuMakeFld.Click += new System.EventHandler(this.makefldlist);
 			// 
 			// menuMakeFldCRLF
 			// 
-			this.menuMakeFldCRLF.Index = 8;
+			this.menuMakeFldCRLF.Index = 10;
 			this.menuMakeFldCRLF.Text = "フィールドリスト改行作成";
 			this.menuMakeFldCRLF.Click += new System.EventHandler(this.makefldListLF);
 			// 
 			// menuMakeFldNoComma
 			// 
-			this.menuMakeFldNoComma.Index = 9;
+			this.menuMakeFldNoComma.Index = 11;
 			this.menuMakeFldNoComma.Text = "フィールドリストカンマなし作成";
 			this.menuMakeFldNoComma.Click += new System.EventHandler(this.makefldListNoComma);
 			// 
 			// menuSeparater2
 			// 
-			this.menuSeparater2.Index = 10;
+			this.menuSeparater2.Index = 12;
 			this.menuSeparater2.Text = "-";
 			// 
 			// menuDDL
 			// 
-			this.menuDDL.Index = 11;
+			this.menuDDL.Index = 13;
 			this.menuDDL.Text = "簡易定義文生成";
 			this.menuDDL.Click += new System.EventHandler(this.makeDDL);
 			// 
 			// menuDDLDrop
 			// 
-			this.menuDDLDrop.Index = 12;
+			this.menuDDLDrop.Index = 14;
 			this.menuDDLDrop.Text = "簡易定義文生成 DROP文付き";
 			this.menuDDLDrop.Click += new System.EventHandler(this.makeDDLDrop);
 			// 
 			// menuDDLPare
 			// 
-			this.menuDDLPare.Index = 13;
+			this.menuDDLPare.Index = 15;
 			this.menuDDLPare.Text = "簡易定義文生成([]付き)";
 			this.menuDDLPare.Click += new System.EventHandler(this.makeDDLPare);
 			// 
 			// menuDDLDropPare
 			// 
-			this.menuDDLDropPare.Index = 14;
+			this.menuDDLDropPare.Index = 16;
 			this.menuDDLDropPare.Text = "簡易定義文生成( DROP []付き)";
 			this.menuDDLDropPare.Click += new System.EventHandler(this.makeDDLDropPare);
 			// 
 			// menuSeparater3
 			// 
-			this.menuSeparater3.Index = 15;
+			this.menuSeparater3.Index = 17;
 			this.menuSeparater3.Text = "-";
 			// 
 			// menuSelect
 			// 
-			this.menuSelect.Index = 16;
+			this.menuSelect.Index = 18;
 			this.menuSelect.Text = "Select文生成";
 			this.menuSelect.Click += new System.EventHandler(this.btnSelect_Click);
 			// 
 			// menuMakeCSV
 			// 
-			this.menuMakeCSV.Index = 17;
+			this.menuMakeCSV.Index = 19;
 			this.menuMakeCSV.Text = "CSV作成";
 			this.menuMakeCSV.Click += new System.EventHandler(this.makeCSV);
 			// 
 			// menuMakeCSVDQ
 			// 
-			this.menuMakeCSVDQ.Index = 18;
+			this.menuMakeCSVDQ.Index = 20;
 			this.menuMakeCSVDQ.Text = "CSV作成(”付き)";
 			this.menuMakeCSVDQ.Click += new System.EventHandler(this.makeCSVQuote);
 			// 
 			// menuMakeTab
 			// 
-			this.menuMakeTab.Index = 19;
+			this.menuMakeTab.Index = 21;
 			this.menuMakeTab.Text = "Tab区切出力";
 			this.menuMakeTab.Click += new System.EventHandler(this.menuMakeTab_Click);
 			// 
 			// menuMakeTabDQ
 			// 
-			this.menuMakeTabDQ.Index = 20;
+			this.menuMakeTabDQ.Index = 22;
 			this.menuMakeTabDQ.Text = "Tab区切出力(\"付き)";
 			this.menuMakeTabDQ.Click += new System.EventHandler(this.menuMakeTabDQ_Click);
 			// 
 			// menuSeparater4
 			// 
-			this.menuSeparater4.Index = 21;
+			this.menuSeparater4.Index = 23;
 			this.menuSeparater4.Text = "-";
 			// 
 			// menuDepend
 			// 
-			this.menuDepend.Index = 22;
+			this.menuDepend.Index = 24;
 			this.menuDepend.Text = "依存関係出力";
 			this.menuDepend.Click += new System.EventHandler(this.DependOutPut);
 			// 
@@ -1563,7 +1581,7 @@ namespace quickDBExplorer
 
 		private void insertmake(object sender, System.EventArgs e)
 		{
-			this.CreInsert(true,false);
+			this.CreInsert(true,false,false);
 		}
 
 		private bool CheckFileSpec()
@@ -1639,7 +1657,7 @@ namespace quickDBExplorer
 			return true;
 		}
 
-		private void CreInsert(bool fieldlst, bool deletefrom)
+		private void CreInsert(bool fieldlst, bool deletefrom, bool isTaihi)
 		{
 			try
 			{
@@ -1742,6 +1760,17 @@ namespace quickDBExplorer
 						strint.Add( dr.GetFieldType(j) );
 					}
 					//ds.Tables[tbname].Columns.Count;
+
+					if( isTaihi == true )
+					{
+						string taihistr = 
+						String.Format(" select * into {1} from {0} \r\n",
+							gettbname(tbname),
+							"SV"+gettbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd")) 
+							);
+						wr.Write(taihistr);
+
+					}
 
 					if( deletefrom == true && dr.HasRows == true)
 					{
@@ -2480,17 +2509,17 @@ namespace quickDBExplorer
 
 		private void insertmakeDelete(object sender, System.EventArgs e)
 		{
-			this.CreInsert( true, true );
+			this.CreInsert( true, true,false );
 		}
 
 		private void insertmakeNoField(object sender, System.EventArgs e)
 		{
-			this.CreInsert(false,false );
+			this.CreInsert(false,false,false );
 		}
 
 		private void insertmakeNoFieldDelete(object sender, System.EventArgs e)
 		{
-			this.CreInsert(false,true);
+			this.CreInsert(false,true,false);
 		}
 
 		private void btnSelect_Click(object sender, System.EventArgs e)
@@ -3866,6 +3895,13 @@ namespace quickDBExplorer
 			return string.Format("[{0}].[{1}]",str[0],str[1]);
 		}
 
+		protected string gettbnameAdd(string tbname,string addstr)
+		{
+			string delimStr = ".";
+			string []str = tbname.Split(delimStr.ToCharArray(), 2);
+			return string.Format("[{0}].[{1}_{2}]",str[0], str[1], addstr);
+		}
+
 		private void Redisp_Click(object sender, System.EventArgs e)
 		{
 			//再描画ボタン押下
@@ -4426,6 +4462,16 @@ namespace quickDBExplorer
 		private void useCheckBox_CheckedChanged(object sender, System.EventArgs e)
 		{
 		
+		}
+
+		private void menuInsertDeleteTaihi_Click(object sender, System.EventArgs e)
+		{
+			this.CreInsert(true,true,true);
+		}
+
+		private void menuInsertNoFldDeleteTaihi_Click(object sender, System.EventArgs e)
+		{
+			this.CreInsert(false,true,true);
 		}
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
