@@ -4,12 +4,12 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace dbAdpt
+namespace quickDBExplorer
 {
 	/// <summary>
-	/// dbAdptBaseForm の概要の説明です。
+	/// quickDBExplorerBaseForm の概要の説明です。
 	/// </summary>
-	public class dbAdptBaseForm : System.Windows.Forms.Form
+	public class quickDBExplorerBaseForm : System.Windows.Forms.Form
 	{
 		protected System.Windows.Forms.Label msgArea;
 		/// <summary>
@@ -19,7 +19,7 @@ namespace dbAdpt
 		private System.Windows.Forms.ErrorProvider errorProvider1;
 		protected string  errMessage = "";
 
-		public dbAdptBaseForm()
+		public quickDBExplorerBaseForm()
 		{
 			//
 			// Windows フォーム デザイナ サポートに必要です。
@@ -72,20 +72,20 @@ namespace dbAdpt
 			// 
 			this.errorProvider1.ContainerControl = this;
 			// 
-			// dbAdptBaseForm
+			// quickDBExplorerBaseForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(288, 266);
 			this.Controls.Add(this.msgArea);
-			this.Name = "dbAdptBaseForm";
-			this.Text = "dbAdptBaseForm";
-			this.Load += new System.EventHandler(this.dbAdptBaseForm_Load);
+			this.Name = "quickDBExplorerBaseForm";
+			this.Text = "quickDBExplorerBaseForm";
+			this.Load += new System.EventHandler(this.quickDBExplorerBaseForm_Load);
 			this.ResumeLayout(false);
 
 		}
 		#endregion
 
-		private void dbAdptBaseForm_Load(object sender, System.EventArgs e)
+		private void quickDBExplorerBaseForm_Load(object sender, System.EventArgs e)
 		{
 			this.msgArea.Text = "";
 		}

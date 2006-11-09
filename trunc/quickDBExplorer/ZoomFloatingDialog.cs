@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace dbAdpt
+namespace quickDBExplorer
 {
-	public class ZoomFloatingDialog : dbAdpt.ZoomDialog
+	public class ZoomFloatingDialog : quickDBExplorer.ZoomDialog
 	{
 		private System.Windows.Forms.CheckBox chkStayOnTop;
 		private System.Windows.Forms.Button btnApply;

@@ -39,5 +39,6 @@ And follows
 DataBase Aplication Developer Helper Tool
 dbadpt
 
-
+License: 	GNU General Public License 2.0
+Labels: 	SQLSERVER, .NETFramework1.1, CSharp, Database, Windows, DevTool, Stable
 

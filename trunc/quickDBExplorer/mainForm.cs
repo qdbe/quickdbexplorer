@@ -9,13 +9,13 @@ using System.Data;
 using System.IO;
 using System.Diagnostics;
 
-namespace dbAdpt
+namespace quickDBExplorer
 {
 	/// <summary>
 	/// メインとなる画面
 	/// DBの選択、オーナーの選択、テーブルの選択、処理の選択などのメインとなる処理を全て実装している
 	/// </summary>
-	public class MainForm : dbAdptBaseForm
+	public class MainForm : quickDBExplorerBaseForm
 	{
 		private System.ComponentModel.IContainer components;
 		private System.Windows.Forms.Button btnCSV;

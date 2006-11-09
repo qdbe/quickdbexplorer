@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Globalization;
 
 
-namespace dbAdpt
+namespace quickDBExplorer
 {
 	/// <summary>
 	/// GridFormatDialog ‚ÌŠT—v‚Ìà–¾‚Å‚·B

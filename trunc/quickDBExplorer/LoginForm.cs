@@ -10,12 +10,12 @@ using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
 
-namespace dbAdpt
+namespace quickDBExplorer
 {
 	/// <summary>
 	/// Form1 の概要の説明です。
 	/// </summary>
-	public class LoginForm : dbAdptBaseForm
+	public class LoginForm : quickDBExplorerBaseForm
 	{
 		private System.Windows.Forms.TextBox txtServerName;
 		private System.Windows.Forms.Label label1;
@@ -53,7 +53,7 @@ namespace dbAdpt
 			try
 			{
 				string path = Application.StartupPath;
-				fs = new FileStream(path + "\\dbAdpt.xml", FileMode.Open);
+				fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Open);
 				SoapFormatter sf = new SoapFormatter();
 				if( fs != null && fs.CanRead )
 				{
@@ -272,7 +272,7 @@ namespace dbAdpt
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Name = "LoginForm";
-			this.Text = "dbAdpt ログイン";
+			this.Text = "quickDBExplorer ログイン";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.Form1_Closing);
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.Controls.SetChildIndex(this.label1, 0);
@@ -449,10 +449,10 @@ namespace dbAdpt
 			try
 			{
 				string path = Application.StartupPath;
-				fs = new FileStream(path + "\\dbAdpt.xml", FileMode.OpenOrCreate );
+				fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.OpenOrCreate );
 				fs.Close();
 				fs = null;
-				fs = new FileStream(path + "\\dbAdpt.xml", FileMode.Truncate, FileAccess.Write);
+				fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Truncate, FileAccess.Write);
 				SoapFormatter sf = new SoapFormatter();
 				if( fs != null && fs.CanWrite )
 				{

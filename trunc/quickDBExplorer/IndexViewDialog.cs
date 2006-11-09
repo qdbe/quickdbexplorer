@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
 
-namespace dbAdpt
+namespace quickDBExplorer
 {
 	/// <summary>
 	/// IndexViewDialog ‚ÌŠT—v‚Ìà–¾‚Å‚·B

@@ -4,7 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace dbAdpt
+namespace quickDBExplorer
 {
 	/// <summary>
 	/// QuerySelectDialog ‚ÌŠT—v‚Ìà–¾‚Å‚·B

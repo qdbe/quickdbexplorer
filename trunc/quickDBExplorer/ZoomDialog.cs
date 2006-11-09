@@ -4,14 +4,14 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 
-namespace dbAdpt
+namespace quickDBExplorer
 {
 	/// <summary>
 	/// ZoomDialog の概要の説明です。
 	/// where, order 等のテキストボックスの値を、全体が見えるようにするダイアログ
 	/// ここで値の編集が可能
 	/// </summary>
-	public class ZoomDialog : dbAdptBaseForm
+	public class ZoomDialog : quickDBExplorerBaseForm
 	{
 		protected System.Windows.Forms.TextBox txtZoom;
 		protected System.Windows.Forms.Button btnOk;

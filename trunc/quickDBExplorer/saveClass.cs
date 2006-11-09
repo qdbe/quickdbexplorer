@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Xml;
 
-namespace dbAdpt
+namespace quickDBExplorer
 {
 	[Serializable]
 	public class ServerData
