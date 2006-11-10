@@ -31,57 +31,12 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label1;
 		private System.ComponentModel.IContainer components = null;
 
-		public LoginDialog()
+		public LoginDialog(saveClass initialOption)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
 
-			// TODO: InitializeComponent 呼び出しの後に初期化処理を追加します。
-			FileStream fs = null;
-
-			this.InitErrMessage();
-
-			initopt = new saveClass();
-			try
-			{
-				string path = Application.StartupPath;
-				fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Open);
-				SoapFormatter sf = new SoapFormatter();
-				if( fs != null && fs.CanRead )
-				{
-					initopt = (saveClass)sf.Deserialize(fs);
-					if( initopt.lastserverkey != "" )
-					{
-						ServerData sv = (ServerData)initopt.ht[initopt.lastserverkey];
-						this.txtServerName.Text = sv.Servername;
-						this.txtInstance.Text = sv.InstanceName;
-						if( sv.IsUseTrust == true )
-						{
-							this.chkTrust.Checked = true;
-						}
-						else
-						{
-							this.chkTrust.Checked = false;
-							this.txtUser.Text = sv.loginUser;
-						}
-					}
-				}
-			}
-			catch(	System.IO.FileNotFoundException )
-			{
-				;
-			}
-			catch( Exception e )
-			{
-				this.SetErrorMessage(e);
-			}
-			finally
-			{
-				if( fs != null )
-				{
-					fs.Close();
-				}
-			}
+			this.initopt = initialOption;
 
 		}
 
@@ -159,7 +114,7 @@ namespace quickDBExplorer
 			this.btnServerHistory.Name = "btnServerHistory";
 			this.btnServerHistory.Size = new System.Drawing.Size(304, 24);
 			this.btnServerHistory.TabIndex = 12;
-			this.btnServerHistory.Text = "過去に接続したサーバーから選択(&H)";
+			this.btnServerHistory.Text = "過去に接続したサーバーから選択(&Z)";
 			this.btnServerHistory.Click += new System.EventHandler(this.btnServerHistory_Click);
 			// 
 			// btnLogin
@@ -169,7 +124,7 @@ namespace quickDBExplorer
 			this.btnLogin.Name = "btnLogin";
 			this.btnLogin.Size = new System.Drawing.Size(88, 24);
 			this.btnLogin.TabIndex = 24;
-			this.btnLogin.Text = "接続(&C)";
+			this.btnLogin.Text = "接続(&O)";
 			this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
 			// 
 			// label4
@@ -281,7 +236,29 @@ namespace quickDBExplorer
 			// ローカルのファイルから　オプションを読み込む
 
 			this.checkBox1.Checked = true;
-			this.Opacity = 100;
+			if( initopt.lastserverkey != "" )
+			{
+				ServerData sv = (ServerData)initopt.ht[initopt.lastserverkey];
+				this.txtServerName.Text = sv.Servername;
+				this.txtInstance.Text = sv.InstanceName;
+				if( sv.IsUseTrust == true )
+				{
+					this.chkTrust.Checked = true;
+				}
+				else
+				{
+					this.chkTrust.Checked = false;
+					this.txtUser.Text = sv.loginUser;
+				}
+			}
+			if( this.initopt.ht.Count > 0 )
+			{
+				this.btnServerHistory.Enabled = true;
+			}
+			else
+			{
+				this.btnServerHistory.Enabled = false;
+			}
 		}
 
 		private void btnLogin_Click(object sender, System.EventArgs e)
@@ -367,6 +344,7 @@ namespace quickDBExplorer
 				}
 				mainForm.sqlConnection1 = con;
 				mainForm.Show();
+				this.Close();
 			}
 			catch ( System.Data.SqlClient.SqlException se)
 			{
@@ -409,56 +387,6 @@ namespace quickDBExplorer
 
 		private void LoginDialog_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			FileStream fs = null;
-
-			try
-			{
-				string path = Application.StartupPath;
-				fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.OpenOrCreate );
-				fs.Close();
-				fs = null;
-				fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Truncate, FileAccess.Write);
-				SoapFormatter sf = new SoapFormatter();
-				if( fs != null && fs.CanWrite )
-				{
-					ArrayList ar = new ArrayList();
-					foreach( object keys in initopt.ht.Keys )
-					{
-						if( ((ServerData)(initopt.ht[keys])).isSaveKey == false )
-						{
-							ar.Add((string)keys);
-						}
-					}
-					foreach( string kk in ar )
-					{
-						initopt.ht.Remove(kk);
-					}
-					if( initopt.ht.Count == 0 )
-					{
-						ServerData sv = new ServerData();
-						sv.Servername = this.txtServerName.Text;
-						sv.InstanceName = this.txtInstance.Text;
-						sv.IsUseTrust = this.chkTrust.Checked;
-						initopt.ht.Add(sv.KeyName,sv);
-					}
-					sf.Serialize(fs,(object)initopt);
-				}
-			}
-			catch(	System.IO.FileNotFoundException )
-			{
-				;
-			}
-			catch( Exception ex )
-			{
-				this.SetErrorMessage(ex);
-			}
-			finally
-			{
-				if( fs != null )
-				{
-					fs.Close();
-				}
-			}
 		}
 
 		private void chkTrust_CheckedChanged(object sender, System.EventArgs e)

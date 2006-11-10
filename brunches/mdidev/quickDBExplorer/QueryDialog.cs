@@ -134,7 +134,7 @@ namespace quickDBExplorer
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(96, 24);
 			this.button1.TabIndex = 1;
-			this.button1.Text = "SQL実行(&W)";
+			this.button1.Text = "SQL実行(&O)";
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// button2
@@ -154,7 +154,7 @@ namespace quickDBExplorer
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(208, 16);
 			this.checkBox1.TabIndex = 3;
-			this.checkBox1.Text = "戻り値あり";
+			this.checkBox1.Text = "戻り値あり(&R)";
 			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
 			// 
 			// QueryDialog

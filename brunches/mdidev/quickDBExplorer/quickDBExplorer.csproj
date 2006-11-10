@@ -178,6 +178,16 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "quickDBExplorerBaseForm.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "quickDBExplorerBaseForm.resx"
+                    DependentUpon = "quickDBExplorerBaseForm.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "saveClass.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -190,16 +200,6 @@
                 <File
                     RelPath = "ServerSelectDialog.resx"
                     DependentUpon = "ServerSelectDialog.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "sqaoBaseForm.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "sqaoBaseForm.resx"
-                    DependentUpon = "sqaoBaseForm.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

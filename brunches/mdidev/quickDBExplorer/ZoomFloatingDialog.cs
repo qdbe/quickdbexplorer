@@ -57,6 +57,7 @@ namespace quickDBExplorer
 			this.btnOk.Location = new System.Drawing.Point(10, 234);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(80, 26);
+			this.btnOk.Text = "åàíË(&O)";
 			// 
 			// btnClose
 			// 
@@ -76,7 +77,7 @@ namespace quickDBExplorer
 			this.chkStayOnTop.Name = "chkStayOnTop";
 			this.chkStayOnTop.Size = new System.Drawing.Size(152, 18);
 			this.chkStayOnTop.TabIndex = 11;
-			this.chkStayOnTop.Text = "èÌÇ…TOPÇ…ï\é¶";
+			this.chkStayOnTop.Text = "èÌÇ…TOPÇ…ï\é¶(&T)";
 			this.chkStayOnTop.CheckedChanged += new System.EventHandler(this.chkStayOnTop_CheckedChanged);
 			// 
 			// btnApply
