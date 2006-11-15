@@ -108,6 +108,16 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "DataGridViewBase.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "DataGridViewBase.resx"
+                    DependentUpon = "DataGridViewBase.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "GridFormatDialog.cs"
                     SubType = "Form"
                     BuildAction = "Compile"

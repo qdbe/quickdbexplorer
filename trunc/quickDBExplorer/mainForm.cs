@@ -1274,6 +1274,11 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// 初期表示処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MainForm_Load(object sender, System.EventArgs e)
 		{
 
@@ -1372,6 +1377,11 @@ namespace quickDBExplorer
 						break;
 					}
 				}
+			}
+			if( this.ownerListbox.SelectedItems.Count == 0 )
+			{
+				// 選択がない場合、一番最初をディフォルトで選択する
+				this.ownerListbox.SetSelected(0,true);
 			}
 			if( svdata.outdest[svdata.lastdb] != null )
 			{
@@ -4472,6 +4482,8 @@ namespace quickDBExplorer
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
 			cm.CommandTimeout = 180;
+			DataTable	rcdt = new DataTable("RecordCount");
+			rcdt.CaseSensitive = true;
 
 			if( this.tableList.SelectedItems.Count == 0 )
 			{
@@ -4492,14 +4504,11 @@ namespace quickDBExplorer
 
 			int			rowcount = 0;
 			int			trow = 0;
+			rcdt.Columns.Add("テーブル名");
+			rcdt.Columns.Add("データ件数",typeof(int));
+
 			try
 			{
-
-				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
-				StringBuilder fname = new StringBuilder();
-
-				wr.WriteLine("テーブル名\t\t\tデータ件数");
 
 				foreach( String tbname in this.tableList.SelectedItems )
 				{
@@ -4528,16 +4537,17 @@ namespace quickDBExplorer
 					{
 						rowcount++;
 						trow++;
-						wr.Write(gettbname(tbname));
-						wr.Write("\t\t\t");
+						DataRow addrow = rcdt.NewRow();
+						addrow[0] = gettbname(tbname);
 						if( dr.IsDBNull(0) )
 						{
-							wr.WriteLine( "0" );
+							addrow[1] = 0;
 						}
 						else
 						{
-							wr.WriteLine( dr.GetValue(0).ToString() );
+							addrow[1] = dr.GetValue(0);
 						}
+						rcdt.Rows.Add(addrow);
 					}
 					if( dr != null && dr.IsClosed == false )
 					{
@@ -4550,7 +4560,8 @@ namespace quickDBExplorer
 				}
 				else
 				{
-					MessageBox.Show(strline.ToString());
+					DataGridViewBase dlg = new DataGridViewBase(rcdt,"データ件数");
+					dlg.ShowDialog();
 				}
 			}
 			catch ( System.Data.SqlClient.SqlException se )
