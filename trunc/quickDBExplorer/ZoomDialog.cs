@@ -144,7 +144,7 @@ namespace quickDBExplorer
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(70, 26);
 			this.btnOk.TabIndex = 1;
-			this.btnOk.Text = "Œˆ’è(&W)";
+			this.btnOk.Text = "Œˆ’è(&O)";
 			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
 			// 
 			// btnClose

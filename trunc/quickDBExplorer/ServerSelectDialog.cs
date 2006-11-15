@@ -84,7 +84,7 @@ namespace quickDBExplorer
 			this.button1.Name = "button1";
 			this.button1.Size = new System.Drawing.Size(120, 24);
 			this.button1.TabIndex = 1;
-			this.button1.Text = "サーバー選択(&W)";
+			this.button1.Text = "サーバー選択(&O)";
 			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// button2

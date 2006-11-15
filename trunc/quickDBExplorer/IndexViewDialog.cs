@@ -70,7 +70,7 @@ namespace quickDBExplorer
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(144, 16);
 			this.checkBox1.TabIndex = 0;
-			this.checkBox1.Text = "èÌÇ…TOPÇ…ï\é¶";
+			this.checkBox1.Text = "èÌÇ…TOPÇ…ï\é¶(&T)";
 			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
 			// 
 			// dataGrid1

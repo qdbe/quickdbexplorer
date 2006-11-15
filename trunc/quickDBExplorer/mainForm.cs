@@ -167,6 +167,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.MenuItem menuInsertDeleteTaihi;
 		private System.Windows.Forms.MenuItem menuInsertNoFldDeleteTaihi;
+		private System.Windows.Forms.MenuItem menuRecordCountDsp;
 		
 		/// <summary>
 		/// メニュー情報
@@ -323,6 +324,7 @@ namespace quickDBExplorer
 			this.label9 = new System.Windows.Forms.Label();
 			this.useCheckBox = new System.Windows.Forms.CheckBox();
 			this.label10 = new System.Windows.Forms.Label();
+			this.menuRecordCountDsp = new System.Windows.Forms.MenuItem();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -569,7 +571,7 @@ namespace quickDBExplorer
 			this.btnCSV.Name = "btnCSV";
 			this.btnCSV.Size = new System.Drawing.Size(136, 24);
 			this.btnCSV.TabIndex = 24;
-			this.btnCSV.Text = "CSV作成(&C)";
+			this.btnCSV.Text = "CSV作成(&K)";
 			this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
 			// 
 			// rdoDspView
@@ -652,7 +654,7 @@ namespace quickDBExplorer
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(52, 16);
 			this.label1.TabIndex = 10;
-			this.label1.Text = "where(&W)";
+			this.label1.Text = "where(&P)";
 			// 
 			// label2
 			// 
@@ -980,7 +982,7 @@ namespace quickDBExplorer
 			this.btnQuerySelect.Name = "btnQuerySelect";
 			this.btnQuerySelect.Size = new System.Drawing.Size(136, 24);
 			this.btnQuerySelect.TabIndex = 27;
-			this.btnQuerySelect.Text = "クエリ指定結果表示(&Q)";
+			this.btnQuerySelect.Text = "クエリ指定結果表示(&J)";
 			this.btnQuerySelect.Click += new System.EventHandler(this.btnQuerySelect_Click);
 			// 
 			// btnDataUpdate
@@ -1072,12 +1074,13 @@ namespace quickDBExplorer
 																						   this.menuEPM,
 																						   this.menuSeparater6,
 																						   this.menuDependBtn,
-																						   this.menuRecordCount});
+																						   this.menuRecordCount,
+																						   this.menuRecordCountDsp});
 			// 
 			// menuQuery
 			// 
 			this.menuQuery.Index = 0;
-			this.menuQuery.Text = "簡易クエリ実行（Select以外）";
+			this.menuQuery.Text = "(&1) 簡易クエリ実行（Select以外）";
 			this.menuQuery.Click += new System.EventHandler(this.btnQueryNonSelect_Click);
 			// 
 			// menuSeparater5
@@ -1088,19 +1091,19 @@ namespace quickDBExplorer
 			// menuISQL
 			// 
 			this.menuISQL.Index = 2;
-			this.menuISQL.Text = "クエリアナライザ起動";
+			this.menuISQL.Text = "(&2) クエリアナライザ起動";
 			this.menuISQL.Click += new System.EventHandler(this.CallISQLW);
 			// 
 			// menuProfile
 			// 
 			this.menuProfile.Index = 3;
-			this.menuProfile.Text = "プロファイラ起動";
+			this.menuProfile.Text = "(&3) プロファイラ起動";
 			this.menuProfile.Click += new System.EventHandler(this.CallProfile);
 			// 
 			// menuEPM
 			// 
 			this.menuEPM.Index = 4;
-			this.menuEPM.Text = "エンタープライズマネージャー起動";
+			this.menuEPM.Text = "(&4) エンタープライズマネージャー起動";
 			this.menuEPM.Click += new System.EventHandler(this.CallEPM);
 			// 
 			// menuSeparater6
@@ -1111,13 +1114,13 @@ namespace quickDBExplorer
 			// menuDependBtn
 			// 
 			this.menuDependBtn.Index = 6;
-			this.menuDependBtn.Text = "依存関係出力";
+			this.menuDependBtn.Text = "(&5) 依存関係出力";
 			this.menuDependBtn.Click += new System.EventHandler(this.DependOutPut);
 			// 
 			// menuRecordCount
 			// 
 			this.menuRecordCount.Index = 7;
-			this.menuRecordCount.Text = "データ件数出力";
+			this.menuRecordCount.Text = "(&6) データ件数出力";
 			this.menuRecordCount.Click += new System.EventHandler(this.RecordCountOutPut);
 			// 
 			// btnWhereZoom
@@ -1151,6 +1154,7 @@ namespace quickDBExplorer
 			this.useCheckBox.Size = new System.Drawing.Size(56, 36);
 			this.useCheckBox.TabIndex = 2;
 			this.useCheckBox.Text = "CheckList";
+			this.useCheckBox.Visible = false;
 			this.useCheckBox.CheckedChanged += new System.EventHandler(this.useCheckBox_CheckedChanged);
 			// 
 			// label10
@@ -1160,6 +1164,12 @@ namespace quickDBExplorer
 			this.label10.Size = new System.Drawing.Size(152, 16);
 			this.label10.TabIndex = 18;
 			this.label10.Text = "Table/View(&V)";
+			// 
+			// menuRecordCountDsp
+			// 
+			this.menuRecordCountDsp.Index = 8;
+			this.menuRecordCountDsp.Text = "(&7) データ件数表示";
+			this.menuRecordCountDsp.Click += new System.EventHandler(this.menuRecordCountDsp_Click);
 			// 
 			// MainForm
 			// 
@@ -1208,6 +1218,7 @@ namespace quickDBExplorer
 			this.Name = "MainForm";
 			this.ShowInTaskbar = false;
 			this.Text = "DataBase選択";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
@@ -1454,7 +1465,7 @@ namespace quickDBExplorer
 			{
 				this.rdoUnicode.Checked = true;
 			}
-			
+			this.Text = servername + "@" + (string)this.dbList.SelectedItem;
 		}
 
 		// INSERT文生成
@@ -1464,29 +1475,21 @@ namespace quickDBExplorer
 												 this.menuInsert,
 												 this.menuInsertDelete,
 												 this.menuInsertNoFld,
-												 this.menuInsertNoFldDelete
+												 this.menuInsertNoFldDelete,
+												 this.menuInsertDeleteTaihi,
+												 this.menuInsertNoFldDeleteTaihi
 											 };
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
-			{
-				bool isFound = false;
-				foreach( MenuItem mm in list )
-				{
-					if( m == mm )
-					{
-						isFound = true;
-					}
-				}
-				if( isFound == false )
-				{
-					m.Visible = false;
-				}
-			}
 
-			this.mainContextMenu.Show(this.btnInsert,new Point(0,0));
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
+			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
+			MenuItem[] cplist = new MenuItem[list.Length];
+			for( int i = 0; i<list.Length; i++ )
 			{
-				m.Visible = true;
+				cplist[i] = list[i].CloneMenu();
+				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
 			}
+			tmpmenu.MenuItems.AddRange(cplist);
+
+			tmpmenu.Show(this.btnInsert,new Point(0,0));
 		}
 		
 		// フィールドリスト生成
@@ -1497,26 +1500,16 @@ namespace quickDBExplorer
 												 this.menuMakeFldCRLF,
 												 this.menuMakeFldNoComma
 											 };
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
+			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
+			MenuItem[] cplist = new MenuItem[list.Length];
+			for( int i = 0; i<list.Length; i++ )
 			{
-				bool isFound = false;
-				foreach( MenuItem mm in list )
-				{
-					if( m == mm )
-					{
-						isFound = true;
-					}
-				}
-				if( isFound == false )
-				{
-					m.Visible = false;
-				}
+				cplist[i] = list[i].CloneMenu();
+				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
 			}
-			this.mainContextMenu.Show(this.btnFieldList,new Point(0,0));
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
-			{
-				m.Visible = true;
-			}
+			tmpmenu.MenuItems.AddRange(cplist);
+
+			tmpmenu.Show(this.btnFieldList,new Point(0,0));
 		}
 
 		// CSV生成
@@ -1528,26 +1521,16 @@ namespace quickDBExplorer
 												 this.menuMakeTab,
 												 this.menuMakeTabDQ
 											 };
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
+			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
+			MenuItem[] cplist = new MenuItem[list.Length];
+			for( int i = 0; i<list.Length; i++ )
 			{
-				bool isFound = false;
-				foreach( MenuItem mm in list )
-				{
-					if( m == mm )
-					{
-						isFound = true;
-					}
-				}
-				if( isFound == false )
-				{
-					m.Visible = false;
-				}
+				cplist[i] = list[i].CloneMenu();
+				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
 			}
-			this.mainContextMenu.Show(this.btnCSV,new Point(0,0));
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
-			{
-				m.Visible = true;
-			}
+			tmpmenu.MenuItems.AddRange(cplist);
+
+			tmpmenu.Show(this.btnCSV,new Point(0,0));
 		}
 
 		// 定義文生成
@@ -1557,26 +1540,16 @@ namespace quickDBExplorer
 												 this.menuDDL,
 												 this.menuDDLDrop
 											 };
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
+			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
+			MenuItem[] cplist = new MenuItem[list.Length];
+			for( int i = 0; i<list.Length; i++ )
 			{
-				bool isFound = false;
-				foreach( MenuItem mm in list )
-				{
-					if( m == mm )
-					{
-						isFound = true;
-					}
-				}
-				if( isFound == false )
-				{
-					m.Visible = false;
-				}
+				cplist[i] = list[i].CloneMenu();
+				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
 			}
-			this.mainContextMenu.Show(this.btnDDL,new Point(0,0));
-			foreach( MenuItem m in this.mainContextMenu.MenuItems )
-			{
-				m.Visible = true;
-			}
+			tmpmenu.MenuItems.AddRange(cplist);
+
+			tmpmenu.Show(this.btnDDL,new Point(0,0));
 		}
 
 		private void insertmake(object sender, System.EventArgs e)
@@ -1764,11 +1737,12 @@ namespace quickDBExplorer
 					if( isTaihi == true )
 					{
 						string taihistr = 
-						String.Format(" select * into {1} from {0} \r\n",
+						String.Format("select * into {1} from {0} ",
 							gettbname(tbname),
-							"SV"+gettbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd")) 
+							gettbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd")) 
 							);
 						wr.Write(taihistr);
+						wr.Write("{0}GO{0}",wr.NewLine );
 
 					}
 
@@ -1865,11 +1839,8 @@ namespace quickDBExplorer
 								//							{
 								//								wr.Write( dr.GetDouble(i).ToString() );
 								//							}
-							else if( fldtypename == "nvarchar" ||
-								fldtypename == "varchar" ||
-								fldtypename == "char" ||
-								fldtypename == "nchar" ||
-								fldtypename == "ntext")
+							else if( fldtypename == "varchar" ||
+								fldtypename == "char" )
 							{
 								// 文字列
 								if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
@@ -1886,6 +1857,28 @@ namespace quickDBExplorer
 									else
 									{
 										wr.Write( "'{0}'", dr.GetString(i).Replace("\0","") );
+									}
+								}
+							}
+							else if( fldtypename == "nvarchar" ||
+								fldtypename == "nchar" ||
+								fldtypename == "ntext")
+							{
+								// 文字列
+								if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
+								{
+									wr.Write( "N''" );
+								}
+								else
+								{
+									if( dr.GetString(i).IndexOf("'") >= 0 )
+									{
+										// ' が文字列に入っている場合は '' に強制的に変換する
+										wr.Write( "N'{0}'", dr.GetString(i).Replace("'","''").Replace("\0",""));
+									}
+									else
+									{
+										wr.Write( "N'{0}'", dr.GetString(i).Replace("\0","") );
 									}
 								}
 							}
@@ -2389,10 +2382,10 @@ namespace quickDBExplorer
 								//								wr.Write( dr.GetDouble(i).ToString() );
 								//							}
 							else if( fldtypename == "nvarchar" ||
-								fldtypename == "varchar" ||
-								fldtypename == "char" ||
 								fldtypename == "nchar" ||
-								fldtypename == "ntext")
+								fldtypename == "ntext" ||
+								fldtypename == "varchar" ||
+								fldtypename == "char" )
 							{
 								// 文字列
 								if( dr.GetString(i).Equals("\0") )
@@ -4472,6 +4465,121 @@ namespace quickDBExplorer
 		private void menuInsertNoFldDeleteTaihi_Click(object sender, System.EventArgs e)
 		{
 			this.CreInsert(false,true,true);
+		}
+
+		private void menuRecordCountDsp_Click(object sender, System.EventArgs e)
+		{
+			SqlDataReader dr = null;
+			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = 180;
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+			if( this.tableList.SelectedItems.Count > 1 &&
+				this.txtWhere.Text != null &&
+				this.txtWhere.Text.Trim() != "" )
+			{
+				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+					== System.Windows.Forms.DialogResult.No )
+				{
+					return;
+				}
+			}
+
+			this.InitErrMessage();
+
+			int			rowcount = 0;
+			int			trow = 0;
+			try
+			{
+
+				StringBuilder strline =  new StringBuilder();
+				TextWriter	wr = new StringWriter(strline);
+				StringBuilder fname = new StringBuilder();
+
+				wr.WriteLine("テーブル名\t\t\tデータ件数");
+
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+					trow = 0;
+					string sqlstr;
+					sqlstr = string.Format("select  count(1) from {0} ",gettbname(tbname));
+					if( this.txtWhere.Text.Trim() != "" )
+					{
+						sqlstr += " where " + this.txtWhere.Text.Trim();
+					}
+
+					cm.CommandText = sqlstr;
+					cm.Connection = this.sqlConnection1;
+
+					dr = cm.ExecuteReader();
+
+					ArrayList fldname = new ArrayList();
+					ArrayList strint = new ArrayList();
+	
+					fldname.Clear();
+					strint.Clear();
+
+
+					// データの書き出し
+					while (dr.Read())
+					{
+						rowcount++;
+						trow++;
+						wr.Write(gettbname(tbname));
+						wr.Write("\t\t\t");
+						if( dr.IsDBNull(0) )
+						{
+							wr.WriteLine( "0" );
+						}
+						else
+						{
+							wr.WriteLine( dr.GetValue(0).ToString() );
+						}
+					}
+					if( dr != null && dr.IsClosed == false )
+					{
+						dr.Close();
+					}
+				}
+				if( rowcount == 0 )
+				{
+					MessageBox.Show("対象データがありませんでした");
+				}
+				else
+				{
+					MessageBox.Show(strline.ToString());
+				}
+			}
+			catch ( System.Data.SqlClient.SqlException se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+				return;
+			}
+			catch( Exception se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+
+			// set datas to clipboard
+		
 		}
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
