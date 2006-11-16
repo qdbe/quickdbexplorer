@@ -53,6 +53,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(quickDBExplorerBaseForm));
 			this.msgArea = new System.Windows.Forms.Label();
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
 			this.SuspendLayout();
@@ -77,6 +78,7 @@ namespace quickDBExplorer
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(288, 266);
 			this.Controls.Add(this.msgArea);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "quickDBExplorerBaseForm";
 			this.Text = "quickDBExplorerBaseForm";
 			this.Load += new System.EventHandler(this.quickDBExplorerBaseForm_Load);

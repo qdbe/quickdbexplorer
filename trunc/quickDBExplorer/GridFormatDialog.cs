@@ -72,6 +72,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(GridFormatDialog));
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
@@ -247,6 +248,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.comboBox2);
 			this.Controls.Add(this.comboBox3);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "GridFormatDialog";
 			this.ShowInTaskbar = false;
 			this.Text = "データ表示書式指定";

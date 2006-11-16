@@ -58,6 +58,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(IndexViewDialog));
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.dataGrid1 = new System.Windows.Forms.DataGrid();
 			this.button1 = new System.Windows.Forms.Button();
@@ -105,6 +106,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.dataGrid1);
 			this.Controls.Add(this.checkBox1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimizeBox = false;
 			this.Name = "IndexViewDialog";
 			this.ShowInTaskbar = false;

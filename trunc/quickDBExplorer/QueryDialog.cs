@@ -62,6 +62,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(QueryDialog));
 			this.textBox1 = new System.Windows.Forms.TextBox();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.menuItem1 = new System.Windows.Forms.MenuItem();
@@ -167,6 +168,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.textBox1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "QueryDialog";
 			this.ShowInTaskbar = false;
 			this.Text = "SQL•¶Žw’è";

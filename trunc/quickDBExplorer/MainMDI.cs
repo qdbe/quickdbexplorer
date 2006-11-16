@@ -64,14 +64,15 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainMDI));
 			this.statusBar1 = new System.Windows.Forms.StatusBar();
 			this.mainMenu1 = new System.Windows.Forms.MainMenu();
 			this.menuItem1 = new System.Windows.Forms.MenuItem();
 			this.menuItem3 = new System.Windows.Forms.MenuItem();
+			this.menuItem5 = new System.Windows.Forms.MenuItem();
 			this.menuItem2 = new System.Windows.Forms.MenuItem();
 			this.menuItem4 = new System.Windows.Forms.MenuItem();
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
-			this.menuItem5 = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// statusBar1
@@ -104,6 +105,12 @@ namespace quickDBExplorer
 			this.menuItem3.Text = "êVãKê⁄ë±(&N)";
 			this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click);
 			// 
+			// menuItem5
+			// 
+			this.menuItem5.Index = 1;
+			this.menuItem5.Text = "èIóπ(&Q)";
+			this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
+			// 
 			// menuItem2
 			// 
 			this.menuItem2.Index = 1;
@@ -120,17 +127,12 @@ namespace quickDBExplorer
 			// 
 			this.errorProvider1.ContainerControl = this;
 			// 
-			// menuItem5
-			// 
-			this.menuItem5.Index = 1;
-			this.menuItem5.Text = "èIóπ(&Q)";
-			this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
-			// 
 			// MainMDI
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(960, 641);
 			this.Controls.Add(this.statusBar1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.IsMdiContainer = true;
 			this.Menu = this.mainMenu1;
 			this.Name = "MainMDI";

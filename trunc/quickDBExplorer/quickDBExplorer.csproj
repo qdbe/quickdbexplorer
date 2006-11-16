@@ -7,7 +7,7 @@
     >
         <Build>
             <Settings
-                ApplicationIcon = "App.ico"
+                ApplicationIcon = "AppIcon.ico"
                 AssemblyKeyContainerName = ""
                 AssemblyName = "quickDBExplorer"
                 AssemblyOriginatorKeyFile = ""
@@ -99,7 +99,7 @@
         <Files>
             <Include>
                 <File
-                    RelPath = "App.ico"
+                    RelPath = "AppIcon.ico"
                     BuildAction = "Content"
                 />
                 <File
