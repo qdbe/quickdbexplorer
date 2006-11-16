@@ -115,6 +115,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(ZoomDialog));
 			this.txtZoom = new System.Windows.Forms.TextBox();
 			this.btnOk = new System.Windows.Forms.Button();
 			this.btnClose = new System.Windows.Forms.Button();
@@ -167,6 +168,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.txtZoom);
 			this.Controls.Add(this.btnClose);
 			this.Controls.Add(this.btnOk);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ZoomDialog";
 			this.Text = "ZoomDialog";
 			this.Load += new System.EventHandler(this.ZoomDialog_Load);

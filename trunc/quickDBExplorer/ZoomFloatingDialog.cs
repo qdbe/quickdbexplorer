@@ -42,6 +42,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(ZoomFloatingDialog));
 			this.chkStayOnTop = new System.Windows.Forms.CheckBox();
 			this.btnApply = new System.Windows.Forms.Button();
 			this.SuspendLayout();
@@ -57,7 +58,6 @@ namespace quickDBExplorer
 			this.btnOk.Location = new System.Drawing.Point(10, 234);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(80, 26);
-			this.btnOk.Text = "Œˆ’è(&O)";
 			// 
 			// btnClose
 			// 
@@ -95,6 +95,7 @@ namespace quickDBExplorer
 			this.ClientSize = new System.Drawing.Size(544, 266);
 			this.Controls.Add(this.btnApply);
 			this.Controls.Add(this.chkStayOnTop);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ZoomFloatingDialog";
 			this.Controls.SetChildIndex(this.chkStayOnTop, 0);
 			this.Controls.SetChildIndex(this.btnApply, 0);

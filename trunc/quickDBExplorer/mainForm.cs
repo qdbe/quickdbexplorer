@@ -222,6 +222,7 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainForm));
 			this.dbList = new System.Windows.Forms.ListBox();
 			this.tableList = new System.Windows.Forms.ListBox();
 			this.mainContextMenu = new System.Windows.Forms.ContextMenu();
@@ -319,12 +320,12 @@ namespace quickDBExplorer
 			this.menuSeparater6 = new System.Windows.Forms.MenuItem();
 			this.menuDependBtn = new System.Windows.Forms.MenuItem();
 			this.menuRecordCount = new System.Windows.Forms.MenuItem();
+			this.menuRecordCountDsp = new System.Windows.Forms.MenuItem();
 			this.btnWhereZoom = new System.Windows.Forms.Button();
 			this.btnOrderZoom = new System.Windows.Forms.Button();
 			this.label9 = new System.Windows.Forms.Label();
 			this.useCheckBox = new System.Windows.Forms.CheckBox();
 			this.label10 = new System.Windows.Forms.Label();
-			this.menuRecordCountDsp = new System.Windows.Forms.MenuItem();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -1123,6 +1124,12 @@ namespace quickDBExplorer
 			this.menuRecordCount.Text = "(&6) データ件数出力";
 			this.menuRecordCount.Click += new System.EventHandler(this.RecordCountOutPut);
 			// 
+			// menuRecordCountDsp
+			// 
+			this.menuRecordCountDsp.Index = 8;
+			this.menuRecordCountDsp.Text = "(&7) データ件数表示";
+			this.menuRecordCountDsp.Click += new System.EventHandler(this.menuRecordCountDsp_Click);
+			// 
 			// btnWhereZoom
 			// 
 			this.btnWhereZoom.Location = new System.Drawing.Point(220, 484);
@@ -1164,12 +1171,6 @@ namespace quickDBExplorer
 			this.label10.Size = new System.Drawing.Size(152, 16);
 			this.label10.TabIndex = 18;
 			this.label10.Text = "Table/View(&V)";
-			// 
-			// menuRecordCountDsp
-			// 
-			this.menuRecordCountDsp.Index = 8;
-			this.menuRecordCountDsp.Text = "(&7) データ件数表示";
-			this.menuRecordCountDsp.Click += new System.EventHandler(this.menuRecordCountDsp_Click);
 			// 
 			// MainForm
 			// 
@@ -1215,6 +1216,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.grpSysUserMode);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.btnOrderZoom);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "MainForm";
 			this.ShowInTaskbar = false;
 			this.Text = "DataBase選択";

@@ -62,6 +62,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(LoginDialog));
 			this.chkTrust = new System.Windows.Forms.CheckBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -209,6 +210,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "LoginDialog";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.LoginDialog_Closing);
 			this.Load += new System.EventHandler(this.LoginDialog_Load);
