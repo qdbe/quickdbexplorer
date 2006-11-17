@@ -975,7 +975,7 @@ namespace quickDBExplorer
 			this.label6.Size = new System.Drawing.Size(124, 12);
 			this.label6.TabIndex = 27;
 			this.label6.Text = "C info;";
-			this.toolTip2.SetToolTip(this.label6, "Copyright; Y.N(godz)  2004-2006 GPL-2.0");
+			this.toolTip2.SetToolTip(this.label6, "Copyright; Y.N(godz)  2004-2006");
 			// 
 			// btnQuerySelect
 			// 
@@ -1018,7 +1018,7 @@ namespace quickDBExplorer
 			this.btnGridFormat.Name = "btnGridFormat";
 			this.btnGridFormat.Size = new System.Drawing.Size(156, 20);
 			this.btnGridFormat.TabIndex = 33;
-			this.btnGridFormat.Text = "書式グリッド表示指定(&G)";
+			this.btnGridFormat.Text = "グリッド表示書式指定(&G)";
 			this.btnGridFormat.Click += new System.EventHandler(this.btnGridFormat_Click);
 			// 
 			// label8
@@ -1148,9 +1148,9 @@ namespace quickDBExplorer
 			// 
 			// label9
 			// 
-			this.label9.Location = new System.Drawing.Point(644, 328);
+			this.label9.Location = new System.Drawing.Point(640, 328);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(104, 16);
+			this.label9.Size = new System.Drawing.Size(108, 16);
 			this.label9.TabIndex = 33;
 			this.label9.Text = "Ctrl+3で値拡大表示";
 			// 
@@ -1478,6 +1478,7 @@ namespace quickDBExplorer
 				this.rdoUnicode.Checked = true;
 			}
 			this.Text = servername + "@" + (string)this.dbList.SelectedItem;
+			this.dbList.Focus();	//フォーカスを元に戻す
 		}
 
 		// INSERT文生成

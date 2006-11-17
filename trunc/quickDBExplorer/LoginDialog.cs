@@ -89,7 +89,7 @@ namespace quickDBExplorer
 			this.chkTrust.Name = "chkTrust";
 			this.chkTrust.Size = new System.Drawing.Size(160, 16);
 			this.chkTrust.TabIndex = 18;
-			this.chkTrust.Text = "信頼関係接続を利用(&T)";
+			this.chkTrust.Text = "Windows認証を利用(&T)";
 			this.chkTrust.CheckedChanged += new System.EventHandler(this.chkTrust_CheckedChanged);
 			// 
 			// label5
@@ -212,6 +212,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "LoginDialog";
+			this.Text = "ログイン";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.LoginDialog_Closing);
 			this.Load += new System.EventHandler(this.LoginDialog_Load);
 			this.Controls.SetChildIndex(this.msgArea, 0);
