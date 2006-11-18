@@ -282,7 +282,12 @@ namespace quickDBExplorer
 
 		private void menuItem4_Click(object sender, System.EventArgs e)
 		{
-			MessageBox.Show("Sorry! under construction...");
+			string helpname = AppDomain.CurrentDomain.FriendlyName;
+			helpname = helpname.Replace(".exe","help.mht");
+			if( File.Exists(helpname) == true )
+			{
+				System.Diagnostics.Process.Start( helpname );
+			}
 		}
 
 		private void menuItem5_Click(object sender, System.EventArgs e)
