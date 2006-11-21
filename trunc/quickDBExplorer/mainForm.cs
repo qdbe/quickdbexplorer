@@ -90,10 +90,10 @@ namespace quickDBExplorer
 		private System.Windows.Forms.RadioButton rdoUnicode;
 		private System.Windows.Forms.RadioButton rdoUtf8;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-		private System.Windows.Forms.TextBox txtDspCount;
-		private System.Windows.Forms.TextBox txtOutput;
-		private System.Windows.Forms.TextBox txtSort;
-		private System.Windows.Forms.TextBox txtWhere;
+		private quickDBExplorerTextBox txtDspCount;
+		private quickDBExplorerTextBox txtOutput;
+		private quickDBExplorerTextBox txtSort;
+		private quickDBExplorerTextBox txtWhere;
 		private System.Windows.Forms.ToolTip toolTip1;
 		private System.Windows.Forms.ToolTip toolTip2;
 		private System.Windows.Forms.ToolTip toolTip3;
@@ -261,8 +261,8 @@ namespace quickDBExplorer
 			this.grpSortMode = new System.Windows.Forms.GroupBox();
 			this.rdoSortOwnerTable = new System.Windows.Forms.RadioButton();
 			this.rdoSortTable = new System.Windows.Forms.RadioButton();
-			this.txtWhere = new System.Windows.Forms.TextBox();
-			this.txtSort = new System.Windows.Forms.TextBox();
+			this.txtWhere = new quickDBExplorer.quickDBExplorerTextBox();
+			this.txtSort = new quickDBExplorer.quickDBExplorerTextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.btnSelect = new System.Windows.Forms.Button();
@@ -271,14 +271,14 @@ namespace quickDBExplorer
 			this.dbGrid = new System.Windows.Forms.DataGrid();
 			this.chkDspData = new System.Windows.Forms.CheckBox();
 			this.grpDataDspMode = new System.Windows.Forms.GroupBox();
-			this.txtDspCount = new System.Windows.Forms.TextBox();
+			this.txtDspCount = new quickDBExplorer.quickDBExplorerTextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.grpSysUserMode = new System.Windows.Forms.GroupBox();
 			this.rdoNotDspSysUser = new System.Windows.Forms.RadioButton();
 			this.rdoDspSysUser = new System.Windows.Forms.RadioButton();
 			this.grpOutputMode = new System.Windows.Forms.GroupBox();
 			this.btnReference = new System.Windows.Forms.Button();
-			this.txtOutput = new System.Windows.Forms.TextBox();
+			this.txtOutput = new quickDBExplorer.quickDBExplorerTextBox();
 			this.rdoOutFile = new System.Windows.Forms.RadioButton();
 			this.rdoClipboard = new System.Windows.Forms.RadioButton();
 			this.rdoOutFolder = new System.Windows.Forms.RadioButton();
@@ -754,8 +754,8 @@ namespace quickDBExplorer
 			this.txtDspCount.Size = new System.Drawing.Size(72, 19);
 			this.txtDspCount.TabIndex = 1;
 			this.txtDspCount.Text = "1000";
-			this.txtDspCount.TextChanged += new System.EventHandler(this.txtDspCount_TextChanged);
 			this.txtDspCount.Leave += new System.EventHandler(this.txtDspCount_Leave);
+			this.txtDspCount.TextChanged += new System.EventHandler(this.txtDspCount_TextChanged);
 			// 
 			// label3
 			// 
