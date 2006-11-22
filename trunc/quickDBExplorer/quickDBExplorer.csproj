@@ -118,6 +118,11 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "DateSerialFactory.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "GridFormatDialog.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
@@ -196,6 +201,14 @@
                     RelPath = "quickDBExplorerBaseForm.resx"
                     DependentUpon = "quickDBExplorerBaseForm.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "quickDBExplorerHelp.doc"
+                    BuildAction = "None"
+                />
+                <File
+                    RelPath = "quickDBExplorerHelp.mht"
+                    BuildAction = "None"
                 />
                 <File
                     RelPath = "quickDBExplorerTextBox.cs"
