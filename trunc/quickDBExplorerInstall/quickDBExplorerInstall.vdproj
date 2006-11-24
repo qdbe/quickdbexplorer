@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_02A201133FDA49C8ADEECA42A0A15016"
+        "OwnerKey" = "8:_E2B2201F00D148BA8EC52803C8C8A12D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5F7A036F16F445AE820B62BA2CD7D2DA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -23,12 +29,6 @@
         {
         "MsmKey" = "8:_C215BC43414E4470A06CB51EBD3AD33F"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D7DE4E5C9BDC4A8EB918E4B2E521CAE6"
-        "OwnerKey" = "8:_E2B2201F00D148BA8EC52803C8C8A12D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -781,7 +781,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_D7DE4E5C9BDC4A8EB918E4B2E521CAE6"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_02A201133FDA49C8ADEECA42A0A15016"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -800,7 +800,7 @@
         {
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_E2B2201F00D148BA8EC52803C8C8A12D"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Release\\quickDBExplorer.exe"
+            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Debug\\quickDBExplorer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"

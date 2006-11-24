@@ -15,7 +15,7 @@ namespace serialFactory
 			//
 		}
 
-		public string Encode(string datestr)
+		public static string Encode(string datestr)
 		{
 			// “ú•t‚ð•ÏŠ·‚·‚é
 			int yy = 0;
@@ -26,6 +26,13 @@ namespace serialFactory
 			mm = int.Parse(datestr.Substring(4,2));
 			dd = int.Parse(datestr.Substring(6,2));
 			DateTime tm = new DateTime(yy,mm,dd,yy%24,mm,dd);
+
+			return Encode(tm);
+		}
+
+		public static string Encode(DateTime tm)
+		{
+			// “ú•t‚ð•ÏŠ·‚·‚é
 			string hexstr = tm.Ticks.ToString();
 			ArrayList ar = new ArrayList();
 			ar.Add(hexstr.Substring(0,6));
@@ -44,7 +51,7 @@ namespace serialFactory
 			return prestr;
 		}
 
-		public DateTime Decode(string keystr)
+		public static DateTime Decode(string keystr)
 		{
 			string basestr = keystr;
 			basestr = basestr.Substring(0,basestr.Length-2);

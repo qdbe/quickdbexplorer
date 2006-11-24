@@ -1,19 +1,21 @@
 using System;
+using System.IO;
+using System.Text;
+using System.Globalization;
 
 namespace serialFactory
 {
 	/// <summary>
-	/// userNameFactory の概要の説明です。
+	/// UserNameFactoru の概要の説明です。
 	/// </summary>
-	public class userNameFactory
+	public class UserNameFactoru
 	{
-		public userNameFactory()
+		public UserNameFactoru()
 		{
 			// 
 			// TODO: コンストラクタ ロジックをここに追加してください。
 			//
 		}
-
 		public static string Encode(string srcstr)
 		{
 			Encoding encoder = Encoding.GetEncoding(54936);
@@ -40,7 +42,6 @@ namespace serialFactory
 			string retstr = new string(encoder.GetChars(ret));
 			return retstr;
 		}
-
 
 	}
 }

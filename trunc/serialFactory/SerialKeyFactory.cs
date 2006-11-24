@@ -1,6 +1,5 @@
 using System;
 using System.Text;
-using System.Random;
 using System.Collections;
 using System.Security.Cryptography;
 
@@ -19,7 +18,7 @@ namespace serialFactory
 			//
 		}
 
-		public string Encode(string keystr, int startpos, int len)
+		public static string Encode(string keystr, int startpos, int len)
 		{
 			MD5 md5 = new MD5CryptoServiceProvider();
 			Encoding encoder = Encoding.GetEncoding(54936);
@@ -28,12 +27,18 @@ namespace serialFactory
 			string output = "";
 			for( int i = 0; i < result.Length; i++ )
 			{
-				output += result[i].ToString("x");
+				output += result[i].ToString("X");
 			}
 			return output.ToUpper().Substring(startpos,len);
 		}
 
-		public ArrayList EncodeArray(ArrayList strar,int len)
+		/// <summary>
+		/// シリアルキーを
+		/// </summary>
+		/// <param name="strar"></param>
+		/// <param name="len"></param>
+		/// <returns></returns>
+		public static ArrayList EncodeArray(ArrayList strar,int len)
 		{
 			string srcstr = "";
 			int		prenum = 0;
@@ -42,20 +47,20 @@ namespace serialFactory
 
 			for( int i = 0; i < strar.Count; i += 2 )
 			{
-				srcstr = strar[i];
+				srcstr = (string)strar[i];
 				prenum = int.Parse(srcstr.Substring(0,2));
 				startpos = prenum % 9;
 				yoso = ( prenum % ( strar.Count / 2 ) ) * 2;
-				strar[yoso] = this.Encode(srcstr,startpos,len);
+				strar[yoso] = SerialKeyFactory.Encode(srcstr,startpos,len);
 			}
 
 			return strar;
 		}
 
-		public bool CheckArray(ArrayList strar, int len)
+		public static bool CheckArray(ArrayList strar, int len)
 		{
-			ArrayList copyar = strar.Clone();
-			this.EncodeArray(copyar,len);
+			ArrayList copyar = (ArrayList)strar.Clone();
+			SerialKeyFactory.EncodeArray(copyar,len);
 
 			for( int i = 0; i < copyar.Count; i++ )
 			{
@@ -68,10 +73,58 @@ namespace serialFactory
 			return true;
 		}
 
-		public ArrayList( int len, int arCount )
+		/// <summary>
+		/// 新規にシリアルキーを作成する
+		/// </summary>
+		/// <param name="len">一つあたりのキーの長さ</param>
+		/// <param name="arCount">全体の配列数</param>
+		/// <returns>作成されたシリアルキー</returns>
+		public static ArrayList CreateKeys( int len, int arCount )
 		{
 			// シリアルキーの情報を指定された数分作成する
+
+			if( arCount % 2 == 1 ||
+				arCount < 2 )
+			{
+				return null;
+			}
+			if( len < 3 )
+			{
+				return null;
+			}
+
+			Random rdm = new Random(unchecked((int)DateTime.Now.Ticks));
+ 
+			ArrayList retar = new ArrayList(arCount);
+			int		randint;
 			
+			for( int	finishCnt = 0; finishCnt < arCount; )
+			{
+				// 先頭2桁をまずは決定する
+				randint = rdm.Next(1,100);
+				int yoso = ( randint % ( arCount / 2 ) ) * 2;
+				if( retar[yoso] != null )
+				{
+					continue;
+				}
+
+				// キー部分を決定する
+				string keystr = randint.ToString("X2");
+				// キーの残りの部分をセットする
+				for( int j = 0; j < (len - 2); j++ )
+				{
+					randint = rdm.Next(1,256);
+					keystr += randint.ToString("X2").Substring(1,1);
+				}
+				retar[finishCnt] = keystr;
+				finishCnt += 2;
+			}
+
+			// 対応するチェックサム部分をセットする
+
+			EncodeArray(retar,len);
+
+			return retar;
 		}
 	}
 }

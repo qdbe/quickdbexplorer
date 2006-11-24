@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "serialFactory", "serialFact
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialKeyManager", "SerialKeyManager\SerialKeyManager.csproj", "{DC047999-0D4F-4158-8364-D14367DBCBBF}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
 		Debug = Debug
@@ -27,6 +31,10 @@ Global
 		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Debug.Build.0 = Debug|.NET
 		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Release.ActiveCfg = Release|.NET
 		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Release.Build.0 = Release|.NET
+		{DC047999-0D4F-4158-8364-D14367DBCBBF}.Debug.ActiveCfg = Debug|.NET
+		{DC047999-0D4F-4158-8364-D14367DBCBBF}.Debug.Build.0 = Debug|.NET
+		{DC047999-0D4F-4158-8364-D14367DBCBBF}.Release.ActiveCfg = Release|.NET
+		{DC047999-0D4F-4158-8364-D14367DBCBBF}.Release.Build.0 = Release|.NET
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

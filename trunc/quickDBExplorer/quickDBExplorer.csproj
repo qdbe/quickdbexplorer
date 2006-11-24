@@ -216,6 +216,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "quickDBExplorerTextBox.resx"
+                    DependentUpon = "quickDBExplorerTextBox.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "saveClass.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
