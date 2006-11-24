@@ -61,6 +61,9 @@ namespace serialFactory
 		DateTime		LimitDate;			// 利用期限日時
 		DateTime		LimitLength;		// セットアップ後しかない
 
+		int				DateCheck;			// 偶数の場合は日付チェックを厳密に行う。
+											// 奇数の場合は日付チェックは厳密にしない。(シリアルキーの登録のみチェック) 
+
 		// 文字列からのデータ取込
 		public bool	loaddata(string serialstr)
 		{
