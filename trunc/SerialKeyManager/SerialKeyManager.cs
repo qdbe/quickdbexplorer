@@ -14,11 +14,9 @@ namespace SerialKeyManager
 	/// </summary>
 	public class SerialKeyManager : System.Windows.Forms.Form
 	{
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.TextBox textBox4;
+		private System.Windows.Forms.Button btnMakeSerial;
+		private System.Windows.Forms.Button btnCheckSerial;
+		private System.Windows.Forms.Button btnRireki;
 		/// <summary>
 		/// 必要なデザイナ変数です。
 		/// </summary>
@@ -58,63 +56,45 @@ namespace SerialKeyManager
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.button1 = new System.Windows.Forms.Button();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.textBox4 = new System.Windows.Forms.TextBox();
+			this.btnMakeSerial = new System.Windows.Forms.Button();
+			this.btnCheckSerial = new System.Windows.Forms.Button();
+			this.btnRireki = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// textBox1
+			// btnMakeSerial
 			// 
-			this.textBox1.Location = new System.Drawing.Point(88, 40);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(128, 19);
-			this.textBox1.TabIndex = 0;
-			this.textBox1.Text = "textBox1";
+			this.btnMakeSerial.Location = new System.Drawing.Point(24, 32);
+			this.btnMakeSerial.Name = "btnMakeSerial";
+			this.btnMakeSerial.Size = new System.Drawing.Size(216, 48);
+			this.btnMakeSerial.TabIndex = 0;
+			this.btnMakeSerial.Text = "シリアルキー作成";
+			this.btnMakeSerial.Click += new System.EventHandler(this.btnMakeSerial_Click);
 			// 
-			// button1
+			// btnCheckSerial
 			// 
-			this.button1.Location = new System.Drawing.Point(176, 88);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(64, 32);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "button1";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.btnCheckSerial.Location = new System.Drawing.Point(24, 96);
+			this.btnCheckSerial.Name = "btnCheckSerial";
+			this.btnCheckSerial.Size = new System.Drawing.Size(216, 48);
+			this.btnCheckSerial.TabIndex = 1;
+			this.btnCheckSerial.Text = "シリアルキー妥当性チェック";
+			this.btnCheckSerial.Click += new System.EventHandler(this.btnCheckSerial_Click);
 			// 
-			// textBox2
+			// btnRireki
 			// 
-			this.textBox2.Location = new System.Drawing.Point(40, 152);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(176, 19);
-			this.textBox2.TabIndex = 2;
-			this.textBox2.Text = "textBox2";
-			// 
-			// textBox3
-			// 
-			this.textBox3.Location = new System.Drawing.Point(24, 192);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(192, 19);
-			this.textBox3.TabIndex = 3;
-			this.textBox3.Text = "textBox3";
-			// 
-			// textBox4
-			// 
-			this.textBox4.Location = new System.Drawing.Point(64, 88);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(96, 19);
-			this.textBox4.TabIndex = 4;
-			this.textBox4.Text = "54936";
+			this.btnRireki.Location = new System.Drawing.Point(24, 160);
+			this.btnRireki.Name = "btnRireki";
+			this.btnRireki.Size = new System.Drawing.Size(216, 48);
+			this.btnRireki.TabIndex = 2;
+			this.btnRireki.Text = "発行履歴参照";
+			this.btnRireki.Click += new System.EventHandler(this.btnRireki_Click);
 			// 
 			// SerialKeyManager
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(292, 273);
-			this.Controls.Add(this.textBox4);
-			this.Controls.Add(this.textBox3);
-			this.Controls.Add(this.textBox2);
-			this.Controls.Add(this.textBox1);
-			this.Controls.Add(this.button1);
+			this.ClientSize = new System.Drawing.Size(272, 237);
+			this.Controls.Add(this.btnRireki);
+			this.Controls.Add(this.btnCheckSerial);
+			this.Controls.Add(this.btnMakeSerial);
 			this.Name = "SerialKeyManager";
 			this.Text = "SerialKeyManager";
 			this.ResumeLayout(false);
@@ -128,28 +108,23 @@ namespace SerialKeyManager
 			Application.Run(new SerialKeyManager());
 		}
 
-		private void button1_Click(object sender, System.EventArgs e)
+		private void btnMakeSerial_Click(object sender, System.EventArgs e)
 		{
+			MakeSerialKey dlg = new MakeSerialKey();
+			dlg.ShowDialog();
+		}
 
-			Encoding encoder = Encoding.GetEncoding(int.Parse(this.textBox4.Text));
+		private void btnCheckSerial_Click(object sender, System.EventArgs e)
+		{
+			SerialCheckDlg dlg = new SerialCheckDlg();
+			dlg.ShowDialog();
+		}
 
-			byte[] result = encoder.GetBytes(this.textBox1.Text);
-			string output = "";
-			for( int i = 0; i < result.Length; i++ )
-			{
-				output += result[i].ToString("X2");
-			}
-			this.textBox2.Text = output;
+		private void btnRireki_Click(object sender, System.EventArgs e)
+		{
+			string logFileName = Application.ExecutablePath + ".log";
 
-			byte[] ret = new byte[output.Length/2];
-			for( int j = 0; j < ret.Length; j++ )
-			{
-				ret[j] = byte.Parse(output.Substring(j*2,2),NumberStyles.HexNumber);
-			}
-
-			string retstr = new string(encoder.GetChars(ret));
-			this.textBox3.Text = retstr;
-		
+			System.Diagnostics.Process.Start( logFileName );
 		}
 	}
 }

@@ -77,7 +77,7 @@ namespace serialFactory
 			this.btnOK.Location = new System.Drawing.Point(24, 64);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(134, 24);
-			this.btnOK.TabIndex = 1;
+			this.btnOK.TabIndex = 2;
 			this.btnOK.Text = "はい、知っています";
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
@@ -86,7 +86,7 @@ namespace serialFactory
 			this.btnAbort.Location = new System.Drawing.Point(230, 64);
 			this.btnAbort.Name = "btnAbort";
 			this.btnAbort.Size = new System.Drawing.Size(166, 26);
-			this.btnAbort.TabIndex = 3;
+			this.btnAbort.TabIndex = 1;
 			this.btnAbort.Text = "いいえ知りません(&X)";
 			this.btnAbort.Click += new System.EventHandler(this.btnAbort_Click);
 			// 
@@ -121,6 +121,7 @@ namespace serialFactory
 					break ;
 				}
 			}
+			this.btnOK.Name = this.btnOK.Name + shortcutkey.ToString();
 
 			this.btnOK.Text = "はい、しっています(&" + shortcutkey.ToString() + ")";
 		
@@ -134,6 +135,7 @@ namespace serialFactory
 
 		private void btnAbort_Click(object sender, System.EventArgs e)
 		{
+			MessageBox.Show("ビジネス ソフトウェア アライアンス(BSA) のホームページを表示します。");
 			System.Diagnostics.Process.Start( "http://www.bsa.or.jp/" );
 			this.Close();
 		}

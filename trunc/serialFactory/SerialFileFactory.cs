@@ -121,12 +121,14 @@ namespace serialFactory
 		{
 			try
 			{
-				this.SerialData.UserName = username;
 				if( this.serialData.LoadSetupData(serial) == false )
 				{
 					this.errMsg = StrEncoder.Encode(this.SerialData.errMsg);
 					return false;
 				}
+				// ƒ†[ƒU[–¼‚Ìİ’è‚ÌêŠ‚Í‚±‚±‚Å‚È‚¢‚Æ‚¢‚¯‚È‚¢
+				this.SerialData.UserName = username;
+
 				StreamWriter sr = new StreamWriter(filename);
 				sr.Write(this.SerialData.SerializeData());
 				sr.Close();

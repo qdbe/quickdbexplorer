@@ -89,6 +89,11 @@
                     AssemblyName = "System.Xml"
                     HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
                 />
+                <Reference
+                    Name = "serialFactory"
+                    Project = "{78D1D1E4-523A-42B6-AB78-93A328D0B612}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>
@@ -101,6 +106,26 @@
                     RelPath = "AssemblyInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "MakeSerialKey.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "MakeSerialKey.resx"
+                    DependentUpon = "MakeSerialKey.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "SerialCheckDlg.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "SerialCheckDlg.resx"
+                    DependentUpon = "SerialCheckDlg.cs"
+                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "SerialKeyManager.cs"

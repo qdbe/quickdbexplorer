@@ -74,7 +74,7 @@ namespace serialFactory
 			this.serialText.Multiline = true;
 			this.serialText.Name = "serialText";
 			this.serialText.Size = new System.Drawing.Size(412, 96);
-			this.serialText.TabIndex = 0;
+			this.serialText.TabIndex = 1;
 			this.serialText.Text = "";
 			// 
 			// label1
@@ -82,7 +82,7 @@ namespace serialFactory
 			this.label1.Location = new System.Drawing.Point(24, 16);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(238, 22);
-			this.label1.TabIndex = 1;
+			this.label1.TabIndex = 0;
 			this.label1.Text = "シリアルキーを下記に入力して下さい";
 			// 
 			// btnOK
@@ -90,7 +90,7 @@ namespace serialFactory
 			this.btnOK.Location = new System.Drawing.Point(26, 214);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(102, 24);
-			this.btnOK.TabIndex = 2;
+			this.btnOK.TabIndex = 4;
 			this.btnOK.Text = "登録(&R)";
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
@@ -99,7 +99,7 @@ namespace serialFactory
 			this.label2.Location = new System.Drawing.Point(26, 154);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(198, 16);
-			this.label2.TabIndex = 3;
+			this.label2.TabIndex = 2;
 			this.label2.Text = "ユーザー名を入力してください";
 			// 
 			// txtUser
@@ -107,7 +107,7 @@ namespace serialFactory
 			this.txtUser.Location = new System.Drawing.Point(24, 184);
 			this.txtUser.Name = "txtUser";
 			this.txtUser.Size = new System.Drawing.Size(412, 19);
-			this.txtUser.TabIndex = 4;
+			this.txtUser.TabIndex = 3;
 			this.txtUser.Text = "";
 			// 
 			// btnAbort
@@ -115,7 +115,7 @@ namespace serialFactory
 			this.btnAbort.Location = new System.Drawing.Point(318, 214);
 			this.btnAbort.Name = "btnAbort";
 			this.btnAbort.Size = new System.Drawing.Size(102, 24);
-			this.btnAbort.TabIndex = 2;
+			this.btnAbort.TabIndex = 5;
 			this.btnAbort.Text = "登録を中断(&X)";
 			this.btnAbort.Click += new System.EventHandler(this.btnAbort_Click);
 			// 

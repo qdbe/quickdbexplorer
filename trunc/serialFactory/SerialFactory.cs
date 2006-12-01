@@ -20,16 +20,18 @@ namespace serialFactory
 		private DateTime		serialSetupDate;	// シリアルキー セットアップ日時
 		private DateTime		limitDate;			// 利用期限日時
 		private DateTime		limitLength;		// セットアップ後の有効期限日数(2002/05/21 13:48:00 からの差分)
-		private DateTime		baseDate = new DateTime(2006,5,21,13,48,00);
+		private DateTime		baseDate = new DateTime(2001,5,21,13,48,00);
 		string	userName;			// ユーザー名
 		public  string errMsg = "";
 
-		
+		private int				setUpLimitDay;
+
 		public SerialFactory()
 		{
 			initDatas();
-			this.serialArrayCnt = 6;
-			this.serialYosoLen = 5;
+			this.serialArrayCnt = 8;
+			this.serialYosoLen = 10;
+			this.SetUpLimitDay = 60;
 		}
 
 		/// <summary>
@@ -39,10 +41,10 @@ namespace serialFactory
 		{
 			this.userName = "";
 			this.serialArray = new ArrayList();
-			this.serialSetupDate = DateTime.Now;
-			this.keyMakeDate = DateTime.Now;
-			this.limitDate = DateTime.Now;
-			this.LimitLength = new DateTime(2006,5,21,13,48,00).AddDays(30);
+			this.serialSetupDate = DateTime.Parse("1900/1/1");
+			this.keyMakeDate = DateTime.Parse("1900/1/1");
+			this.limitDate = DateTime.Parse("1900/1/1");
+			this.LimitLength = this.baseDate;
 		}
 
 
@@ -144,6 +146,12 @@ namespace serialFactory
 			}
 		}
 
+		public int SetUpLimitDay
+		{
+			get { return this.setUpLimitDay; }
+			set { this.setUpLimitDay = value; }
+		}
+
 		/// <summary>
 		/// 完全なシリアルキーデータが入っている文字列から、情報を読み取る
 		/// </summary>
@@ -151,10 +159,17 @@ namespace serialFactory
 		/// <returns></returns>
 		public bool	LoadData(string serialstr)
 		{
+			return LoadData(serialstr,true);
+		}
+
+		public bool	LoadData(string serialstr, bool doCheck)
+		{
 			this.errMsg = "";
 			try
 			{
-				if( this.IsValidSerialStr(serialstr) == false )
+				this.initDatas();
+
+				if( doCheck == true && this.IsValidSerialStr(serialstr) == false )
 				{
 					this.initDatas();
 					return false;
@@ -177,65 +192,84 @@ namespace serialFactory
 				needstr = needstr.Substring(kaiseki.Length);
 				kaiseki = needstr.Substring(0,DateSerialFactory.SerializedLen);
 				object ret = DateSerialFactory.Decode(kaiseki);
-				if( ret == null )
+				if( doCheck == true && ret == null )
 				{
 					this.initDatas();
 					return false;
 				}
-				this.KeyMakeDate = (DateTime)ret;
+				if( ret != null )
+				{
+					this.KeyMakeDate = (DateTime)ret;
+				}
 
 				// 次に、シリアルキーのセットアップ日時
 				needstr = needstr.Substring(kaiseki.Length);
 				kaiseki = needstr.Substring(0,DateSerialFactory.SerializedLen);
 				ret = DateSerialFactory.Decode(kaiseki);
-				if( ret == null )
+				if( doCheck == true && ret == null )
 				{
 					this.initDatas();
 					return false;
 				}
-				this.SerialSetupDate = (DateTime)ret;
+				if( ret != null )
+				{
+					this.SerialSetupDate = (DateTime)ret;
+				}
 
 
 				// 次に、シリアルキーの利用期限日時
 				needstr = needstr.Substring(kaiseki.Length);
 				kaiseki = needstr.Substring(0,DateSerialFactory.SerializedLen);
 				ret = DateSerialFactory.Decode(kaiseki);
-				if( ret == null )
+				if( doCheck == true && ret == null )
 				{
 					this.initDatas();
 					return false;
 				}
-				this.LimitDate = (DateTime)ret;
+				if( ret != null )
+				{
+					this.LimitDate = (DateTime)ret;
+				}
 
 				// 次に、シリアルキーの利用期限日数
 				needstr = needstr.Substring(kaiseki.Length);
 				kaiseki = needstr.Substring(0,DateSerialFactory.SerializedLen);
 				ret = DateSerialFactory.Decode(kaiseki);
-				if( ret == null )
+				if( doCheck == true && ret == null )
 				{
 					this.initDatas();
 					return false;
 				}
-				this.LimitLength = (DateTime)ret;
+				if( ret != null )
+				{
+					this.LimitLength = (DateTime)ret;
+				}
 
 
 				// 次に、シリアルキーの利用期限日数
 				needstr = needstr.Substring(kaiseki.Length);
 				// 残りは全てユーザー名のはず
 				string ustr = UserNameFactory.Decode(needstr);
-				if( ustr == null )
+				if( doCheck == true && ustr == null )
 				{
 					this.initDatas();
 					return false;
 				}
 				this.UserName = ustr;
 
-				return IsValidSerial();
+				if( doCheck == true )
+				{
+					return IsValidSerial();
+				}
+				return true;
 			}
 			catch( Exception ex)
 			{
 				this.errMsg = ex.ToString();
-				this.initDatas();
+				if( doCheck == true )
+				{
+					this.initDatas();
+				}
 				return false;
 			}
 		}
@@ -244,8 +278,9 @@ namespace serialFactory
 		/// 現在の各種値が正しいものかどうかをチェックする
 		/// </summary>
 		/// <returns></returns>
-		private bool IsValidSerial()
+		public bool IsValidSerial()
 		{
+			// シリアルキーの配列
 			if( SerialKeyFactory.CheckArray(this.SerialArray,this.SerialYosoLen) == false )
 			{
 				this.initDatas();
@@ -261,12 +296,21 @@ namespace serialFactory
 			}
 
 			ts = this.LimitDate  - this.SerialSetupDate;
-			//　有効期限 > キーセットアップ日
+			//　有効期限 >= キーセットアップ日 であるはず
 			if( ts.Days < 0 )
 			{
 				this.initDatas();
 				return false;
 			}
+
+			// 現在の日付と有効期限を比較し、すでに有効期限が切れている
+			ts = this.limitDate - DateTime.Now;
+			if( ts.Days < 0 )
+			{
+				this.initDatas();
+				return false;
+			}
+
 			// 有効日数がマイナスはありえない
 			if( this.LimitLengthInt < 0 )
 			{
@@ -286,9 +330,16 @@ namespace serialFactory
 		/// <returns></returns>
 		public bool	LoadSetupData(string serialstr)
 		{
+			return LoadSetupData(serialstr,true);
+		}
+
+		public bool	LoadSetupData(string serialstr, bool doCheck)
+		{
 			try
 			{
-				if( this.IsValidSetupSerialStr(serialstr) == false )
+				this.initDatas();
+
+				if( doCheck == true && this.IsValidSetupSerialStr(serialstr) == false )
 				{
 					this.initDatas();
 					return false;
@@ -311,24 +362,37 @@ namespace serialFactory
 				needstr = needstr.Substring(kaiseki.Length);
 				kaiseki = needstr.Substring(0,DateSerialFactory.SerializedLen);
 				object ret = DateSerialFactory.Decode(kaiseki);
-				if( ret == null )
+				if( doCheck == true && ret == null )
 				{
 					this.initDatas();
 					return false;
 				}
-				this.KeyMakeDate = (DateTime)ret;
+				if( ret != null )
+				{
+					this.KeyMakeDate = (DateTime)ret;
+				}
 
+				// キー作成後、一定日数以内にセットアップが必要
+				TimeSpan ts = DateTime.Now - this.keyMakeDate;
+				if( doCheck == true && ts.Days > this.SetUpLimitDay )
+				{
+					this.initDatas();
+					return false;
+				}
 
 				// 次に、シリアルキーの利用期限日時
 				needstr = needstr.Substring(kaiseki.Length);
 				kaiseki = needstr.Substring(0,DateSerialFactory.SerializedLen);
 				ret = DateSerialFactory.Decode(kaiseki);
-				if( ret == null )
+				if( doCheck == true && ret == null )
 				{
 					this.initDatas();
 					return false;
 				}
-				this.LimitLength = (DateTime)ret;
+				if( ret != null )
+				{
+					this.LimitLength = (DateTime)ret;
+				}
 
 				// シリアルキーのセットアップ日時は現在になる
 				this.SerialSetupDate = DateTime.Now;
@@ -336,12 +400,19 @@ namespace serialFactory
 				// 有効期限の設定
 				this.LimitDate = this.SerialSetupDate.AddDays(this.LimitLengthInt);
 
-				return IsValidSerial();
+				if( doCheck == true )
+				{
+					return IsValidSerial();
+				}
+				return true;
 			}
 			catch( Exception ex)
 			{
 				this.errMsg = ex.ToString();
-				this.initDatas();
+				if( doCheck == true )
+				{
+					this.initDatas();
+				}
 				return false;
 			}
 		}

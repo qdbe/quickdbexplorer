@@ -15,8 +15,14 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_02A201133FDA49C8ADEECA42A0A15016"
+        "MsmKey" = "8:_2A947510B76740B5939B1BB7CDED9D7B"
         "OwnerKey" = "8:_E2B2201F00D148BA8EC52803C8C8A12D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2A947510B76740B5939B1BB7CDED9D7B"
+        "OwnerKey" = "8:_D9E2B47B3D92481B925AD5FA3E00B9FE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -28,6 +34,12 @@
         "Entry"
         {
         "MsmKey" = "8:_C215BC43414E4470A06CB51EBD3AD33F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D9E2B47B3D92481B925AD5FA3E00B9FE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -781,7 +793,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_02A201133FDA49C8ADEECA42A0A15016"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_2A947510B76740B5939B1BB7CDED9D7B"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -798,6 +810,34 @@
         }
         "ProjectOutput"
         {
+            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_D9E2B47B3D92481B925AD5FA3E00B9FE"
+            {
+            "SourcePath" = "8:..\\serialFactory\\obj\\Debug\\serialFactory.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{78D1D1E4-523A-42B6-AB78-93A328D0B612}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_E2B2201F00D148BA8EC52803C8C8A12D"
             {
             "SourcePath" = "8:..\\quickDBExplorer\\obj\\Debug\\quickDBExplorer.exe"

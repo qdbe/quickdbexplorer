@@ -119,6 +119,7 @@ namespace serialFactory
 					break ;
 				}
 			}
+			this.btnOk.Name = this.btnOk.Name + shortcutkey.ToString();
 
 			this.btnOk.Text = "ÇÕÇ¢ÅAÇ†ÇËÇ‹Ç∑(&" + shortcutkey.ToString() + ")";
 		

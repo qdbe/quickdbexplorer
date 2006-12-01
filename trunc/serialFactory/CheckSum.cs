@@ -22,7 +22,7 @@ namespace serialFactory
 		public static string MakeCheckSum(string userSerialStr)
 		{
 			MD5 md5 = new MD5CryptoServiceProvider();
-			Encoding encoder = Encoding.GetEncoding(54936);
+			Encoding encoder = Encoding.GetEncoding(20127);
 
 			byte[] result = md5.ComputeHash(encoder.GetBytes(userSerialStr));
 			int		csum = 0;

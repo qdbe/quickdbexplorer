@@ -16,6 +16,8 @@ namespace SerialTest
 	/// </summary>
 	public class Form1 : System.Windows.Forms.Form
 	{
+		SerialManager smanager = new SerialManager();
+
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.TextBox textBox2;
@@ -48,6 +50,7 @@ namespace SerialTest
 			//
 			// TODO: InitializeComponent 呼び出しの後に、コンストラクタ コードを追加してください。
 			//
+			this.smanager.SerialFileName = Application.ExecutablePath + ".auth";
 		}
 
 		/// <summary>
@@ -324,8 +327,6 @@ namespace SerialTest
 
 		private void button4_Click(object sender, System.EventArgs e)
 		{
-			SerialManager smanager = new SerialManager();
-			smanager.SerialFileName = Application.ExecutablePath + ".auth";
 			smanager.LoadAndCheckSerial();
 		}
 
@@ -346,10 +347,7 @@ namespace SerialTest
 
 		private void button7_Click(object sender, System.EventArgs e)
 		{
-			SerialManager sf = new SerialManager();
-			sf.SerialFileName = Application.ExecutablePath + ".auth";
-			sf.LoadAndCheckSerial();
-			sf.ShowRegisterInfo();
+			smanager.ShowRegisterInfo();
 		}
 	}
 }
