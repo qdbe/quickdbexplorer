@@ -7,7 +7,7 @@
     >
         <Build>
             <Settings
-                ApplicationIcon = ""
+                ApplicationIcon = "..\quickDBExplorer\AppIcon.ico"
                 AssemblyKeyContainerName = ""
                 AssemblyName = "serialFactory"
                 AssemblyOriginatorKeyFile = ""
@@ -94,6 +94,10 @@
         <Files>
             <Include>
                 <File
+                    RelPath = "AppIcon.ico"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "AssemblyInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -117,6 +121,16 @@
                     RelPath = "DateSerialFactory.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "RegisterInfoDialog.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "RegisterInfoDialog.resx"
+                    DependentUpon = "RegisterInfoDialog.cs"
+                    BuildAction = "EmbeddedResource"
                 />
                 <File
                     RelPath = "RegisterSerialDialog.cs"

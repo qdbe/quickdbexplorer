@@ -57,6 +57,7 @@ namespace serialFactory
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(ChosakuKenDialog));
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnOK = new System.Windows.Forms.Button();
 			this.btnAbort = new System.Windows.Forms.Button();
@@ -97,6 +98,7 @@ namespace serialFactory
 			this.Controls.Add(this.btnAbort);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.label1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ChosakuKenDialog";
 			this.Text = "Šm”F";
 			this.Load += new System.EventHandler(this.ChosakuKenDialog_Load);

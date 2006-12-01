@@ -230,8 +230,10 @@ namespace SerialTest
 			// 
 			this.button7.Location = new System.Drawing.Point(722, 88);
 			this.button7.Name = "button7";
+			this.button7.Size = new System.Drawing.Size(128, 23);
 			this.button7.TabIndex = 16;
-			this.button7.Text = "button7";
+			this.button7.Text = "îFèÿèÓïÒï\é¶";
+			this.button7.Click += new System.EventHandler(this.button7_Click);
 			// 
 			// Form1
 			// 
@@ -242,16 +244,16 @@ namespace SerialTest
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.textBox9);
 			this.Controls.Add(this.textBox8);
-			this.Controls.Add(this.button5);
-			this.Controls.Add(this.button4);
 			this.Controls.Add(this.textBox7);
-			this.Controls.Add(this.button3);
 			this.Controls.Add(this.textBox6);
 			this.Controls.Add(this.textBox5);
 			this.Controls.Add(this.textBox4);
 			this.Controls.Add(this.textBox3);
 			this.Controls.Add(this.textBox2);
 			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.button5);
+			this.Controls.Add(this.button4);
+			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Name = "Form1";
@@ -340,6 +342,14 @@ namespace SerialTest
 		private void button6_Click(object sender, System.EventArgs e)
 		{
 			File.Delete(Application.ExecutablePath + ".auth");
+		}
+
+		private void button7_Click(object sender, System.EventArgs e)
+		{
+			SerialManager sf = new SerialManager();
+			sf.SerialFileName = Application.ExecutablePath + ".auth";
+			sf.LoadAndCheckSerial();
+			sf.ShowRegisterInfo();
 		}
 	}
 }

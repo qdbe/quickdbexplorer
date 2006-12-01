@@ -55,6 +55,7 @@ namespace serialFactory
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(ryoshinDialog));
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnAbort = new System.Windows.Forms.Button();
 			this.btnOk = new System.Windows.Forms.Button();
@@ -95,6 +96,7 @@ namespace serialFactory
 			this.Controls.Add(this.btnOk);
 			this.Controls.Add(this.btnAbort);
 			this.Controls.Add(this.label1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ryoshinDialog";
 			this.Text = "Šm”F";
 			this.Load += new System.EventHandler(this.ryoshinDialog_Load);

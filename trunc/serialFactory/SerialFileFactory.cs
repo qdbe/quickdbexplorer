@@ -70,6 +70,14 @@ namespace serialFactory
 			return true;
 		}
 
+		public bool IsTestingPeriod
+		{
+			get 
+			{
+				return this.SerialData.IsTestingPeriod;
+			}
+		}
+
 		/// <summary>
 		/// シリアルキーファイルの読み込み処理
 		/// </summary>

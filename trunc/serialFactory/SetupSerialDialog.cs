@@ -58,6 +58,7 @@ namespace serialFactory
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(SetupSerialDialog));
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnRegist = new System.Windows.Forms.Button();
 			this.btnTempUse = new System.Windows.Forms.Button();
@@ -107,6 +108,7 @@ namespace serialFactory
 			this.Controls.Add(this.btnTempUse);
 			this.Controls.Add(this.btnRegist);
 			this.Controls.Add(this.label1);
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "SetupSerialDialog";
 			this.Text = "シリアルキー登録確認";
 			this.Load += new System.EventHandler(this.SetupSerialDialog_Load);

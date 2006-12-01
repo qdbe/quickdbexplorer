@@ -128,6 +128,22 @@ namespace serialFactory
 			}
 		}
 
+		public bool IsTestingPeriod
+		{
+			get 
+			{
+				if( this.serialArray.Count == 0 )
+				{
+					// 試用期間中である
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+
 		/// <summary>
 		/// 完全なシリアルキーデータが入っている文字列から、情報を読み取る
 		/// </summary>

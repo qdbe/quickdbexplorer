@@ -57,6 +57,16 @@ namespace serialFactory
 			set { this.serialFileName = value; }
 		}
 
+		public string UserName
+		{
+			get { return this.sfile.SerialData.UserName; }
+		}
+
+		public string LimitDate
+		{
+			get { return this.sfile.SerialData.LimitDate.ToString("YYYY/M/d"); }
+		}
+
 		/// <summary>
 		/// シリアルキーが存在するかどうかをチェックし、存在しない場合警告メッセージ&キーの登録画面を表示する
 		/// </summary>
@@ -81,6 +91,12 @@ namespace serialFactory
 			return false;
 		}
 
+		/// <summary>
+		/// シリアルキーを登録する
+		/// </summary>
+		/// <param name="serial"></param>
+		/// <param name="user"></param>
+		/// <returns></returns>
 		public bool	SetupSerial(string serial, string user)
 		{
 			bool ret = sfile.SetupSerial(this.serialFileName,serial,user);
@@ -90,6 +106,20 @@ namespace serialFactory
 				return false;
 			}
 			return true;
+		}
+
+		public void	ShowRegisterInfo()
+		{
+			if( this.sfile.IsTestingPeriod == true )
+			{
+				MessageBox.Show("現在は試用中です");
+			}
+			else
+			{
+				RegisterInfoDialog dlg = new RegisterInfoDialog();
+				dlg.smanager = this;
+				dlg.ShowDialog();
+			}
 		}
 	
 	}
