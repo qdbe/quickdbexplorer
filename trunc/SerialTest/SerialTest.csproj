@@ -3,22 +3,22 @@
         ProjectType = "Local"
         ProductVersion = "7.10.3077"
         SchemaVersion = "2.0"
-        ProjectGuid = "{78D1D1E4-523A-42B6-AB78-93A328D0B612}"
+        ProjectGuid = "{9AFF9AD9-A3E0-4C61-81A8-D35788FE8F9F}"
     >
         <Build>
             <Settings
-                ApplicationIcon = ""
+                ApplicationIcon = "App.ico"
                 AssemblyKeyContainerName = ""
-                AssemblyName = "serialFactory"
+                AssemblyName = "SerialTest"
                 AssemblyOriginatorKeyFile = ""
                 DefaultClientScript = "JScript"
                 DefaultHTMLPageLayout = "Grid"
                 DefaultTargetSchema = "IE50"
                 DelaySign = "false"
-                OutputType = "Library"
+                OutputType = "WinExe"
                 PreBuildEvent = ""
                 PostBuildEvent = ""
-                RootNamespace = "serialFactory"
+                RootNamespace = "SerialTest"
                 RunPostBuildEvent = "OnBuildSuccess"
                 StartupObject = ""
             >
@@ -75,9 +75,9 @@
                     HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Data.dll"
                 />
                 <Reference
-                    Name = "System.XML"
-                    AssemblyName = "System.Xml"
-                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
+                    Name = "System.Drawing"
+                    AssemblyName = "System.Drawing"
+                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll"
                 />
                 <Reference
                     Name = "System.Windows.Forms"
@@ -85,102 +85,37 @@
                     HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Windows.Forms.dll"
                 />
                 <Reference
-                    Name = "System.Drawing"
-                    AssemblyName = "System.Drawing"
-                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.Drawing.dll"
+                    Name = "System.XML"
+                    AssemblyName = "System.Xml"
+                    HintPath = "C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\System.XML.dll"
+                />
+                <Reference
+                    Name = "serialFactory"
+                    Project = "{78D1D1E4-523A-42B6-AB78-93A328D0B612}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
                 />
             </References>
         </Build>
         <Files>
             <Include>
                 <File
+                    RelPath = "App.ico"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "AssemblyInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "CheckSum.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "ChosakuKenDialog.cs"
+                    RelPath = "Form1.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "ChosakuKenDialog.resx"
-                    DependentUpon = "ChosakuKenDialog.cs"
+                    RelPath = "Form1.resx"
+                    DependentUpon = "Form1.cs"
                     BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "DateSerialFactory.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "RegisterSerialDialog.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "RegisterSerialDialog.resx"
-                    DependentUpon = "RegisterSerialDialog.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "ryoshinDialog.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "ryoshinDialog.resx"
-                    DependentUpon = "ryoshinDialog.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "SerialFactory.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "SerialFileFactory.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "SerialKeyFactory.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "SerialManager.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "SetupSerialDialog.cs"
-                    SubType = "Form"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "SetupSerialDialog.resx"
-                    DependentUpon = "SetupSerialDialog.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "StrEncoder.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "TextFile1.txt"
-                    BuildAction = "Content"
-                />
-                <File
-                    RelPath = "UserNameFactory.cs"
-                    SubType = "Code"
-                    BuildAction = "Compile"
                 />
             </Include>
         </Files>

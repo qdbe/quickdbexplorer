@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.Collections;
+using System.Globalization;
 using System.Security.Cryptography;
 
 
@@ -48,9 +49,9 @@ namespace serialFactory
 			for( int i = 0; i < strar.Count; i += 2 )
 			{
 				srcstr = (string)strar[i];
-				prenum = int.Parse(srcstr.Substring(0,2));
+				prenum = int.Parse(srcstr.Substring(0,2),NumberStyles.HexNumber);
 				startpos = prenum % 9;
-				yoso = ( prenum % ( strar.Count / 2 ) ) * 2;
+				yoso = prenum % strar.Count;
 				strar[yoso] = SerialKeyFactory.Encode(srcstr,startpos,len);
 			}
 
@@ -64,7 +65,7 @@ namespace serialFactory
 
 			for( int i = 0; i < copyar.Count; i++ )
 			{
-				if( copyar[i] != strar[i] )
+				if( (string)copyar[i] != (string)strar[i] )
 				{
 					return false;
 				}
@@ -96,14 +97,22 @@ namespace serialFactory
 			Random rdm = new Random(unchecked((int)DateTime.Now.Ticks));
  
 			ArrayList retar = new ArrayList(arCount);
+			for(int k = 0; k < arCount; k ++ )
+			{
+				retar.Add(null);
+			}
 			int		randint;
 			
 			for( int	finishCnt = 0; finishCnt < arCount; )
 			{
 				// æ“ª2Œ…‚ð‚Ü‚¸‚ÍŒˆ’è‚·‚é
 				randint = rdm.Next(1,100);
-				int yoso = ( randint % ( arCount / 2 ) ) * 2;
-				if( retar[yoso] != null )
+				int yoso = randint % arCount;
+				if( yoso % 2 == 0 )
+				{
+					continue;
+				}
+				if( retar.Count != 0 && retar[yoso] != null )
 				{
 					continue;
 				}
@@ -117,6 +126,7 @@ namespace serialFactory
 					keystr += randint.ToString("X2").Substring(1,1);
 				}
 				retar[finishCnt] = keystr;
+				retar[yoso] = keystr;	// ‚±‚±‚Å‚Íƒ_ƒ~[‚Å‚¢‚ê‚Ä‚¨‚­
 				finishCnt += 2;
 			}
 

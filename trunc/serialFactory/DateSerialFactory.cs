@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Globalization;
+using System.Security.Cryptography;
 
 namespace serialFactory
 {
@@ -8,12 +10,82 @@ namespace serialFactory
 	/// </summary>
 	public class DateSerialFactory
 	{
+		// シリアライズキーの最低長
+		public const int SerializedLen = 68;	// 文字列長とチェックサム含む
+		static int []bunkai = new int[] {
+											38,
+											17,
+											33,
+											23,
+											22,
+											11,
+											41,
+											57,
+											54,
+											45,
+											36,
+											32,
+											34,
+											43,
+											61,
+											60,
+											51,
+											5,
+											14,
+											42,
+											12,
+											62,
+											19,
+											15,
+											50,
+											3,
+											39,
+											29,
+											55,
+											9,
+											58,
+											0,
+											8,
+											7,
+											52,
+											28,
+											24,
+											26,
+											21,
+											59,
+											56,
+											30,
+											4,
+											2,
+											47,
+											37,
+											44,
+											48,
+											31,
+											20,
+											10,
+											27,
+											16,
+											25,
+											35,
+											53,
+											1,
+											63,
+											40,
+											18,
+											13,
+											49,
+											6,
+											46
+										};
+
 		public DateSerialFactory()
 		{
 			// 
 			// TODO: コンストラクタ ロジックをここに追加してください。
 			//
 		}
+
 
 		public static string Encode(string datestr)
 		{
@@ -30,39 +102,60 @@ namespace serialFactory
 			return Encode(tm);
 		}
 
-		public static string Encode(DateTime tm)
+		public static string Encode(DateTime inittm)
 		{
-			// 日付を変換する
-			string hexstr = tm.Ticks.ToString();
-			ArrayList ar = new ArrayList();
-			ar.Add(hexstr.Substring(0,6));
-			ar.Add(hexstr.Substring(6,4));
-			ar.Add(hexstr.Substring(10,4));
-			ar.Add(hexstr.Substring(14,4));
+			// 時、分、秒は規定値にあわせる
 
-			string prestr = (string)ar[2] + (string)ar[1] + (string)ar[3] + (string)ar[0];
-			int checksum = 0;
-			for( int j = 0; j < prestr.Length; j++ )
+			Random rdm = new Random(unchecked((int)DateTime.Now.Ticks));
+
+			// 日付を変換する
+			DateTime tm = new DateTime(inittm.Year,inittm.Month,inittm.Day,inittm.Year%24,inittm.Month,inittm.Day);
+			string hexstr = tm.Ticks.ToString();	// ここが肝
+			char [] ar = new char[64];
+			for(int i = 0; i < ar.Length; i++ )
 			{
-				checksum += int.Parse(prestr[j].ToString());
+				if( bunkai[i] < hexstr.Length )
+				{
+					// この場合元の文字列からの値を登録する
+					ar[i] = hexstr[bunkai[i]];
+				}
+				else
+				{
+					// 元の文字列を超えているので、ランダムな値を入れる
+					int randint = rdm.Next(16);
+					ar[i] = randint.ToString()[0];
+				}
 			}
-			checksum = checksum%16;
-			prestr += checksum.ToString("X2").ToUpper();
-			return prestr;
+			string prestr = hexstr.Length.ToString("X2") + new string(ar);
+			return prestr + CheckSum.MakeCheckSum(prestr);
 		}
 
-		public static DateTime Decode(string keystr)
+		public static object Decode(string keystr)
 		{
-			string basestr = keystr;
-			basestr = basestr.Substring(0,basestr.Length-2);
-			ArrayList dear = new ArrayList();
-			dear.Add(basestr.Substring(0,4));
-			dear.Add(basestr.Substring(4,4));
-			dear.Add(basestr.Substring(8,4));
-			dear.Add(basestr.Substring(12,6));
-			string longstr = (string)dear[3]+(string)dear[1]+(string)dear[0]+(string)dear[2];
+			if( keystr == null ||
+				keystr.Length < SerializedLen ||
+				CheckSum.DoCheckSum(keystr) == false )
+			{
+				return null;
+			}
+
+			string basestr = CheckSum.MinusCheckSum(keystr);
+			int		needlen = int.Parse(basestr.Substring(0,2),NumberStyles.HexNumber );
+			basestr = basestr.Substring(2);
+
+			char [] ar = new char[needlen];
+
+			for( int i = 0; i < 64; i++ )
+			{
+				if( bunkai[i] < needlen )
+				{
+					ar[bunkai[i]] = basestr[i];
+				}
+			}
+
+			string longstr = new string(ar);
 			long timelong = long.Parse(longstr);
-			return new DateTime(timelong);
+			return new DateTime(timelong);// ここが肝
 		}
 	}
 }
