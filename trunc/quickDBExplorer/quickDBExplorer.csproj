@@ -94,6 +94,11 @@
                     AssemblyName = "System.Runtime.Serialization.Formatters.Soap"
                     HintPath = "C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Runtime.Serialization.Formatters.Soap.dll"
                 />
+                <Reference
+                    Name = "serialFactory"
+                    Project = "{78D1D1E4-523A-42B6-AB78-93A328D0B612}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>

@@ -137,6 +137,14 @@ namespace serialFactory
 
 		private void btnRegist_Click(object sender, System.EventArgs e)
 		{
+			// 使用許諾の確認
+			KeikokuDlg kdlg = new KeikokuDlg();
+			if( kdlg.ShowDialog() != DialogResult.OK )
+			{
+				this.Close();
+				return;
+			}
+
 			RegisterSerialDialog dlg = new RegisterSerialDialog();
 			dlg.smanager = this.smanager;
 			DialogResult ret = dlg.ShowDialog();
@@ -156,6 +164,13 @@ namespace serialFactory
 
 		private void btnTempUse_Click(object sender, System.EventArgs e)
 		{
+			// 使用許諾の確認
+			KeikokuDlg kdlg = new KeikokuDlg();
+			if( kdlg.ShowDialog() != DialogResult.OK )
+			{
+				this.Close();
+				return;
+			}
 			// 試用の為の確認ダイアログを表示する
 			ryoshinDialog rdlg = new ryoshinDialog();
 			if( DialogResult.OK != rdlg.ShowDialog())

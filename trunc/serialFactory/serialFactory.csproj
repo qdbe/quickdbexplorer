@@ -123,6 +123,20 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "KeikokuDlg.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "KeikokuDlg.resx"
+                    DependentUpon = "KeikokuDlg.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "license.txt"
+                    BuildAction = "Content"
+                />
+                <File
                     RelPath = "RegisterInfoDialog.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
@@ -189,6 +203,30 @@
                 />
                 <File
                     RelPath = "TextFile1.txt"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "TextFile2.txt"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "TextFile3.txt"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "TextFile4.txt"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "TextFile5.txt"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "TextFile6.txt"
+                    BuildAction = "Content"
+                />
+                <File
+                    RelPath = "TextFile7.txt"
                     BuildAction = "Content"
                 />
                 <File

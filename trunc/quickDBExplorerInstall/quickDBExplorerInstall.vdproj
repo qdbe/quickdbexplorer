@@ -15,14 +15,8 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_2A947510B76740B5939B1BB7CDED9D7B"
-        "OwnerKey" = "8:_E2B2201F00D148BA8EC52803C8C8A12D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2A947510B76740B5939B1BB7CDED9D7B"
-        "OwnerKey" = "8:_D9E2B47B3D92481B925AD5FA3E00B9FE"
+        "MsmKey" = "8:_3D31C6C055504C748100A35C7CFEB914"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -33,14 +27,26 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_92864FDA5E7AAD03DB3ABAF847D5F67B"
+        "OwnerKey" = "8:_E2B2201F00D148BA8EC52803C8C8A12D"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_C215BC43414E4470A06CB51EBD3AD33F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_D9E2B47B3D92481B925AD5FA3E00B9FE"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_D7DB0DAB33EA486CB58F7ED2213E1A4F"
+        "OwnerKey" = "8:_92864FDA5E7AAD03DB3ABAF847D5F67B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D7DB0DAB33EA486CB58F7ED2213E1A4F"
+        "OwnerKey" = "8:_E2B2201F00D148BA8EC52803C8C8A12D"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -114,6 +120,26 @@
         }
         "File"
         {
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_3D31C6C055504C748100A35C7CFEB914"
+            {
+            "SourcePath" = "8:..\\serialFactory\\license.txt"
+            "TargetName" = "8:license.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_5F7A036F16F445AE820B62BA2CD7D2DA"
             {
             "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.mht"
@@ -132,6 +158,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_92864FDA5E7AAD03DB3ABAF847D5F67B"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:serialFactory, Version=1.0.2530.3530, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_92864FDA5E7AAD03DB3ABAF847D5F67B"
+                    {
+                    "Name" = "8:serialFactory.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:serialFactory.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_C215BC43414E4470A06CB51EBD3AD33F"
@@ -253,19 +310,19 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:quickDBExplorer"
-        "ProductCode" = "8:{E248EAF9-FDB2-4B94-BB2C-7F3A717FA9F4}"
-        "PackageCode" = "8:{653E5619-A0A4-4543-A454-12D1B20466CF}"
-        "UpgradeCode" = "8:{345F31DE-036C-48CE-87EB-08D36B810757}"
+        "ProductCode" = "8:{FF70B6EB-28BF-48B4-AA14-C6FE01CFAE03}"
+        "PackageCode" = "8:{2AA95CA9-33A2-4BC0-A677-FD08D6D50480}"
+        "UpgradeCode" = "8:{F11492BC-0C84-4BA5-BE29-BEB68FC8A758}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:GSOFT"
+        "Manufacturer" = "8:GI Engineering"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:quickDBExplorer"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:GSOFT"
+        "ARPCONTACT" = "8:GI Engineering"
         "Keywords" = "8:quickDBExplorer"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -793,7 +850,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_2A947510B76740B5939B1BB7CDED9D7B"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_D7DB0DAB33EA486CB58F7ED2213E1A4F"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -810,37 +867,9 @@
         }
         "ProjectOutput"
         {
-            "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_D9E2B47B3D92481B925AD5FA3E00B9FE"
-            {
-            "SourcePath" = "8:..\\serialFactory\\obj\\Debug\\serialFactory.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{78D1D1E4-523A-42B6-AB78-93A328D0B612}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_E2B2201F00D148BA8EC52803C8C8A12D"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Debug\\quickDBExplorer.exe"
+            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Release\\quickDBExplorer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"

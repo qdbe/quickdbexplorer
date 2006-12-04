@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
+using serialFactory;
 
 namespace quickDBExplorer
 {
@@ -29,6 +30,12 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem menuItem4;
 		private System.Windows.Forms.MenuItem menuItem5;
 		protected string  errMessage = "";
+		private System.Windows.Forms.MenuItem menuItem6;
+		private System.Windows.Forms.MenuItem menuItem7;
+
+		private SerialManager smanager = new SerialManager();
+
+
 
 		public MainMDI()
 		{
@@ -73,6 +80,8 @@ namespace quickDBExplorer
 			this.menuItem2 = new System.Windows.Forms.MenuItem();
 			this.menuItem4 = new System.Windows.Forms.MenuItem();
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
+			this.menuItem6 = new System.Windows.Forms.MenuItem();
+			this.menuItem7 = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// statusBar1
@@ -120,12 +129,27 @@ namespace quickDBExplorer
 			// menuItem4
 			// 
 			this.menuItem4.Index = 2;
+			this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					  this.menuItem6,
+																					  this.menuItem7});
 			this.menuItem4.Text = "HELP(&H)";
 			this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
 			// 
 			// errorProvider1
 			// 
 			this.errorProvider1.ContainerControl = this;
+			// 
+			// menuItem6
+			// 
+			this.menuItem6.Index = 0;
+			this.menuItem6.Text = "ヘルプ参照";
+			this.menuItem6.Click += new System.EventHandler(this.menuItem6_Click);
+			// 
+			// menuItem7
+			// 
+			this.menuItem7.Index = 1;
+			this.menuItem7.Text = "ライセンス登録状況";
+			this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
 			// 
 			// MainMDI
 			// 
@@ -188,6 +212,13 @@ namespace quickDBExplorer
 		private void MainMDI_Load(object sender, System.EventArgs e)
 		{
 			// TODO: InitializeComponent 呼び出しの後に初期化処理を追加します。
+			smanager.SerialFileName = Application.ExecutablePath + ".auth";
+			if( smanager.LoadAndCheckSerial() == false )
+			{
+				this.Close();
+			}
+
+
 			FileStream fs = null;
 
 			this.InitErrMessage();
@@ -293,6 +324,21 @@ namespace quickDBExplorer
 		private void menuItem5_Click(object sender, System.EventArgs e)
 		{
 			this.Close();
+		}
+
+		private void menuItem6_Click(object sender, System.EventArgs e)
+		{
+			string helpname = AppDomain.CurrentDomain.FriendlyName;
+			helpname = helpname.Replace(".exe","help.mht");
+			if( File.Exists(helpname) == true )
+			{
+				System.Diagnostics.Process.Start( helpname );
+			}
+		}
+
+		private void menuItem7_Click(object sender, System.EventArgs e)
+		{
+			this.smanager.ShowRegisterInfo();
 		}
 
 	}

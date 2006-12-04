@@ -328,16 +328,27 @@ namespace serialFactory
 		/// </summary>
 		/// <param name="serialstr">シリアルキーデータを持つ文字列</param>
 		/// <returns></returns>
+		public bool	LoadSetupData(string serialstr, string uname)
+		{
+			return LoadSetupData(serialstr,true, uname);
+		}
+
 		public bool	LoadSetupData(string serialstr)
 		{
-			return LoadSetupData(serialstr,true);
+			return LoadSetupData(serialstr,true, "");
 		}
 
 		public bool	LoadSetupData(string serialstr, bool doCheck)
 		{
+			return LoadSetupData(serialstr, doCheck,"");
+		}
+
+		public bool	LoadSetupData(string serialstr, bool doCheck, string uname)
+		{
 			try
 			{
 				this.initDatas();
+				this.UserName = uname;
 
 				if( doCheck == true && this.IsValidSetupSerialStr(serialstr) == false )
 				{
