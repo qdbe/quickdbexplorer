@@ -9,6 +9,6 @@
     </filelist>
   </trigger>
   <output>
-    <file dir="D:\SelfTest\quickDBExplorer\trunc\quickDBExplorer\forInstall" />
+    <file dir="D:\SelfTest\quickDBExplorer\trunc\forInstall" />
   </output>
 </dotfuscator>

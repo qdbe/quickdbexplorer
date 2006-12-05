@@ -17,7 +17,7 @@
                 DelaySign = "false"
                 OutputType = "WinExe"
                 PreBuildEvent = ""
-                PostBuildEvent = "$(SolutionDir)dodotfuscator.bat&#xd;&#xa;"
+                PostBuildEvent = "cd $(SolutionDir)&#xd;&#xa;; $(SolutionDir)dodotfuscator.bat&#xd;&#xa;"
                 RootNamespace = "quickDBExplorer"
                 RunPostBuildEvent = "OnBuildSuccess"
                 StartupObject = ""
