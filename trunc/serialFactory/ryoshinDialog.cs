@@ -96,6 +96,7 @@ namespace serialFactory
 			this.Controls.Add(this.btnOk);
 			this.Controls.Add(this.btnAbort);
 			this.Controls.Add(this.label1);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ryoshinDialog";
 			this.Text = "Šm”F";

@@ -75,6 +75,7 @@ namespace serialFactory
 			// 
 			// btnRegist
 			// 
+			this.btnRegist.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnRegist.Location = new System.Drawing.Point(28, 54);
 			this.btnRegist.Name = "btnRegist";
 			this.btnRegist.Size = new System.Drawing.Size(116, 28);
@@ -84,6 +85,7 @@ namespace serialFactory
 			// 
 			// btnTempUse
 			// 
+			this.btnTempUse.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
 			this.btnTempUse.Location = new System.Drawing.Point(174, 54);
 			this.btnTempUse.Name = "btnTempUse";
 			this.btnTempUse.Size = new System.Drawing.Size(120, 28);
@@ -93,6 +95,7 @@ namespace serialFactory
 			// 
 			// btnAbort
 			// 
+			this.btnAbort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnAbort.Location = new System.Drawing.Point(332, 56);
 			this.btnAbort.Name = "btnAbort";
 			this.btnAbort.Size = new System.Drawing.Size(160, 26);
@@ -108,6 +111,7 @@ namespace serialFactory
 			this.Controls.Add(this.btnTempUse);
 			this.Controls.Add(this.btnRegist);
 			this.Controls.Add(this.label1);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "SetupSerialDialog";
 			this.Text = "シリアルキー登録確認";

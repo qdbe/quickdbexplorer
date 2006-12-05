@@ -130,6 +130,7 @@ namespace serialFactory
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.btnAbort);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "RegisterSerialDialog";
 			this.Text = "シリアルキー登録";

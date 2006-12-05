@@ -19,6 +19,14 @@ namespace serialFactory
 			//
 		}
 
+		public static string Encode(string keystr, int len)
+		{
+			int prenum = int.Parse(keystr.Substring(0,2),NumberStyles.HexNumber);
+			int startpos = prenum % 9;
+
+			return Encode(keystr, startpos, len);
+		}
+
 		public static string Encode(string keystr, int startpos, int len)
 		{
 			MD5 md5 = new MD5CryptoServiceProvider();
