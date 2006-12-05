@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorer", "quickDBE
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "quickDBExplorerInstall", "quickDBExplorerInstall\quickDBExplorerInstall.vdproj", "{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}"
 	ProjectSection(ProjectDependencies) = postProject
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0} = {EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}
+		{78D1D1E4-523A-42B6-AB78-93A328D0B612} = {78D1D1E4-523A-42B6-AB78-93A328D0B612}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "serialFactory", "serialFactory\serialFactory.csproj", "{78D1D1E4-523A-42B6-AB78-93A328D0B612}"
@@ -31,6 +33,7 @@ Global
 		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Release.Build.0 = Release|.NET
 		{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}.Debug.ActiveCfg = Debug
 		{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}.Release.ActiveCfg = Release
+		{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}.Release.Build.0 = Release
 		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Debug.ActiveCfg = Debug|.NET
 		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Debug.Build.0 = Debug|.NET
 		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Release.ActiveCfg = Release|.NET

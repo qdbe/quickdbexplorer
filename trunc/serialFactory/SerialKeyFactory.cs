@@ -53,6 +53,10 @@ namespace serialFactory
 			int		prenum = 0;
 			int		startpos = 0;
 			int		yoso = 0;
+			for( int j = 0; j < strar.Count; j += 2 )
+			{
+				strar[j+1] = "";
+			}
 
 			for( int i = 0; i < strar.Count; i += 2 )
 			{

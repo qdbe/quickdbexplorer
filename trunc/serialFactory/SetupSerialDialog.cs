@@ -143,9 +143,10 @@ namespace serialFactory
 		{
 			// 使用許諾の確認
 			KeikokuDlg kdlg = new KeikokuDlg();
+			kdlg.IsBeforeRegist = true;
 			if( kdlg.ShowDialog() != DialogResult.OK )
 			{
-				this.Close();
+				// 登録を中断して、試用にうつれるように、close()しない
 				return;
 			}
 
@@ -170,6 +171,7 @@ namespace serialFactory
 		{
 			// 使用許諾の確認
 			KeikokuDlg kdlg = new KeikokuDlg();
+			kdlg.IsBeforeRegist = false;
 			if( kdlg.ShowDialog() != DialogResult.OK )
 			{
 				this.Close();

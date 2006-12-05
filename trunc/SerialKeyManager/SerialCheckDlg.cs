@@ -273,6 +273,7 @@ namespace SerialKeyManager
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.label6);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Name = "SerialCheckDlg";
 			this.Text = "SerialCheckDlg";
 			this.ResumeLayout(false);
@@ -295,10 +296,22 @@ namespace SerialKeyManager
 			catch{}
 			// シリアルキー配列
 			string output = "";
-			foreach( string sr in this.sfact.SerialArray )
+			ArrayList copyar = (ArrayList)this.sfact.SerialArray.Clone();
+			SerialKeyFactory.EncodeArray(copyar,this.sfact.SerialYosoLen);
+			for( int i = 0; i < this.sfact.SerialArrayCnt && i < this.sfact.SerialArray.Count; i++ )
 			{
-				output += sr + "\r\n";
+				output += (string)this.sfact.SerialArray[i] + ":";
+				if( (string)this.sfact.SerialArray[i] == (string)copyar[i] )
+				{
+					output += "OK";
+				}
+				else
+				{
+					output += "NG";
+				}
+				output += "\r\n";
 			}
+
 			this.txtSerialArray.Text = output;
 
 			// キー作成日時
@@ -331,10 +344,22 @@ namespace SerialKeyManager
 			catch{}
 			// シリアルキー配列
 			string output = "";
-			foreach( string sr in this.sfact.SerialArray )
+			ArrayList copyar = (ArrayList)this.sfact.SerialArray.Clone();
+			SerialKeyFactory.EncodeArray(copyar,this.sfact.SerialYosoLen);
+			for( int i = 0; i < this.sfact.SerialArrayCnt && i < this.sfact.SerialArray.Count; i++ )
 			{
-				output += sr + "\r\n";
+				output += (string)this.sfact.SerialArray[i] + ":";
+				if( (string)this.sfact.SerialArray[i] == (string)copyar[i] )
+				{
+					output += "OK";
+				}
+				else
+				{
+					output += "NG";
+				}
+				output += "\r\n";
 			}
+
 			this.txtSerialArray.Text = output;
 
 			// キー作成日時

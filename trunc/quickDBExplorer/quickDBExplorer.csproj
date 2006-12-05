@@ -19,7 +19,7 @@
                 PreBuildEvent = ""
                 PostBuildEvent = "cd $(SolutionDir)&#xd;&#xa;; $(SolutionDir)dodotfuscator.bat&#xd;&#xa;"
                 RootNamespace = "quickDBExplorer"
-                RunPostBuildEvent = "OnBuildSuccess"
+                RunPostBuildEvent = "OnOutputUpdated"
                 StartupObject = ""
             >
                 <Config

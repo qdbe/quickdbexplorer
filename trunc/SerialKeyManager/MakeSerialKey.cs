@@ -182,6 +182,7 @@ namespace SerialKeyManager
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.txtUser);
 			this.Controls.Add(this.label2);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Name = "MakeSerialKey";
 			this.Text = "MakeSerialKey";
 			this.ResumeLayout(false);

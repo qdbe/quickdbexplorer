@@ -19,6 +19,7 @@ namespace serialFactory
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Button btnContinue;
 		private System.Windows.Forms.TextBox txtLicense;
+		private	bool	isBeforeRegist = false;
 		/// <summary>
 		/// 必要なデザイナ変数です。
 		/// </summary>
@@ -70,9 +71,9 @@ namespace serialFactory
 			// btnAbort
 			// 
 			this.btnAbort.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAbort.Location = new System.Drawing.Point(436, 300);
+			this.btnAbort.Location = new System.Drawing.Point(372, 300);
 			this.btnAbort.Name = "btnAbort";
-			this.btnAbort.Size = new System.Drawing.Size(102, 24);
+			this.btnAbort.Size = new System.Drawing.Size(164, 24);
 			this.btnAbort.TabIndex = 6;
 			this.btnAbort.Text = "登録を中断(&X)";
 			this.btnAbort.Click += new System.EventHandler(this.btnAbort_Click);
@@ -150,12 +151,27 @@ namespace serialFactory
 		}
 		#endregion
 
+		public bool IsBeforeRegist
+		{
+			get { return this.isBeforeRegist; }
+			set { this.isBeforeRegist = value; }
+		}
+
 		private void KeikokuDlg_Load(object sender, System.EventArgs e)
 		{
 			string licensestr = "";
 			StreamReader sr = new StreamReader(Application.StartupPath + "\\license.txt",Encoding.GetEncoding(932));
 			licensestr = sr.ReadToEnd();
 			sr.Close();
+
+			if( this.IsBeforeRegist == true )
+			{
+				this.btnAbort.Text = "登録を中断(&X)";
+			}
+			else
+			{
+				this.btnAbort.Text = "アプリケーションを中断する(&X)";
+			}
 
 			this.txtLicense.Text = licensestr;
 		}
