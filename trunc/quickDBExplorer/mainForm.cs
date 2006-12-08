@@ -4008,11 +4008,11 @@ namespace quickDBExplorer
 				{
 					wr = new StringWriter(strline);
 					wr.Write("テーブル名");
-					wr.Write(",依存関係先名称");
-					wr.Write(",種類");
-					wr.Write(",更新あり");
-					wr.Write(",selectでの利用");
-					wr.Write(",従属性が存在する列またはパラメータ");
+					wr.Write("\t依存関係先名称");
+					wr.Write("\t種類");
+					wr.Write("\t更新あり");
+					wr.Write("\tselectでの利用");
+					wr.Write("\t従属性が存在する列またはパラメータ");
 					wr.Write(wr.NewLine);
 				}
 				else if( this.rdoOutFile.Checked == true ) 
@@ -4022,11 +4022,11 @@ namespace quickDBExplorer
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
 					wr.Write("テーブル名");
-					wr.Write(",依存関係先名称");
-					wr.Write(",種類");
-					wr.Write(",更新あり");
-					wr.Write(",selectでの利用");
-					wr.Write(",従属性が存在する列またはパラメータ");
+					wr.Write("\t依存関係先名称");
+					wr.Write("\t種類");
+					wr.Write("\t更新あり");
+					wr.Write("\tselectでの利用");
+					wr.Write("\t従属性が存在する列またはパラメータ");
 					wr.Write(wr.NewLine);
 				}
 
@@ -4039,11 +4039,11 @@ namespace quickDBExplorer
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
 						wr.Write("テーブル名");
-						wr.Write(",依存関係先名称");
-						wr.Write(",種類");
-						wr.Write(",更新あり");
-						wr.Write(",selectでの利用");
-						wr.Write(",従属性が存在する列またはパラメータ");
+						wr.Write("\t依存関係先名称");
+						wr.Write("\t種類");
+						wr.Write("\t更新あり");
+						wr.Write("\tselectでの利用");
+						wr.Write("\t従属性が存在する列またはパラメータ");
 						wr.Write(wr.NewLine);
 					}
 
@@ -4071,7 +4071,7 @@ namespace quickDBExplorer
 							wr.Write(tbname);
 							foreach( DataColumn col in ds.Tables[tbname].Columns)
 							{
-								wr.Write(",");
+								wr.Write("\t");
 								wr.Write(dr[col.ColumnName].ToString());
 							}
 							wr.Write(wr.NewLine);
