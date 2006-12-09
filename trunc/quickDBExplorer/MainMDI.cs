@@ -133,7 +133,6 @@ namespace quickDBExplorer
 																					  this.menuItem6,
 																					  this.menuItem7});
 			this.menuItem4.Text = "HELP(&H)";
-			this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
 			// 
 			// errorProvider1
 			// 
@@ -311,16 +310,6 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void menuItem4_Click(object sender, System.EventArgs e)
-		{
-			string helpname = AppDomain.CurrentDomain.FriendlyName;
-			helpname = helpname.Replace(".exe","help.mht");
-			if( File.Exists(helpname) == true )
-			{
-				System.Diagnostics.Process.Start( helpname );
-			}
-		}
-
 		private void menuItem5_Click(object sender, System.EventArgs e)
 		{
 			this.Close();
@@ -329,7 +318,8 @@ namespace quickDBExplorer
 		private void menuItem6_Click(object sender, System.EventArgs e)
 		{
 			string helpname = AppDomain.CurrentDomain.FriendlyName;
-			helpname = helpname.Replace(".exe","help.mht");
+			// D:\godz\local\quickDBExplorer\trunc\quickDBExplorer\quickDBExplorerHelp.htm
+			helpname = helpname.Replace(".exe","Help.htm");
 			if( File.Exists(helpname) == true )
 			{
 				System.Diagnostics.Process.Start( helpname );
