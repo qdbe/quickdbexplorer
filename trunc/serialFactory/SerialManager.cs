@@ -116,6 +116,46 @@ namespace serialFactory
 			return true;
 		}
 
+		/// <summary>
+		/// シリアルキーの登録が正しいか否かをチェックする
+		/// </summary>
+		/// <returns></returns>
+		public bool CheckSerial()
+		{
+			return serialFilef.ReadSerialFile(this.serialFileName);
+		}
+
+		/// <summary>
+		/// シリアルキーを更新登録する
+		/// </summary>
+		/// <param name="serial"></param>
+		/// <param name="user"></param>
+		/// <returns></returns>
+		public bool	UpdateSerial()
+		{
+			// 使用許諾の確認
+			KeikokuDlg kdlg = new KeikokuDlg();
+			kdlg.IsBeforeRegist = true;
+			if( kdlg.ShowDialog() != DialogResult.OK )
+			{
+				// 登録を中断
+				return false;
+			}
+
+			RegisterSerialDialog dlg = new RegisterSerialDialog();
+			dlg.smanager = this;
+			DialogResult ret = dlg.ShowDialog();
+			if( ret == DialogResult.OK)
+			{
+				// 登録完了
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 		public void	ShowRegisterInfo()
 		{
 			if( this.serialFilef.IsTestingPeriod == true )

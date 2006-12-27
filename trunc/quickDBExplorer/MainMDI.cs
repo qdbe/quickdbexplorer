@@ -32,6 +32,7 @@ namespace quickDBExplorer
 		protected string  errMessage = "";
 		private System.Windows.Forms.MenuItem menuItem6;
 		private System.Windows.Forms.MenuItem menuItem7;
+		private System.Windows.Forms.MenuItem menuItem8;
 
 		private SerialManager smanager = new SerialManager();
 
@@ -79,9 +80,10 @@ namespace quickDBExplorer
 			this.menuItem5 = new System.Windows.Forms.MenuItem();
 			this.menuItem2 = new System.Windows.Forms.MenuItem();
 			this.menuItem4 = new System.Windows.Forms.MenuItem();
-			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
 			this.menuItem6 = new System.Windows.Forms.MenuItem();
 			this.menuItem7 = new System.Windows.Forms.MenuItem();
+			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
+			this.menuItem8 = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// statusBar1
@@ -131,12 +133,9 @@ namespace quickDBExplorer
 			this.menuItem4.Index = 2;
 			this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.menuItem6,
-																					  this.menuItem7});
+																					  this.menuItem7,
+																					  this.menuItem8});
 			this.menuItem4.Text = "HELP(&H)";
-			// 
-			// errorProvider1
-			// 
-			this.errorProvider1.ContainerControl = this;
 			// 
 			// menuItem6
 			// 
@@ -149,6 +148,16 @@ namespace quickDBExplorer
 			this.menuItem7.Index = 1;
 			this.menuItem7.Text = "ライセンス登録状況";
 			this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
+			// 
+			// errorProvider1
+			// 
+			this.errorProvider1.ContainerControl = this;
+			// 
+			// menuItem8
+			// 
+			this.menuItem8.Index = 2;
+			this.menuItem8.Text = "ライセンス更新登録";
+			this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
 			// 
 			// MainMDI
 			// 
@@ -329,6 +338,11 @@ namespace quickDBExplorer
 		private void menuItem7_Click(object sender, System.EventArgs e)
 		{
 			this.smanager.ShowRegisterInfo();
+		}
+
+		private void menuItem8_Click(object sender, System.EventArgs e)
+		{
+			this.smanager.UpdateSerial();
 		}
 
 	}
