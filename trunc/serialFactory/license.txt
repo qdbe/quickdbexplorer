@@ -53,4 +53,4 @@
 権およびその他の一切の知的財産権は作者に帰属します。
 
 当ソフトウェアに対するリバースエンジニアリング及び、改変は一切禁止します。
-Copyright (C) 2004-2006 Y.N(godz). All rights reserved.
+Copyright (C) 2004-2007 Y.N(godz). All rights reserved.

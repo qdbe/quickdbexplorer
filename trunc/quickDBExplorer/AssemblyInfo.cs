@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("-")]
 [assembly: AssemblyProduct("quickDBExplorer!")]
-[assembly: AssemblyCopyright("CopyRight; Y.N(godz) 2004-2206")]
+[assembly: AssemblyCopyright("CopyRight; Y.N(godz) 2004-2007")]
 [assembly: AssemblyTrademark("Go Ahead!")]
 [assembly: AssemblyCulture("")]		
 
@@ -27,6 +27,7 @@ using System.Runtime.CompilerServices;
 // ビルドおよびリビジョン番号を既定値にすることができます。
 
 [assembly: AssemblyVersion("1.3.*")]
+[assembly: AssemblyInformationalVersion("1.4.0")]
 
 //
 // アセンブリに署名するには、使用するキーを指定しなければなりません。 

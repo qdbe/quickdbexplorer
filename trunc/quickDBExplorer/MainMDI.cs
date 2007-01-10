@@ -10,6 +10,7 @@ using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
 using serialFactory;
+using System.Reflection;
 
 namespace quickDBExplorer
 {
@@ -33,6 +34,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem menuItem6;
 		private System.Windows.Forms.MenuItem menuItem7;
 		private System.Windows.Forms.MenuItem menuItem8;
+		private System.Windows.Forms.MenuItem menuItem9;
 
 		private SerialManager smanager = new SerialManager();
 
@@ -82,8 +84,9 @@ namespace quickDBExplorer
 			this.menuItem4 = new System.Windows.Forms.MenuItem();
 			this.menuItem6 = new System.Windows.Forms.MenuItem();
 			this.menuItem7 = new System.Windows.Forms.MenuItem();
-			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
 			this.menuItem8 = new System.Windows.Forms.MenuItem();
+			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
+			this.menuItem9 = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// statusBar1
@@ -134,7 +137,8 @@ namespace quickDBExplorer
 			this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.menuItem6,
 																					  this.menuItem7,
-																					  this.menuItem8});
+																					  this.menuItem8,
+																					  this.menuItem9});
 			this.menuItem4.Text = "HELP(&H)";
 			// 
 			// menuItem6
@@ -149,15 +153,21 @@ namespace quickDBExplorer
 			this.menuItem7.Text = "ライセンス登録状況";
 			this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
 			// 
-			// errorProvider1
-			// 
-			this.errorProvider1.ContainerControl = this;
-			// 
 			// menuItem8
 			// 
 			this.menuItem8.Index = 2;
 			this.menuItem8.Text = "ライセンス更新登録";
 			this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
+			// 
+			// errorProvider1
+			// 
+			this.errorProvider1.ContainerControl = this;
+			// 
+			// menuItem9
+			// 
+			this.menuItem9.Index = 3;
+			this.menuItem9.Text = "About";
+			this.menuItem9.Click += new System.EventHandler(this.menuItem9_Click);
 			// 
 			// MainMDI
 			// 
@@ -343,6 +353,19 @@ namespace quickDBExplorer
 		private void menuItem8_Click(object sender, System.EventArgs e)
 		{
 			this.smanager.UpdateSerial();
+		}
+
+		private void menuItem9_Click(object sender, System.EventArgs e)
+		{
+			object []obj = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute),false);
+			string aboutstr = Application.ProductName + " Version " + Application.ProductVersion;
+			if( obj != null && obj.Length != 0)
+			{
+				aboutstr += Environment.NewLine + Environment.NewLine + ((AssemblyCopyrightAttribute)obj[0]).Copyright;
+			}
+			MessageBox.Show(
+				aboutstr
+				);
 		}
 
 	}
