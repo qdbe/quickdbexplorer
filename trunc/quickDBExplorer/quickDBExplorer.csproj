@@ -1,7 +1,7 @@
 <VisualStudioProject>
     <CSHARP
         ProjectType = "Local"
-        ProductVersion = "7.10.6030"
+        ProductVersion = "7.10.3077"
         SchemaVersion = "2.0"
         ProjectGuid = "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
     >
@@ -130,6 +130,16 @@
                 <File
                     RelPath = "GridFormatDialog.resx"
                     DependentUpon = "GridFormatDialog.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "ImageViewer.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "ImageViewer.resx"
+                    DependentUpon = "ImageViewer.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

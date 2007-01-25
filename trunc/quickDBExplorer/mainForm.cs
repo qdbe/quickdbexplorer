@@ -168,6 +168,9 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem menuInsertDeleteTaihi;
 		private System.Windows.Forms.MenuItem menuInsertNoFldDeleteTaihi;
 		private System.Windows.Forms.MenuItem menuRecordCountDsp;
+		private System.Windows.Forms.ContextMenu dbGridMenu;
+		private System.Windows.Forms.MenuItem copyDbGridMenu;
+		private System.Windows.Forms.ContextMenu contextMenu1;
 		
 		/// <summary>
 		/// メニュー情報
@@ -269,6 +272,8 @@ namespace quickDBExplorer
 			this.ownerListbox = new System.Windows.Forms.ListBox();
 			this.btnDDL = new System.Windows.Forms.Button();
 			this.dbGrid = new System.Windows.Forms.DataGrid();
+			this.dbGridMenu = new System.Windows.Forms.ContextMenu();
+			this.copyDbGridMenu = new System.Windows.Forms.MenuItem();
 			this.chkDspData = new System.Windows.Forms.CheckBox();
 			this.grpDataDspMode = new System.Windows.Forms.GroupBox();
 			this.txtDspCount = new quickDBExplorer.quickDBExplorerTextBox();
@@ -326,6 +331,7 @@ namespace quickDBExplorer
 			this.label9 = new System.Windows.Forms.Label();
 			this.useCheckBox = new System.Windows.Forms.CheckBox();
 			this.label10 = new System.Windows.Forms.Label();
+			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -705,6 +711,7 @@ namespace quickDBExplorer
 			this.dbGrid.CaptionFont = new System.Drawing.Font("Tahoma", 8F);
 			this.dbGrid.CaptionForeColor = System.Drawing.Color.White;
 			this.dbGrid.CaptionVisible = false;
+			this.dbGrid.ContextMenu = this.dbGridMenu;
 			this.dbGrid.DataMember = "";
 			this.dbGrid.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.dbGrid.ForeColor = System.Drawing.Color.Black;
@@ -722,6 +729,17 @@ namespace quickDBExplorer
 			this.dbGrid.Size = new System.Drawing.Size(672, 212);
 			this.dbGrid.TabIndex = 35;
 			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
+			// 
+			// dbGridMenu
+			// 
+			this.dbGridMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					   this.copyDbGridMenu});
+			// 
+			// copyDbGridMenu
+			// 
+			this.copyDbGridMenu.Index = 0;
+			this.copyDbGridMenu.Text = "クリップボードにコピー";
+			this.copyDbGridMenu.Click += new System.EventHandler(this.copyDbGridMenu_Click);
 			// 
 			// chkDspData
 			// 
@@ -4595,6 +4613,64 @@ namespace quickDBExplorer
 			// set datas to clipboard
 		
 		}
+
+		private void copyDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			if( this.dbGrid.Visible == false )
+			{
+				return;
+			}
+			if( this.dbGrid.DataSource == null )
+			{
+				return;
+			}
+			DataTable dt = null;
+			if( this.dbGrid.DataSource is DataSet )
+			{
+				dt = ((DataSet)this.dbGrid.DataSource).Tables[0];
+			}
+			else if( this.dbGrid.DataSource is DataTable )
+			{
+				dt = (DataTable)this.dbGrid.DataSource;
+			}
+			if( dt == null ||
+				dt.Rows.Count == 0 )
+			{
+				return;
+			}
+			StringBuilder strline = new StringBuilder();
+			StringWriter wr = new StringWriter(strline);
+			// header 
+			int cnt = 0;
+			foreach( DataColumn col in dt.Columns )
+			{
+				if( cnt != 0 )
+				{
+					wr.Write("\t");
+				}
+				wr.Write(col.ColumnName);
+				cnt++;
+			}
+			wr.Write(wr.NewLine);
+
+			foreach( DataRow dr in dt.Rows )
+			{
+				for( int i = 0; i < dt.Columns.Count; i++ )
+				{
+					if( i != 0 )
+					{
+						wr.Write("\t");
+					}
+					if( dr[i] != DBNull.Value )
+					{
+						wr.Write(dr[i].ToString());
+					}
+				}
+				wr.Write(wr.NewLine);
+			}
+			Clipboard.SetDataObject(strline.ToString(),true );
+			MessageBox.Show("処理を完了しました");
+		}
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
 	{
@@ -4617,6 +4693,22 @@ namespace quickDBExplorer
 				e.Alt != true &&
 				e.Shift != true )
 			{
+				// バイナリの場合、イメージ表示を行ってみる
+				Object obj = GetColumnValueAtRow(this._sorce, this.editrow );
+				if( obj is byte[] )
+				{
+					MemoryStream ms = new MemoryStream((byte[])obj);
+					Image gazo = Image.FromStream(ms);
+					if( gazo != null )
+					{
+						ImageViewer viewdlg = new ImageViewer();
+						viewdlg.ViewImage = gazo;
+						viewdlg.ShowDialog();
+						return;
+					}
+				}
+
+
 				ZoomDialog dlg  = new ZoomDialog();
 				dlg.EditText = this.TextBox.Text;
 				if( this.TextBox.ReadOnly == true )
