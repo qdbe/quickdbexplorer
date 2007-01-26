@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.IO;
 using System.Diagnostics;
+using System.Threading;
 
 namespace quickDBExplorer
 {
@@ -140,6 +141,12 @@ namespace quickDBExplorer
 		/// 信頼関係接続を利用するか否か
 		/// </summary>
 		public bool IsUseTruse = false;
+
+		/// <summary>
+		/// スレッドの稼動状態を表す
+		/// 処理中=1 中断された、または未処理 = 0
+		/// </summary>
+		protected int IsThreadAlive = 0;
 
 		/// <summary>
 		/// DB接続情報
@@ -343,7 +350,7 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(176, 580);
+			this.msgArea.Location = new System.Drawing.Point(176, 609);
 			this.msgArea.Name = "msgArea";
 			this.msgArea.Size = new System.Drawing.Size(652, 16);
 			this.msgArea.TabIndex = 36;
@@ -726,7 +733,7 @@ namespace quickDBExplorer
 			this.dbGrid.ParentRowsForeColor = System.Drawing.Color.Black;
 			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
 			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
-			this.dbGrid.Size = new System.Drawing.Size(672, 212);
+			this.dbGrid.Size = new System.Drawing.Size(672, 241);
 			this.dbGrid.TabIndex = 35;
 			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
 			// 
@@ -988,7 +995,7 @@ namespace quickDBExplorer
 			// 
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label6.Font = new System.Drawing.Font("MS UI Gothic", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.label6.Location = new System.Drawing.Point(4, 588);
+			this.label6.Location = new System.Drawing.Point(4, 617);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(124, 12);
 			this.label6.TabIndex = 27;
@@ -1239,49 +1246,9 @@ namespace quickDBExplorer
 			this.ShowInTaskbar = false;
 			this.Text = "DataBase選択";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
-			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
-			this.Controls.SetChildIndex(this.label5, 0);
-			this.Controls.SetChildIndex(this.grpSysUserMode, 0);
-			this.Controls.SetChildIndex(this.grpDataDspMode, 0);
-			this.Controls.SetChildIndex(this.dbList, 0);
-			this.Controls.SetChildIndex(this.tableList, 0);
-			this.Controls.SetChildIndex(this.btnInsert, 0);
-			this.Controls.SetChildIndex(this.btnFieldList, 0);
-			this.Controls.SetChildIndex(this.btnCSV, 0);
-			this.Controls.SetChildIndex(this.grpViewMode, 0);
-			this.Controls.SetChildIndex(this.grpSortMode, 0);
-			this.Controls.SetChildIndex(this.txtWhere, 0);
-			this.Controls.SetChildIndex(this.txtSort, 0);
-			this.Controls.SetChildIndex(this.label1, 0);
-			this.Controls.SetChildIndex(this.label2, 0);
-			this.Controls.SetChildIndex(this.btnSelect, 0);
-			this.Controls.SetChildIndex(this.ownerListbox, 0);
-			this.Controls.SetChildIndex(this.btnDDL, 0);
-			this.Controls.SetChildIndex(this.dbGrid, 0);
-			this.Controls.SetChildIndex(this.chkDspData, 0);
-			this.Controls.SetChildIndex(this.grpOutputMode, 0);
-			this.Controls.SetChildIndex(this.label4, 0);
-			this.Controls.SetChildIndex(this.fieldListbox, 0);
-			this.Controls.SetChildIndex(this.grpCharaSet, 0);
-			this.Controls.SetChildIndex(this.chkDspFieldAttr, 0);
-			this.Controls.SetChildIndex(this.label6, 0);
-			this.Controls.SetChildIndex(this.btnQuerySelect, 0);
-			this.Controls.SetChildIndex(this.btnDataUpdate, 0);
-			this.Controls.SetChildIndex(this.btnDataEdit, 0);
-			this.Controls.SetChildIndex(this.label7, 0);
-			this.Controls.SetChildIndex(this.btnGridFormat, 0);
-			this.Controls.SetChildIndex(this.label8, 0);
-			this.Controls.SetChildIndex(this.btnIndex, 0);
-			this.Controls.SetChildIndex(this.btnRedisp, 0);
-			this.Controls.SetChildIndex(this.btnTmpAllDsp, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
-			this.Controls.SetChildIndex(this.btnEtc, 0);
-			this.Controls.SetChildIndex(this.btnWhereZoom, 0);
-			this.Controls.SetChildIndex(this.label9, 0);
-			this.Controls.SetChildIndex(this.useCheckBox, 0);
-			this.Controls.SetChildIndex(this.label10, 0);
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
@@ -4671,6 +4638,63 @@ namespace quickDBExplorer
 			Clipboard.SetDataObject(strline.ToString(),true );
 			MessageBox.Show("処理を完了しました");
 		}
+
+		protected bool	BeginNewThread(WaitCallback callb, object tags)
+		{
+			if( this.IsThreadAlive > 0 )
+			{
+				return false;
+			}
+			try
+			{
+				Interlocked.Increment(ref this.IsThreadAlive);
+				ThreadPool.QueueUserWorkItem(callb,tags);
+				return true;
+			}
+			catch(Exception e)
+			{
+				this.SetErrorMessage(e);
+				if( this.IsThreadAlive != 0 )
+				{
+					Interlocked.Decrement(ref this.IsThreadAlive);
+				}
+				return false;
+			}
+		}
+
+		protected void	ThreadEndIfAlive()
+		{
+			if( this.IsThreadAlive == 0 )
+			{
+				return;
+			}
+			try
+			{
+				Interlocked.Decrement(ref this.IsThreadAlive);
+			}
+			catch
+			{
+
+			}
+		}
+
+		protected void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			ThreadEndIfAlive();
+		}
+
+		protected bool IsProcCancel()
+		{
+			if( this.IsThreadAlive == 0 )
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
 	}
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
 	{
