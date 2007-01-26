@@ -350,7 +350,7 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(176, 609);
+			this.msgArea.Location = new System.Drawing.Point(176, 600);
 			this.msgArea.Name = "msgArea";
 			this.msgArea.Size = new System.Drawing.Size(652, 16);
 			this.msgArea.TabIndex = 36;
@@ -727,13 +727,13 @@ namespace quickDBExplorer
 			this.dbGrid.HeaderFont = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.dbGrid.HeaderForeColor = System.Drawing.Color.Black;
 			this.dbGrid.LinkColor = System.Drawing.Color.Maroon;
-			this.dbGrid.Location = new System.Drawing.Point(240, 364);
+			this.dbGrid.Location = new System.Drawing.Point(240, 368);
 			this.dbGrid.Name = "dbGrid";
 			this.dbGrid.ParentRowsBackColor = System.Drawing.Color.Silver;
 			this.dbGrid.ParentRowsForeColor = System.Drawing.Color.Black;
 			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
 			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
-			this.dbGrid.Size = new System.Drawing.Size(672, 241);
+			this.dbGrid.Size = new System.Drawing.Size(672, 228);
 			this.dbGrid.TabIndex = 35;
 			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
 			// 
@@ -995,7 +995,7 @@ namespace quickDBExplorer
 			// 
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label6.Font = new System.Drawing.Font("MS UI Gothic", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.label6.Location = new System.Drawing.Point(4, 617);
+			this.label6.Location = new System.Drawing.Point(4, 633);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(124, 12);
 			this.label6.TabIndex = 27;
@@ -1200,7 +1200,7 @@ namespace quickDBExplorer
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(928, 597);
+			this.ClientSize = new System.Drawing.Size(928, 613);
 			this.Controls.Add(this.label10);
 			this.Controls.Add(this.useCheckBox);
 			this.Controls.Add(this.label9);
@@ -1249,6 +1249,47 @@ namespace quickDBExplorer
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
+			this.Controls.SetChildIndex(this.label5, 0);
+			this.Controls.SetChildIndex(this.grpSysUserMode, 0);
+			this.Controls.SetChildIndex(this.grpDataDspMode, 0);
+			this.Controls.SetChildIndex(this.dbList, 0);
+			this.Controls.SetChildIndex(this.tableList, 0);
+			this.Controls.SetChildIndex(this.btnInsert, 0);
+			this.Controls.SetChildIndex(this.btnFieldList, 0);
+			this.Controls.SetChildIndex(this.btnCSV, 0);
+			this.Controls.SetChildIndex(this.grpViewMode, 0);
+			this.Controls.SetChildIndex(this.grpSortMode, 0);
+			this.Controls.SetChildIndex(this.txtWhere, 0);
+			this.Controls.SetChildIndex(this.txtSort, 0);
+			this.Controls.SetChildIndex(this.label1, 0);
+			this.Controls.SetChildIndex(this.label2, 0);
+			this.Controls.SetChildIndex(this.btnSelect, 0);
+			this.Controls.SetChildIndex(this.ownerListbox, 0);
+			this.Controls.SetChildIndex(this.btnDDL, 0);
+			this.Controls.SetChildIndex(this.dbGrid, 0);
+			this.Controls.SetChildIndex(this.chkDspData, 0);
+			this.Controls.SetChildIndex(this.grpOutputMode, 0);
+			this.Controls.SetChildIndex(this.label4, 0);
+			this.Controls.SetChildIndex(this.fieldListbox, 0);
+			this.Controls.SetChildIndex(this.grpCharaSet, 0);
+			this.Controls.SetChildIndex(this.chkDspFieldAttr, 0);
+			this.Controls.SetChildIndex(this.label6, 0);
+			this.Controls.SetChildIndex(this.btnQuerySelect, 0);
+			this.Controls.SetChildIndex(this.btnDataUpdate, 0);
+			this.Controls.SetChildIndex(this.btnDataEdit, 0);
+			this.Controls.SetChildIndex(this.label7, 0);
+			this.Controls.SetChildIndex(this.btnGridFormat, 0);
+			this.Controls.SetChildIndex(this.label8, 0);
+			this.Controls.SetChildIndex(this.btnIndex, 0);
+			this.Controls.SetChildIndex(this.btnRedisp, 0);
+			this.Controls.SetChildIndex(this.btnTmpAllDsp, 0);
+			this.Controls.SetChildIndex(this.btnEtc, 0);
+			this.Controls.SetChildIndex(this.btnWhereZoom, 0);
+			this.Controls.SetChildIndex(this.label9, 0);
+			this.Controls.SetChildIndex(this.useCheckBox, 0);
+			this.Controls.SetChildIndex(this.label10, 0);
+			this.Controls.SetChildIndex(this.msgArea, 0);
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
@@ -2958,40 +2999,49 @@ namespace quickDBExplorer
 					return;
 				}
 
+				ProcCondition procCond = GetProcCondition(tbname);
+				procCond.isAllDisp = isAllDsp;
+
 				int	maxlines;
 				int	maxGetLines;
-				if( this.txtDspCount.Text != "" )
+				if( procCond.MaxStr != "" )
 				{
-					maxlines = int.Parse(this.txtDspCount.Text);
+					maxlines = int.Parse(procCond.MaxStr);
 				}
 				else
 				{
 					maxlines = 0;
 				}
-				if( isAllDsp == true )
+				if( procCond.isAllDisp == true )
 				{
 					maxlines = 0;
 				}
 
 				// データの内容を取得し、表示する
 				string sqlstr;
+				string sqlstrDisp;
 				sqlstr = "select ";
+				sqlstrDisp = "select ";
 
 				maxGetLines = 0;
 				if( maxlines != 0 )
 				{
 					maxGetLines = maxlines + 1;
 					sqlstr += " TOP " + maxGetLines.ToString();
+					sqlstrDisp += " TOP " + maxlines.ToString();
 				}
 
 				sqlstr += string.Format(" * from {0}",gettbname(tbname));
-				if( this.txtWhere.Text.Trim() != "" )
+				sqlstrDisp += string.Format(" * from {0}",gettbname(tbname));
+				if( procCond.WhereStr.Trim() != "" )
 				{
-					sqlstr += " where " + this.txtWhere.Text.Trim();
+					sqlstr += " where " + procCond.WhereStr.Trim();
+					sqlstrDisp += " where " + procCond.WhereStr.Trim();
 				}
-				if( this.txtSort.Text.Trim() != "" )
+				if( procCond.OrderStr.Trim() != "" )
 				{
-					sqlstr += " order by " + this.txtSort.Text.Trim();
+					sqlstr += " order by " + procCond.OrderStr.Trim();
+					sqlstrDisp += " order by " + procCond.OrderStr.Trim();
 				}
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				dspdt = new DataSet();
@@ -3077,7 +3127,7 @@ namespace quickDBExplorer
 
 
 				this.dbGrid.AllowSorting = true;
-				this.toolTip3.SetToolTip(this.dbGrid,sqlstr);
+				this.toolTip3.SetToolTip(this.dbGrid,sqlstrDisp);
 				this.dbGrid.SetDataBinding(dspdt, "aaaa");
 				this.dbGrid.Show();
 				this.btnDataEdit.Text = "データ編集(&T)";
@@ -4674,13 +4724,16 @@ namespace quickDBExplorer
 			}
 			catch
 			{
-
+				;
 			}
 		}
 
 		protected void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
-			ThreadEndIfAlive();
+			if( e.Control == true && e.Shift == false && e.Alt == false && e.KeyCode == Keys.G )
+			{
+				ThreadEndIfAlive();
+			}
 		}
 
 		protected bool IsProcCancel()
@@ -4694,8 +4747,46 @@ namespace quickDBExplorer
 				return false;
 			}
 		}
-
+		
+		protected ProcCondition GetProcCondition(string tbname)
+		{
+			ProcCondition procCond = new ProcCondition();
+			if( tbname != null )
+			{
+				procCond.Tbname.Add(tbname);
+			}
+			else
+			{
+				foreach( object obj in this.tableList.SelectedItems)
+				{
+					procCond.Tbname.Add((string)obj);
+				}
+			}
+			procCond.WhereStr = this.txtWhere.Text;
+			procCond.OrderStr = this.txtSort.Text;
+			procCond.MaxStr = this.txtDspCount.Text;
+			return procCond;
+		}
 	}
+
+	public class ProcCondition
+	{
+		public ArrayList	Tbname;
+		public string		WhereStr;
+		public string		OrderStr;
+		public string		MaxStr;
+		public bool		isAllDisp;
+
+		public ProcCondition()
+		{
+			Tbname = new ArrayList();
+			this.WhereStr = "";
+			this.OrderStr = "";
+			this.MaxStr = "";
+			this.isAllDisp = false;
+		}
+	}
+
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
 	{
 		private CurrencyManager _sorce;

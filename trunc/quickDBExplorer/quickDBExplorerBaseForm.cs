@@ -107,6 +107,12 @@ namespace quickDBExplorer
 			this.errorProvider1.SetError(this.msgArea,this.msgArea.Text);
 		}
 
+		protected void SetMessageArea(object dspdata)
+		{
+			this.msgArea.Text = dspdata.ToString();
+			Application.DoEvents();
+		}
+
 		private void msgArea_DoubleClick(object sender, System.EventArgs e)
 		{
 			if( this.errMessage != "" )
