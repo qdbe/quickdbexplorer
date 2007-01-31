@@ -149,6 +149,14 @@ namespace quickDBExplorer
 		protected int IsThreadAlive = 0;
 
 		/// <summary>
+		/// Table/View リストの選択履歴
+		/// Max10件を想定
+		/// </summary>
+		protected ArrayList selectedTables = new ArrayList();
+
+		protected const int MaxTableHistory = 10;
+
+		/// <summary>
 		/// DB接続情報
 		/// </summary>
 		public System.Data.SqlClient.SqlConnection sqlConnection1;
@@ -178,6 +186,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ContextMenu dbGridMenu;
 		private System.Windows.Forms.MenuItem copyDbGridMenu;
 		private System.Windows.Forms.ContextMenu contextMenu1;
+		private System.Windows.Forms.ComboBox cmbHistory;
 		
 		/// <summary>
 		/// メニュー情報
@@ -339,6 +348,7 @@ namespace quickDBExplorer
 			this.useCheckBox = new System.Windows.Forms.CheckBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
+			this.cmbHistory = new System.Windows.Forms.ComboBox();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -357,6 +367,7 @@ namespace quickDBExplorer
 			// 
 			// dbList
 			// 
+			this.dbList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.dbList.ItemHeight = 12;
 			this.dbList.Location = new System.Drawing.Point(60, 16);
 			this.dbList.Name = "dbList";
@@ -368,6 +379,7 @@ namespace quickDBExplorer
 			// tableList
 			// 
 			this.tableList.ContextMenu = this.mainContextMenu;
+			this.tableList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.tableList.HorizontalScrollbar = true;
 			this.tableList.ItemHeight = 12;
 			this.tableList.Location = new System.Drawing.Point(240, 20);
@@ -689,6 +701,7 @@ namespace quickDBExplorer
 			// 
 			// ownerListbox
 			// 
+			this.ownerListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.ownerListbox.ItemHeight = 12;
 			this.ownerListbox.Location = new System.Drawing.Point(60, 80);
 			this.ownerListbox.Name = "ownerListbox";
@@ -902,6 +915,7 @@ namespace quickDBExplorer
 			this.fieldListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.fieldListbox.ContextMenu = this.fldContextMenu;
+			this.fieldListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.fieldListbox.HorizontalScrollbar = true;
 			this.fieldListbox.ItemHeight = 12;
 			this.fieldListbox.Location = new System.Drawing.Point(656, 40);
@@ -1197,10 +1211,22 @@ namespace quickDBExplorer
 			this.label10.TabIndex = 18;
 			this.label10.Text = "Table/View(&V)";
 			// 
+			// cmbHistory
+			// 
+			this.cmbHistory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbHistory.DropDownWidth = 300;
+			this.cmbHistory.Location = new System.Drawing.Point(320, 0);
+			this.cmbHistory.MaxDropDownItems = 10;
+			this.cmbHistory.Name = "cmbHistory";
+			this.cmbHistory.Size = new System.Drawing.Size(176, 20);
+			this.cmbHistory.TabIndex = 37;
+			this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectionChangeCommitted);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(928, 613);
+			this.Controls.Add(this.cmbHistory);
 			this.Controls.Add(this.label10);
 			this.Controls.Add(this.useCheckBox);
 			this.Controls.Add(this.label9);
@@ -1289,6 +1315,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.label9, 0);
 			this.Controls.SetChildIndex(this.useCheckBox, 0);
 			this.Controls.SetChildIndex(this.label10, 0);
+			this.Controls.SetChildIndex(this.cmbHistory, 0);
 			this.Controls.SetChildIndex(this.msgArea, 0);
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
@@ -1391,6 +1418,12 @@ namespace quickDBExplorer
 			{
 				svdata.lastdb = (string)this.dbList.SelectedItem;
 			}
+			// テーブルの選択履歴をクリア
+			this.selectedTables.Clear();
+			this.cmbHistory.DataSource = null;
+			this.cmbHistory.DataSource = this.selectedTables;
+			
+
 			dsplist2();
 			displistowner();
 			if( svdata.dbopt[svdata.lastdb] != null )
@@ -1406,6 +1439,7 @@ namespace quickDBExplorer
 					}
 				}
 			}
+
 			if( this.ownerListbox.SelectedItems.Count == 0 )
 			{
 				// 選択がない場合、一番最初をディフォルトで選択する
@@ -2221,7 +2255,21 @@ namespace quickDBExplorer
 			if( this.chkDspData.CheckState == CheckState.Checked &&
 				this.tableList.SelectedItems.Count == 1 )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				// 1件のみ選択されている場合
+
+				// 選択されたTable/View を記憶する
+				if( this.selectedTables.Contains(this.tableList.SelectedItem.ToString()) == false )
+				{
+					if( this.selectedTables.Count > MaxTableHistory )
+					{
+						this.selectedTables.RemoveAt(0);
+					}
+					this.selectedTables.Add(this.tableList.SelectedItem.ToString());
+					this.cmbHistory.DataSource = null;
+					this.cmbHistory.DataSource = this.selectedTables;
+				}
+
+				// データ表示部に、該当テーブルのデータを表示する
 				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
@@ -2531,6 +2579,12 @@ namespace quickDBExplorer
 
 		private void rdoDspView_CheckedChanged(object sender, System.EventArgs e)
 		{
+			// テーブルの選択履歴をクリア
+			this.selectedTables.Clear();
+			this.cmbHistory.DataSource = null;
+			this.cmbHistory.DataSource = this.selectedTables;
+			
+
 			dsplist2();
 		}
 
@@ -2659,6 +2713,12 @@ namespace quickDBExplorer
 				// 選択したDBの最終オーナーを記録する
 				svdata.dbopt[svdata.lastdb] = (string)this.ownerListbox.SelectedItem;
 			}
+			// テーブルの選択履歴をクリア
+			this.selectedTables.Clear();
+			this.cmbHistory.DataSource = null;
+			this.cmbHistory.DataSource = this.selectedTables;
+			
+
 			dsplist2();
 		}
 
@@ -3190,6 +3250,12 @@ namespace quickDBExplorer
 
 		private void rdoDspSysUser_CheckedChanged(object sender, System.EventArgs e)
 		{
+			// テーブルの選択履歴をクリア
+			this.selectedTables.Clear();
+			this.cmbHistory.DataSource = null;
+			this.cmbHistory.DataSource = this.selectedTables;
+			
+
 			dsplist2();
 			displistowner();
 		}
@@ -3240,6 +3306,12 @@ namespace quickDBExplorer
 
 		private void rdoNotDspSysUser_CheckedChanged(object sender, System.EventArgs e)
 		{
+			// テーブルの選択履歴をクリア
+			this.selectedTables.Clear();
+			this.cmbHistory.DataSource = null;
+			this.cmbHistory.DataSource = this.selectedTables;
+			
+
 			dsplist2();
 			displistowner();
 		}
@@ -4766,6 +4838,19 @@ namespace quickDBExplorer
 			procCond.OrderStr = this.txtSort.Text;
 			procCond.MaxStr = this.txtDspCount.Text;
 			return procCond;
+		}
+
+		private void cmbHistory_SelectionChangeCommitted(object sender, System.EventArgs e)
+		{
+			if( this.cmbHistory.SelectedIndex < 0 )
+			{
+				return;
+			}
+			string tablename = (string)this.cmbHistory.SelectedItem;
+
+			int setidx = this.tableList.FindStringExact(tablename);
+			this.tableList.ClearSelected();
+			this.tableList.SelectedIndex = setidx;
 		}
 	}
 
