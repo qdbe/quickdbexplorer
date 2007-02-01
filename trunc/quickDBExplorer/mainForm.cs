@@ -160,7 +160,12 @@ namespace quickDBExplorer
 		/// </summary>
 		protected const int MaxTableHistory = 10;
 
+		/// <summary>
+		///  コンボボックスのイベント処理中か否か
+		/// </summary>
 		protected bool isInCmbEvent = false;
+
+		private int SqlTimeOut = 300;
 
 		/// <summary>
 		/// DB接続情報
@@ -1228,7 +1233,7 @@ namespace quickDBExplorer
 			this.cmbHistory.TabIndex = 19;
 			this.cmbHistory.SelectedIndexChanged += new System.EventHandler(this.cmbHistory_SelectedIndexChanged);
 			this.cmbHistory.Leave += new System.EventHandler(this.cmbHistory_SelectedIndexChanged);
-			this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectedIndexChanged);
+			this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectionChangeCommitted);
 			// 
 			// MainForm
 			// 
@@ -1772,6 +1777,7 @@ namespace quickDBExplorer
 
 				SqlDataReader dr = null;
 				SqlCommand	cm = new SqlCommand();
+				cm.CommandTimeout = this.SqlTimeOut;
 			
 
 				foreach( String tbname in this.tableList.SelectedItems )
@@ -2328,6 +2334,7 @@ namespace quickDBExplorer
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
 
 			if( this.tableList.SelectedItems.Count == 0 )
 			{
@@ -2752,6 +2759,7 @@ namespace quickDBExplorer
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
 
 			this.InitErrMessage();
 
@@ -2867,6 +2875,7 @@ namespace quickDBExplorer
 		{	
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
 
 			if( this.tableList.SelectedItems.Count == 0 )
 			{
@@ -3291,7 +3300,8 @@ namespace quickDBExplorer
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
-			
+			cm.CommandTimeout = this.SqlTimeOut;
+
 			this.InitErrMessage();
 
 			try 
@@ -3933,6 +3943,8 @@ namespace quickDBExplorer
 					tran = this.sqlConnection1.BeginTransaction();
 
 					SqlCommand cm = new SqlCommand(Sqldlg2.SelectSql,this.sqlConnection1,tran);
+					cm.CommandTimeout = this.SqlTimeOut;
+
 					string msg = "";
 					if( Sqldlg2.hasReturn == true )
 					{
@@ -4051,6 +4063,7 @@ namespace quickDBExplorer
 		private void DependOutPut(object sender, System.EventArgs e)
 		{
 			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
 
 			if( this.tableList.SelectedItems.Count == 0 )
 			{
@@ -4186,7 +4199,7 @@ namespace quickDBExplorer
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = 180;
+			cm.CommandTimeout = this.SqlTimeOut;
 
 			if( this.tableList.SelectedItems.Count == 0 )
 			{
@@ -4549,7 +4562,8 @@ namespace quickDBExplorer
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = 180;
+			cm.CommandTimeout = this.SqlTimeOut;
+
 			DataTable	rcdt = new DataTable("RecordCount");
 			rcdt.CaseSensitive = true;
 
@@ -4851,6 +4865,22 @@ namespace quickDBExplorer
 			{
 				return;
 			}
+			if( this.cmbHistory.SelectedIndex < 0 )
+			{
+				return;
+			}
+			string tablename = (string)this.cmbHistory.SelectedItem;
+
+			isInCmbEvent = true;
+			int setidx = this.tableList.FindStringExact(tablename);
+			this.tableList.ClearSelected();
+			this.tableList.SelectedIndex = setidx;
+			isInCmbEvent = false;
+			this.tableList.Focus();
+		}
+
+		private void cmbHistory_SelectionChangeCommitted(object sender, System.EventArgs e)
+		{
 			if( this.cmbHistory.SelectedIndex < 0 )
 			{
 				return;
