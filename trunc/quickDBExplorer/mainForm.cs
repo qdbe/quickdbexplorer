@@ -371,7 +371,7 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(176, 600);
+			this.msgArea.Location = new System.Drawing.Point(176, 624);
 			this.msgArea.Name = "msgArea";
 			this.msgArea.Size = new System.Drawing.Size(652, 16);
 			this.msgArea.TabIndex = 40;
@@ -751,13 +751,13 @@ namespace quickDBExplorer
 			this.dbGrid.HeaderFont = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
 			this.dbGrid.HeaderForeColor = System.Drawing.Color.Black;
 			this.dbGrid.LinkColor = System.Drawing.Color.Maroon;
-			this.dbGrid.Location = new System.Drawing.Point(240, 368);
+			this.dbGrid.Location = new System.Drawing.Point(240, 384);
 			this.dbGrid.Name = "dbGrid";
 			this.dbGrid.ParentRowsBackColor = System.Drawing.Color.Silver;
 			this.dbGrid.ParentRowsForeColor = System.Drawing.Color.Black;
 			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
 			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
-			this.dbGrid.Size = new System.Drawing.Size(672, 228);
+			this.dbGrid.Size = new System.Drawing.Size(672, 236);
 			this.dbGrid.TabIndex = 39;
 			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
 			// 
@@ -1020,7 +1020,7 @@ namespace quickDBExplorer
 			// 
 			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label6.Font = new System.Drawing.Font("MS UI Gothic", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.label6.Location = new System.Drawing.Point(4, 633);
+			this.label6.Location = new System.Drawing.Point(4, 657);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(124, 12);
 			this.label6.TabIndex = 27;
@@ -1058,13 +1058,13 @@ namespace quickDBExplorer
 			// 
 			this.label7.Location = new System.Drawing.Point(244, 328);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(372, 16);
+			this.label7.Size = new System.Drawing.Size(368, 16);
 			this.label7.TabIndex = 33;
 			this.label7.Text = "見出しに★がある列はNULL可です。NULLのセルは水色に着色されます。";
 			// 
 			// btnGridFormat
 			// 
-			this.btnGridFormat.Location = new System.Drawing.Point(752, 320);
+			this.btnGridFormat.Location = new System.Drawing.Point(752, 336);
 			this.btnGridFormat.Name = "btnGridFormat";
 			this.btnGridFormat.Size = new System.Drawing.Size(156, 20);
 			this.btnGridFormat.TabIndex = 37;
@@ -1073,11 +1073,11 @@ namespace quickDBExplorer
 			// 
 			// label8
 			// 
-			this.label8.Location = new System.Drawing.Point(244, 348);
+			this.label8.Location = new System.Drawing.Point(244, 344);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(392, 16);
+			this.label8.Size = new System.Drawing.Size(500, 16);
 			this.label8.TabIndex = 34;
-			this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。";
+			this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。Ctrl+3で値拡大表示。";
 			// 
 			// btnIndex
 			// 
@@ -1090,7 +1090,7 @@ namespace quickDBExplorer
 			// 
 			// btnRedisp
 			// 
-			this.btnRedisp.Location = new System.Drawing.Point(640, 344);
+			this.btnRedisp.Location = new System.Drawing.Point(640, 360);
 			this.btnRedisp.Name = "btnRedisp";
 			this.btnRedisp.Size = new System.Drawing.Size(108, 20);
 			this.btnRedisp.TabIndex = 36;
@@ -1099,7 +1099,7 @@ namespace quickDBExplorer
 			// 
 			// btnTmpAllDsp
 			// 
-			this.btnTmpAllDsp.Location = new System.Drawing.Point(752, 344);
+			this.btnTmpAllDsp.Location = new System.Drawing.Point(752, 360);
 			this.btnTmpAllDsp.Name = "btnTmpAllDsp";
 			this.btnTmpAllDsp.Size = new System.Drawing.Size(156, 20);
 			this.btnTmpAllDsp.TabIndex = 38;
@@ -1198,11 +1198,11 @@ namespace quickDBExplorer
 			// 
 			// label9
 			// 
-			this.label9.Location = new System.Drawing.Point(640, 328);
+			this.label9.Location = new System.Drawing.Point(244, 364);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(108, 16);
+			this.label9.Size = new System.Drawing.Size(280, 16);
 			this.label9.TabIndex = 35;
-			this.label9.Text = "Ctrl+3で値拡大表示";
+			this.label9.Text = "複数行にわたる文字列はとき色(ピンク)に着色されます。";
 			// 
 			// useCheckBox
 			// 
@@ -1236,7 +1236,7 @@ namespace quickDBExplorer
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(928, 613);
+			this.ClientSize = new System.Drawing.Size(928, 637);
 			this.Controls.Add(this.cmbHistory);
 			this.Controls.Add(this.label10);
 			this.Controls.Add(this.useCheckBox);
@@ -4999,6 +4999,14 @@ namespace quickDBExplorer
 			{
 				backBrush = new SolidBrush(Color.FromArgb(0xbf,0xef,0xff));
 			}
+			else if( cellValue is string && 
+				( 
+				((string)cellValue).IndexOf("\r\n") >= 0 ||
+				((string)cellValue).IndexOf("\n") >= 0 ) )
+			{
+				backBrush = new SolidBrush(Color.FromArgb(0xf4,0xb3,0xc2));
+			}
+
 			//基本クラスのPaintメソッドを呼び出す
 			base.Paint(g, bounds, source, rowNum,
 				backBrush, foreBrush, alignToRight);

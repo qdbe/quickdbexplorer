@@ -51,6 +51,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4265009504014E47B0D1B461E4075940"
+        "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4265009504014E47B0D1B461E4075940"
+        "OwnerKey" = "8:_A7A71B1D5E0BE6778B5D534455E71099"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4BADB8C0F962420E814E8ED1CB058F43"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -119,18 +131,6 @@
         {
         "MsmKey" = "8:_A7A71B1D5E0BE6778B5D534455E71099"
         "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AE2586F3A40A41069DF0E6945AD079DF"
-        "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AE2586F3A40A41069DF0E6945AD079DF"
-        "OwnerKey" = "8:_A7A71B1D5E0BE6778B5D534455E71099"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -512,7 +512,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:quickDBExplorer, Version=1.4.2.890, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:quickDBExplorer, Version=1.4.2.41087, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_617B01C450714C85851955A11602F67F"
@@ -1080,13 +1080,13 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:quickDBExplorer"
-        "ProductCode" = "8:{91D165BF-0C13-41BD-9CF7-CA998CCB2869}"
-        "PackageCode" = "8:{81B3FF18-574E-42E9-9B40-0CCCDF52E5E6}"
+        "ProductCode" = "8:{5F0F8A43-F55B-4EC4-AC3F-BD07482293E3}"
+        "PackageCode" = "8:{4D701B19-B277-40EC-BA5D-FB031A3D2F05}"
         "UpgradeCode" = "8:{F11492BC-0C84-4BA5-BE29-BEB68FC8A758}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.4.2"
+        "ProductVersion" = "8:1.4.3"
         "Manufacturer" = "8:GI-Engineering"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1667,7 +1667,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_AE2586F3A40A41069DF0E6945AD079DF"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_4265009504014E47B0D1B461E4075940"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
