@@ -1231,8 +1231,6 @@ namespace quickDBExplorer
 			this.cmbHistory.Name = "cmbHistory";
 			this.cmbHistory.Size = new System.Drawing.Size(176, 20);
 			this.cmbHistory.TabIndex = 19;
-			this.cmbHistory.SelectedIndexChanged += new System.EventHandler(this.cmbHistory_SelectedIndexChanged);
-			this.cmbHistory.Leave += new System.EventHandler(this.cmbHistory_SelectedIndexChanged);
 			this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectionChangeCommitted);
 			// 
 			// MainForm
@@ -4857,26 +4855,6 @@ namespace quickDBExplorer
 		private void tableList_CopyData(object sender)
 		{
 			copytablename(false);
-		}
-
-		private void cmbHistory_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			if( this.cmbHistory.DroppedDown == true )
-			{
-				return;
-			}
-			if( this.cmbHistory.SelectedIndex < 0 )
-			{
-				return;
-			}
-			string tablename = (string)this.cmbHistory.SelectedItem;
-
-			isInCmbEvent = true;
-			int setidx = this.tableList.FindStringExact(tablename);
-			this.tableList.ClearSelected();
-			this.tableList.SelectedIndex = setidx;
-			isInCmbEvent = false;
-			this.tableList.Focus();
 		}
 
 		private void cmbHistory_SelectionChangeCommitted(object sender, System.EventArgs e)

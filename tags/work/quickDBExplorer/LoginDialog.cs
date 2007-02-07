@@ -12,8 +12,14 @@ using System.Runtime.Serialization.Formatters.Soap;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// ログイン用のダイアログ処理
+	/// </summary>
 	public class LoginDialog : quickDBExplorer.quickDBExplorerBaseForm
 	{
+		/// <summary>
+		/// 前回終了時の画面情報記憶データ
+		/// </summary>
 		protected saveClass	initopt;
 
 		private System.Windows.Forms.CheckBox chkTrust;
@@ -31,6 +37,10 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label1;
 		private System.ComponentModel.IContainer components = null;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="initialOption"></param>
 		public LoginDialog(saveClass initialOption)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
@@ -234,16 +244,23 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// 画面の初期表示時の処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void LoginDialog_Load(object sender, System.EventArgs e)
 		{
-			// ローカルのファイルから　オプションを読み込む
+			// 前回画面情報から、画面初期値を表示する
 
 			this.checkBox1.Checked = true;
 			if( initopt.lastserverkey != "" )
 			{
+				// 最終接続したサーバーの情報を取得し、画面にセット
 				ServerData sv = (ServerData)initopt.ht[initopt.lastserverkey];
 				this.txtServerName.Text = sv.Servername;
 				this.txtInstance.Text = sv.InstanceName;
+				// 信頼関係接続を利用するか否か
 				if( sv.IsUseTrust == true )
 				{
 					this.chkTrust.Checked = true;
@@ -254,6 +271,7 @@ namespace quickDBExplorer
 					this.txtUser.Text = sv.loginUser;
 				}
 			}
+			// サーバーの接続履歴がある場合は、過去に接続したサーバーからの選択を可能にする
 			if( this.initopt.ht.Count > 0 )
 			{
 				this.btnServerHistory.Enabled = true;
@@ -264,6 +282,11 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 接続 ボタン押下時の処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnLogin_Click(object sender, System.EventArgs e)
 		{
 			String myConnString;
@@ -272,11 +295,13 @@ namespace quickDBExplorer
 				// ユーザー名での接続
 				if( this.txtInstance.Text != "" )
 				{
+					// インスタンス名指定あり
 					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
 						+"Database=master;User ID="+this.txtUser.Text
 						+";Password="+this.txtPassword.Text;			}
 				else
 				{
+					// インスタンス名指定なし
 					myConnString = "Server=" + this.txtServerName.Text + ";"
 						+"Database=master;User ID="+this.txtUser.Text
 						+";Password="+this.txtPassword.Text;
@@ -287,17 +312,19 @@ namespace quickDBExplorer
 				// 信頼関係接続
 				if( this.txtInstance.Text != "" )
 				{
+					// インスタンス名指定あり
 					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
 						+"Database=master;Integrated Security=SSPI;";
 				}
 				else
 				{
+					// インスタンス名指定なし
 					myConnString = "Server=" + this.txtServerName.Text + ";"
 						+"Database=master;Integrated Security=SSPI;";
 				}
 			}
-			
-			this.InitErrMessage();
+
+			this.InitErrMessage();	// エラー情報を一旦クリア
 
 			try 
 			{
