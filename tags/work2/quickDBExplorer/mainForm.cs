@@ -675,6 +675,7 @@ namespace quickDBExplorer
 			this.txtWhere.TabIndex = 11;
 			this.txtWhere.Text = "";
 			this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
+			this.txtWhere.DoubleClick += new System.EventHandler(this.txtWhere_DoubleClick);
 			// 
 			// txtSort
 			// 
@@ -4871,6 +4872,11 @@ namespace quickDBExplorer
 			this.tableList.SelectedIndex = setidx;
 			isInCmbEvent = false;
 			this.tableList.Focus();
+		}
+
+		private void txtWhere_DoubleClick(object sender, System.EventArgs e)
+		{
+		
 		}
 	}
 

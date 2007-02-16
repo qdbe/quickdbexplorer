@@ -1,7 +1,7 @@
 <VisualStudioProject>
     <CSHARP
         ProjectType = "Local"
-        ProductVersion = "7.10.6030"
+        ProductVersion = "7.10.3077"
         SchemaVersion = "2.0"
         ProjectGuid = "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
     >
@@ -17,7 +17,7 @@
                 DelaySign = "false"
                 OutputType = "WinExe"
                 PreBuildEvent = ""
-                PostBuildEvent = "cd $(SolutionDir)&#xd;&#xa;; $(SolutionDir)dodotfuscator.bat&#xd;&#xa;"
+                PostBuildEvent = ""
                 RootNamespace = "quickDBExplorer"
                 RunPostBuildEvent = "OnOutputUpdated"
                 StartupObject = ""
@@ -133,6 +133,16 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "HistoryViewer.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "HistoryViewer.resx"
+                    DependentUpon = "HistoryViewer.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "ImageViewer.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
@@ -245,6 +255,11 @@
                     RelPath = "ServerSelectDialog.resx"
                     DependentUpon = "ServerSelectDialog.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textHistory.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "ZoomDialog.cs"
