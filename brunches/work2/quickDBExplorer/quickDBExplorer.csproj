@@ -1,7 +1,7 @@
 <VisualStudioProject>
     <CSHARP
         ProjectType = "Local"
-        ProductVersion = "7.10.3077"
+        ProductVersion = "7.10.6030"
         SchemaVersion = "2.0"
         ProjectGuid = "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
     >
@@ -257,9 +257,23 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "textHistory.xsd"
+                    BuildAction = "Content"
+                    Generator = "MSDataSetGenerator"
+                    LastGenOutput = "textHistory.cs"
+                />
+                <File
                     RelPath = "textHistory.cs"
-                    SubType = "Component"
+                    DependentUpon = "textHistory.xsd"
+                    SubType = "code"
                     BuildAction = "Compile"
+                    DesignTime = "True"
+                    AutoGen = "True"
+                />
+                <File
+                    RelPath = "textHistory.xsx"
+                    DependentUpon = "textHistory.xsd"
+                    BuildAction = "None"
                 />
                 <File
                     RelPath = "ZoomDialog.cs"
