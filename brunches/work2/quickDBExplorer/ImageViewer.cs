@@ -32,7 +32,6 @@ namespace quickDBExplorer
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
 
-			// TODO: InitializeComponent 呼び出しの後に初期化処理を追加します。
 		}
 
 		/// <summary>

@@ -47,9 +47,6 @@ namespace quickDBExplorer
 			//
 			InitializeComponent();
 
-			//
-			// TODO: InitializeComponent 呼び出しの後に、コンストラクタ コードを追加してください。
-			//
 		}
 
 		/// <summary>
@@ -229,7 +226,6 @@ namespace quickDBExplorer
 
 		private void MainMDI_Load(object sender, System.EventArgs e)
 		{
-			// TODO: InitializeComponent 呼び出しの後に初期化処理を追加します。
 			smanager.SerialFileName = Application.ExecutablePath + ".auth";
 			if( smanager.LoadAndCheckSerial() == false )
 			{

@@ -1,8 +1,10 @@
 using System;
+using System.Data;
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using quickDBExplorer;
 
 namespace quickDBExplorer
 {
@@ -13,15 +15,17 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Button btnClear;
 		private System.ComponentModel.IContainer components = null;
 		private System.Windows.Forms.ListView historyList;
-		ArrayList	histAr = new ArrayList();
+		textHistory	textHistoryDS = new textHistory();
+		string targetTable = "";
 
-		public HistoryViewer(ArrayList histdata)
+		public string retString = "";
+
+		public HistoryViewer(textHistory hdata, string curTable)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
-			this.histAr = histdata;
-
-			// TODO: InitializeComponent 呼び出しの後に初期化処理を追加します。
+			this.textHistoryDS = hdata;
+			this.targetTable = curTable;
 		}
 
 		/// <summary>
@@ -66,6 +70,7 @@ namespace quickDBExplorer
 			this.button1.Size = new System.Drawing.Size(72, 24);
 			this.button1.TabIndex = 4;
 			this.button1.Text = "戻る(&X)";
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// btnOK
 			// 
@@ -73,6 +78,7 @@ namespace quickDBExplorer
 			this.btnOK.Name = "btnOK";
 			this.btnOK.TabIndex = 1;
 			this.btnOK.Text = "決定(&O)";
+			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
 			// btnClear
 			// 
@@ -81,6 +87,7 @@ namespace quickDBExplorer
 			this.btnClear.Size = new System.Drawing.Size(88, 23);
 			this.btnClear.TabIndex = 2;
 			this.btnClear.Text = "履歴消去(&L)";
+			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
 			// 
 			// historyList
 			// 
@@ -113,11 +120,54 @@ namespace quickDBExplorer
 		{
 			// 一旦履歴は全てクリア
 			this.historyList.Clear();
-			textHistory hist = new textHistory();
-			if( this.histAr != null && this.histAr.Count != 0 )
+			if( this.textHistoryDS != null && this.textHistoryDS.textHistoryData.Rows.Count != 0 )
 			{
+				// まずは、同じテーブル名のものを優先
+				this.textHistoryDS.textHistoryData.DefaultView.RowFilter = string.Format("KeyValue = {0}",this.targetTable);
+				this.textHistoryDS.textHistoryData.DefaultView.Sort = "KeyNo desc";
 				this.historyList.BeginUpdate();
+
+				foreach( DataRow dr in this.textHistoryDS.textHistoryData.Rows )
+				{
+					ListViewItem item = new ListViewItem();
+					item.SubItems.Add((string)dr["KeyValue"]);
+					item.SubItems.Add((string)dr["DataValue"]);
+					this.historyList.Items.Add(item);
+				}
+
+				// 次に違うテーブルのものを表示
+				this.textHistoryDS.textHistoryData.DefaultView.RowFilter = string.Format("KeyValue != {0}",this.targetTable);
+				this.textHistoryDS.textHistoryData.DefaultView.Sort = "KeyValue, KeyNo desc";
+				foreach( DataRow dr in this.textHistoryDS.textHistoryData.Rows )
+				{
+					ListViewItem item = new ListViewItem();
+					item.SubItems.Add((string)dr["KeyValue"]);
+					item.SubItems.Add((string)dr["DataValue"]);
+					this.historyList.Items.Add(item);
+				}
+
 				this.historyList.EndUpdate();
+
+				this.historyList.Items[0].Selected = true;
+			}
+		}
+
+		private void btnClear_Click(object sender, System.EventArgs e)
+		{
+			this.textHistoryDS.textHistoryData.Rows.Clear();
+			this.historyList.Clear();
+		}
+
+		private void button1_Click(object sender, System.EventArgs e)
+		{
+			this.Close();
+		}
+
+		private void btnOK_Click(object sender, System.EventArgs e)
+		{
+			if( this.historyList.SelectedItems.Count > 0 )
+			{
+				this.retString = this.historyList.SelectedItems[0].SubItems[1].Text;
 			}
 		}
 	}

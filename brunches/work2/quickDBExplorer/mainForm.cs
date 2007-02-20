@@ -167,6 +167,8 @@ namespace quickDBExplorer
 
 		private int SqlTimeOut = 300;
 
+		private textHistory  whereHistory = new textHistory();
+
 		/// <summary>
 		/// DBÚ‘±î•ñ
 		/// </summary>
@@ -3266,6 +3268,8 @@ namespace quickDBExplorer
 			{
 				DspData("");
 			}
+
+			// —š—ğ‚ÉŒ»İ‚Ì’l‚ğ‹L˜^ TODO
 		}
 
 		private void txtSort_Leave(object sender, System.EventArgs e)
@@ -4876,7 +4880,16 @@ namespace quickDBExplorer
 
 		private void txtWhere_DoubleClick(object sender, System.EventArgs e)
 		{
-		
+			string targetTable = "";
+			if( this.tableList.SelectedItems.Count == 1 )
+			{
+				targetTable = this.tableList.SelectedItem.ToString();
+			}
+			HistoryViewer hv = new HistoryViewer(this.whereHistory, targetTable);
+			if( DialogResult.OK == hv.ShowDialog() )
+			{
+				this.txtWhere.Text = hv.retString;
+			}
 		}
 	}
 
