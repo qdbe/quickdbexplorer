@@ -17,6 +17,8 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ListView historyList;
 		textHistory	textHistoryDS = new textHistory();
 		string targetTable = "";
+		private System.Windows.Forms.ColumnHeader KeyValue;
+		private System.Windows.Forms.ColumnHeader DataValue;
 
 		public string retString = "";
 
@@ -54,6 +56,8 @@ namespace quickDBExplorer
 			this.btnOK = new System.Windows.Forms.Button();
 			this.btnClear = new System.Windows.Forms.Button();
 			this.historyList = new System.Windows.Forms.ListView();
+			this.KeyValue = new System.Windows.Forms.ColumnHeader();
+			this.DataValue = new System.Windows.Forms.ColumnHeader();
 			this.SuspendLayout();
 			// 
 			// msgArea
@@ -91,10 +95,21 @@ namespace quickDBExplorer
 			// 
 			// historyList
 			// 
+			this.historyList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+																						  this.KeyValue,
+																						  this.DataValue});
 			this.historyList.Location = new System.Drawing.Point(16, 8);
 			this.historyList.Name = "historyList";
 			this.historyList.Size = new System.Drawing.Size(520, 254);
 			this.historyList.TabIndex = 0;
+			// 
+			// KeyValue
+			// 
+			this.KeyValue.Text = "テーブル名";
+			// 
+			// DataValue
+			// 
+			this.DataValue.Text = "履歴詳細";
 			// 
 			// HistoryViewer
 			// 
@@ -123,7 +138,7 @@ namespace quickDBExplorer
 			if( this.textHistoryDS != null && this.textHistoryDS.textHistoryData.Rows.Count != 0 )
 			{
 				// まずは、同じテーブル名のものを優先
-				this.textHistoryDS.textHistoryData.DefaultView.RowFilter = string.Format("KeyValue = {0}",this.targetTable);
+				this.textHistoryDS.textHistoryData.DefaultView.RowFilter = string.Format("KeyValue = '{0}'",this.targetTable);
 				this.textHistoryDS.textHistoryData.DefaultView.Sort = "KeyNo desc";
 				this.historyList.BeginUpdate();
 
@@ -136,7 +151,7 @@ namespace quickDBExplorer
 				}
 
 				// 次に違うテーブルのものを表示
-				this.textHistoryDS.textHistoryData.DefaultView.RowFilter = string.Format("KeyValue != {0}",this.targetTable);
+				this.textHistoryDS.textHistoryData.DefaultView.RowFilter = string.Format("KeyValue <> '{0}'",this.targetTable);
 				this.textHistoryDS.textHistoryData.DefaultView.Sort = "KeyValue, KeyNo desc";
 				foreach( DataRow dr in this.textHistoryDS.textHistoryData.Rows )
 				{

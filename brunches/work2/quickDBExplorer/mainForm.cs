@@ -217,9 +217,6 @@ namespace quickDBExplorer
 			//
 			InitializeComponent();
 
-			//
-			// TODO: InitializeComponent 呼び出しの後に、コンストラクタ コードを追加してください。
-			//
 			svdata = sv;
 			Sqldlg.SelectSql = "";
 			Sqldlg2.SelectSql = "";
@@ -1826,7 +1823,7 @@ namespace quickDBExplorer
 					if( isTaihi == true )
 					{
 						string taihistr = 
-						String.Format("select * into {1} from {0} ",
+							String.Format("select * into {1} from {0} ",
 							gettbname(tbname),
 							gettbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd")) 
 							);
@@ -3258,18 +3255,22 @@ namespace quickDBExplorer
 
 		private void txtWhere_Leave(object sender, System.EventArgs e)
 		{
+			string tbname = "";
 			if( this.chkDspData.CheckState == CheckState.Checked &&
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
+				tbname = this.tableList.SelectedItem.ToString();
 			}
 			else
 			{
-				DspData("");
+				tbname = "";
 			}
+			DspData(tbname);
 
 			// 履歴に現在の値を記録 TODO
+			SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
+
 		}
 
 		private void txtSort_Leave(object sender, System.EventArgs e)
@@ -4890,6 +4891,30 @@ namespace quickDBExplorer
 			{
 				this.txtWhere.Text = hv.retString;
 			}
+		}
+
+		private void SetNewHistory(string key, string hvalue, ref textHistory tdata)
+		{
+			if( hvalue == null || hvalue == "" )
+			{
+				return;
+			}
+
+			tdata.textHistoryData.DefaultView.RowFilter = string.Format("KeyValue = '{0}'", key );
+
+			foreach( DataRow dr in tdata.textHistoryData.Rows )
+			{
+				if( (string)dr["DataValue"] == hvalue )
+				{
+					// 同じテーブルに対し、既に同じ履歴が登録されているため、何もしない
+					return;
+				}
+			}
+			
+			textHistory.textHistoryDataRow ndr = tdata.textHistoryData.NewtextHistoryDataRow();
+			ndr.KeyValue = key;
+			ndr.DataValue = hvalue;
+			tdata.textHistoryData.Rows.Add(ndr);
 		}
 	}
 
