@@ -17,8 +17,6 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ListView historyList;
 		textHistory	textHistoryDS = new textHistory();
 		string targetTable = "";
-		private System.Windows.Forms.ColumnHeader KeyValue;
-		private System.Windows.Forms.ColumnHeader DataValue;
 
 		public string retString = "";
 
@@ -56,8 +54,6 @@ namespace quickDBExplorer
 			this.btnOK = new System.Windows.Forms.Button();
 			this.btnClear = new System.Windows.Forms.Button();
 			this.historyList = new System.Windows.Forms.ListView();
-			this.KeyValue = new System.Windows.Forms.ColumnHeader();
-			this.DataValue = new System.Windows.Forms.ColumnHeader();
 			this.SuspendLayout();
 			// 
 			// msgArea
@@ -68,6 +64,7 @@ namespace quickDBExplorer
 			// 
 			// button1
 			// 
+			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.button1.Location = new System.Drawing.Point(462, 270);
 			this.button1.Name = "button1";
@@ -78,6 +75,7 @@ namespace quickDBExplorer
 			// 
 			// btnOK
 			// 
+			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnOK.Location = new System.Drawing.Point(18, 272);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.TabIndex = 1;
@@ -86,6 +84,7 @@ namespace quickDBExplorer
 			// 
 			// btnClear
 			// 
+			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnClear.Location = new System.Drawing.Point(104, 272);
 			this.btnClear.Name = "btnClear";
 			this.btnClear.Size = new System.Drawing.Size(88, 23);
@@ -95,31 +94,32 @@ namespace quickDBExplorer
 			// 
 			// historyList
 			// 
-			this.historyList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-																						  this.KeyValue,
-																						  this.DataValue});
+			this.historyList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+				| System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right)));
+			this.historyList.FullRowSelect = true;
+			this.historyList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.historyList.Location = new System.Drawing.Point(16, 8);
+			this.historyList.MultiSelect = false;
 			this.historyList.Name = "historyList";
 			this.historyList.Size = new System.Drawing.Size(520, 254);
 			this.historyList.TabIndex = 0;
-			// 
-			// KeyValue
-			// 
-			this.KeyValue.Text = "テーブル名";
-			// 
-			// DataValue
-			// 
-			this.DataValue.Text = "履歴詳細";
+			this.historyList.View = System.Windows.Forms.View.Details;
+			this.historyList.DoubleClick += new System.EventHandler(this.historyList_DoubleClick);
 			// 
 			// HistoryViewer
 			// 
+			this.AcceptButton = this.btnOK;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
+			this.CancelButton = this.button1;
 			this.ClientSize = new System.Drawing.Size(552, 304);
 			this.Controls.Add(this.historyList);
 			this.Controls.Add(this.btnClear);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.button1);
 			this.Name = "HistoryViewer";
+			this.ShowInTaskbar = false;
+			this.Text = "過去入力履歴選択";
 			this.Load += new System.EventHandler(this.HistoryViewer_Load);
 			this.Controls.SetChildIndex(this.msgArea, 0);
 			this.Controls.SetChildIndex(this.button1, 0);
@@ -135,29 +135,39 @@ namespace quickDBExplorer
 		{
 			// 一旦履歴は全てクリア
 			this.historyList.Clear();
+			this.historyList.Columns.Add("テーブル",120,HorizontalAlignment.Left);
+			this.historyList.Columns.Add("履歴",this.historyList.Width - 120 - 4,HorizontalAlignment.Left);
 			if( this.textHistoryDS != null && this.textHistoryDS.textHistoryData.Rows.Count != 0 )
 			{
 				// まずは、同じテーブル名のものを優先
-				this.textHistoryDS.textHistoryData.DefaultView.RowFilter = string.Format("KeyValue = '{0}'",this.targetTable);
-				this.textHistoryDS.textHistoryData.DefaultView.Sort = "KeyNo desc";
+
+
 				this.historyList.BeginUpdate();
 
-				foreach( DataRow dr in this.textHistoryDS.textHistoryData.Rows )
+				DataRow []drl = this.textHistoryDS.textHistoryData.Select(string.Format("KeyValue = '{0}'",this.targetTable),
+					"KeyNo desc");
+				for( int i = 0 ; i < drl.Length; i++ )
 				{
-					ListViewItem item = new ListViewItem();
-					item.SubItems.Add((string)dr["KeyValue"]);
-					item.SubItems.Add((string)dr["DataValue"]);
+					ListViewItem item = new ListViewItem(
+						new string[] {
+										 (string)drl[i]["KeyValue"],
+										 (string)drl[i]["DataValue"]
+									 }
+						);
 					this.historyList.Items.Add(item);
 				}
 
 				// 次に違うテーブルのものを表示
-				this.textHistoryDS.textHistoryData.DefaultView.RowFilter = string.Format("KeyValue <> '{0}'",this.targetTable);
-				this.textHistoryDS.textHistoryData.DefaultView.Sort = "KeyValue, KeyNo desc";
-				foreach( DataRow dr in this.textHistoryDS.textHistoryData.Rows )
+				drl = this.textHistoryDS.textHistoryData.Select(string.Format("KeyValue <> '{0}'",this.targetTable),
+					"KeyNo desc");
+				for( int i = 0 ; i < drl.Length; i++ )
 				{
-					ListViewItem item = new ListViewItem();
-					item.SubItems.Add((string)dr["KeyValue"]);
-					item.SubItems.Add((string)dr["DataValue"]);
+					ListViewItem item = new ListViewItem(
+						new string[] {
+										 (string)drl[i]["KeyValue"],
+										 (string)drl[i]["DataValue"]
+									 }
+						);
 					this.historyList.Items.Add(item);
 				}
 
@@ -184,6 +194,13 @@ namespace quickDBExplorer
 			{
 				this.retString = this.historyList.SelectedItems[0].SubItems[1].Text;
 			}
+			this.DialogResult = DialogResult.OK;
+			this.Close();
+		}
+
+		private void historyList_DoubleClick(object sender, System.EventArgs e)
+		{
+			this.btnOK_Click(sender, e);
 		}
 	}
 }
