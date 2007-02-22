@@ -4931,6 +4931,19 @@ namespace quickDBExplorer
 		{
 			if( e.Alt == false &&
 				e.Control == true &&
+				e.KeyCode == Keys.W )
+			{
+				// 値の拡大表示を行う
+				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+				dlg.EditText = this.txtWhere.Text;
+				dlg.LableName = "where 指定";
+				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+				dlg.Show();
+				dlg.BringToFront();
+				dlg.Focus();
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
 				e.KeyCode == Keys.D )
 			{
 				// 全削除を行う
@@ -4970,6 +4983,19 @@ namespace quickDBExplorer
 
 		private void txtSort_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.W )
+			{
+				// 値の拡大表示を行う
+				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+				dlg.EditText = this.txtSort.Text;
+				dlg.LableName = "order by 指定";
+				dlg.Enter += new System.EventHandler(this.dlgSortZoom_Click);
+				dlg.Show();
+				dlg.BringToFront();
+				dlg.Focus();
+			}
 			if( e.Alt == false &&
 				e.Control == true &&
 				e.KeyCode == Keys.D )

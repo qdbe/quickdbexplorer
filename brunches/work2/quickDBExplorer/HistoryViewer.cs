@@ -17,6 +17,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ListView historyList;
 		textHistory	textHistoryDS = new textHistory();
 		string targetTable = "";
+		private System.Windows.Forms.Button btnDspAll;
 
 		public string retString = "";
 
@@ -54,12 +55,14 @@ namespace quickDBExplorer
 			this.btnOK = new System.Windows.Forms.Button();
 			this.btnClear = new System.Windows.Forms.Button();
 			this.historyList = new System.Windows.Forms.ListView();
+			this.btnDspAll = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(198, 270);
+			this.msgArea.Location = new System.Drawing.Point(358, 270);
 			this.msgArea.Name = "msgArea";
+			this.msgArea.Size = new System.Drawing.Size(98, 24);
 			this.msgArea.TabIndex = 3;
 			// 
 			// button1
@@ -107,6 +110,16 @@ namespace quickDBExplorer
 			this.historyList.View = System.Windows.Forms.View.Details;
 			this.historyList.DoubleClick += new System.EventHandler(this.historyList_DoubleClick);
 			// 
+			// btnDspAll
+			// 
+			this.btnDspAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnDspAll.Location = new System.Drawing.Point(210, 272);
+			this.btnDspAll.Name = "btnDspAll";
+			this.btnDspAll.Size = new System.Drawing.Size(112, 23);
+			this.btnDspAll.TabIndex = 3;
+			this.btnDspAll.Text = "—š—ðŠg‘å•\Ž¦(&L)";
+			this.btnDspAll.Click += new System.EventHandler(this.btnDspAll_Click);
+			// 
 			// HistoryViewer
 			// 
 			this.AcceptButton = this.btnOK;
@@ -117,10 +130,12 @@ namespace quickDBExplorer
 			this.Controls.Add(this.btnClear);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.button1);
+			this.Controls.Add(this.btnDspAll);
 			this.Name = "HistoryViewer";
 			this.ShowInTaskbar = false;
 			this.Text = "‰ß‹Ž“ü—Í—š—ð‘I‘ð";
 			this.Load += new System.EventHandler(this.HistoryViewer_Load);
+			this.Controls.SetChildIndex(this.btnDspAll, 0);
 			this.Controls.SetChildIndex(this.msgArea, 0);
 			this.Controls.SetChildIndex(this.button1, 0);
 			this.Controls.SetChildIndex(this.btnOK, 0);
@@ -201,6 +216,19 @@ namespace quickDBExplorer
 		private void historyList_DoubleClick(object sender, System.EventArgs e)
 		{
 			this.btnOK_Click(sender, e);
+		}
+
+		private void btnDspAll_Click(object sender, System.EventArgs e)
+		{
+			if( this.historyList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+			ZoomDialog dlg = new ZoomDialog();
+			dlg.IsDispOnly = true;
+			dlg.EditText = this.historyList.SelectedItems[0].SubItems[1].Text;
+			dlg.LableName = "—š—ðŠg‘å•\Ž¦";
+			dlg.ShowDialog();
 		}
 	}
 }
