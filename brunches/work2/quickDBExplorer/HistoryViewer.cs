@@ -21,12 +21,20 @@ namespace quickDBExplorer
 
 		public string retString = "";
 
+		private bool isShowTable = true;
+
 		public HistoryViewer(textHistory hdata, string curTable)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
 			this.textHistoryDS = hdata;
 			this.targetTable = curTable;
+		}
+
+		public bool IsShowTable
+		{
+			get { return this.isShowTable; }
+			set { this.isShowTable = value; }
 		}
 
 		/// <summary>
@@ -150,7 +158,10 @@ namespace quickDBExplorer
 		{
 			// 一旦履歴は全てクリア
 			this.historyList.Clear();
-			this.historyList.Columns.Add("テーブル",120,HorizontalAlignment.Left);
+			if( isShowTable == true )
+			{
+				this.historyList.Columns.Add("テーブル",120,HorizontalAlignment.Left);
+			}
 			this.historyList.Columns.Add("履歴",this.historyList.Width - 120 - 4,HorizontalAlignment.Left);
 			if( this.textHistoryDS != null && this.textHistoryDS.textHistoryData.Rows.Count != 0 )
 			{
@@ -161,14 +172,26 @@ namespace quickDBExplorer
 
 				DataRow []drl = this.textHistoryDS.textHistoryData.Select(string.Format("KeyValue = '{0}'",this.targetTable),
 					"KeyNo desc");
+				ListViewItem item ;
 				for( int i = 0 ; i < drl.Length; i++ )
 				{
-					ListViewItem item = new ListViewItem(
-						new string[] {
-										 (string)drl[i]["KeyValue"],
-										 (string)drl[i]["DataValue"]
-									 }
-						);
+					if( isShowTable == true )
+					{
+						item = new ListViewItem(
+							new string[] {
+											 (string)drl[i]["KeyValue"],
+											 (string)drl[i]["DataValue"]
+										 }
+							);
+					}
+					else
+					{
+						item = new ListViewItem(
+							new string[] {
+											 (string)drl[i]["DataValue"]
+										 }
+							);
+					}
 					this.historyList.Items.Add(item);
 				}
 
@@ -177,12 +200,23 @@ namespace quickDBExplorer
 					"KeyNo desc");
 				for( int i = 0 ; i < drl.Length; i++ )
 				{
-					ListViewItem item = new ListViewItem(
-						new string[] {
-										 (string)drl[i]["KeyValue"],
-										 (string)drl[i]["DataValue"]
-									 }
-						);
+					if( isShowTable == true )
+					{
+						item = new ListViewItem(
+							new string[] {
+											 (string)drl[i]["KeyValue"],
+											 (string)drl[i]["DataValue"]
+										 }
+							);
+					}
+					else
+					{
+						item = new ListViewItem(
+							new string[] {
+											 (string)drl[i]["DataValue"]
+										 }
+							);
+					}
 					this.historyList.Items.Add(item);
 				}
 
@@ -207,7 +241,14 @@ namespace quickDBExplorer
 		{
 			if( this.historyList.SelectedItems.Count > 0 )
 			{
-				this.retString = this.historyList.SelectedItems[0].SubItems[1].Text;
+				if( isShowTable == true )
+				{
+					this.retString = this.historyList.SelectedItems[0].SubItems[1].Text;
+				}
+				else
+				{
+					this.retString = this.historyList.SelectedItems[0].SubItems[0].Text;
+				}
 			}
 			this.DialogResult = DialogResult.OK;
 			this.Close();
@@ -226,7 +267,14 @@ namespace quickDBExplorer
 			}
 			ZoomDialog dlg = new ZoomDialog();
 			dlg.IsDispOnly = true;
-			dlg.EditText = this.historyList.SelectedItems[0].SubItems[1].Text;
+			if( isShowTable == true )
+			{
+				dlg.EditText = this.historyList.SelectedItems[0].SubItems[1].Text;
+			}
+			else
+			{
+				dlg.EditText = this.historyList.SelectedItems[0].SubItems[0].Text;
+			}
 			dlg.LableName = "履歴拡大表示";
 			dlg.ShowDialog();
 		}

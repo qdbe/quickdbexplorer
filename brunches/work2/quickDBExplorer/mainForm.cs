@@ -167,8 +167,22 @@ namespace quickDBExplorer
 
 		private int SqlTimeOut = 300;
 
+		/// <summary>
+		/// where 句の入力履歴情報
+		/// </summary>
 		private textHistory  whereHistory = new textHistory();
+
+		/// <summary>
+		/// order by 句の入力履歴情報
+		/// </summary>
 		private textHistory  sortHistory = new textHistory();
+
+		/// <summary>
+		/// select 実行履歴情報
+		/// </summary>
+		private textHistory  selectHistory = new textHistory();
+
+		private textHistory  DMLHistory = new textHistory();
 
 		/// <summary>
 		/// DB接続情報
@@ -2296,15 +2310,15 @@ namespace quickDBExplorer
 				}
 
 
-				this.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtWhere.Text,ref this.whereHistory);
-				this.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtSort.Text,ref this.sortHistory);
+				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtWhere.Text,ref this.whereHistory);
+				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtSort.Text,ref this.sortHistory);
 				// データ表示部に、該当テーブルのデータを表示する
 				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
-				this.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
-				this.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
+				MainForm.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
+				MainForm.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
 				DspData("");
 			}
 			if( this.tableList.SelectedItems.Count == 1 )
@@ -3276,7 +3290,7 @@ namespace quickDBExplorer
 			DspData(tbname);
 
 			// 履歴に現在の値を記録 TODO
-			SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
+			MainForm.SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
 
 		}
 
@@ -3296,7 +3310,7 @@ namespace quickDBExplorer
 			DspData(tbname);
 
 			// 履歴に現在の値を記録 TODO
-			SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
+			MainForm.SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
 		}
 
 		private void rdoDspSysUser_CheckedChanged(object sender, System.EventArgs e)
@@ -3707,6 +3721,8 @@ namespace quickDBExplorer
 			{
 				this.InitErrMessage();
 
+				Sqldlg.DHistory = this.selectHistory;
+
 				if( Sqldlg.ShowDialog() == DialogResult.OK )
 				{
 					SqlDataAdapter da = new SqlDataAdapter(Sqldlg.SelectSql, this.sqlConnection1);
@@ -3953,6 +3969,8 @@ namespace quickDBExplorer
 			try
 			{
 				this.InitErrMessage();
+
+				Sqldlg2.DHistory = this.DMLHistory;
 
 				if( Sqldlg2.ShowDialog() == DialogResult.OK )
 				{
@@ -4904,7 +4922,7 @@ namespace quickDBExplorer
 			this.tableList.Focus();
 		}
 
-		private void SetNewHistory(string key, string hvalue, ref textHistory tdata)
+		static public void SetNewHistory(string key, string hvalue, ref textHistory tdata)
 		{
 			if( hvalue == null || hvalue == "" )
 			{
@@ -4962,7 +4980,7 @@ namespace quickDBExplorer
 				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.retString)
 				{
 					this.txtWhere.Text = hv.retString;
-					SetNewHistory(targetTable,hv.retString,ref this.whereHistory);
+					MainForm.SetNewHistory(targetTable,hv.retString,ref this.whereHistory);
 
 					DspData(targetTable);
 				}
@@ -4975,7 +4993,7 @@ namespace quickDBExplorer
 				{
 					targetTable = this.tableList.SelectedItem.ToString();
 				}
-				SetNewHistory(targetTable,this.txtWhere.Text,ref this.whereHistory);
+				MainForm.SetNewHistory(targetTable,this.txtWhere.Text,ref this.whereHistory);
 				DspData(targetTable);
 			}
 		
@@ -5016,7 +5034,7 @@ namespace quickDBExplorer
 				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.retString)
 				{
 					this.txtSort.Text = hv.retString;
-					SetNewHistory(targetTable,hv.retString,ref this.sortHistory);
+					MainForm.SetNewHistory(targetTable,hv.retString,ref this.sortHistory);
 
 					DspData(targetTable);
 				}
@@ -5029,7 +5047,7 @@ namespace quickDBExplorer
 				{
 					targetTable = this.tableList.SelectedItem.ToString();
 				}
-				SetNewHistory(targetTable,this.txtSort.Text,ref this.sortHistory);
+				MainForm.SetNewHistory(targetTable,this.txtSort.Text,ref this.sortHistory);
 				DspData(targetTable);
 			}
 		
