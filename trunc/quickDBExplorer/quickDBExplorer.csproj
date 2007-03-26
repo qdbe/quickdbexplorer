@@ -133,6 +133,16 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "HistoryViewer.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "HistoryViewer.resx"
+                    DependentUpon = "HistoryViewer.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "ImageViewer.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
@@ -245,6 +255,25 @@
                     RelPath = "ServerSelectDialog.resx"
                     DependentUpon = "ServerSelectDialog.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "textHistory.xsd"
+                    BuildAction = "Content"
+                    Generator = "MSDataSetGenerator"
+                    LastGenOutput = "textHistory.cs"
+                />
+                <File
+                    RelPath = "textHistory.cs"
+                    DependentUpon = "textHistory.xsd"
+                    SubType = "code"
+                    BuildAction = "Compile"
+                    DesignTime = "True"
+                    AutoGen = "True"
+                />
+                <File
+                    RelPath = "textHistory.xsx"
+                    DependentUpon = "textHistory.xsd"
+                    BuildAction = "None"
                 />
                 <File
                     RelPath = "ZoomDialog.cs"

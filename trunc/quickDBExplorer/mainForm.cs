@@ -168,6 +168,23 @@ namespace quickDBExplorer
 		private int SqlTimeOut = 300;
 
 		/// <summary>
+		/// where 句の入力履歴情報
+		/// </summary>
+		private textHistory  whereHistory = new textHistory();
+
+		/// <summary>
+		/// order by 句の入力履歴情報
+		/// </summary>
+		private textHistory  sortHistory = new textHistory();
+
+		/// <summary>
+		/// select 実行履歴情報
+		/// </summary>
+		private textHistory  selectHistory = new textHistory();
+
+		private textHistory  DMLHistory = new textHistory();
+
+		/// <summary>
 		/// DB接続情報
 		/// </summary>
 		public System.Data.SqlClient.SqlConnection sqlConnection1;
@@ -215,9 +232,6 @@ namespace quickDBExplorer
 			//
 			InitializeComponent();
 
-			//
-			// TODO: InitializeComponent 呼び出しの後に、コンストラクタ コードを追加してください。
-			//
 			svdata = sv;
 			Sqldlg.SelectSql = "";
 			Sqldlg2.SelectSql = "";
@@ -674,6 +688,7 @@ namespace quickDBExplorer
 			this.txtWhere.Size = new System.Drawing.Size(144, 19);
 			this.txtWhere.TabIndex = 11;
 			this.txtWhere.Text = "";
+			this.txtWhere.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtWhere_KeyDown);
 			this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
 			// 
 			// txtSort
@@ -683,6 +698,7 @@ namespace quickDBExplorer
 			this.txtSort.Size = new System.Drawing.Size(144, 19);
 			this.txtSort.TabIndex = 14;
 			this.txtSort.Text = "";
+			this.txtSort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSort_KeyDown);
 			this.txtSort.Leave += new System.EventHandler(this.txtSort_Leave);
 			// 
 			// label1
@@ -1823,7 +1839,7 @@ namespace quickDBExplorer
 					if( isTaihi == true )
 					{
 						string taihistr = 
-						String.Format("select * into {1} from {0} ",
+							String.Format("select * into {1} from {0} ",
 							gettbname(tbname),
 							gettbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd")) 
 							);
@@ -2293,11 +2309,16 @@ namespace quickDBExplorer
 					this.cmbHistory.Refresh();
 				}
 
+
+				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtWhere.Text,ref this.whereHistory);
+				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtSort.Text,ref this.sortHistory);
 				// データ表示部に、該当テーブルのデータを表示する
 				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
+				MainForm.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
+				MainForm.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
 				DspData("");
 			}
 			if( this.tableList.SelectedItems.Count == 1 )
@@ -3255,30 +3276,41 @@ namespace quickDBExplorer
 
 		private void txtWhere_Leave(object sender, System.EventArgs e)
 		{
+			string tbname = "";
 			if( this.chkDspData.CheckState == CheckState.Checked &&
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
+				tbname = this.tableList.SelectedItem.ToString();
 			}
 			else
 			{
-				DspData("");
+				tbname = "";
 			}
+			DspData(tbname);
+
+			// 履歴に現在の値を記録 TODO
+			MainForm.SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
+
 		}
 
 		private void txtSort_Leave(object sender, System.EventArgs e)
 		{
+			string tbname = "";
 			if( this.chkDspData.CheckState == CheckState.Checked &&
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
+				tbname = this.tableList.SelectedItem.ToString();
 			}
 			else
 			{
-				DspData("");
+				tbname = "";
 			}
+			DspData(tbname);
+
+			// 履歴に現在の値を記録 TODO
+			MainForm.SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
 		}
 
 		private void rdoDspSysUser_CheckedChanged(object sender, System.EventArgs e)
@@ -3689,6 +3721,8 @@ namespace quickDBExplorer
 			{
 				this.InitErrMessage();
 
+				Sqldlg.DHistory = this.selectHistory;
+
 				if( Sqldlg.ShowDialog() == DialogResult.OK )
 				{
 					SqlDataAdapter da = new SqlDataAdapter(Sqldlg.SelectSql, this.sqlConnection1);
@@ -3935,6 +3969,8 @@ namespace quickDBExplorer
 			try
 			{
 				this.InitErrMessage();
+
+				Sqldlg2.DHistory = this.DMLHistory;
 
 				if( Sqldlg2.ShowDialog() == DialogResult.OK )
 				{
@@ -4524,6 +4560,13 @@ namespace quickDBExplorer
 		private void dlgWhereZoom_Click(object sender, System.EventArgs e)
 		{
 			this.txtWhere.Text = ((ZoomDialog)sender).EditText;
+
+			string targetTable = "";
+			if( this.tableList.SelectedItems.Count == 1 )
+			{
+				targetTable = this.tableList.SelectedItem.ToString();
+			}
+			DspData(targetTable);
 		}
 
 		private void btnOrderZoom_Click(object sender, System.EventArgs e)
@@ -4539,6 +4582,12 @@ namespace quickDBExplorer
 		private void dlgSortZoom_Click(object sender, System.EventArgs e)
 		{
 			this.txtSort.Text = ((ZoomDialog)sender).EditText;
+			string targetTable = "";
+			if( this.tableList.SelectedItems.Count == 1 )
+			{
+				targetTable = this.tableList.SelectedItem.ToString();
+			}
+			DspData(targetTable);
 		}
 
 		private void useCheckBox_CheckedChanged(object sender, System.EventArgs e)
@@ -4871,6 +4920,137 @@ namespace quickDBExplorer
 			this.tableList.SelectedIndex = setidx;
 			isInCmbEvent = false;
 			this.tableList.Focus();
+		}
+
+		static public void SetNewHistory(string key, string hvalue, ref textHistory tdata)
+		{
+			if( hvalue == null || hvalue == "" )
+			{
+				return;
+			}
+
+			DataRow []drl = tdata.textHistoryData.Select( string.Format("KeyValue = '{0}'", key ) );
+
+			for( int i = 0; i < drl.Length; i++ ){
+				if( (string)drl[i]["DataValue"] == hvalue )
+				{
+					// 同じテーブルに対し、既に同じ履歴が登録されているため、何もしない
+					return;
+				}
+			}
+			
+			textHistory.textHistoryDataRow ndr = tdata.textHistoryData.NewtextHistoryDataRow();
+			ndr.KeyValue = key;
+			ndr.DataValue = hvalue;
+			tdata.textHistoryData.Rows.Add(ndr);
+		}
+
+		private void txtWhere_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.W )
+			{
+				// 値の拡大表示を行う
+				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+				dlg.EditText = this.txtWhere.Text;
+				dlg.LableName = "where 指定";
+				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+				dlg.Show();
+				dlg.BringToFront();
+				dlg.Focus();
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.D )
+			{
+				// 全削除を行う
+				((TextBox)sender).Text = "";
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.S )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				HistoryViewer hv = new HistoryViewer(this.whereHistory, targetTable);
+				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.retString)
+				{
+					this.txtWhere.Text = hv.retString;
+					MainForm.SetNewHistory(targetTable,hv.retString,ref this.whereHistory);
+
+					DspData(targetTable);
+				}
+			}
+			if( e.KeyCode == Keys.Return ||
+				e.KeyCode == Keys.Enter )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				MainForm.SetNewHistory(targetTable,this.txtWhere.Text,ref this.whereHistory);
+				DspData(targetTable);
+			}
+		
+		}
+
+		private void txtSort_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.W )
+			{
+				// 値の拡大表示を行う
+				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+				dlg.EditText = this.txtSort.Text;
+				dlg.LableName = "order by 指定";
+				dlg.Enter += new System.EventHandler(this.dlgSortZoom_Click);
+				dlg.Show();
+				dlg.BringToFront();
+				dlg.Focus();
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.D )
+			{
+				// 全削除を行う
+				((TextBox)sender).Text = "";
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.S )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				HistoryViewer hv = new HistoryViewer(this.sortHistory, targetTable);
+				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.retString)
+				{
+					this.txtSort.Text = hv.retString;
+					MainForm.SetNewHistory(targetTable,hv.retString,ref this.sortHistory);
+
+					DspData(targetTable);
+				}
+			}
+			if( e.KeyCode == Keys.Return ||
+				e.KeyCode == Keys.Enter )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				MainForm.SetNewHistory(targetTable,this.txtSort.Text,ref this.sortHistory);
+				DspData(targetTable);
+			}
+		
 		}
 	}
 

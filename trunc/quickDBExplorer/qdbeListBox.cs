@@ -30,9 +30,6 @@ namespace quickDBExplorer
 
 		public qdbeListBox() : base()
 		{
-			// 
-			// TODO: コンストラクタ ロジックをここに追加してください。
-			//
 		}
 
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)

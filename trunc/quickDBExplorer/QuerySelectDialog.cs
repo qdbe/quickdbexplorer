@@ -21,6 +21,10 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem menuItem2;
 		private System.Windows.Forms.MenuItem menuItem3;
 		private System.Windows.Forms.MenuItem menuItem4;
+		private System.Windows.Forms.Button btnHistory;
+
+		protected textHistory  dHistory = new textHistory();
+
 		/// <summary>
 		/// 必要なデザイナ変数です。
 		/// </summary>
@@ -33,9 +37,15 @@ namespace quickDBExplorer
 			//
 			InitializeComponent();
 
-			//
-			// TODO: InitializeComponent 呼び出しの後に、コンストラクタ コードを追加してください。
-			//
+		}
+
+		/// <summary>
+		/// 入力履歴情報
+		/// </summary>
+		public textHistory DHistory
+		{
+			get { return this.dHistory; }
+			set { this.dHistory = value; }
 		}
 
 		/// <summary>
@@ -69,6 +79,7 @@ namespace quickDBExplorer
 			this.menuItem4 = new System.Windows.Forms.MenuItem();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
+			this.btnHistory = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// textBox1
@@ -87,6 +98,7 @@ namespace quickDBExplorer
 			this.textBox1.TabIndex = 0;
 			this.textBox1.Text = "";
 			this.textBox1.WordWrap = false;
+			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
 			// 
 			// contextMenu1
 			// 
@@ -145,12 +157,22 @@ namespace quickDBExplorer
 			this.button2.TabIndex = 2;
 			this.button2.Text = "キャンセル(&X)";
 			// 
+			// btnHistory
+			// 
+			this.btnHistory.Location = new System.Drawing.Point(128, 240);
+			this.btnHistory.Name = "btnHistory";
+			this.btnHistory.Size = new System.Drawing.Size(80, 23);
+			this.btnHistory.TabIndex = 3;
+			this.btnHistory.Text = "履歴引用(&L)";
+			this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
+			// 
 			// QuerySelectDialog
 			// 
 			this.AcceptButton = this.button1;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.CancelButton = this.button2;
 			this.ClientSize = new System.Drawing.Size(480, 273);
+			this.Controls.Add(this.btnHistory);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.textBox1);
@@ -169,6 +191,7 @@ namespace quickDBExplorer
 		{
 			SelectSql = this.textBox1.Text;
 			//this.DialogResult = DialogResult.OK;
+			MainForm.SetNewHistory("",this.textBox1.Text,ref this.dHistory);
 		}
 
 		private void QuerySelectDialog_Load(object sender, System.EventArgs e)
@@ -195,6 +218,41 @@ namespace quickDBExplorer
 		private void menuItem4_Click(object sender, System.EventArgs e)
 		{
 			this.textBox1.SelectAll();
+		}
+
+		private void btnHistory_Click(object sender, System.EventArgs e)
+		{
+			HistoryViewer hv = new HistoryViewer(this.dHistory, "");
+			hv.IsShowTable = false;
+
+			if( DialogResult.OK == hv.ShowDialog() && this.textBox1.Text != hv.retString)
+			{
+				this.textBox1.Text = hv.retString;
+				MainForm.SetNewHistory("",hv.retString,ref this.dHistory);
+			}
+		}
+
+		private void textBox1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.D )
+			{
+				// 全削除を行う
+				((TextBox)sender).Text = "";
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.S )
+			{
+				HistoryViewer hv = new HistoryViewer(this.dHistory, "");
+				hv.IsShowTable = false;
+				if( DialogResult.OK == hv.ShowDialog() && this.textBox1.Text != hv.retString)
+				{
+					this.textBox1.Text = hv.retString;
+					MainForm.SetNewHistory("",hv.retString,ref this.dHistory);
+				}
+			}
 		}
 
 	}
