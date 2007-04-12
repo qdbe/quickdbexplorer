@@ -1731,6 +1731,181 @@ namespace quickDBExplorer
 			return true;
 		}
 
+		private string convdata(SqlDataReader dr, int i, string addstr, string unichar, bool outNull)
+		{
+			//
+			//aaa  bigint  NOT NULL PRIMARY KEY,
+			//bbb  binary(50)  NULL,
+			//ccc  datetime  NULL,
+			//ddd  decimal(18,0)  NULL,
+			//eee  float  NULL,
+			//fff  image  NULL,
+			//ggg  int  NULL,
+			//hhh  money  NULL,
+			//iii  nchar(10)  NULL,
+			//jjj  ntext  NULL,
+			//kkk  numeric(18,0)  NULL,
+			//lll  nvarchar(50)  NULL,
+			//mmm  real  NULL,
+			//nnn  smalldatetime  NULL,
+			//ooo  smallint  NULL,
+			//ppp  smallmoney  NULL,
+			//qqq  sql_variant  NULL,
+			//rrr  text  NULL,
+			//sss  timestamp  NULL,
+			//ttt  tinyint  NULL,
+			//uuu  uniqueidentifier  NULL,
+			//vvv  varbinary(50)  NULL,
+			//www  varchar(50)  NULL
+			string fldtypename = dr.GetDataTypeName(i);
+			if( dr.IsDBNull(i) )
+			{
+				if( outNull ){
+					return "null";
+				}
+				else
+				{
+					return "";
+				}
+			}
+			else if( fldtypename.Equals("bigint") )
+			{
+				return dr.GetInt64(i).ToString();
+			}
+			else if( fldtypename.Equals("image") ||
+					 fldtypename.Equals("varbinary") ||
+					 fldtypename.Equals("binary"))
+			{
+				if( outNull )
+				{	
+					return string.Format("null" );
+				}
+				else
+				{
+					// バイナリはヘキサ文字列で出しておく
+					byte []odata = dr.GetSqlBinary(i).Value;
+					string sodata ="0x";
+					for(int k = 0; k < odata.Length; k++ )
+					{
+						sodata += odata[k].ToString("X2");
+					}
+					return string.Format("{1}{0}{1}", sodata, addstr );
+				}
+			}
+			else if( fldtypename.Equals("datetime") ||
+					 fldtypename.Equals("smalldatetime"))
+			{
+				return string.Format("{1}{0}{1}", dr.GetDateTime(i).ToString(), addstr );
+			}
+			else if( fldtypename.Equals("decimal") 
+					 || fldtypename.Equals("numeric"))
+			{
+				return dr.GetDecimal(i).ToString();
+			}
+			else if( fldtypename.Equals("float")||
+					 fldtypename.Equals("double") )
+			{
+				return dr.GetDouble(i).ToString();
+			}
+			else if( fldtypename.Equals("int") )
+			{
+				return dr.GetInt32(i).ToString();
+			}
+			else if( fldtypename.Equals("smallint") )
+			{
+				return dr.GetInt16(i).ToString();
+			}
+			else if( fldtypename.Equals("tinyint") )
+			{
+				return dr.GetValue(i).ToString();
+			}
+			else if( fldtypename.Equals("money") 
+					 || fldtypename.Equals("smallmoney"))
+			{
+				return dr.GetSqlMoney(i).ToString();
+			}
+			else if( fldtypename.Equals("real"))
+			{
+				return dr.GetValue(i).ToString();
+			}
+			//							else if( fldtypename.Equals("money") )
+			//							{
+			//								wr.Write( dr.GetDouble(i).ToString() );
+			//							}
+			else if( fldtypename == "varchar" ||
+					 fldtypename == "char" ||
+					 fldtypename == "text" )
+			{
+				// 文字列
+				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
+				{
+					return string.Format( "{0}{0}", addstr );
+				}
+				else
+				{
+					if( dr.GetString(i).IndexOf("'") >= 0 )
+					{
+						// ' が文字列に入っている場合は '' に強制的に変換する
+						return string.Format( "{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""),addstr);
+					}
+					else
+					{
+						return string.Format( "{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr );
+					}
+				}
+			}
+			else if( fldtypename == "nvarchar" ||
+					 fldtypename == "nchar" ||
+					 fldtypename == "ntext")
+			{
+				// 文字列
+				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
+				{
+					return string.Format( "{1}{0}", addstr, unichar );
+				}
+				else
+				{
+					if( dr.GetString(i).IndexOf("'") >= 0 )
+					{
+						// ' が文字列に入っている場合は '' に強制的に変換する
+						return string.Format( "{2}{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""), addstr, unichar);
+					}
+					else
+					{
+						return string.Format( "{2}{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr, unichar );
+					}
+				}
+			}
+			else if( fldtypename == "uniqueidentifier" )
+			{
+				return string.Format("{1}{0}{1}", dr.GetSqlGuid(i).ToString(), addstr );
+			}
+			else if( fldtypename == "timestamp" )
+			{
+				// timestamp は自動更新されるのでnullでよい
+				if( outNull )
+				{	
+					return string.Format("null" );
+				}
+				else
+				{
+					// バイナリはヘキサ文字列で出しておく
+					byte []odata = dr.GetSqlBinary(i).Value;
+					string sodata ="0x";
+					for(int k = 0; k < odata.Length; k++ )
+					{
+						sodata += odata[k].ToString("X2");
+					}
+					return string.Format("{1}{0}{1}", sodata, addstr );
+				}
+			}
+			else
+			{
+				// sql_variant は型の決めようがないので文字列扱いにしておく
+				return string.Format("{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
+			}
+		}
+
 		private void CreInsert(bool fieldlst, bool deletefrom, bool isTaihi)
 		{
 			try
@@ -1891,103 +2066,13 @@ namespace quickDBExplorer
 							//wr.Write("insert into [{0}] values ( ", tbname );
 						}
 
-						string fldtypename;
-
 						for( int i = 0 ; i < maxcol; i++ )
 						{
 							if( i != 0 )
 							{
 								wr.Write( ", " );
 							}
-							fldtypename = dr.GetDataTypeName(i);
-							if( dr.IsDBNull(i) )
-							{
-								wr.Write( "null" );
-							}
-							else if( fldtypename.Equals("int") )
-							{
-								wr.Write( dr.GetInt32(i).ToString() );
-							}
-							else if( fldtypename.Equals("bigint") )
-							{
-								wr.Write( dr.GetInt64(i).ToString() );
-							}
-							else if( fldtypename.Equals("image") ||
-								fldtypename.Equals("varbinary") ||
-								fldtypename.Equals("binary"))
-							{
-								wr.Write("'{0}'", dr.GetSqlBinary(i).ToString() );
-							}
-							else if( fldtypename.Equals("decimal") 
-								|| fldtypename.Equals("numeric"))
-							{
-								wr.Write( dr.GetDecimal(i).ToString() );
-							}
-							else if( fldtypename.Equals("float")||
-								fldtypename.Equals("double") )
-							{
-								wr.Write( dr.GetDouble(i).ToString() );
-							}
-							else if( fldtypename.Equals("real"))
-							{
-								wr.Write( dr.GetValue(i).ToString() );
-							}
-							else if( fldtypename.Equals("datetime") ||
-								fldtypename.Equals("smalldatetime"))
-							{
-								wr.Write( dr.GetDateTime(i).ToString() );
-							}
-								//							else if( fldtypename.Equals("money") )
-								//							{
-								//								wr.Write( dr.GetDouble(i).ToString() );
-								//							}
-							else if( fldtypename == "varchar" ||
-								fldtypename == "char" )
-							{
-								// 文字列
-								if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
-								{
-									wr.Write( "''" );
-								}
-								else
-								{
-									if( dr.GetString(i).IndexOf("'") >= 0 )
-									{
-										// ' が文字列に入っている場合は '' に強制的に変換する
-										wr.Write( "'{0}'", dr.GetString(i).Replace("'","''").Replace("\0",""));
-									}
-									else
-									{
-										wr.Write( "'{0}'", dr.GetString(i).Replace("\0","") );
-									}
-								}
-							}
-							else if( fldtypename == "nvarchar" ||
-								fldtypename == "nchar" ||
-								fldtypename == "ntext")
-							{
-								// 文字列
-								if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
-								{
-									wr.Write( "N''" );
-								}
-								else
-								{
-									if( dr.GetString(i).IndexOf("'") >= 0 )
-									{
-										// ' が文字列に入っている場合は '' に強制的に変換する
-										wr.Write( "N'{0}'", dr.GetString(i).Replace("'","''").Replace("\0",""));
-									}
-									else
-									{
-										wr.Write( "N'{0}'", dr.GetString(i).Replace("\0","") );
-									}
-								}
-							}
-							else
-							{
-								wr.Write( dr.GetValue(i).ToString().Replace("\0","") );
-							}
+							wr.Write(convdata(dr, i, "'","N",true));
 						}
 						wr.Write( " ) {0}",wr.NewLine );
 					}
@@ -2459,7 +2544,6 @@ namespace quickDBExplorer
 						wr.Write( fldname[i] );
 					}
 					wr.Write( wr.NewLine );
-					string fldtypename;
 
 					// データの書き出し
 					while (dr.Read())
@@ -2472,81 +2556,13 @@ namespace quickDBExplorer
 							{
 								wr.Write( separater );
 							}
-							fldtypename = dr.GetDataTypeName(i);
-							if( dr.IsDBNull(i) )
+							if ( isdquote == false )
 							{
-								wr.Write( "" );
-							}
-							else if( fldtypename.Equals("int") )
-							{
-								wr.Write( dr.GetInt32(i).ToString() );
-							}
-							else if( fldtypename.Equals("bigint") )
-							{
-								wr.Write( dr.GetInt64(i).ToString() );
-							}
-							else if( fldtypename.Equals("image") ||
-								fldtypename.Equals("varbinary") ||
-								fldtypename.Equals("binary"))
-							{
-								wr.Write("\"{0}\"", dr.GetSqlBinary(i).ToString() );
-							}
-							else if( fldtypename.Equals("decimal") 
-								|| fldtypename.Equals("numeric"))
-							{
-								wr.Write( dr.GetDecimal(i).ToString() );
-							}
-							else if( fldtypename.Equals("float")||
-								fldtypename.Equals("double") )
-							{
-								wr.Write( dr.GetDouble(i).ToString() );
-							}
-							else if( fldtypename.Equals("real"))
-							{
-								wr.Write( dr.GetValue(i).ToString() );
-							}
-							else if( fldtypename.Equals("datetime") ||
-								fldtypename.Equals("smalldatetime"))
-							{
-								wr.Write( dr.GetDateTime(i).ToString() );
-							}
-								//							else if( fldtypename.Equals("money") )
-								//							{
-								//								wr.Write( dr.GetDouble(i).ToString() );
-								//							}
-							else if( fldtypename == "nvarchar" ||
-								fldtypename == "nchar" ||
-								fldtypename == "ntext" ||
-								fldtypename == "varchar" ||
-								fldtypename == "char" )
-							{
-								// 文字列
-								if( dr.GetString(i).Equals("\0") )
-								{
-									if( isdquote )
-									{
-										wr.Write( "\"\"" );
-									}
-									else
-									{
-										wr.Write( "" );
-									}
-								}
-								else if( !dr.GetString(i).Equals("") )
-								{
-									if( isdquote )
-									{
-										wr.Write( "\"{0}\"", dr.GetString(i).Replace("\0","") );
-									}
-									else
-									{
-										wr.Write( dr.GetString(i).Replace("\0","") );
-									}
-								}
+								wr.Write(convdata(dr, i, "","",false));
 							}
 							else
 							{
-								wr.Write( dr.GetValue(i).ToString().Replace("\0","") );
+								wr.Write(convdata(dr, i, "\"","",false));
 							}
 						}
 						wr.Write( wr.NewLine );
@@ -3219,6 +3235,10 @@ namespace quickDBExplorer
 							cs.Format = getFormat(this.DateFormat);
 						}
 					}
+					if( col.DataType.FullName == "System.Byte[]" )
+					{
+						cs.ReadOnly = true;
+					}
 					//マップ名を指定する
 					cs.MappingName = col.ColumnName;
 					if( col.AllowDBNull == true )
@@ -3768,6 +3788,11 @@ namespace quickDBExplorer
 								cs.Format = getFormat(this.DateFormat);
 							}
 						}
+						if( col.DataType.FullName == "System.Byte[]" )
+						{
+							cs.ReadOnly = true;
+						}
+
 						//マップ名を指定する
 						cs.MappingName = col.ColumnName;
 						if( col.AllowDBNull == true )
@@ -3815,6 +3840,8 @@ namespace quickDBExplorer
 			try
 			{
 				this.InitErrMessage();
+
+				this.dbGrid.EndEdit(this.dbGrid.TableStyles[0].GridColumnStyles[this.dbGrid.CurrentCell.ColumnNumber],this.dbGrid.CurrentCell.RowNumber,false);
 
 				if( this.chkDspData.CheckState == CheckState.Checked &&
 					this.tableList.SelectedItems.Count == 1 &&
