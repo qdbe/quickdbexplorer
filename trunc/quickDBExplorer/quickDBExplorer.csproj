@@ -257,6 +257,16 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "TableSelectDialog.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "TableSelectDialog.resx"
+                    DependentUpon = "TableSelectDialog.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "textHistory.xsd"
                     BuildAction = "Content"
                     Generator = "MSDataSetGenerator"
