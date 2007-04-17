@@ -165,7 +165,7 @@ namespace quickDBExplorer
 		/// </summary>
 		protected bool isInCmbEvent = false;
 
-		private int SqlTimeOut = 300;
+		public int SqlTimeOut = 300;
 
 		/// <summary>
 		/// where 句の入力履歴情報
@@ -216,6 +216,11 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ContextMenu contextMenu1;
 		protected System.Windows.Forms.ComboBox cmbHistory;
 		private System.Windows.Forms.MenuItem menuTableSelect;
+		private System.Windows.Forms.MenuItem menuCSVRead;
+		private System.Windows.Forms.MenuItem menuCSVReadDQ;
+		private System.Windows.Forms.MenuItem menuTabRead;
+		private System.Windows.Forms.MenuItem menuTabReadDQ;
+		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		
 		/// <summary>
 		/// メニュー情報
@@ -273,6 +278,7 @@ namespace quickDBExplorer
 			this.mainContextMenu = new System.Windows.Forms.ContextMenu();
 			this.menuTableCopy = new System.Windows.Forms.MenuItem();
 			this.menuTableCopyCsv = new System.Windows.Forms.MenuItem();
+			this.menuTableSelect = new System.Windows.Forms.MenuItem();
 			this.menuInsert = new System.Windows.Forms.MenuItem();
 			this.menuInsertDelete = new System.Windows.Forms.MenuItem();
 			this.menuInsertNoFld = new System.Windows.Forms.MenuItem();
@@ -375,7 +381,11 @@ namespace quickDBExplorer
 			this.label10 = new System.Windows.Forms.Label();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.cmbHistory = new System.Windows.Forms.ComboBox();
-			this.menuTableSelect = new System.Windows.Forms.MenuItem();
+			this.menuCSVRead = new System.Windows.Forms.MenuItem();
+			this.menuCSVReadDQ = new System.Windows.Forms.MenuItem();
+			this.menuTabRead = new System.Windows.Forms.MenuItem();
+			this.menuTabReadDQ = new System.Windows.Forms.MenuItem();
+			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -445,6 +455,10 @@ namespace quickDBExplorer
 																							this.menuMakeCSVDQ,
 																							this.menuMakeTab,
 																							this.menuMakeTabDQ,
+																							this.menuCSVRead,
+																							this.menuCSVReadDQ,
+																							this.menuTabRead,
+																							this.menuTabReadDQ,
 																							this.menuSeparater4,
 																							this.menuDepend});
 			this.mainContextMenu.Popup += new System.EventHandler(this.mainContextMenu_Popup);
@@ -460,6 +474,12 @@ namespace quickDBExplorer
 			this.menuTableCopyCsv.Index = 1;
 			this.menuTableCopyCsv.Text = "テーブル名コピー カンマ付き";
 			this.menuTableCopyCsv.Click += new System.EventHandler(this.menuTableCopyCsv_Click);
+			// 
+			// menuTableSelect
+			// 
+			this.menuTableSelect.Index = 2;
+			this.menuTableSelect.Text = "指定テーブル選択";
+			this.menuTableSelect.Click += new System.EventHandler(this.menuTableSelect_Click);
 			// 
 			// menuInsert
 			// 
@@ -586,12 +606,12 @@ namespace quickDBExplorer
 			// 
 			// menuSeparater4
 			// 
-			this.menuSeparater4.Index = 24;
+			this.menuSeparater4.Index = 28;
 			this.menuSeparater4.Text = "-";
 			// 
 			// menuDepend
 			// 
-			this.menuDepend.Index = 25;
+			this.menuDepend.Index = 29;
 			this.menuDepend.Text = "依存関係出力";
 			this.menuDepend.Click += new System.EventHandler(this.DependOutPut);
 			// 
@@ -625,7 +645,7 @@ namespace quickDBExplorer
 			this.btnCSV.Name = "btnCSV";
 			this.btnCSV.Size = new System.Drawing.Size(136, 24);
 			this.btnCSV.TabIndex = 25;
-			this.btnCSV.Text = "CSV作成(&K)";
+			this.btnCSV.Text = "ファイル作成・読込(&K)";
 			this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
 			// 
 			// rdoDspView
@@ -774,6 +794,7 @@ namespace quickDBExplorer
 			this.dbGrid.Name = "dbGrid";
 			this.dbGrid.ParentRowsBackColor = System.Drawing.Color.Silver;
 			this.dbGrid.ParentRowsForeColor = System.Drawing.Color.Black;
+			this.dbGrid.RowHeaderWidth = 40;
 			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
 			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
 			this.dbGrid.Size = new System.Drawing.Size(672, 236);
@@ -931,6 +952,7 @@ namespace quickDBExplorer
 			this.label4.Size = new System.Drawing.Size(48, 32);
 			this.label4.TabIndex = 0;
 			this.label4.Text = "DB(&B)";
+			this.label4.DoubleClick += new System.EventHandler(this.label4_DoubleClick);
 			// 
 			// label5
 			// 
@@ -1252,11 +1274,29 @@ namespace quickDBExplorer
 			this.cmbHistory.TabIndex = 19;
 			this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectionChangeCommitted);
 			// 
-			// menuTableSelect
+			// menuCSVRead
 			// 
-			this.menuTableSelect.Index = 2;
-			this.menuTableSelect.Text = "指定テーブル選択";
-			this.menuTableSelect.Click += new System.EventHandler(this.menuTableSelect_Click);
+			this.menuCSVRead.Index = 24;
+			this.menuCSVRead.Text = "CSV読込";
+			this.menuCSVRead.Click += new System.EventHandler(this.menuCSVRead_Click);
+			// 
+			// menuCSVReadDQ
+			// 
+			this.menuCSVReadDQ.Index = 25;
+			this.menuCSVReadDQ.Text = "CSV読込(\"付き)";
+			this.menuCSVReadDQ.Click += new System.EventHandler(this.menuCSVReadDQ_Click);
+			// 
+			// menuTabRead
+			// 
+			this.menuTabRead.Index = 26;
+			this.menuTabRead.Text = "Tab区切読込";
+			this.menuTabRead.Click += new System.EventHandler(this.menuTabRead_Click);
+			// 
+			// menuTabReadDQ
+			// 
+			this.menuTabReadDQ.Index = 27;
+			this.menuTabReadDQ.Text = "Tab区切読込（”付き)";
+			this.menuTabReadDQ.Click += new System.EventHandler(this.menuTabReadDQ_Click);
 			// 
 			// MainForm
 			// 
@@ -1626,11 +1666,15 @@ namespace quickDBExplorer
 		private void btnCSV_Click(object sender, System.EventArgs e)
 		{
 			MenuItem[] list = new MenuItem[] {
-												 this.menuMakeCSV,
-												 this.menuMakeCSVDQ,
-												 this.menuMakeTab,
-												 this.menuMakeTabDQ
-											 };
+				this.menuMakeCSV,
+				this.menuMakeCSVDQ,
+				this.menuMakeTab,
+				this.menuMakeTabDQ,
+				this.menuCSVRead,
+				this.menuCSVReadDQ,
+				this.menuTabRead,
+				this.menuTabReadDQ
+			};
 			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
 			MenuItem[] cplist = new MenuItem[list.Length];
 			for( int i = 0; i<list.Length; i++ )
@@ -3960,16 +4004,25 @@ namespace quickDBExplorer
 				return;
 			}
 
-			int row = 0;
+			int row=0;
 			int yDelta = dbGrid.GetCellBounds(row, 0).Height + 1;
 			int y = dbGrid.GetCellBounds(row, 0).Top + 2;
+			if( y < yDelta )
+			{
+				// 複数行がスクロールで隠れているはずなので、その行数分をスキップする
+				while( y < yDelta )
+				{
+					y += yDelta;
+					row ++;
+				}
+			}
      
 			CurrencyManager cm = (CurrencyManager) this.BindingContext[dbGrid.DataSource, dbGrid.DataMember];
-			while(y < dbGrid.Height - yDelta && row < cm.Count)
+			while((y <= dbGrid.Height) && (row < cm.Count))
 			{
 				//get & draw the header text...
 				string text = string.Format("{0}", row+1);
-				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 5, y);
+				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 10, y);
 				y += yDelta;
 				row++;
 			}
@@ -4858,6 +4911,18 @@ namespace quickDBExplorer
 			{
 				ThreadEndIfAlive();
 			}
+			if( e.Control == true && e.Shift == true && e.Alt == true && e.KeyCode == Keys.T )
+			{
+				if( this.SqlTimeOut == 0 )
+				{
+					this.SqlTimeOut = 300;
+				}
+				else
+				{
+					this.SqlTimeOut = 0;
+				}
+				MessageBox.Show("SQL Timeout値を " + this.SqlTimeOut.ToString() + "秒に設定しました" );
+			}
 		}
 
 		protected bool IsProcCancel()
@@ -5086,6 +5151,11 @@ namespace quickDBExplorer
 		
 		}
 
+		/// <summary>
+		/// 指定されたテーブルのリストを元に、テーブルの一覧の選択状態を変更する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void menuTableSelect_Click(object sender, System.EventArgs e)
 		{
 			TableSelectDialog dlg = new TableSelectDialog();
@@ -5093,6 +5163,7 @@ namespace quickDBExplorer
 			{
 				string tabs = dlg.ResultStr;
 				string []tablelists = tabs.Split("\r\n".ToCharArray());
+				this.tableList.BeginUpdate();
 				this.tableList.ClearSelected();
 				for( int i = 0; i < tablelists.Length; i++ )
 				{
@@ -5102,8 +5173,375 @@ namespace quickDBExplorer
 						this.tableList.SetSelected(x,true);
 					}
 				}
-
+				this.tableList.EndUpdate();
 			}
+		}
+
+		private void menuCSVRead_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Data(true,false);
+		}
+
+		private void menuCSVReadDQ_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Data(true,true);
+		}
+
+		private void menuTabRead_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Data(false,false);
+		}
+
+		private void menuTabReadDQ_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Data(false,false);
+		}
+
+		protected void  LoadFile2Data( bool isCsv, bool isUseDQ )
+		{
+			if( this.tableList.SelectedItems.Count != 1 )
+			{
+				MessageBox.Show("対象テーブルは単独で指定してください");
+			}
+
+			try
+			{
+				this.InitErrMessage();
+				// insert 文の作成
+				if( ( this.txtWhere.Text != null &&
+					this.txtWhere.Text.Trim() != "" ) ||
+					( this.txtSort.Text != null &&
+					this.txtSort.Text.Trim() != "" ) )
+				{
+					if( MessageBox.Show("データ取込の場合、where, order by は無視されます","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+						== System.Windows.Forms.DialogResult.No )
+					{
+						return;
+					}
+				}
+			
+
+				this.openFileDialog1.CheckFileExists = true;
+				this.openFileDialog1.CheckPathExists = true;
+				this.openFileDialog1.Filter = "CSV|*.csv|TXT|*.txt|全て|*.*";
+				this.openFileDialog1.Multiselect = false;
+				this.openFileDialog1.RestoreDirectory = false;
+				if( this.openFileDialog1.ShowDialog(this) != DialogResult.OK )
+				{
+					return;
+				}
+				Stream fsw = this.openFileDialog1.OpenFile();
+			
+				int			rowcount = 0;
+				int			trow	= 0;
+				TextReader	wr = new StreamReader(fsw,true);
+
+				System.Data.SqlClient.SqlDataAdapter da = new SqlDataAdapter();
+				SqlCommand	cm = new SqlCommand();
+				cm.CommandTimeout = this.SqlTimeOut;
+
+				String tbname = this.tableList.SelectedItem.ToString();
+			
+
+				// get id 
+				string sqlstr;
+				sqlstr = string.Format("select  * from {0} where 0=1",gettbname(tbname));
+				cm.CommandText = sqlstr;
+				cm.Connection = this.sqlConnection1;
+
+				da.SelectCommand = cm;
+				DataTable dt = new DataTable();
+				dt.CaseSensitive = true;
+				da.FillSchema(dt,SchemaType.Mapped);
+
+				if( dt.Columns.Count == 0 )
+				{
+					return ;
+				}
+
+				// ファイルのチェックを実施する
+
+				string readstr = "";
+				string Separator = "";
+				if( isCsv == true )
+				{
+					Separator = ",";
+				}
+				else
+				{
+					Separator = "\t";
+				}
+				ArrayList ar = new ArrayList();
+				for(int linecount = 1;;linecount++)
+				{
+					readstr = wr.ReadLine();
+					if( readstr == null )
+					{
+						break;
+					}
+					string []firstsplit = readstr.Split(Separator.ToCharArray());
+					ar.Clear();
+					if( !isUseDQ )
+					{
+						ar.AddRange(firstsplit);
+					}
+					else
+					{
+						// ダブルクォートが指定されている為、文字の途中で切れている可能性がある
+						string addstr = "";
+						for( int j = 0; j < firstsplit.Length; j++ )
+						{
+							if( firstsplit[j].StartsWith("\"") == true &&
+								firstsplit[j].EndsWith("\"") == true 
+								)
+							{
+								// 前後の " を排除した値を配置
+								ar.Add(firstsplit[j].Substring(1,firstsplit[j].Length-2));
+							}
+							else if( firstsplit[j].StartsWith("\"") == true )
+							{
+								// 最初の文字がダブルクォートで始まっているので、順次ダブルクォートが出てくるまでを検索する
+								int k = j;
+								for( ; k < firstsplit.Length; k ++ )
+								{
+									if( firstsplit[k].EndsWith("\"") == true )
+									{
+										addstr += firstsplit[k].Substring(0,firstsplit[k].Length-1);
+										break;
+									}
+									else
+									{
+										if( j == k )
+										{
+											addstr += firstsplit[k].Substring(1);
+										}
+										else
+										{
+											addstr += firstsplit[k];
+										}
+									}
+								}
+								ar.Add(addstr);
+								j = k;
+							}
+							else
+							{
+								ar.Add(firstsplit[j]);
+							}
+						}
+					}
+
+					// 一行のデータが ar に配置されたので、dt と比較する
+
+					if( ar.Count != dt.Columns.Count )
+					{
+						MessageBox.Show("項目数が違います 行:" + linecount.ToString() );
+					}
+					foreach(DataColumn col in dt.Columns )
+					{
+						if( col.AllowDBNull == false && 
+							(string)ar[col.Ordinal] == string.Empty )
+						{
+							MessageBox.Show("項目 " + col.ColumnName + "には値の指定が必要です。行:" + linecount.ToString());
+							break;
+						}
+						if( col.AutoIncrement == true && (string)ar[col.Ordinal] != string.Empty)
+						{
+							MessageBox.Show("項目 " + col.ColumnName + "は自動採番されるので値は指定できません。行:" + linecount.ToString());
+							break;
+						}
+						if( col.DataType == typeof(System.String) )
+						{
+							if( col.MaxLength < ar[col.Ordinal].ToString().Length )
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には " + col.MaxLength + "桁以上の値は指定できません。行:" + linecount.ToString());
+								break;
+							}
+						}
+						if( col.DataType == typeof(System.Int32) )
+						{
+							try
+							{
+								int i = int.Parse(ar[col.Ordinal].ToString());
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								break;
+							}
+						}
+
+						{"System.Int32"}
+{"System.String"}
+{"System.Int64"}
+{"System.Byte[]"}
+{"System.Boolean"}
+{"System.DateTime"}
+{"System.Decimal"}
+{"System.Double"}
+{"System.Byte[]"}
+{"System.Single"}
+{"System.Int16"}
+{"System.Object"}
+{"System.Byte"}	
+{"System.Guid"}
+
+					}
+
+				}
+
+				
+
+				/*
+				dr = cm.f.ExecuteReader();
+
+					ArrayList fldname = new ArrayList();
+					ArrayList strint = new ArrayList();
+					int			maxcol;
+	
+					fldname.Clear();
+					strint.Clear();
+
+					maxcol = dr.FieldCount;
+					for( int j=0 ; j < maxcol; j++ )
+					{
+						fldname.Add( dr.GetName(j) );
+						strint.Add( dr.GetFieldType(j) );
+					}
+					//ds.Tables[tbname].Columns.Count;
+
+					if( isTaihi == true )
+					{
+						string taihistr = 
+							String.Format("select * into {1} from {0} ",
+							gettbname(tbname),
+							gettbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd")) 
+							);
+						wr.Write(taihistr);
+						wr.Write("{0}GO{0}",wr.NewLine );
+
+					}
+
+					if( deletefrom == true && dr.HasRows == true)
+					{
+						wr.Write("delete from  ");
+						string delimStr = ".";
+						string []tbstr = tbname.Split(delimStr.ToCharArray(), 2);
+						wr.Write(string.Format("[{0}].[{1}]",tbstr[0],tbstr[1]));
+						if( this.txtWhere.Text.Trim() != "" )
+						{
+							wr.Write( " where {0}", this.txtWhere.Text.Trim() );
+
+						}
+						wr.Write("{0}GO{0}",wr.NewLine );
+					}
+
+
+					trow	= 0;
+					while(dr.Read())
+					{
+						if( trow != 0 && ( trow % 1000 == 0 ) )
+						{
+							wr.Write("GO{0}",wr.NewLine);
+						}
+						trow++;
+						rowcount ++;
+						if( fieldlst == true )
+						{
+							wr.Write("insert into {0} ( ", gettbname(tbname) );
+							for( int i = 0 ; i < maxcol; i++ )
+							{
+								if( i != 0 )
+								{
+									wr.Write(",");
+								}
+								wr.Write( fldname[i] );
+							}
+							wr.Write(" ) values ( " );
+						}
+						else
+						{
+							wr.Write("insert into {0} values ( ", gettbname(tbname) );
+							//wr.Write("insert into [{0}] values ( ", tbname );
+						}
+
+						for( int i = 0 ; i < maxcol; i++ )
+						{
+							if( i != 0 )
+							{
+								wr.Write( ", " );
+							}
+							wr.Write(convdata(dr, i, "'","N",true));
+						}
+						wr.Write( " ) {0}",wr.NewLine );
+					}
+					if( trow > 0 )
+					{
+						wr.Write("GO{0}{0}",wr.NewLine );
+					}
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						wr.Close();
+						File.Delete(this.txtOutput.Text + "\\" + tbname + ".sql");
+						if( trow > 0 )
+						{
+							fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
+							// ファイルをリネームする
+							File.Move(this.txtOutput.Text + "\\" + tbname + ".sql.tmp", 
+								this.txtOutput.Text + "\\" + tbname + ".sql");
+						}
+					}
+					if( dr != null && dr.IsClosed == false )
+					{
+						dr.Close();
+					}
+				}
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+
+
+				// set datas to clipboard
+				if( rowcount == 0 )
+				{
+					MessageBox.Show("対象データがありませんでした");
+				}
+				else
+				{
+					if( this.rdoOutFolder.Checked == false ) 
+					{
+						wr.Close();
+					}
+					if( this.rdoClipboard.Checked == true ) 
+					{
+						Clipboard.SetDataObject(strline.ToString(),true );
+					}
+					else
+					{
+						Clipboard.SetDataObject(fname.ToString(),true );
+					}
+					MessageBox.Show("処理を完了しました");
+				}
+				*/
+			}
+			catch( Exception exp )
+			{
+				this.SetErrorMessage(exp);
+			}
+		}
+
+		private void label4_DoubleClick(object sender, System.EventArgs e)
+		{
+			if( this.SqlTimeOut == 0 )
+			{
+				this.SqlTimeOut = 300;
+			}
+			else
+			{
+				this.SqlTimeOut = 0;
+			}
+			MessageBox.Show("SQL Timeout値を " + this.SqlTimeOut.ToString() + "秒に設定しました" );
 		}
 	}
 
