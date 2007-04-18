@@ -5204,6 +5204,10 @@ namespace quickDBExplorer
 				MessageBox.Show("対象テーブルは単独で指定してください");
 			}
 
+			SqlCommand	cm = new SqlCommand();
+			SqlTransaction tran	= null;
+			TextReader	wr = null;
+
 			try
 			{
 				this.InitErrMessage();
@@ -5220,24 +5224,30 @@ namespace quickDBExplorer
 					}
 				}
 			
-
-				this.openFileDialog1.CheckFileExists = true;
-				this.openFileDialog1.CheckPathExists = true;
-				this.openFileDialog1.Filter = "CSV|*.csv|TXT|*.txt|全て|*.*";
-				this.openFileDialog1.Multiselect = false;
-				this.openFileDialog1.RestoreDirectory = false;
-				if( this.openFileDialog1.ShowDialog(this) != DialogResult.OK )
+				if( MessageBox.Show("クリップボードから読み込みますか?","確認",System.Windows.Forms.MessageBoxButtons.YesNo) ==
+					DialogResult.Yes)
 				{
-					return;
+					String str = Clipboard.GetDataObject().GetData(typeof(System.String)).ToString();
+					wr = new StringReader(str);
 				}
-				Stream fsw = this.openFileDialog1.OpenFile();
+				else
+				{
+					this.openFileDialog1.CheckFileExists = true;
+					this.openFileDialog1.CheckPathExists = true;
+					this.openFileDialog1.Filter = "CSV|*.csv|TXT|*.txt|全て|*.*";
+					this.openFileDialog1.Multiselect = false;
+					this.openFileDialog1.RestoreDirectory = false;
+					if( this.openFileDialog1.ShowDialog(this) != DialogResult.OK )
+					{
+						return;
+					}
+					Stream fsw = this.openFileDialog1.OpenFile();
 			
-				int			rowcount = 0;
-				int			trow	= 0;
-				TextReader	wr = new StreamReader(fsw,true);
+					wr = new StreamReader(fsw,true);
+				}
+
 
 				System.Data.SqlClient.SqlDataAdapter da = new SqlDataAdapter();
-				SqlCommand	cm = new SqlCommand();
 				cm.CommandTimeout = this.SqlTimeOut;
 
 				String tbname = this.tableList.SelectedItem.ToString();
@@ -5245,7 +5255,7 @@ namespace quickDBExplorer
 
 				// get id 
 				string sqlstr;
-				sqlstr = string.Format("select  * from {0} where 0=1",gettbname(tbname));
+				sqlstr = string.Format("select  * from {0} ",gettbname(tbname));
 				cm.CommandText = sqlstr;
 				cm.Connection = this.sqlConnection1;
 
@@ -5272,13 +5282,17 @@ namespace quickDBExplorer
 					Separator = "\t";
 				}
 				ArrayList ar = new ArrayList();
-				for(int linecount = 1;;linecount++)
+				bool isSetAll = true;
+
+				int linecount = 0;
+				for(;;)
 				{
 					readstr = wr.ReadLine();
 					if( readstr == null )
 					{
 						break;
 					}
+					linecount++;
 					string []firstsplit = readstr.Split(Separator.ToCharArray());
 					ar.Clear();
 					if( !isUseDQ )
@@ -5336,198 +5350,248 @@ namespace quickDBExplorer
 					if( ar.Count != dt.Columns.Count )
 					{
 						MessageBox.Show("項目数が違います 行:" + linecount.ToString() );
+						isSetAll = false;
+						break;
 					}
+
+					foreach(DataColumn ccol in dt.Columns )
+					{
+						if( ccol.DataType == typeof(System.Byte[]) )
+						{
+							MessageBox.Show( "バイナリデータがあるテーブルは指定できません:列" +  ccol.ColumnName );
+							isSetAll = false;
+							break;
+						}
+					}
+					if( isSetAll == false )
+					{
+						break;
+					}
+
+					DataRow dr = dt.NewRow();
 					foreach(DataColumn col in dt.Columns )
 					{
 						if( col.AllowDBNull == false && 
 							(string)ar[col.Ordinal] == string.Empty )
 						{
 							MessageBox.Show("項目 " + col.ColumnName + "には値の指定が必要です。行:" + linecount.ToString());
+							isSetAll = false;
 							break;
 						}
 						if( col.AutoIncrement == true && (string)ar[col.Ordinal] != string.Empty)
 						{
 							MessageBox.Show("項目 " + col.ColumnName + "は自動採番されるので値は指定できません。行:" + linecount.ToString());
+							isSetAll = false;
 							break;
 						}
+						// {"System.Int16"}
+						if( col.DataType == typeof(System.Int32) )
+						{
+							try
+							{
+								dr[col.ColumnName] = Int16.Parse(ar[col.Ordinal].ToString());
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には Int16 の整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
+							}
+						}
+						// {"System.Int32"}
+						if( col.DataType == typeof(System.Int32) )
+						{
+							try
+							{
+								dr[col.ColumnName] = Int32.Parse(ar[col.Ordinal].ToString());
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には Int32の整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
+							}
+						}
+						// {"System.Int64"}
+						if( col.DataType == typeof(System.Int64) )
+						{
+							try
+							{
+								dr[col.ColumnName] = Int64.Parse(ar[col.Ordinal].ToString());
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には Int64の整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
+							}
+						}
+						// {"System.String"}
 						if( col.DataType == typeof(System.String) )
 						{
 							if( col.MaxLength < ar[col.Ordinal].ToString().Length )
 							{
 								MessageBox.Show("項目 " + col.ColumnName + "には " + col.MaxLength + "桁以上の値は指定できません。行:" + linecount.ToString());
+								isSetAll = false;
 								break;
 							}
+							dr[col.ColumnName] = ar[col.Ordinal];
 						}
-						if( col.DataType == typeof(System.Int32) )
+						// {"System.Boolean"}
+						if( col.DataType == typeof(System.Boolean) )
 						{
 							try
 							{
-								int i = int.Parse(ar[col.Ordinal].ToString());
+								dr[col.ColumnName] = Boolean.Parse(ar[col.Ordinal].ToString());
 							}
 							catch
 							{
 								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
 								break;
 							}
 						}
-
-						{"System.Int32"}
-{"System.String"}
-{"System.Int64"}
-{"System.Byte[]"}
-{"System.Boolean"}
-{"System.DateTime"}
-{"System.Decimal"}
-{"System.Double"}
-{"System.Byte[]"}
-{"System.Single"}
-{"System.Int16"}
-{"System.Object"}
-{"System.Byte"}	
-{"System.Guid"}
-
-					}
-
-				}
-
-				
-
-				/*
-				dr = cm.f.ExecuteReader();
-
-					ArrayList fldname = new ArrayList();
-					ArrayList strint = new ArrayList();
-					int			maxcol;
-	
-					fldname.Clear();
-					strint.Clear();
-
-					maxcol = dr.FieldCount;
-					for( int j=0 ; j < maxcol; j++ )
-					{
-						fldname.Add( dr.GetName(j) );
-						strint.Add( dr.GetFieldType(j) );
-					}
-					//ds.Tables[tbname].Columns.Count;
-
-					if( isTaihi == true )
-					{
-						string taihistr = 
-							String.Format("select * into {1} from {0} ",
-							gettbname(tbname),
-							gettbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd")) 
-							);
-						wr.Write(taihistr);
-						wr.Write("{0}GO{0}",wr.NewLine );
-
-					}
-
-					if( deletefrom == true && dr.HasRows == true)
-					{
-						wr.Write("delete from  ");
-						string delimStr = ".";
-						string []tbstr = tbname.Split(delimStr.ToCharArray(), 2);
-						wr.Write(string.Format("[{0}].[{1}]",tbstr[0],tbstr[1]));
-						if( this.txtWhere.Text.Trim() != "" )
+						// {"System.DateTime"}
+						if( col.DataType == typeof(System.DateTime) )
 						{
-							wr.Write( " where {0}", this.txtWhere.Text.Trim() );
-
-						}
-						wr.Write("{0}GO{0}",wr.NewLine );
-					}
-
-
-					trow	= 0;
-					while(dr.Read())
-					{
-						if( trow != 0 && ( trow % 1000 == 0 ) )
-						{
-							wr.Write("GO{0}",wr.NewLine);
-						}
-						trow++;
-						rowcount ++;
-						if( fieldlst == true )
-						{
-							wr.Write("insert into {0} ( ", gettbname(tbname) );
-							for( int i = 0 ; i < maxcol; i++ )
+							try
 							{
-								if( i != 0 )
-								{
-									wr.Write(",");
-								}
-								wr.Write( fldname[i] );
+								dr[col.ColumnName] = DateTime.Parse(ar[col.Ordinal].ToString());
 							}
-							wr.Write(" ) values ( " );
-						}
-						else
-						{
-							wr.Write("insert into {0} values ( ", gettbname(tbname) );
-							//wr.Write("insert into [{0}] values ( ", tbname );
-						}
-
-						for( int i = 0 ; i < maxcol; i++ )
-						{
-							if( i != 0 )
+							catch
 							{
-								wr.Write( ", " );
+								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
 							}
-							wr.Write(convdata(dr, i, "'","N",true));
 						}
-						wr.Write( " ) {0}",wr.NewLine );
-					}
-					if( trow > 0 )
-					{
-						wr.Write("GO{0}{0}",wr.NewLine );
-					}
-					if( this.rdoOutFolder.Checked == true ) 
-					{
-						wr.Close();
-						File.Delete(this.txtOutput.Text + "\\" + tbname + ".sql");
-						if( trow > 0 )
+						// {"System.Decimal"}
+						if( col.DataType == typeof(System.Decimal) )
 						{
-							fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
-							// ファイルをリネームする
-							File.Move(this.txtOutput.Text + "\\" + tbname + ".sql.tmp", 
-								this.txtOutput.Text + "\\" + tbname + ".sql");
+							try
+							{
+								dr[col.ColumnName] = Decimal.Parse(ar[col.Ordinal].ToString());
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
+							}
+						}
+						// {"System.Double"}
+						if( col.DataType == typeof(System.Double) )
+						{
+							try
+							{
+								dr[col.ColumnName] = Double.Parse(ar[col.Ordinal].ToString());
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
+							}
+						}
+						// {"System.Single"}
+						if( col.DataType == typeof(System.Single) )
+						{
+							try
+							{
+								dr[col.ColumnName] = Single.Parse(ar[col.Ordinal].ToString());
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
+							}
+						}
+						//{"System.Object"}
+						if( col.DataType == typeof(System.Object) )
+						{
+							try
+							{
+								dr[col.ColumnName] = ar[col.Ordinal].ToString();
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
+							}
+						}
+						//{"System.Byte"}	
+						if( col.DataType == typeof(System.Byte) )
+						{
+							try
+							{
+								dr[col.ColumnName] = Byte.Parse(ar[col.Ordinal].ToString());
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
+							}
+						}
+						//{"System.Guid"}
+						if( col.DataType == typeof(System.Guid) )
+						{
+							try
+							{
+								dr[col.ColumnName] = ar[col.Ordinal].ToString();
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								isSetAll = false;
+								break;
+							}
 						}
 					}
-					if( dr != null && dr.IsClosed == false )
+					if( isSetAll == true )
 					{
-						dr.Close();
-					}
-				}
-				if( dr != null && dr.IsClosed == false )
-				{
-					dr.Close();
-				}
-
-
-				// set datas to clipboard
-				if( rowcount == 0 )
-				{
-					MessageBox.Show("対象データがありませんでした");
-				}
-				else
-				{
-					if( this.rdoOutFolder.Checked == false ) 
-					{
-						wr.Close();
-					}
-					if( this.rdoClipboard.Checked == true ) 
-					{
-						Clipboard.SetDataObject(strline.ToString(),true );
+						dt.Rows.Add(dr);
 					}
 					else
 					{
-						Clipboard.SetDataObject(fname.ToString(),true );
+						break;
 					}
-					MessageBox.Show("処理を完了しました");
 				}
-				*/
+
+				// データベースへ更新する
+				if( isSetAll == true )
+				{
+					if( MessageBox.Show(linecount.ToString() + "件のデータを読み込みますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) == DialogResult.Yes )
+					{
+						SqlDataAdapter dda = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+										
+						tran = this.sqlConnection1.BeginTransaction();
+						dda.SelectCommand.Transaction = tran;
+						SqlCommandBuilder  cb = new SqlCommandBuilder(dda);
+						dda.Update(dt);
+						tran.Commit();
+
+						MessageBox.Show("読込を完了しました");
+					}
+				}
+
 			}
 			catch( Exception exp )
 			{
+				if( tran != null )
+				{
+					tran.Rollback();
+				}
 				this.SetErrorMessage(exp);
+			}
+			finally
+			{
+				if( wr != null )
+				{
+					wr.Close();
+				}
 			}
 		}
 
