@@ -87,6 +87,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_43E075405ECF4992ADB9A29BA30230A4"
+        "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_43E075405ECF4992ADB9A29BA30230A4"
+        "OwnerKey" = "8:_E236D7F88D3892C9AC0E6987B506EF92"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4BADB8C0F962420E814E8ED1CB058F43"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -107,18 +119,6 @@
         {
         "MsmKey" = "8:_5ACD854E46EE48C2939C07F93085BDEE"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5B39E77CFCE04C64A92B3336A6947EBF"
-        "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5B39E77CFCE04C64A92B3336A6947EBF"
-        "OwnerKey" = "8:_E236D7F88D3892C9AC0E6987B506EF92"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -700,7 +700,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:quickDBExplorer, Version=1.4.3.36711, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:quickDBExplorer, Version=1.4.4.24090, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_617B01C450714C85851955A11602F67F"
@@ -1111,7 +1111,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:serialFactory, Version=1.0.2641.36710, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:serialFactory, Version=1.0.2665.24089, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_E236D7F88D3892C9AC0E6987B506EF92"
@@ -1288,13 +1288,13 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:quickDBExplorer"
-        "ProductCode" = "8:{21CC9C03-DDBE-4D24-997A-F95A513A7EDC}"
-        "PackageCode" = "8:{7DD40EFD-A6ED-4136-AD27-C90FD66D64CA}"
+        "ProductCode" = "8:{81ECB2AE-97ED-43F3-B2D7-5CA10E63381A}"
+        "PackageCode" = "8:{BEFD4562-2F60-427E-8EB5-FC1783088682}"
         "UpgradeCode" = "8:{F11492BC-0C84-4BA5-BE29-BEB68FC8A758}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.4.4"
+        "ProductVersion" = "8:1.4.5"
         "Manufacturer" = "8:GI-Engineering"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1875,7 +1875,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_5B39E77CFCE04C64A92B3336A6947EBF"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_43E075405ECF4992ADB9A29BA30230A4"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

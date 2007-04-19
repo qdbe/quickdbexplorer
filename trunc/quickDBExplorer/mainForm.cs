@@ -300,6 +300,10 @@ namespace quickDBExplorer
 			this.menuMakeCSVDQ = new System.Windows.Forms.MenuItem();
 			this.menuMakeTab = new System.Windows.Forms.MenuItem();
 			this.menuMakeTabDQ = new System.Windows.Forms.MenuItem();
+			this.menuCSVRead = new System.Windows.Forms.MenuItem();
+			this.menuCSVReadDQ = new System.Windows.Forms.MenuItem();
+			this.menuTabRead = new System.Windows.Forms.MenuItem();
+			this.menuTabReadDQ = new System.Windows.Forms.MenuItem();
 			this.menuSeparater4 = new System.Windows.Forms.MenuItem();
 			this.menuDepend = new System.Windows.Forms.MenuItem();
 			this.menuISQLW = new System.Windows.Forms.MenuItem();
@@ -381,10 +385,6 @@ namespace quickDBExplorer
 			this.label10 = new System.Windows.Forms.Label();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.cmbHistory = new System.Windows.Forms.ComboBox();
-			this.menuCSVRead = new System.Windows.Forms.MenuItem();
-			this.menuCSVReadDQ = new System.Windows.Forms.MenuItem();
-			this.menuTabRead = new System.Windows.Forms.MenuItem();
-			this.menuTabReadDQ = new System.Windows.Forms.MenuItem();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
@@ -604,6 +604,30 @@ namespace quickDBExplorer
 			this.menuMakeTabDQ.Text = "Tab区切出力(\"付き)";
 			this.menuMakeTabDQ.Click += new System.EventHandler(this.menuMakeTabDQ_Click);
 			// 
+			// menuCSVRead
+			// 
+			this.menuCSVRead.Index = 24;
+			this.menuCSVRead.Text = "CSV読込";
+			this.menuCSVRead.Click += new System.EventHandler(this.menuCSVRead_Click);
+			// 
+			// menuCSVReadDQ
+			// 
+			this.menuCSVReadDQ.Index = 25;
+			this.menuCSVReadDQ.Text = "CSV読込(\"付き)";
+			this.menuCSVReadDQ.Click += new System.EventHandler(this.menuCSVReadDQ_Click);
+			// 
+			// menuTabRead
+			// 
+			this.menuTabRead.Index = 26;
+			this.menuTabRead.Text = "Tab区切読込";
+			this.menuTabRead.Click += new System.EventHandler(this.menuTabRead_Click);
+			// 
+			// menuTabReadDQ
+			// 
+			this.menuTabReadDQ.Index = 27;
+			this.menuTabReadDQ.Text = "Tab区切読込（”付き)";
+			this.menuTabReadDQ.Click += new System.EventHandler(this.menuTabReadDQ_Click);
+			// 
 			// menuSeparater4
 			// 
 			this.menuSeparater4.Index = 28;
@@ -645,7 +669,7 @@ namespace quickDBExplorer
 			this.btnCSV.Name = "btnCSV";
 			this.btnCSV.Size = new System.Drawing.Size(136, 24);
 			this.btnCSV.TabIndex = 25;
-			this.btnCSV.Text = "ファイル作成・読込(&K)";
+			this.btnCSV.Text = "CSV等作成・読込(&K)";
 			this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
 			// 
 			// rdoDspView
@@ -1274,30 +1298,6 @@ namespace quickDBExplorer
 			this.cmbHistory.TabIndex = 19;
 			this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectionChangeCommitted);
 			// 
-			// menuCSVRead
-			// 
-			this.menuCSVRead.Index = 24;
-			this.menuCSVRead.Text = "CSV読込";
-			this.menuCSVRead.Click += new System.EventHandler(this.menuCSVRead_Click);
-			// 
-			// menuCSVReadDQ
-			// 
-			this.menuCSVReadDQ.Index = 25;
-			this.menuCSVReadDQ.Text = "CSV読込(\"付き)";
-			this.menuCSVReadDQ.Click += new System.EventHandler(this.menuCSVReadDQ_Click);
-			// 
-			// menuTabRead
-			// 
-			this.menuTabRead.Index = 26;
-			this.menuTabRead.Text = "Tab区切読込";
-			this.menuTabRead.Click += new System.EventHandler(this.menuTabRead_Click);
-			// 
-			// menuTabReadDQ
-			// 
-			this.menuTabReadDQ.Index = 27;
-			this.menuTabReadDQ.Text = "Tab区切読込（”付き)";
-			this.menuTabReadDQ.Click += new System.EventHandler(this.menuTabReadDQ_Click);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -1718,7 +1718,7 @@ namespace quickDBExplorer
 				if( this.txtOutput.Text == "" )
 				{
 					this.saveFileDialog1.CreatePrompt = true;
-					this.saveFileDialog1.Filter = "SQL|*.sql|CSV|*.csv|TXT|*.txt|全て|*.*";
+					this.saveFileDialog1.Filter = "SQL|*.sql|csv|*.csv|txt|*.txt|全て|*.*";
 					DialogResult ret = this.saveFileDialog1.ShowDialog();
 					if( ret == DialogResult.OK )
 					{
@@ -2061,6 +2061,19 @@ namespace quickDBExplorer
 					{
 						fldname.Add( dr.GetName(j) );
 						strint.Add( dr.GetFieldType(j) );
+					}
+
+					DataTable dt = dr.GetSchemaTable();
+					foreach( DataRow draw in dt.Rows )
+					{
+						if( (Boolean)draw["IsIdentity"] == true )
+						{
+							// Identity 列がある場合、SET IDENTITY_INSERT table on をつける
+							string addidinsert = string.Format("SET IDENTITY_INSERT {0} on ",gettbname(tbname));
+							wr.WriteLine(addidinsert);
+							wr.Write(wr.NewLine);
+							break;
+						}
 					}
 					//ds.Tables[tbname].Columns.Count;
 
@@ -3665,7 +3678,7 @@ namespace quickDBExplorer
 				// 単独ファイルの参照指定
 				
 				this.saveFileDialog1.CreatePrompt = true;
-				this.saveFileDialog1.Filter = "SQL|*.sql|CSV|*.csv|TXT|*.txt|全て|*.*";
+				this.saveFileDialog1.Filter = "SQL|*.sql|csv|*.csv|txt|*.txt|全て|*.*";
 				DialogResult ret = this.saveFileDialog1.ShowDialog();
 				if( ret == DialogResult.OK )
 				{
@@ -5194,7 +5207,7 @@ namespace quickDBExplorer
 
 		private void menuTabReadDQ_Click(object sender, System.EventArgs e)
 		{
-			this.LoadFile2Data(false,false);
+			this.LoadFile2Data(false,true);
 		}
 
 		protected void  LoadFile2Data( bool isCsv, bool isUseDQ )
@@ -5234,7 +5247,7 @@ namespace quickDBExplorer
 				{
 					this.openFileDialog1.CheckFileExists = true;
 					this.openFileDialog1.CheckPathExists = true;
-					this.openFileDialog1.Filter = "CSV|*.csv|TXT|*.txt|全て|*.*";
+					this.openFileDialog1.Filter = "csv|*.csv|txt|*.txt|全て|*.*";
 					this.openFileDialog1.Multiselect = false;
 					this.openFileDialog1.RestoreDirectory = false;
 					if( this.openFileDialog1.ShowDialog(this) != DialogResult.OK )
@@ -5446,7 +5459,7 @@ namespace quickDBExplorer
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Boolean値を指定してください。行:" + linecount.ToString());
 								isSetAll = false;
 								break;
 							}
@@ -5460,7 +5473,7 @@ namespace quickDBExplorer
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には DateTimeを表す値を指定してください。行:" + linecount.ToString());
 								isSetAll = false;
 								break;
 							}
@@ -5474,7 +5487,7 @@ namespace quickDBExplorer
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Decimal値を指定してください。行:" + linecount.ToString());
 								isSetAll = false;
 								break;
 							}
@@ -5488,7 +5501,7 @@ namespace quickDBExplorer
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Double値を指定してください。行:" + linecount.ToString());
 								isSetAll = false;
 								break;
 							}
@@ -5502,7 +5515,7 @@ namespace quickDBExplorer
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Single値を指定してください。行:" + linecount.ToString());
 								isSetAll = false;
 								break;
 							}
@@ -5514,9 +5527,9 @@ namespace quickDBExplorer
 							{
 								dr[col.ColumnName] = ar[col.Ordinal].ToString();
 							}
-							catch
+							catch ( Exception e )
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には 指定された値は指定できません。行:" + linecount.ToString() + "\r\n" + e.ToString());
 								isSetAll = false;
 								break;
 							}
@@ -5530,7 +5543,7 @@ namespace quickDBExplorer
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Byte値を指定してください。行:" + linecount.ToString());
 								isSetAll = false;
 								break;
 							}
@@ -5544,7 +5557,7 @@ namespace quickDBExplorer
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には 整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Guidを表す文字列を指定してください。行:" + linecount.ToString());
 								isSetAll = false;
 								break;
 							}
