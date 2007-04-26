@@ -1505,15 +1505,25 @@ namespace quickDBExplorer
 			displistowner();
 			if( svdata.dbopt[svdata.lastdb] != null )
 			{
-				// 該当DBの最後に選択したユーザーを選択する
-				for( int i = 0; i < this.ownerListbox.Items.Count; i++ )
+				if( svdata.dbopt[svdata.lastdb] is ArrayList )
 				{
-					if( (string)this.ownerListbox.Items[i] == (string)svdata.dbopt[svdata.lastdb] )
-					{
-						this.ownerListbox.SetSelected(i, true);
-						this.ownerListbox.Focus();
-						break;
+
+					ArrayList saveownerlist = (ArrayList)svdata.dbopt[svdata.lastdb];
+
+					// 該当DBの最後に選択したユーザーを選択する
+					string []olist = (string[])saveownerlist.ToArray(typeof(string));
+					for( int i = 0; i < olist.Length; i++ ){
+						int idx = this.ownerListbox.FindString(olist[i]);
+						if( idx >= 0 )
+						{
+							this.ownerListbox.SetSelected(idx, true);
+						}
 					}
+					this.ownerListbox.Focus();
+				}
+				else
+				{
+					svdata.dbopt[svdata.lastdb] = null;
 				}
 			}
 
@@ -2842,7 +2852,21 @@ namespace quickDBExplorer
 			if( this.ownerListbox.SelectedItem != null )
 			{
 				// 選択したDBの最終オーナーを記録する
-				svdata.dbopt[svdata.lastdb] = (string)this.ownerListbox.SelectedItem;
+				ArrayList saveownerlist;
+				if( svdata.dbopt[svdata.lastdb] == null )
+				{
+					saveownerlist = new ArrayList();
+					svdata.dbopt[svdata.lastdb] = saveownerlist;
+				}
+				else
+				{
+					saveownerlist = (ArrayList)svdata.dbopt[svdata.lastdb];
+				}
+				saveownerlist.Clear();
+				foreach( string itm in this.ownerListbox.SelectedItems )
+				{
+					saveownerlist.Add(itm);
+				}
 			}
 			// テーブルの選択履歴をクリア
 			this.selectedTables.Clear();
@@ -3855,6 +3879,7 @@ namespace quickDBExplorer
 						if( col.DataType.FullName == "System.Byte[]" )
 						{
 							cs.ReadOnly = true;
+							cs.IsThisImage = true;
 						}
 
 						//マップ名を指定する
@@ -5645,13 +5670,42 @@ namespace quickDBExplorer
 		private CurrencyManager _sorce;
 		private int				editrow;
 		private bool	canSetEmptyString;
+		private bool	isThisImage;
 
-		public MyDataGridTextBoxColumn(bool canset)
+		public MyDataGridTextBoxColumn(bool canset) : this(canset,false)
+		{
+		}
+
+		public bool IsThisImage
+		{
+			get { return this.isThisImage; }
+			set { 
+				this.isThisImage  = true; 
+				if( this.isThisImage == true )
+				{
+					this.TextBox.Text = "";
+					this.TextBox.ReadOnly = true;
+				}
+			}
+		}
+
+		public MyDataGridTextBoxColumn(bool canset, bool isImage)
 		{
 			this.NullText = "";
 			this.TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridKeyDownControler);
 			this.canSetEmptyString = canset;
+			this.isThisImage = isImage;
+			this.TextBox.TextChanged += new EventHandler(this.GridTextControler);
 		}
+
+		private void GridTextControler(object sender, EventArgs e)
+		{
+			if( isThisImage == true )
+			{
+				this.TextBox.Text = "";
+			}
+		}
+
 
 		private void GridKeyDownControler(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
@@ -5666,12 +5720,19 @@ namespace quickDBExplorer
 				if( obj is byte[] )
 				{
 					MemoryStream ms = new MemoryStream((byte[])obj);
-					Image gazo = Image.FromStream(ms);
-					if( gazo != null )
+					try
 					{
-						ImageViewer viewdlg = new ImageViewer();
-						viewdlg.ViewImage = gazo;
-						viewdlg.ShowDialog();
+						Image gazo = Image.FromStream(ms);
+						if( gazo != null )
+						{
+							ImageViewer viewdlg = new ImageViewer();
+							viewdlg.ViewImage = gazo;
+							viewdlg.ShowDialog();
+							return;
+						}
+					}
+					catch
+					{
 						return;
 					}
 				}
@@ -5722,7 +5783,18 @@ namespace quickDBExplorer
 		{
 			this._sorce = source;
 			this.editrow = rowNum;
-			base.Edit(source, rowNum, bounds, readOnly, instantText, cellIsVisible);
+			object cellValue =
+				this.GetColumnValueAtRow(source, rowNum);
+			if (cellValue is byte[])
+			{
+				this.TextBox.Text = "";
+				this.TextBox.Focus();
+				base.Edit(source, rowNum, bounds, readOnly, instantText, cellIsVisible);
+			}
+			else
+			{
+				base.Edit(source, rowNum, bounds, readOnly, instantText, cellIsVisible);
+			}
 		}
 
 		protected override void EnterNullValue()
@@ -5746,6 +5818,12 @@ namespace quickDBExplorer
 			if (cellValue == DBNull.Value)
 			{
 				backBrush = new SolidBrush(Color.FromArgb(0xbf,0xef,0xff));
+			}
+			if (cellValue is byte[])
+			{
+				backBrush = new SolidBrush(Color.FromArgb(0x80,0x80,0x80));
+				g.FillRectangle(backBrush,bounds);
+				return;
 			}
 			else if( cellValue is string && 
 				( 

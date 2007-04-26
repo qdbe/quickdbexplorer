@@ -87,18 +87,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_43E075405ECF4992ADB9A29BA30230A4"
-        "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_43E075405ECF4992ADB9A29BA30230A4"
-        "OwnerKey" = "8:_E236D7F88D3892C9AC0E6987B506EF92"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_4BADB8C0F962420E814E8ED1CB058F43"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -143,6 +131,18 @@
         {
         "MsmKey" = "8:_6AFA617C527F48798412E1F96DD2BC09"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6C8086B492C84D5DA927AECEB19FF552"
+        "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6C8086B492C84D5DA927AECEB19FF552"
+        "OwnerKey" = "8:_A7A71B1D5E0BE6778B5D534455E71099"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -207,6 +207,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A7A71B1D5E0BE6778B5D534455E71099"
+        "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_AD902775E84A4944890E9B22266126E5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -251,12 +257,6 @@
         {
         "MsmKey" = "8:_D0359C47DF9A435E9E15CF0F3D2D6B7B"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E236D7F88D3892C9AC0E6987B506EF92"
-        "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -700,7 +700,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:quickDBExplorer, Version=1.4.4.24090, Culture=neutral"
+            "AssemblyAsmDisplayName" = "8:quickDBExplorer, Version=1.4.4.41143, Culture=neutral"
                 "ScatterAssemblies"
                 {
                     "_617B01C450714C85851955A11602F67F"
@@ -947,6 +947,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_A7A71B1D5E0BE6778B5D534455E71099"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:serialFactory, Version=1.0.2589.890, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_A7A71B1D5E0BE6778B5D534455E71099"
+                    {
+                    "Name" = "8:serialFactory.DLL"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:serialFactory.DLL"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_AD902775E84A4944890E9B22266126E5"
             {
             "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image011.jpg"
@@ -1107,37 +1138,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_E236D7F88D3892C9AC0E6987B506EF92"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:serialFactory, Version=1.0.2665.24089, Culture=neutral"
-                "ScatterAssemblies"
-                {
-                    "_E236D7F88D3892C9AC0E6987B506EF92"
-                    {
-                    "Name" = "8:serialFactory.DLL"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:serialFactory.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_F10E93D98CE64C1ABF9A0A64698A3A86"
             {
             "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image019.jpg"
@@ -1288,13 +1288,13 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:quickDBExplorer"
-        "ProductCode" = "8:{81ECB2AE-97ED-43F3-B2D7-5CA10E63381A}"
-        "PackageCode" = "8:{BEFD4562-2F60-427E-8EB5-FC1783088682}"
+        "ProductCode" = "8:{54E23C98-CF91-47D8-8687-CC2BDFE3623C}"
+        "PackageCode" = "8:{A874454D-636C-4B36-818C-3C0739C12619}"
         "UpgradeCode" = "8:{F11492BC-0C84-4BA5-BE29-BEB68FC8A758}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.4.5"
+        "ProductVersion" = "8:1.4.6"
         "Manufacturer" = "8:GI-Engineering"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1875,7 +1875,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_43E075405ECF4992ADB9A29BA30230A4"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_6C8086B492C84D5DA927AECEB19FF552"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

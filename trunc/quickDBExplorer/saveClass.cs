@@ -18,9 +18,25 @@ namespace quickDBExplorer
 
 		public string		lastdb;		// 最後に利用したDB名
 
-		public Hashtable		dbopt;		// DB 毎の最終ユーザーを記録する
-		public int	isShowsysuser;		// システムユーザーを表示するか否か
+		/// <summary>
+		/// // DB 毎の最終ユーザーを記録する
+		/// 複数を登録させるため、内部はstring の要素を持ったArrayListとする
+		/// </summary>
+		public Hashtable		dbopt;	
+
+		/// <summary>
+		/// システムユーザーを表示するか否か
+		/// </summary>
+		public int	isShowsysuser;	
+
+		/// <summary>
+		///table/view リストのソート順 
+		/// </summary>
 		public int	sortKey;
+
+		/// <summary>
+		/// view を表示させるかどうか
+		/// </summary>
 		public int	showView;
 		public	Hashtable	outdest;
 		public	Hashtable	outfile;
