@@ -3300,6 +3300,10 @@ namespace quickDBExplorer
 					{
 						cs = new MyDataGridTextBoxColumn(true);
 					}
+					else if( col.DataType.FullName == "System.Byte[]" )
+					{
+						cs = new MyDataGridTextBoxColumn(false,true);
+					}
 					else
 					{
 						cs = new MyDataGridTextBoxColumn(false);
@@ -3322,10 +3326,6 @@ namespace quickDBExplorer
 						{
 							cs.Format = getFormat(this.DateFormat);
 						}
-					}
-					if( col.DataType.FullName == "System.Byte[]" )
-					{
-						cs.ReadOnly = true;
 					}
 					//マップ名を指定する
 					cs.MappingName = col.ColumnName;
@@ -3853,6 +3853,10 @@ namespace quickDBExplorer
 						{
 							cs = new MyDataGridTextBoxColumn(true);
 						}
+						else if( col.DataType.FullName == "System.Byte[]" )
+						{
+							cs = new MyDataGridTextBoxColumn(false,true);
+						}
 						else
 						{
 							cs = new MyDataGridTextBoxColumn(false);
@@ -3875,11 +3879,6 @@ namespace quickDBExplorer
 							{
 								cs.Format = getFormat(this.DateFormat);
 							}
-						}
-						if( col.DataType.FullName == "System.Byte[]" )
-						{
-							cs.ReadOnly = true;
-							cs.IsThisImage = true;
 						}
 
 						//マップ名を指定する
@@ -5671,16 +5670,14 @@ namespace quickDBExplorer
 		private int				editrow;
 		private bool	canSetEmptyString;
 		private bool	isThisImage;
-
-		public MyDataGridTextBoxColumn(bool canset) : this(canset,false)
-		{
-		}
+		private TextBox		localTextBox = new TextBox();
 
 		public bool IsThisImage
 		{
 			get { return this.isThisImage; }
-			set { 
-				this.isThisImage  = true; 
+			set 
+			{ 
+				this.isThisImage  = value; 
 				if( this.isThisImage == true )
 				{
 					this.TextBox.Text = "";
@@ -5689,12 +5686,19 @@ namespace quickDBExplorer
 			}
 		}
 
+		public MyDataGridTextBoxColumn(bool canset) : this(canset,false)
+		{
+		}
+
+
 		public MyDataGridTextBoxColumn(bool canset, bool isImage)
 		{
 			this.NullText = "";
 			this.TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridKeyDownControler);
 			this.canSetEmptyString = canset;
 			this.isThisImage = isImage;
+			this.TextBox.Enter += new EventHandler(this.GridTextControler);
+			this.TextBox.GotFocus += new EventHandler(this.GridTextControler);
 			this.TextBox.TextChanged += new EventHandler(this.GridTextControler);
 		}
 
@@ -5702,7 +5706,7 @@ namespace quickDBExplorer
 		{
 			if( isThisImage == true )
 			{
-				this.TextBox.Text = "";
+				((TextBox)sender).Text = "";
 			}
 		}
 
@@ -5783,12 +5787,9 @@ namespace quickDBExplorer
 		{
 			this._sorce = source;
 			this.editrow = rowNum;
-			object cellValue =
-				this.GetColumnValueAtRow(source, rowNum);
-			if (cellValue is byte[])
+			if( this.isThisImage == true )
 			{
-				this.TextBox.Text = "";
-				this.TextBox.Focus();
+				//this.TextBox.Text = "";
 				base.Edit(source, rowNum, bounds, readOnly, instantText, cellIsVisible);
 			}
 			else
@@ -5821,7 +5822,7 @@ namespace quickDBExplorer
 			}
 			if (cellValue is byte[])
 			{
-				backBrush = new SolidBrush(Color.FromArgb(0x80,0x80,0x80));
+				backBrush = new SolidBrush(Color.FromArgb(0x10,0xC9,0x8D));
 				g.FillRectangle(backBrush,bounds);
 				return;
 			}
