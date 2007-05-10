@@ -198,6 +198,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "qdbeListBox.resx"
+                    DependentUpon = "qdbeListBox.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "QueryDialog.cs"
                     SubType = "Form"
                     BuildAction = "Compile"

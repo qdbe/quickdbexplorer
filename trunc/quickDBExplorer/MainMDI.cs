@@ -133,8 +133,8 @@ namespace quickDBExplorer
 			this.menuItem4.Index = 2;
 			this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.menuItem6,
-																					  this.menuItem7,
-																					  this.menuItem8,
+//																					  this.menuItem7,
+//																					  this.menuItem8,
 																					  this.menuItem9});
 			this.menuItem4.Text = "HELP(&H)";
 			// 
@@ -162,7 +162,7 @@ namespace quickDBExplorer
 			// 
 			// menuItem9
 			// 
-			this.menuItem9.Index = 3;
+			this.menuItem9.Index = 1;
 			this.menuItem9.Text = "About";
 			this.menuItem9.Click += new System.EventHandler(this.menuItem9_Click);
 			// 
@@ -227,10 +227,10 @@ namespace quickDBExplorer
 		private void MainMDI_Load(object sender, System.EventArgs e)
 		{
 			smanager.SerialFileName = Application.ExecutablePath + ".auth";
-			if( smanager.LoadAndCheckSerial() == false )
-			{
-				this.Close();
-			}
+			//if( smanager.LoadAndCheckSerial() == false )
+			//{
+			//	this.Close();
+			//}
 
 
 			FileStream fs = null;
