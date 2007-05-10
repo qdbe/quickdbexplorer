@@ -232,6 +232,15 @@ namespace quickDBExplorer
 			//	this.Close();
 			//}
 
+			// 暫定的に、60日限定の起動しかできなくしておく
+			DateTime dt = new DateTime(2007,7,1);
+			if( dt < DateTime.Now )
+			{
+				MessageBox.Show("プログラムの有効期限が切れました。再度最新版をダウンロードしてください");
+				this.Close();
+				return;
+			}
+
 
 			FileStream fs = null;
 
