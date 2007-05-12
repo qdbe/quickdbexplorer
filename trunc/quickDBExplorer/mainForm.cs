@@ -5762,6 +5762,7 @@ namespace quickDBExplorer
 			}
 			if( this.TextBox.ReadOnly == true )
 			{
+				e.Handled = true;
 				return;
 			}
 			if( e.KeyCode == Keys.D1 &&

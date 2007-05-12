@@ -226,21 +226,51 @@ namespace quickDBExplorer
 
 		private void MainMDI_Load(object sender, System.EventArgs e)
 		{
+			string authconf = Application.ExecutablePath + ".aconf";
 			smanager.SerialFileName = Application.ExecutablePath + ".auth";
-			//if( smanager.LoadAndCheckSerial() == false )
-			//{
-			//	this.Close();
-			//}
-
-			// 暫定的に、60日限定の起動しかできなくしておく
-			DateTime dt = new DateTime(2007,7,1);
-			if( dt < DateTime.Now )
+			if( File.Exists(authconf) == true )
 			{
-				MessageBox.Show("プログラムの有効期限が切れました。再度最新版をダウンロードしてください");
-				this.Close();
-				return;
-			}
+				FileStream acst = File.Open(authconf,FileMode.Open,FileAccess.Read);
+				StreamReader sr = new StreamReader(acst);
+				string confstr = sr.ReadToEnd();
+				sr.Close();
+				string confvalue = StrEncoder.Decode(confstr);
+				confvalue.TrimEnd("\0".ToCharArray());
+				if( confvalue.StartsWith("NoLicense") )
+				{
+					;
+				}
+				else if( confvalue.StartsWith("LimitDate") )
+				{
+					// 暫定的に、60日限定の起動しかできなくしておく
+					DateTime dt = new DateTime(2007,7,1);
+					if( dt < DateTime.Now )
+					{
+						MessageBox.Show("プログラムの有効期限が切れました。再度最新版をダウンロードしてください");
+						this.Close();
+						return;
+					}
+				}
+				else
+				{
+					// ライセンス認証を必要としておく
+					if( smanager.LoadAndCheckSerial() == false )
+					{
+						this.Close();
+						return;
+					}
+				}
 
+			}
+			else
+			{
+				// 認証Configファイルがない
+				// 通常にライセンスが必要
+				if( smanager.LoadAndCheckSerial() == false )
+				{
+					this.Close();
+				}
+			}
 
 			FileStream fs = null;
 

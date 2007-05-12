@@ -223,6 +223,10 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "quickDBExplorer.exe.aconf"
+                    BuildAction = "None"
+                />
+                <File
                     RelPath = "quickDBExplorerBaseForm.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
