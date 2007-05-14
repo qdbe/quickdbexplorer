@@ -3298,15 +3298,15 @@ namespace quickDBExplorer
 					//列スタイルにMyDataGridTextBoxColumnを使う
 					if( col.DataType.FullName == "System.String" )
 					{
-						cs = new MyDataGridTextBoxColumn(true);
+						cs = new MyDataGridTextBoxColumn(this.dbGrid,true);
 					}
 					else if( col.DataType.FullName == "System.Byte[]" )
 					{
-						cs = new MyDataGridTextBoxColumn(false,true);
+						cs = new MyDataGridTextBoxColumn(this.dbGrid,false,true);
 					}
 					else
 					{
-						cs = new MyDataGridTextBoxColumn(false);
+						cs = new MyDataGridTextBoxColumn(this.dbGrid,false);
 						if( col.DataType.FullName == "System.Int32" ||
 							col.DataType.FullName == "System.Int16" ||
 							col.DataType.FullName == "System.Int64" ||
@@ -3851,15 +3851,15 @@ namespace quickDBExplorer
 						//列スタイルにMyDataGridTextBoxColumnを使う
 						if( col.DataType.FullName == "System.String" )
 						{
-							cs = new MyDataGridTextBoxColumn(true);
+							cs = new MyDataGridTextBoxColumn(this.dbGrid,true);
 						}
 						else if( col.DataType.FullName == "System.Byte[]" )
 						{
-							cs = new MyDataGridTextBoxColumn(false,true);
+							cs = new MyDataGridTextBoxColumn(this.dbGrid,false,true);
 						}
 						else
 						{
-							cs = new MyDataGridTextBoxColumn(false);
+							cs = new MyDataGridTextBoxColumn(this.dbGrid,false);
 							if( col.DataType.FullName == "System.Int32" ||
 								col.DataType.FullName == "System.Int16" ||
 								col.DataType.FullName == "System.Int64" ||
@@ -5671,6 +5671,7 @@ namespace quickDBExplorer
 		private bool	canSetEmptyString;
 		private bool	isThisImage;
 		private TextBox		localTextBox = new TextBox();
+		DataGrid parentdg = new DataGrid();
 
 		public bool IsThisImage
 		{
@@ -5680,26 +5681,28 @@ namespace quickDBExplorer
 				this.isThisImage  = value; 
 				if( this.isThisImage == true )
 				{
+					this.ReadOnly = true;
 					this.TextBox.Text = "";
 					this.TextBox.ReadOnly = true;
 				}
 			}
 		}
 
-		public MyDataGridTextBoxColumn(bool canset) : this(canset,false)
+		public MyDataGridTextBoxColumn(DataGrid pa, bool canset) : this(pa,canset,false)
 		{
 		}
 
 
-		public MyDataGridTextBoxColumn(bool canset, bool isImage)
+		public MyDataGridTextBoxColumn(DataGrid pa, bool canset, bool isImage)
 		{
 			this.NullText = "";
 			this.TextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridKeyDownControler);
 			this.canSetEmptyString = canset;
-			this.isThisImage = isImage;
+			this.IsThisImage = isImage;
 			this.TextBox.Enter += new EventHandler(this.GridTextControler);
 			this.TextBox.GotFocus += new EventHandler(this.GridTextControler);
 			this.TextBox.TextChanged += new EventHandler(this.GridTextControler);
+			this.parentdg = pa;
 		}
 
 		private void GridTextControler(object sender, EventArgs e)
@@ -5748,29 +5751,36 @@ namespace quickDBExplorer
 				{
 					dlg.IsDispOnly = true;
 					dlg.LableName = "値参照";
+					dlg.ShowDialog();
 				}
 				else
 				{
 					dlg.LableName = "値編集";
-				}
-				if( dlg.ShowDialog() == DialogResult.OK &&
-					dlg.EditText != "" )
-				{
-					this.TextBox.Text = dlg.EditText;
-					SetColumnValueAtRow(this._sorce, this.editrow, dlg.EditText);
+					if( dlg.ShowDialog() == DialogResult.OK &&
+						dlg.EditText != "" )
+					{
+						this.TextBox.Text = dlg.EditText;
+						SetColumnValueAtRow(this._sorce, this.editrow, dlg.EditText);
+					}
 				}
 			}
-			if( this.TextBox.ReadOnly == true )
+			if( this.parentdg.ReadOnly == true )
 			{
 				e.Handled = true;
 				return;
 			}
+
 			if( e.KeyCode == Keys.D1 &&
 				e.Control == true &&
 				e.Alt != true &&
 				e.Shift != true )
 			{
 				EnterNullValue();
+			}
+			if( this.TextBox.ReadOnly == true )
+			{
+				e.Handled = true;
+				return;
 			}
 			if( canSetEmptyString == true&&
 				e.KeyCode == Keys.D2 &&
