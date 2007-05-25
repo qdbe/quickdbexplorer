@@ -3208,6 +3208,23 @@ namespace quickDBExplorer
 			{
 				this.InitErrMessage();
 
+				// •ÒW’†‚Ì‰Â”\«‚ª‚ ‚é
+				DataGridCell curcell = this.dbGrid.CurrentCell;
+				int rownum = curcell.RowNumber;
+				int colnum  = curcell.ColumnNumber;
+				DataSet ds = (DataSet)this.dbGrid.DataSource;
+				if( ds != null )
+				{
+					if( ds.Tables[0].Rows.Count > 0 )
+					{
+						this.dbGrid.EndEdit(
+							this.dbGrid.TableStyles[0].GridColumnStyles[colnum],
+							rownum,
+							true
+							);
+					}
+				}
+
 				if( tbname == "" )
 				{
 					this.dbGrid.Hide();
@@ -5670,8 +5687,13 @@ namespace quickDBExplorer
 		private int				editrow;
 		private bool	canSetEmptyString;
 		private bool	isThisImage;
-		private TextBox		localTextBox = new TextBox();
 		DataGrid parentdg = new DataGrid();
+
+		protected  override void Abort(int rowNum)
+		{
+			this.HideEditBox();
+		}
+
 
 		public bool IsThisImage
 		{
