@@ -3217,11 +3217,12 @@ namespace quickDBExplorer
 				{
 					if( ds.Tables[0].Rows.Count > 0 )
 					{
-						this.dbGrid.EndEdit(
-							this.dbGrid.TableStyles[0].GridColumnStyles[colnum],
-							rownum,
-							true
-							);
+						((MyDataGridTextBoxColumn)this.dbGrid.TableStyles[0].GridColumnStyles[colnum]).CancelEdit();
+//						this.dbGrid.EndEdit(
+//							this.dbGrid.TableStyles[0].GridColumnStyles[colnum],
+//							rownum,
+//							true
+//							);
 					}
 				}
 
@@ -5689,11 +5690,10 @@ namespace quickDBExplorer
 		private bool	isThisImage;
 		DataGrid parentdg = new DataGrid();
 
-		protected  override void Abort(int rowNum)
+		public void	CancelEdit()
 		{
 			this.HideEditBox();
 		}
-
 
 		public bool IsThisImage
 		{
