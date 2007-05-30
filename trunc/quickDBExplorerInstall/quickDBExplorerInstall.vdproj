@@ -15,61 +15,37 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_05508B2B03A64A5F9CA3AC553B8BC995"
+        "MsmKey" = "8:_0DFA1A33DD6F44C6B4701EA771756BCA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0CAFF0FB5F3C42129DCEACB7A5117862"
+        "MsmKey" = "8:_1262DD60FAE146ECB8615C154D7FABDD"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_15D33C5E20DD43808A31B3A185FC9743"
+        "MsmKey" = "8:_215F50A9973545E485F3EFF37DBA5236"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1BB06CBE14504C9FB3CC895CD38C50BB"
+        "MsmKey" = "8:_29E25D408BDA4447BDD8C09259C2290E"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_1C184410668A4EA8A60F13EFD19CF162"
+        "MsmKey" = "8:_2F65AA20BAE842AD8B46C27C90E917C9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_224562E6473B4187A44C985335C71913"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_25249158690F49198DD4E3112AA88369"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2A5684A32D1B43F4A22930678C84D6DF"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_34140C273F0C4F36BAE18BB4C3AEE042"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_34E7E3CCA3DA40B28964DF293B87FAE7"
+        "MsmKey" = "8:_35807B35C2E042E38146490744AE852B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -81,19 +57,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_44F6CF6FC710497B9568D996353DD464"
+        "MsmKey" = "8:_3D4FDBAF25D548638DC10DF99D4AE784"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_44FB78003283420E8B799661C6759CA0"
+        "MsmKey" = "8:_3EAA6A7CD4564D9A96D5B7E0825D855A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_45A26C6C17B44E66BF6BCDF6D1D52E9E"
+        "MsmKey" = "8:_41D3254E01A8420193D786E099DF9303"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -105,31 +81,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4F6673E6AD0749C0A8F0F526A1D39201"
+        "MsmKey" = "8:_4ED0EE611DE445B7A899D3F18C8D4303"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5872790338094783B775C4C54853BB98"
+        "MsmKey" = "8:_54A7535425AB4A28AAA19B073A4B1CCB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_587D42058458458DA0E3FBFEC5B03BC1"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_5DD8FCC53A1644DA81A2B55671AEE7E6"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6051324F006B4192A3CC748AE18238B9"
+        "MsmKey" = "8:_57BBE32A989B42068A36C8DEC2D8495C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -141,61 +105,31 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_61FFC0BF845F4C5F8153B160547FA86E"
+        "MsmKey" = "8:_6D300BE8BE604666BE333E3F202070CB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_67859E8E538B4BBE8F2456931BD48936"
+        "MsmKey" = "8:_788BE23BDBD44A46A883A1F734DE8980"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6E2E7135DFF644B790DD7F463A125A1C"
+        "MsmKey" = "8:_8403BA629895469883DD54E3C1026F54"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_71A6593EE82B47F29189D9C6D1CFEA57"
+        "MsmKey" = "8:_8408D542665B4EE2AAE2EAE56A7916D5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7D6301AACD07432EAFED986EFBC01CCB"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7E1CEF49D2974A2093369D4ECB4A5C56"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_81212F4A8862492EA39C5EAEDF28FB7C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_81D99C966D724493B7F34946029A8492"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_893B8600051B4A0FA9A0F24CCDD892DF"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8D9C37CF8E8D4A439B30426BF7FA9D72"
+        "MsmKey" = "8:_8755E3CEDE6143B4A0FC201595FEA843"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -207,19 +141,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_90A8134082B24202B56B37BD50849B77"
+        "MsmKey" = "8:_91FC4C67D6254EE6AFB2E09D52785979"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9CCE7FE5F4914F548BCDD4982B0DFF26"
+        "MsmKey" = "8:_99F1CBD7A3EE45958F23518F988265F2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9F9497A1E95341858415D938CB248D8D"
+        "MsmKey" = "8:_A57AEE5EF2284F8F8F81D0E7A81415C9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -231,7 +165,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BDC3A707ACE84E33AA7C96CD1116FAEA"
+        "MsmKey" = "8:_A7F3E2205BC0448F9FC8CAD5DC91515B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AC902F5E14CA4BB89DB6CBC997CF63DF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_AD79D5FC2A924944B0C0498BFCA7126A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B1105CF6F7F54FBC9525792CDD04B8F5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -243,85 +195,115 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C2417E0FA4E1482CB13C59C84DBA1EAB"
+        "MsmKey" = "8:_C8E0A4F559634C8895C062688741D7BB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C4DB98F7EE804D52852D98E30324C458"
+        "MsmKey" = "8:_CC82F8B98D2E4550AA79389D64BBEC67"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C6D23600F51046FEB8DA60348847E0E8"
+        "MsmKey" = "8:_CF12723477964A59846F16CD3C73E5C8"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C6F0935D314D41D7A6D7853EDE33DE18"
+        "MsmKey" = "8:_D02D314C944D4257A3FFD3BD13FE929C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C72DEDD40DA14B89A03F14B2299AAF53"
+        "MsmKey" = "8:_D511D9A4DC1F46D58E6D946A8B12E88B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C7F02F06DF4B43479711BB4A17B09C45"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CEC8A6DE2F714E3789E54D2E2480C3DF"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D13B4CAC89B54B919E639B47E174EE55"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DBB55E5169BD4A30B5562A114A6C8C7C"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E510D6A7313E48DA973F13DB48C57B13"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E6E20EBA74814C059C3B3302C48801A4"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_EE3C4D2503904A6D8C919117F833C71F"
+        "MsmKey" = "8:_DAC79E938691420AAFAE9DF4C41C9F8C"
         "OwnerKey" = "8:_617B01C450714C85851955A11602F67F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_EE3C4D2503904A6D8C919117F833C71F"
+        "MsmKey" = "8:_DAC79E938691420AAFAE9DF4C41C9F8C"
         "OwnerKey" = "8:_A7A71B1D5E0BE6778B5D534455E71099"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F2CE0A2826D34BEA9835584933B00F6D"
+        "MsmKey" = "8:_DCC855E3A3D140029DBF3AB5E17417EB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DF66C92ABBB644F1BD2AAA098B033AEF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E27E943FE34D444D9E7B156779557884"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E40F8D48FC5446F8B050DC0D95036529"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E5EABCAC6FAA444F954AFE99B46E5AF6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E6574C98389040D08B8C30A7286CA922"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EC3C157B52BD417D969607501913680E"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F02D24BCA61948299C92125DAD592913"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F20671A75E6C4F889CE995E70DF29E8A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F4AF52EF2623427D89AE826E2F480C4F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F51BDE5A059643E2BD626E83BA1075AD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F595716DE7384CB9A3D29E6C01FB4EA5"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -396,10 +378,10 @@
         }
         "File"
         {
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_05508B2B03A64A5F9CA3AC553B8BC995"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_0DFA1A33DD6F44C6B4701EA771756BCA"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image035.jpg"
-            "TargetName" = "8:image035.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image011.jpg"
+            "TargetName" = "8:image011.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -416,10 +398,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_0CAFF0FB5F3C42129DCEACB7A5117862"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_1262DD60FAE146ECB8615C154D7FABDD"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image012.png"
-            "TargetName" = "8:image012.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image019.jpg"
+            "TargetName" = "8:image019.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -436,10 +418,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_15D33C5E20DD43808A31B3A185FC9743"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_215F50A9973545E485F3EFF37DBA5236"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image018.png"
-            "TargetName" = "8:image018.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image007.jpg"
+            "TargetName" = "8:image007.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -456,10 +438,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_1BB06CBE14504C9FB3CC895CD38C50BB"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_29E25D408BDA4447BDD8C09259C2290E"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image014.png"
-            "TargetName" = "8:image014.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\filelist.xml"
+            "TargetName" = "8:filelist.xml"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -476,10 +458,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_1C184410668A4EA8A60F13EFD19CF162"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_2F65AA20BAE842AD8B46C27C90E917C9"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image039.png"
-            "TargetName" = "8:image039.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image028.png"
+            "TargetName" = "8:image028.png"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -496,90 +478,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_224562E6473B4187A44C985335C71913"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_35807B35C2E042E38146490744AE852B"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image025.jpg"
-            "TargetName" = "8:image025.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_25249158690F49198DD4E3112AA88369"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image033.jpg"
-            "TargetName" = "8:image033.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_2A5684A32D1B43F4A22930678C84D6DF"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image042.jpg"
-            "TargetName" = "8:image042.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_34140C273F0C4F36BAE18BB4C3AEE042"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image038.gif"
-            "TargetName" = "8:image038.gif"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_34E7E3CCA3DA40B28964DF293B87FAE7"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image008.png"
-            "TargetName" = "8:image008.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image021.jpg"
+            "TargetName" = "8:image021.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -616,27 +518,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_44F6CF6FC710497B9568D996353DD464"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image016.png"
-            "TargetName" = "8:image016.png"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_44FB78003283420E8B799661C6759CA0"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_3D4FDBAF25D548638DC10DF99D4AE784"
             {
             "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image030.png"
             "TargetName" = "8:image030.png"
@@ -656,10 +538,30 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_45A26C6C17B44E66BF6BCDF6D1D52E9E"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_3EAA6A7CD4564D9A96D5B7E0825D855A"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image044.jpg"
-            "TargetName" = "8:image044.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image025.jpg"
+            "TargetName" = "8:image025.jpg"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_41D3254E01A8420193D786E099DF9303"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image002.jpg"
+            "TargetName" = "8:image002.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -696,10 +598,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_4F6673E6AD0749C0A8F0F526A1D39201"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_4ED0EE611DE445B7A899D3F18C8D4303"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image019.jpg"
-            "TargetName" = "8:image019.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image032.png"
+            "TargetName" = "8:image032.png"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -716,10 +618,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_5872790338094783B775C4C54853BB98"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_54A7535425AB4A28AAA19B073A4B1CCB"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image024.png"
-            "TargetName" = "8:image024.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image039.png"
+            "TargetName" = "8:image039.png"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -736,50 +638,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_587D42058458458DA0E3FBFEC5B03BC1"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_57BBE32A989B42068A36C8DEC2D8495C"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image002.jpg"
-            "TargetName" = "8:image002.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_5DD8FCC53A1644DA81A2B55671AEE7E6"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image037.jpg"
-            "TargetName" = "8:image037.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_6051324F006B4192A3CC748AE18238B9"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image029.jpg"
-            "TargetName" = "8:image029.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image040.jpg"
+            "TargetName" = "8:image040.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -827,10 +689,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_61FFC0BF845F4C5F8153B160547FA86E"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_6D300BE8BE604666BE333E3F202070CB"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image006.png"
-            "TargetName" = "8:image006.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image005.jpg"
+            "TargetName" = "8:image005.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -847,10 +709,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_67859E8E538B4BBE8F2456931BD48936"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_788BE23BDBD44A46A883A1F734DE8980"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image017.jpg"
-            "TargetName" = "8:image017.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image036.jpg"
+            "TargetName" = "8:image036.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -867,10 +729,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_6E2E7135DFF644B790DD7F463A125A1C"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_8403BA629895469883DD54E3C1026F54"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image034.jpg"
-            "TargetName" = "8:image034.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image020.png"
+            "TargetName" = "8:image020.png"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -887,10 +749,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_71A6593EE82B47F29189D9C6D1CFEA57"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_8408D542665B4EE2AAE2EAE56A7916D5"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image022.png"
-            "TargetName" = "8:image022.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image004.png"
+            "TargetName" = "8:image004.png"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -907,110 +769,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_7D6301AACD07432EAFED986EFBC01CCB"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_8755E3CEDE6143B4A0FC201595FEA843"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image001.png"
-            "TargetName" = "8:image001.png"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_7E1CEF49D2974A2093369D4ECB4A5C56"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image013.jpg"
-            "TargetName" = "8:image013.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_81212F4A8862492EA39C5EAEDF28FB7C"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image003.gif"
-            "TargetName" = "8:image003.gif"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_81D99C966D724493B7F34946029A8492"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image040.jpg"
-            "TargetName" = "8:image040.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_893B8600051B4A0FA9A0F24CCDD892DF"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image026.png"
-            "TargetName" = "8:image026.png"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_8D9C37CF8E8D4A439B30426BF7FA9D72"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image009.jpg"
-            "TargetName" = "8:image009.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image029.jpg"
+            "TargetName" = "8:image029.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1047,10 +809,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_90A8134082B24202B56B37BD50849B77"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_91FC4C67D6254EE6AFB2E09D52785979"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image007.jpg"
-            "TargetName" = "8:image007.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image001.png"
+            "TargetName" = "8:image001.png"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1067,10 +829,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_9CCE7FE5F4914F548BCDD4982B0DFF26"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_99F1CBD7A3EE45958F23518F988265F2"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image005.jpg"
-            "TargetName" = "8:image005.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image016.png"
+            "TargetName" = "8:image016.png"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1087,10 +849,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_9F9497A1E95341858415D938CB248D8D"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_A57AEE5EF2284F8F8F81D0E7A81415C9"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image041.png"
-            "TargetName" = "8:image041.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image023.jpg"
+            "TargetName" = "8:image023.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1138,10 +900,70 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_BDC3A707ACE84E33AA7C96CD1116FAEA"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_A7F3E2205BC0448F9FC8CAD5DC91515B"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image031.jpg"
-            "TargetName" = "8:image031.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image037.png"
+            "TargetName" = "8:image037.png"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_AC902F5E14CA4BB89DB6CBC997CF63DF"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image033.jpg"
+            "TargetName" = "8:image033.jpg"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_AD79D5FC2A924944B0C0498BFCA7126A"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image018.png"
+            "TargetName" = "8:image018.png"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_B1105CF6F7F54FBC9525792CDD04B8F5"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image017.jpg"
+            "TargetName" = "8:image017.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1178,10 +1000,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_C2417E0FA4E1482CB13C59C84DBA1EAB"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_C8E0A4F559634C8895C062688741D7BB"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image043.png"
-            "TargetName" = "8:image043.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image003.gif"
+            "TargetName" = "8:image003.gif"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1198,7 +1020,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_C4DB98F7EE804D52852D98E30324C458"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_CC82F8B98D2E4550AA79389D64BBEC67"
             {
             "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image010.png"
             "TargetName" = "8:image010.png"
@@ -1218,10 +1040,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_C6D23600F51046FEB8DA60348847E0E8"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_CF12723477964A59846F16CD3C73E5C8"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image028.jpg"
-            "TargetName" = "8:image028.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image038.jpg"
+            "TargetName" = "8:image038.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1238,10 +1060,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_C6F0935D314D41D7A6D7853EDE33DE18"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_D02D314C944D4257A3FFD3BD13FE929C"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image023.jpg"
-            "TargetName" = "8:image023.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image027.jpg"
+            "TargetName" = "8:image027.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1258,10 +1080,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_C72DEDD40DA14B89A03F14B2299AAF53"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_D511D9A4DC1F46D58E6D946A8B12E88B"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image036.png"
-            "TargetName" = "8:image036.png"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image031.jpg"
+            "TargetName" = "8:image031.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1278,7 +1100,187 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_C7F02F06DF4B43479711BB4A17B09C45"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_DCC855E3A3D140029DBF3AB5E17417EB"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image006.png"
+            "TargetName" = "8:image006.png"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_DF66C92ABBB644F1BD2AAA098B033AEF"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image024.png"
+            "TargetName" = "8:image024.png"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_E27E943FE34D444D9E7B156779557884"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image012.png"
+            "TargetName" = "8:image012.png"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_E40F8D48FC5446F8B050DC0D95036529"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image009.jpg"
+            "TargetName" = "8:image009.jpg"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_E5EABCAC6FAA444F954AFE99B46E5AF6"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image026.png"
+            "TargetName" = "8:image026.png"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_E6574C98389040D08B8C30A7286CA922"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image013.jpg"
+            "TargetName" = "8:image013.jpg"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_EC3C157B52BD417D969607501913680E"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image035.png"
+            "TargetName" = "8:image035.png"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_F02D24BCA61948299C92125DAD592913"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image034.gif"
+            "TargetName" = "8:image034.gif"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_F20671A75E6C4F889CE995E70DF29E8A"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image008.png"
+            "TargetName" = "8:image008.png"
+            "Tag" = "8:"
+            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_F4AF52EF2623427D89AE826E2F480C4F"
             {
             "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image015.jpg"
             "TargetName" = "8:image015.jpg"
@@ -1298,10 +1300,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_CEC8A6DE2F714E3789E54D2E2480C3DF"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_F51BDE5A059643E2BD626E83BA1075AD"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image021.jpg"
-            "TargetName" = "8:image021.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image014.png"
+            "TargetName" = "8:image014.png"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1318,90 +1320,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_D13B4CAC89B54B919E639B47E174EE55"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_F595716DE7384CB9A3D29E6C01FB4EA5"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image020.png"
-            "TargetName" = "8:image020.png"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_DBB55E5169BD4A30B5562A114A6C8C7C"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image011.jpg"
-            "TargetName" = "8:image011.jpg"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_E510D6A7313E48DA973F13DB48C57B13"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image004.png"
-            "TargetName" = "8:image004.png"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_E6E20EBA74814C059C3B3302C48801A4"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image032.png"
-            "TargetName" = "8:image032.png"
-            "Tag" = "8:"
-            "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_F2CE0A2826D34BEA9835584933B00F6D"
-            {
-            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image027.jpg"
-            "TargetName" = "8:image027.jpg"
+            "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image022.png"
+            "TargetName" = "8:image022.png"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
             "Condition" = "8:"
@@ -1548,8 +1470,8 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:quickDBExplorer"
-        "ProductCode" = "8:{54E23C98-CF91-47D8-8687-CC2BDFE3623C}"
-        "PackageCode" = "8:{F3E09E3E-36CA-472D-98A2-1500A7F7D82B}"
+        "ProductCode" = "8:{5C5AE647-8488-4728-9500-E1BC761FF05D}"
+        "PackageCode" = "8:{70CFC09B-925C-41CD-BBF7-5B4B3A7AB2FF}"
         "UpgradeCode" = "8:{F11492BC-0C84-4BA5-BE29-BEB68FC8A758}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -2135,7 +2057,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_EE3C4D2503904A6D8C919117F833C71F"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_DAC79E938691420AAFAE9DF4C41C9F8C"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
