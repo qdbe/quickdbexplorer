@@ -1,0 +1,71 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorer", "quickDBExplorer\quickDBExplorer.csproj", "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "quickDBExplorerInstall", "quickDBExplorerInstall\quickDBExplorerInstall.vdproj", "{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0} = {EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}
+		{78D1D1E4-523A-42B6-AB78-93A328D0B612} = {78D1D1E4-523A-42B6-AB78-93A328D0B612}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "serialFactory", "serialFactory\serialFactory.csproj", "{78D1D1E4-523A-42B6-AB78-93A328D0B612}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialKeyManager", "SerialKeyManager\SerialKeyManager.csproj", "{DC047999-0D4F-4158-8364-D14367DBCBBF}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialTest", "SerialTest\SerialTest.csproj", "{9AFF9AD9-A3E0-4C61-81A8-D35788FE8F9F}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SerialKeyManagerSetup", "SerialKeyManagerSetup\SerialKeyManagerSetup.vdproj", "{215F785C-E59C-45AB-B0FA-4ACD1769EF81}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MakeAuthConf", "MakeAuthConf\MakeAuthConf.csproj", "{9897272C-4E6C-41BF-AFEE-037F7FF09371}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectDependencies) = postSolution
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Debug.ActiveCfg = Debug|.NET
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Debug.Build.0 = Debug|.NET
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Release.ActiveCfg = Release|.NET
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Release.Build.0 = Release|.NET
+		{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}.Debug.ActiveCfg = Debug
+		{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}.Release.ActiveCfg = Release
+		{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}.Release.Build.0 = Release
+		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Debug.ActiveCfg = Debug|.NET
+		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Debug.Build.0 = Debug|.NET
+		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Release.ActiveCfg = Release|.NET
+		{78D1D1E4-523A-42B6-AB78-93A328D0B612}.Release.Build.0 = Release|.NET
+		{DC047999-0D4F-4158-8364-D14367DBCBBF}.Debug.ActiveCfg = Debug|.NET
+		{DC047999-0D4F-4158-8364-D14367DBCBBF}.Debug.Build.0 = Debug|.NET
+		{DC047999-0D4F-4158-8364-D14367DBCBBF}.Release.ActiveCfg = Release|.NET
+		{DC047999-0D4F-4158-8364-D14367DBCBBF}.Release.Build.0 = Release|.NET
+		{9AFF9AD9-A3E0-4C61-81A8-D35788FE8F9F}.Debug.ActiveCfg = Debug|.NET
+		{9AFF9AD9-A3E0-4C61-81A8-D35788FE8F9F}.Debug.Build.0 = Debug|.NET
+		{9AFF9AD9-A3E0-4C61-81A8-D35788FE8F9F}.Release.ActiveCfg = Release|.NET
+		{9AFF9AD9-A3E0-4C61-81A8-D35788FE8F9F}.Release.Build.0 = Release|.NET
+		{215F785C-E59C-45AB-B0FA-4ACD1769EF81}.Debug.ActiveCfg = Debug
+		{215F785C-E59C-45AB-B0FA-4ACD1769EF81}.Release.ActiveCfg = Release
+		{215F785C-E59C-45AB-B0FA-4ACD1769EF81}.Release.Build.0 = Release
+		{9897272C-4E6C-41BF-AFEE-037F7FF09371}.Debug.ActiveCfg = Debug|.NET
+		{9897272C-4E6C-41BF-AFEE-037F7FF09371}.Debug.Build.0 = Debug|.NET
+		{9897272C-4E6C-41BF-AFEE-037F7FF09371}.Release.ActiveCfg = Release|.NET
+		{9897272C-4E6C-41BF-AFEE-037F7FF09371}.Release.Build.0 = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
