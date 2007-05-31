@@ -9,7 +9,6 @@ using System.Configuration;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
-using serialFactory;
 using System.Reflection;
 
 namespace quickDBExplorer
@@ -32,11 +31,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem menuItem5;
 		protected string  errMessage = "";
 		private System.Windows.Forms.MenuItem menuItem6;
-		private System.Windows.Forms.MenuItem menuItem7;
-		private System.Windows.Forms.MenuItem menuItem8;
 		private System.Windows.Forms.MenuItem menuItem9;
-
-		private SerialManager smanager = new SerialManager();
 
 
 
@@ -80,8 +75,6 @@ namespace quickDBExplorer
 			this.menuItem2 = new System.Windows.Forms.MenuItem();
 			this.menuItem4 = new System.Windows.Forms.MenuItem();
 			this.menuItem6 = new System.Windows.Forms.MenuItem();
-			this.menuItem7 = new System.Windows.Forms.MenuItem();
-			this.menuItem8 = new System.Windows.Forms.MenuItem();
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
 			this.menuItem9 = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
@@ -133,8 +126,6 @@ namespace quickDBExplorer
 			this.menuItem4.Index = 2;
 			this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					  this.menuItem6,
-//																					  this.menuItem7,
-//																					  this.menuItem8,
 																					  this.menuItem9});
 			this.menuItem4.Text = "HELP(&H)";
 			// 
@@ -143,18 +134,6 @@ namespace quickDBExplorer
 			this.menuItem6.Index = 0;
 			this.menuItem6.Text = "ヘルプ参照";
 			this.menuItem6.Click += new System.EventHandler(this.menuItem6_Click);
-			// 
-			// menuItem7
-			// 
-			this.menuItem7.Index = 1;
-			this.menuItem7.Text = "ライセンス登録状況";
-			this.menuItem7.Click += new System.EventHandler(this.menuItem7_Click);
-			// 
-			// menuItem8
-			// 
-			this.menuItem8.Index = 2;
-			this.menuItem8.Text = "ライセンス更新登録";
-			this.menuItem8.Click += new System.EventHandler(this.menuItem8_Click);
 			// 
 			// errorProvider1
 			// 
@@ -226,51 +205,6 @@ namespace quickDBExplorer
 
 		private void MainMDI_Load(object sender, System.EventArgs e)
 		{
-			string authconf = Application.ExecutablePath + ".aconf";
-			smanager.SerialFileName = Application.ExecutablePath + ".auth";
-			if( File.Exists(authconf) == true )
-			{
-				FileStream acst = File.Open(authconf,FileMode.Open,FileAccess.Read);
-				StreamReader sr = new StreamReader(acst);
-				string confstr = sr.ReadToEnd();
-				sr.Close();
-				string confvalue = StrEncoder.Decode(confstr);
-				confvalue.TrimEnd("\0".ToCharArray());
-				if( confvalue.StartsWith("NoLicense") )
-				{
-					;
-				}
-				else if( confvalue.StartsWith("LimitDate") )
-				{
-					// 暫定的に、60日限定の起動しかできなくしておく
-					DateTime dt = new DateTime(2007,7,1);
-					if( dt < DateTime.Now )
-					{
-						MessageBox.Show("プログラムの有効期限が切れました。再度最新版をダウンロードしてください");
-						this.Close();
-						return;
-					}
-				}
-				else
-				{
-					// ライセンス認証を必要としておく
-					if( smanager.LoadAndCheckSerial() == false )
-					{
-						this.Close();
-						return;
-					}
-				}
-
-			}
-			else
-			{
-				// 認証Configファイルがない
-				// 通常にライセンスが必要
-				if( smanager.LoadAndCheckSerial() == false )
-				{
-					this.Close();
-				}
-			}
 
 			FileStream fs = null;
 
@@ -378,16 +312,6 @@ namespace quickDBExplorer
 			{
 				System.Diagnostics.Process.Start( helpname );
 			}
-		}
-
-		private void menuItem7_Click(object sender, System.EventArgs e)
-		{
-			this.smanager.ShowRegisterInfo();
-		}
-
-		private void menuItem8_Click(object sender, System.EventArgs e)
-		{
-			this.smanager.UpdateSerial();
 		}
 
 		private void menuItem9_Click(object sender, System.EventArgs e)
