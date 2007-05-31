@@ -15,19 +15,25 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_06321A0E17C64F4EBA820A301F1B5105"
-        "OwnerKey" = "8:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0DFA1A33DD6F44C6B4701EA771756BCA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
+        "MsmKey" = "8:_1111A8EC163E4560961C6CA2818D0A3B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1262DD60FAE146ECB8615C154D7FABDD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_17E124AB6818410EAEE3721857F478FF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -57,12 +63,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_3D31C6C055504C748100A35C7CFEB914"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_3D4FDBAF25D548638DC10DF99D4AE784"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -81,7 +81,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_4BADB8C0F962420E814E8ED1CB058F43"
+        "MsmKey" = "8:_44C7658B07D54D72B81CE327B9AC1692"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -237,6 +237,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E363350B4BCC468B8A49E42F396E2DFB"
+        "OwnerKey" = "8:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E40F8D48FC5446F8B050DC0D95036529"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -380,12 +386,52 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_1111A8EC163E4560961C6CA2818D0A3B"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\readme.txt"
+            "TargetName" = "8:readme.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_1262DD60FAE146ECB8615C154D7FABDD"
             {
             "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image019.jpg"
             "TargetName" = "8:image019.jpg"
             "Tag" = "8:"
             "Folder" = "8:_F2F3006DE8434CDB91E59F235BFE70D7"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_17E124AB6818410EAEE3721857F478FF"
+            {
+            "SourcePath" = "8:..\\quickDBExplorer\\license.txt"
+            "TargetName" = "8:license.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -480,26 +526,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_3D31C6C055504C748100A35C7CFEB914"
-            {
-            "SourcePath" = "8:..\\serialFactory\\license.txt"
-            "TargetName" = "8:license.txt"
-            "Tag" = "8:"
-            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_3D4FDBAF25D548638DC10DF99D4AE784"
             {
             "SourcePath" = "8:..\\quickDBExplorer\\quickDBExplorerHelp.files\\image030.png"
@@ -560,9 +586,9 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{A582A373-4685-4296-BEFE-614B80A702C3}:_4BADB8C0F962420E814E8ED1CB058F43"
+            "{A582A373-4685-4296-BEFE-614B80A702C3}:_44C7658B07D54D72B81CE327B9AC1692"
             {
-            "SourcePath" = "8:..\\serialFactory\\ライセンス.rtf"
+            "SourcePath" = "8:..\\quickDBExplorer\\ライセンス.rtf"
             "TargetName" = "8:ライセンス.rtf"
             "Tag" = "8:"
             "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
@@ -1370,13 +1396,13 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:quickDBExplorer"
-        "ProductCode" = "8:{5C5AE647-8488-4728-9500-E1BC761FF05D}"
-        "PackageCode" = "8:{70CFC09B-925C-41CD-BBF7-5B4B3A7AB2FF}"
+        "ProductCode" = "8:{48F282A7-F1B9-41BA-B09D-F9901879A8C3}"
+        "PackageCode" = "8:{04A9F6AB-26CE-449B-821B-F84A83AA8AE6}"
         "UpgradeCode" = "8:{F11492BC-0C84-4BA5-BE29-BEB68FC8A758}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "ProductVersion" = "8:1.4.6"
+        "ProductVersion" = "8:1.4.7"
         "Manufacturer" = "8:GI-Engineering"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:http://qdbe.rgr.jp/"
@@ -1855,7 +1881,7 @@
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
                             "Setting" = "3:2"
-                            "Value" = "8:_4BADB8C0F962420E814E8ED1CB058F43"
+                            "Value" = "8:_44C7658B07D54D72B81CE327B9AC1692"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "Sunken"
@@ -1957,7 +1983,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_06321A0E17C64F4EBA820A301F1B5105"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_E363350B4BCC468B8A49E42F396E2DFB"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -1976,7 +2002,7 @@
         {
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Release\\quickDBExplorer.exe"
+            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Debug\\quickDBExplorer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
