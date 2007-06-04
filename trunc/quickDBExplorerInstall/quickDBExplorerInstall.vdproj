@@ -237,12 +237,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E363350B4BCC468B8A49E42F396E2DFB"
-        "OwnerKey" = "8:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_E40F8D48FC5446F8B050DC0D95036529"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -257,6 +251,12 @@
         {
         "MsmKey" = "8:_E6574C98389040D08B8C30A7286CA922"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E91B2298ADFE48C9946B843AE285F0CC"
+        "OwnerKey" = "8:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1397,7 +1397,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:quickDBExplorer"
         "ProductCode" = "8:{48F282A7-F1B9-41BA-B09D-F9901879A8C3}"
-        "PackageCode" = "8:{04A9F6AB-26CE-449B-821B-F84A83AA8AE6}"
+        "PackageCode" = "8:{651C2447-A640-4DF3-9BCD-85F3198395AD}"
         "UpgradeCode" = "8:{F11492BC-0C84-4BA5-BE29-BEB68FC8A758}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -1522,7 +1522,7 @@
             "Target" = "8:_F9A209BF6F114019A1826252A9B8C535"
             "Folder" = "8:_761760D6B6164318A8B7450A9F249AC7"
             "WorkingFolder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
-            "Icon" = "8:"
+            "Icon" = "8:_C215BC43414E4470A06CB51EBD3AD33F"
             "Feature" = "8:"
             }
             "{478F747B-8505-45D1-9AAE-8C3B645C26E3}:_4364630FF39E4D559F9B8A7F589B3455"
@@ -1536,7 +1536,7 @@
             "Target" = "8:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
             "Folder" = "8:_761760D6B6164318A8B7450A9F249AC7"
             "WorkingFolder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
-            "Icon" = "8:"
+            "Icon" = "8:_C215BC43414E4470A06CB51EBD3AD33F"
             "Feature" = "8:"
             }
             "{478F747B-8505-45D1-9AAE-8C3B645C26E3}:_47B65B547486485BBD56DA46F630F815"
@@ -1550,7 +1550,7 @@
             "Target" = "8:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
             "Folder" = "8:_E47A815ED5394269805CAD1B676AFD34"
             "WorkingFolder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
-            "Icon" = "8:"
+            "Icon" = "8:_C215BC43414E4470A06CB51EBD3AD33F"
             "Feature" = "8:"
             }
         }
@@ -1983,7 +1983,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_E363350B4BCC468B8A49E42F396E2DFB"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_E91B2298ADFE48C9946B843AE285F0CC"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2002,7 +2002,7 @@
         {
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Debug\\quickDBExplorer.exe"
+            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Release\\quickDBExplorer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"

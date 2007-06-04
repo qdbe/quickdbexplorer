@@ -221,6 +221,8 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem menuTabRead;
 		private System.Windows.Forms.MenuItem menuTabReadDQ;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
+		private System.Windows.Forms.MenuItem menuStasticUpdate;
+		private System.Windows.Forms.MenuItem menuUpdateStaticsMain;
 		
 		/// <summary>
 		/// メニュー情報
@@ -306,6 +308,8 @@ namespace quickDBExplorer
 			this.menuTabReadDQ = new System.Windows.Forms.MenuItem();
 			this.menuSeparater4 = new System.Windows.Forms.MenuItem();
 			this.menuDepend = new System.Windows.Forms.MenuItem();
+			this.menuUpdateStaticsMain = new System.Windows.Forms.MenuItem();
+			this.menuStasticUpdate = new System.Windows.Forms.MenuItem();
 			this.menuISQLW = new System.Windows.Forms.MenuItem();
 			this.btnInsert = new System.Windows.Forms.Button();
 			this.btnFieldList = new System.Windows.Forms.Button();
@@ -460,7 +464,8 @@ namespace quickDBExplorer
 																							this.menuTabRead,
 																							this.menuTabReadDQ,
 																							this.menuSeparater4,
-																							this.menuDepend});
+																							this.menuDepend,
+																							this.menuUpdateStaticsMain});
 			this.mainContextMenu.Popup += new System.EventHandler(this.mainContextMenu_Popup);
 			// 
 			// menuTableCopy
@@ -638,6 +643,18 @@ namespace quickDBExplorer
 			this.menuDepend.Index = 29;
 			this.menuDepend.Text = "依存関係出力";
 			this.menuDepend.Click += new System.EventHandler(this.DependOutPut);
+			// 
+			// menuUpdateStaticsMain
+			// 
+			this.menuUpdateStaticsMain.Index = 30;
+			this.menuUpdateStaticsMain.Text = "統計情報更新";
+			this.menuUpdateStaticsMain.Click += new System.EventHandler(this.menuUpdateStaticsMain_Click);
+			// 
+			// menuStasticUpdate
+			// 
+			this.menuStasticUpdate.Index = 9;
+			this.menuStasticUpdate.Text = "(&8) 統計情報更新";
+			this.menuStasticUpdate.Click += new System.EventHandler(this.menuStasticUpdate_Click);
 			// 
 			// menuISQLW
 			// 
@@ -1191,7 +1208,8 @@ namespace quickDBExplorer
 																						   this.menuSeparater6,
 																						   this.menuDependBtn,
 																						   this.menuRecordCount,
-																						   this.menuRecordCountDsp});
+																						   this.menuRecordCountDsp,
+																						   this.menuStasticUpdate});
 			// 
 			// menuQuery
 			// 
@@ -5661,6 +5679,62 @@ namespace quickDBExplorer
 				this.SqlTimeOut = 0;
 			}
 			MessageBox.Show("SQL Timeout値を " + this.SqlTimeOut.ToString() + "秒に設定しました" );
+		}
+
+		/// <summary>
+		/// 選択されたテーブルの統計情報を更新する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void menuStasticUpdate_Click(object sender, System.EventArgs e)
+		{
+			// SQL 的には、UPDATE STATISTICS table を実施する
+			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+		
+			this.InitErrMessage();
+
+			try
+			{
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+					string sqlstr;
+					// split owner.table -> owner, table
+
+					string delimStr = ".";
+					string []str = tbname.Split(delimStr.ToCharArray(), 2);
+					sqlstr = "update STATISTICS " + gettbname(tbname) ;
+					cm.CommandText = sqlstr;
+					cm.Connection = this.sqlConnection1;
+					cm.ExecuteNonQuery();
+				}
+				MessageBox.Show("処理を完了しました");
+			}
+			catch ( System.Data.SqlClient.SqlException se )
+			{
+				this.SetErrorMessage(se);
+			}
+			catch ( Exception se )
+			{
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+		}
+
+		private void menuUpdateStaticsMain_Click(object sender, System.EventArgs e)
+		{
+			this.menuStasticUpdate_Click(sender,e);
 		}
 	}
 
