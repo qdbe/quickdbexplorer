@@ -184,6 +184,8 @@ namespace quickDBExplorer
 
 		private textHistory  DMLHistory = new textHistory();
 
+		private int		sqlVersion = 2000;
+
 		/// <summary>
 		/// DBê⁄ë±èÓïÒ
 		/// </summary>
@@ -1435,6 +1437,14 @@ namespace quickDBExplorer
 
 			try
 			{
+				if(this.sqlConnection1.ServerVersion.StartsWith("08") )
+				{
+					this.sqlVersion = 2000;
+				}
+				else if(this.sqlConnection1.ServerVersion.StartsWith("09") )
+				{
+					this.sqlVersion = 2005;
+				}
 				this.Text = servername;
 				SqlDataAdapter da = new SqlDataAdapter("SELECT name FROM sysdatabases order by name", this.sqlConnection1);
 				DataSet ds = new DataSet();
@@ -1936,8 +1946,10 @@ namespace quickDBExplorer
 				}
 			}
 			else if( fldtypename == "nvarchar" ||
-					 fldtypename == "nchar" ||
-					 fldtypename == "ntext")
+				fldtypename == "nchar" ||
+				fldtypename == "xml" ||
+				fldtypename == "sql_variant" ||
+				fldtypename == "ntext")
 			{
 				// ï∂éöóÒ
 				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
@@ -2391,10 +2403,19 @@ namespace quickDBExplorer
 							valtype == "nchar" ||
 							valtype == "binary" )
 						{
-							istr = string.Format("{0}  {1}({2}) ",
-								ds.Tables[tbname].Rows[i][0],
-								ds.Tables[tbname].Rows[i][1],
-								ds.Tables[tbname].Rows[i][3]);
+							if( (Int16)ds.Tables[tbname].Rows[i][3] == -1 )
+							{
+								istr = string.Format("{0}  {1}(max) ",
+									ds.Tables[tbname].Rows[i][0],
+									ds.Tables[tbname].Rows[i][1]);
+							}
+							else
+							{
+								istr = string.Format("{0}  {1}({2}) ",
+									ds.Tables[tbname].Rows[i][0],
+									ds.Tables[tbname].Rows[i][1],
+									ds.Tables[tbname].Rows[i][3]);
+							}
 										 
 						}
 						else if( valtype == "numeric" ||
@@ -3123,7 +3144,14 @@ namespace quickDBExplorer
 							valtype == "nchar" ||
 							valtype == "binary" )
 						{
-							wr.Write(" ({0})", ds.Tables[tbname].Rows[i][3]);
+							if( (Int16)ds.Tables[tbname].Rows[i][3] == -1 )
+							{
+								wr.Write(" (max)");
+							}
+							else
+							{
+								wr.Write(" ({0})", ds.Tables[tbname].Rows[i][3]);
+							}
 						}
 						else if( valtype == "numeric" ||
 							valtype == "decimal" )
@@ -4568,6 +4596,12 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallISQLW(object sender, System.EventArgs e)
 		{
+			if( this.sqlVersion == 2005 )
+			{
+				this.CallEPM(sender,e);
+				return;
+			}
+
 			Process isqlProcess = new Process();
 			isqlProcess.StartInfo.FileName = "isqlw";
 			isqlProcess.StartInfo.ErrorDialog = true;
@@ -4626,7 +4660,14 @@ namespace quickDBExplorer
 		private void CallProfile(object sender, System.EventArgs e)
 		{
 			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = "profiler.exe";
+			if( this.sqlVersion == 2000 )
+			{
+				isqlProcess.StartInfo.FileName = "profiler.exe";
+			}
+			else
+			{
+				isqlProcess.StartInfo.FileName = "profiler90.exe";
+			}
 			isqlProcess.StartInfo.ErrorDialog = true;
 			string serverstr = "";
 			if( this.instanceName != "" )
@@ -4683,7 +4724,57 @@ namespace quickDBExplorer
 		private void CallEPM(object sender, System.EventArgs e)
 		{
 			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = "SQL Server Enterprise Manager.MSC";
+			if( this.sqlVersion == 2000 )
+			{
+				isqlProcess.StartInfo.FileName = "SQL Server Enterprise Manager.MSC";
+			}
+			else
+			{
+				isqlProcess.StartInfo.FileName = "SqlWb";
+				string serverstr = "";
+				if( this.instanceName != "" )
+				{
+					serverstr = this.serverRealName + "\\" + this.instanceName;
+				}
+				else
+				{
+					serverstr = this.serverRealName;
+				}
+				if( this.IsUseTruse == true )
+				{
+					if( this.dbList.SelectedItems.Count != 0 )
+					{
+						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E -nosplash",
+							serverstr,
+							(string)this.dbList.SelectedItem
+							);
+					}
+					else
+					{
+						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E -nosplash",
+							serverstr
+							);
+					}
+				}
+				else
+				{
+					if( this.dbList.SelectedItems.Count != 0 )
+					{
+						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} -nosplash",
+							serverstr,
+							(string)this.dbList.SelectedItem,
+							this.loginUid,
+							this.loginPasswd );
+					}
+					else
+					{
+						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} -nosplash",
+							serverstr,
+							this.loginUid,
+							this.loginPasswd );
+					}
+				}
+			}
 			isqlProcess.StartInfo.ErrorDialog = true;
 
 			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
