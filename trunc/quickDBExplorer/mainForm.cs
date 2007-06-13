@@ -5458,11 +5458,18 @@ namespace quickDBExplorer
 							break;
 						}
 						// {"System.Int16"}
-						if( col.DataType == typeof(System.Int32) )
+						if( col.DataType == typeof(System.Int16) )
 						{
 							try
 							{
-								dr[col.ColumnName] = Int16.Parse(ar[col.Ordinal].ToString());
+								if( ar[col.Ordinal].ToString() == "" )
+								{
+									dr[col.ColumnName] = DBNull.Value;
+								}
+								else
+								{
+									dr[col.ColumnName] = Int16.Parse(ar[col.Ordinal].ToString());
+								}
 							}
 							catch
 							{
@@ -5476,7 +5483,14 @@ namespace quickDBExplorer
 						{
 							try
 							{
-								dr[col.ColumnName] = Int32.Parse(ar[col.Ordinal].ToString());
+								if( ar[col.Ordinal].ToString() == "" )
+								{
+									dr[col.ColumnName] = DBNull.Value;
+								}
+								else
+								{
+									dr[col.ColumnName] = Int32.Parse(ar[col.Ordinal].ToString());
+								}
 							}
 							catch
 							{
@@ -5490,7 +5504,14 @@ namespace quickDBExplorer
 						{
 							try
 							{
-								dr[col.ColumnName] = Int64.Parse(ar[col.Ordinal].ToString());
+								if( ar[col.Ordinal].ToString() == "" )
+								{
+									dr[col.ColumnName] = DBNull.Value;
+								}
+								else
+								{
+									dr[col.ColumnName] = Int64.Parse(ar[col.Ordinal].ToString());
+								}
 							}
 							catch
 							{
@@ -5529,7 +5550,14 @@ namespace quickDBExplorer
 						{
 							try
 							{
-								dr[col.ColumnName] = DateTime.Parse(ar[col.Ordinal].ToString());
+								if( ar[col.Ordinal].ToString() == "" )
+								{
+									dr[col.ColumnName] = DBNull.Value;
+								}
+								else
+								{
+									dr[col.ColumnName] = DateTime.Parse(ar[col.Ordinal].ToString());
+								}
 							}
 							catch
 							{
@@ -5543,7 +5571,14 @@ namespace quickDBExplorer
 						{
 							try
 							{
-								dr[col.ColumnName] = Decimal.Parse(ar[col.Ordinal].ToString());
+								if( ar[col.Ordinal].ToString() == "" )
+								{
+									dr[col.ColumnName] = DBNull.Value;
+								}
+								else
+								{
+									dr[col.ColumnName] = Decimal.Parse(ar[col.Ordinal].ToString());
+								}
 							}
 							catch
 							{
@@ -5557,7 +5592,14 @@ namespace quickDBExplorer
 						{
 							try
 							{
-								dr[col.ColumnName] = Double.Parse(ar[col.Ordinal].ToString());
+								if( ar[col.Ordinal].ToString() == "" )
+								{
+									dr[col.ColumnName] = DBNull.Value;
+								}
+								else
+								{
+									dr[col.ColumnName] = Double.Parse(ar[col.Ordinal].ToString());
+								}
 							}
 							catch
 							{
@@ -5571,7 +5613,14 @@ namespace quickDBExplorer
 						{
 							try
 							{
-								dr[col.ColumnName] = Single.Parse(ar[col.Ordinal].ToString());
+								if( ar[col.Ordinal].ToString() == "" )
+								{
+									dr[col.ColumnName] = DBNull.Value;
+								}
+								else
+								{
+									dr[col.ColumnName] = Single.Parse(ar[col.Ordinal].ToString());
+								}
 							}
 							catch
 							{
