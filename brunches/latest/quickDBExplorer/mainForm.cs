@@ -1443,13 +1443,24 @@ namespace quickDBExplorer
 				if(this.sqlConnection1.ServerVersion.StartsWith("08") )
 				{
 					this.sqlVersion = 2000;
+					this.label5.Text = "owner/Role(&O)";
 				}
 				else if(this.sqlConnection1.ServerVersion.StartsWith("09") )
 				{
 					this.sqlVersion = 2005;
+					this.label5.Text = "Schema(&O)";
 				}
 				this.Text = servername;
-				SqlDataAdapter da = new SqlDataAdapter("SELECT name FROM sysdatabases order by name", this.sqlConnection1);
+				string selectsql = "";
+				if( this.sqlVersion == 2000 )
+				{
+					selectsql = "SELECT name FROM sysdatabases order by name";
+				}
+				else
+				{
+					selectsql = "SELECT name FROM sys.databases  order by name";
+				}
+				SqlDataAdapter da = new SqlDataAdapter(selectsql, this.sqlConnection1);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
 				da.Fill(ds,"sysdatabases");
@@ -1532,7 +1543,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 			displistowner();
 			if( svdata.dbopt[svdata.lastdb] != null )
 			{
@@ -2360,14 +2371,59 @@ namespace quickDBExplorer
 				string sqlstr;
 				// split owner.table -> owner, table
 
-				sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+				if( this.sqlVersion == 2000 )
+				{
+					sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+				}
+				else
+				{
+					sqlstr = string.Format(
+						@"select 
+	sys.columns.name colname, 
+	sys.types.name valtype, 
+	convert(smallint,sys.columns.max_length) as length, 
+	convert(smallint,sys.columns.precision) as prec, 
+	convert(smallint,sys.columns.scale) as xscale, 
+	sys.columns.column_id as colid, 
+	sys.columns.column_id as colorder, 
+	convert(int,sys.columns.is_nullable) as isnullable, 
+	sys.columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects, 
+	sys.columns, 
+	sys.schemas, 
+	sys.types 
+where 
+	sys.all_objects.object_id = sys.columns.object_id and 
+	sys.all_objects.schema_id= sys.schemas.schema_id and 
+	sys.columns.user_type_id  = sys.types.user_type_id  and 
+	sys.schemas.name = '{0}' and 
+	sys.all_objects.name = '{1}' 
+order by colorder",
+						str[0],
+						str[1]
+						);
+				}
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
 				da.Fill(ds,tbname);
 
-				sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
-					(int)ds.Tables[tbname].Rows[0]["id"] );
+				if( this.sqlVersion == 2000 )
+				{
+					sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
+						(int)ds.Tables[tbname].Rows[0]["id"] );
+				}
+				else
+				{
+					sqlstr = string.Format(
+						@"select * from sys.indexes where 
+							object_id = {0}
+						and is_primary_key = 1",
+						(int)ds.Tables[tbname].Rows[0]["id"] );
+				}
+
 				SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				DataSet idx = new DataSet();
 				idx.CaseSensitive = true;
@@ -2378,10 +2434,20 @@ namespace quickDBExplorer
 				idkey.CaseSensitive = true;
 				if( dodsp == true && idx.Tables[0].Rows.Count != 0 )
 				{
-					indid = (short)idx.Tables[0].Rows[0]["indid"];
-					sqlstr = string.Format("select * from sysindexkeys where id={0} and indid={1}",
-						(int)ds.Tables[tbname].Rows[0]["id"],
-						(short)indid );
+					if( this.sqlVersion == 2000 )
+					{
+						indid = (short)idx.Tables[0].Rows[0]["indid"];
+						sqlstr = string.Format("select * from sysindexkeys where id={0} and indid={1}",
+							(int)ds.Tables[tbname].Rows[0]["id"],
+							(short)indid );
+					}
+					else
+					{
+						indid = (int)idx.Tables[0].Rows[0]["index_id"];
+						sqlstr = string.Format("select object_id,index_id,index_column_id,column_id as colid,key_ordinal,partition_ordinal,is_descending_key,is_included_column from sys.index_columns where object_id={0} and index_id={1}",
+							(int)ds.Tables[tbname].Rows[0]["id"],
+							(short)indid );
+					}
 					SqlDataAdapter dai = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 					dai.Fill(idkey,tbname);
 				}
@@ -2449,9 +2515,19 @@ namespace quickDBExplorer
 						{
 							foreach(DataRow dr in idkey.Tables[0].Rows )
 							{
-								if( (short)dr["colid"] == (short)ds.Tables[tbname].Rows[i]["colid"] )
+								if( this.sqlVersion == 2000 )
 								{
-									istr +=" PRIMARY KEY";
+									if( (short)dr["colid"] == (short)ds.Tables[tbname].Rows[i]["colid"] )
+									{
+										istr +=" PRIMARY KEY";
+									}
+								}
+								else
+								{
+									if( (int)dr["colid"] == (int)ds.Tables[tbname].Rows[i]["colid"] )
+									{
+										istr +=" PRIMARY KEY";
+									}
 								}
 							}
 						}
@@ -2764,12 +2840,12 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 		}
 
 		private void rdoSortTable_CheckedChanged(object sender, System.EventArgs e)
 		{
-			dsplist2();
+			dspTableList();
 		}
 
 		private void insertmakeDelete(object sender, System.EventArgs e)
@@ -2917,10 +2993,13 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 		}
 
-		private void dsplist2()
+		/// <summary>
+		/// 現在の画面上のDB、Owner から、テーブル一覧を表示する
+		/// </summary>
+		private void dspTableList()
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
@@ -2950,11 +3029,55 @@ namespace quickDBExplorer
 
 				if( this.rdoDspView.Checked == true )
 				{
-					cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
+					}
+					else
+					{
+						cm.CommandText = @"select 
+	sys.all_objects.name as tbname, 
+	sys.schemas.name as uname 
+from 
+	sys.all_objects, 
+	sys.schemas 
+where 
+	( sys.all_objects.type='U' or sys.all_objects.type='V' 
+	  or
+	  (sys.all_objects.type='SN' and 
+		exists ( select 'X' from sys.all_objects t2 where
+		sys.all_objects.parent_object_id = t2.object_id and 
+		(t2.type='U' or t2.type='V') )
+	   )
+	) and 
+	sys.all_objects.schema_id = sys.schemas.schema_id";
+					}
 				}
 				else
 				{
-					cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
+					}
+					else
+					{
+						cm.CommandText = @"select 
+	sys.all_objects.name as tbname, 
+	sys.schemas.name as uname 
+from 
+	sys.all_objects, 
+	sys.schemas 
+where 
+	( sys.all_objects.type='U' 
+	  or
+	  (sys.all_objects.type='SN' and 
+		exists ( select 'X' from sys.all_objects t2 where
+		sys.all_objects.parent_object_id = t2.object_id and 
+		(t2.type='U' ) )
+	   )
+	) and 
+	sys.all_objects.schema_id = sys.schemas.schema_id";
+					}
 				}
 
 				if( this.ownerListbox.SelectedItem != null )
@@ -2977,7 +3100,14 @@ namespace quickDBExplorer
 					}
 					if( allsele == false )
 					{
-						cm.CommandText += " and sysusers.name in ( " + ownerlist + " ) ";
+						if( this.sqlVersion == 2000 )
+						{
+							cm.CommandText += " and sysusers.name in ( " + ownerlist + " ) ";
+						}
+						else
+						{
+							cm.CommandText += " and sys.schemas.name in ( " + ownerlist + " ) ";
+						}
 					}
 				}
 				cm.CommandText += sortkey;
@@ -3497,7 +3627,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 			displistowner();
 		}
 
@@ -3513,11 +3643,25 @@ namespace quickDBExplorer
 			{
 				if( rdoDspSysUser.Checked )
 				{
-					cm.CommandText = "select * from sysusers order by name";
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select * from sysusers order by name";
+					}
+					else
+					{
+						cm.CommandText = "select * from sys.schemas order by name";
+					}
 				}
 				else
 				{
-					cm.CommandText = "select * from sysusers where name not like 'db_%' order by name";
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select * from sysusers where name not like 'db_%' order by name";
+					}
+					else
+					{
+						cm.CommandText = "select * from sys.schemas where name not like 'db_%' order by name";
+					}
 				}
 				cm.Connection = this.sqlConnection1;
 
@@ -3555,7 +3699,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 			displistowner();
 		}
 

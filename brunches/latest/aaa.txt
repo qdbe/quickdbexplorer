@@ -1,0 +1,5 @@
+ms-help://MS.SQLCC.v9/MS.SQLSVR.v9.ja/tsqlref9/html/a616fce9-b4c1-49da-87a7-9d6f74911d8f.htm
+
+
+
+sys.index_columns:object_id,index_id,index_column_id,column_id,key_ordinal,partition_ordinal,is_descending_key,is_included_column
