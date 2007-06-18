@@ -184,6 +184,9 @@ namespace quickDBExplorer
 
 		private textHistory  DMLHistory = new textHistory();
 
+		/// <summary>
+		/// Ú‘±‚µ‚½æ‚ÌSQL Server‚Ìƒo[ƒWƒ‡ƒ“
+		/// </summary>
 		private int		sqlVersion = 2000;
 
 		/// <summary>
