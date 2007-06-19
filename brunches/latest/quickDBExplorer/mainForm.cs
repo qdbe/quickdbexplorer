@@ -2483,7 +2483,7 @@ order by colorder",
 								istr = string.Format("{0}  {1}({2}) ",
 									ds.Tables[tbname].Rows[i][0],
 									ds.Tables[tbname].Rows[i][1],
-									ds.Tables[tbname].Rows[i][3]);
+									ds.Tables[tbname].Rows[i][2]);
 							}
 										 
 						}
