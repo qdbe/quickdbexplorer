@@ -2257,7 +2257,6 @@ namespace quickDBExplorer
 			{
 				this.InitErrMessage();
 
-				// insert •¶‚Ìì¬
 				if( this.tableList.SelectedItems.Count == 0 )
 				{
 					return;
@@ -2371,18 +2370,44 @@ namespace quickDBExplorer
 				string sqlstr;
 				// split owner.table -> owner, table
 
+
 				if( this.sqlVersion == 2000 )
 				{
 					sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
 				}
 				else
 				{
-					sqlstr = string.Format(
-						@"select 
+					// Check synonym 
+					sqlstr = string.Format( @"select parent_object_id from sys.all_objects 
+	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.all_objects.name = '{1}' ",
+						str[0],
+						str[1]
+						);
+					SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+					DataSet dssyn = new DataSet();
+					dssyn.CaseSensitive = true;
+					dasyn.Fill(dssyn,tbname);
+					if( dssyn.Tables[tbname].Rows.Count > 0 &&
+						(int)dssyn.Tables[tbname].Rows[0][0] != 0 )
+					{
+						// Synonym 
+
+	
+
+						sqlstr = string.Format(
+							@"select 
 	sys.columns.name colname, 
-	sys.types.name valtype, 
+	st.name valtype, 
 	convert(smallint,sys.columns.max_length) as length, 
-	convert(smallint,sys.columns.precision) as prec, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
+	ELSE sys.columns.precision	
+	end ) as [prec], 
 	convert(smallint,sys.columns.scale) as xscale, 
 	sys.columns.column_id as colid, 
 	sys.columns.column_id as colorder, 
@@ -2390,38 +2415,82 @@ namespace quickDBExplorer
 	sys.columns.collation_name as collation, 
 	sys.all_objects.object_id as id
 from 
-	sys.all_objects, 
-	sys.columns, 
-	sys.schemas, 
-	sys.types 
+	sys.all_objects 
+	inner join sys.columns on sys.all_objects.object_id = sys.columns.object_id 
+	inner join sys.types st on sys.columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
 where 
-	sys.all_objects.object_id = sys.columns.object_id and 
-	sys.all_objects.schema_id= sys.schemas.schema_id and 
-	sys.columns.user_type_id  = sys.types.user_type_id  and 
+	sys.all_objects.object_id = {0} 
+order by colorder",
+							(int)dssyn.Tables[tbname].Rows[0][0]
+							);
+					}
+					else
+					{
+						// Not Synonym
+
+	
+
+						sqlstr = string.Format(
+							@"select 
+	sys.columns.name colname, 
+	st.name valtype, 
+	convert(smallint,sys.columns.max_length) as length, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
+	ELSE sys.columns.precision	
+	end ) as [prec], 
+	convert(smallint,sys.columns.scale) as xscale, 
+	sys.columns.column_id as colid, 
+	sys.columns.column_id as colorder, 
+	convert(int,sys.columns.is_nullable) as isnullable, 
+	sys.columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.columns on sys.all_objects.object_id = sys.columns.object_id 
+	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
+	inner join sys.types st on sys.columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
 	sys.schemas.name = '{0}' and 
 	sys.all_objects.name = '{1}' 
 order by colorder",
-						str[0],
-						str[1]
-						);
+							str[0],
+							str[1]
+							);
+					}
 				}
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
 				da.Fill(ds,tbname);
 
-				if( this.sqlVersion == 2000 )
+
+				if( ds.Tables[tbname].Rows.Count == 0 )
 				{
-					sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
-						(int)ds.Tables[tbname].Rows[0]["id"] );
+					sqlstr = string.Format(
+						@"select * from sys.indexes where 0=1" );
 				}
 				else
 				{
-					sqlstr = string.Format(
-						@"select * from sys.indexes where 
+					if( this.sqlVersion == 2000 )
+					{
+						sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
+							(int)ds.Tables[tbname].Rows[0]["id"] );
+					}
+					else
+					{
+						sqlstr = string.Format(
+							@"select * from sys.indexes where 
 							object_id = {0}
 						and is_primary_key = 1",
-						(int)ds.Tables[tbname].Rows[0]["id"] );
+							(int)ds.Tables[tbname].Rows[0]["id"] );
+					}
 				}
 
 				SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection1);
@@ -2483,7 +2552,7 @@ order by colorder",
 								istr = string.Format("{0}  {1}({2}) ",
 									ds.Tables[tbname].Rows[i][0],
 									ds.Tables[tbname].Rows[i][1],
-									ds.Tables[tbname].Rows[i][2]);
+									ds.Tables[tbname].Rows[i][3]);
 							}
 										 
 						}
@@ -3223,7 +3292,44 @@ where
 
 					string delimStr = ".";
 					string []str = tbname.Split(delimStr.ToCharArray(), 2);
-					sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+					if( this.sqlVersion == 2000 )
+					{
+						sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+					}
+					else
+					{
+						sqlstr = string.Format(
+							@"select 
+	sys.columns.name colname, 
+	st.name valtype, 
+	convert(smallint,sys.columns.max_length) as length, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
+	ELSE sys.columns.precision	
+	end ) as [prec], 
+	convert(smallint,sys.columns.scale) as xscale, 
+	sys.columns.column_id as colid, 
+	sys.columns.column_id as colorder, 
+	convert(int,sys.columns.is_nullable) as isnullable, 
+	sys.columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.columns on sys.all_objects.object_id = sys.columns.object_id 
+	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
+	inner join sys.types st on sys.columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
+	sys.schemas.name = '{0}' and 
+	sys.all_objects.name = '{1}' 
+order by colorder",
+							str[0],
+							str[1]
+							);
+					}
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
