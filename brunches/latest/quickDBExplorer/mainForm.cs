@@ -2378,11 +2378,11 @@ namespace quickDBExplorer
 				else
 				{
 					// Check synonym 
-					sqlstr = string.Format( @"select parent_object_id from sys.all_objects 
-	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
+					sqlstr = string.Format( @"select OBJECT_ID(base_object_name) from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
 	where
 	sys.schemas.name = '{0}' and 
-	sys.all_objects.name = '{1}' ",
+	sys.synonyms.name = '{1}' ",
 						str[0],
 						str[1]
 						);
@@ -3111,12 +3111,17 @@ from
 	sys.all_objects, 
 	sys.schemas 
 where 
-	( sys.all_objects.type='U' or sys.all_objects.type='V' 
+	( sys.all_objects.type='U' 
+	  or sys.all_objects.type='V' 
 	  or
 	  (sys.all_objects.type='SN' and 
-		exists ( select 'X' from sys.all_objects t2 where
-		sys.all_objects.parent_object_id = t2.object_id and 
-		(t2.type='U' or t2.type='V') )
+		exists ( select 'X' from sys.synonyms t2 
+			inner join sys.all_objects t3 on
+			OBJECT_ID(t2.base_object_name) = t3.object_id
+			and (t3.type='U' or t3.type='V' )
+				where
+				sys.all_objects.object_id = t2.object_id 
+				)
 	   )
 	) and 
 	sys.all_objects.schema_id = sys.schemas.schema_id";
@@ -3140,9 +3145,13 @@ where
 	( sys.all_objects.type='U' 
 	  or
 	  (sys.all_objects.type='SN' and 
-		exists ( select 'X' from sys.all_objects t2 where
-		sys.all_objects.parent_object_id = t2.object_id and 
-		(t2.type='U' ) )
+		exists ( select 'X' from sys.synonyms t2 
+			inner join sys.all_objects t3 on
+			OBJECT_ID(t2.base_object_name) = t3.object_id
+			and (t3.type='U')
+				where
+				sys.all_objects.object_id = t2.object_id 
+				)
 	   )
 	) and 
 	sys.all_objects.schema_id = sys.schemas.schema_id";
