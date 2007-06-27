@@ -143,7 +143,28 @@ namespace quickDBExplorer
 			string []str = tbname.Split(delimStr.ToCharArray(), 2);
 			string sqlstr;
 
-			sqlstr = string.Format(@"sp_helpindex '{0}'", tbname );
+			sqlstr = string.Format( @"select base_object_name from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.synonyms.name = '{1}' ",
+				str[0],
+				str[1]
+				);
+			SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection);
+			DataSet dssyn = new DataSet();
+			dssyn.CaseSensitive = true;
+			dasyn.Fill(dssyn,tbname);
+			if( dssyn.Tables[tbname].Rows.Count > 0 )
+			{
+				// Synonym 
+				sqlstr = string.Format(@"sp_helpindex '{0}'", dssyn.Tables[tbname].Rows[0]["base_object_name"] );
+			}
+			else
+			{
+				sqlstr = string.Format(@"sp_helpindex '{0}'", tbname );
+			}
+
 			SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection);
 			DataSet baseidx = new DataSet();
 			daa.Fill(baseidx,"basedata");

@@ -1444,11 +1444,13 @@ namespace quickDBExplorer
 				{
 					this.sqlVersion = 2000;
 					this.label5.Text = "owner/Role(&O)";
+					this.rdoSortOwnerTable.Text = "オーナー名・テーブル名";
 				}
 				else if(this.sqlConnection1.ServerVersion.StartsWith("09") )
 				{
 					this.sqlVersion = 2005;
 					this.label5.Text = "Schema(&O)";
+					this.rdoSortOwnerTable.Text = "スキーマ名・テーブル名";
 				}
 				this.Text = servername;
 				string selectsql = "";
@@ -3289,12 +3291,6 @@ where
 						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
 					}
 
-					if( bDrop )
-					{
-						wr.Write( "DROP TABLE " );
-						wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
-						wr.Write( "GO{0}",wr.NewLine);
-					}
 					// get id 
 					string sqlstr;
 					// split owner.table -> owner, table
@@ -3303,12 +3299,93 @@ where
 					string []str = tbname.Split(delimStr.ToCharArray(), 2);
 					if( this.sqlVersion == 2000 )
 					{
+						if( bDrop )
+						{
+							wr.Write( "DROP TABLE " );
+							wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+							wr.Write( "GO{0}",wr.NewLine);
+						}
 						sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
 					}
 					else
 					{
-						sqlstr = string.Format(
-							@"select 
+						// synonym ？
+						sqlstr = string.Format( @"select * from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.synonyms.name = '{1}' ",
+							str[0],
+							str[1]
+							);
+						SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+						DataSet dssyn = new DataSet();
+						dssyn.CaseSensitive = true;
+						dasyn.Fill(dssyn,tbname);
+						if( dssyn.Tables[tbname].Rows.Count > 0 )
+						{
+							// Synonym 
+							if( bDrop )
+							{
+								wr.Write( "DROP SYNONYM " );
+								wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+								wr.Write( "GO{0}",wr.NewLine);
+							}
+							wr.Write( string.Format("create synonym {0} for {1}",
+								gettbname(tbname),
+								dssyn.Tables[tbname].Rows[0]["base_object_name"] )
+								);
+							wr.Write("{0}{0}Go{0}",wr.NewLine);
+
+							if( bDrop )
+							{
+								wr.Write( "DROP TABLE " );
+								wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+								wr.Write( "GO{0}",wr.NewLine);
+							}
+							// not synonym 
+							sqlstr = string.Format(
+								@"select 
+	sys.columns.name colname, 
+	st.name valtype, 
+	convert(smallint,sys.columns.max_length) as length, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
+	ELSE sys.columns.precision	
+	end ) as [prec], 
+	convert(smallint,sys.columns.scale) as xscale, 
+	sys.columns.column_id as colid, 
+	sys.columns.column_id as colorder, 
+	convert(int,sys.columns.is_nullable) as isnullable, 
+	sys.columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.synonyms on sys.all_objects.object_id = OBJECT_ID(sys.synonyms.base_object_name) 
+	inner join sys.columns on sys.all_objects.object_id = sys.columns.object_id 
+	inner join sys.types st on sys.columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
+	sys.synonyms.object_id = OBJECT_ID('{0}')
+order by colorder",
+								gettbname(tbname)
+								);
+
+						}
+						else
+						{
+							if( bDrop )
+							{
+								wr.Write( "DROP TABLE " );
+								wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+								wr.Write( "GO{0}",wr.NewLine);
+							}
+							// not synonym 
+							sqlstr = string.Format(
+								@"select 
 	sys.columns.name colname, 
 	st.name valtype, 
 	convert(smallint,sys.columns.max_length) as length, 
@@ -3335,9 +3412,10 @@ where
 	sys.schemas.name = '{0}' and 
 	sys.all_objects.name = '{1}' 
 order by colorder",
-							str[0],
-							str[1]
-							);
+								str[0],
+								str[1]
+								);
+						}
 					}
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 					DataSet ds = new DataSet();
@@ -6110,6 +6188,24 @@ order by colorder",
 
 					string delimStr = ".";
 					string []str = tbname.Split(delimStr.ToCharArray(), 2);
+
+					sqlstr = string.Format( @"select base_object_name from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.synonyms.name = '{1}' ",
+						str[0],
+						str[1]
+						);
+					SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+					DataSet dssyn = new DataSet();
+					dssyn.CaseSensitive = true;
+					dasyn.Fill(dssyn,tbname);
+					if( dssyn.Tables[tbname].Rows.Count > 0 )
+					{
+						// synonym は update STATISTICSができない
+						continue;
+					}
 					sqlstr = "update STATISTICS " + gettbname(tbname) ;
 					cm.CommandText = sqlstr;
 					cm.Connection = this.sqlConnection1;
