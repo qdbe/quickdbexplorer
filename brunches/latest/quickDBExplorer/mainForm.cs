@@ -2401,25 +2401,25 @@ namespace quickDBExplorer
 
 						sqlstr = string.Format(
 							@"select 
-	sys.columns.name colname, 
+	sys.all_columns.name colname, 
 	st.name valtype, 
-	convert(smallint,sys.columns.max_length) as length, 
+	convert(smallint,sys.all_columns.max_length) as length, 
 	convert(smallint,
 	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
-	ELSE sys.columns.precision	
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
 	end ) as [prec], 
-	convert(smallint,sys.columns.scale) as xscale, 
-	sys.columns.column_id as colid, 
-	sys.columns.column_id as colorder, 
-	convert(int,sys.columns.is_nullable) as isnullable, 
-	sys.columns.collation_name as collation, 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
 	sys.all_objects.object_id as id
 from 
 	sys.all_objects 
-	inner join sys.columns on sys.all_objects.object_id = sys.columns.object_id 
-	inner join sys.types st on sys.columns.user_type_id  = st.user_type_id  
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
 	LEFT OUTER JOIN sys.types AS baset ON 
 		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
 where 
@@ -2436,26 +2436,26 @@ order by colorder",
 
 						sqlstr = string.Format(
 							@"select 
-	sys.columns.name colname, 
+	sys.all_columns.name colname, 
 	st.name valtype, 
-	convert(smallint,sys.columns.max_length) as length, 
+	convert(smallint,sys.all_columns.max_length) as length, 
 	convert(smallint,
 	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
-	ELSE sys.columns.precision	
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
 	end ) as [prec], 
-	convert(smallint,sys.columns.scale) as xscale, 
-	sys.columns.column_id as colid, 
-	sys.columns.column_id as colorder, 
-	convert(int,sys.columns.is_nullable) as isnullable, 
-	sys.columns.collation_name as collation, 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
 	sys.all_objects.object_id as id
 from 
 	sys.all_objects 
-	inner join sys.columns on sys.all_objects.object_id = sys.columns.object_id 
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
 	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
-	inner join sys.types st on sys.columns.user_type_id  = st.user_type_id  
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
 	LEFT OUTER JOIN sys.types AS baset ON 
 		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
 where 
@@ -3346,26 +3346,26 @@ where
 							// not synonym 
 							sqlstr = string.Format(
 								@"select 
-	sys.columns.name colname, 
+	sys.all_columns.name colname, 
 	st.name valtype, 
-	convert(smallint,sys.columns.max_length) as length, 
+	convert(smallint,sys.all_columns.max_length) as length, 
 	convert(smallint,
 	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
-	ELSE sys.columns.precision	
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
 	end ) as [prec], 
-	convert(smallint,sys.columns.scale) as xscale, 
-	sys.columns.column_id as colid, 
-	sys.columns.column_id as colorder, 
-	convert(int,sys.columns.is_nullable) as isnullable, 
-	sys.columns.collation_name as collation, 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
 	sys.all_objects.object_id as id
 from 
 	sys.all_objects 
 	inner join sys.synonyms on sys.all_objects.object_id = OBJECT_ID(sys.synonyms.base_object_name) 
-	inner join sys.columns on sys.all_objects.object_id = sys.columns.object_id 
-	inner join sys.types st on sys.columns.user_type_id  = st.user_type_id  
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
 	LEFT OUTER JOIN sys.types AS baset ON 
 		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
 where 
@@ -3386,26 +3386,26 @@ order by colorder",
 							// not synonym 
 							sqlstr = string.Format(
 								@"select 
-	sys.columns.name colname, 
+	sys.all_columns.name colname, 
 	st.name valtype, 
-	convert(smallint,sys.columns.max_length) as length, 
+	convert(smallint,sys.all_columns.max_length) as length, 
 	convert(smallint,
 	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.columns.max_length/2 
-	ELSE sys.columns.precision	
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
 	end ) as [prec], 
-	convert(smallint,sys.columns.scale) as xscale, 
-	sys.columns.column_id as colid, 
-	sys.columns.column_id as colorder, 
-	convert(int,sys.columns.is_nullable) as isnullable, 
-	sys.columns.collation_name as collation, 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
 	sys.all_objects.object_id as id
 from 
 	sys.all_objects 
-	inner join sys.columns on sys.all_objects.object_id = sys.columns.object_id 
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
 	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
-	inner join sys.types st on sys.columns.user_type_id  = st.user_type_id  
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
 	LEFT OUTER JOIN sys.types AS baset ON 
 		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
 where 
@@ -3853,7 +3853,9 @@ order by colorder",
 					}
 					else
 					{
-						cm.CommandText = "select * from sys.schemas where name not like 'db_%' order by name";
+						cm.CommandText = @"select * from sys.schemas where name not in ( 'sys', 'INFORMATION_SCHEMA', 'guest', 'db_owner', 
+							'db_accessadmin', 'db_securityadmin', 'db_ddladmin', 'db_backupoperator', 'db_datareader',
+							'db_datawriter', 'db_denydatareader', 'db_denydatawriter'  ) order by name";
 					}
 				}
 				cm.Connection = this.sqlConnection1;

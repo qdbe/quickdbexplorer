@@ -131,6 +131,7 @@ namespace quickDBExplorer
 			this.txtZoom.Location = new System.Drawing.Point(14, 12);
 			this.txtZoom.Multiline = true;
 			this.txtZoom.Name = "txtZoom";
+			this.txtZoom.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.txtZoom.Size = new System.Drawing.Size(520, 210);
 			this.txtZoom.TabIndex = 0;
 			this.txtZoom.Text = "";
