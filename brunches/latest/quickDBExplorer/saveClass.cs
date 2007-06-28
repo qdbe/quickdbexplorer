@@ -46,6 +46,23 @@ namespace quickDBExplorer
 		public	bool	isSaveKey = true;
 		public	bool	IsUseTrust = false;
 		public	string	loginUser = "";
+		/// <summary>
+		/// where ãÂÇÃì¸óÕóöóèÓïÒ
+		/// </summary>
+		public textHistory  whereHistory;
+
+		/// <summary>
+		/// order by ãÂÇÃì¸óÕóöóèÓïÒ
+		/// </summary>
+		public textHistory  sortHistory;
+
+		/// <summary>
+		/// select é¿çsóöóèÓïÒ
+		/// </summary>
+		public textHistory  selectHistory;
+
+		public textHistory  DMLHistory;
+
 
 		public ServerData()
 		{
@@ -59,6 +76,10 @@ namespace quickDBExplorer
 			showgrid =  new Hashtable();
 			griddspcnt =  new Hashtable();
 			txtencode = new Hashtable();
+			whereHistory = new textHistory();
+			sortHistory = new textHistory();
+			selectHistory = new textHistory();
+			DMLHistory = new textHistory();
 		}
 
 		public ServerData(SerializationInfo info, StreamingContext context)
@@ -77,6 +98,10 @@ namespace quickDBExplorer
 			showgrid =  new Hashtable();
 			griddspcnt =  new Hashtable();
 			txtencode = new Hashtable();
+			whereHistory = new textHistory();
+			sortHistory = new textHistory();
+			selectHistory = new textHistory();
+			DMLHistory = new textHistory();
 
 			try
 			{
@@ -170,6 +195,29 @@ namespace quickDBExplorer
 				this.loginUser = info.GetString("loginUser");
 			}
 			catch{}
+
+			try
+			{
+				this.whereHistory = (textHistory)info.GetValue("whereHistory",typeof(textHistory));
+			}
+			catch{}
+			try
+			{
+				this.sortHistory = (textHistory)info.GetValue("sortHistory",typeof(textHistory));
+			}
+			catch{}
+			try
+			{
+				this.selectHistory = (textHistory)info.GetValue("selectHistory",typeof(textHistory));
+			}
+			catch{}
+			try
+			{
+				this.DMLHistory = (textHistory)info.GetValue("DMLHistory",typeof(textHistory));
+			}
+			catch{}
+
+
 		}
 
 		public virtual void GetObjectData(
@@ -191,6 +239,10 @@ namespace quickDBExplorer
 			info.AddValue("txtencode", txtencode );
 			info.AddValue("isSaveKey", isSaveKey );
 			info.AddValue("loginUser", loginUser );
+			info.AddValue("whereHistory", whereHistory );
+			info.AddValue("sortHistory", sortHistory );
+			info.AddValue("selectHistory", selectHistory );
+			info.AddValue("DMLHistory", DMLHistory );
 		}
 
 		public string Servername

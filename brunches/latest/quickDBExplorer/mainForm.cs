@@ -248,6 +248,10 @@ namespace quickDBExplorer
 			svdata = sv;
 			Sqldlg.SelectSql = "";
 			Sqldlg2.SelectSql = "";
+			this.whereHistory = svdata.whereHistory;
+			this.sortHistory = svdata.sortHistory;
+			this.selectHistory = svdata.selectHistory;
+			this.DMLHistory = svdata.DMLHistory;
 		}
 
 		/// <summary>
