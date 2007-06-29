@@ -11,8 +11,8 @@ namespace quickDBExplorer
 	/// </summary>
 	public class QueryDialog : System.Windows.Forms.Form
 	{
-		private System.Windows.Forms.TextBox textBox1;
-		private System.Windows.Forms.Button button1;
+		protected System.Windows.Forms.TextBox textBox1;
+		protected System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
 
 		public string	SelectSql = "";
@@ -201,7 +201,7 @@ namespace quickDBExplorer
 		#endregion
 
 
-		private void button1_Click(object sender, System.EventArgs e)
+		protected virtual void button1_Click(object sender, System.EventArgs e)
 		{
 			SelectSql = this.textBox1.Text;
 			if( this.checkBox1.Checked == true )

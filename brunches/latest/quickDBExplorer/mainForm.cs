@@ -228,6 +228,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.MenuItem menuStasticUpdate;
 		private System.Windows.Forms.MenuItem menuUpdateStaticsMain;
+		private System.Windows.Forms.MenuItem menuDoQuery;
 		
 		/// <summary>
 		/// メニュー情報
@@ -399,6 +400,7 @@ namespace quickDBExplorer
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.cmbHistory = new System.Windows.Forms.ComboBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.menuDoQuery = new System.Windows.Forms.MenuItem();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -1218,7 +1220,8 @@ namespace quickDBExplorer
 																						   this.menuDependBtn,
 																						   this.menuRecordCount,
 																						   this.menuRecordCountDsp,
-																						   this.menuStasticUpdate});
+																						   this.menuStasticUpdate,
+																						   this.menuDoQuery});
 			// 
 			// menuQuery
 			// 
@@ -1324,6 +1327,12 @@ namespace quickDBExplorer
 			this.cmbHistory.Size = new System.Drawing.Size(176, 20);
 			this.cmbHistory.TabIndex = 19;
 			this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectionChangeCommitted);
+			// 
+			// menuDoQuery
+			// 
+			this.menuDoQuery.Index = 10;
+			this.menuDoQuery.Text = "(9) 各種コマンド実行";
+			this.menuDoQuery.Click += new System.EventHandler(this.menuDoQuery_Click);
 			// 
 			// MainForm
 			// 
@@ -6195,6 +6204,79 @@ order by colorder",
 					string delimStr = ".";
 					string []str = tbname.Split(delimStr.ToCharArray(), 2);
 
+					if( this.sqlVersion != 2000 )
+					{
+						// synonym かどうかをチェックする。
+						sqlstr = string.Format( @"select base_object_name from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.synonyms.name = '{1}' ",
+							str[0],
+							str[1]
+							);
+						SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+						DataSet dssyn = new DataSet();
+						dssyn.CaseSensitive = true;
+						dasyn.Fill(dssyn,tbname);
+						if( dssyn.Tables[tbname].Rows.Count > 0 )
+						{
+							// synonym は update STATISTICSができない
+							continue;
+						}
+					}
+					sqlstr = "update STATISTICS " + gettbname(tbname) ;
+					cm.CommandText = sqlstr;
+					cm.Connection = this.sqlConnection1;
+					cm.ExecuteNonQuery();
+				}
+				MessageBox.Show("処理を完了しました");
+			}
+			catch ( System.Data.SqlClient.SqlException se )
+			{
+				this.SetErrorMessage(se);
+			}
+			catch ( Exception se )
+			{
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+		}
+
+		private void menuUpdateStaticsMain_Click(object sender, System.EventArgs e)
+		{
+			this.menuStasticUpdate_Click(sender,e);
+		}
+
+		private void menuDoQuery_Click(object sender, System.EventArgs e)
+		{
+			// テーブル名称を引数として、各種クエリの実行を可能にする
+			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+		
+			this.InitErrMessage();
+
+			try
+			{
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+					string sqlstr;
+					// split owner.table -> owner, table
+
+					string delimStr = ".";
+					string []str = tbname.Split(delimStr.ToCharArray(), 2);
+
 					sqlstr = string.Format( @"select base_object_name from sys.synonyms 
 	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
 	where
@@ -6234,11 +6316,8 @@ order by colorder",
 					cm.Dispose();
 				}
 			}
-		}
 
-		private void menuUpdateStaticsMain_Click(object sender, System.EventArgs e)
-		{
-			this.menuStasticUpdate_Click(sender,e);
+		
 		}
 	}
 
