@@ -101,6 +101,7 @@ namespace quickDBExplorer
 
 		private QueryDialog Sqldlg2 = new QueryDialog();
 		private QuerySelectDialog Sqldlg = new QuerySelectDialog();
+		private	CmdInputDialog	cmdDialog = new CmdInputDialog();
 		private DataSet dspdt = new DataSet();
 		private ServerData svdata;
 		private	Font	gfont;
@@ -184,6 +185,8 @@ namespace quickDBExplorer
 
 		private textHistory  DMLHistory = new textHistory();
 
+		private textHistory  cmdHistory = new textHistory();
+
 		/// <summary>
 		/// 接続した先のSQL Serverのバージョン
 		/// </summary>
@@ -249,10 +252,12 @@ namespace quickDBExplorer
 			svdata = sv;
 			Sqldlg.SelectSql = "";
 			Sqldlg2.SelectSql = "";
+			cmdDialog.SelectSql = "";
 			this.whereHistory = svdata.whereHistory;
 			this.sortHistory = svdata.sortHistory;
 			this.selectHistory = svdata.selectHistory;
 			this.DMLHistory = svdata.DMLHistory;
+			this.cmdHistory = svdata.cmdHistory;
 		}
 
 		/// <summary>
@@ -2488,8 +2493,17 @@ order by colorder",
 
 				if( ds.Tables[tbname].Rows.Count == 0 )
 				{
-					sqlstr = string.Format(
-						@"select * from sys.indexes where 0=1" );
+					// 通常はありえないが、念の為、空の表示を行う
+					if( this.sqlVersion == 2000 )
+					{
+						sqlstr = string.Format(
+							@"select * from sysindexes where 0=1" );
+					}
+					else
+					{
+						sqlstr = string.Format(
+							@"select * from sys.indexes where 0=1" );
+					}
 				}
 				else
 				{
@@ -4596,6 +4610,8 @@ order by colorder",
 			if( indexdlg == null )
 			{
 				indexdlg = new IndexViewDialog();
+				indexdlg.sqlVersion = this.sqlVersion;
+
 				indexdlg.sqlConnection = this.sqlConnection1;
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
@@ -6257,67 +6273,71 @@ order by colorder",
 		private void menuDoQuery_Click(object sender, System.EventArgs e)
 		{
 			// テーブル名称を引数として、各種クエリの実行を可能にする
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
 
 			if( this.tableList.SelectedItems.Count == 0 )
 			{
 				return;
 			}
-		
-			this.InitErrMessage();
 
+			SqlCommand cm = new SqlCommand();
+			SqlDataAdapter da = new SqlDataAdapter();
 			try
 			{
-				foreach( String tbname in this.tableList.SelectedItems )
+				this.InitErrMessage();
+
+				this.cmdDialog.DHistory = this.cmdHistory;
+
+				if( cmdDialog.ShowDialog() == DialogResult.OK )
 				{
-					string sqlstr;
-					// split owner.table -> owner, table
-
-					string delimStr = ".";
-					string []str = tbname.Split(delimStr.ToCharArray(), 2);
-
-					sqlstr = string.Format( @"select base_object_name from sys.synonyms 
-	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
-	where
-	sys.schemas.name = '{0}' and 
-	sys.synonyms.name = '{1}' ",
-						str[0],
-						str[1]
-						);
-					SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-					DataSet dssyn = new DataSet();
-					dssyn.CaseSensitive = true;
-					dasyn.Fill(dssyn,tbname);
-					if( dssyn.Tables[tbname].Rows.Count > 0 )
-					{
-						// synonym は update STATISTICSができない
-						continue;
-					}
-					sqlstr = "update STATISTICS " + gettbname(tbname) ;
-					cm.CommandText = sqlstr;
+					cm.CommandTimeout = this.SqlTimeOut;
+					DataSet	ds = new DataSet("retData");
+					ds.CaseSensitive = true;
 					cm.Connection = this.sqlConnection1;
-					cm.ExecuteNonQuery();
+
+					foreach( String tbname in this.tableList.SelectedItems )
+					{
+						// split owner.table -> owner, table
+
+						string delimStr = ".";
+						string []str = tbname.Split(delimStr.ToCharArray(), 2);
+
+						cm.CommandText = string.Format(this.cmdDialog.SelectSql,
+							gettbname(tbname));
+
+						if( cmdDialog.hasReturn == true )
+						{
+							// 戻り値あり
+							da.SelectCommand = cm;
+							da.Fill(ds,"retdata");
+						}
+						else
+						{
+							int cnt = cm.ExecuteNonQuery();
+						}
+					}
+					if( cmdDialog.hasReturn == true )
+					{
+						this.dbGrid.SetDataBinding(ds,"retdata");
+						this.dbGrid.Show();
+						this.dbGrid.ReadOnly = true;
+						this.btnDataEdit.Text = "データ編集(&T)";
+						this.btnDataEdit.BackColor = this.btnBackColor;
+						this.btnDataEdit.ForeColor = this.btnForeColor;
+					}
+					MessageBox.Show("処理を完了しました");
 				}
-				MessageBox.Show("処理を完了しました");
 			}
-			catch ( System.Data.SqlClient.SqlException se )
+			catch( Exception exp)
 			{
-				this.SetErrorMessage(se);
+				this.SetErrorMessage(exp);
 			}
-			catch ( Exception se )
-			{
-				this.SetErrorMessage(se);
-			}
-			finally 
+			finally
 			{
 				if( cm != null )
 				{
 					cm.Dispose();
 				}
 			}
-
-		
 		}
 	}
 

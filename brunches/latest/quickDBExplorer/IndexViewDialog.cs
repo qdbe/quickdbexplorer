@@ -24,6 +24,8 @@ namespace quickDBExplorer
 		public string dsptbname;
 		public System.Data.SqlClient.SqlConnection sqlConnection;
 
+		public int		sqlVersion = 2000;
+
 		public IndexViewDialog()
 		{
 			//
@@ -143,22 +145,29 @@ namespace quickDBExplorer
 			string []str = tbname.Split(delimStr.ToCharArray(), 2);
 			string sqlstr;
 
-			sqlstr = string.Format( @"select base_object_name from sys.synonyms 
+			if( this.sqlVersion != 2000 )
+			{
+				sqlstr = string.Format( @"select base_object_name from sys.synonyms 
 	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
 	where
 	sys.schemas.name = '{0}' and 
 	sys.synonyms.name = '{1}' ",
-				str[0],
-				str[1]
-				);
-			SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection);
-			DataSet dssyn = new DataSet();
-			dssyn.CaseSensitive = true;
-			dasyn.Fill(dssyn,tbname);
-			if( dssyn.Tables[tbname].Rows.Count > 0 )
-			{
-				// Synonym 
-				sqlstr = string.Format(@"sp_helpindex '{0}'", dssyn.Tables[tbname].Rows[0]["base_object_name"] );
+					str[0],
+					str[1]
+					);
+				SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection);
+				DataSet dssyn = new DataSet();
+				dssyn.CaseSensitive = true;
+				dasyn.Fill(dssyn,tbname);
+				if( dssyn.Tables[tbname].Rows.Count > 0 )
+				{
+					// Synonym 
+					sqlstr = string.Format(@"sp_helpindex '{0}'", dssyn.Tables[tbname].Rows[0]["base_object_name"] );
+				}
+				else
+				{
+					sqlstr = string.Format(@"sp_helpindex '{0}'", tbname );
+				}
 			}
 			else
 			{

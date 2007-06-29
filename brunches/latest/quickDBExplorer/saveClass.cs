@@ -63,6 +63,7 @@ namespace quickDBExplorer
 
 		public textHistory  DMLHistory;
 
+		public textHistory  cmdHistory;
 
 		public ServerData()
 		{
@@ -102,6 +103,7 @@ namespace quickDBExplorer
 			sortHistory = new textHistory();
 			selectHistory = new textHistory();
 			DMLHistory = new textHistory();
+			cmdHistory = new textHistory();
 
 			try
 			{
@@ -216,6 +218,11 @@ namespace quickDBExplorer
 				this.DMLHistory = (textHistory)info.GetValue("DMLHistory",typeof(textHistory));
 			}
 			catch{}
+			try
+			{
+				this.cmdHistory = (textHistory)info.GetValue("cmdHistory",typeof(textHistory));
+			}
+			catch{}
 
 
 		}
@@ -243,6 +250,7 @@ namespace quickDBExplorer
 			info.AddValue("sortHistory", sortHistory );
 			info.AddValue("selectHistory", selectHistory );
 			info.AddValue("DMLHistory", DMLHistory );
+			info.AddValue("cmdHistory", cmdHistory );
 		}
 
 		public string Servername
