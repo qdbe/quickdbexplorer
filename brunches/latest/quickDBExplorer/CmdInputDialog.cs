@@ -9,6 +9,7 @@ namespace quickDBExplorer
 	public class CmdInputDialog : quickDBExplorer.QueryDialog
 	{
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label label2;
 		private System.ComponentModel.IContainer components = null;
 
 		public CmdInputDialog()
@@ -42,12 +43,13 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			this.label1 = new System.Windows.Forms.Label();
+			this.label2 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dHistory)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// textBox1
 			// 
-			this.textBox1.Location = new System.Drawing.Point(16, 38);
+			this.textBox1.Location = new System.Drawing.Point(16, 48);
 			this.textBox1.Name = "textBox1";
 			this.textBox1.Size = new System.Drawing.Size(444, 218);
 			// 
@@ -59,9 +61,17 @@ namespace quickDBExplorer
 			// 
 			this.label1.Location = new System.Drawing.Point(14, 8);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(434, 24);
+			this.label1.Size = new System.Drawing.Size(434, 18);
 			this.label1.TabIndex = 4;
 			this.label1.Text = "{0}をクエリ内に記載することで、選択しているテーブル名に実行時に変換されます";
+			// 
+			// label2
+			// 
+			this.label2.Location = new System.Drawing.Point(14, 28);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(434, 18);
+			this.label2.TabIndex = 4;
+			this.label2.Text = "例： truncate table {0}";
 			// 
 			// CmdInputDialog
 			// 
@@ -69,8 +79,10 @@ namespace quickDBExplorer
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(480, 325);
 			this.Controls.Add(this.label1);
+			this.Controls.Add(this.label2);
 			this.Name = "CmdInputDialog";
 			this.Text = "各種クエリ実行(テーブル引数)";
+			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.button1, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.textBox1, 0);

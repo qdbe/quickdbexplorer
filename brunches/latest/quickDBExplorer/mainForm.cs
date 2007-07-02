@@ -5737,6 +5737,7 @@ order by colorder",
 			if( this.tableList.SelectedItems.Count != 1 )
 			{
 				MessageBox.Show("対象テーブルは単独で指定してください");
+				return;
 			}
 
 			SqlCommand	cm = new SqlCommand();
@@ -6285,6 +6286,7 @@ order by colorder",
 			{
 				this.InitErrMessage();
 
+				this.cmdDialog.SelectSql = " {0} ";
 				this.cmdDialog.DHistory = this.cmdHistory;
 
 				if( cmdDialog.ShowDialog() == DialogResult.OK )
