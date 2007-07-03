@@ -101,6 +101,7 @@ namespace quickDBExplorer
 
 		private QueryDialog Sqldlg2 = new QueryDialog();
 		private QuerySelectDialog Sqldlg = new QuerySelectDialog();
+		private	CmdInputDialog	cmdDialog = new CmdInputDialog();
 		private DataSet dspdt = new DataSet();
 		private ServerData svdata;
 		private	Font	gfont;
@@ -184,6 +185,8 @@ namespace quickDBExplorer
 
 		private textHistory  DMLHistory = new textHistory();
 
+		private textHistory  cmdHistory = new textHistory();
+
 		/// <summary>
 		/// 接続した先のSQL Serverのバージョン
 		/// </summary>
@@ -228,6 +231,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.MenuItem menuStasticUpdate;
 		private System.Windows.Forms.MenuItem menuUpdateStaticsMain;
+		private System.Windows.Forms.MenuItem menuDoQuery;
 		
 		/// <summary>
 		/// メニュー情報
@@ -248,6 +252,12 @@ namespace quickDBExplorer
 			svdata = sv;
 			Sqldlg.SelectSql = "";
 			Sqldlg2.SelectSql = "";
+			cmdDialog.SelectSql = "";
+			this.whereHistory = svdata.whereHistory;
+			this.sortHistory = svdata.sortHistory;
+			this.selectHistory = svdata.selectHistory;
+			this.DMLHistory = svdata.DMLHistory;
+			this.cmdHistory = svdata.cmdHistory;
 		}
 
 		/// <summary>
@@ -395,6 +405,7 @@ namespace quickDBExplorer
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.cmbHistory = new System.Windows.Forms.ComboBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.menuDoQuery = new System.Windows.Forms.MenuItem();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -1214,7 +1225,8 @@ namespace quickDBExplorer
 																						   this.menuDependBtn,
 																						   this.menuRecordCount,
 																						   this.menuRecordCountDsp,
-																						   this.menuStasticUpdate});
+																						   this.menuStasticUpdate,
+																						   this.menuDoQuery});
 			// 
 			// menuQuery
 			// 
@@ -1320,6 +1332,12 @@ namespace quickDBExplorer
 			this.cmbHistory.Size = new System.Drawing.Size(176, 20);
 			this.cmbHistory.TabIndex = 19;
 			this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectionChangeCommitted);
+			// 
+			// menuDoQuery
+			// 
+			this.menuDoQuery.Index = 10;
+			this.menuDoQuery.Text = "(9) 各種コマンド実行";
+			this.menuDoQuery.Click += new System.EventHandler(this.menuDoQuery_Click);
 			// 
 			// MainForm
 			// 
@@ -1443,13 +1461,26 @@ namespace quickDBExplorer
 				if(this.sqlConnection1.ServerVersion.StartsWith("08") )
 				{
 					this.sqlVersion = 2000;
+					this.label5.Text = "owner/Role(&O)";
+					this.rdoSortOwnerTable.Text = "オーナー名・テーブル名";
 				}
 				else if(this.sqlConnection1.ServerVersion.StartsWith("09") )
 				{
 					this.sqlVersion = 2005;
+					this.label5.Text = "Schema(&O)";
+					this.rdoSortOwnerTable.Text = "スキーマ名・テーブル名";
 				}
 				this.Text = servername;
-				SqlDataAdapter da = new SqlDataAdapter("SELECT name FROM sysdatabases order by name", this.sqlConnection1);
+				string selectsql = "";
+				if( this.sqlVersion == 2000 )
+				{
+					selectsql = "SELECT name FROM sysdatabases order by name";
+				}
+				else
+				{
+					selectsql = "SELECT name FROM sys.databases  order by name";
+				}
+				SqlDataAdapter da = new SqlDataAdapter(selectsql, this.sqlConnection1);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
 				da.Fill(ds,"sysdatabases");
@@ -1532,7 +1563,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 			displistowner();
 			if( svdata.dbopt[svdata.lastdb] != null )
 			{
@@ -2246,7 +2277,6 @@ namespace quickDBExplorer
 			{
 				this.InitErrMessage();
 
-				// insert 文の作成
 				if( this.tableList.SelectedItems.Count == 0 )
 				{
 					return;
@@ -2360,14 +2390,138 @@ namespace quickDBExplorer
 				string sqlstr;
 				// split owner.table -> owner, table
 
-				sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+
+				if( this.sqlVersion == 2000 )
+				{
+					sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+				}
+				else
+				{
+					// Check synonym 
+					sqlstr = string.Format( @"select OBJECT_ID(base_object_name) from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.synonyms.name = '{1}' ",
+						str[0],
+						str[1]
+						);
+					SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+					DataSet dssyn = new DataSet();
+					dssyn.CaseSensitive = true;
+					dasyn.Fill(dssyn,tbname);
+					if( dssyn.Tables[tbname].Rows.Count > 0 &&
+						(int)dssyn.Tables[tbname].Rows[0][0] != 0 )
+					{
+						// Synonym 
+
+	
+
+						sqlstr = string.Format(
+							@"select 
+	sys.all_columns.name colname, 
+	st.name valtype, 
+	convert(smallint,sys.all_columns.max_length) as length, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
+	end ) as [prec], 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
+	sys.all_objects.object_id = {0} 
+order by colorder",
+							(int)dssyn.Tables[tbname].Rows[0][0]
+							);
+					}
+					else
+					{
+						// Not Synonym
+
+	
+
+						sqlstr = string.Format(
+							@"select 
+	sys.all_columns.name colname, 
+	st.name valtype, 
+	convert(smallint,sys.all_columns.max_length) as length, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
+	end ) as [prec], 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
+	sys.schemas.name = '{0}' and 
+	sys.all_objects.name = '{1}' 
+order by colorder",
+							str[0],
+							str[1]
+							);
+					}
+				}
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
 				da.Fill(ds,tbname);
 
-				sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
-					(int)ds.Tables[tbname].Rows[0]["id"] );
+
+				if( ds.Tables[tbname].Rows.Count == 0 )
+				{
+					// 通常はありえないが、念の為、空の表示を行う
+					if( this.sqlVersion == 2000 )
+					{
+						sqlstr = string.Format(
+							@"select * from sysindexes where 0=1" );
+					}
+					else
+					{
+						sqlstr = string.Format(
+							@"select * from sys.indexes where 0=1" );
+					}
+				}
+				else
+				{
+					if( this.sqlVersion == 2000 )
+					{
+						sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
+							(int)ds.Tables[tbname].Rows[0]["id"] );
+					}
+					else
+					{
+						sqlstr = string.Format(
+							@"select * from sys.indexes where 
+							object_id = {0}
+						and is_primary_key = 1",
+							(int)ds.Tables[tbname].Rows[0]["id"] );
+					}
+				}
+
 				SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				DataSet idx = new DataSet();
 				idx.CaseSensitive = true;
@@ -2378,10 +2532,20 @@ namespace quickDBExplorer
 				idkey.CaseSensitive = true;
 				if( dodsp == true && idx.Tables[0].Rows.Count != 0 )
 				{
-					indid = (short)idx.Tables[0].Rows[0]["indid"];
-					sqlstr = string.Format("select * from sysindexkeys where id={0} and indid={1}",
-						(int)ds.Tables[tbname].Rows[0]["id"],
-						(short)indid );
+					if( this.sqlVersion == 2000 )
+					{
+						indid = (short)idx.Tables[0].Rows[0]["indid"];
+						sqlstr = string.Format("select * from sysindexkeys where id={0} and indid={1}",
+							(int)ds.Tables[tbname].Rows[0]["id"],
+							(short)indid );
+					}
+					else
+					{
+						indid = (int)idx.Tables[0].Rows[0]["index_id"];
+						sqlstr = string.Format("select object_id,index_id,index_column_id,column_id as colid,key_ordinal,partition_ordinal,is_descending_key,is_included_column from sys.index_columns where object_id={0} and index_id={1}",
+							(int)ds.Tables[tbname].Rows[0]["id"],
+							(short)indid );
+					}
 					SqlDataAdapter dai = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 					dai.Fill(idkey,tbname);
 				}
@@ -2449,9 +2613,19 @@ namespace quickDBExplorer
 						{
 							foreach(DataRow dr in idkey.Tables[0].Rows )
 							{
-								if( (short)dr["colid"] == (short)ds.Tables[tbname].Rows[i]["colid"] )
+								if( this.sqlVersion == 2000 )
 								{
-									istr +=" PRIMARY KEY";
+									if( (short)dr["colid"] == (short)ds.Tables[tbname].Rows[i]["colid"] )
+									{
+										istr +=" PRIMARY KEY";
+									}
+								}
+								else
+								{
+									if( (int)dr["colid"] == (int)ds.Tables[tbname].Rows[i]["colid"] )
+									{
+										istr +=" PRIMARY KEY";
+									}
 								}
 							}
 						}
@@ -2764,12 +2938,12 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 		}
 
 		private void rdoSortTable_CheckedChanged(object sender, System.EventArgs e)
 		{
-			dsplist2();
+			dspTableList();
 		}
 
 		private void insertmakeDelete(object sender, System.EventArgs e)
@@ -2917,10 +3091,13 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 		}
 
-		private void dsplist2()
+		/// <summary>
+		/// 現在の画面上のDB、Owner から、テーブル一覧を表示する
+		/// </summary>
+		private void dspTableList()
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
@@ -2950,11 +3127,64 @@ namespace quickDBExplorer
 
 				if( this.rdoDspView.Checked == true )
 				{
-					cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
+					}
+					else
+					{
+						cm.CommandText = @"select 
+	sys.all_objects.name as tbname, 
+	sys.schemas.name as uname 
+from 
+	sys.all_objects, 
+	sys.schemas 
+where 
+	( sys.all_objects.type='U' 
+	  or sys.all_objects.type='V' 
+	  or
+	  (sys.all_objects.type='SN' and 
+		exists ( select 'X' from sys.synonyms t2 
+			inner join sys.all_objects t3 on
+			OBJECT_ID(t2.base_object_name) = t3.object_id
+			and (t3.type='U' or t3.type='V' )
+				where
+				sys.all_objects.object_id = t2.object_id 
+				)
+	   )
+	) and 
+	sys.all_objects.schema_id = sys.schemas.schema_id";
+					}
 				}
 				else
 				{
-					cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
+					}
+					else
+					{
+						cm.CommandText = @"select 
+	sys.all_objects.name as tbname, 
+	sys.schemas.name as uname 
+from 
+	sys.all_objects, 
+	sys.schemas 
+where 
+	( sys.all_objects.type='U' 
+	  or
+	  (sys.all_objects.type='SN' and 
+		exists ( select 'X' from sys.synonyms t2 
+			inner join sys.all_objects t3 on
+			OBJECT_ID(t2.base_object_name) = t3.object_id
+			and (t3.type='U')
+				where
+				sys.all_objects.object_id = t2.object_id 
+				)
+	   )
+	) and 
+	sys.all_objects.schema_id = sys.schemas.schema_id";
+					}
 				}
 
 				if( this.ownerListbox.SelectedItem != null )
@@ -2977,7 +3207,14 @@ namespace quickDBExplorer
 					}
 					if( allsele == false )
 					{
-						cm.CommandText += " and sysusers.name in ( " + ownerlist + " ) ";
+						if( this.sqlVersion == 2000 )
+						{
+							cm.CommandText += " and sysusers.name in ( " + ownerlist + " ) ";
+						}
+						else
+						{
+							cm.CommandText += " and sys.schemas.name in ( " + ownerlist + " ) ";
+						}
 					}
 				}
 				cm.CommandText += sortkey;
@@ -3081,19 +3318,132 @@ namespace quickDBExplorer
 						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
 					}
 
-					if( bDrop )
-					{
-						wr.Write( "DROP TABLE " );
-						wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
-						wr.Write( "GO{0}",wr.NewLine);
-					}
 					// get id 
 					string sqlstr;
 					// split owner.table -> owner, table
 
 					string delimStr = ".";
 					string []str = tbname.Split(delimStr.ToCharArray(), 2);
-					sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+					if( this.sqlVersion == 2000 )
+					{
+						if( bDrop )
+						{
+							wr.Write( "DROP TABLE " );
+							wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+							wr.Write( "GO{0}",wr.NewLine);
+						}
+						sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+					}
+					else
+					{
+						// synonym ？
+						sqlstr = string.Format( @"select * from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.synonyms.name = '{1}' ",
+							str[0],
+							str[1]
+							);
+						SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+						DataSet dssyn = new DataSet();
+						dssyn.CaseSensitive = true;
+						dasyn.Fill(dssyn,tbname);
+						if( dssyn.Tables[tbname].Rows.Count > 0 )
+						{
+							// Synonym 
+							if( bDrop )
+							{
+								wr.Write( "DROP SYNONYM " );
+								wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+								wr.Write( "GO{0}",wr.NewLine);
+							}
+							wr.Write( string.Format("create synonym {0} for {1}",
+								gettbname(tbname),
+								dssyn.Tables[tbname].Rows[0]["base_object_name"] )
+								);
+							wr.Write("{0}{0}Go{0}",wr.NewLine);
+
+							if( bDrop )
+							{
+								wr.Write( "DROP TABLE " );
+								wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+								wr.Write( "GO{0}",wr.NewLine);
+							}
+							// not synonym 
+							sqlstr = string.Format(
+								@"select 
+	sys.all_columns.name colname, 
+	st.name valtype, 
+	convert(smallint,sys.all_columns.max_length) as length, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
+	end ) as [prec], 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.synonyms on sys.all_objects.object_id = OBJECT_ID(sys.synonyms.base_object_name) 
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
+	sys.synonyms.object_id = OBJECT_ID('{0}')
+order by colorder",
+								gettbname(tbname)
+								);
+
+						}
+						else
+						{
+							if( bDrop )
+							{
+								wr.Write( "DROP TABLE " );
+								wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+								wr.Write( "GO{0}",wr.NewLine);
+							}
+							// not synonym 
+							sqlstr = string.Format(
+								@"select 
+	sys.all_columns.name colname, 
+	st.name valtype, 
+	convert(smallint,sys.all_columns.max_length) as length, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
+	end ) as [prec], 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
+	sys.schemas.name = '{0}' and 
+	sys.all_objects.name = '{1}' 
+order by colorder",
+								str[0],
+								str[1]
+								);
+						}
+					}
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
@@ -3497,7 +3847,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 			displistowner();
 		}
 
@@ -3513,11 +3863,27 @@ namespace quickDBExplorer
 			{
 				if( rdoDspSysUser.Checked )
 				{
-					cm.CommandText = "select * from sysusers order by name";
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select * from sysusers order by name";
+					}
+					else
+					{
+						cm.CommandText = "select * from sys.schemas order by name";
+					}
 				}
 				else
 				{
-					cm.CommandText = "select * from sysusers where name not like 'db_%' order by name";
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select * from sysusers where name not like 'db_%' order by name";
+					}
+					else
+					{
+						cm.CommandText = @"select * from sys.schemas where name not in ( 'sys', 'INFORMATION_SCHEMA', 'guest', 'db_owner', 
+							'db_accessadmin', 'db_securityadmin', 'db_ddladmin', 'db_backupoperator', 'db_datareader',
+							'db_datawriter', 'db_denydatareader', 'db_denydatawriter'  ) order by name";
+					}
 				}
 				cm.Connection = this.sqlConnection1;
 
@@ -3555,7 +3921,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dsplist2();
+			dspTableList();
 			displistowner();
 		}
 
@@ -4244,6 +4610,8 @@ namespace quickDBExplorer
 			if( indexdlg == null )
 			{
 				indexdlg = new IndexViewDialog();
+				indexdlg.sqlVersion = this.sqlVersion;
+
 				indexdlg.sqlConnection = this.sqlConnection1;
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
@@ -5369,6 +5737,7 @@ namespace quickDBExplorer
 			if( this.tableList.SelectedItems.Count != 1 )
 			{
 				MessageBox.Show("対象テーブルは単独で指定してください");
+				return;
 			}
 
 			SqlCommand	cm = new SqlCommand();
@@ -5851,6 +6220,28 @@ namespace quickDBExplorer
 
 					string delimStr = ".";
 					string []str = tbname.Split(delimStr.ToCharArray(), 2);
+
+					if( this.sqlVersion != 2000 )
+					{
+						// synonym かどうかをチェックする。
+						sqlstr = string.Format( @"select base_object_name from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.synonyms.name = '{1}' ",
+							str[0],
+							str[1]
+							);
+						SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+						DataSet dssyn = new DataSet();
+						dssyn.CaseSensitive = true;
+						dasyn.Fill(dssyn,tbname);
+						if( dssyn.Tables[tbname].Rows.Count > 0 )
+						{
+							// synonym は update STATISTICSができない
+							continue;
+						}
+					}
 					sqlstr = "update STATISTICS " + gettbname(tbname) ;
 					cm.CommandText = sqlstr;
 					cm.Connection = this.sqlConnection1;
@@ -5878,6 +6269,77 @@ namespace quickDBExplorer
 		private void menuUpdateStaticsMain_Click(object sender, System.EventArgs e)
 		{
 			this.menuStasticUpdate_Click(sender,e);
+		}
+
+		private void menuDoQuery_Click(object sender, System.EventArgs e)
+		{
+			// テーブル名称を引数として、各種クエリの実行を可能にする
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+
+			SqlCommand cm = new SqlCommand();
+			SqlDataAdapter da = new SqlDataAdapter();
+			try
+			{
+				this.InitErrMessage();
+
+				this.cmdDialog.SelectSql = " {0} ";
+				this.cmdDialog.DHistory = this.cmdHistory;
+
+				if( cmdDialog.ShowDialog() == DialogResult.OK )
+				{
+					cm.CommandTimeout = this.SqlTimeOut;
+					DataSet	ds = new DataSet("retData");
+					ds.CaseSensitive = true;
+					cm.Connection = this.sqlConnection1;
+
+					foreach( String tbname in this.tableList.SelectedItems )
+					{
+						// split owner.table -> owner, table
+
+						string delimStr = ".";
+						string []str = tbname.Split(delimStr.ToCharArray(), 2);
+
+						cm.CommandText = string.Format(this.cmdDialog.SelectSql,
+							gettbname(tbname));
+
+						if( cmdDialog.hasReturn == true )
+						{
+							// 戻り値あり
+							da.SelectCommand = cm;
+							da.Fill(ds,"retdata");
+						}
+						else
+						{
+							int cnt = cm.ExecuteNonQuery();
+						}
+					}
+					if( cmdDialog.hasReturn == true )
+					{
+						this.dbGrid.SetDataBinding(ds,"retdata");
+						this.dbGrid.Show();
+						this.dbGrid.ReadOnly = true;
+						this.btnDataEdit.Text = "データ編集(&T)";
+						this.btnDataEdit.BackColor = this.btnBackColor;
+						this.btnDataEdit.ForeColor = this.btnForeColor;
+					}
+					MessageBox.Show("処理を完了しました");
+				}
+			}
+			catch( Exception exp)
+			{
+				this.SetErrorMessage(exp);
+			}
+			finally
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
 		}
 	}
 

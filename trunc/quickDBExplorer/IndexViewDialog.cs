@@ -24,6 +24,8 @@ namespace quickDBExplorer
 		public string dsptbname;
 		public System.Data.SqlClient.SqlConnection sqlConnection;
 
+		public int		sqlVersion = 2000;
+
 		public IndexViewDialog()
 		{
 			//
@@ -143,47 +145,73 @@ namespace quickDBExplorer
 			string []str = tbname.Split(delimStr.ToCharArray(), 2);
 			string sqlstr;
 
-			sqlstr = string.Format(@"select 
-				sysobjects.id  
-				from 
-					sysobjects, sysusers 
-				where 
-					sysobjects.uid= sysusers.uid and 
-					sysusers.name = '{0}' and sysobjects.name = '{1}' ",str[0],str[1]);
-			SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection);
-			DataSet ds = new DataSet();
-			da.Fill(ds,tbname);
+			if( this.sqlVersion != 2000 )
+			{
+				sqlstr = string.Format( @"select base_object_name from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.synonyms.name = '{1}' ",
+					str[0],
+					str[1]
+					);
+				SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection);
+				DataSet dssyn = new DataSet();
+				dssyn.CaseSensitive = true;
+				dasyn.Fill(dssyn,tbname);
+				if( dssyn.Tables[tbname].Rows.Count > 0 )
+				{
+					// Synonym 
+					sqlstr = string.Format(@"sp_helpindex '{0}'", dssyn.Tables[tbname].Rows[0]["base_object_name"] );
+				}
+				else
+				{
+					sqlstr = string.Format(@"sp_helpindex '{0}'", tbname );
+				}
+			}
+			else
+			{
+				sqlstr = string.Format(@"sp_helpindex '{0}'", tbname );
+			}
 
-			sqlstr = string.Format(@"select t1.name as 名称,
-			convert(varchar(210), 
-				case when (t1.status & 16)<>0 then 'clustered' else 'nonclustered' end
-				+ case when (t1.status & 1)<>0 then ', '+(select name from master.dbo.spt_values where type = 'I' and number = 1)  else '' end
-				+ case when (t1.status & 2)<>0 then ', '+(select name from master.dbo.spt_values where type = 'I' and number = 2) else '' end
-				+ case when (t1.status & 4)<>0 then ', '+(select name from master.dbo.spt_values where type = 'I' and number = 4) else '' end
-				+ case when (t1.status & 64)<>0 then ', '+(select name from master.dbo.spt_values where type = 'I' and number = 64) else case when (t1.status & 32)<>0 then ', '+(select  name from master.dbo.spt_values where type = 'I' and number = 32) else '' end end
-				+ case when (t1.status & 2048)<>0 then ', '+(select name from master.dbo.spt_values where type = 'I' and number = 2048) else '' end
-				+ case when (t1.status & 4096)<>0 then ', '+(select name from master.dbo.spt_values where type = 'I' and number = 4096) else '' end
-				+ case when (t1.status & 8388608)<>0 then ', '+(select name from master.dbo.spt_values where type = 'I' and number = 8388608) else '' end
-				+ case when (t1.status & 16777216)<>0 then ', '+(select name from master.dbo.spt_values where type = 'I' and number = 16777216)  else '' end ) as 属性,
-	t2.keyno 順序,
-	t3.name as フィールド
- from 
-	sysindexes t1, 
-	sysindexkeys t2,
-	syscolumns t3
-where 
-	t1.indid > 0 and t1.indid < 255  and 
-	(t1.status & 64)=0 and
-	t1.id={0}  and 
-	t1.id = t2.id and
-	t1.indid = t2.indid and
-	t1.id = t3.id and
-	t2.colid = t3.colid
-order by t2.indid, t2.keyno",
-				(int)ds.Tables[tbname].Rows[0]["id"] );
 			SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection);
+			DataSet baseidx = new DataSet();
+			daa.Fill(baseidx,"basedata");
+
+
+
+			// 取得した結果の index_keys フィールドを分割し、複数行にする
+			// 名称, 属性、順序、フィールドに分割
+
 			DataSet idx = new DataSet();
-			daa.Fill(idx,"abc");
+			idx.Tables.Add("abc");
+			idx.Tables["abc"].Columns.Add("名称");
+			idx.Tables["abc"].Columns.Add("属性");
+			idx.Tables["abc"].Columns.Add("順序",typeof(int));
+			idx.Tables["abc"].Columns.Add("フィールド");
+
+			if( baseidx.Tables["basedata"] != null &&
+				baseidx.Tables["basedata"].Rows.Count != 0 )
+			{
+
+				string index_keys;
+				foreach( DataRow dr in baseidx.Tables["basedata"].Rows )
+				{
+					index_keys = (string)dr["index_keys"];
+					string [] fname = index_keys.Split(',');
+					for(int i = 0; i < fname.Length; i++ )
+					{
+						DataRow newdr = idx.Tables["abc"].NewRow();
+						newdr["名称"] = (string)dr["index_name"];
+						newdr["属性"] = (string)dr["index_description"];
+						newdr["順序"] = i + 1;
+						newdr["フィールド"] = fname[i].Trim();
+						idx.Tables["abc"].Rows.Add(newdr);
+					}
+				}
+			}
+
+
 
 
 			DataGridTextBoxColumn  cs;

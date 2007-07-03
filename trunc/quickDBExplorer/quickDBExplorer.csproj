@@ -108,6 +108,16 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "CmdInputDialog.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "CmdInputDialog.resx"
+                    DependentUpon = "CmdInputDialog.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "DataGridViewBase.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
