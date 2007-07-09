@@ -4625,6 +4625,14 @@ order by colorder",
 			}
 			else
 			{
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					indexdlg.settabledsp(this.tableList.SelectedItem.ToString());
+				}
+				else
+				{
+					indexdlg.settabledsp("");
+				}
 				indexdlg.Show();
 				indexdlg.BringToFront();
 			}
