@@ -21,6 +21,19 @@ namespace quickDBExplorer
 		/// </summary>
 		public event CopyDataHandler CopyData = null;
 
+		/// <summary>
+		/// Ctrl + F 押下時のデリゲート
+		/// </summary>
+		public delegate void ExTendedCopyDataHandler(
+			object sender
+			);
+
+		/// <summary>
+		/// Ctrl+F 押下時のイベント
+		/// </summary>
+		public event ExTendedCopyDataHandler ExtendedCopyData = null;
+
+
 		private bool isAllSelecting = false;
 
 		public bool IsAllSelecting 
@@ -39,6 +52,14 @@ namespace quickDBExplorer
 				if( this.CopyData != null )
 				{
 					this.CopyData(this);
+				}
+				return true;
+			}
+			if( (int)keyData == ( (int)Keys.Control + (int)Keys.F ) )
+			{
+				if( this.ExtendedCopyData != null )
+				{
+					this.ExtendedCopyData(this);
 				}
 				return true;
 			}

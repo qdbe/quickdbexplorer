@@ -232,6 +232,9 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem menuStasticUpdate;
 		private System.Windows.Forms.MenuItem menuUpdateStaticsMain;
 		private System.Windows.Forms.MenuItem menuDoQuery;
+		private System.Windows.Forms.Label label11;
+		private quickDBExplorer.quickDBExplorerTextBox txtAlias;
+		private System.Windows.Forms.ToolTip toolTip4;
 		
 		/// <summary>
 		/// メニュー情報
@@ -397,6 +400,7 @@ namespace quickDBExplorer
 			this.menuDependBtn = new System.Windows.Forms.MenuItem();
 			this.menuRecordCount = new System.Windows.Forms.MenuItem();
 			this.menuRecordCountDsp = new System.Windows.Forms.MenuItem();
+			this.menuDoQuery = new System.Windows.Forms.MenuItem();
 			this.btnWhereZoom = new System.Windows.Forms.Button();
 			this.btnOrderZoom = new System.Windows.Forms.Button();
 			this.label9 = new System.Windows.Forms.Label();
@@ -405,7 +409,9 @@ namespace quickDBExplorer
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.cmbHistory = new System.Windows.Forms.ComboBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.menuDoQuery = new System.Windows.Forms.MenuItem();
+			this.label11 = new System.Windows.Forms.Label();
+			this.txtAlias = new quickDBExplorer.quickDBExplorerTextBox();
+			this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -420,7 +426,7 @@ namespace quickDBExplorer
 			this.msgArea.Location = new System.Drawing.Point(176, 624);
 			this.msgArea.Name = "msgArea";
 			this.msgArea.Size = new System.Drawing.Size(652, 16);
-			this.msgArea.TabIndex = 40;
+			this.msgArea.TabIndex = 42;
 			// 
 			// dbList
 			// 
@@ -443,7 +449,7 @@ namespace quickDBExplorer
 			this.tableList.Name = "tableList";
 			this.tableList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.tableList.Size = new System.Drawing.Size(256, 292);
-			this.tableList.TabIndex = 20;
+			this.tableList.TabIndex = 22;
 			this.tableList.CopyData += new quickDBExplorer.qdbeListBox.CopyDataHandler(this.tableList_CopyData);
 			this.tableList.DoubleClick += new System.EventHandler(this.insertmake);
 			this.tableList.SelectedIndexChanged += new System.EventHandler(this.tableList_SelectedIndexChanged);
@@ -683,7 +689,7 @@ namespace quickDBExplorer
 			this.btnInsert.Location = new System.Drawing.Point(508, 16);
 			this.btnInsert.Name = "btnInsert";
 			this.btnInsert.Size = new System.Drawing.Size(136, 24);
-			this.btnInsert.TabIndex = 21;
+			this.btnInsert.TabIndex = 23;
 			this.btnInsert.Text = "INSERT文作成(&I)";
 			this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
 			// 
@@ -692,7 +698,7 @@ namespace quickDBExplorer
 			this.btnFieldList.Location = new System.Drawing.Point(508, 44);
 			this.btnFieldList.Name = "btnFieldList";
 			this.btnFieldList.Size = new System.Drawing.Size(136, 24);
-			this.btnFieldList.TabIndex = 22;
+			this.btnFieldList.TabIndex = 24;
 			this.btnFieldList.Text = "フィールドリスト作成(&F)";
 			this.btnFieldList.Click += new System.EventHandler(this.btnFieldList_Click);
 			// 
@@ -701,7 +707,7 @@ namespace quickDBExplorer
 			this.btnCSV.Location = new System.Drawing.Point(508, 128);
 			this.btnCSV.Name = "btnCSV";
 			this.btnCSV.Size = new System.Drawing.Size(136, 24);
-			this.btnCSV.TabIndex = 25;
+			this.btnCSV.TabIndex = 27;
 			this.btnCSV.Text = "CSV等作成・読込(&K)";
 			this.btnCSV.Click += new System.EventHandler(this.btnCSV_Click);
 			// 
@@ -763,38 +769,38 @@ namespace quickDBExplorer
 			// 
 			// txtWhere
 			// 
-			this.txtWhere.Location = new System.Drawing.Point(72, 480);
+			this.txtWhere.Location = new System.Drawing.Point(72, 516);
 			this.txtWhere.Name = "txtWhere";
 			this.txtWhere.Size = new System.Drawing.Size(144, 19);
-			this.txtWhere.TabIndex = 11;
+			this.txtWhere.TabIndex = 13;
 			this.txtWhere.Text = "";
 			this.txtWhere.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtWhere_KeyDown);
 			this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
 			// 
 			// txtSort
 			// 
-			this.txtSort.Location = new System.Drawing.Point(72, 508);
+			this.txtSort.Location = new System.Drawing.Point(72, 544);
 			this.txtSort.Name = "txtSort";
 			this.txtSort.Size = new System.Drawing.Size(144, 19);
-			this.txtSort.TabIndex = 14;
+			this.txtSort.TabIndex = 16;
 			this.txtSort.Text = "";
 			this.txtSort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSort_KeyDown);
 			this.txtSort.Leave += new System.EventHandler(this.txtSort_Leave);
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(8, 480);
+			this.label1.Location = new System.Drawing.Point(8, 516);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(52, 16);
-			this.label1.TabIndex = 10;
+			this.label1.TabIndex = 12;
 			this.label1.Text = "where(&P)";
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(8, 508);
+			this.label2.Location = new System.Drawing.Point(8, 544);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(64, 16);
-			this.label2.TabIndex = 13;
+			this.label2.TabIndex = 15;
 			this.label2.Text = "order by(&S)";
 			// 
 			// btnSelect
@@ -802,7 +808,7 @@ namespace quickDBExplorer
 			this.btnSelect.Location = new System.Drawing.Point(508, 72);
 			this.btnSelect.Name = "btnSelect";
 			this.btnSelect.Size = new System.Drawing.Size(136, 24);
-			this.btnSelect.TabIndex = 23;
+			this.btnSelect.TabIndex = 25;
 			this.btnSelect.Text = "Select 文生成(&X)";
 			this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
 			// 
@@ -823,7 +829,7 @@ namespace quickDBExplorer
 			this.btnDDL.Location = new System.Drawing.Point(508, 100);
 			this.btnDDL.Name = "btnDDL";
 			this.btnDDL.Size = new System.Drawing.Size(136, 24);
-			this.btnDDL.TabIndex = 24;
+			this.btnDDL.TabIndex = 26;
 			this.btnDDL.Text = "簡易定義文生成(&D)";
 			this.btnDDL.Click += new System.EventHandler(this.btnDDL_Click);
 			// 
@@ -855,7 +861,7 @@ namespace quickDBExplorer
 			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
 			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
 			this.dbGrid.Size = new System.Drawing.Size(672, 236);
-			this.dbGrid.TabIndex = 39;
+			this.dbGrid.TabIndex = 41;
 			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
 			// 
 			// dbGridMenu
@@ -871,10 +877,10 @@ namespace quickDBExplorer
 			// 
 			// chkDspData
 			// 
-			this.chkDspData.Location = new System.Drawing.Point(24, 548);
+			this.chkDspData.Location = new System.Drawing.Point(24, 584);
 			this.chkDspData.Name = "chkDspData";
 			this.chkDspData.Size = new System.Drawing.Size(52, 24);
-			this.chkDspData.TabIndex = 17;
+			this.chkDspData.TabIndex = 19;
 			this.chkDspData.Text = "表示";
 			this.chkDspData.CheckedChanged += new System.EventHandler(this.chkDspData_CheckedChanged);
 			// 
@@ -882,10 +888,10 @@ namespace quickDBExplorer
 			// 
 			this.grpDataDspMode.Controls.Add(this.txtDspCount);
 			this.grpDataDspMode.Controls.Add(this.label3);
-			this.grpDataDspMode.Location = new System.Drawing.Point(8, 532);
+			this.grpDataDspMode.Location = new System.Drawing.Point(8, 568);
 			this.grpDataDspMode.Name = "grpDataDspMode";
 			this.grpDataDspMode.Size = new System.Drawing.Size(216, 44);
-			this.grpDataDspMode.TabIndex = 16;
+			this.grpDataDspMode.TabIndex = 18;
 			this.grpDataDspMode.TabStop = false;
 			this.grpDataDspMode.Text = "データグリッド";
 			// 
@@ -1031,8 +1037,9 @@ namespace quickDBExplorer
 			this.fieldListbox.Name = "fieldListbox";
 			this.fieldListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.fieldListbox.Size = new System.Drawing.Size(240, 268);
-			this.fieldListbox.TabIndex = 32;
+			this.fieldListbox.TabIndex = 34;
 			this.fieldListbox.CopyData += new quickDBExplorer.qdbeListBox.CopyDataHandler(this.fieldListbox_CopyData);
+			this.fieldListbox.ExtendedCopyData += new quickDBExplorer.qdbeListBox.ExTendedCopyDataHandler(this.fieldListbox_ExtendedCopyData);
 			// 
 			// fldContextMenu
 			// 
@@ -1110,7 +1117,7 @@ namespace quickDBExplorer
 			this.chkDspFieldAttr.Location = new System.Drawing.Point(656, 16);
 			this.chkDspFieldAttr.Name = "chkDspFieldAttr";
 			this.chkDspFieldAttr.Size = new System.Drawing.Size(244, 20);
-			this.chkDspFieldAttr.TabIndex = 31;
+			this.chkDspFieldAttr.TabIndex = 33;
 			this.chkDspFieldAttr.Text = "フィールド属性を表示(&Z)";
 			this.chkDspFieldAttr.CheckedChanged += new System.EventHandler(this.chkDspFieldAttr_CheckedChanged);
 			// 
@@ -1130,7 +1137,7 @@ namespace quickDBExplorer
 			this.btnQuerySelect.Location = new System.Drawing.Point(508, 212);
 			this.btnQuerySelect.Name = "btnQuerySelect";
 			this.btnQuerySelect.Size = new System.Drawing.Size(136, 24);
-			this.btnQuerySelect.TabIndex = 28;
+			this.btnQuerySelect.TabIndex = 30;
 			this.btnQuerySelect.Text = "クエリ指定結果表示(&J)";
 			this.btnQuerySelect.Click += new System.EventHandler(this.btnQuerySelect_Click);
 			// 
@@ -1139,7 +1146,7 @@ namespace quickDBExplorer
 			this.btnDataUpdate.Location = new System.Drawing.Point(508, 296);
 			this.btnDataUpdate.Name = "btnDataUpdate";
 			this.btnDataUpdate.Size = new System.Drawing.Size(132, 24);
-			this.btnDataUpdate.TabIndex = 30;
+			this.btnDataUpdate.TabIndex = 32;
 			this.btnDataUpdate.Text = "データ更新(&U)";
 			this.btnDataUpdate.Click += new System.EventHandler(this.btnDataUpdate_Click);
 			// 
@@ -1148,7 +1155,7 @@ namespace quickDBExplorer
 			this.btnDataEdit.Location = new System.Drawing.Point(508, 268);
 			this.btnDataEdit.Name = "btnDataEdit";
 			this.btnDataEdit.Size = new System.Drawing.Size(132, 24);
-			this.btnDataEdit.TabIndex = 29;
+			this.btnDataEdit.TabIndex = 31;
 			this.btnDataEdit.Text = "データ編集(&T)";
 			this.btnDataEdit.Click += new System.EventHandler(this.btnDataEdit_Click);
 			// 
@@ -1157,7 +1164,7 @@ namespace quickDBExplorer
 			this.label7.Location = new System.Drawing.Point(244, 328);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(368, 16);
-			this.label7.TabIndex = 33;
+			this.label7.TabIndex = 35;
 			this.label7.Text = "見出しに★がある列はNULL可です。NULLのセルは水色に着色されます。";
 			// 
 			// btnGridFormat
@@ -1165,7 +1172,7 @@ namespace quickDBExplorer
 			this.btnGridFormat.Location = new System.Drawing.Point(752, 336);
 			this.btnGridFormat.Name = "btnGridFormat";
 			this.btnGridFormat.Size = new System.Drawing.Size(156, 20);
-			this.btnGridFormat.TabIndex = 37;
+			this.btnGridFormat.TabIndex = 39;
 			this.btnGridFormat.Text = "グリッド表示書式指定(&G)";
 			this.btnGridFormat.Click += new System.EventHandler(this.btnGridFormat_Click);
 			// 
@@ -1174,7 +1181,7 @@ namespace quickDBExplorer
 			this.label8.Location = new System.Drawing.Point(244, 344);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(500, 16);
-			this.label8.TabIndex = 34;
+			this.label8.TabIndex = 36;
 			this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。Ctrl+3で値拡大表示。";
 			// 
 			// btnIndex
@@ -1182,7 +1189,7 @@ namespace quickDBExplorer
 			this.btnIndex.Location = new System.Drawing.Point(508, 156);
 			this.btnIndex.Name = "btnIndex";
 			this.btnIndex.Size = new System.Drawing.Size(136, 23);
-			this.btnIndex.TabIndex = 26;
+			this.btnIndex.TabIndex = 28;
 			this.btnIndex.Text = "INDEX情報表示(&N)";
 			this.btnIndex.Click += new System.EventHandler(this.btnIndex_Click);
 			// 
@@ -1191,7 +1198,7 @@ namespace quickDBExplorer
 			this.btnRedisp.Location = new System.Drawing.Point(640, 360);
 			this.btnRedisp.Name = "btnRedisp";
 			this.btnRedisp.Size = new System.Drawing.Size(108, 20);
-			this.btnRedisp.TabIndex = 36;
+			this.btnRedisp.TabIndex = 38;
 			this.btnRedisp.Text = "グリッド再描画(&L)";
 			this.btnRedisp.Click += new System.EventHandler(this.Redisp_Click);
 			// 
@@ -1200,7 +1207,7 @@ namespace quickDBExplorer
 			this.btnTmpAllDsp.Location = new System.Drawing.Point(752, 360);
 			this.btnTmpAllDsp.Name = "btnTmpAllDsp";
 			this.btnTmpAllDsp.Size = new System.Drawing.Size(156, 20);
-			this.btnTmpAllDsp.TabIndex = 38;
+			this.btnTmpAllDsp.TabIndex = 40;
 			this.btnTmpAllDsp.Text = "一時的に全データを表示(&A)";
 			this.btnTmpAllDsp.Click += new System.EventHandler(this.btnTmpAllDsp_Click);
 			// 
@@ -1209,7 +1216,7 @@ namespace quickDBExplorer
 			this.btnEtc.Location = new System.Drawing.Point(508, 184);
 			this.btnEtc.Name = "btnEtc";
 			this.btnEtc.Size = new System.Drawing.Size(136, 23);
-			this.btnEtc.TabIndex = 27;
+			this.btnEtc.TabIndex = 29;
 			this.btnEtc.Text = "その他(&E)";
 			this.btnEtc.Click += new System.EventHandler(this.btnEtc_Click);
 			// 
@@ -1280,20 +1287,26 @@ namespace quickDBExplorer
 			this.menuRecordCountDsp.Text = "(&7) データ件数表示";
 			this.menuRecordCountDsp.Click += new System.EventHandler(this.menuRecordCountDsp_Click);
 			// 
+			// menuDoQuery
+			// 
+			this.menuDoQuery.Index = 10;
+			this.menuDoQuery.Text = "(9) 各種コマンド実行";
+			this.menuDoQuery.Click += new System.EventHandler(this.menuDoQuery_Click);
+			// 
 			// btnWhereZoom
 			// 
-			this.btnWhereZoom.Location = new System.Drawing.Point(220, 484);
+			this.btnWhereZoom.Location = new System.Drawing.Point(220, 520);
 			this.btnWhereZoom.Name = "btnWhereZoom";
 			this.btnWhereZoom.Size = new System.Drawing.Size(16, 20);
-			this.btnWhereZoom.TabIndex = 12;
+			this.btnWhereZoom.TabIndex = 14;
 			this.btnWhereZoom.Click += new System.EventHandler(this.btnWhereZoom_Click);
 			// 
 			// btnOrderZoom
 			// 
-			this.btnOrderZoom.Location = new System.Drawing.Point(220, 508);
+			this.btnOrderZoom.Location = new System.Drawing.Point(220, 544);
 			this.btnOrderZoom.Name = "btnOrderZoom";
 			this.btnOrderZoom.Size = new System.Drawing.Size(16, 20);
-			this.btnOrderZoom.TabIndex = 15;
+			this.btnOrderZoom.TabIndex = 17;
 			this.btnOrderZoom.Click += new System.EventHandler(this.btnOrderZoom_Click);
 			// 
 			// label9
@@ -1301,7 +1314,7 @@ namespace quickDBExplorer
 			this.label9.Location = new System.Drawing.Point(244, 364);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(280, 16);
-			this.label9.TabIndex = 35;
+			this.label9.TabIndex = 37;
 			this.label9.Text = "複数行にわたる文字列はとき色(ピンク)に着色されます。";
 			// 
 			// useCheckBox
@@ -1319,7 +1332,7 @@ namespace quickDBExplorer
 			this.label10.Location = new System.Drawing.Point(240, 4);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(152, 16);
-			this.label10.TabIndex = 18;
+			this.label10.TabIndex = 20;
 			this.label10.Text = "Table/View(&V)";
 			// 
 			// cmbHistory
@@ -1330,14 +1343,25 @@ namespace quickDBExplorer
 			this.cmbHistory.MaxDropDownItems = 11;
 			this.cmbHistory.Name = "cmbHistory";
 			this.cmbHistory.Size = new System.Drawing.Size(176, 20);
-			this.cmbHistory.TabIndex = 19;
+			this.cmbHistory.TabIndex = 21;
 			this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectionChangeCommitted);
 			// 
-			// menuDoQuery
+			// label11
 			// 
-			this.menuDoQuery.Index = 10;
-			this.menuDoQuery.Text = "(9) 各種コマンド実行";
-			this.menuDoQuery.Click += new System.EventHandler(this.menuDoQuery_Click);
+			this.label11.Location = new System.Drawing.Point(8, 484);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(60, 16);
+			this.label11.TabIndex = 10;
+			this.label11.Text = "Alias(&M)";
+			// 
+			// txtAlias
+			// 
+			this.txtAlias.Location = new System.Drawing.Point(72, 480);
+			this.txtAlias.Name = "txtAlias";
+			this.txtAlias.Size = new System.Drawing.Size(144, 19);
+			this.txtAlias.TabIndex = 11;
+			this.txtAlias.Text = "";
+			this.toolTip4.SetToolTip(this.txtAlias, "選択したテーブルに別名(Alias)をつけることができます");
 			// 
 			// MainForm
 			// 
@@ -1384,6 +1408,8 @@ namespace quickDBExplorer
 			this.Controls.Add(this.grpSysUserMode);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.btnOrderZoom);
+			this.Controls.Add(this.label11);
+			this.Controls.Add(this.txtAlias);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "MainForm";
 			this.ShowInTaskbar = false;
@@ -1392,6 +1418,8 @@ namespace quickDBExplorer
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.Controls.SetChildIndex(this.txtAlias, 0);
+			this.Controls.SetChildIndex(this.label11, 0);
 			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
 			this.Controls.SetChildIndex(this.label5, 0);
 			this.Controls.SetChildIndex(this.grpSysUserMode, 0);
@@ -4389,7 +4417,7 @@ order by colorder",
 						sqlstr += " TOP " + this.txtDspCount.Text;
 					}
 
-					sqlstr += string.Format(" * from {0}",gettbname(tbname));
+					sqlstr += string.Format(" * from {0}",gettbnameWithAlias(tbname));
 					//sqlstr += " * from [" + tbname + "]";
 					if( this.txtWhere.Text.Trim() != "" )
 					{
@@ -4567,6 +4595,15 @@ order by colorder",
 			string delimStr = ".";
 			string []str = tbname.Split(delimStr.ToCharArray(), 2);
 			return string.Format("[{0}].[{1}]",str[0],str[1]);
+		}
+		protected string gettbnameWithAlias(string tbname)
+		{
+			string tbl = this.gettbname(tbname);
+			if( this.txtAlias.Text != "" )
+			{
+				tbl += " " + this.txtAlias.Text;
+			}
+			return tbl;
 		}
 
 		protected string gettbnameAdd(string tbname,string addstr)
@@ -4859,7 +4896,7 @@ order by colorder",
 					}
 					trow = 0;
 					string sqlstr;
-					sqlstr = string.Format("select  count(1) from {0} ",gettbname(tbname));
+					sqlstr = string.Format("select  count(1) from {0} ",gettbnameWithAlias(tbname));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						sqlstr += " where " + this.txtWhere.Text.Trim();
@@ -6347,6 +6384,16 @@ order by colorder",
 				{
 					cm.Dispose();
 				}
+			}
+		}
+
+		private void fieldListbox_ExtendedCopyData(object sender)
+		{
+			// フィールド一覧で Ctrl + F が押下された場合の処理
+			// 別ダイアログを表示してエイリアス等の指定を可能にする
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
 			}
 		}
 	}
