@@ -2136,7 +2136,7 @@ namespace quickDBExplorer
 
 					// get id 
 					string sqlstr;
-					sqlstr = string.Format("select  * from {0} ",gettbname(tbname));
+					sqlstr = string.Format("select  * from {0} ",gettbnameWithAlias(tbname));
 					//sqlstr = "select * from [" + tbname + "]";
 					if( this.txtWhere.Text.Trim() != "" )
 					{
@@ -2183,9 +2183,14 @@ namespace quickDBExplorer
 					{
 						string taihistr = 
 							String.Format("select * into {1} from {0} ",
-							gettbname(tbname),
+							gettbnameWithAlias(tbname),
 							gettbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd")) 
 							);
+						if( this.txtWhere.Text.Trim() != "" )
+						{
+							taihistr += string.Format(" where {0}", this.txtWhere.Text.Trim() );
+						}
+						wr.Write("{0}GO{0}",wr.NewLine );
 						wr.Write(taihistr);
 						wr.Write("{0}GO{0}",wr.NewLine );
 
@@ -2194,9 +2199,7 @@ namespace quickDBExplorer
 					if( deletefrom == true && dr.HasRows == true)
 					{
 						wr.Write("delete from  ");
-						string delimStr = ".";
-						string []tbstr = tbname.Split(delimStr.ToCharArray(), 2);
-						wr.Write(string.Format("[{0}].[{1}]",tbstr[0],tbstr[1]));
+						wr.Write(gettbname(tbname));
 						if( this.txtWhere.Text.Trim() != "" )
 						{
 							wr.Write( " where {0}", this.txtWhere.Text.Trim() );
@@ -2231,7 +2234,6 @@ namespace quickDBExplorer
 						else
 						{
 							wr.Write("insert into {0} values ( ", gettbname(tbname) );
-							//wr.Write("insert into [{0}] values ( ", tbname );
 						}
 
 						for( int i = 0 ; i < maxcol; i++ )
@@ -2824,7 +2826,7 @@ order by colorder",
 					trow = 0;
 					// get id 
 					string sqlstr;
-					sqlstr = string.Format("select  * from {0} ",gettbname(tbname));
+					sqlstr = string.Format("select  * from {0} ",gettbnameWithAlias(tbname));
 					//sqlstr = "select * from [" + tbname + "]";
 					if( this.txtWhere.Text.Trim() != "" )
 					{
@@ -3051,7 +3053,7 @@ order by colorder",
 					
 					}
 					wr.Write(wr.NewLine);
-					wr.Write(" from {0}{1}", gettbname(tbname),wr.NewLine);
+					wr.Write(" from {0}{1}", gettbnameWithAlias(tbname),wr.NewLine);
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						wr.Write(" where {0}{1}", this.txtWhere.Text.Trim(),wr.NewLine);
@@ -3694,8 +3696,8 @@ order by colorder",
 					sqlstrDisp += " TOP " + maxlines.ToString();
 				}
 
-				sqlstr += string.Format(" * from {0}",gettbname(tbname));
-				sqlstrDisp += string.Format(" * from {0}",gettbname(tbname));
+				sqlstr += string.Format(" * from {0}",gettbnameWithAlias(tbname));
+				sqlstrDisp += string.Format(" * from {0}",gettbnameWithAlias(tbname));
 				if( procCond.WhereStr.Trim() != "" )
 				{
 					sqlstr += " where " + procCond.WhereStr.Trim();
@@ -5309,7 +5311,7 @@ order by colorder",
 				{
 					trow = 0;
 					string sqlstr;
-					sqlstr = string.Format("select  count(1) from {0} ",gettbname(tbname));
+					sqlstr = string.Format("select  count(1) from {0} ",gettbnameWithAlias(tbname));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						sqlstr += " where " + this.txtWhere.Text.Trim();
@@ -5836,7 +5838,7 @@ order by colorder",
 
 				// get id 
 				string sqlstr;
-				sqlstr = string.Format("select  * from {0} ",gettbname(tbname));
+				sqlstr = string.Format("select  * from {0} ",gettbnameWithAlias(tbname));
 				cm.CommandText = sqlstr;
 				cm.Connection = this.sqlConnection1;
 
@@ -6343,11 +6345,6 @@ order by colorder",
 
 					foreach( String tbname in this.tableList.SelectedItems )
 					{
-						// split owner.table -> owner, table
-
-						string delimStr = ".";
-						string []str = tbname.Split(delimStr.ToCharArray(), 2);
-
 						cm.CommandText = string.Format(this.cmdDialog.SelectSql,
 							gettbname(tbname));
 
@@ -6391,10 +6388,52 @@ order by colorder",
 		{
 			// フィールド一覧で Ctrl + F が押下された場合の処理
 			// 別ダイアログを表示してエイリアス等の指定を可能にする
-			if( this.tableList.SelectedItems.Count == 0 )
+			if( this.tableList.SelectedItems.Count != 1 )
 			{
 				return;
 			}
+
+			FieldGetDialog dlg = new FieldGetDialog();
+			dlg.baseTableName = this.tableList.SelectedItem.ToString();
+			if( dlg.ShowDialog(this) != DialogResult.OK )
+			{
+				return;
+			}
+			StringBuilder str = new StringBuilder();
+			for( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
+			{
+				if( i != 0 )
+				{
+					if( dlg.retCRLF == true )
+					{
+						if( dlg.retComma ) 
+						{
+							str.Append(",\r\n");
+						}
+						else
+						{
+							str.Append("\r\n");
+						}
+					}
+					else
+					{
+						if( dlg.retComma )
+						{
+							str.Append(",");
+						}
+						else
+						{
+							str.Append("\t");
+						}
+					}
+				}
+				str.Append(dlg.retTableAccessor+".");
+				str.Append((string)this.fieldListbox.SelectedItems[i]);
+			}
+			if( str.Length != 0 )
+			{
+				Clipboard.SetDataObject(str.ToString(),true );
+			}		
 		}
 	}
 
