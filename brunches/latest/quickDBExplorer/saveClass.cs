@@ -57,6 +57,11 @@ namespace quickDBExplorer
 		public textHistory  sortHistory;
 
 		/// <summary>
+		/// order by ãÂÇÃì¸óÕóöóèÓïÒ
+		/// </summary>
+		public textHistory  aliasHistory;
+
+		/// <summary>
 		/// select é¿çsóöóèÓïÒ
 		/// </summary>
 		public textHistory  selectHistory;
@@ -79,6 +84,7 @@ namespace quickDBExplorer
 			txtencode = new Hashtable();
 			whereHistory = new textHistory();
 			sortHistory = new textHistory();
+			aliasHistory = new textHistory();
 			selectHistory = new textHistory();
 			DMLHistory = new textHistory();
 		}
@@ -101,6 +107,7 @@ namespace quickDBExplorer
 			txtencode = new Hashtable();
 			whereHistory = new textHistory();
 			sortHistory = new textHistory();
+			aliasHistory = new textHistory();
 			selectHistory = new textHistory();
 			DMLHistory = new textHistory();
 			cmdHistory = new textHistory();
@@ -210,6 +217,11 @@ namespace quickDBExplorer
 			catch{}
 			try
 			{
+				this.aliasHistory = (textHistory)info.GetValue("aliasHistory",typeof(textHistory));
+			}
+			catch{}
+			try
+			{
 				this.selectHistory = (textHistory)info.GetValue("selectHistory",typeof(textHistory));
 			}
 			catch{}
@@ -248,6 +260,7 @@ namespace quickDBExplorer
 			info.AddValue("loginUser", loginUser );
 			info.AddValue("whereHistory", whereHistory );
 			info.AddValue("sortHistory", sortHistory );
+			info.AddValue("aliasHistory", aliasHistory );
 			info.AddValue("selectHistory", selectHistory );
 			info.AddValue("DMLHistory", DMLHistory );
 			info.AddValue("cmdHistory", cmdHistory );

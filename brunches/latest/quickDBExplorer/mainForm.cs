@@ -179,6 +179,11 @@ namespace quickDBExplorer
 		private textHistory  sortHistory = new textHistory();
 
 		/// <summary>
+		/// alias 句の入力履歴情報
+		/// </summary>
+		private textHistory  aliasHistory = new textHistory();
+
+		/// <summary>
 		/// select 実行履歴情報
 		/// </summary>
 		private textHistory  selectHistory = new textHistory();
@@ -235,6 +240,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label11;
 		private quickDBExplorer.quickDBExplorerTextBox txtAlias;
 		private System.Windows.Forms.ToolTip toolTip4;
+		private System.Windows.Forms.MenuItem menuFieldAliasCopy;
 		
 		/// <summary>
 		/// メニュー情報
@@ -258,6 +264,7 @@ namespace quickDBExplorer
 			cmdDialog.SelectSql = "";
 			this.whereHistory = svdata.whereHistory;
 			this.sortHistory = svdata.sortHistory;
+			this.aliasHistory = svdata.aliasHistory;
 			this.selectHistory = svdata.selectHistory;
 			this.DMLHistory = svdata.DMLHistory;
 			this.cmdHistory = svdata.cmdHistory;
@@ -371,6 +378,7 @@ namespace quickDBExplorer
 			this.fldmenuCopyNoCRLF = new System.Windows.Forms.MenuItem();
 			this.fldmenuCopyNoComma = new System.Windows.Forms.MenuItem();
 			this.fldmenuCopyNoCRLFNoComma = new System.Windows.Forms.MenuItem();
+			this.menuFieldAliasCopy = new System.Windows.Forms.MenuItem();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.grpCharaSet = new System.Windows.Forms.GroupBox();
 			this.rdoUtf8 = new System.Windows.Forms.RadioButton();
@@ -769,38 +777,38 @@ namespace quickDBExplorer
 			// 
 			// txtWhere
 			// 
-			this.txtWhere.Location = new System.Drawing.Point(72, 516);
+			this.txtWhere.Location = new System.Drawing.Point(72, 488);
 			this.txtWhere.Name = "txtWhere";
 			this.txtWhere.Size = new System.Drawing.Size(144, 19);
-			this.txtWhere.TabIndex = 13;
+			this.txtWhere.TabIndex = 11;
 			this.txtWhere.Text = "";
 			this.txtWhere.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtWhere_KeyDown);
 			this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
 			// 
 			// txtSort
 			// 
-			this.txtSort.Location = new System.Drawing.Point(72, 544);
+			this.txtSort.Location = new System.Drawing.Point(72, 516);
 			this.txtSort.Name = "txtSort";
 			this.txtSort.Size = new System.Drawing.Size(144, 19);
-			this.txtSort.TabIndex = 16;
+			this.txtSort.TabIndex = 14;
 			this.txtSort.Text = "";
 			this.txtSort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSort_KeyDown);
 			this.txtSort.Leave += new System.EventHandler(this.txtSort_Leave);
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(8, 516);
+			this.label1.Location = new System.Drawing.Point(8, 488);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(52, 16);
-			this.label1.TabIndex = 12;
+			this.label1.TabIndex = 10;
 			this.label1.Text = "where(&P)";
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(8, 544);
+			this.label2.Location = new System.Drawing.Point(8, 516);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(64, 16);
-			this.label2.TabIndex = 15;
+			this.label2.TabIndex = 13;
 			this.label2.Text = "order by(&S)";
 			// 
 			// btnSelect
@@ -1047,7 +1055,8 @@ namespace quickDBExplorer
 																						   this.fldmenuCopy,
 																						   this.fldmenuCopyNoCRLF,
 																						   this.fldmenuCopyNoComma,
-																						   this.fldmenuCopyNoCRLFNoComma});
+																						   this.fldmenuCopyNoCRLFNoComma,
+																						   this.menuFieldAliasCopy});
 			// 
 			// fldmenuCopy
 			// 
@@ -1072,6 +1081,12 @@ namespace quickDBExplorer
 			this.fldmenuCopyNoCRLFNoComma.Index = 3;
 			this.fldmenuCopyNoCRLFNoComma.Text = "コピー改行・カンマなし";
 			this.fldmenuCopyNoCRLFNoComma.Click += new System.EventHandler(this.fldmenuCopyNoCRLFNoComma_Click);
+			// 
+			// menuFieldAliasCopy
+			// 
+			this.menuFieldAliasCopy.Index = 4;
+			this.menuFieldAliasCopy.Text = "条件指定コピー";
+			this.menuFieldAliasCopy.Click += new System.EventHandler(this.menuFieldAliasCopy_Click);
 			// 
 			// grpCharaSet
 			// 
@@ -1295,18 +1310,18 @@ namespace quickDBExplorer
 			// 
 			// btnWhereZoom
 			// 
-			this.btnWhereZoom.Location = new System.Drawing.Point(220, 520);
+			this.btnWhereZoom.Location = new System.Drawing.Point(220, 492);
 			this.btnWhereZoom.Name = "btnWhereZoom";
 			this.btnWhereZoom.Size = new System.Drawing.Size(16, 20);
-			this.btnWhereZoom.TabIndex = 14;
+			this.btnWhereZoom.TabIndex = 12;
 			this.btnWhereZoom.Click += new System.EventHandler(this.btnWhereZoom_Click);
 			// 
 			// btnOrderZoom
 			// 
-			this.btnOrderZoom.Location = new System.Drawing.Point(220, 544);
+			this.btnOrderZoom.Location = new System.Drawing.Point(220, 516);
 			this.btnOrderZoom.Name = "btnOrderZoom";
 			this.btnOrderZoom.Size = new System.Drawing.Size(16, 20);
-			this.btnOrderZoom.TabIndex = 17;
+			this.btnOrderZoom.TabIndex = 15;
 			this.btnOrderZoom.Click += new System.EventHandler(this.btnOrderZoom_Click);
 			// 
 			// label9
@@ -1348,20 +1363,23 @@ namespace quickDBExplorer
 			// 
 			// label11
 			// 
-			this.label11.Location = new System.Drawing.Point(8, 484);
+			this.label11.Location = new System.Drawing.Point(8, 544);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(60, 16);
-			this.label11.TabIndex = 10;
+			this.label11.TabIndex = 16;
 			this.label11.Text = "Alias(&M)";
+			this.label11.DoubleClick += new System.EventHandler(this.label11_DoubleClick);
 			// 
 			// txtAlias
 			// 
-			this.txtAlias.Location = new System.Drawing.Point(72, 480);
+			this.txtAlias.Location = new System.Drawing.Point(72, 540);
 			this.txtAlias.Name = "txtAlias";
 			this.txtAlias.Size = new System.Drawing.Size(144, 19);
-			this.txtAlias.TabIndex = 11;
+			this.txtAlias.TabIndex = 17;
 			this.txtAlias.Text = "";
 			this.toolTip4.SetToolTip(this.txtAlias, "選択したテーブルに別名(Alias)をつけることができます");
+			this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
+			this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
 			// 
 			// MainForm
 			// 
@@ -2718,6 +2736,7 @@ order by colorder",
 
 				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtWhere.Text,ref this.whereHistory);
 				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtSort.Text,ref this.sortHistory);
+				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtAlias.Text,ref this.aliasHistory);
 				// データ表示部に、該当テーブルのデータを表示する
 				DspData(this.tableList.SelectedItem.ToString());
 			}
@@ -2725,6 +2744,7 @@ order by colorder",
 			{
 				MainForm.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
 				MainForm.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
+				MainForm.SetNewHistory("",this.txtAlias.Text,ref this.aliasHistory);
 				DspData("");
 			}
 			if( this.tableList.SelectedItems.Count == 1 )
@@ -6435,6 +6455,92 @@ order by colorder",
 				Clipboard.SetDataObject(str.ToString(),true );
 			}		
 		}
+
+		private void menuFieldAliasCopy_Click(object sender, System.EventArgs e)
+		{
+			fieldListbox_ExtendedCopyData(sender);
+		}
+
+		private void label11_DoubleClick(object sender, System.EventArgs e)
+		{
+			if( this.tableList.SelectedItems.Count != 1 )
+			{
+				return;
+			}
+			this.txtAlias.Text = this.tableList.SelectedItem.ToString();
+		
+		}
+
+		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.W )
+			{
+				// 値の拡大表示を行う
+				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+				dlg.EditText = this.txtWhere.Text;
+				dlg.LableName = "Alias 指定";
+				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+				dlg.Show();
+				dlg.BringToFront();
+				dlg.Focus();
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.D )
+			{
+				// 全削除を行う
+				((TextBox)sender).Text = "";
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.S )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				HistoryViewer hv = new HistoryViewer(this.aliasHistory, targetTable);
+				if( DialogResult.OK == hv.ShowDialog() && ((TextBox)sender).Text != hv.retString)
+				{
+					this.txtWhere.Text = hv.retString;
+					MainForm.SetNewHistory(targetTable,hv.retString,ref this.aliasHistory);
+
+					DspData(targetTable);
+				}
+			}
+			if( e.KeyCode == Keys.Return ||
+				e.KeyCode == Keys.Enter )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				MainForm.SetNewHistory(targetTable,((TextBox)sender).Text,ref this.aliasHistory);
+				DspData(targetTable);
+			}
+		}
+
+		private void txtAlias_Leave(object sender, System.EventArgs e)
+		{
+			string tbname = "";
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				tbname = this.tableList.SelectedItem.ToString();
+			}
+			else
+			{
+				tbname = "";
+			}
+			// 履歴に現在の値を記録 TODO
+			MainForm.SetNewHistory(tbname,((TextBox)sender).Text,ref this.aliasHistory);
+		}
+
 	}
 
 	public class ProcCondition
