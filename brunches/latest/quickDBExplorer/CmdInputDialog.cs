@@ -6,18 +6,22 @@ using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// テーブルに対する各種コマンド実行 のコマンド入力用ダイアログ
+	/// </summary>
 	public class CmdInputDialog : quickDBExplorer.QueryDialog
 	{
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.ComponentModel.IContainer components = null;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public CmdInputDialog()
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
-
-			// TODO: InitializeComponent 呼び出しの後に初期化処理を追加します。
 		}
 
 		/// <summary>
@@ -92,6 +96,11 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// OKボタン押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected override void button1_Click(object sender, EventArgs e)
 		{
 			if( this.textBox1.Text != "" &&

@@ -7,16 +7,23 @@ using System.Windows.Forms;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// QueryDialog の概要の説明です。
+	/// クエリ等を入力する為のダイアログ
 	/// </summary>
 	public class QueryDialog : System.Windows.Forms.Form
 	{
+
+		/// <summary>
+		/// 入力された文字列
+		/// </summary>
+		public string	SelectSql = "";
+		/// <summary>
+		/// 結果に戻り値があるかどうか
+		/// </summary>
+		public bool		hasReturn = false;
+
 		protected System.Windows.Forms.TextBox textBox1;
 		protected System.Windows.Forms.Button button1;
 		private System.Windows.Forms.Button button2;
-
-		public string	SelectSql = "";
-		public bool		hasReturn = false;
 		private System.Windows.Forms.ContextMenu contextMenu1;
 		private System.Windows.Forms.MenuItem menuItem1;
 		private System.Windows.Forms.MenuItem menuItem2;
@@ -168,7 +175,6 @@ namespace quickDBExplorer
 			this.checkBox1.Size = new System.Drawing.Size(208, 16);
 			this.checkBox1.TabIndex = 3;
 			this.checkBox1.Text = "戻り値あり(&R)";
-			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
 			// 
 			// btnHistory
 			// 
@@ -242,24 +248,32 @@ namespace quickDBExplorer
 			this.textBox1.SelectAll();
 		}
 
-		private void checkBox1_CheckedChanged(object sender, System.EventArgs e)
-		{
-		
-		}
-
+		/// <summary>
+		/// 履歴引用ボタンの押下
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnHistory_Click(object sender, System.EventArgs e)
 		{
+			// 入力履歴の選択ダイアログを表示する
 			HistoryViewer hv = new HistoryViewer(this.dHistory, "");
 			hv.IsShowTable = false;
 			if( DialogResult.OK == hv.ShowDialog() && this.textBox1.Text != hv.retString)
 			{
+				//違う情報であれば、それを表示し、履歴として追加する
 				this.textBox1.Text = hv.retString;
 				MainForm.SetNewHistory("",hv.retString,ref this.dHistory);
 			}
 		}
 
+		/// <summary>
+		/// キーダウンイベントハンドラ
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
 		private void textBox1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
+			// Ctrl+Dで全入力文字削除
 			if( e.Alt == false &&
 				e.Control == true &&
 				e.KeyCode == Keys.D )
@@ -267,6 +281,8 @@ namespace quickDBExplorer
 				// 全削除を行う
 				((TextBox)sender).Text = "";
 			}
+
+			// Ctrl＋Sで過去入力履歴ダイアログを表示する
 			if( e.Alt == false &&
 				e.Control == true &&
 				e.KeyCode == Keys.S )

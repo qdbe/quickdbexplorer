@@ -6471,6 +6471,18 @@ order by colorder",
 		
 		}
 
+		private void dlgAliasZoom_Click(object sender, System.EventArgs e)
+		{
+			this.txtAlias.Text = ((ZoomDialog)sender).EditText;
+
+			string targetTable = "";
+			if( this.tableList.SelectedItems.Count == 1 )
+			{
+				targetTable = this.tableList.SelectedItem.ToString();
+			}
+			DspData(targetTable);
+		}
+
 		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			if( e.Alt == false &&
@@ -6479,9 +6491,9 @@ order by colorder",
 			{
 				// 値の拡大表示を行う
 				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
-				dlg.EditText = this.txtWhere.Text;
+				dlg.EditText = this.txtAlias.Text;
 				dlg.LableName = "Alias 指定";
-				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+				dlg.Enter += new System.EventHandler(this.dlgAliasZoom_Click);
 				dlg.Show();
 				dlg.BringToFront();
 				dlg.Focus();
@@ -6505,7 +6517,7 @@ order by colorder",
 				HistoryViewer hv = new HistoryViewer(this.aliasHistory, targetTable);
 				if( DialogResult.OK == hv.ShowDialog() && ((TextBox)sender).Text != hv.retString)
 				{
-					this.txtWhere.Text = hv.retString;
+					((TextBox)sender).Text = hv.retString;
 					MainForm.SetNewHistory(targetTable,hv.retString,ref this.aliasHistory);
 
 					DspData(targetTable);
