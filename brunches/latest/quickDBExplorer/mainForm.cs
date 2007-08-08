@@ -100,7 +100,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ToolTip toolTip3;
 
 		private QueryDialog Sqldlg2 = new QueryDialog();
-		private QuerySelectDialog Sqldlg = new QuerySelectDialog();
+		private QueryDialogSelect Sqldlg = new QueryDialogSelect();
 		private	CmdInputDialog	cmdDialog = new CmdInputDialog();
 		private DataSet dspdt = new DataSet();
 		private ServerData svdata;

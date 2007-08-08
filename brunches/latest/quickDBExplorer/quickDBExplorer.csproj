@@ -228,13 +228,13 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "QuerySelectDialog.cs"
+                    RelPath = "QueryDialogSelect.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "QuerySelectDialog.resx"
-                    DependentUpon = "QuerySelectDialog.cs"
+                    RelPath = "QueryDialogSelect.resx"
+                    DependentUpon = "QueryDialogSelect.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

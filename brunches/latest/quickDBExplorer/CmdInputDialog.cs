@@ -51,15 +51,15 @@ namespace quickDBExplorer
 			((System.ComponentModel.ISupportInitialize)(this.dHistory)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// textBox1
+			// txtInput
 			// 
-			this.textBox1.Location = new System.Drawing.Point(16, 48);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(444, 218);
+			this.txtInput.Location = new System.Drawing.Point(16, 48);
+			this.txtInput.Name = "txtInput";
+			this.txtInput.Size = new System.Drawing.Size(444, 218);
 			// 
-			// button1
+			// btnGo
 			// 
-			this.button1.Name = "button1";
+			this.btnGo.Name = "btnGo";
 			// 
 			// label1
 			// 
@@ -87,9 +87,9 @@ namespace quickDBExplorer
 			this.Name = "CmdInputDialog";
 			this.Text = "各種クエリ実行(テーブル引数)";
 			this.Controls.SetChildIndex(this.label2, 0);
-			this.Controls.SetChildIndex(this.button1, 0);
+			this.Controls.SetChildIndex(this.btnGo, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
-			this.Controls.SetChildIndex(this.textBox1, 0);
+			this.Controls.SetChildIndex(this.txtInput, 0);
 			((System.ComponentModel.ISupportInitialize)(this.dHistory)).EndInit();
 			this.ResumeLayout(false);
 
@@ -101,14 +101,14 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected override void button1_Click(object sender, EventArgs e)
+		protected override void btnGo_Click(object sender, EventArgs e)
 		{
-			if( this.textBox1.Text != "" &&
-				this.textBox1.Text.IndexOf("{0}") < 0 )
+			if( this.txtInput.Text != "" &&
+				this.txtInput.Text.IndexOf("{0}") < 0 )
 			{
 				return;
 			}
-			base.button1_Click (sender, e);
+			base.btnGo_Click (sender, e);
 			this.DialogResult = DialogResult.OK;
 			this.Close();
 		}
