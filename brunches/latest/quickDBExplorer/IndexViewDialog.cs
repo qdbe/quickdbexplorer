@@ -9,23 +9,36 @@ using System.Data;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// IndexViewDialog の概要の説明です。
+	/// 指定されたテーブルのINDEX情報の表示ダイアログ
 	/// </summary>
 	public class IndexViewDialog : System.Windows.Forms.Form
 	{
-		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox chkTopStay;
 		private System.Windows.Forms.DataGrid dataGrid1;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnCancel;
 		/// <summary>
 		/// 必要なデザイナ変数です。
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
+		/// <summary>
+		/// 表示するテーブル名称
+		/// </summary>
 		public string dsptbname;
+
+		/// <summary>
+		/// SQL Server へのコネクション情報
+		/// </summary>
 		public System.Data.SqlClient.SqlConnection sqlConnection;
 
+		/// <summary>
+		/// SQL Server のバージョン
+		/// </summary>
 		public int		sqlVersion = 2000;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public IndexViewDialog()
 		{
 			//
@@ -58,20 +71,20 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(IndexViewDialog));
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.chkTopStay = new System.Windows.Forms.CheckBox();
 			this.dataGrid1 = new System.Windows.Forms.DataGrid();
-			this.button1 = new System.Windows.Forms.Button();
+			this.btnCancel = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// checkBox1
+			// chkTopStay
 			// 
-			this.checkBox1.Location = new System.Drawing.Point(16, 8);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(144, 16);
-			this.checkBox1.TabIndex = 0;
-			this.checkBox1.Text = "常にTOPに表示(&T)";
-			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			this.chkTopStay.Location = new System.Drawing.Point(16, 8);
+			this.chkTopStay.Name = "chkTopStay";
+			this.chkTopStay.Size = new System.Drawing.Size(144, 16);
+			this.chkTopStay.TabIndex = 0;
+			this.chkTopStay.Text = "常に前面に表示(&T)";
+			this.chkTopStay.CheckedChanged += new System.EventHandler(this.chkTopStay_CheckedChanged);
 			// 
 			// dataGrid1
 			// 
@@ -86,25 +99,25 @@ namespace quickDBExplorer
 			this.dataGrid1.Size = new System.Drawing.Size(528, 196);
 			this.dataGrid1.TabIndex = 1;
 			// 
-			// button1
+			// btnCancel
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.button1.Location = new System.Drawing.Point(448, 240);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(80, 24);
-			this.button1.TabIndex = 2;
-			this.button1.Text = "閉じる(&X)";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btnCancel.Location = new System.Drawing.Point(448, 240);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(80, 24);
+			this.btnCancel.TabIndex = 2;
+			this.btnCancel.Text = "閉じる(&X)";
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
 			// IndexViewDialog
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.CancelButton = this.button1;
+			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(544, 269);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.dataGrid1);
-			this.Controls.Add(this.checkBox1);
+			this.Controls.Add(this.chkTopStay);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MinimizeBox = false;
 			this.Name = "IndexViewDialog";
@@ -118,6 +131,10 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// INDEX情報を表示するテーブルを切り替える
+		/// </summary>
+		/// <param name="tbname">新規に表示するテーブル名称</param>
 		public void settabledsp(string tbname)
 		{
 			if( tbname == null || tbname == "" )
@@ -147,6 +164,7 @@ namespace quickDBExplorer
 
 			if( this.sqlVersion != 2000 )
 			{
+				// SQL Server 2005 以降 では、synonym が指定される可能性がある為、そのチェックを行う
 				sqlstr = string.Format( @"select base_object_name from sys.synonyms 
 	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
 	where
@@ -161,7 +179,7 @@ namespace quickDBExplorer
 				dasyn.Fill(dssyn,tbname);
 				if( dssyn.Tables[tbname].Rows.Count > 0 )
 				{
-					// Synonym 
+					// Synonym の場合、その親となるオブジェクトに対して 実施する必要あり
 					sqlstr = string.Format(@"sp_helpindex '{0}'", dssyn.Tables[tbname].Rows[0]["base_object_name"] );
 				}
 				else
@@ -171,6 +189,7 @@ namespace quickDBExplorer
 			}
 			else
 			{
+				// SQL Server 2000 では、synonym の考慮は必要なし
 				sqlstr = string.Format(@"sp_helpindex '{0}'", tbname );
 			}
 
@@ -217,12 +236,13 @@ namespace quickDBExplorer
 			DataGridTextBoxColumn  cs;
 			//新しいDataGridTableStyleの作成
 			DataGridTableStyle ts = new DataGridTableStyle();
-			//マップ名を指定する
+			//マップ名を指定するこれは適当
 			ts.MappingName = "abc";
 
 			foreach( DataColumn col in idx.Tables[0].Columns )
 			{
 				cs = new DataGridTextBoxColumn();
+				// 以前の表示幅を記憶している場合、その同じ幅で表示する
 				if( colwidth[col.ColumnName] != null )
 				{
 					cs.Width = (int)colwidth[col.ColumnName];
@@ -248,9 +268,14 @@ namespace quickDBExplorer
 			this.dataGrid1.Show();
 		}
 
-		private void checkBox1_CheckedChanged(object sender, System.EventArgs e)
+		/// <summary>
+		/// 常にTOPに表示 チェックボックス変更時ハンドラ
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void chkTopStay_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.checkBox1.Checked == true )
+			if( this.chkTopStay.Checked == true )
 			{
 				this.TopMost = true;
 			}
@@ -260,6 +285,11 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void IndexViewDialog_Load(object sender, System.EventArgs e)
 		{
 			if(dsptbname != "" )
@@ -268,13 +298,27 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void button1_Click(object sender, System.EventArgs e)
+		/// <summary>
+		/// 戻るボタン押下時処理
+		/// ここでは、ダイアログを実際に閉じるのではなく
+		/// 非表示にするのみとする
+		/// これは、以前の表示幅を記憶して、その幅で表示するようにする為
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnCancel_Click(object sender, System.EventArgs e)
 		{
 			this.Visible = false;
 		}
 
+		/// <summary>
+		/// 「X」ボタンや、ALT+F4 等によるダイアログの閉じる処理への対応
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void IndexViewDialog_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
+			// ここでも非表示にするのみとする
 			this.Visible = false;
 			e.Cancel = true;
 		}

@@ -53,9 +53,9 @@ namespace quickDBExplorer
 			// 
 			// txtInput
 			// 
-			this.txtInput.Location = new System.Drawing.Point(16, 48);
+			this.txtInput.Location = new System.Drawing.Point(16, 50);
 			this.txtInput.Name = "txtInput";
-			this.txtInput.Size = new System.Drawing.Size(444, 218);
+			this.txtInput.Size = new System.Drawing.Size(444, 206);
 			// 
 			// btnGo
 			// 
@@ -86,10 +86,10 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label2);
 			this.Name = "CmdInputDialog";
 			this.Text = "各種クエリ実行(テーブル引数)";
-			this.Controls.SetChildIndex(this.label2, 0);
-			this.Controls.SetChildIndex(this.btnGo, 0);
-			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.txtInput, 0);
+			this.Controls.SetChildIndex(this.btnGo, 0);
+			this.Controls.SetChildIndex(this.label2, 0);
+			this.Controls.SetChildIndex(this.label1, 0);
 			((System.ComponentModel.ISupportInitialize)(this.dHistory)).EndInit();
 			this.ResumeLayout(false);
 

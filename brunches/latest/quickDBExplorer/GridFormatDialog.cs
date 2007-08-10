@@ -23,10 +23,25 @@ namespace quickDBExplorer
 		/// 必要なデザイナ変数です。
 		/// </summary>
 		private System.ComponentModel.Container components = null;
+		/// <summary>
+		/// 表示フォントの指定
+		/// </summary>
 		public	Font	gfont;
+		/// <summary>
+		/// フォント表示色の指定
+		/// </summary>
 		public	Color	gcolor;
+		/// <summary>
+		/// 数値変換書式の指定
+		/// </summary>
 		public	string	NumFormat;
+		/// <summary>
+		/// 小数点書式の指定
+		/// </summary>
 		public	string	FloatFormat;
+		/// <summary>
+		/// 日付変換書式の指定
+		/// </summary>
 		public	string	DateFormat;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox textBox1;
@@ -38,6 +53,9 @@ namespace quickDBExplorer
 		private System.Windows.Forms.RichTextBox richTextBox1;
 		private System.Windows.Forms.FontDialog fontDialog1;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public GridFormatDialog()
 		{
 			//
@@ -98,7 +116,6 @@ namespace quickDBExplorer
 			this.button1.Size = new System.Drawing.Size(72, 24);
 			this.button1.TabIndex = 10;
 			this.button1.Text = "戻る(&X)";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// button2
 			// 
@@ -327,11 +344,18 @@ namespace quickDBExplorer
 			this.textBox3.Text = DateTime.Now.ToString(getFormat(this.comboBox3.SelectedItem.ToString()));
 		}
 
+		/// <summary>
+		/// フォーマット文字列を取得する
+		/// </summary>
+		/// <param name="fstr">基の表示書式</param>
+		/// <returns>表示書式文字列</returns>
 		protected string getFormat(string fstr)
 		{
+			// \t\t があれば、プログラムの初期選択枝からの選択
 			int termp = fstr.IndexOf("	");
 			if( termp == -1 )
 			{
+				// \t\t がない場合、ユーザーが入力した文字列
 				return fstr;
 			}
 			return fstr.Substring(0,termp);
@@ -345,9 +369,5 @@ namespace quickDBExplorer
 			this.DialogResult = DialogResult.OK;
 		}
 
-		private void button1_Click(object sender, System.EventArgs e)
-		{
-		
-		}
 	}
 }

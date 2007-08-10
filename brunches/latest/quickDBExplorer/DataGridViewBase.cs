@@ -8,15 +8,38 @@ using System.Text;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// DataTable を表示するためのダイアログ
+	/// </summary>
 	public class DataGridViewBase : quickDBExplorer.quickDBExplorerBaseForm
 	{
+		/// <summary>
+		///  クリップボードコピーボタン
+		/// </summary>
 		protected System.Windows.Forms.Button btnClopboard;
+		/// <summary>
+		/// データ表示エリア
+		/// </summary>
 		protected System.Windows.Forms.DataGrid dataViewGrid;
 		private System.ComponentModel.IContainer components = null;
-		private System.Windows.Forms.Button btnClose;
+		/// <summary>
+		/// 閉じるボタン
+		/// </summary>
+		protected System.Windows.Forms.Button btnClose;
+		/// <summary>
+		/// 表示するデータ
+		/// </summary>
 		protected DataTable viewData = new DataTable("viewData");
+		/// <summary>
+		/// タイトル表示
+		/// </summary>
 		protected string  titleName	= "";
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="dt">表示するデータ</param>
+		/// <param name="tname">表示タイトル</param>
 		public DataGridViewBase(DataTable dt, string tname)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
@@ -118,6 +141,11 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// データの内容をTAB区切でクリップボードにコピーする
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
 		private void btnClopboard_Click(object sender, System.EventArgs e)
 		{
 			if( this.viewData == null )
@@ -131,6 +159,7 @@ namespace quickDBExplorer
 			}
 
 			StringBuilder stb = new StringBuilder();
+			// カラム名をまずは出力
 			for( int j = 0; j < this.viewData.Columns.Count; j++ )
 			{
 				if( j != 0 )
@@ -141,6 +170,7 @@ namespace quickDBExplorer
 			}
 			stb.Append(Environment.NewLine);
 
+			// データの内容を出力
 			foreach( DataRow dr in this.viewData.Rows )
 			{
 				for( int i = 0; i < this.viewData.Columns.Count; i++ )
@@ -163,6 +193,11 @@ namespace quickDBExplorer
 			Clipboard.SetDataObject(stb.ToString(),true );
 		}
 
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
 		private void DataGridViewBase_Load(object sender, System.EventArgs e)
 		{
 			if( this.viewData == null )
@@ -174,6 +209,11 @@ namespace quickDBExplorer
 			this.dataViewGrid.DataSource = this.viewData;
 		}
 
+		/// <summary>
+		/// 閉じるボタン押下時処理
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
 		private void btnClose_Click(object sender, System.EventArgs e)
 		{
 			this.DialogResult = DialogResult.OK;

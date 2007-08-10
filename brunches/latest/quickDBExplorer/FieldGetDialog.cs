@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// フィールド情報の取得条件指定ダイアログ
+	/// </summary>
 	public class FieldGetDialog : quickDBExplorer.quickDBExplorerBaseForm
 	{
 		private System.Windows.Forms.Label label1;
@@ -18,13 +21,28 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ComboBox cmbPattern;
 		private System.ComponentModel.IContainer components = null;
 
+		/// <summary>
+		/// テーブル名
+		/// </summary>
 		public string	baseTableName = "";
 
+		/// <summary>
+		/// テーブルの修飾子(alias) 戻り値
+		/// </summary>
 		public string retTableAccessor = "";
+		/// <summary>
+		/// 改行をつけるかつけないかの指定(戻り値)
+		/// </summary>
 		public bool retCRLF = false;
 		private System.Windows.Forms.ToolTip toolTip1;
+		/// <summary>
+		/// カンマをつけるかつけないか(戻り値)
+		/// </summary>
 		public bool retComma = false;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public FieldGetDialog()
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
@@ -179,8 +197,14 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
 		private void FieldGetDialog_Load(object sender, System.EventArgs e)
 		{
+			// 表示エリアを越える情報を一緒にセットし、選択時の処理に利用している
 			this.cmbPattern.Items.Add("0:alias.FieldName,CRLF                                      :1,1,1");
 			this.cmbPattern.Items.Add("1:alias.FieldName CRLF                                      :1,0,1");
 			this.cmbPattern.Items.Add("2:alias.FieldName                                           :1,0,0");
@@ -193,26 +217,35 @@ namespace quickDBExplorer
 			this.cmbPattern.Items.Add("9:Schema.TableName.FieldName CRLF                           :3,0,1");
 			this.cmbPattern.Items.Add("A:Schema.TableName.FieldName                                :3,0,0");
 			this.cmbPattern.Items.Add("B:Schema.TableName.FieldName,                               :3,1,0");
+			// 初期表示は一番最初
 			this.cmbPattern.SelectedIndex = 0;
 		}
 
+		/// <summary>
+		/// コンボボックス選択時ハンドラ
+		/// 選択された項目に応じて、各項目の内容をセットする
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
 		private void cmbPattern_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			string []selstr = this.cmbPattern.SelectedItem.ToString().Split(new char[]{':'},3)[2].Split(new char[]{','},3);
+			// テーブル修飾子の指定
 			switch( int.Parse(selstr[0]) )
 			{
 				case 1:
 					this.txtAlias.Text = "t1";
 					break;
 				case 2:
-					this.txtAlias.Text = this.splittbname(this.baseTableName)[1];
+					this.txtAlias.Text = qdbeUtil.SplitTbname(this.baseTableName)[1];
 					break;
 				case 3:
-					this.txtAlias.Text = this.gettbname(this.baseTableName);
+					this.txtAlias.Text = qdbeUtil.GetTbname(this.baseTableName);
 					break;
 				default:
 					break;
 			}
+			// カンマ利用の指定
 			if(int.Parse(selstr[1]) == 1 )
 			{
 				this.chkComma.Checked = true;
@@ -221,6 +254,7 @@ namespace quickDBExplorer
 			{
 				this.chkComma.Checked = false;
 			}
+			// 改行付加の指定
 			if(int.Parse(selstr[2]) == 1 )
 			{
 				this.chkCRLF.Checked = true;
@@ -231,23 +265,12 @@ namespace quickDBExplorer
 			}
 		}
 
-		protected string[] splittbname(string tbname)
-		{
-			string delimStr = ".";
-			string []str = tbname.Split(delimStr.ToCharArray(), 2);
-			string []retstr = new string[2];
-			retstr[0] = string.Format("[{0}]",str[0]);
-			retstr[1] = string.Format("[{0}]",str[1]);
-			return retstr;
-		}
 
-		protected string gettbname(string tbname)
-		{
-			string delimStr = ".";
-			string []str = tbname.Split(delimStr.ToCharArray(), 2);
-			return string.Format("[{0}].[{1}]",str[0],str[1]);
-		}
-
+		/// <summary>
+		/// OKボタン押下時ハンドラ
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnOK_Click(object sender, System.EventArgs e)
 		{
 			this.retTableAccessor = this.txtAlias.Text;

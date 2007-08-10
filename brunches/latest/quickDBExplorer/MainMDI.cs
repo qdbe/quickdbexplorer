@@ -247,15 +247,19 @@ namespace quickDBExplorer
 		private void MainMDI_Load(object sender, System.EventArgs e)
 		{
 
+			// 設定ファイルの読み込みストリーム
 			FileStream fs = null;
 
+			// エラーメッセージを初期化
 			this.InitErrMessage();
 
 			initopt = new saveClass();
 			try
 			{
+				// 設定ファイルを読み込み
 				string path = Application.StartupPath;
 				fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Open);
+				// Soap Serialize しているので、それをDeSerialize
 				SoapFormatter sf = new SoapFormatter();
 				if( fs != null && fs.CanRead )
 				{
@@ -264,11 +268,13 @@ namespace quickDBExplorer
 			}
 			catch(	System.IO.FileNotFoundException )
 			{
+				// 初回インストール時はファイルがない可能性がある
 				;
 			}
 			catch( Exception exp )
 			{
 				this.SetErrorMessage(exp);
+				initopt = new saveClass();
 			}
 			finally
 			{
@@ -277,6 +283,7 @@ namespace quickDBExplorer
 					fs.Close();
 				}
 			}
+			// 最新バージョンの存在チェックを実施
 			CheckNewVersion(false);
 
 			// 最初は強制的にログインを表示する
@@ -286,6 +293,11 @@ namespace quickDBExplorer
 			logindlg.Focus();
 		}
 
+		/// <summary>
+		/// ダイアログのクローズ処理
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
 		private void MainMDI_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			FileStream fs = null;

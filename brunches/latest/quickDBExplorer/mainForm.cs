@@ -166,6 +166,9 @@ namespace quickDBExplorer
 		/// </summary>
 		protected bool isInCmbEvent = false;
 
+		/// <summary>
+		/// SQL のクエリ実行タイムアウト値
+		/// </summary>
 		public int SqlTimeOut = 300;
 
 		/// <summary>
@@ -227,7 +230,6 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ContextMenu dbGridMenu;
 		private System.Windows.Forms.MenuItem copyDbGridMenu;
 		private System.Windows.Forms.ContextMenu contextMenu1;
-		protected System.Windows.Forms.ComboBox cmbHistory;
 		private System.Windows.Forms.MenuItem menuTableSelect;
 		private System.Windows.Forms.MenuItem menuCSVRead;
 		private System.Windows.Forms.MenuItem menuCSVReadDQ;
@@ -241,6 +243,10 @@ namespace quickDBExplorer
 		private quickDBExplorer.quickDBExplorerTextBox txtAlias;
 		private System.Windows.Forms.ToolTip toolTip4;
 		private System.Windows.Forms.MenuItem menuFieldAliasCopy;
+		/// <summary>
+		/// コマンド入力ダイアログ
+		/// </summary>
+		protected System.Windows.Forms.ComboBox cmbHistory;
 		
 		/// <summary>
 		/// メニュー情報
@@ -2189,7 +2195,7 @@ namespace quickDBExplorer
 						if( (Boolean)draw["IsIdentity"] == true )
 						{
 							// Identity 列がある場合、SET IDENTITY_INSERT table on をつける
-							string addidinsert = string.Format("SET IDENTITY_INSERT {0} on ",gettbname(tbname));
+							string addidinsert = string.Format("SET IDENTITY_INSERT {0} on ",qdbeUtil.GetTbname(tbname));
 							wr.WriteLine(addidinsert);
 							wr.Write(wr.NewLine);
 							break;
@@ -2202,7 +2208,7 @@ namespace quickDBExplorer
 						string taihistr = 
 							String.Format("select * into {1} from {0} ",
 							gettbnameWithAlias(tbname),
-							gettbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd")) 
+							qdbeUtil.GetTbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd"))
 							);
 						if( this.txtWhere.Text.Trim() != "" )
 						{
@@ -2217,7 +2223,7 @@ namespace quickDBExplorer
 					if( deletefrom == true && dr.HasRows == true)
 					{
 						wr.Write("delete from  ");
-						wr.Write(gettbname(tbname));
+						wr.Write(qdbeUtil.GetTbname(tbname));
 						if( this.txtWhere.Text.Trim() != "" )
 						{
 							wr.Write( " where {0}", this.txtWhere.Text.Trim() );
@@ -2238,7 +2244,7 @@ namespace quickDBExplorer
 						rowcount ++;
 						if( fieldlst == true )
 						{
-							wr.Write("insert into {0} ( ", gettbname(tbname) );
+							wr.Write("insert into {0} ( ", qdbeUtil.GetTbname(tbname) );
 							for( int i = 0 ; i < maxcol; i++ )
 							{
 								if( i != 0 )
@@ -2251,7 +2257,7 @@ namespace quickDBExplorer
 						}
 						else
 						{
-							wr.Write("insert into {0} values ( ", gettbname(tbname) );
+							wr.Write("insert into {0} values ( ", qdbeUtil.GetTbname(tbname) );
 						}
 
 						for( int i = 0 ; i < maxcol; i++ )
@@ -2362,7 +2368,7 @@ namespace quickDBExplorer
 					}
 
 					// get id 
-					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",gettbname(tbname)), this.sqlConnection1);
+					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",qdbeUtil.GetTbname(tbname)), this.sqlConnection1);
 
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
@@ -3055,7 +3061,7 @@ order by colorder",
 						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
 					}
 					// get id 
-					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",gettbname(tbname)), this.sqlConnection1);
+					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",qdbeUtil.GetTbname(tbname)), this.sqlConnection1);
 
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
@@ -3379,7 +3385,7 @@ where
 						if( bDrop )
 						{
 							wr.Write( "DROP TABLE " );
-							wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+							wr.Write("{0}{1}", qdbeUtil.GetTbname(tbname),wr.NewLine);
 							wr.Write( "GO{0}",wr.NewLine);
 						}
 						sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
@@ -3405,11 +3411,11 @@ where
 							if( bDrop )
 							{
 								wr.Write( "DROP SYNONYM " );
-								wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+								wr.Write("{0}{1}", qdbeUtil.GetTbname(tbname),wr.NewLine);
 								wr.Write( "GO{0}",wr.NewLine);
 							}
 							wr.Write( string.Format("create synonym {0} for {1}",
-								gettbname(tbname),
+								qdbeUtil.GetTbname(tbname),
 								dssyn.Tables[tbname].Rows[0]["base_object_name"] )
 								);
 							wr.Write("{0}{0}Go{0}",wr.NewLine);
@@ -3417,7 +3423,7 @@ where
 							if( bDrop )
 							{
 								wr.Write( "DROP TABLE " );
-								wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+								wr.Write("{0}{1}", qdbeUtil.GetTbname(tbname),wr.NewLine);
 								wr.Write( "GO{0}",wr.NewLine);
 							}
 							// not synonym 
@@ -3448,7 +3454,7 @@ from
 where 
 	sys.synonyms.object_id = OBJECT_ID('{0}')
 order by colorder",
-								gettbname(tbname)
+								qdbeUtil.GetTbname(tbname)
 								);
 
 						}
@@ -3457,7 +3463,7 @@ order by colorder",
 							if( bDrop )
 							{
 								wr.Write( "DROP TABLE " );
-								wr.Write("{0}{1}", gettbname(tbname),wr.NewLine);
+								wr.Write("{0}{1}", qdbeUtil.GetTbname(tbname),wr.NewLine);
 								wr.Write( "GO{0}",wr.NewLine);
 							}
 							// not synonym 
@@ -3646,11 +3652,22 @@ order by colorder",
 			}
 		}
 
+		/// <summary>
+		/// 指定されたテーブルの情報を表示する
+		/// </summary>
+		/// <param name="tbname">表示するテーブル名</param>
 		protected void DspData(string tbname)
 		{
 			DspData(tbname,false);
 		}
 		
+		/// <summary>
+		/// 指定されたテーブルの情報を表示する
+		/// </summary>
+		/// <param name="tbname">表示するテーブル名</param>
+		/// <param name="isAllDsp">全て表示するか否かの指定
+		/// true: 全て表示する
+		/// false; 全て表示しない</param>
 		protected void DspData(string tbname, bool isAllDsp)
 		{
 			try
@@ -4078,6 +4095,11 @@ order by colorder",
 
 
 
+		/// <summary>
+		/// フィールドリスト情報のコピー
+		/// </summary>
+		/// <param name="lf">改行をつけるか否か</param>
+		/// <param name="docomma">カンマをつけるか否か</param>
 		protected void copyfldlist(bool lf, bool docomma)
 		{
 			StringBuilder str = new StringBuilder();
@@ -4612,27 +4634,20 @@ order by colorder",
 			}
 		}
 
-		protected string gettbname(string tbname)
-		{
-			string delimStr = ".";
-			string []str = tbname.Split(delimStr.ToCharArray(), 2);
-			return string.Format("[{0}].[{1}]",str[0],str[1]);
-		}
+		/// <summary>
+		/// from 句で利用するために、テーブル修飾子をつけて、テーブル名を変換する
+		/// 基の名前は[]が付いていないことが前提
+		/// </summary>
+		/// <param name="tbname">テーブル名(owner.tablename形式)</param>
+		/// <returns>解析後のテーブル名([owner].[tabblname] alias 形式)</returns>
 		protected string gettbnameWithAlias(string tbname)
 		{
-			string tbl = this.gettbname(tbname);
+			string tbl = qdbeUtil.GetTbname(tbname);
 			if( this.txtAlias.Text != "" )
 			{
 				tbl += " " + this.txtAlias.Text;
 			}
 			return tbl;
-		}
-
-		protected string gettbnameAdd(string tbname,string addstr)
-		{
-			string delimStr = ".";
-			string []str = tbname.Split(delimStr.ToCharArray(), 2);
-			return string.Format("[{0}].[{1}_{2}]",str[0], str[1], addstr);
 		}
 
 		private void Redisp_Click(object sender, System.EventArgs e)
@@ -4650,6 +4665,11 @@ order by colorder",
 			}
 		}
 
+		/// <summary>
+		/// フォーマット文字列を取得する
+		/// </summary>
+		/// <param name="fstr">基の表示書式</param>
+		/// <returns>表示書式文字列</returns>
 		protected string getFormat(string fstr)
 		{
 			if(fstr == null)
@@ -4941,7 +4961,7 @@ order by colorder",
 					{
 						rowcount++;
 						trow++;
-						wr.Write(gettbname(tbname));
+						wr.Write(qdbeUtil.GetTbname(tbname));
 						wr.Write(",");
 						if( dr.IsDBNull(0) )
 						{
@@ -5355,7 +5375,7 @@ order by colorder",
 						rowcount++;
 						trow++;
 						DataRow addrow = rcdt.NewRow();
-						addrow[0] = gettbname(tbname);
+						addrow[0] = qdbeUtil.GetTbname(tbname);
 						if( dr.IsDBNull(0) )
 						{
 							addrow[1] = 0;
@@ -5468,10 +5488,17 @@ order by colorder",
 			MessageBox.Show("処理を完了しました");
 		}
 
+		/// <summary>
+		/// 新規スレッドを開始する
+		/// </summary>
+		/// <param name="callb">終了時に呼び出されるCallBack関数</param>
+		/// <param name="tags">CallBack時に引き渡される情報</param>
+		/// <returns>スレッドが正常に開始できたか否か</returns>
 		protected bool	BeginNewThread(WaitCallback callb, object tags)
 		{
 			if( this.IsThreadAlive > 0 )
 			{
+				// 他のスレッドがあれば、スレッドを開始しない
 				return false;
 			}
 			try
@@ -5491,6 +5518,9 @@ order by colorder",
 			}
 		}
 
+		/// <summary>
+		/// スレッドを終了させる
+		/// </summary>
 		protected void	ThreadEndIfAlive()
 		{
 			if( this.IsThreadAlive == 0 )
@@ -5507,6 +5537,11 @@ order by colorder",
 			}
 		}
 
+		/// <summary>
+		/// キー押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			if( e.Control == true && e.Shift == false && e.Alt == false && e.KeyCode == Keys.G )
@@ -5527,6 +5562,10 @@ order by colorder",
 			}
 		}
 
+		/// <summary>
+		/// スレッドが中止されたか否か
+		/// </summary>
+		/// <returns></returns>
 		protected bool IsProcCancel()
 		{
 			if( this.IsThreadAlive == 0 )
@@ -5539,6 +5578,11 @@ order by colorder",
 			}
 		}
 		
+		/// <summary>
+		/// テーブルに対する処理用情報をセットする
+		/// </summary>
+		/// <param name="tbname"></param>
+		/// <returns></returns>
 		protected ProcCondition GetProcCondition(string tbname)
 		{
 			ProcCondition procCond = new ProcCondition();
@@ -5559,11 +5603,19 @@ order by colorder",
 			return procCond;
 		}
 
+		/// <summary>
+		/// フィールドリストのコピーメニュー選択時処理
+		/// </summary>
+		/// <param name="sender"></param>
 		private void fieldListbox_CopyData(object sender)
 		{
 			copyfldlist(true,true);
 		}
 
+		/// <summary>
+		/// DBリストのコピーメニュー選択時処理
+		/// </summary>
+		/// <param name="sender"></param>
 		private void dbList_CopyData(object sender)
 		{
 			if( this.dbList.SelectedItems.Count > 0 )
@@ -5582,9 +5634,13 @@ order by colorder",
 			}
 		}
 
+		/// <summary>
+		/// Owner/Role/Schemaのコピーメニュー選択時処理
+		/// </summary>
+		/// <param name="sender"></param>
 		private void ownerListbox_CopyData(object sender)
 		{
-			// DB名のコピー
+			// Owner/Role/Schema名のコピー
 			if( this.ownerListbox.SelectedItems.Count > 0 )
 			{
 				StringBuilder strline =  new StringBuilder();
@@ -5622,35 +5678,19 @@ order by colorder",
 			this.tableList.Focus();
 		}
 
-		static public void SetNewHistory(string key, string hvalue, ref textHistory tdata)
-		{
-			if( hvalue == null || hvalue == "" )
-			{
-				return;
-			}
 
-			DataRow []drl = tdata.textHistoryData.Select( string.Format("KeyValue = '{0}'", key ) );
-
-			for( int i = 0; i < drl.Length; i++ ){
-				if( (string)drl[i]["DataValue"] == hvalue )
-				{
-					// 同じテーブルに対し、既に同じ履歴が登録されているため、何もしない
-					return;
-				}
-			}
-			
-			textHistory.textHistoryDataRow ndr = tdata.textHistoryData.NewtextHistoryDataRow();
-			ndr.KeyValue = key;
-			ndr.DataValue = hvalue;
-			tdata.textHistoryData.Rows.Add(ndr);
-		}
-
+		/// <summary>
+		/// where 入力テキストボックスでの特殊キー押下ハンドラ
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void txtWhere_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			if( e.Alt == false &&
 				e.Control == true &&
 				e.KeyCode == Keys.W )
 			{
+				// Ctrl + W
 				// 値の拡大表示を行う
 				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
 				dlg.EditText = this.txtWhere.Text;
@@ -5664,6 +5704,7 @@ order by colorder",
 				e.Control == true &&
 				e.KeyCode == Keys.D )
 			{
+				// Ctrl + D
 				// 全削除を行う
 				((TextBox)sender).Text = "";
 			}
@@ -5671,6 +5712,8 @@ order by colorder",
 				e.Control == true &&
 				e.KeyCode == Keys.S )
 			{
+				// Ctrl + S
+				// 入力履歴を表示する
 				string targetTable = "";
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
@@ -5688,6 +5731,7 @@ order by colorder",
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
+				// Enter(Return) では、入力を確定させて、グリッド表示に反映させる
 				string targetTable = "";
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
@@ -6309,7 +6353,7 @@ order by colorder",
 							continue;
 						}
 					}
-					sqlstr = "update STATISTICS " + gettbname(tbname) ;
+					sqlstr = "update STATISTICS " + qdbeUtil.GetTbname(tbname) ;
 					cm.CommandText = sqlstr;
 					cm.Connection = this.sqlConnection1;
 					cm.ExecuteNonQuery();
@@ -6366,7 +6410,7 @@ order by colorder",
 					foreach( String tbname in this.tableList.SelectedItems )
 					{
 						cm.CommandText = string.Format(this.cmdDialog.SelectSql,
-							gettbname(tbname));
+							qdbeUtil.GetTbname(tbname));
 
 						if( cmdDialog.hasReturn == true )
 						{

@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// イメージの表示ダイアログ
+	/// </summary>
 	public class ImageViewer : quickDBExplorer.quickDBExplorerBaseForm
 	{
 		private System.ComponentModel.IContainer components = null;
@@ -18,8 +21,14 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Button btnClose;
 
+		/// <summary>
+		/// 表示するイメージ情報
+		/// </summary>
 		protected Image viewImage;
 
+		/// <summary>
+		/// 表示するイメージ情報の取得・設定
+		/// </summary>
 		public Image ViewImage
 		{
 			get { return this.viewImage; }
@@ -27,6 +36,9 @@ namespace quickDBExplorer
 		}
 
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public ImageViewer()
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
@@ -183,19 +195,34 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ImageViewer_Load(object sender, System.EventArgs e)
 		{
+			// もともとの幅、高さを一旦記憶する
 			int basewidth = this.pictureBox1.Width;
 			int baseheight = this.pictureBox1.Height;
+			// 表示イメージの設定
 			this.pictureBox1.Image = this.viewImage;
+			// もともとのイメージ表示エリアのサイズとの差分を取得して
 			int diffwidth = this.viewImage.Width - basewidth;
 			int diffheight = this.viewImage.Height - baseheight;
+			// このダイアログ自体のサイズを動的に変更する
 			this.Width += diffwidth;
 			this.Height += diffheight;
+			// イメージの幅、高さ情報の表示
 			this.PixcelHeight.Text = this.viewImage.Height.ToString();
 			this.PixcelWidth.Text = this.viewImage.Width.ToString();
 		}
 
+		/// <summary>
+		/// 閉じるボタン押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnClose_Click(object sender, System.EventArgs e)
 		{
 			this.Close();
