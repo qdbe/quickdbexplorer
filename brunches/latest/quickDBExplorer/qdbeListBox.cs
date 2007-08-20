@@ -4,7 +4,8 @@ using System.Windows.Forms;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// qdbeListBox の概要の説明です。
+	/// リストボックスの拡張機能版
+	/// キー押下時の特殊処理(delegateでのイベントハンドラ呼び出し処理)が組み込んである
 	/// </summary>
 	public class qdbeListBox : System.Windows.Forms.ListBox
 	{
@@ -36,6 +37,9 @@ namespace quickDBExplorer
 
 		private bool isAllSelecting = false;
 
+		/// <summary>
+		/// 全ての項目が選択されているか否か
+		/// </summary>
 		public bool IsAllSelecting 
 		{
 			get { return this.isAllSelecting; }
@@ -45,8 +49,15 @@ namespace quickDBExplorer
 		{
 		}
 
+		/// <summary>
+		/// 特殊キー押下時イベントハンドラ
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <param name="keyData"></param>
+		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
+			// CTRL+Cでコピー処理
 			if( (int)keyData == ( (int)Keys.Control + (int)Keys.C ) )
 			{
 				if( this.CopyData != null )
@@ -55,6 +66,7 @@ namespace quickDBExplorer
 				}
 				return true;
 			}
+			// CTRL+Fで拡張コピー処理
 			if( (int)keyData == ( (int)Keys.Control + (int)Keys.F ) )
 			{
 				if( this.ExtendedCopyData != null )
@@ -63,6 +75,7 @@ namespace quickDBExplorer
 				}
 				return true;
 			}
+			// CTRL+Aで全選択
 			if( (int)keyData == ( (int)Keys.Control + (int)Keys.A ) )
 			{
 				if( this.SelectionMode != SelectionMode.MultiExtended &&

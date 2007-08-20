@@ -2740,17 +2740,17 @@ order by colorder",
 				}
 
 
-				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtWhere.Text,ref this.whereHistory);
-				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtSort.Text,ref this.sortHistory);
-				MainForm.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtAlias.Text,ref this.aliasHistory);
+				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtWhere.Text,ref this.whereHistory);
+				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtSort.Text,ref this.sortHistory);
+				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtAlias.Text,ref this.aliasHistory);
 				// データ表示部に、該当テーブルのデータを表示する
 				DspData(this.tableList.SelectedItem.ToString());
 			}
 			else
 			{
-				MainForm.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
-				MainForm.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
-				MainForm.SetNewHistory("",this.txtAlias.Text,ref this.aliasHistory);
+				qdbeUtil.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
+				qdbeUtil.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
+				qdbeUtil.SetNewHistory("",this.txtAlias.Text,ref this.aliasHistory);
 				DspData("");
 			}
 			if( this.tableList.SelectedItems.Count == 1 )
@@ -3882,7 +3882,7 @@ order by colorder",
 			DspData(tbname);
 
 			// 履歴に現在の値を記録 TODO
-			MainForm.SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
+			qdbeUtil.SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
 
 		}
 
@@ -3902,7 +3902,7 @@ order by colorder",
 			DspData(tbname);
 
 			// 履歴に現在の値を記録 TODO
-			MainForm.SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
+			qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
 		}
 
 		private void rdoDspSysUser_CheckedChanged(object sender, System.EventArgs e)
@@ -5723,7 +5723,7 @@ order by colorder",
 				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.retString)
 				{
 					this.txtWhere.Text = hv.retString;
-					MainForm.SetNewHistory(targetTable,hv.retString,ref this.whereHistory);
+					qdbeUtil.SetNewHistory(targetTable,hv.retString,ref this.whereHistory);
 
 					DspData(targetTable);
 				}
@@ -5737,7 +5737,7 @@ order by colorder",
 				{
 					targetTable = this.tableList.SelectedItem.ToString();
 				}
-				MainForm.SetNewHistory(targetTable,this.txtWhere.Text,ref this.whereHistory);
+				qdbeUtil.SetNewHistory(targetTable,this.txtWhere.Text,ref this.whereHistory);
 				DspData(targetTable);
 			}
 		
@@ -5778,7 +5778,7 @@ order by colorder",
 				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.retString)
 				{
 					this.txtSort.Text = hv.retString;
-					MainForm.SetNewHistory(targetTable,hv.retString,ref this.sortHistory);
+					qdbeUtil.SetNewHistory(targetTable,hv.retString,ref this.sortHistory);
 
 					DspData(targetTable);
 				}
@@ -5791,7 +5791,7 @@ order by colorder",
 				{
 					targetTable = this.tableList.SelectedItem.ToString();
 				}
-				MainForm.SetNewHistory(targetTable,this.txtSort.Text,ref this.sortHistory);
+				qdbeUtil.SetNewHistory(targetTable,this.txtSort.Text,ref this.sortHistory);
 				DspData(targetTable);
 			}
 		
@@ -5843,6 +5843,13 @@ order by colorder",
 			this.LoadFile2Data(false,true);
 		}
 
+		/// <summary>
+		/// ファイルからデータを読み込み
+		/// CSV,TSVの指定、また ”の利用を指定可能
+		/// </summary>
+		/// <param name="isCsv">true: CSVでの読み込み false : TSV での読み込み</param>
+		/// <param name="isUseDQ">文字列にダブルクォートをつけているか
+		/// true: 付加されている false: 付加されていない</param>
 		protected void  LoadFile2Data( bool isCsv, bool isUseDQ )
 		{
 			if( this.tableList.SelectedItems.Count != 1 )
@@ -6562,7 +6569,7 @@ order by colorder",
 				if( DialogResult.OK == hv.ShowDialog() && ((TextBox)sender).Text != hv.retString)
 				{
 					((TextBox)sender).Text = hv.retString;
-					MainForm.SetNewHistory(targetTable,hv.retString,ref this.aliasHistory);
+					qdbeUtil.SetNewHistory(targetTable,hv.retString,ref this.aliasHistory);
 
 					DspData(targetTable);
 				}
@@ -6575,7 +6582,7 @@ order by colorder",
 				{
 					targetTable = this.tableList.SelectedItem.ToString();
 				}
-				MainForm.SetNewHistory(targetTable,((TextBox)sender).Text,ref this.aliasHistory);
+				qdbeUtil.SetNewHistory(targetTable,((TextBox)sender).Text,ref this.aliasHistory);
 				DspData(targetTable);
 			}
 		}
@@ -6594,19 +6601,40 @@ order by colorder",
 				tbname = "";
 			}
 			// 履歴に現在の値を記録 TODO
-			MainForm.SetNewHistory(tbname,((TextBox)sender).Text,ref this.aliasHistory);
+			qdbeUtil.SetNewHistory(tbname,((TextBox)sender).Text,ref this.aliasHistory);
 		}
 
 	}
 
+	/// <summary>
+	/// 処理開始時の情報を記憶する為のクラス
+	/// </summary>
 	public class ProcCondition
 	{
+		/// <summary>
+		/// 選択されたテーブルの一覧
+		/// </summary>
 		public ArrayList	Tbname;
+		/// <summary>
+		/// where 句の指定
+		/// </summary>
 		public string		WhereStr;
+		/// <summary>
+		/// Order by 句の指定
+		/// </summary>
 		public string		OrderStr;
+		/// <summary>
+		/// 最大件数の指定
+		/// </summary>
 		public string		MaxStr;
+		/// <summary>
+		/// グリッドにデータを全て表示するか否かの指定
+		/// </summary>
 		public bool		isAllDisp;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public ProcCondition()
 		{
 			Tbname = new ArrayList();
@@ -6617,19 +6645,28 @@ order by colorder",
 		}
 	}
 
+	/// <summary>
+	/// データグリッドの表示形式を管理する
+	/// </summary>
 	public class MyDataGridTextBoxColumn : DataGridTextBoxColumn
 	{
 		private CurrencyManager _sorce;
 		private int				editrow;
 		private bool	canSetEmptyString;
 		private bool	isThisImage;
-		DataGrid parentdg = new DataGrid();
+		private DataGrid parentdg = new DataGrid();
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public void	CancelEdit()
 		{
 			this.HideEditBox();
 		}
 
+		/// <summary>
+		/// 管理するデータがイメージか否かを取得・設定する
+		/// </summary>
 		public bool IsThisImage
 		{
 			get { return this.isThisImage; }
@@ -6645,11 +6682,22 @@ order by colorder",
 			}
 		}
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="pa">親となるグリッド</param>
+		/// <param name="canset">空白文字列の設定が可能か否か</param>
 		public MyDataGridTextBoxColumn(DataGrid pa, bool canset) : this(pa,canset,false)
 		{
 		}
 
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="pa">親となるグリッド</param>
+		/// <param name="canset">空白文字列の設定が可能か否か</param>
+		/// <param name="isImage">管理するデータがイメージか否か</param>
 		public MyDataGridTextBoxColumn(DataGrid pa, bool canset, bool isImage)
 		{
 			this.NullText = "";
@@ -6662,6 +6710,11 @@ order by colorder",
 			this.parentdg = pa;
 		}
 
+		/// <summary>
+		/// TextBoxへのイベントハンドラ
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
 		private void GridTextControler(object sender, EventArgs e)
 		{
 			if( isThisImage == true )
@@ -6671,6 +6724,11 @@ order by colorder",
 		}
 
 
+		/// <summary>
+		/// グリッド上でのキーダウンイベント処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void GridKeyDownControler(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			// Ctrl+3 で値の編集ダイアログを表示
@@ -6702,6 +6760,7 @@ order by colorder",
 				}
 
 
+				// 画像以外の場合、拡大表示ダイアログで値を表示させる
 				ZoomDialog dlg  = new ZoomDialog();
 				dlg.EditText = this.TextBox.Text;
 				if( this.TextBox.ReadOnly == true )
@@ -6721,12 +6780,15 @@ order by colorder",
 					}
 				}
 			}
+
+			// 参照のみの場合、これ以降の処理は行う必要なし。
 			if( this.parentdg.ReadOnly == true )
 			{
 				e.Handled = true;
 				return;
 			}
 
+			// CTRL+1でNULL値の入力
 			if( e.KeyCode == Keys.D1 &&
 				e.Control == true &&
 				e.Alt != true &&
@@ -6739,6 +6801,7 @@ order by colorder",
 				e.Handled = true;
 				return;
 			}
+			// CTRL+2 で空白文字列の入力
 			if( canSetEmptyString == true&&
 				e.KeyCode == Keys.D2 &&
 				e.Control == true &&
@@ -6749,6 +6812,16 @@ order by colorder",
 				SetColumnValueAtRow(this._sorce, this.editrow, "");
 			}
 		}
+
+		/// <summary>
+		/// 編集開始時処理のオーバーライド
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="rowNum"></param>
+		/// <param name="bounds"></param>
+		/// <param name="readOnly"></param>
+		/// <param name="instantText"></param>
+		/// <param name="cellIsVisible"></param>
 		protected override void Edit(CurrencyManager source,
 			int rowNum, Rectangle bounds, bool readOnly,
 			string instantText, bool cellIsVisible)
@@ -6766,13 +6839,25 @@ order by colorder",
 			}
 		}
 
+		/// <summary>
+		/// NULL値入力処理のオーバーライド
+		/// </summary>
 		protected override void EnterNullValue()
 		{
 			this.TextBox.Text = this.NullText;
 			SetColumnValueAtRow(this._sorce, this.editrow, DBNull.Value);
 		}
 
-		//Paintメソッドをオーバーライドする
+		/// <summary>
+		/// Paintメソッドをオーバーライドする
+		/// </summary>
+		/// <param name="g"></param>
+		/// <param name="bounds"></param>
+		/// <param name="source"></param>
+		/// <param name="rowNum"></param>
+		/// <param name="backBrush"></param>
+		/// <param name="foreBrush"></param>
+		/// <param name="alignToRight"></param>
 		protected override void Paint(Graphics g,
 			Rectangle bounds,
 			CurrencyManager source,
@@ -6786,10 +6871,12 @@ order by colorder",
 				this.GetColumnValueAtRow(source, rowNum);
 			if (cellValue == DBNull.Value)
 			{
+				// NULLの場合は水色に着色
 				backBrush = new SolidBrush(Color.FromArgb(0xbf,0xef,0xff));
 			}
 			if (cellValue is byte[])
 			{
+				// バイナリデータの場合、コバルトグリーンに着色
 				backBrush = new SolidBrush(Color.FromArgb(0x10,0xC9,0x8D));
 				g.FillRectangle(backBrush,bounds);
 				return;
@@ -6799,6 +6886,7 @@ order by colorder",
 				((string)cellValue).IndexOf("\r\n") >= 0 ||
 				((string)cellValue).IndexOf("\n") >= 0 ) )
 			{
+				// 文字列で複数行にわたる場合、とき色に着色
 				backBrush = new SolidBrush(Color.FromArgb(0xf4,0xb3,0xc2));
 			}
 

@@ -21,17 +21,35 @@ namespace quickDBExplorer
 		/// </summary>
 		public bool		hasReturn = false;
 
+		/// <summary>
+		/// テキスト入力エリア
+		/// </summary>
 		protected System.Windows.Forms.TextBox txtInput;
+		/// <summary>
+		/// OKボタン
+		/// </summary>
 		protected System.Windows.Forms.Button btnGo;
+		/// <summary>
+		/// 戻るボタン
+		/// </summary>
 		private System.Windows.Forms.Button btnCancel;
+		/// <summary>
+		/// テキスト入力エリアでの右クリックメニュー
+		/// </summary>
 		private System.Windows.Forms.ContextMenu contextMenu1;
 		private System.Windows.Forms.MenuItem menuCopy;
 		private System.Windows.Forms.MenuItem menuCut;
 		private System.Windows.Forms.MenuItem menuPaste;
 		private System.Windows.Forms.MenuItem menuAllSelect;
+		/// <summary>
+		/// 戻り値あり チェックボックス
+		/// </summary>
 		public System.Windows.Forms.CheckBox chkReturn;
 		private System.Windows.Forms.Button btnHistory;
 
+		/// <summary>
+		/// 入力履歴データ
+		/// </summary>
 		protected textHistory  dHistory = new textHistory();
 
 		/// <summary>
@@ -39,6 +57,9 @@ namespace quickDBExplorer
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public QueryDialog()
 		{
 			//
@@ -207,6 +228,11 @@ namespace quickDBExplorer
 		#endregion
 
 
+		/// <summary>
+		/// OKボタン押下時イベントハンドラ
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected virtual void btnGo_Click(object sender, System.EventArgs e)
 		{
 			SelectSql = this.txtInput.Text;
@@ -219,7 +245,7 @@ namespace quickDBExplorer
 				this.hasReturn = false;
 			}
 			//this.DialogResult = DialogResult.OK;
-			MainForm.SetNewHistory("",this.txtInput.Text,ref this.dHistory);
+			qdbeUtil.SetNewHistory("",this.txtInput.Text,ref this.dHistory);
 		}
 
 		private void QueryDialog_Load(object sender, System.EventArgs e)
@@ -262,7 +288,7 @@ namespace quickDBExplorer
 			{
 				//違う情報であれば、それを表示し、履歴として追加する
 				this.txtInput.Text = hv.retString;
-				MainForm.SetNewHistory("",hv.retString,ref this.dHistory);
+				qdbeUtil.SetNewHistory("",hv.retString,ref this.dHistory);
 			}
 		}
 
@@ -292,7 +318,7 @@ namespace quickDBExplorer
 				if( DialogResult.OK == hv.ShowDialog() && this.txtInput.Text != hv.retString)
 				{
 					this.txtInput.Text = hv.retString;
-					MainForm.SetNewHistory("",hv.retString,ref this.dHistory);
+					qdbeUtil.SetNewHistory("",hv.retString,ref this.dHistory);
 				}
 			}
 		

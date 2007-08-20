@@ -386,6 +386,10 @@ namespace quickDBExplorer
 			CheckNewVersion(true);
 		}
 
+		/// <summary>
+		/// 最新バージョンが存在するかどうかをチェックする
+		/// </summary>
+		/// <param name="catchError"></param>
 		protected void CheckNewVersion(bool catchError)
 		{
 			StreamReader sr = null;
