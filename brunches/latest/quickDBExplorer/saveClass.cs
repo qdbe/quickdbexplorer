@@ -9,14 +9,29 @@ using System.Runtime.Serialization.Formatters.Soap;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// サーバー別の各種指定履歴データを管理する
+	/// </summary>
 	[Serializable]
 	public class ServerData : ISerializable
 	{
+		/// <summary>
+		/// 接続先サーバー名
+		/// </summary>
 		protected string		servername;
+		/// <summary>
+		/// 接続先インスタンス名
+		/// </summary>
 		protected string		instancename;
+		/// <summary>
+		/// サーバー＋インスタンスを利用した接続先サーバーのHashtableのキー情報
+		/// </summary>
 		protected string		keyname;
 
-		public string		lastdb;		// 最後に利用したDB名
+		/// <summary>
+		/// 最後に利用したDB名
+		/// </summary>
+		public string		lastdb;		
 
 		/// <summary>
 		/// // DB 毎の最終ユーザーを記録する
@@ -38,13 +53,37 @@ namespace quickDBExplorer
 		/// view を表示させるかどうか
 		/// </summary>
 		public int	showView;
+		/// <summary>
+		/// データ出力先の指定
+		/// </summary>
 		public	Hashtable	outdest;
+		/// <summary>
+		/// データ出力先のファイル・フォルダ名
+		/// </summary>
 		public	Hashtable	outfile;
+		/// <summary>
+		/// データグリッドを表示するか否か
+		/// </summary>
 		public	Hashtable	showgrid;
+		/// <summary>
+		/// グリッド表示件数
+		/// </summary>
 		public 	Hashtable	griddspcnt;
+		/// <summary>
+		/// テキスト出力時の文字コード
+		/// </summary>
 		public	Hashtable	txtencode;
+		/// <summary>
+		/// サーバー別情報を記憶するか否か
+		/// </summary>
 		public	bool	isSaveKey = true;
+		/// <summary>
+		/// 信頼関係接続を利用するか否か
+		/// </summary>
 		public	bool	IsUseTrust = false;
+		/// <summary>
+		/// ログインユーザー名
+		/// </summary>
 		public	string	loginUser = "";
 		/// <summary>
 		/// where 句の入力履歴情報
@@ -66,10 +105,19 @@ namespace quickDBExplorer
 		/// </summary>
 		public textHistory  selectHistory;
 
+		/// <summary>
+		/// クエリ発行時の入力履歴
+		/// </summary>
 		public textHistory  DMLHistory;
 
+		/// <summary>
+		/// 各種コマンド入力履歴
+		/// </summary>
 		public textHistory  cmdHistory;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public ServerData()
 		{
 			dbopt = new Hashtable();
@@ -89,6 +137,11 @@ namespace quickDBExplorer
 			DMLHistory = new textHistory();
 		}
 
+		/// <summary>
+		/// シリアライズ処理用コンストラクタ
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="context"></param>
 		public ServerData(SerializationInfo info, StreamingContext context)
 		{
 			servername = "";
@@ -239,6 +292,11 @@ namespace quickDBExplorer
 
 		}
 
+		/// <summary>
+		/// シリアライズ処理用
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="context"></param>
 		public virtual void GetObjectData(
 			SerializationInfo info, StreamingContext context)
 		{
@@ -266,6 +324,9 @@ namespace quickDBExplorer
 			info.AddValue("cmdHistory", cmdHistory );
 		}
 
+		/// <summary>
+		/// 接続先サーバー名
+		/// </summary>
 		public string Servername
 		{
 			get { return this.servername; }
@@ -275,6 +336,9 @@ namespace quickDBExplorer
 				this.keyname = value + this.instancename;
 			}
 		}
+		/// <summary>
+		/// 接続先インスタンス名
+		/// </summary>
 		public string InstanceName
 		{
 			get { return this.instancename; }
@@ -284,6 +348,9 @@ namespace quickDBExplorer
 				this.keyname = this.servername + this.instancename;
 			}
 		}
+		/// <summary>
+		/// サーバー＋インスタンスを利用した接続先サーバーのHashtableのキー情報
+		/// </summary>
 		public string KeyName
 		{
 			get 
@@ -299,13 +366,30 @@ namespace quickDBExplorer
 	[Serializable]
 	public class saveClass : ISerializable
 	{
+		/// <summary>
+		/// サーバー別情報を管理するハッシュテーブル
+		/// サーバー名＋インスタンス名をキーとする
+		/// </summary>
 		public Hashtable	ht;
+
+		/// <summary>
+		/// 最後に接続したサーバーのHashkey
+		/// </summary>
 		public string lastserverkey = "";
+
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public saveClass()
 		{
 			ht = new Hashtable();
 		}
 
+		/// <summary>
+		/// シリアライズ処理用コンストラクタ
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="context"></param>
 		public saveClass(SerializationInfo info, StreamingContext context)
 		{
 			try 
@@ -325,6 +409,11 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// シリアライズ処理用
+		/// </summary>
+		/// <param name="info"></param>
+		/// <param name="context"></param>
 		public virtual void GetObjectData(
 			SerializationInfo info, StreamingContext context)
 		{

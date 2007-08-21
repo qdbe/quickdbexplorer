@@ -6,10 +6,16 @@ using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// select 文を入力する為のダイアログ
+	/// </summary>
 	public class QueryDialogSelect : quickDBExplorer.QueryDialog
 	{
 		private System.ComponentModel.IContainer components = null;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public QueryDialogSelect()
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。

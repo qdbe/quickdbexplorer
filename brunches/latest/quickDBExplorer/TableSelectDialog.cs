@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// テーブル指定ダイアログ
+	/// </summary>
 	public class TableSelectDialog : quickDBExplorer.quickDBExplorerBaseForm
 	{
 		private System.Windows.Forms.Button button2;
@@ -13,8 +16,14 @@ namespace quickDBExplorer
 		private System.Windows.Forms.TextBox txtTableSelect;
 		private System.ComponentModel.IContainer components = null;
 
+		/// <summary>
+		/// 当ダイアログでの入力結果
+		/// </summary>
 		public string ResultStr = "";
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public TableSelectDialog()
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。

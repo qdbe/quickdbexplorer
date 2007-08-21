@@ -12,6 +12,9 @@ namespace quickDBExplorer
 	/// </summary>
 	public class quickDBExplorerBaseForm : System.Windows.Forms.Form
 	{
+		/// <summary>
+		/// メッセージ表示エリア
+		/// </summary>
 		protected System.Windows.Forms.Label msgArea;
 		/// <summary>
 		/// 必要なデザイナ変数です。

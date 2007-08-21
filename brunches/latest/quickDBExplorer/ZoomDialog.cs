@@ -7,14 +7,23 @@ using System.Windows.Forms;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// ZoomDialog の概要の説明です。
+	/// 値の拡大表示用ダイアログ
 	/// where, order 等のテキストボックスの値を、全体が見えるようにするダイアログ
 	/// ここで値の編集が可能
 	/// </summary>
 	public class ZoomDialog : quickDBExplorerBaseForm
 	{
+		/// <summary>
+		/// 表示テキストエリア
+		/// </summary>
 		protected System.Windows.Forms.TextBox txtZoom;
+		/// <summary>
+		/// OKボタン
+		/// </summary>
 		protected System.Windows.Forms.Button btnOk;
+		/// <summary>
+		/// 閉じるボタン
+		/// </summary>
 		protected System.Windows.Forms.Button btnClose;
 		/// <summary>
 		/// 必要なデザイナ変数です。
@@ -80,7 +89,9 @@ namespace quickDBExplorer
 			set { this.isDispOnly = value; }
 		}
 
-
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public ZoomDialog()
 		{
 			//
@@ -179,6 +190,11 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		protected virtual void ZoomDialog_Load(object sender, System.EventArgs e)
 		{
 			this.txtZoom.Text = this.editText;

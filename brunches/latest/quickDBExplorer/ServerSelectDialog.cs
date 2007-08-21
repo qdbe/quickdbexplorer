@@ -12,16 +12,26 @@ namespace quickDBExplorer
 	public class ServerSelectDialog : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.ListBox listBox1;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnOk;
 		/// <summary>
 		/// 必要なデザイナ変数です。
 		/// </summary>
 		private System.ComponentModel.Container components = null;
-		private System.Windows.Forms.Button button2;
-		protected	saveClass	ServerList;
+		private System.Windows.Forms.Button btnCancel;
+		private	saveClass	ServerList;
+		/// <summary>
+		/// 選択されたサーバー名
+		/// </summary>
 		public	string selectedServer;
+		/// <summary>
+		/// 選択されたインスタンス名
+		/// </summary>
 		public  string selectedInstance;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="cl">過去の接続サーバー履歴情報</param>
 		public ServerSelectDialog(saveClass cl)
 		{
 			//
@@ -58,8 +68,8 @@ namespace quickDBExplorer
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(ServerSelectDialog));
 			this.listBox1 = new System.Windows.Forms.ListBox();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
+			this.btnOk = new System.Windows.Forms.Button();
+			this.btnCancel = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// listBox1
@@ -74,35 +84,35 @@ namespace quickDBExplorer
 			this.listBox1.TabIndex = 0;
 			this.listBox1.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
 			// 
-			// button1
+			// btnOk
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(8, 264);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(120, 24);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "サーバー選択(&O)";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.btnOk.Location = new System.Drawing.Point(8, 264);
+			this.btnOk.Name = "btnOk";
+			this.btnOk.Size = new System.Drawing.Size(120, 24);
+			this.btnOk.TabIndex = 1;
+			this.btnOk.Text = "サーバー選択(&O)";
+			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
 			// 
-			// button2
+			// btnCancel
 			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.button2.Location = new System.Drawing.Point(168, 264);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(120, 24);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "キャンセル(&X)";
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btnCancel.Location = new System.Drawing.Point(168, 264);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(120, 24);
+			this.btnCancel.TabIndex = 2;
+			this.btnCancel.Text = "キャンセル(&X)";
 			// 
 			// ServerSelectDialog
 			// 
-			this.AcceptButton = this.button1;
+			this.AcceptButton = this.btnOk;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.CancelButton = this.button2;
+			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(292, 293);
-			this.Controls.Add(this.button2);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.btnCancel);
+			this.Controls.Add(this.btnOk);
 			this.Controls.Add(this.listBox1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ServerSelectDialog";
@@ -114,7 +124,7 @@ namespace quickDBExplorer
 		}
 		#endregion
 
-		private void button1_Click(object sender, System.EventArgs e)
+		private void btnOk_Click(object sender, System.EventArgs e)
 		{
 			if( this.listBox1.SelectedItem != null )
 			{
@@ -141,7 +151,7 @@ namespace quickDBExplorer
 
 		private void listBox1_DoubleClick(object sender, System.EventArgs e)
 		{
-			this.button1.PerformClick();
+			this.btnOk.PerformClick();
 		}
 	}
 }

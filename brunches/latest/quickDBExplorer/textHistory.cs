@@ -14,7 +14,9 @@ namespace quickDBExplorer {
     using System.Xml;
     using System.Runtime.Serialization;
     
-    
+    /// <summary>
+    /// 入力履歴データを管理するクラス
+    /// </summary>
     [Serializable()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Diagnostics.DebuggerStepThrough()]

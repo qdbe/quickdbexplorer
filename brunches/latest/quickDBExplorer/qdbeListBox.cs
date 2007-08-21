@@ -45,6 +45,9 @@ namespace quickDBExplorer
 			get { return this.isAllSelecting; }
 		}
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public qdbeListBox() : base()
 		{
 		}
