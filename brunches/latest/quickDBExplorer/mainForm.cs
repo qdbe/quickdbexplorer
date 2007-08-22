@@ -116,32 +116,74 @@ namespace quickDBExplorer
 		/// <summary>
 		///  接続先のサーバー名。表示用にのみ利用
 		/// </summary>
-		public string servername = "";
+		protected string servername = "";
+		public string ServerName
+		{
+			get { return this.servername; }
+			set { this.servername = value; }
+		}
 
 		/// <summary>
 		/// 接続先サーバーの本当の名前。インスタンス名を含まない
 		/// </summary>
-		public string serverRealName = "";
+		protected string serverRealName = "";
+		/// <summary>
+		/// 接続先サーバーの本当の名前。インスタンス名を含まない
+		/// </summary>
+		public string ServerRealName 
+		{
+			get { return this.serverRealName; }
+			set { this.serverRealName = value; }
+		}
 
 		/// <summary>
 		/// 接続先サーバーのインスタンス名
 		/// </summary>
-		public string instanceName = "";
+		protected string instanceName = "";
+		/// <summary>
+		/// 接続先サーバーのインスタンス名
+		/// </summary>
+		public string InstanceName 
+		{
+			get { return this.instanceName; }
+			set { this.instanceName = value; }
+		}
 
 		/// <summary>
 		/// ログインID
 		/// </summary>
-		public string loginUid = "";
+		protected string loginUid = "";
+		public string LoginUid 
+		{
+			get { return this.loginUid; }
+			set { this.loginUid = value; }
+		}
 
 		/// <summary>
 		/// ログイン用パスワード
 		/// </summary>
-		public string loginPasswd = "";
+		protected string loginPasswd = "";
+		/// <summary>
+		/// ログイン用パスワード
+		/// </summary>
+		public string LoginPasswd 
+		{
+			get { return this.loginPasswd; }
+			set { this.loginPasswd = value; }
+		}
 
 		/// <summary>
 		/// 信頼関係接続を利用するか否か
 		/// </summary>
-		public bool IsUseTruse = false;
+		protected bool isUseTruse = false;
+		/// <summary>
+		/// 信頼関係接続を利用するか否か
+		/// </summary>
+		public bool IsUseTruse 
+		{
+			get { return this.isUseTruse; }
+			set { this.isUseTruse = value; }
+		}
 
 		/// <summary>
 		/// スレッドの稼動状態を表す
@@ -169,7 +211,15 @@ namespace quickDBExplorer
 		/// <summary>
 		/// SQL のクエリ実行タイムアウト値
 		/// </summary>
-		public int SqlTimeOut = 300;
+		protected int sqlTimeOut = 300;
+		/// <summary>
+		/// SQL のクエリ実行タイムアウト値
+		/// </summary>
+		public int SqlTimeOut 
+		{
+			get { return this.sqlTimeOut; }
+			set { this.sqlTimeOut = value; }
+		}
 
 		/// <summary>
 		/// where 句の入力履歴情報
@@ -6465,7 +6515,7 @@ order by colorder",
 			}
 
 			FieldGetDialog dlg = new FieldGetDialog();
-			dlg.baseTableName = this.tableList.SelectedItem.ToString();
+			dlg.BaseTableName = this.tableList.SelectedItem.ToString();
 			if( dlg.ShowDialog(this) != DialogResult.OK )
 			{
 				return;
@@ -6475,9 +6525,9 @@ order by colorder",
 			{
 				if( i != 0 )
 				{
-					if( dlg.retCRLF == true )
+					if( dlg.RetCRLF == true )
 					{
-						if( dlg.retComma ) 
+						if( dlg.RetComma ) 
 						{
 							str.Append(",\r\n");
 						}
@@ -6488,7 +6538,7 @@ order by colorder",
 					}
 					else
 					{
-						if( dlg.retComma )
+						if( dlg.RetComma )
 						{
 							str.Append(",");
 						}
@@ -6498,7 +6548,7 @@ order by colorder",
 						}
 					}
 				}
-				str.Append(dlg.retTableAccessor+".");
+				str.Append(dlg.RetTableAccessor+".");
 				str.Append((string)this.fieldListbox.SelectedItems[i]);
 			}
 			if( str.Length != 0 )
@@ -6614,11 +6664,28 @@ order by colorder",
 		/// <summary>
 		/// 選択されたテーブルの一覧
 		/// </summary>
-		public ArrayList	Tbname;
+		protected ArrayList	tbname;
+		/// <summary>
+		/// 選択されたテーブルの一覧
+		/// </summary>
+		public ArrayList	Tbname
+		{
+			get { return this.tbname; }
+			set { this.tbname = value; }
+		}
+
 		/// <summary>
 		/// where 句の指定
 		/// </summary>
-		public string		WhereStr;
+		protected string		whereStr;
+		/// <summary>
+		/// where 句の指定
+		/// </summary>
+		public string		WhereStr
+		{
+			get { return this.whereStr; }
+			set { this.whereStr = value; }
+		}
 		/// <summary>
 		/// Order by 句の指定
 		/// </summary>

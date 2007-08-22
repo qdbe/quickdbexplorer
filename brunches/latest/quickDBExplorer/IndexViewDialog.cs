@@ -24,17 +24,41 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示するテーブル名称
 		/// </summary>
-		public string dsptbname;
+		protected string dsptbname;
+		/// <summary>
+		/// 表示するテーブル名称
+		/// </summary>
+		public string DspTbname
+		{
+			get { return this.dsptbname; }
+			set { this.dsptbname = value; }
+		}
 
 		/// <summary>
 		/// SQL Server へのコネクション情報
 		/// </summary>
-		public System.Data.SqlClient.SqlConnection sqlConnection;
+		protected System.Data.SqlClient.SqlConnection sqlConnection;
+		/// <summary>
+		/// SQL Server へのコネクション情報
+		/// </summary>
+		public System.Data.SqlClient.SqlConnection SqlConnection
+		{
+			get { return this.sqlConnection; }
+			set { this.sqlConnection = value; }
+		}
 
 		/// <summary>
 		/// SQL Server のバージョン
 		/// </summary>
-		public int		sqlVersion = 2000;
+		protected int		sqlVersion = 2000;
+		/// <summary>
+		/// SQL Server のバージョン
+		/// </summary>
+		public int		SqlVersion
+		{
+			get	{ return this.sqlVersion; }
+			set { this.sqlConnection = value; }
+		}
 
 		/// <summary>
 		/// コンストラクタ

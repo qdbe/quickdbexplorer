@@ -24,21 +24,55 @@ namespace quickDBExplorer
 		/// <summary>
 		/// テーブル名
 		/// </summary>
-		public string	baseTableName = "";
+		protected string	baseTableName = "";
+		/// <summary>
+		/// テーブル名
+		/// </summary>
+		public string	BaseTableName
+		{
+			get { return this.baseTableName; }
+			set { this.baseTableName = value; }
+		}
 
 		/// <summary>
 		/// テーブルの修飾子(alias) 戻り値
 		/// </summary>
-		public string retTableAccessor = "";
+		protected string retTableAccessor = "";
+
+		/// <summary>
+		/// テーブルの修飾子(alias) 戻り値
+		/// </summary>
+		public string RetTableAccessor
+		{
+			get { return this.retTableAccessor; }
+			set { this.retTableAccessor = value; }
+		}
+
 		/// <summary>
 		/// 改行をつけるかつけないかの指定(戻り値)
 		/// </summary>
-		public bool retCRLF = false;
+		protected bool retCRLF = false;
+		/// <summary>
+		/// 改行をつけるかつけないかの指定(戻り値)
+		/// </summary>
+		public bool RetCRLF 
+		{
+			get { return this.retCRLF; }
+			set { this.retCRLF = value; }
+		}
 		private System.Windows.Forms.ToolTip toolTip1;
 		/// <summary>
 		/// カンマをつけるかつけないか(戻り値)
 		/// </summary>
-		public bool retComma = false;
+		protected bool retComma = false;
+		/// <summary>
+		/// カンマをつけるかつけないか(戻り値)
+		/// </summary>
+		public bool RetComma 
+		{
+			get { return this.retComma; }
+			set { this.retComma = value; }
+		}
 
 		/// <summary>
 		/// コンストラクタ

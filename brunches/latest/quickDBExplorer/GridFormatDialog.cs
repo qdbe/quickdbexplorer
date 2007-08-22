@@ -26,23 +26,64 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示フォントの指定
 		/// </summary>
-		public	Font	gfont;
+		protected	Font	gfont;
+		/// <summary>
+		/// 表示フォントの指定
+		/// </summary>
+		public	Font	Gfont
+		{
+			get { return this.gfont; }
+			set { this.gfont = value; }
+		}
 		/// <summary>
 		/// フォント表示色の指定
 		/// </summary>
-		public	Color	gcolor;
+		protected	Color	gcolor;
+		/// <summary>
+		/// フォント表示色の指定
+		/// </summary>
+		public	Color	Gcolor
+		{
+			get { return this.gcolor; }
+			set { this.gcolor = value; }
+		}
 		/// <summary>
 		/// 数値変換書式の指定
 		/// </summary>
-		public	string	NumFormat;
+		protected	string	numFormat;
+		/// <summary>
+		/// 数値変換書式の指定
+		/// </summary>
+		public	string	NumFormat
+		{
+			get { return this.numFormat; }
+			set { this.numFormat = value; }
+
+		}
 		/// <summary>
 		/// 小数点書式の指定
 		/// </summary>
-		public	string	FloatFormat;
+		protected	string	floatFormat;
+		/// <summary>
+		/// 小数点書式の指定
+		/// </summary>
+		public	string	FloatFormat
+		{
+			get { return this.floatFormat; }
+			set { this.floatFormat = value; }
+		}
 		/// <summary>
 		/// 日付変換書式の指定
 		/// </summary>
-		public	string	DateFormat;
+		protected	string	dateFormat;
+		/// <summary>
+		/// 日付変換書式の指定
+		/// </summary>
+		public	string	DateFormat
+		{
+			get { return this.dateFormat; }
+			set { this.dateFormat = value; }
+		}
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.ComboBox comboBox1;

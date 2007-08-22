@@ -34,7 +34,15 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 選択された入力履歴情報
 		/// </summary>
-		public string retString = "";
+		protected string retString = "";
+		/// <summary>
+		/// 選択された入力履歴情報
+		/// </summary>
+		public string RetString 
+		{
+			get { return this.retString; }
+			set { this.retString = value; }
+		}
 
 		/// <summary>
 		/// テーブル名称を表示するか否かの指定
