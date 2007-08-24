@@ -19,7 +19,15 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 当ダイアログでの入力結果
 		/// </summary>
-		public string ResultStr = "";
+		protected string resultStr = "";
+		/// <summary>
+		/// 当ダイアログでの入力結果
+		/// </summary>
+		public string ResultStr
+		{
+			get { return this.ResultStr; }
+			set { this.resultStr = value; }
+		}
 
 		/// <summary>
 		/// コンストラクタ

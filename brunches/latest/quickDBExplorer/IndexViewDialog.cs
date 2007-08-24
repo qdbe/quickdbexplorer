@@ -57,7 +57,7 @@ namespace quickDBExplorer
 		public int		SqlVersion
 		{
 			get	{ return this.sqlVersion; }
-			set { this.sqlConnection = value; }
+			set { this.sqlVersion = value; }
 		}
 
 		/// <summary>

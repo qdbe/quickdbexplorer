@@ -257,10 +257,6 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "quickDBExplorerHelp.doc"
-                    BuildAction = "None"
-                />
-                <File
                     RelPath = "quickDBExplorerTextBox.cs"
                     SubType = "Component"
                     BuildAction = "Compile"

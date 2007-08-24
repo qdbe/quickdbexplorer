@@ -255,10 +255,10 @@ namespace quickDBExplorer
 
 			this.chkSaveInfo.Checked = true;
 			// 最後に表示したサーバーの情報があれば、それを表示する
-			if( initopt.lastserverkey != "" )
+			if( initopt.LastServerKey != "" )
 			{
 				// 記憶されたサーバー別の記憶情報
-				ServerData sv = (ServerData)initopt.ht[initopt.lastserverkey];
+				ServerData sv = (ServerData)initopt.PerServerData[initopt.LastServerKey];
 				this.txtServerName.Text = sv.Servername;
 				this.txtInstance.Text = sv.InstanceName;
 				if( sv.IsUseTrust == true )
@@ -268,11 +268,11 @@ namespace quickDBExplorer
 				else
 				{
 					this.chkTrust.Checked = false;
-					this.txtUser.Text = sv.loginUser;
+					this.txtUser.Text = sv.LoginUser;
 				}
 				// パスワードは記憶していないので戻す必要なし
 			}
-			if( this.initopt.ht.Count > 0 )
+			if( this.initopt.PerServerData.Count > 0 )
 			{
 				this.btnServerHistory.Enabled = true;
 			}
@@ -338,44 +338,44 @@ namespace quickDBExplorer
 				ServerData sv = new ServerData();
 				sv.Servername = this.txtServerName.Text;
 				sv.InstanceName = this.txtInstance.Text;
-				if( initopt.ht[sv.KeyName] == null )
+				if( initopt.PerServerData[sv.KeyName] == null )
 				{
-					initopt.ht.Add(sv.KeyName,sv);
+					initopt.PerServerData.Add(sv.KeyName,sv);
 				}
 				else
 				{
-					sv = (ServerData)initopt.ht[sv.KeyName];
+					sv = (ServerData)initopt.PerServerData[sv.KeyName];
 				}
 
 				if( this.chkSaveInfo.Checked == false )
 				{
-					sv.isSaveKey = false;
+					sv.IsSaveKey = false;
 				}
 				else
 				{
-					sv.isSaveKey = true;
+					sv.IsSaveKey = true;
 				}
 				sv.IsUseTrust = this.chkTrust.Checked;
-				sv.loginUser = this.txtUser.Text;
+				sv.LoginUser = this.txtUser.Text;
 				// 最後に接続したサーバーを更新
-				initopt.lastserverkey = sv.KeyName;
+				initopt.LastServerKey = sv.KeyName;
 
 				// メインダイアログを表示
 				MainForm mainForm = new MainForm(sv);
 				mainForm.MdiParent = this.MdiParent;
-				mainForm.servername = this.txtServerName.Text;
-				mainForm.serverRealName = this.txtServerName.Text;
-				mainForm.instanceName = this.txtInstance.Text;
-				mainForm.loginUid = this.txtUser.Text;
-				mainForm.loginPasswd = this.txtPassword.Text;
+				mainForm.ServerName = this.txtServerName.Text;
+				mainForm.ServerRealName = this.txtServerName.Text;
+				mainForm.InstanceName = this.txtInstance.Text;
+				mainForm.LoginUid = this.txtUser.Text;
+				mainForm.LoginPasswd = this.txtPassword.Text;
 				mainForm.IsUseTruse = this.chkTrust.Checked;
 				if( this.txtInstance.Text != "" )
 				{
-					mainForm.servername = this.txtServerName.Text + "@" + this.txtInstance.Text;
+					mainForm.ServerName = this.txtServerName.Text + "@" + this.txtInstance.Text;
 				}
 				else
 				{
-					mainForm.servername = this.txtServerName.Text;
+					mainForm.ServerName = this.txtServerName.Text;
 				}
 				mainForm.sqlConnection1 = con;
 				mainForm.Show();
@@ -398,20 +398,20 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void btnServerHistory_Click(object sender, System.EventArgs e)
 		{
-			if( this.initopt.ht.Count > 0 )
+			if( this.initopt.PerServerData.Count > 0 )
 			{
 				ServerSelectDialog dlg = new ServerSelectDialog(this.initopt);
 			
 				if( dlg.ShowDialog() == DialogResult.OK	)
 				{
-					this.txtServerName.Text = dlg.selectedServer;
-					this.txtInstance.Text = dlg.selectedInstance;
+					this.txtServerName.Text = dlg.SelectedServer;
+					this.txtInstance.Text = dlg.SelectedInstance;
 
 					ServerData sv = new ServerData();
 					sv.Servername = this.txtServerName.Text;
 					sv.InstanceName = this.txtInstance.Text;
 
-					ServerData selectSv = (ServerData)this.initopt.ht[sv.KeyName];
+					ServerData selectSv = (ServerData)this.initopt.PerServerData[sv.KeyName];
 					if( selectSv != null && selectSv.IsUseTrust == true )
 					{
 						this.chkTrust.Checked = true;

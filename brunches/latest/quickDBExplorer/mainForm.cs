@@ -117,6 +117,9 @@ namespace quickDBExplorer
 		///  接続先のサーバー名。表示用にのみ利用
 		/// </summary>
 		protected string servername = "";
+		/// <summary>
+		///  接続先のサーバー名。表示用にのみ利用
+		/// </summary>
 		public string ServerName
 		{
 			get { return this.servername; }
@@ -153,6 +156,9 @@ namespace quickDBExplorer
 		/// ログインID
 		/// </summary>
 		protected string loginUid = "";
+		/// <summary>
+		/// ログインID
+		/// </summary>
 		public string LoginUid 
 		{
 			get { return this.loginUid; }
@@ -318,12 +324,12 @@ namespace quickDBExplorer
 			Sqldlg.SelectSql = "";
 			Sqldlg2.SelectSql = "";
 			cmdDialog.SelectSql = "";
-			this.whereHistory = svdata.whereHistory;
-			this.sortHistory = svdata.sortHistory;
-			this.aliasHistory = svdata.aliasHistory;
-			this.selectHistory = svdata.selectHistory;
+			this.whereHistory = svdata.WhereHistory;
+			this.sortHistory = svdata.SortHistory;
+			this.aliasHistory = svdata.AliasHistory;
+			this.selectHistory = svdata.SelectHistory;
 			this.DMLHistory = svdata.DMLHistory;
-			this.cmdHistory = svdata.cmdHistory;
+			this.cmdHistory = svdata.CmdHistory;
 		}
 
 		/// <summary>
@@ -1596,7 +1602,7 @@ namespace quickDBExplorer
 			{
 				this.SetErrorMessage(se);
 			}
-			if( svdata.isShowsysuser == 0 )
+			if( svdata.IsShowsysuser == 0 )
 			{
 				this.rdoNotDspSysUser.Checked = true;
 				this.rdoDspSysUser.Checked = false;
@@ -1606,7 +1612,7 @@ namespace quickDBExplorer
 				this.rdoNotDspSysUser.Checked = false;
 				this.rdoDspSysUser.Checked = true;
 			}
-			if( svdata.sortKey == 0 )
+			if( svdata.SortKey == 0 )
 			{
 				this.rdoSortTable.Checked = false;
 				this.rdoSortOwnerTable.Checked = true;
@@ -1616,7 +1622,7 @@ namespace quickDBExplorer
 				this.rdoSortTable.Checked = true;
 				this.rdoSortOwnerTable.Checked = false;
 			}
-			if( svdata.showView == 0 )
+			if( svdata.ShowView == 0 )
 			{
 				this.rdoDspView.Checked = false;
 				this.rdoNotDspView.Checked = true;
@@ -1628,11 +1634,11 @@ namespace quickDBExplorer
 			}
 
 			// 前回の値を元にDB先を変更する
-			if(  svdata.lastdb != null && svdata.lastdb != "" )
+			if(  svdata.LastDb != null && svdata.LastDb != "" )
 			{
 				for( int i = 0; i < this.dbList.Items.Count; i++  )
 				{
-					if( (string)this.dbList.Items[i] == svdata.lastdb )
+					if( (string)this.dbList.Items[i] == svdata.LastDb )
 					{
 						this.dbList.SetSelected(i,true);
 						this.dbList.Focus();
@@ -1656,7 +1662,7 @@ namespace quickDBExplorer
 		{
 			if( this.dbList.SelectedItems.Count != 0 )
 			{
-				svdata.lastdb = (string)this.dbList.SelectedItem;
+				svdata.LastDb = (string)this.dbList.SelectedItem;
 			}
 			// テーブルの選択履歴をクリア
 			this.selectedTables.Clear();
@@ -1667,12 +1673,12 @@ namespace quickDBExplorer
 
 			dspTableList();
 			displistowner();
-			if( svdata.dbopt[svdata.lastdb] != null )
+			if( svdata.Dbopt[svdata.LastDb] != null )
 			{
-				if( svdata.dbopt[svdata.lastdb] is ArrayList )
+				if( svdata.Dbopt[svdata.LastDb] is ArrayList )
 				{
 
-					ArrayList saveownerlist = (ArrayList)svdata.dbopt[svdata.lastdb];
+					ArrayList saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDb];
 
 					// 該当DBの最後に選択したユーザーを選択する
 					string []olist = (string[])saveownerlist.ToArray(typeof(string));
@@ -1687,7 +1693,7 @@ namespace quickDBExplorer
 				}
 				else
 				{
-					svdata.dbopt[svdata.lastdb] = null;
+					svdata.Dbopt[svdata.LastDb] = null;
 				}
 			}
 
@@ -1696,10 +1702,10 @@ namespace quickDBExplorer
 				// 選択がない場合、一番最初をディフォルトで選択する
 				this.ownerListbox.SetSelected(0,true);
 			}
-			if( svdata.outdest[svdata.lastdb] != null )
+			if( svdata.OutDest[svdata.LastDb] != null )
 			{
 				// 該当DBの最後の出力先をセットする
-				switch( (int)svdata.outdest[svdata.lastdb] )
+				switch( (int)svdata.OutDest[svdata.LastDb] )
 				{
 					case	0:
 						//クリップボード
@@ -1727,9 +1733,9 @@ namespace quickDBExplorer
 				this.rdoOutFolder.Checked = false;
 			}
 
-			if( svdata.outfile[svdata.lastdb] != null )
+			if( svdata.OutFile[svdata.LastDb] != null )
 			{
-				this.txtOutput.Text = (string)svdata.outfile[svdata.lastdb];
+				this.txtOutput.Text = (string)svdata.OutFile[svdata.LastDb];
 			}
 			else
 			{
@@ -1737,9 +1743,9 @@ namespace quickDBExplorer
 			}
 			
 
-			if( svdata.showgrid[svdata.lastdb] != null )
+			if( svdata.ShowGrid[svdata.LastDb] != null )
 			{
-				if( (int)svdata.showgrid[svdata.lastdb] == 0 )
+				if( (int)svdata.ShowGrid[svdata.LastDb] == 0 )
 				{
 					this.chkDspData.CheckState = CheckState.Unchecked;
 				}
@@ -1753,11 +1759,11 @@ namespace quickDBExplorer
 				this.chkDspData.CheckState = CheckState.Checked;
 			}
 
-			if( svdata.griddspcnt[svdata.lastdb] != null )
+			if( svdata.GridDspCnt[svdata.LastDb] != null )
 			{
-				if( (string)svdata.griddspcnt[svdata.lastdb] != "" )
+				if( (string)svdata.GridDspCnt[svdata.LastDb] != "" )
 				{
-					this.txtDspCount.Text = (string)svdata.griddspcnt[svdata.lastdb];
+					this.txtDspCount.Text = (string)svdata.GridDspCnt[svdata.LastDb];
 				}
 				else
 				{
@@ -1769,13 +1775,13 @@ namespace quickDBExplorer
 				this.txtDspCount.Text = "1000";
 			}
 
-			if( svdata.txtencode[svdata.lastdb] != null )
+			if( svdata.TxtEncode[svdata.LastDb] != null )
 			{
-				if( (int)svdata.txtencode[svdata.lastdb] == 0 )
+				if( (int)svdata.TxtEncode[svdata.LastDb] == 0 )
 				{
 					this.rdoUnicode.Checked = true;
 				}
-				else if( (int)svdata.txtencode[svdata.lastdb] == 1 )
+				else if( (int)svdata.TxtEncode[svdata.LastDb] == 1 )
 				{
 					this.rdoSjis.Checked = true;
 				}
@@ -3175,14 +3181,14 @@ order by colorder",
 			{
 				// 選択したDBの最終オーナーを記録する
 				ArrayList saveownerlist;
-				if( svdata.dbopt[svdata.lastdb] == null )
+				if( svdata.Dbopt[svdata.LastDb] == null )
 				{
 					saveownerlist = new ArrayList();
-					svdata.dbopt[svdata.lastdb] = saveownerlist;
+					svdata.Dbopt[svdata.LastDb] = saveownerlist;
 				}
 				else
 				{
-					saveownerlist = (ArrayList)svdata.dbopt[svdata.lastdb];
+					saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDb];
 				}
 				saveownerlist.Clear();
 				foreach( string itm in this.ownerListbox.SelectedItems )
@@ -3694,11 +3700,11 @@ order by colorder",
 			}
 			if( this.chkDspData.CheckState == CheckState.Checked )
 			{
-				svdata.showgrid[svdata.lastdb] = 1;
+				svdata.ShowGrid[svdata.LastDb] = 1;
 			}
 			else
 			{
-				svdata.showgrid[svdata.lastdb] = 0;
+				svdata.ShowGrid[svdata.LastDb] = 0;
 			}
 		}
 
@@ -3752,7 +3758,7 @@ order by colorder",
 				}
 
 				ProcCondition procCond = GetProcCondition(tbname);
-				procCond.isAllDisp = isAllDsp;
+				procCond.IsAllDisp = isAllDsp;
 
 				int	maxlines;
 				int	maxGetLines;
@@ -3764,7 +3770,7 @@ order by colorder",
 				{
 					maxlines = 0;
 				}
-				if( procCond.isAllDisp == true )
+				if( procCond.IsAllDisp == true )
 				{
 					maxlines = 0;
 				}
@@ -4076,64 +4082,64 @@ order by colorder",
 		{
 			if( this.rdoNotDspSysUser.Checked == true )
 			{
-				svdata.isShowsysuser = 0;
+				svdata.IsShowsysuser = 0;
 			}
 			else
 			{
-				svdata.isShowsysuser = 1;
+				svdata.IsShowsysuser = 1;
 			}
 
 			if( this.rdoSortOwnerTable.Checked == true )
 			{
-				svdata.sortKey = 0;
+				svdata.SortKey = 0;
 			}
 			else
 			{
-				svdata.sortKey = 1;
+				svdata.SortKey = 1;
 			}
 			if( this.rdoDspView.Checked == false) 
 			{
-				svdata.showView = 0;
+				svdata.ShowView = 0;
 			}
 			else
 			{
-				svdata.showView = 1;
+				svdata.ShowView = 1;
 			}
 
 			if( this.rdoClipboard.Checked == true) 
 			{
-				svdata.outdest[svdata.lastdb] = 0;
+				svdata.OutDest[svdata.LastDb] = 0;
 			}
 			if( this.rdoOutFile.Checked == true) 
 			{
-				svdata.outdest[svdata.lastdb] = 1;
+				svdata.OutDest[svdata.LastDb] = 1;
 			}
 			if( this.rdoOutFolder.Checked == true) 
 			{
-				svdata.outdest[svdata.lastdb] = 2;
+				svdata.OutDest[svdata.LastDb] = 2;
 			}
-			svdata.outfile[svdata.lastdb] = this.txtOutput.Text;
+			svdata.OutFile[svdata.LastDb] = this.txtOutput.Text;
 			if( this.chkDspData.CheckState == CheckState.Checked )
 			{
-				svdata.showgrid[svdata.lastdb] = 1;
+				svdata.ShowGrid[svdata.LastDb] = 1;
 			}
 			else
 			{
-				svdata.showgrid[svdata.lastdb] = 0;
+				svdata.ShowGrid[svdata.LastDb] = 0;
 			}
 			if( this.rdoUnicode.Checked == true )
 			{
-				svdata.txtencode[svdata.lastdb] = 0;
+				svdata.TxtEncode[svdata.LastDb] = 0;
 			}
 			if( this.rdoSjis.Checked == true )
 			{
-				svdata.txtencode[svdata.lastdb] = 1;
+				svdata.TxtEncode[svdata.LastDb] = 1;
 			}
 			if( this.rdoUtf8.Checked == true )
 			{
-				svdata.txtencode[svdata.lastdb] = 2;
+				svdata.TxtEncode[svdata.LastDb] = 2;
 			}
-			svdata.griddspcnt[svdata.lastdb] = this.txtDspCount.Text;
+			svdata.GridDspCnt[svdata.LastDb] = this.txtDspCount.Text;
 
 			if( this.sqlConnection1 != null )
 			{
@@ -4204,7 +4210,7 @@ order by colorder",
 			{
 				this.txtOutput.Enabled = false;
 				this.btnReference.Enabled = false;
-				svdata.outdest[svdata.lastdb] = 0;
+				svdata.OutDest[svdata.LastDb] = 0;
 				this.rdoUnicode.Enabled = false;
 				this.rdoSjis.Enabled = false;
 				this.rdoUtf8.Enabled = false;
@@ -4217,7 +4223,7 @@ order by colorder",
 			{
 				this.txtOutput.Enabled = true;
 				this.btnReference.Enabled = true;
-				svdata.outdest[svdata.lastdb] = 2;
+				svdata.OutDest[svdata.LastDb] = 2;
 				this.rdoUnicode.Enabled = true;
 				this.rdoSjis.Enabled = true;
 				this.rdoUtf8.Enabled = true;
@@ -4230,7 +4236,7 @@ order by colorder",
 			{
 				this.txtOutput.Enabled = true;
 				this.btnReference.Enabled = true;
-				svdata.outdest[svdata.lastdb] = 1;
+				svdata.OutDest[svdata.LastDb] = 1;
 				this.rdoUnicode.Enabled = true;
 				this.rdoSjis.Enabled = true;
 				this.rdoUtf8.Enabled = true;
@@ -4305,13 +4311,13 @@ order by colorder",
 		private void txtOutput_TextChanged(object sender, System.EventArgs e)
 		{
 			this.toolTip1.SetToolTip(this.txtOutput,this.txtOutput.Text);
-			svdata.outfile[svdata.lastdb] = this.txtOutput.Text;
+			svdata.OutFile[svdata.LastDb] = this.txtOutput.Text;
 		}
 
 
 		private void txtDspCount_TextChanged(object sender, System.EventArgs e)
 		{
-			svdata.griddspcnt[svdata.lastdb] = this.txtDspCount.Text;
+			svdata.GridDspCnt[svdata.LastDb] = this.txtDspCount.Text;
 		}
 
 		private void fldmenuCopyNoComma_Click(object sender, System.EventArgs e)
@@ -4328,7 +4334,7 @@ order by colorder",
 		{
 			if( this.rdoUnicode.Checked == true )
 			{
-				svdata.txtencode[svdata.lastdb] = 0;
+				svdata.TxtEncode[svdata.LastDb] = 0;
 			}
 		}
 
@@ -4336,7 +4342,7 @@ order by colorder",
 		{
 			if( this.rdoSjis.Checked == true )
 			{
-				svdata.txtencode[svdata.lastdb] = 1;
+				svdata.TxtEncode[svdata.LastDb] = 1;
 			}
 		}
 
@@ -4344,7 +4350,7 @@ order by colorder",
 		{
 			if( this.rdoUtf8.Checked == true )
 			{
-				svdata.txtencode[svdata.lastdb] = 2;
+				svdata.TxtEncode[svdata.LastDb] = 2;
 			}
 		}
 		private System.Text.Encoding GetEncode()
@@ -4623,16 +4629,16 @@ order by colorder",
 		private void btnGridFormat_Click(object sender, System.EventArgs e)
 		{
 			GridFormatDialog dlg = new GridFormatDialog();
-			dlg.gfont = gfont;
-			dlg.gcolor = gcolor;
+			dlg.Gfont = gfont;
+			dlg.Gcolor = gcolor;
 			dlg.NumFormat = this.NumFormat;
 			dlg.FloatFormat = this.FloatFormat;
 			dlg.DateFormat = this.DateFormat;
 			
 			if( dlg.ShowDialog() == DialogResult.OK )
 			{
-				this.gfont = dlg.gfont;
-				this.gcolor = dlg.gcolor;
+				this.gfont = dlg.Gfont;
+				this.gcolor = dlg.Gcolor;
 				this.dbGrid.Font = this.gfont;
 				this.dbGrid.ForeColor = this.gcolor;
 				this.NumFormat = dlg.NumFormat;
@@ -4659,7 +4665,7 @@ order by colorder",
 					cm.CommandTimeout = this.SqlTimeOut;
 
 					string msg = "";
-					if( Sqldlg2.hasReturn == true )
+					if( Sqldlg2.HasReturn == true )
 					{
 						object ret = cm.ExecuteScalar();
 						tran.Commit();
@@ -4739,16 +4745,16 @@ order by colorder",
 			if( indexdlg == null )
 			{
 				indexdlg = new IndexViewDialog();
-				indexdlg.sqlVersion = this.sqlVersion;
+				indexdlg.SqlVersion = this.sqlVersion;
 
-				indexdlg.sqlConnection = this.sqlConnection1;
+				indexdlg.SqlConnection = this.sqlConnection1;
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					indexdlg.dsptbname = this.tableList.SelectedItem.ToString();
+					indexdlg.DspTbname = this.tableList.SelectedItem.ToString();
 				}
 				else
 				{
-					indexdlg.dsptbname = "";
+					indexdlg.DspTbname = "";
 				}
 				indexdlg.Show();
 			}
@@ -5770,10 +5776,10 @@ order by colorder",
 					targetTable = this.tableList.SelectedItem.ToString();
 				}
 				HistoryViewer hv = new HistoryViewer(this.whereHistory, targetTable);
-				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.retString)
+				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.RetString)
 				{
-					this.txtWhere.Text = hv.retString;
-					qdbeUtil.SetNewHistory(targetTable,hv.retString,ref this.whereHistory);
+					this.txtWhere.Text = hv.RetString;
+					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.whereHistory);
 
 					DspData(targetTable);
 				}
@@ -6689,15 +6695,40 @@ order by colorder",
 		/// <summary>
 		/// Order by 句の指定
 		/// </summary>
-		public string		OrderStr;
+		protected string		orderStr;
+		/// <summary>
+		/// Order by 句の指定
+		/// </summary>
+		public string		OrderStr
+		{
+			get { return this.orderStr; }
+			set { this.orderStr = value; }
+		}
 		/// <summary>
 		/// 最大件数の指定
 		/// </summary>
-		public string		MaxStr;
+		protected string		maxStr;
+		/// <summary>
+		/// 最大件数の指定
+		/// </summary>
+		public string		MaxStr
+		{
+			get { return this.maxStr; }
+			set { this.maxStr = value; }
+		}
+
 		/// <summary>
 		/// グリッドにデータを全て表示するか否かの指定
 		/// </summary>
-		public bool		isAllDisp;
+		protected bool		isAllDisp;
+		/// <summary>
+		/// グリッドにデータを全て表示するか否かの指定
+		/// </summary>
+		public bool		IsAllDisp
+		{
+			get { return this.isAllDisp; }
+			set { this.isAllDisp = value; }
+		}
 
 		/// <summary>
 		/// コンストラクタ

@@ -15,12 +15,28 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 入力された文字列
 		/// </summary>
-		public string	SelectSql = "";
+		protected string	selectSql = "";
+		/// <summary>
+		/// 入力された文字列
+		/// </summary>
+		public string	SelectSql
+		{
+			get { return this.selectSql; }
+			set { this.selectSql = value ; }
+		}
 		/// <summary>
 		/// 結果に戻り値があるかどうか
 		/// </summary>
-		public bool		hasReturn = false;
-
+		protected bool		hasReturn = false;
+		/// <summary>
+		/// 結果に戻り値があるかどうか
+		/// </summary>
+		public bool		HasReturn
+		{
+			get { return this.hasReturn; }
+			set { this.hasReturn = value; }
+		}
+		
 		/// <summary>
 		/// テキスト入力エリア
 		/// </summary>
@@ -44,7 +60,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 戻り値あり チェックボックス
 		/// </summary>
-		public System.Windows.Forms.CheckBox chkReturn;
+		protected System.Windows.Forms.CheckBox chkReturn;
 		private System.Windows.Forms.Button btnHistory;
 
 		/// <summary>

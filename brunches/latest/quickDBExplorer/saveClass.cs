@@ -31,89 +31,245 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 最後に利用したDB名
 		/// </summary>
-		public string		lastdb;		
+		protected string		lastdb;		
+		/// <summary>
+		/// 最後に利用したDB名
+		/// </summary>
+		public string		LastDb
+		{
+			get { return this.lastdb; }
+			set { this.lastdb = value; }
+		}
 
 		/// <summary>
 		/// // DB 毎の最終ユーザーを記録する
 		/// 複数を登録させるため、内部はstring の要素を持ったArrayListとする
 		/// </summary>
-		public Hashtable		dbopt;	
+		protected Hashtable		dbopt;	
+		/// <summary>
+		/// // DB 毎の最終ユーザーを記録する
+		/// 複数を登録させるため、内部はstring の要素を持ったArrayListとする
+		/// </summary>
+		public Hashtable		Dbopt
+		{
+			get { return this.dbopt; }
+			set { this.dbopt = value; }
+		}
 
 		/// <summary>
 		/// システムユーザーを表示するか否か
 		/// </summary>
-		public int	isShowsysuser;	
+		protected int	isShowsysuser;	
+		/// <summary>
+		/// システムユーザーを表示するか否か
+		/// </summary>
+		public int	IsShowsysuser
+		{
+			get { return this.isShowsysuser; }
+			set { this.isShowsysuser = value; }
+		}
 
 		/// <summary>
 		///table/view リストのソート順 
 		/// </summary>
-		public int	sortKey;
+		protected int	sortKey;
+		/// <summary>
+		///table/view リストのソート順 
+		/// </summary>
+		public int	SortKey
+		{
+			get { return this.sortKey ; }
+			set { this.sortKey = value; }
+		}
 
 		/// <summary>
 		/// view を表示させるかどうか
 		/// </summary>
-		public int	showView;
+		protected int	showView;
+		/// <summary>
+		/// view を表示させるかどうか
+		/// </summary>
+		public int	ShowView
+		{
+			get { return this.showView; }
+			set { this.showView = value; }
+		}
+		
 		/// <summary>
 		/// データ出力先の指定
 		/// </summary>
-		public	Hashtable	outdest;
+		protected	Hashtable	outdest;
+		/// <summary>
+		/// データ出力先の指定
+		/// </summary>
+		public	Hashtable	OutDest
+		{
+			get { return this.outdest; }
+			set { this.outdest = value; }
+		}
 		/// <summary>
 		/// データ出力先のファイル・フォルダ名
 		/// </summary>
-		public	Hashtable	outfile;
+		protected	Hashtable	outfile;
+		/// <summary>
+		/// データ出力先のファイル・フォルダ名
+		/// </summary>
+		public	Hashtable	OutFile
+		{
+			get { return this.outfile; }
+			set { this.outfile = value; }
+		}
 		/// <summary>
 		/// データグリッドを表示するか否か
 		/// </summary>
-		public	Hashtable	showgrid;
+		protected	Hashtable	showgrid;
+		/// <summary>
+		/// データグリッドを表示するか否か
+		/// </summary>
+		public	Hashtable	ShowGrid
+		{
+			get { return this.showgrid; }
+			set { this.showgrid = value; }
+		}
+
 		/// <summary>
 		/// グリッド表示件数
 		/// </summary>
-		public 	Hashtable	griddspcnt;
+		protected 	Hashtable	griddspcnt;
+		/// <summary>
+		/// グリッド表示件数
+		/// </summary>
+		public 	Hashtable	GridDspCnt
+		{
+			get { return this.griddspcnt; }
+			set { this.griddspcnt = value; }
+		}
+		
 		/// <summary>
 		/// テキスト出力時の文字コード
 		/// </summary>
-		public	Hashtable	txtencode;
+		protected	Hashtable	txtencode;
+		/// <summary>
+		/// テキスト出力時の文字コード
+		/// </summary>
+		public	Hashtable	TxtEncode
+		{
+			get { return this.txtencode; }
+			set { this.txtencode = value; }
+		}
+        /// <summary>
+		/// サーバー別情報を記憶するか否か
+		/// </summary>
+		protected	bool	isSaveKey = true;
 		/// <summary>
 		/// サーバー別情報を記憶するか否か
 		/// </summary>
-		public	bool	isSaveKey = true;
+		public	bool	IsSaveKey
+		{
+			get { return this.isSaveKey; }
+			set { this.isSaveKey = value; }
+		}
 		/// <summary>
 		/// 信頼関係接続を利用するか否か
 		/// </summary>
-		public	bool	IsUseTrust = false;
+		protected	bool	isUseTrust = false;
+		/// <summary>
+		/// 信頼関係接続を利用するか否か
+		/// </summary>
+		public	bool	IsUseTrust
+		{
+			get { return this.IsUseTrust; }
+			set { this.IsUseTrust = value; }
+		}
 		/// <summary>
 		/// ログインユーザー名
 		/// </summary>
-		public	string	loginUser = "";
+		protected	string	loginUser = "";
+		/// <summary>
+		/// ログインユーザー名
+		/// </summary>
+		public	string	LoginUser
+		{
+			get { return this.loginUser; }
+			set { this.loginUser = value; }
+		}
 		/// <summary>
 		/// where 句の入力履歴情報
 		/// </summary>
-		public textHistory  whereHistory;
+		protected textHistory  whereHistory;
+		/// <summary>
+		/// where 句の入力履歴情報
+		/// </summary>
+		public textHistory  WhereHistory
+		{
+			get { return this.whereHistory; }
+			set { this.whereHistory = value; }
+		}
 
 		/// <summary>
 		/// order by 句の入力履歴情報
 		/// </summary>
-		public textHistory  sortHistory;
+		protected textHistory  sortHistory;
+		/// <summary>
+		/// order by 句の入力履歴情報
+		/// </summary>
+		public textHistory  SortHistory
+		{
+			get { return this.sortHistory; }
+			set { this.sortHistory = value; }
+		}
 
 		/// <summary>
 		/// order by 句の入力履歴情報
 		/// </summary>
-		public textHistory  aliasHistory;
+		protected textHistory  aliasHistory;
+		/// <summary>
+		/// order by 句の入力履歴情報
+		/// </summary>
+		public textHistory  AliasHistory
+		{
+			get { return this.aliasHistory; }
+			set { this.aliasHistory = value; }
+		}
 
 		/// <summary>
 		/// select 実行履歴情報
 		/// </summary>
-		public textHistory  selectHistory;
+		protected textHistory  selectHistory;
+		/// <summary>
+		/// select 実行履歴情報
+		/// </summary>
+		public textHistory  SelectHistory
+		{
+			get { return this.selectHistory; }
+			set { this.selectHistory = value; }
+		}
 
 		/// <summary>
 		/// クエリ発行時の入力履歴
 		/// </summary>
-		public textHistory  DMLHistory;
+		protected textHistory  dmlHistory;
+		/// <summary>
+		/// クエリ発行時の入力履歴
+		/// </summary>
+		public textHistory  DMLHistory
+		{
+			get { return this.dmlHistory; }
+			set { this.dmlHistory = value; }
+		}
 
 		/// <summary>
 		/// 各種コマンド入力履歴
 		/// </summary>
-		public textHistory  cmdHistory;
+		protected textHistory  cmdHistory;
+		/// <summary>
+		/// 各種コマンド入力履歴
+		/// </summary>
+		public textHistory  CmdHistory
+		{
+			get { return this.cmdHistory; }
+			set { this.cmdHistory = value; }
+		}
 
 		/// <summary>
 		/// コンストラクタ
@@ -370,19 +526,36 @@ namespace quickDBExplorer
 		/// サーバー別情報を管理するハッシュテーブル
 		/// サーバー名＋インスタンス名をキーとする
 		/// </summary>
-		public Hashtable	ht;
+		protected Hashtable	perServerData;
+		/// <summary>
+		/// サーバー別情報を管理するハッシュテーブル
+		/// サーバー名＋インスタンス名をキーとする
+		/// </summary>
+		public Hashtable	PerServerData
+		{
+			get { return this.ht; }
+			set { this.ht = value; }
+		}
 
 		/// <summary>
 		/// 最後に接続したサーバーのHashkey
 		/// </summary>
-		public string lastserverkey = "";
+		protected string lastserverkey = "";
+		/// <summary>
+		/// 最後に接続したサーバーのHashkey
+		/// </summary>
+		public string LastServerKey
+		{
+			get { return this.lastserverkey; }
+			set { this.lastserverkey = value; }
+		}
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public saveClass()
 		{
-			ht = new Hashtable();
+			this.perServerData = new Hashtable();
 		}
 
 		/// <summary>
@@ -401,11 +574,11 @@ namespace quickDBExplorer
 				this.lastserverkey = "";
 			}
 			try { 
-				this.ht = (Hashtable)info.GetValue("SERVERDATA",typeof(Hashtable));
+				this.perServerData = (Hashtable)info.GetValue("SERVERDATA",typeof(Hashtable));
 			} 
 			catch
 			{
-				this.ht = new Hashtable();
+				this.perServerData = new Hashtable();
 			}
 		}
 
@@ -418,7 +591,7 @@ namespace quickDBExplorer
 			SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue("LASTSERVERKEY", this.lastserverkey);
-			info.AddValue("SERVERDATA", this.ht, typeof(Hashtable) );
+			info.AddValue("SERVERDATA", this.perServerData, typeof(Hashtable) );
 		}
 
 	}

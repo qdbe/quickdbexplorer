@@ -19,14 +19,31 @@ namespace quickDBExplorer
 		private System.ComponentModel.Container components = null;
 		private System.Windows.Forms.Button btnCancel;
 		private	saveClass	ServerList;
+
 		/// <summary>
 		/// 選択されたサーバー名
 		/// </summary>
-		public	string selectedServer;
+		protected	string selectedServer;
+		/// <summary>
+		/// 選択されたサーバー名
+		/// </summary>
+		public	string SelectedServer
+		{
+			get { return this.selectedServer; }
+			set { this.selectedServer = value; }
+		}
 		/// <summary>
 		/// 選択されたインスタンス名
 		/// </summary>
-		public  string selectedInstance;
+		protected  string selectedInstance;
+		/// <summary>
+		/// 選択されたインスタンス名
+		/// </summary>
+		public  string SelectedInstance
+		{
+			get { return this.selectedInstance; }
+			set { this.selectedInstance = value; }
+		}
 
 		/// <summary>
 		/// コンストラクタ
