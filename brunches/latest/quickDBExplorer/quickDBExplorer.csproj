@@ -1,7 +1,7 @@
 <VisualStudioProject>
     <CSHARP
         ProjectType = "Local"
-        ProductVersion = "7.10.3077"
+        ProductVersion = "7.10.6030"
         SchemaVersion = "2.0"
         ProjectGuid = "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
     >
@@ -189,7 +189,7 @@
                 />
                 <File
                     RelPath = "mainForm.cs"
-                    SubType = "Component"
+                    SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
@@ -206,6 +206,11 @@
                     RelPath = "MainMDI.resx"
                     DependentUpon = "MainMDI.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "QdbeDataGridTextBoxColumn.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "qdbeListBox.cs"

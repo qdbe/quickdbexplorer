@@ -159,7 +159,7 @@ namespace quickDBExplorer
 
 		private void ServerSelectDialog_Load(object sender, System.EventArgs e)
 		{
-			foreach( object sd in ServerList.ht.Values )
+			foreach( object sd in ServerList.PerServerData.Values )
 			{
 				this.listBox1.Items.Add(((ServerData)sd).Servername + ":" + ((ServerData)sd).InstanceName );
 			}

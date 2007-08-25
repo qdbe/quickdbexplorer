@@ -313,24 +313,24 @@ namespace quickDBExplorer
 				if( fs != null && fs.CanWrite )
 				{
 					ArrayList ar = new ArrayList();
-					foreach( object keys in initopt.ht.Keys )
+					foreach( object keys in initopt.PerServerData.Keys )
 					{
-						if( ((ServerData)(initopt.ht[keys])).isSaveKey == false )
+						if( ((ServerData)(initopt.PerServerData[keys])).IsSaveKey == false )
 						{
 							ar.Add((string)keys);
 						}
 					}
 					foreach( string kk in ar )
 					{
-						initopt.ht.Remove(kk);
+						initopt.PerServerData.Remove(kk);
 					}
-					if( initopt.ht.Count == 0 )
+					if( initopt.PerServerData.Count == 0 )
 					{
 						ServerData sv = new ServerData();
 						sv.Servername = "(local)";
 						sv.InstanceName = "";
 						sv.IsUseTrust = false;
-						initopt.ht.Add(sv.KeyName,sv);
+						initopt.PerServerData.Add(sv.KeyName,sv);
 					}
 					sf.Serialize(fs,(object)initopt);
 				}

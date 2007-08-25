@@ -533,8 +533,8 @@ namespace quickDBExplorer
 		/// </summary>
 		public Hashtable	PerServerData
 		{
-			get { return this.ht; }
-			set { this.ht = value; }
+			get { return this.perServerData; }
+			set { this.perServerData = value; }
 		}
 
 		/// <summary>

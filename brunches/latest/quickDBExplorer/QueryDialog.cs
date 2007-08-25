@@ -300,11 +300,11 @@ namespace quickDBExplorer
 			// 入力履歴の選択ダイアログを表示する
 			HistoryViewer hv = new HistoryViewer(this.dHistory, "");
 			hv.IsShowTable = false;
-			if( DialogResult.OK == hv.ShowDialog() && this.txtInput.Text != hv.retString)
+			if( DialogResult.OK == hv.ShowDialog() && this.txtInput.Text != hv.RetString)
 			{
 				//違う情報であれば、それを表示し、履歴として追加する
-				this.txtInput.Text = hv.retString;
-				qdbeUtil.SetNewHistory("",hv.retString,ref this.dHistory);
+				this.txtInput.Text = hv.RetString;
+				qdbeUtil.SetNewHistory("",hv.RetString,ref this.dHistory);
 			}
 		}
 
@@ -331,10 +331,10 @@ namespace quickDBExplorer
 			{
 				HistoryViewer hv = new HistoryViewer(this.dHistory, "");
 				hv.IsShowTable = false;
-				if( DialogResult.OK == hv.ShowDialog() && this.txtInput.Text != hv.retString)
+				if( DialogResult.OK == hv.ShowDialog() && this.txtInput.Text != hv.RetString)
 				{
-					this.txtInput.Text = hv.retString;
-					qdbeUtil.SetNewHistory("",hv.retString,ref this.dHistory);
+					this.txtInput.Text = hv.RetString;
+					qdbeUtil.SetNewHistory("",hv.RetString,ref this.dHistory);
 				}
 			}
 		
