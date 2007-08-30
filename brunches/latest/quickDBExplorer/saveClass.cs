@@ -178,8 +178,8 @@ namespace quickDBExplorer
 		/// </summary>
 		public	bool	IsUseTrust
 		{
-			get { return this.IsUseTrust; }
-			set { this.IsUseTrust = value; }
+			get { return this.isUseTrust; }
+			set { this.isUseTrust = value; }
 		}
 		/// <summary>
 		/// ログインユーザー名

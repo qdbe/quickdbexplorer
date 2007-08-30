@@ -9,6 +9,7 @@ using System.Data;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
+using System.Reflection;
 
 namespace quickDBExplorer
 {
@@ -112,6 +113,16 @@ namespace quickDBExplorer
 		private	string	NumFormat;
 		private	string	FloatFormat;
 		private	string	DateFormat;
+
+		private ISqlInterface	sqlDriver = null;
+		/// <summary>
+		/// SQL文を処理するクラス
+		/// </summary>
+		public	ISqlInterface	SqlDriver
+		{
+			get { return this.sqlDriver; }
+			set { this.sqlDriver = value; }
+		}
 
 		/// <summary>
 		///  接続先のサーバー名。表示用にのみ利用
@@ -255,6 +266,14 @@ namespace quickDBExplorer
 		/// 接続した先のSQL Serverのバージョン
 		/// </summary>
 		private int		sqlVersion = 2000;
+		/// <summary>
+		/// 接続した先のSQL Serverのバージョン
+		/// </summary>
+		public	int		SqlVersion
+		{
+			get { return this.sqlVersion; }
+			set { this.sqlVersion = value; }
+		}
 
 		/// <summary>
 		/// DB接続情報
@@ -1566,29 +1585,12 @@ namespace quickDBExplorer
 
 			try
 			{
-				if(this.sqlConnection1.ServerVersion.StartsWith("08") )
-				{
-					this.sqlVersion = 2000;
-					this.label5.Text = "owner/Role(&O)";
-					this.rdoSortOwnerTable.Text = "オーナー名・テーブル名";
-				}
-				else if(this.sqlConnection1.ServerVersion.StartsWith("09") )
-				{
-					this.sqlVersion = 2005;
-					this.label5.Text = "Schema(&O)";
-					this.rdoSortOwnerTable.Text = "スキーマ名・テーブル名";
-				}
+				this.label5.Text = this.sqlDriver.GetOwnerLabel1();
+				this.rdoSortOwnerTable.Text = this.sqlDriver.GetOwnerLabel1();
+
 				this.Text = servername;
-				string selectsql = "";
-				if( this.sqlVersion == 2000 )
-				{
-					selectsql = "SELECT name FROM sysdatabases order by name";
-				}
-				else
-				{
-					selectsql = "SELECT name FROM sys.databases  order by name";
-				}
-				SqlDataAdapter da = new SqlDataAdapter(selectsql, this.sqlConnection1);
+
+				SqlDataAdapter da = new SqlDataAdapter(this.sqlDriver.GetDBSelect(), this.sqlConnection1);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
 				da.Fill(ds,"sysdatabases");
@@ -3730,7 +3732,7 @@ order by colorder",
 			{
 				this.InitErrMessage();
 
-				// 編集中の可能性がある
+				// 編集中の可能性があるので、これをキャンセルする
 				DataGridCell curcell = this.dbGrid.CurrentCell;
 				int rownum = curcell.RowNumber;
 				int colnum  = curcell.ColumnNumber;
@@ -3743,6 +3745,7 @@ order by colorder",
 					}
 				}
 
+				// テーブル名が指定されていない場合は何も表示せず、グリッドを隠す
 				if( tbname == "" )
 				{
 					this.dbGrid.Hide();
@@ -3831,47 +3834,28 @@ order by colorder",
 				foreach( DataColumn col in dspdt.Tables[0].Columns )
 				{
 					//列スタイルにQdbeDataGridTextBoxColumnを使う
-					if( col.DataType.FullName == "System.String" )
+					cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col);
+					// 各種書式の指定
+					if( col.DataType.FullName == "System.Int32" ||
+						col.DataType.FullName == "System.Int16" ||
+						col.DataType.FullName == "System.Int64" ||
+						col.DataType.FullName == "System.UInt32" ||
+						col.DataType.FullName == "System.UInt16" ||
+						col.DataType.FullName == "System.UInt64" ||
+						col.DataType.FullName == "System.Decimal" )
 					{
-						cs = new QdbeDataGridTextBoxColumn(this.dbGrid,true);
+						cs.Format = getFormat(this.NumFormat);
 					}
-					else if( col.DataType.FullName == "System.Byte[]" )
+					if( col.DataType.FullName == "System.Double" ||
+						col.DataType.FullName == "System.Single" )
 					{
-						cs = new QdbeDataGridTextBoxColumn(this.dbGrid,false,true);
+						cs.Format = getFormat(this.FloatFormat);
 					}
-					else
+					if( col.DataType.FullName == "System.DateTime" )
 					{
-						cs = new QdbeDataGridTextBoxColumn(this.dbGrid,false);
-						if( col.DataType.FullName == "System.Int32" ||
-							col.DataType.FullName == "System.Int16" ||
-							col.DataType.FullName == "System.Int64" ||
-							col.DataType.FullName == "System.UInt32" ||
-							col.DataType.FullName == "System.UInt16" ||
-							col.DataType.FullName == "System.UInt64" ||
-							col.DataType.FullName == "System.Decimal" )
-						{
-							cs.Format = getFormat(this.NumFormat);
-						}
-						if( col.DataType.FullName == "System.Double" ||
-							col.DataType.FullName == "System.Single" )
-						{
-							cs.Format = getFormat(this.FloatFormat);
-						}
-						if( col.DataType.FullName == "System.DateTime" )
-						{
-							cs.Format = getFormat(this.DateFormat);
-						}
+						cs.Format = getFormat(this.DateFormat);
 					}
-					//マップ名を指定する
-					cs.MappingName = col.ColumnName;
-					if( col.AllowDBNull == true )
-					{
-						cs.HeaderText = "★"+col.ColumnName;
-					}
-					else
-					{
-						cs.HeaderText = col.ColumnName;
-					}
+					
 					
 					//DataGridTableStyleに追加する
 					ts.GridColumnStyles.Add(cs);
@@ -4405,49 +4389,28 @@ order by colorder",
 					foreach( DataColumn col in dspdt.Tables[0].Columns )
 					{
 						//列スタイルにQdbeDataGridTextBoxColumnを使う
-						if( col.DataType.FullName == "System.String" )
+						cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col);
+						// 各種書式の指定
+						if( col.DataType.FullName == "System.Int32" ||
+							col.DataType.FullName == "System.Int16" ||
+							col.DataType.FullName == "System.Int64" ||
+							col.DataType.FullName == "System.UInt32" ||
+							col.DataType.FullName == "System.UInt16" ||
+							col.DataType.FullName == "System.UInt64" ||
+							col.DataType.FullName == "System.Decimal" )
 						{
-							cs = new QdbeDataGridTextBoxColumn(this.dbGrid,true);
+							cs.Format = getFormat(this.NumFormat);
 						}
-						else if( col.DataType.FullName == "System.Byte[]" )
+						if( col.DataType.FullName == "System.Double" ||
+							col.DataType.FullName == "System.Single" )
 						{
-							cs = new QdbeDataGridTextBoxColumn(this.dbGrid,false,true);
+							cs.Format = getFormat(this.FloatFormat);
 						}
-						else
+						if( col.DataType.FullName == "System.DateTime" )
 						{
-							cs = new QdbeDataGridTextBoxColumn(this.dbGrid,false);
-							if( col.DataType.FullName == "System.Int32" ||
-								col.DataType.FullName == "System.Int16" ||
-								col.DataType.FullName == "System.Int64" ||
-								col.DataType.FullName == "System.UInt32" ||
-								col.DataType.FullName == "System.UInt16" ||
-								col.DataType.FullName == "System.UInt64" ||
-								col.DataType.FullName == "System.Decimal" )
-							{
-								cs.Format = getFormat(this.NumFormat);
-							}
-							if( col.DataType.FullName == "System.Double" ||
-								col.DataType.FullName == "System.Single" )
-							{
-								cs.Format = getFormat(this.FloatFormat);
-							}
-							if( col.DataType.FullName == "System.DateTime" )
-							{
-								cs.Format = getFormat(this.DateFormat);
-							}
+							cs.Format = getFormat(this.DateFormat);
 						}
 
-						//マップ名を指定する
-						cs.MappingName = col.ColumnName;
-						if( col.AllowDBNull == true )
-						{
-							cs.HeaderText = "★"+col.ColumnName;
-						}
-						else
-						{
-							cs.HeaderText = col.ColumnName;
-						}
-					
 						//DataGridTableStyleに追加する
 						ts.GridColumnStyles.Add(cs);
 					}
@@ -5105,7 +5068,7 @@ order by colorder",
 		/// <param name="e"></param>
 		private void CallISQLW(object sender, System.EventArgs e)
 		{
-			if( this.sqlVersion == 2005 )
+			if( this.sqlVersion != 2000 )
 			{
 				this.CallEPM(sender,e);
 				return;

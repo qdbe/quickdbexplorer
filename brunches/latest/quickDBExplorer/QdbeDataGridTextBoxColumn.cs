@@ -19,7 +19,7 @@ namespace quickDBExplorer
 		private DataGrid parentdg = new DataGrid();
 
 		/// <summary>
-		/// コンストラクタ
+		/// 編集処理を中断する
 		/// </summary>
 		public void	CancelEdit()
 		{
@@ -51,6 +51,44 @@ namespace quickDBExplorer
 		/// <param name="canset">空白文字列の設定が可能か否か</param>
 		public QdbeDataGridTextBoxColumn(DataGrid pa, bool canset) : this(pa,canset,false)
 		{
+		}
+
+		/// <summary>
+		/// コンストラクタ
+		/// データカラムに応じ、自動的に、
+		/// 空白文字列の設定が可能か否か
+		/// 管理するデータがイメージか否か
+		/// を設定する
+		/// </summary>
+		/// <param name="pa">親となるグリッド</param>
+		/// <param name="col">結合させるデータカラム</param>
+		public QdbeDataGridTextBoxColumn(DataGrid pa, DataColumn col) : this(pa,false,false)
+		{
+			if( col.DataType.FullName == "System.String" )
+			{
+				this.canSetEmptyString = true;
+				this.IsThisImage = false;
+			}
+			else if( col.DataType.FullName == "System.Byte[]" )
+			{
+				this.canSetEmptyString = false;
+				this.IsThisImage = true;
+			}
+			else
+			{
+				this.canSetEmptyString = false;
+				this.IsThisImage = false;
+			}
+			//マップ名を指定する
+			this.MappingName = col.ColumnName;
+			if( col.AllowDBNull == true )
+			{
+				this.HeaderText = "★"+col.ColumnName;
+			}
+			else
+			{
+				this.HeaderText = col.ColumnName;
+			}
 		}
 
 

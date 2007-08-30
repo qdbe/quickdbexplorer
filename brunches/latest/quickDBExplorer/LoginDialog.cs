@@ -9,6 +9,7 @@ using System.Configuration;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
+using System.Reflection;
 
 namespace quickDBExplorer
 {
@@ -329,6 +330,10 @@ namespace quickDBExplorer
 
 			try 
 			{
+				Assembly asm = null;
+				string dllName = "";
+				string className = "";
+
 				// SQL Server とのコネクションを確立する
 				System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection();
 				con.ConnectionString = myConnString;
@@ -378,6 +383,24 @@ namespace quickDBExplorer
 					mainForm.ServerName = this.txtServerName.Text;
 				}
 				mainForm.sqlConnection1 = con;
+
+				if(con.ServerVersion.StartsWith("08") )
+				{
+					mainForm.SqlVersion = 2000;
+					dllName = "SqlServer2000Driver.dll";
+					className = "quickDBExplorer.SqlServer2000";
+				}
+				else if(con.ServerVersion.StartsWith("09") )
+				{
+					mainForm.SqlVersion = 2005;
+					dllName = "SqlServer2005Driver.dll";
+					className = "quickDBExplorer.SqlServer2005";
+				}
+				asm = Assembly.LoadFrom(dllName);
+				mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className,true);
+
+				mainForm.SqlDriver.SetConnection(mainForm.sqlConnection1);
+
 				mainForm.Show();
 				// メインダイアログを表示すれば、このダイアログは不要
 				this.Close();

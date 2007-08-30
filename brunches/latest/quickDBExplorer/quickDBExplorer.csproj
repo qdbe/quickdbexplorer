@@ -94,6 +94,11 @@
                     AssemblyName = "System.Runtime.Serialization.Formatters.Soap"
                     HintPath = "C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Runtime.Serialization.Formatters.Soap.dll"
                 />
+                <Reference
+                    Name = "ISqlInterface"
+                    Project = "{607646D5-0110-4F20-8916-E1C7B75FF090}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>
