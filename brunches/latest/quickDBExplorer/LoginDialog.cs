@@ -384,6 +384,7 @@ namespace quickDBExplorer
 				}
 				mainForm.sqlConnection1 = con;
 
+				// SQL ˆ—ƒNƒ‰ƒX‚Ì‰Šú‰»
 				if(con.ServerVersion.StartsWith("08") )
 				{
 					mainForm.SqlVersion = 2000;

@@ -114,6 +114,7 @@ namespace quickDBExplorer
 		private	string	FloatFormat;
 		private	string	DateFormat;
 
+		#region 公開メンバ
 		private ISqlInterface	sqlDriver = null;
 		/// <summary>
 		/// SQL文を処理するクラス
@@ -274,6 +275,7 @@ namespace quickDBExplorer
 			get { return this.sqlVersion; }
 			set { this.sqlVersion = value; }
 		}
+		#endregion
 
 		/// <summary>
 		/// DB接続情報
@@ -577,7 +579,6 @@ namespace quickDBExplorer
 																							this.menuSeparater4,
 																							this.menuDepend,
 																							this.menuUpdateStaticsMain});
-			this.mainContextMenu.Popup += new System.EventHandler(this.mainContextMenu_Popup);
 			// 
 			// menuTableCopy
 			// 
@@ -1334,7 +1335,7 @@ namespace quickDBExplorer
 			// menuQuery
 			// 
 			this.menuQuery.Index = 0;
-			this.menuQuery.Text = "(&1) 簡易クエリ実行（Select以外）";
+			this.menuQuery.Text = "簡易クエリ実行（Select以外）";
 			this.menuQuery.Click += new System.EventHandler(this.btnQueryNonSelect_Click);
 			// 
 			// menuSeparater5
@@ -1345,19 +1346,19 @@ namespace quickDBExplorer
 			// menuISQL
 			// 
 			this.menuISQL.Index = 2;
-			this.menuISQL.Text = "(&2) クエリアナライザ起動";
+			this.menuISQL.Text = "クエリアナライザ起動";
 			this.menuISQL.Click += new System.EventHandler(this.CallISQLW);
 			// 
 			// menuProfile
 			// 
 			this.menuProfile.Index = 3;
-			this.menuProfile.Text = "(&3) プロファイラ起動";
+			this.menuProfile.Text = "プロファイラ起動";
 			this.menuProfile.Click += new System.EventHandler(this.CallProfile);
 			// 
 			// menuEPM
 			// 
 			this.menuEPM.Index = 4;
-			this.menuEPM.Text = "(&4) エンタープライズマネージャー起動";
+			this.menuEPM.Text = "エンタープライズマネージャー起動";
 			this.menuEPM.Click += new System.EventHandler(this.CallEPM);
 			// 
 			// menuSeparater6
@@ -1368,25 +1369,25 @@ namespace quickDBExplorer
 			// menuDependBtn
 			// 
 			this.menuDependBtn.Index = 6;
-			this.menuDependBtn.Text = "(&5) 依存関係出力";
+			this.menuDependBtn.Text = "依存関係出力";
 			this.menuDependBtn.Click += new System.EventHandler(this.DependOutPut);
 			// 
 			// menuRecordCount
 			// 
 			this.menuRecordCount.Index = 7;
-			this.menuRecordCount.Text = "(&6) データ件数出力";
+			this.menuRecordCount.Text = "データ件数出力";
 			this.menuRecordCount.Click += new System.EventHandler(this.RecordCountOutPut);
 			// 
 			// menuRecordCountDsp
 			// 
 			this.menuRecordCountDsp.Index = 8;
-			this.menuRecordCountDsp.Text = "(&7) データ件数表示";
+			this.menuRecordCountDsp.Text = "データ件数表示";
 			this.menuRecordCountDsp.Click += new System.EventHandler(this.menuRecordCountDsp_Click);
 			// 
 			// menuDoQuery
 			// 
 			this.menuDoQuery.Index = 10;
-			this.menuDoQuery.Text = "(9) 各種コマンド実行";
+			this.menuDoQuery.Text = "各種コマンド実行";
 			this.menuDoQuery.Click += new System.EventHandler(this.menuDoQuery_Click);
 			// 
 			// btnWhereZoom
@@ -1421,7 +1422,6 @@ namespace quickDBExplorer
 			this.useCheckBox.TabIndex = 2;
 			this.useCheckBox.Text = "CheckList";
 			this.useCheckBox.Visible = false;
-			this.useCheckBox.CheckedChanged += new System.EventHandler(this.useCheckBox_CheckedChanged);
 			// 
 			// label10
 			// 
@@ -1573,6 +1573,277 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		#region ボタンメニュー関連処理
+		private void DspButtonMenu(object sender, System.EventArgs e, MenuItem[] list)
+		{
+			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
+			MenuItem[] cplist = new MenuItem[list.Length];
+			// メニューの各項目の先頭に、(1) のようなアクセラレーターキーを追加する
+			for( int i = 0; i<list.Length; i++ )
+			{
+				cplist[i] = list[i].CloneMenu();
+				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
+			}
+			tmpmenu.MenuItems.AddRange(cplist);
+
+			tmpmenu.Show((Control)sender,new Point(0,0));
+		}
+
+		// INSERT文生成ボタン
+		private void btnInsert_Click(object sender, System.EventArgs e)
+		{
+			MenuItem[] list = new MenuItem[] {
+												 this.menuInsert,
+												 this.menuInsertDelete,
+												 this.menuInsertNoFld,
+												 this.menuInsertNoFldDelete,
+												 this.menuInsertDeleteTaihi,
+												 this.menuInsertNoFldDeleteTaihi
+											 };
+			this.DspButtonMenu(sender, e, list);
+		}
+		
+		// フィールドリスト生成
+		private void btnFieldList_Click(object sender, System.EventArgs e)
+		{
+			MenuItem[] list = new MenuItem[] {
+												 this.menuMakeFld,
+												 this.menuMakeFldCRLF,
+												 this.menuMakeFldNoComma
+											 };
+			this.DspButtonMenu(sender, e, list);
+		}
+
+		// CSV生成
+		private void btnCSV_Click(object sender, System.EventArgs e)
+		{
+			MenuItem[] list = new MenuItem[] {
+				this.menuMakeCSV,
+				this.menuMakeCSVDQ,
+				this.menuMakeTab,
+				this.menuMakeTabDQ,
+				this.menuCSVRead,
+				this.menuCSVReadDQ,
+				this.menuTabRead,
+				this.menuTabReadDQ
+			};
+			this.DspButtonMenu(sender, e, list);
+		}
+
+		// 定義文生成
+		private void btnDDL_Click(object sender, System.EventArgs e)
+		{
+			MenuItem[] list = new MenuItem[] {
+												 this.menuDDL,
+												 this.menuDDLDrop
+											 };
+			this.DspButtonMenu(sender, e, list);
+		}
+
+		private void btnEtc_Click(object sender, System.EventArgs e)
+		{
+			MenuItem[] list = new MenuItem[] {
+												 this.menuQuery,
+												 this.menuSeparater5,
+												 this.menuISQL,
+												 this.menuProfile,
+												 this.menuEPM,
+												 this.menuSeparater6,
+												 this.menuDependBtn,
+												 this.menuRecordCount,
+												 this.menuRecordCountDsp,
+												 this.menuStasticUpdate,
+												 this.menuDoQuery
+											 };
+			
+			this.DspButtonMenu(sender, e, list);
+		}
+		#endregion
+
+		#region メニュー関連ボタンイベントハンドラ
+		private void insertmake(object sender, System.EventArgs e)
+		{
+			this.CreInsert(true,false,false);
+		}
+
+		private void makefldlist(object sender, System.EventArgs e)
+		{
+			crefldlst(false,true);
+		}
+
+		private void makefldListLF(object sender, System.EventArgs e)
+		{
+			crefldlst(true,true);
+		}
+
+		private void makefldListNoComma(object sender, System.EventArgs e)
+		{
+			crefldlst(true,false);
+		}
+
+		private void makeCSV(object sender, System.EventArgs e)
+		{
+			crecsv(false, ",");
+		}
+
+		private void makeCSVQuote(object sender, System.EventArgs e)
+		{
+			crecsv(true,",");
+		}
+
+		private void insertmakeDelete(object sender, System.EventArgs e)
+		{
+			this.CreInsert( true, true,false );
+		}
+
+		private void insertmakeNoField(object sender, System.EventArgs e)
+		{
+			this.CreInsert(false,false,false );
+		}
+
+		private void insertmakeNoFieldDelete(object sender, System.EventArgs e)
+		{
+			this.CreInsert(false,true,false);
+		}
+
+		private void makeDDL(object sender, System.EventArgs e)
+		{
+			this.CreDDL(false, false);
+		}
+
+		private void makeDDLDrop(object sender, System.EventArgs e)
+		{
+			this.CreDDL(true, false);
+		}
+		
+		private void makeDDLPare(object sender, System.EventArgs e)
+		{
+			this.CreDDL(false, true);
+		
+		}
+
+		private void makeDDLDropPare(object sender, System.EventArgs e)
+		{
+			this.CreDDL(true, true);
+		}
+
+		private void menuTableCopy_Click(object sender, System.EventArgs e)
+		{
+			copytablename(false);
+		}
+
+		private void menuTableCopyCsv_Click(object sender, System.EventArgs e)
+		{
+			copytablename(true);
+		}
+
+
+		private void fldmenuCopy_Click(object sender, System.EventArgs e)
+		{
+			copyfldlist(true,true);
+		}
+
+		private void fldmenuCopyNoCRLF_Click(object sender, System.EventArgs e)
+		{
+			copyfldlist(false,true);
+		}
+
+		private void fldmenuCopyNoComma_Click(object sender, System.EventArgs e)
+		{
+			copyfldlist(true,false);
+		}
+
+		private void fldmenuCopyNoCRLFNoComma_Click(object sender, System.EventArgs e)
+		{
+			copyfldlist(false,false);
+		}
+
+		private void rdoUnicode_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if( this.rdoUnicode.Checked == true )
+			{
+				svdata.TxtEncode[svdata.LastDb] = 0;
+			}
+		}
+
+		private void rdoSjis_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if( this.rdoSjis.Checked == true )
+			{
+				svdata.TxtEncode[svdata.LastDb] = 1;
+			}
+		}
+
+		private void rdoUtf8_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if( this.rdoUtf8.Checked == true )
+			{
+				svdata.TxtEncode[svdata.LastDb] = 2;
+			}
+		}
+
+		private void menuMakeTab_Click(object sender, System.EventArgs e)
+		{
+			crecsv(false,"	");
+		}
+
+		private void menuMakeTabDQ_Click(object sender, System.EventArgs e)
+		{
+			crecsv(true,"	");
+		}
+
+		private void menuInsertDeleteTaihi_Click(object sender, System.EventArgs e)
+		{
+			this.CreInsert(true,true,true);
+		}
+
+		private void menuInsertNoFldDeleteTaihi_Click(object sender, System.EventArgs e)
+		{
+			this.CreInsert(false,true,true);
+		}
+
+		private void menuCSVRead_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Data(true,false);
+		}
+
+		private void menuCSVReadDQ_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Data(true,true);
+		}
+
+		private void menuTabRead_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Data(false,false);
+		}
+
+		private void menuTabReadDQ_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Data(false,true);
+		}
+
+		private void menuUpdateStaticsMain_Click(object sender, System.EventArgs e)
+		{
+			this.menuStasticUpdate_Click(sender,e);
+		}
+
+		private void menuFieldAliasCopy_Click(object sender, System.EventArgs e)
+		{
+			fieldListbox_ExtendedCopyData(sender);
+		}
+
+		/// <summary>
+		/// フィールドリストのコピーメニュー選択時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		private void fieldListbox_CopyData(object sender)
+		{
+			copyfldlist(true,true);
+		}
+
+		#endregion
+
+		#region 画面制御
 		/// <summary>
 		/// 初期表示処理
 		/// </summary>
@@ -1585,11 +1856,13 @@ namespace quickDBExplorer
 
 			try
 			{
+				// ラベル・ボタンの設定
 				this.label5.Text = this.sqlDriver.GetOwnerLabel1();
-				this.rdoSortOwnerTable.Text = this.sqlDriver.GetOwnerLabel1();
+				this.rdoSortOwnerTable.Text = this.sqlDriver.GetOwnerLabel2();
 
 				this.Text = servername;
 
+				// DB一覧の表示を実行
 				SqlDataAdapter da = new SqlDataAdapter(this.sqlDriver.GetDBSelect(), this.sqlConnection1);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
@@ -1660,6 +1933,86 @@ namespace quickDBExplorer
 			this.btnForeColor = this.btnDataEdit.ForeColor;
 		}
 
+		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if( this.rdoNotDspSysUser.Checked == true )
+			{
+				svdata.IsShowsysuser = 0;
+			}
+			else
+			{
+				svdata.IsShowsysuser = 1;
+			}
+
+			if( this.rdoSortOwnerTable.Checked == true )
+			{
+				svdata.SortKey = 0;
+			}
+			else
+			{
+				svdata.SortKey = 1;
+			}
+			if( this.rdoDspView.Checked == false) 
+			{
+				svdata.ShowView = 0;
+			}
+			else
+			{
+				svdata.ShowView = 1;
+			}
+
+			if( this.rdoClipboard.Checked == true) 
+			{
+				svdata.OutDest[svdata.LastDb] = 0;
+			}
+			if( this.rdoOutFile.Checked == true) 
+			{
+				svdata.OutDest[svdata.LastDb] = 1;
+			}
+			if( this.rdoOutFolder.Checked == true) 
+			{
+				svdata.OutDest[svdata.LastDb] = 2;
+			}
+			svdata.OutFile[svdata.LastDb] = this.txtOutput.Text;
+			if( this.chkDspData.CheckState == CheckState.Checked )
+			{
+				svdata.ShowGrid[svdata.LastDb] = 1;
+			}
+			else
+			{
+				svdata.ShowGrid[svdata.LastDb] = 0;
+			}
+			if( this.rdoUnicode.Checked == true )
+			{
+				svdata.TxtEncode[svdata.LastDb] = 0;
+			}
+			if( this.rdoSjis.Checked == true )
+			{
+				svdata.TxtEncode[svdata.LastDb] = 1;
+			}
+			if( this.rdoUtf8.Checked == true )
+			{
+				svdata.TxtEncode[svdata.LastDb] = 2;
+			}
+			svdata.GridDspCnt[svdata.LastDb] = this.txtDspCount.Text;
+
+			if( this.sqlConnection1 != null )
+			{
+				this.sqlConnection1.Close();
+				this.sqlConnection1.Dispose();
+				this.sqlConnection1 = null;
+			}
+		}
+
+
+		#endregion
+
+		#region 画面コントロールのイベント処理(処理ロジックは除く)
+		/// <summary>
+		/// DB選択が変更になった場合のイベントハンドラ
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void dbList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			if( this.dbList.SelectedItems.Count != 0 )
@@ -1673,7 +2026,9 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
+			// 対象となるテーブル一覧の表示
 			dspTableList();
+			// 対象となる owner/role/schema の表示
 			displistowner();
 			if( svdata.Dbopt[svdata.LastDb] != null )
 			{
@@ -1800,348 +2155,2457 @@ namespace quickDBExplorer
 			this.dbList.Focus();	//フォーカスを元に戻す
 		}
 
-		// INSERT文生成
-		private void btnInsert_Click(object sender, System.EventArgs e)
+		private void tableList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			MenuItem[] list = new MenuItem[] {
-												 this.menuInsert,
-												 this.menuInsertDelete,
-												 this.menuInsertNoFld,
-												 this.menuInsertNoFldDelete,
-												 this.menuInsertDeleteTaihi,
-												 this.menuInsertNoFldDeleteTaihi
-											 };
-
-			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
-			MenuItem[] cplist = new MenuItem[list.Length];
-			for( int i = 0; i<list.Length; i++ )
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
 			{
-				cplist[i] = list[i].CloneMenu();
-				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
-			}
-			tmpmenu.MenuItems.AddRange(cplist);
+				// 1件のみ選択されている場合
 
-			tmpmenu.Show(this.btnInsert,new Point(0,0));
-		}
-		
-		// フィールドリスト生成
-		private void btnFieldList_Click(object sender, System.EventArgs e)
-		{
-			MenuItem[] list = new MenuItem[] {
-												 this.menuMakeFld,
-												 this.menuMakeFldCRLF,
-												 this.menuMakeFldNoComma
-											 };
-			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
-			MenuItem[] cplist = new MenuItem[list.Length];
-			for( int i = 0; i<list.Length; i++ )
-			{
-				cplist[i] = list[i].CloneMenu();
-				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
-			}
-			tmpmenu.MenuItems.AddRange(cplist);
-
-			tmpmenu.Show(this.btnFieldList,new Point(0,0));
-		}
-
-		// CSV生成
-		private void btnCSV_Click(object sender, System.EventArgs e)
-		{
-			MenuItem[] list = new MenuItem[] {
-				this.menuMakeCSV,
-				this.menuMakeCSVDQ,
-				this.menuMakeTab,
-				this.menuMakeTabDQ,
-				this.menuCSVRead,
-				this.menuCSVReadDQ,
-				this.menuTabRead,
-				this.menuTabReadDQ
-			};
-			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
-			MenuItem[] cplist = new MenuItem[list.Length];
-			for( int i = 0; i<list.Length; i++ )
-			{
-				cplist[i] = list[i].CloneMenu();
-				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
-			}
-			tmpmenu.MenuItems.AddRange(cplist);
-
-			tmpmenu.Show(this.btnCSV,new Point(0,0));
-		}
-
-		// 定義文生成
-		private void btnDDL_Click(object sender, System.EventArgs e)
-		{
-			MenuItem[] list = new MenuItem[] {
-												 this.menuDDL,
-												 this.menuDDLDrop
-											 };
-			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
-			MenuItem[] cplist = new MenuItem[list.Length];
-			for( int i = 0; i<list.Length; i++ )
-			{
-				cplist[i] = list[i].CloneMenu();
-				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
-			}
-			tmpmenu.MenuItems.AddRange(cplist);
-
-			tmpmenu.Show(this.btnDDL,new Point(0,0));
-		}
-
-		private void insertmake(object sender, System.EventArgs e)
-		{
-			this.CreInsert(true,false,false);
-		}
-
-		private bool CheckFileSpec()
-		{
-			if( this.rdoOutFile.Checked == true ) 
-			{
-				if( this.txtOutput.Text == "" )
+				if( isInCmbEvent == false )
 				{
-					this.saveFileDialog1.CreatePrompt = true;
-					this.saveFileDialog1.Filter = "SQL|*.sql|csv|*.csv|txt|*.txt|全て|*.*";
-					DialogResult ret = this.saveFileDialog1.ShowDialog();
-					if( ret == DialogResult.OK )
+					// 選択されたTable/View を記憶する
+					if( this.selectedTables.Contains(this.tableList.SelectedItem.ToString()) == false )
 					{
-						this.txtOutput.Text = this.saveFileDialog1.FileName;
+						if( this.selectedTables.Count > MaxTableHistory )
+						{
+							this.selectedTables.RemoveAt(0);
+						}
 					}
+					else
+					{
+						this.selectedTables.Remove(this.tableList.SelectedItem.ToString());
+
+					}
+					this.selectedTables.Add(this.tableList.SelectedItem.ToString());
+					this.cmbHistory.DataSource = null;
+					this.cmbHistory.DataSource = this.selectedTables;
+					int i = this.cmbHistory.FindStringExact(this.tableList.SelectedItem.ToString());
+					this.cmbHistory.SelectedIndex = i;
+					this.cmbHistory.Refresh();
+				}
+
+
+				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtWhere.Text,ref this.whereHistory);
+				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtSort.Text,ref this.sortHistory);
+				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtAlias.Text,ref this.aliasHistory);
+				// データ表示部に、該当テーブルのデータを表示する
+				DspData(this.tableList.SelectedItem.ToString());
+			}
+			else
+			{
+				qdbeUtil.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
+				qdbeUtil.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
+				qdbeUtil.SetNewHistory("",this.txtAlias.Text,ref this.aliasHistory);
+				DspData("");
+			}
+			if( this.tableList.SelectedItems.Count == 1 )
+			{
+				dspfldlist(this.tableList.SelectedItem.ToString());
+			}
+			else
+			{
+				dspfldlist("");
+			}
+			if( indexdlg != null && indexdlg.Visible == true )
+			{
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					indexdlg.settabledsp(this.tableList.SelectedItem.ToString());
 				}
 				else
+				{
+					indexdlg.settabledsp("");
+				}
+				indexdlg.Show();
+			}
+		}
+
+		private void rdoDspView_CheckedChanged(object sender, System.EventArgs e)
+		{
+			// テーブルの選択履歴をクリア
+			this.selectedTables.Clear();
+			this.cmbHistory.DataSource = null;
+			this.cmbHistory.DataSource = this.selectedTables;
+			this.cmbHistory.Refresh();
+			
+
+			dspTableList();
+		}
+
+		private void rdoSortTable_CheckedChanged(object sender, System.EventArgs e)
+		{
+			dspTableList();
+		}
+
+		private void chkDspData_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				DspData(this.tableList.SelectedItem.ToString());
+			}
+			else
+			{
+				DspData("");
+			}
+			if( this.chkDspData.CheckState == CheckState.Checked )
+			{
+				svdata.ShowGrid[svdata.LastDb] = 1;
+			}
+			else
+			{
+				svdata.ShowGrid[svdata.LastDb] = 0;
+			}
+		}
+
+		private void txtDspCount_Leave(object sender, System.EventArgs e)
+		{
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				DspData(this.tableList.SelectedItem.ToString());
+			}
+			else
+			{
+				DspData("");
+			}
+		}
+
+		private void txtWhere_Leave(object sender, System.EventArgs e)
+		{
+			string tbname = "";
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				tbname = this.tableList.SelectedItem.ToString();
+			}
+			else
+			{
+				tbname = "";
+			}
+			DspData(tbname);
+
+			// 履歴に現在の値を記録 TODO
+			qdbeUtil.SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
+
+		}
+
+		private void txtSort_Leave(object sender, System.EventArgs e)
+		{
+			string tbname = "";
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				tbname = this.tableList.SelectedItem.ToString();
+			}
+			else
+			{
+				tbname = "";
+			}
+			DspData(tbname);
+
+			// 履歴に現在の値を記録 TODO
+			qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
+		}
+
+		private void rdoDspSysUser_CheckedChanged(object sender, System.EventArgs e)
+		{
+			// テーブルの選択履歴をクリア
+			this.selectedTables.Clear();
+			this.cmbHistory.DataSource = null;
+			this.cmbHistory.DataSource = this.selectedTables;
+			this.cmbHistory.Refresh();
+			
+
+			dspTableList();
+			displistowner();
+		}
+
+		private void ownerListbox_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			if( this.ownerListbox.IsAllSelecting == true )
+			{
+				return;
+			}
+			if( this.ownerListbox.SelectedItem != null )
+			{
+				// 選択したDBの最終オーナーを記録する
+				ArrayList saveownerlist;
+				if( svdata.Dbopt[svdata.LastDb] == null )
+				{
+					saveownerlist = new ArrayList();
+					svdata.Dbopt[svdata.LastDb] = saveownerlist;
+				}
+				else
+				{
+					saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDb];
+				}
+				saveownerlist.Clear();
+				foreach( string itm in this.ownerListbox.SelectedItems )
+				{
+					saveownerlist.Add(itm);
+				}
+			}
+			// テーブルの選択履歴をクリア
+			this.selectedTables.Clear();
+			this.cmbHistory.DataSource = null;
+			this.cmbHistory.DataSource = this.selectedTables;
+			this.cmbHistory.Refresh();
+			
+
+			dspTableList();
+		}
+
+		private void rdoNotDspSysUser_CheckedChanged(object sender, System.EventArgs e)
+		{
+			// テーブルの選択履歴をクリア
+			this.selectedTables.Clear();
+			this.cmbHistory.DataSource = null;
+			this.cmbHistory.DataSource = this.selectedTables;
+			this.cmbHistory.Refresh();
+			
+
+			dspTableList();
+			displistowner();
+		}
+
+		private void rdoClipboard_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if( rdoClipboard.Checked == true )
+			{
+				this.txtOutput.Enabled = false;
+				this.btnReference.Enabled = false;
+				svdata.OutDest[svdata.LastDb] = 0;
+				this.rdoUnicode.Enabled = false;
+				this.rdoSjis.Enabled = false;
+				this.rdoUtf8.Enabled = false;
+			}
+		}
+
+		private void rdoOutFolder_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if( this.rdoOutFolder.Checked == true )
+			{
+				this.txtOutput.Enabled = true;
+				this.btnReference.Enabled = true;
+				svdata.OutDest[svdata.LastDb] = 2;
+				this.rdoUnicode.Enabled = true;
+				this.rdoSjis.Enabled = true;
+				this.rdoUtf8.Enabled = true;
+			}
+		}
+
+		private void rdoOutFile_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if( this.rdoOutFile.Checked == true )
+			{
+				this.txtOutput.Enabled = true;
+				this.btnReference.Enabled = true;
+				svdata.OutDest[svdata.LastDb] = 1;
+				this.rdoUnicode.Enabled = true;
+				this.rdoSjis.Enabled = true;
+				this.rdoUtf8.Enabled = true;
+			}
+		}
+
+		private void btnReference_Click(object sender, System.EventArgs e)
+		{
+			if( this.rdoOutFile.Checked == true )
+			{
+				if( this.txtOutput.Text != "" )
 				{
 					DirectoryInfo d = new DirectoryInfo(this.txtOutput.Text);
 					if( d.Exists )
 					{
-						MessageBox.Show("指定されたファイル名はフォルダを指しています。ファイル名を指定してください。処理を中断します");
-						return false;
+						this.saveFileDialog1.InitialDirectory = this.txtOutput.Text;
+						this.saveFileDialog1.FileName = "";
 					}
-				}
-				if( this.txtOutput.Text == "" )
-				{
-					MessageBox.Show("ファイル名が指定されていないので、処理を中断します");
-					return false;
-				}
-			}
-			if( this.rdoOutFolder.Checked == true )
-			{
-
-				if( this.txtOutput.Text == "" )
-				{
-					this.folderBrowserDialog1.SelectedPath = "";
-					this.folderBrowserDialog1.ShowNewFolderButton = true;
-					DialogResult ret = this.folderBrowserDialog1.ShowDialog();
-					if( ret == DialogResult.OK )
+					else
 					{
-						this.txtOutput.Text = this.folderBrowserDialog1.SelectedPath;
+						this.saveFileDialog1.FileName = this.txtOutput.Text;
 					}
 				}
-
-				if( this.txtOutput.Text != "" )
-				{
-					DirectoryInfo d = new DirectoryInfo(this.txtOutput.Text);
-					FileInfo	f = new FileInfo(this.txtOutput.Text);
-					if( f.Exists )
-					{
-						MessageBox.Show("フォルダ名は指定されていますが、フォルダではありません。処理を中断します");
-						return false;
-					}
-					else if( !d.Exists )
-					{
-						Directory.CreateDirectory(this.txtOutput.Text);
-						DirectoryInfo ff = new DirectoryInfo(this.txtOutput.Text);
-						if( !ff.Exists )
-						{
-							MessageBox.Show("フォルダ名は指定されていますが、作成できませんでした。処理を中断します");
-							return false;
-						}
-					}
-				}
-				else
-				{
-					MessageBox.Show("フォルダ名が指定されませんでした。処理を中断します");
-					return false;
-				}
+				// 単独ファイルの参照指定
 				
-			}
-			return true;
-		}
-
-		private string convdata(SqlDataReader dr, int i, string addstr, string unichar, bool outNull)
-		{
-			//
-			//aaa  bigint  NOT NULL PRIMARY KEY,
-			//bbb  binary(50)  NULL,
-			//ccc  datetime  NULL,
-			//ddd  decimal(18,0)  NULL,
-			//eee  float  NULL,
-			//fff  image  NULL,
-			//ggg  int  NULL,
-			//hhh  money  NULL,
-			//iii  nchar(10)  NULL,
-			//jjj  ntext  NULL,
-			//kkk  numeric(18,0)  NULL,
-			//lll  nvarchar(50)  NULL,
-			//mmm  real  NULL,
-			//nnn  smalldatetime  NULL,
-			//ooo  smallint  NULL,
-			//ppp  smallmoney  NULL,
-			//qqq  sql_variant  NULL,
-			//rrr  text  NULL,
-			//sss  timestamp  NULL,
-			//ttt  tinyint  NULL,
-			//uuu  uniqueidentifier  NULL,
-			//vvv  varbinary(50)  NULL,
-			//www  varchar(50)  NULL
-			string fldtypename = dr.GetDataTypeName(i);
-			if( dr.IsDBNull(i) )
-			{
-				if( outNull ){
-					return "null";
-				}
-				else
+				this.saveFileDialog1.CreatePrompt = true;
+				this.saveFileDialog1.Filter = "SQL|*.sql|csv|*.csv|txt|*.txt|全て|*.*";
+				DialogResult ret = this.saveFileDialog1.ShowDialog();
+				if( ret == DialogResult.OK )
 				{
-					return "";
-				}
-			}
-			else if( fldtypename.Equals("bigint") )
-			{
-				return dr.GetInt64(i).ToString();
-			}
-			else if( fldtypename.Equals("image") ||
-					 fldtypename.Equals("varbinary") ||
-					 fldtypename.Equals("binary"))
-			{
-				if( outNull )
-				{	
-					return string.Format("null" );
-				}
-				else
-				{
-					// バイナリはヘキサ文字列で出しておく
-					byte []odata = dr.GetSqlBinary(i).Value;
-					string sodata ="0x";
-					for(int k = 0; k < odata.Length; k++ )
-					{
-						sodata += odata[k].ToString("X2");
-					}
-					return string.Format("{1}{0}{1}", sodata, addstr );
-				}
-			}
-			else if( fldtypename.Equals("datetime") ||
-					 fldtypename.Equals("smalldatetime"))
-			{
-				return string.Format("{1}{0}{1}", dr.GetDateTime(i).ToString(), addstr );
-			}
-			else if( fldtypename.Equals("decimal") 
-					 || fldtypename.Equals("numeric"))
-			{
-				return dr.GetDecimal(i).ToString();
-			}
-			else if( fldtypename.Equals("float")||
-					 fldtypename.Equals("double") )
-			{
-				return dr.GetDouble(i).ToString();
-			}
-			else if( fldtypename.Equals("int") )
-			{
-				return dr.GetInt32(i).ToString();
-			}
-			else if( fldtypename.Equals("smallint") )
-			{
-				return dr.GetInt16(i).ToString();
-			}
-			else if( fldtypename.Equals("tinyint") )
-			{
-				return dr.GetValue(i).ToString();
-			}
-			else if( fldtypename.Equals("money") 
-					 || fldtypename.Equals("smallmoney"))
-			{
-				return dr.GetSqlMoney(i).ToString();
-			}
-			else if( fldtypename.Equals("real"))
-			{
-				return dr.GetValue(i).ToString();
-			}
-			//							else if( fldtypename.Equals("money") )
-			//							{
-			//								wr.Write( dr.GetDouble(i).ToString() );
-			//							}
-			else if( fldtypename == "varchar" ||
-					 fldtypename == "char" ||
-					 fldtypename == "text" )
-			{
-				// 文字列
-				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
-				{
-					return string.Format( "{0}{0}", addstr );
-				}
-				else
-				{
-					if( dr.GetString(i).IndexOf("'") >= 0 )
-					{
-						// ' が文字列に入っている場合は '' に強制的に変換する
-						return string.Format( "{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""),addstr);
-					}
-					else
-					{
-						return string.Format( "{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr );
-					}
-				}
-			}
-			else if( fldtypename == "nvarchar" ||
-				fldtypename == "nchar" ||
-				fldtypename == "xml" ||
-				fldtypename == "sql_variant" ||
-				fldtypename == "ntext")
-			{
-				// 文字列
-				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
-				{
-					return string.Format( "{1}{0}{0}", addstr, unichar );
-				}
-				else
-				{
-					if( dr.GetString(i).IndexOf("'") >= 0 )
-					{
-						// ' が文字列に入っている場合は '' に強制的に変換する
-						return string.Format( "{2}{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""), addstr, unichar);
-					}
-					else
-					{
-						return string.Format( "{2}{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr, unichar );
-					}
-				}
-			}
-			else if( fldtypename == "uniqueidentifier" )
-			{
-				return string.Format("{1}{0}{1}", dr.GetSqlGuid(i).ToString(), addstr );
-			}
-			else if( fldtypename == "timestamp" )
-			{
-				// timestamp は自動更新されるのでnullでよい
-				if( outNull )
-				{	
-					return string.Format("null" );
-				}
-				else
-				{
-					// バイナリはヘキサ文字列で出しておく
-					byte []odata = dr.GetSqlBinary(i).Value;
-					string sodata ="0x";
-					for(int k = 0; k < odata.Length; k++ )
-					{
-						sodata += odata[k].ToString("X2");
-					}
-					return string.Format("{1}{0}{1}", sodata, addstr );
+					this.txtOutput.Text = this.saveFileDialog1.FileName;
 				}
 			}
 			else
 			{
-				// sql_variant は型の決めようがないので文字列扱いにしておく
-				return string.Format("{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
+				// 複数ファイルのディレクトリ参照指定
+				if( this.txtOutput.Text != "" )
+				{
+					FileInfo f = new FileInfo(this.txtOutput.Text);
+					if( f.Exists &&
+						( f.Attributes & FileAttributes.Directory ) == FileAttributes.Directory)
+					{
+						this.folderBrowserDialog1.SelectedPath = this.txtOutput.Text;
+					}
+					else if( f.Exists && (f.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
+					{
+						this.folderBrowserDialog1.SelectedPath = f.Directory.FullName;
+					}
+					else if( !f.Exists )
+					{
+						this.folderBrowserDialog1.SelectedPath = this.txtOutput.Text;
+					}
+					else
+					{
+						this.folderBrowserDialog1.SelectedPath = "";
+					}
+				}
+				else
+				{
+					this.folderBrowserDialog1.SelectedPath = "";
+				}
+				
+				this.folderBrowserDialog1.ShowNewFolderButton = true;
+				DialogResult ret = this.folderBrowserDialog1.ShowDialog();
+				if( ret == DialogResult.OK )
+				{
+					this.txtOutput.Text = this.folderBrowserDialog1.SelectedPath;
+				}
 			}
 		}
+
+		private void txtOutput_TextChanged(object sender, System.EventArgs e)
+		{
+			this.toolTip1.SetToolTip(this.txtOutput,this.txtOutput.Text);
+			svdata.OutFile[svdata.LastDb] = this.txtOutput.Text;
+		}
+
+
+		private void txtDspCount_TextChanged(object sender, System.EventArgs e)
+		{
+			svdata.GridDspCnt[svdata.LastDb] = this.txtDspCount.Text;
+		}
+
+		private void chkDspFieldAttr_CheckedChanged(object sender, System.EventArgs e)
+		{
+			if( this.tableList.SelectedItems.Count == 1 )
+			{
+				dspfldlist(this.tableList.SelectedItem.ToString());
+			}
+			else
+			{
+				dspfldlist("");
+			}
+		}
+
+		private void btnDataUpdate_Click(object sender, System.EventArgs e)
+		{
+			SqlTransaction tran	= null;
+			try
+			{
+				this.InitErrMessage();
+
+				this.dbGrid.EndEdit(this.dbGrid.TableStyles[0].GridColumnStyles[this.dbGrid.CurrentCell.ColumnNumber],this.dbGrid.CurrentCell.RowNumber,false);
+
+				if( this.chkDspData.CheckState == CheckState.Checked &&
+					this.tableList.SelectedItems.Count == 1 &&
+					this.dspdt.GetChanges() != null &&
+					this.dspdt.GetChanges().Tables[0].Rows.Count > 0 &&
+					MessageBox.Show("本当に更新してよろしいですか","",MessageBoxButtons.YesNo) == DialogResult.Yes
+					)
+				{
+					// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+					string tbname = this.tableList.SelectedItem.ToString();
+					string sqlstr;
+					sqlstr = "select ";
+					int	maxlines;
+					if( this.txtDspCount.Text != "" )
+					{
+						maxlines = int.Parse(this.txtDspCount.Text);
+					}
+					else
+					{
+						maxlines = 0;
+					}
+					if( maxlines != 0 )
+					{
+						sqlstr += " TOP " + this.txtDspCount.Text;
+					}
+
+					sqlstr += string.Format(" * from {0}",gettbnameWithAlias(tbname));
+					//sqlstr += " * from [" + tbname + "]";
+					if( this.txtWhere.Text.Trim() != "" )
+					{
+						sqlstr += " where " + this.txtWhere.Text.Trim();
+					}
+					if( this.txtSort.Text.Trim() != "" )
+					{
+						sqlstr += " order by " + this.txtSort.Text.Trim();
+					}
+					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+										
+					tran = this.sqlConnection1.BeginTransaction();
+					da.SelectCommand.Transaction = tran;
+					SqlCommandBuilder  cb = new SqlCommandBuilder(da);
+					da.Update(dspdt, "aaaa");
+					tran.Commit();
+
+					this.dbGrid.SetDataBinding(dspdt, "aaaa");
+				}
+			}
+			catch( Exception exp )
+			{
+				this.SetErrorMessage(exp);
+				tran.Rollback();
+			}
+
+		}
+
+		private void btnDataEdit_Click(object sender, System.EventArgs e)
+		{
+			try
+			{
+				this.InitErrMessage();
+
+				if( this.dbGrid.ReadOnly == true )
+				{
+					// 編集可にする
+					this.dbGrid.ReadOnly = false;
+					this.btnDataEdit.Text = "データ編集終了(&T)";
+					this.btnDataEdit.ForeColor = Color.WhiteSmoke;
+					this.btnDataEdit.BackColor = Color.Navy;
+				}
+				else
+				{
+					// 編集不可にする
+					if( this.dspdt.Tables["aaaa"].GetChanges() == null ||
+						this.dspdt.Tables["aaaa"].GetChanges().Rows.Count == 0 )
+					{
+						this.dbGrid.ReadOnly = true;
+						this.btnDataEdit.Text = "データ編集(&T)";
+						this.btnDataEdit.BackColor = this.btnBackColor;
+						this.btnDataEdit.ForeColor = this.btnForeColor;
+					}
+					else
+					{
+						// 変更があった
+						if( MessageBox.Show("変更を破棄してもよろしいですか?","",MessageBoxButtons.YesNo) == DialogResult.Yes )
+						{
+							this.dspdt.Tables["aaaa"].RejectChanges();
+							this.dbGrid.SetDataBinding(dspdt, "aaaa");
+							this.dbGrid.Show();
+							this.dbGrid.ReadOnly = true;
+							this.btnDataEdit.Text = "データ編集(&T)";
+							this.btnDataEdit.BackColor = this.btnBackColor;
+							this.btnDataEdit.ForeColor = this.btnForeColor;
+						}
+					}
+					
+				}
+			}
+			catch( Exception exp )
+			{
+				this.SetErrorMessage(exp);
+			}
+		}
+
+		private void dbGrid_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+		{
+			if( this.dspdt == null ||
+				this.dspdt.Tables.Count == 0 ||
+				this.dspdt.Tables["aaaa"].Rows.Count == 0 )
+			{
+				return;
+			}
+
+			int row=0;
+			int yDelta = dbGrid.GetCellBounds(row, 0).Height + 1;
+			int y = dbGrid.GetCellBounds(row, 0).Top + 2;
+			if( y < yDelta )
+			{
+				// 複数行がスクロールで隠れているはずなので、その行数分をスキップする
+				while( y < yDelta )
+				{
+					y += yDelta;
+					row ++;
+				}
+			}
+     
+			CurrencyManager cm = (CurrencyManager) this.BindingContext[dbGrid.DataSource, dbGrid.DataMember];
+			while((y <= dbGrid.Height) && (row < cm.Count))
+			{
+				//get & draw the header text...
+				string text = string.Format("{0}", row+1);
+				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 10, y);
+				y += yDelta;
+				row++;
+			}
+		}
+
+		private void btnGridFormat_Click(object sender, System.EventArgs e)
+		{
+			GridFormatDialog dlg = new GridFormatDialog();
+			dlg.Gfont = gfont;
+			dlg.Gcolor = gcolor;
+			dlg.NumFormat = this.NumFormat;
+			dlg.FloatFormat = this.FloatFormat;
+			dlg.DateFormat = this.DateFormat;
+			
+			if( dlg.ShowDialog() == DialogResult.OK )
+			{
+				this.gfont = dlg.Gfont;
+				this.gcolor = dlg.Gcolor;
+				this.dbGrid.Font = this.gfont;
+				this.dbGrid.ForeColor = this.gcolor;
+				this.NumFormat = dlg.NumFormat;
+				this.FloatFormat = dlg.FloatFormat;
+				this.DateFormat = dlg.DateFormat;
+			}
+		}
+
+
+
+		private void Redisp_Click(object sender, System.EventArgs e)
+		{
+			//再描画ボタン押下
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				DspData(this.tableList.SelectedItem.ToString());
+			}
+			else
+			{
+				DspData("");
+			}
+		}
+
+		private void btnTmpAllDsp_Click(object sender, System.EventArgs e)
+		{
+			//再描画ボタン押下
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				DspData(this.tableList.SelectedItem.ToString(),true);
+				this.btnTmpAllDsp.ForeColor = Color.WhiteSmoke;
+				this.btnTmpAllDsp.BackColor = Color.Navy;
+				this.btnTmpAllDsp.Enabled = true;
+			}
+			else
+			{
+				DspData("");
+			}
+		}
+
+		private void btnWhereZoom_Click(object sender, System.EventArgs e)
+		{
+			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+			dlg.EditText = this.txtWhere.Text;
+			dlg.LableName = "where 指定";
+			dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+			dlg.Show();
+			dlg.BringToFront();
+			dlg.Focus();
+		}
+
+		private void dlgWhereZoom_Click(object sender, System.EventArgs e)
+		{
+			this.txtWhere.Text = ((ZoomDialog)sender).EditText;
+
+			string targetTable = "";
+			if( this.tableList.SelectedItems.Count == 1 )
+			{
+				targetTable = this.tableList.SelectedItem.ToString();
+			}
+			DspData(targetTable);
+		}
+
+		private void btnOrderZoom_Click(object sender, System.EventArgs e)
+		{
+			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+			dlg.EditText = this.txtSort.Text;
+			dlg.LableName = "order by 指定";
+			dlg.Enter += new System.EventHandler(this.dlgSortZoom_Click);
+			dlg.Show();
+			dlg.BringToFront();
+			dlg.Focus();
+		}
+		private void dlgSortZoom_Click(object sender, System.EventArgs e)
+		{
+			this.txtSort.Text = ((ZoomDialog)sender).EditText;
+			string targetTable = "";
+			if( this.tableList.SelectedItems.Count == 1 )
+			{
+				targetTable = this.tableList.SelectedItem.ToString();
+			}
+			DspData(targetTable);
+		}
+
+		private void dlgAliasZoom_Click(object sender, System.EventArgs e)
+		{
+			this.txtAlias.Text = ((ZoomDialog)sender).EditText;
+
+			string targetTable = "";
+			if( this.tableList.SelectedItems.Count == 1 )
+			{
+				targetTable = this.tableList.SelectedItem.ToString();
+			}
+			DspData(targetTable);
+		}
+
+		private void txtAlias_Leave(object sender, System.EventArgs e)
+		{
+			string tbname = "";
+			if( this.chkDspData.CheckState == CheckState.Checked &&
+				this.tableList.SelectedItems.Count == 1 )
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				tbname = this.tableList.SelectedItem.ToString();
+			}
+			else
+			{
+				tbname = "";
+			}
+			// 履歴に現在の値を記録 TODO
+			qdbeUtil.SetNewHistory(tbname,((TextBox)sender).Text,ref this.aliasHistory);
+		}
+
+		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.W )
+			{
+				// 値の拡大表示を行う
+				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+				dlg.EditText = this.txtAlias.Text;
+				dlg.LableName = "Alias 指定";
+				dlg.Enter += new System.EventHandler(this.dlgAliasZoom_Click);
+				dlg.Show();
+				dlg.BringToFront();
+				dlg.Focus();
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.D )
+			{
+				// 全削除を行う
+				((TextBox)sender).Text = "";
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.S )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				HistoryViewer hv = new HistoryViewer(this.aliasHistory, targetTable);
+				if( DialogResult.OK == hv.ShowDialog() && ((TextBox)sender).Text != hv.RetString)
+				{
+					((TextBox)sender).Text = hv.RetString;
+					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.aliasHistory);
+
+					DspData(targetTable);
+				}
+			}
+			if( e.KeyCode == Keys.Return ||
+				e.KeyCode == Keys.Enter )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				qdbeUtil.SetNewHistory(targetTable,((TextBox)sender).Text,ref this.aliasHistory);
+				DspData(targetTable);
+			}
+		}
+
+
+		/// <summary>
+		/// キー押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		protected void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if( e.Control == true && e.Shift == false && e.Alt == false && e.KeyCode == Keys.G )
+			{
+				ThreadEndIfAlive();
+			}
+			if( e.Control == true && e.Shift == true && e.Alt == true && e.KeyCode == Keys.T )
+			{
+				if( this.SqlTimeOut == 0 )
+				{
+					this.SqlTimeOut = 300;
+				}
+				else
+				{
+					this.SqlTimeOut = 0;
+				}
+				MessageBox.Show("SQL Timeout値を " + this.SqlTimeOut.ToString() + "秒に設定しました" );
+			}
+		}
+
+		/// <summary>
+		/// where 入力テキストボックスでの特殊キー押下ハンドラ
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void txtWhere_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.W )
+			{
+				// Ctrl + W
+				// 値の拡大表示を行う
+				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+				dlg.EditText = this.txtWhere.Text;
+				dlg.LableName = "where 指定";
+				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+				dlg.Show();
+				dlg.BringToFront();
+				dlg.Focus();
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.D )
+			{
+				// Ctrl + D
+				// 全削除を行う
+				((TextBox)sender).Text = "";
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.S )
+			{
+				// Ctrl + S
+				// 入力履歴を表示する
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				HistoryViewer hv = new HistoryViewer(this.whereHistory, targetTable);
+				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.RetString)
+				{
+					this.txtWhere.Text = hv.RetString;
+					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.whereHistory);
+
+					DspData(targetTable);
+				}
+			}
+			if( e.KeyCode == Keys.Return ||
+				e.KeyCode == Keys.Enter )
+			{
+				// Enter(Return) では、入力を確定させて、グリッド表示に反映させる
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				qdbeUtil.SetNewHistory(targetTable,this.txtWhere.Text,ref this.whereHistory);
+				DspData(targetTable);
+			}
+		
+		}
+
+		private void txtSort_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.W )
+			{
+				// 値の拡大表示を行う
+				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+				dlg.EditText = this.txtSort.Text;
+				dlg.LableName = "order by 指定";
+				dlg.Enter += new System.EventHandler(this.dlgSortZoom_Click);
+				dlg.Show();
+				dlg.BringToFront();
+				dlg.Focus();
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.D )
+			{
+				// 全削除を行う
+				((TextBox)sender).Text = "";
+			}
+			if( e.Alt == false &&
+				e.Control == true &&
+				e.KeyCode == Keys.S )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				HistoryViewer hv = new HistoryViewer(this.sortHistory, targetTable);
+				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.RetString)
+				{
+					this.txtSort.Text = hv.RetString;
+					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.sortHistory);
+
+					DspData(targetTable);
+				}
+			}
+			if( e.KeyCode == Keys.Return ||
+				e.KeyCode == Keys.Enter )
+			{
+				string targetTable = "";
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					targetTable = this.tableList.SelectedItem.ToString();
+				}
+				qdbeUtil.SetNewHistory(targetTable,this.txtSort.Text,ref this.sortHistory);
+				DspData(targetTable);
+			}
+		
+		}
+
+		/// <summary>
+		/// 指定されたテーブルのリストを元に、テーブルの一覧の選択状態を変更する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void menuTableSelect_Click(object sender, System.EventArgs e)
+		{
+			TableSelectDialog dlg = new TableSelectDialog();
+			if( dlg.ShowDialog() == DialogResult.OK && dlg.ResultStr != "")
+			{
+				string tabs = dlg.ResultStr;
+				string []tablelists = tabs.Split("\r\n".ToCharArray());
+				this.tableList.BeginUpdate();
+				this.tableList.ClearSelected();
+				for( int i = 0; i < tablelists.Length; i++ )
+				{
+					int x = this.tableList.FindStringExact(tablelists[i]);
+					if( x > 0 )
+					{
+						this.tableList.SetSelected(x,true);
+					}
+				}
+				this.tableList.EndUpdate();
+			}
+		}
+
+		private void label4_DoubleClick(object sender, System.EventArgs e)
+		{
+			if( this.SqlTimeOut == 0 )
+			{
+				this.SqlTimeOut = 300;
+			}
+			else
+			{
+				this.SqlTimeOut = 0;
+			}
+			MessageBox.Show("SQL Timeout値を " + this.SqlTimeOut.ToString() + "秒に設定しました" );
+		}
+
+
+		#endregion
+
+		#region 実処理関連
+
+		private void btnSelect_Click(object sender, System.EventArgs e)
+		{
+			// select 文の作成
+
+			this.InitErrMessage();
+
+			try
+			{
+				if( this.tableList.SelectedItems.Count == 0 )
+				{
+					return;
+				}
+				if( CheckFileSpec() == false )
+				{
+					return;
+				}
+
+				StringBuilder strline =  new StringBuilder();
+				TextWriter	wr = new StringWriter(strline);
+				StringBuilder fname = new StringBuilder();
+
+				if( this.rdoClipboard.Checked == true) 
+				{
+					wr = new StringWriter(strline);
+				}
+				else if( this.rdoOutFile.Checked == true ) 
+				{
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+					sw.AutoFlush = false;
+					wr = sw;
+					fname.Append(this.txtOutput.Text);
+				}
+
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
+						sw.AutoFlush = false;
+						wr = sw;
+						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
+					}
+					// get id 
+					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",qdbeUtil.GetTbname(tbname)), this.sqlConnection1);
+
+					DataSet ds = new DataSet();
+					ds.CaseSensitive = true;
+					da.Fill(ds,tbname);
+	
+					wr.Write("select {0}",wr.NewLine);
+					int		maxcol = ds.Tables[tbname].Columns.Count;
+					for( int i = 0; i < maxcol ; i++ )
+					{
+						if( i != 0 )
+						{
+							wr.Write(",{0}", wr.NewLine);
+						}
+						wr.Write("\t{0}", ds.Tables[tbname].Columns[i].ColumnName);
+					
+					}
+					wr.Write(wr.NewLine);
+					wr.Write(" from {0}{1}", gettbnameWithAlias(tbname),wr.NewLine);
+					if( this.txtWhere.Text.Trim() != "" )
+					{
+						wr.Write(" where {0}{1}", this.txtWhere.Text.Trim(),wr.NewLine);
+					}
+					if( this.txtSort.Text.Trim() != "" )
+					{
+						wr.Write(" order by {0}{1}", this.txtSort.Text.Trim(),wr.NewLine);
+					}
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						wr.Close();
+					}
+				}
+				if( this.rdoOutFolder.Checked == false ) 
+				{
+					wr.Close();
+				}
+
+				if( this.rdoClipboard.Checked == true ) 
+				{
+					Clipboard.SetDataObject(strline.ToString(),true );
+				}
+				else
+				{
+					Clipboard.SetDataObject(fname.ToString(),true );
+				}
+
+				MessageBox.Show( "処理を終了しました" );
+			}
+			catch( Exception exp )
+			{
+				this.SetErrorMessage(exp);
+			}
+		}
+
+
+		private void btnIndex_Click(object sender, System.EventArgs e)
+		{
+			if( indexdlg == null )
+			{
+				indexdlg = new IndexViewDialog();
+				indexdlg.SqlVersion = this.sqlVersion;
+
+				indexdlg.SqlConnection = this.sqlConnection1;
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					indexdlg.DspTbname = this.tableList.SelectedItem.ToString();
+				}
+				else
+				{
+					indexdlg.DspTbname = "";
+				}
+				indexdlg.Show();
+			}
+			else
+			{
+				if( this.tableList.SelectedItems.Count == 1 )
+				{
+					indexdlg.settabledsp(this.tableList.SelectedItem.ToString());
+				}
+				else
+				{
+					indexdlg.settabledsp("");
+				}
+				indexdlg.Show();
+				indexdlg.BringToFront();
+			}
+		}
+
+		/// <summary>
+		/// 選択されたテーブルに関する依存関係を出力する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DependOutPut(object sender, System.EventArgs e)
+		{
+			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+			if( CheckFileSpec() == false )
+			{
+				return;
+			}
+			
+			this.InitErrMessage();
+
+			try
+			{
+				StringBuilder strline =  new StringBuilder();
+				TextWriter	wr = new StringWriter(strline);
+				StringBuilder fname = new StringBuilder();
+
+				if( this.rdoClipboard.Checked == true) 
+				{
+					wr = new StringWriter(strline);
+					wr.Write("テーブル名");
+					wr.Write("\t依存関係先名称");
+					wr.Write("\t種類");
+					wr.Write("\t更新あり");
+					wr.Write("\tselectでの利用");
+					wr.Write("\t従属性が存在する列またはパラメータ");
+					wr.Write(wr.NewLine);
+				}
+				else if( this.rdoOutFile.Checked == true ) 
+				{
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+					sw.AutoFlush = false;
+					wr = sw;
+					fname.Append(this.txtOutput.Text);
+					wr.Write("テーブル名");
+					wr.Write("\t依存関係先名称");
+					wr.Write("\t種類");
+					wr.Write("\t更新あり");
+					wr.Write("\tselectでの利用");
+					wr.Write("\t従属性が存在する列またはパラメータ");
+					wr.Write(wr.NewLine);
+				}
+
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv",false, GetEncode());
+						sw.AutoFlush = false;
+						wr = sw;
+						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
+						wr.Write("テーブル名");
+						wr.Write("\t依存関係先名称");
+						wr.Write("\t種類");
+						wr.Write("\t更新あり");
+						wr.Write("\tselectでの利用");
+						wr.Write("\t従属性が存在する列またはパラメータ");
+						wr.Write(wr.NewLine);
+					}
+
+					// 依存関係の情報を取得し、
+
+					// get id 
+					string sqlstr;
+					// split owner.table -> owner, table
+
+					string delimStr = ".";
+					string []str = tbname.Split(delimStr.ToCharArray(), 2);
+					sqlstr = "sp_depends N'[" + str[0] +"].[" + str[1] + "]'";
+					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+					DataSet ds = new DataSet();
+					ds.CaseSensitive = true;
+					da.Fill(ds,tbname);
+
+					if(	ds.Tables.Count != 0 &&
+						ds.Tables[tbname].Rows != null &&
+						ds.Tables[tbname].Rows.Count != 0)
+					{
+						foreach(DataRow dr in ds.Tables[tbname].Rows)
+						{
+							// テーブル名
+							wr.Write(tbname);
+							foreach( DataColumn col in ds.Tables[tbname].Columns)
+							{
+								wr.Write("\t");
+								wr.Write(dr[col.ColumnName].ToString());
+							}
+							wr.Write(wr.NewLine);
+						}
+					}
+
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						wr.Close();
+					}
+				}
+				if( this.rdoOutFolder.Checked == false ) 
+				{
+					wr.Close();
+				}
+				if( this.rdoClipboard.Checked == true ) 
+				{
+					Clipboard.SetDataObject(strline.ToString(),true );
+				}
+				else
+				{
+					Clipboard.SetDataObject(fname.ToString(),true );
+				}
+				MessageBox.Show("処理を完了しました");
+			}
+			catch ( Exception se )
+			{
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+
+		
+		}
+
+		/// <summary>
+		/// 選択されたテーブルに関するデータ件数を出力する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void RecordCountOutPut(object sender, System.EventArgs e)
+		{
+			SqlDataReader dr = null;
+			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+			if( this.tableList.SelectedItems.Count > 1 &&
+				this.txtWhere.Text != null &&
+				this.txtWhere.Text.Trim() != "" )
+			{
+				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+					== System.Windows.Forms.DialogResult.No )
+				{
+					return;
+				}
+			}
+
+			if( CheckFileSpec() == false )
+			{
+				return;
+			}
+
+			this.InitErrMessage();
+
+			int			rowcount = 0;
+			int			trow = 0;
+			try
+			{
+
+				StringBuilder strline =  new StringBuilder();
+				TextWriter	wr = new StringWriter(strline);
+				StringBuilder fname = new StringBuilder();
+
+				if( this.rdoClipboard.Checked == true) 
+				{
+					wr = new StringWriter(strline);
+					wr.WriteLine("テーブル名,データ件数");
+				}
+				else if( this.rdoOutFile.Checked == true ) 
+				{
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+					sw.AutoFlush = false;
+					wr = sw;
+					fname.Append(this.txtOutput.Text);
+					wr.WriteLine("テーブル名,データ件数");
+				}
+
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv.tmp",false, GetEncode());
+						sw.AutoFlush = false;
+						wr = sw;
+						wr.WriteLine("テーブル名,データ件数");
+					}
+					trow = 0;
+					string sqlstr;
+					sqlstr = string.Format("select  count(1) from {0} ",gettbnameWithAlias(tbname));
+					if( this.txtWhere.Text.Trim() != "" )
+					{
+						sqlstr += " where " + this.txtWhere.Text.Trim();
+					}
+
+					cm.CommandText = sqlstr;
+					cm.Connection = this.sqlConnection1;
+
+					dr = cm.ExecuteReader();
+
+					ArrayList fldname = new ArrayList();
+					ArrayList strint = new ArrayList();
+	
+					fldname.Clear();
+					strint.Clear();
+
+
+					// データの書き出し
+					while (dr.Read())
+					{
+						rowcount++;
+						trow++;
+						wr.Write(qdbeUtil.GetTbname(tbname));
+						wr.Write(",");
+						if( dr.IsDBNull(0) )
+						{
+							wr.WriteLine( "0" );
+						}
+						else
+						{
+							wr.WriteLine( dr.GetValue(0).ToString() );
+						}
+					}
+					if( dr != null && dr.IsClosed == false )
+					{
+						dr.Close();
+					}
+					if( this.rdoOutFolder.Checked == true ) 
+					{
+						wr.Close();
+						File.Delete(this.txtOutput.Text + "\\" + tbname + ".csv");
+						if( trow > 0 )
+						{
+							fname.Append(this.txtOutput.Text + "\\" + tbname + ".csv\r\n");
+							// ファイルをリネームする
+							File.Move(this.txtOutput.Text + "\\" + tbname + ".csv.tmp", 
+								this.txtOutput.Text + "\\" + tbname + ".csv");
+						}
+					}
+				}
+				if( this.rdoOutFolder.Checked == false ) 
+				{
+					wr.Close();
+				}
+				if( rowcount == 0 )
+				{
+					MessageBox.Show("対象データがありませんでした");
+				}
+				else
+				{
+					if( this.rdoClipboard.Checked == true ) 
+					{
+						Clipboard.SetDataObject(strline.ToString(),true );
+					}
+					else
+					{
+						Clipboard.SetDataObject(fname.ToString(),true );
+					}
+					MessageBox.Show("処理を完了しました");
+				}
+			}
+			catch ( System.Data.SqlClient.SqlException se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+				return;
+			}
+			catch( Exception se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+
+			// set datas to clipboard
+		}
+
+		/// <summary>
+		/// 現在接続先のDBを初期値として、クエリアナライザを起動する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CallISQLW(object sender, System.EventArgs e)
+		{
+			if( this.sqlVersion != 2000 )
+			{
+				this.CallEPM(sender,e);
+				return;
+			}
+
+			Process isqlProcess = new Process();
+			isqlProcess.StartInfo.FileName = "isqlw";
+			isqlProcess.StartInfo.ErrorDialog = true;
+			string serverstr = "";
+			if( this.instanceName != "" )
+			{
+				serverstr = this.serverRealName + "\\" + this.instanceName;
+			}
+			else
+			{
+				serverstr = this.serverRealName;
+			}
+			if( this.IsUseTruse == true )
+			{
+				if( this.dbList.SelectedItems.Count != 0 )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E ",
+						serverstr,
+						(string)this.dbList.SelectedItem
+						);
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E ",
+						serverstr
+						);
+				}
+			}
+			else
+			{
+				if( this.dbList.SelectedItems.Count != 0 )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} ",
+						serverstr,
+						(string)this.dbList.SelectedItem,
+						this.loginUid,
+						this.loginPasswd );
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} ",
+						serverstr,
+						this.loginUid,
+						this.loginPasswd );
+				}
+			}
+			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			isqlProcess.Start();
+		}
+
+		/// <summary>
+		/// 現在接続先のDBを初期値として、クエリアナライザを起動する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CallProfile(object sender, System.EventArgs e)
+		{
+			Process isqlProcess = new Process();
+			if( this.sqlVersion == 2000 )
+			{
+				isqlProcess.StartInfo.FileName = "profiler.exe";
+			}
+			else
+			{
+				isqlProcess.StartInfo.FileName = "profiler90.exe";
+			}
+			isqlProcess.StartInfo.ErrorDialog = true;
+			string serverstr = "";
+			if( this.instanceName != "" )
+			{
+				serverstr = this.serverRealName + "\\" + this.instanceName;
+			}
+			else
+			{
+				serverstr = this.serverRealName;
+			}
+			if( this.IsUseTruse == true )
+			{
+				if( this.dbList.SelectedItems.Count != 0 )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /D{1} /E ",
+						serverstr,
+						(string)this.dbList.SelectedItem
+						);
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /E ",
+						serverstr
+						);
+				}
+			}
+			else
+			{
+				if( this.dbList.SelectedItems.Count != 0 )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} D{1} /U{2} /P{3} ",
+						serverstr,
+						(string)this.dbList.SelectedItem,
+						this.loginUid,
+						this.loginPasswd );
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} /U{2} /P{3} ",
+						serverstr,
+						this.loginUid,
+						this.loginPasswd );
+				}
+			}
+			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			isqlProcess.Start();
+		}
+
+		/// <summary>
+		/// エンタープライズマネージャーを起動する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CallEPM(object sender, System.EventArgs e)
+		{
+			Process isqlProcess = new Process();
+			if( this.sqlVersion == 2000 )
+			{
+				isqlProcess.StartInfo.FileName = "SQL Server Enterprise Manager.MSC";
+			}
+			else
+			{
+				isqlProcess.StartInfo.FileName = "SqlWb";
+				string serverstr = "";
+				if( this.instanceName != "" )
+				{
+					serverstr = this.serverRealName + "\\" + this.instanceName;
+				}
+				else
+				{
+					serverstr = this.serverRealName;
+				}
+				if( this.IsUseTruse == true )
+				{
+					if( this.dbList.SelectedItems.Count != 0 )
+					{
+						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E -nosplash",
+							serverstr,
+							(string)this.dbList.SelectedItem
+							);
+					}
+					else
+					{
+						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E -nosplash",
+							serverstr
+							);
+					}
+				}
+				else
+				{
+					if( this.dbList.SelectedItems.Count != 0 )
+					{
+						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} -nosplash",
+							serverstr,
+							(string)this.dbList.SelectedItem,
+							this.loginUid,
+							this.loginPasswd );
+					}
+					else
+					{
+						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} -nosplash",
+							serverstr,
+							this.loginUid,
+							this.loginPasswd );
+					}
+				}
+			}
+			isqlProcess.StartInfo.ErrorDialog = true;
+
+			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			isqlProcess.Start();
+		}
+
+		private void menuRecordCountDsp_Click(object sender, System.EventArgs e)
+		{
+			SqlDataReader dr = null;
+			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
+
+			DataTable	rcdt = new DataTable("RecordCount");
+			rcdt.CaseSensitive = true;
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+			if( this.tableList.SelectedItems.Count > 1 &&
+				this.txtWhere.Text != null &&
+				this.txtWhere.Text.Trim() != "" )
+			{
+				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+					== System.Windows.Forms.DialogResult.No )
+				{
+					return;
+				}
+			}
+
+			this.InitErrMessage();
+
+			int			rowcount = 0;
+			int			trow = 0;
+			rcdt.Columns.Add("テーブル名");
+			rcdt.Columns.Add("データ件数",typeof(int));
+
+			try
+			{
+
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+					trow = 0;
+					string sqlstr;
+					sqlstr = string.Format("select  count(1) from {0} ",gettbnameWithAlias(tbname));
+					if( this.txtWhere.Text.Trim() != "" )
+					{
+						sqlstr += " where " + this.txtWhere.Text.Trim();
+					}
+
+					cm.CommandText = sqlstr;
+					cm.Connection = this.sqlConnection1;
+
+					dr = cm.ExecuteReader();
+
+					ArrayList fldname = new ArrayList();
+					ArrayList strint = new ArrayList();
+	
+					fldname.Clear();
+					strint.Clear();
+
+
+					// データの書き出し
+					while (dr.Read())
+					{
+						rowcount++;
+						trow++;
+						DataRow addrow = rcdt.NewRow();
+						addrow[0] = qdbeUtil.GetTbname(tbname);
+						if( dr.IsDBNull(0) )
+						{
+							addrow[1] = 0;
+						}
+						else
+						{
+							addrow[1] = dr.GetValue(0);
+						}
+						rcdt.Rows.Add(addrow);
+					}
+					if( dr != null && dr.IsClosed == false )
+					{
+						dr.Close();
+					}
+				}
+				if( rowcount == 0 )
+				{
+					MessageBox.Show("対象データがありませんでした");
+				}
+				else
+				{
+					DataGridViewBase dlg = new DataGridViewBase(rcdt,"データ件数");
+					dlg.ShowDialog();
+				}
+			}
+			catch ( System.Data.SqlClient.SqlException se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+				return;
+			}
+			catch( Exception se )
+			{
+				if( dr != null && dr.IsClosed == false )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+
+			// set datas to clipboard
+		
+		}
+
+		private void copyDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			if( this.dbGrid.Visible == false )
+			{
+				return;
+			}
+			if( this.dbGrid.DataSource == null )
+			{
+				return;
+			}
+			DataTable dt = null;
+			if( this.dbGrid.DataSource is DataSet )
+			{
+				dt = ((DataSet)this.dbGrid.DataSource).Tables[0];
+			}
+			else if( this.dbGrid.DataSource is DataTable )
+			{
+				dt = (DataTable)this.dbGrid.DataSource;
+			}
+			if( dt == null ||
+				dt.Rows.Count == 0 )
+			{
+				return;
+			}
+			StringBuilder strline = new StringBuilder();
+			StringWriter wr = new StringWriter(strline);
+			// header 
+			int cnt = 0;
+			foreach( DataColumn col in dt.Columns )
+			{
+				if( cnt != 0 )
+				{
+					wr.Write("\t");
+				}
+				wr.Write(col.ColumnName);
+				cnt++;
+			}
+			wr.Write(wr.NewLine);
+
+			foreach( DataRow dr in dt.Rows )
+			{
+				for( int i = 0; i < dt.Columns.Count; i++ )
+				{
+					if( i != 0 )
+					{
+						wr.Write("\t");
+					}
+					if( dr[i] != DBNull.Value )
+					{
+						wr.Write(dr[i].ToString());
+					}
+				}
+				wr.Write(wr.NewLine);
+			}
+			Clipboard.SetDataObject(strline.ToString(),true );
+			MessageBox.Show("処理を完了しました");
+		}
+
+		private void btnQuerySelect_Click(object sender, System.EventArgs e)
+		{
+			try
+			{
+				this.InitErrMessage();
+
+				Sqldlg.DHistory = this.selectHistory;
+
+				if( Sqldlg.ShowDialog() == DialogResult.OK )
+				{
+					SqlDataAdapter da = new SqlDataAdapter(Sqldlg.SelectSql, this.sqlConnection1);
+					da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+					dspdt = new DataSet();
+					dspdt.CaseSensitive = true;
+
+					da.Fill(dspdt,"aaaa");
+
+					//新しいDataGridTableStyleの作成
+					DataGridTableStyle ts = new DataGridTableStyle();
+					//マップ名を指定する
+					ts.MappingName = "aaaa";
+
+					QdbeDataGridTextBoxColumn cs;
+					foreach( DataColumn col in dspdt.Tables[0].Columns )
+					{
+						//列スタイルにQdbeDataGridTextBoxColumnを使う
+						cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col);
+						// 各種書式の指定
+						if( col.DataType.FullName == "System.Int32" ||
+							col.DataType.FullName == "System.Int16" ||
+							col.DataType.FullName == "System.Int64" ||
+							col.DataType.FullName == "System.UInt32" ||
+							col.DataType.FullName == "System.UInt16" ||
+							col.DataType.FullName == "System.UInt64" ||
+							col.DataType.FullName == "System.Decimal" )
+						{
+							cs.Format = getFormat(this.NumFormat);
+						}
+						if( col.DataType.FullName == "System.Double" ||
+							col.DataType.FullName == "System.Single" )
+						{
+							cs.Format = getFormat(this.FloatFormat);
+						}
+						if( col.DataType.FullName == "System.DateTime" )
+						{
+							cs.Format = getFormat(this.DateFormat);
+						}
+
+						//DataGridTableStyleに追加する
+						ts.GridColumnStyles.Add(cs);
+					}
+
+					//テーブルスタイルをDataGridに追加する
+					this.dbGrid.TableStyles.Clear();
+					this.dbGrid.TableStyles.Add(ts);
+
+					this.dbGrid.ReadOnly = true;
+					this.btnDataEdit.BackColor = this.btnBackColor;
+					this.btnDataEdit.ForeColor = this.btnForeColor;
+					this.btnTmpAllDsp.BackColor = this.btnBackColor;
+					this.btnTmpAllDsp.ForeColor = this.btnForeColor;
+					this.btnDataEdit.Text = "データ編集(&T)";
+					this.btnDataUpdate.Enabled = true;
+					this.btnDataEdit.Enabled = true;
+					this.btnGridFormat.Enabled = true;
+					this.chkDspData.Checked = true;
+					this.dbGrid.AllowSorting = true;
+					this.toolTip3.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
+					this.dbGrid.SetDataBinding(dspdt,"aaaa");
+					this.dbGrid.Show();
+				}
+			}
+			catch( Exception exp)
+			{
+				this.SetErrorMessage(exp);
+			}
+		}
+
+		private void btnQueryNonSelect_Click(object sender, System.EventArgs e)
+		{
+			SqlTransaction tran	= null;
+			try
+			{
+				this.InitErrMessage();
+
+				Sqldlg2.DHistory = this.DMLHistory;
+
+				if( Sqldlg2.ShowDialog() == DialogResult.OK )
+				{
+					tran = this.sqlConnection1.BeginTransaction();
+
+					SqlCommand cm = new SqlCommand(Sqldlg2.SelectSql,this.sqlConnection1,tran);
+					cm.CommandTimeout = this.SqlTimeOut;
+
+					string msg = "";
+					if( Sqldlg2.HasReturn == true )
+					{
+						object ret = cm.ExecuteScalar();
+						tran.Commit();
+						msg = string.Format("処理が終了しました。\r\nリターン値は [{0}] です", ret.ToString() );
+					}
+					else
+					{
+						int cnt = cm.ExecuteNonQuery();
+						tran.Commit();
+						msg = string.Format("処理が終了しました。\r\n影響した件数は {0} 件です", cnt );
+					}
+					MessageBox.Show(msg);
+				}
+			}
+			catch( Exception exp)
+			{
+				if( tran != null )
+				{
+					tran.Rollback();
+				}
+				this.SetErrorMessage(exp);
+			}
+		}
+
+		/// <summary>
+		/// 選択されたテーブルの統計情報を更新する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void menuStasticUpdate_Click(object sender, System.EventArgs e)
+		{
+			// SQL 的には、UPDATE STATISTICS table を実施する
+			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+		
+			this.InitErrMessage();
+
+			try
+			{
+				foreach( String tbname in this.tableList.SelectedItems )
+				{
+					string sqlstr;
+					// split owner.table -> owner, table
+
+					string delimStr = ".";
+					string []str = tbname.Split(delimStr.ToCharArray(), 2);
+
+					if( this.sqlVersion != 2000 )
+					{
+						// synonym かどうかをチェックする。
+						sqlstr = string.Format( @"select base_object_name from sys.synonyms 
+	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
+	where
+	sys.schemas.name = '{0}' and 
+	sys.synonyms.name = '{1}' ",
+							str[0],
+							str[1]
+							);
+						SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+						DataSet dssyn = new DataSet();
+						dssyn.CaseSensitive = true;
+						dasyn.Fill(dssyn,tbname);
+						if( dssyn.Tables[tbname].Rows.Count > 0 )
+						{
+							// synonym は update STATISTICSができない
+							continue;
+						}
+					}
+					sqlstr = "update STATISTICS " + qdbeUtil.GetTbname(tbname) ;
+					cm.CommandText = sqlstr;
+					cm.Connection = this.sqlConnection1;
+					cm.ExecuteNonQuery();
+				}
+				MessageBox.Show("処理を完了しました");
+			}
+			catch ( System.Data.SqlClient.SqlException se )
+			{
+				this.SetErrorMessage(se);
+			}
+			catch ( Exception se )
+			{
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+		}
+
+		private void menuDoQuery_Click(object sender, System.EventArgs e)
+		{
+			// テーブル名称を引数として、各種クエリの実行を可能にする
+
+			if( this.tableList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+
+			SqlCommand cm = new SqlCommand();
+			SqlDataAdapter da = new SqlDataAdapter();
+			try
+			{
+				this.InitErrMessage();
+
+				this.cmdDialog.SelectSql = " {0} ";
+				this.cmdDialog.DHistory = this.cmdHistory;
+
+				if( cmdDialog.ShowDialog() == DialogResult.OK )
+				{
+					cm.CommandTimeout = this.SqlTimeOut;
+					DataSet	ds = new DataSet("retData");
+					ds.CaseSensitive = true;
+					cm.Connection = this.sqlConnection1;
+
+					foreach( String tbname in this.tableList.SelectedItems )
+					{
+						cm.CommandText = string.Format(this.cmdDialog.SelectSql,
+							qdbeUtil.GetTbname(tbname));
+
+						if( cmdDialog.HasReturn == true )
+						{
+							// 戻り値あり
+							da.SelectCommand = cm;
+							da.Fill(ds,"retdata");
+						}
+						else
+						{
+							int cnt = cm.ExecuteNonQuery();
+						}
+					}
+					if( cmdDialog.HasReturn == true )
+					{
+						this.dbGrid.SetDataBinding(ds,"retdata");
+						this.dbGrid.Show();
+						this.dbGrid.ReadOnly = true;
+						this.btnDataEdit.Text = "データ編集(&T)";
+						this.btnDataEdit.BackColor = this.btnBackColor;
+						this.btnDataEdit.ForeColor = this.btnForeColor;
+					}
+					MessageBox.Show("処理を完了しました");
+				}
+			}
+			catch( Exception exp)
+			{
+				this.SetErrorMessage(exp);
+			}
+			finally
+			{
+				if( cm != null )
+				{
+					cm.Dispose();
+				}
+			}
+		}
+
+		private void fieldListbox_ExtendedCopyData(object sender)
+		{
+			// フィールド一覧で Ctrl + F が押下された場合の処理
+			// 別ダイアログを表示してエイリアス等の指定を可能にする
+			if( this.tableList.SelectedItems.Count != 1 )
+			{
+				return;
+			}
+
+			FieldGetDialog dlg = new FieldGetDialog();
+			dlg.BaseTableName = this.tableList.SelectedItem.ToString();
+			if( dlg.ShowDialog(this) != DialogResult.OK )
+			{
+				return;
+			}
+			StringBuilder str = new StringBuilder();
+			for( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
+			{
+				if( i != 0 )
+				{
+					if( dlg.RetCRLF == true )
+					{
+						if( dlg.RetComma ) 
+						{
+							str.Append(",\r\n");
+						}
+						else
+						{
+							str.Append("\r\n");
+						}
+					}
+					else
+					{
+						if( dlg.RetComma )
+						{
+							str.Append(",");
+						}
+						else
+						{
+							str.Append("\t");
+						}
+					}
+				}
+				str.Append(dlg.RetTableAccessor+".");
+				str.Append((string)this.fieldListbox.SelectedItems[i]);
+			}
+			if( str.Length != 0 )
+			{
+				Clipboard.SetDataObject(str.ToString(),true );
+			}		
+		}
+
+		private void label11_DoubleClick(object sender, System.EventArgs e)
+		{
+			if( this.tableList.SelectedItems.Count != 1 )
+			{
+				return;
+			}
+			this.txtAlias.Text = this.tableList.SelectedItem.ToString();
+		
+		}
+
+
+		/// <summary>
+		/// DBリストのコピーメニュー選択時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		private void dbList_CopyData(object sender)
+		{
+			if( this.dbList.SelectedItems.Count > 0 )
+			{
+				StringBuilder strline =  new StringBuilder();
+				foreach( string name in dbList.SelectedItems )
+				{
+					if( strline.Length != 0 )
+					{
+						strline.Append(",");
+						strline.Append("\r\n");
+					}
+					strline.Append(name);
+				}
+				Clipboard.SetDataObject(strline.ToString(),true );
+			}
+		}
+
+		/// <summary>
+		/// Owner/Role/Schemaのコピーメニュー選択時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		private void ownerListbox_CopyData(object sender)
+		{
+			// Owner/Role/Schema名のコピー
+			if( this.ownerListbox.SelectedItems.Count > 0 )
+			{
+				StringBuilder strline =  new StringBuilder();
+				foreach( string name in ownerListbox.SelectedItems )
+				{
+					if( strline.Length != 0 )
+					{
+						strline.Append(",");
+						strline.Append("\r\n");
+					}
+					strline.Append(name);
+				}
+				Clipboard.SetDataObject(strline.ToString(),true );
+			}
+		}
+
+		private void tableList_CopyData(object sender)
+		{
+			copytablename(false);
+		}
+
+		private void cmbHistory_SelectionChangeCommitted(object sender, System.EventArgs e)
+		{
+			if( this.cmbHistory.SelectedIndex < 0 )
+			{
+				return;
+			}
+			string tablename = (string)this.cmbHistory.SelectedItem;
+
+			isInCmbEvent = true;
+			int setidx = this.tableList.FindStringExact(tablename);
+			this.tableList.ClearSelected();
+			this.tableList.SelectedIndex = setidx;
+			isInCmbEvent = false;
+			this.tableList.Focus();
+		}
+
+
+
+		private void dspfldlist(string tbname)
+		{
+			try
+			{
+				this.fieldListbox.Items.Clear();
+				if( tbname == "" )
+				{
+					return;
+				}
+
+				bool	dodsp;
+				if( this.chkDspFieldAttr.Checked == true )
+				{
+					dodsp = true;
+				}
+				else
+				{
+					dodsp = false;
+				}
+
+				string delimStr = ".";
+				string []str = tbname.Split(delimStr.ToCharArray(), 2);
+				string sqlstr;
+				// split owner.table -> owner, table
+
+
+				sqlstr = this.sqlDriver.GetFieldListSelect(tbname,str);
+
+				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+				DataSet ds = new DataSet();
+				ds.CaseSensitive = true;
+				da.Fill(ds,tbname);
+
+
+				if( ds.Tables[tbname].Rows.Count == 0 )
+				{
+					// 通常はありえないが、念の為、空の表示を行う
+					if( this.sqlVersion == 2000 )
+					{
+						sqlstr = string.Format(
+							@"select * from sysindexes where 0=1" );
+					}
+					else
+					{
+						sqlstr = string.Format(
+							@"select * from sys.indexes where 0=1" );
+					}
+				}
+				else
+				{
+					if( this.sqlVersion == 2000 )
+					{
+						sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
+							(int)ds.Tables[tbname].Rows[0]["id"] );
+					}
+					else
+					{
+						sqlstr = string.Format(
+							@"select * from sys.indexes where 
+							object_id = {0}
+						and is_primary_key = 1",
+							(int)ds.Tables[tbname].Rows[0]["id"] );
+					}
+				}
+
+				SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+				DataSet idx = new DataSet();
+				idx.CaseSensitive = true;
+				daa.Fill(idx,tbname);
+
+				int indid = -1;
+				DataSet idkey = new DataSet();
+				idkey.CaseSensitive = true;
+				if( dodsp == true && idx.Tables[0].Rows.Count != 0 )
+				{
+					if( this.sqlVersion == 2000 )
+					{
+						indid = (short)idx.Tables[0].Rows[0]["indid"];
+						sqlstr = string.Format("select * from sysindexkeys where id={0} and indid={1}",
+							(int)ds.Tables[tbname].Rows[0]["id"],
+							(short)indid );
+					}
+					else
+					{
+						indid = (int)idx.Tables[0].Rows[0]["index_id"];
+						sqlstr = string.Format("select object_id,index_id,index_column_id,column_id as colid,key_ordinal,partition_ordinal,is_descending_key,is_included_column from sys.index_columns where object_id={0} and index_id={1}",
+							(int)ds.Tables[tbname].Rows[0]["id"],
+							(short)indid );
+					}
+					SqlDataAdapter dai = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+					dai.Fill(idkey,tbname);
+				}
+
+				int		maxRow = ds.Tables[tbname].Rows.Count;
+
+				string	valtype;
+				string	istr = "";
+				for( int i = 0; i < maxRow ; i++ )
+				{
+					if( dodsp == false )
+					{
+						istr = (string)ds.Tables[tbname].Rows[i][0] + " ";
+					}
+					else
+					{
+						valtype = (string)ds.Tables[tbname].Rows[i][1];
+						if( valtype == "varchar" ||
+							valtype == "varbinary" ||
+							valtype == "nvarchar" ||
+							valtype == "char" ||
+							valtype == "nchar" ||
+							valtype == "binary" )
+						{
+							if( (Int16)ds.Tables[tbname].Rows[i][3] == -1 )
+							{
+								istr = string.Format("{0}  {1}(max) ",
+									ds.Tables[tbname].Rows[i][0],
+									ds.Tables[tbname].Rows[i][1]);
+							}
+							else
+							{
+								istr = string.Format("{0}  {1}({2}) ",
+									ds.Tables[tbname].Rows[i][0],
+									ds.Tables[tbname].Rows[i][1],
+									ds.Tables[tbname].Rows[i][3]);
+							}
+										 
+						}
+						else if( valtype == "numeric" ||
+							valtype == "decimal" )
+						{
+							istr = string.Format("{0}  {1}({2},{3}) ",
+								ds.Tables[tbname].Rows[i][0],
+								ds.Tables[tbname].Rows[i][1],
+								ds.Tables[tbname].Rows[i][3],
+								ds.Tables[tbname].Rows[i][4]);
+
+						}
+						else
+						{
+							istr = string.Format("{0}  {1} ",
+								ds.Tables[tbname].Rows[i][0],
+								ds.Tables[tbname].Rows[i][1]);
+						}
+						if( (int)ds.Tables[tbname].Rows[i]["isnullable"] == 0 )
+						{
+							istr +=" NOT NULL";
+						}
+						else
+						{
+							istr +=" NULL";
+						}
+						if( idkey.Tables.Count != 0 && idkey.Tables[0].Rows.Count != 0 )
+						{
+							foreach(DataRow dr in idkey.Tables[0].Rows )
+							{
+								if( this.sqlVersion == 2000 )
+								{
+									if( (short)dr["colid"] == (short)ds.Tables[tbname].Rows[i]["colid"] )
+									{
+										istr +=" PRIMARY KEY";
+									}
+								}
+								else
+								{
+									if( (int)dr["colid"] == (int)ds.Tables[tbname].Rows[i]["colid"] )
+									{
+										istr +=" PRIMARY KEY";
+									}
+								}
+							}
+						}
+					}
+					this.fieldListbox.Items.Add(istr);
+				}
+			}
+			catch( Exception exp )
+			{
+				this.SetErrorMessage(exp);
+			}
+		}
+
+		private void dspTableList()
+		{
+			SqlDataReader dr = null;
+			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
+
+			this.InitErrMessage();
+
+			try 
+			{
+				if( this.dbList.SelectedItem == null )
+				{
+					return ;
+				}
+				this.sqlConnection1.ChangeDatabase((String)this.dbList.SelectedItem);
+				
+				// listbox2 にテーブル一覧を表示
+
+				string sortkey;
+				if( this.rdoSortTable.Checked == true )
+				{
+					sortkey = " order by 1 ";
+				}
+				else
+				{
+					sortkey = " order by 2,1 ";
+				}
+
+				if( this.rdoDspView.Checked == true )
+				{
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
+					}
+					else
+					{
+						cm.CommandText = @"select 
+	sys.all_objects.name as tbname, 
+	sys.schemas.name as uname 
+from 
+	sys.all_objects, 
+	sys.schemas 
+where 
+	( sys.all_objects.type='U' 
+	  or sys.all_objects.type='V' 
+	  or
+	  (sys.all_objects.type='SN' and 
+		exists ( select 'X' from sys.synonyms t2 
+			inner join sys.all_objects t3 on
+			OBJECT_ID(t2.base_object_name) = t3.object_id
+			and (t3.type='U' or t3.type='V' )
+				where
+				sys.all_objects.object_id = t2.object_id 
+				)
+	   )
+	) and 
+	sys.all_objects.schema_id = sys.schemas.schema_id";
+					}
+				}
+				else
+				{
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
+					}
+					else
+					{
+						cm.CommandText = @"select 
+	sys.all_objects.name as tbname, 
+	sys.schemas.name as uname 
+from 
+	sys.all_objects, 
+	sys.schemas 
+where 
+	( sys.all_objects.type='U' 
+	  or
+	  (sys.all_objects.type='SN' and 
+		exists ( select 'X' from sys.synonyms t2 
+			inner join sys.all_objects t3 on
+			OBJECT_ID(t2.base_object_name) = t3.object_id
+			and (t3.type='U')
+				where
+				sys.all_objects.object_id = t2.object_id 
+				)
+	   )
+	) and 
+	sys.all_objects.schema_id = sys.schemas.schema_id";
+					}
+				}
+
+				if( this.ownerListbox.SelectedItem != null )
+				{
+					bool	allsele = false;
+					// 選択があれば、そのOWNERのみのテーブルを表示する
+					string ownerlist = "";
+					foreach( String owname in this.ownerListbox.SelectedItems )
+					{
+						if( owname == "全て" )
+						{
+							allsele = true;
+							break;
+						}
+						if( ownerlist != "" )
+						{
+							ownerlist += ",";
+						}
+						ownerlist += "'" + owname + "'";
+					}
+					if( allsele == false )
+					{
+						if( this.sqlVersion == 2000 )
+						{
+							cm.CommandText += " and sysusers.name in ( " + ownerlist + " ) ";
+						}
+						else
+						{
+							cm.CommandText += " and sys.schemas.name in ( " + ownerlist + " ) ";
+						}
+					}
+				}
+				cm.CommandText += sortkey;
+				cm.Connection = this.sqlConnection1;
+
+				dr = cm.ExecuteReader();
+
+				this.tableList.Items.Clear();
+				while ( dr.Read())
+				{
+					this.tableList.Items.Add(dr["uname"] + "." + dr["tbname"]);
+				}
+				dr.Close();
+			}
+			catch ( System.Data.SqlClient.SqlException se )
+			{
+				if( dr != null )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+			}
+			catch ( Exception se )
+			{
+				if( dr != null )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				cm.Dispose();
+			}
+		
+		}
+
+		private void displistowner()
+		{
+			SqlDataReader dr = null;
+			SqlCommand	cm = new SqlCommand();
+			cm.CommandTimeout = this.SqlTimeOut;
+
+			this.InitErrMessage();
+
+			try 
+			{
+				if( rdoDspSysUser.Checked )
+				{
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select * from sysusers order by name";
+					}
+					else
+					{
+						cm.CommandText = "select * from sys.schemas order by name";
+					}
+				}
+				else
+				{
+					if( this.sqlVersion == 2000 )
+					{
+						cm.CommandText = "select * from sysusers where name not like 'db_%' order by name";
+					}
+					else
+					{
+						cm.CommandText = @"select * from sys.schemas where name not in ( 'sys', 'INFORMATION_SCHEMA', 'guest', 'db_owner', 
+							'db_accessadmin', 'db_securityadmin', 'db_ddladmin', 'db_backupoperator', 'db_datareader',
+							'db_datawriter', 'db_denydatareader', 'db_denydatawriter'  ) order by name";
+					}
+				}
+				cm.Connection = this.sqlConnection1;
+
+				dr = cm.ExecuteReader();
+
+				this.ownerListbox.Items.Clear();
+				this.ownerListbox.Items.Add("全て");
+				while ( dr.Read())
+				{
+					this.ownerListbox.Items.Add(dr["name"]);
+				}
+				dr.Close();
+			
+			}
+			catch ( Exception se )
+			{
+				if( dr != null )
+				{
+					dr.Close();
+				}
+				this.SetErrorMessage(se);
+			}
+			finally 
+			{
+				cm.Dispose();
+			}
+		}
+
 
 		private void CreInsert(bool fieldlst, bool deletefrom, bool isTaihi)
 		{
@@ -2477,276 +4941,6 @@ namespace quickDBExplorer
 		}
 
 		// フィールドのリストを表示する
-		private void dspfldlist(string tbname)
-		{
-			try
-			{
-				this.fieldListbox.Items.Clear();
-				if( tbname == "" )
-				{
-					return;
-				}
-
-				bool	dodsp;
-				if( this.chkDspFieldAttr.Checked == true )
-				{
-					dodsp = true;
-				}
-				else
-				{
-					dodsp = false;
-				}
-
-				string delimStr = ".";
-				string []str = tbname.Split(delimStr.ToCharArray(), 2);
-				string sqlstr;
-				// split owner.table -> owner, table
-
-
-				sqlstr = this.sqlDriver.GetFieldListSelect(tbname,str);
-
-				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-				DataSet ds = new DataSet();
-				ds.CaseSensitive = true;
-				da.Fill(ds,tbname);
-
-
-				if( ds.Tables[tbname].Rows.Count == 0 )
-				{
-					// 通常はありえないが、念の為、空の表示を行う
-					if( this.sqlVersion == 2000 )
-					{
-						sqlstr = string.Format(
-							@"select * from sysindexes where 0=1" );
-					}
-					else
-					{
-						sqlstr = string.Format(
-							@"select * from sys.indexes where 0=1" );
-					}
-				}
-				else
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
-							(int)ds.Tables[tbname].Rows[0]["id"] );
-					}
-					else
-					{
-						sqlstr = string.Format(
-							@"select * from sys.indexes where 
-							object_id = {0}
-						and is_primary_key = 1",
-							(int)ds.Tables[tbname].Rows[0]["id"] );
-					}
-				}
-
-				SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-				DataSet idx = new DataSet();
-				idx.CaseSensitive = true;
-				daa.Fill(idx,tbname);
-
-				int indid = -1;
-				DataSet idkey = new DataSet();
-				idkey.CaseSensitive = true;
-				if( dodsp == true && idx.Tables[0].Rows.Count != 0 )
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						indid = (short)idx.Tables[0].Rows[0]["indid"];
-						sqlstr = string.Format("select * from sysindexkeys where id={0} and indid={1}",
-							(int)ds.Tables[tbname].Rows[0]["id"],
-							(short)indid );
-					}
-					else
-					{
-						indid = (int)idx.Tables[0].Rows[0]["index_id"];
-						sqlstr = string.Format("select object_id,index_id,index_column_id,column_id as colid,key_ordinal,partition_ordinal,is_descending_key,is_included_column from sys.index_columns where object_id={0} and index_id={1}",
-							(int)ds.Tables[tbname].Rows[0]["id"],
-							(short)indid );
-					}
-					SqlDataAdapter dai = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-					dai.Fill(idkey,tbname);
-				}
-
-				int		maxRow = ds.Tables[tbname].Rows.Count;
-
-				string	valtype;
-				string	istr = "";
-				for( int i = 0; i < maxRow ; i++ )
-				{
-					if( dodsp == false )
-					{
-						istr = (string)ds.Tables[tbname].Rows[i][0] + " ";
-					}
-					else
-					{
-						valtype = (string)ds.Tables[tbname].Rows[i][1];
-						if( valtype == "varchar" ||
-							valtype == "varbinary" ||
-							valtype == "nvarchar" ||
-							valtype == "char" ||
-							valtype == "nchar" ||
-							valtype == "binary" )
-						{
-							if( (Int16)ds.Tables[tbname].Rows[i][3] == -1 )
-							{
-								istr = string.Format("{0}  {1}(max) ",
-									ds.Tables[tbname].Rows[i][0],
-									ds.Tables[tbname].Rows[i][1]);
-							}
-							else
-							{
-								istr = string.Format("{0}  {1}({2}) ",
-									ds.Tables[tbname].Rows[i][0],
-									ds.Tables[tbname].Rows[i][1],
-									ds.Tables[tbname].Rows[i][3]);
-							}
-										 
-						}
-						else if( valtype == "numeric" ||
-							valtype == "decimal" )
-						{
-							istr = string.Format("{0}  {1}({2},{3}) ",
-								ds.Tables[tbname].Rows[i][0],
-								ds.Tables[tbname].Rows[i][1],
-								ds.Tables[tbname].Rows[i][3],
-								ds.Tables[tbname].Rows[i][4]);
-
-						}
-						else
-						{
-							istr = string.Format("{0}  {1} ",
-								ds.Tables[tbname].Rows[i][0],
-								ds.Tables[tbname].Rows[i][1]);
-						}
-						if( (int)ds.Tables[tbname].Rows[i]["isnullable"] == 0 )
-						{
-							istr +=" NOT NULL";
-						}
-						else
-						{
-							istr +=" NULL";
-						}
-						if( idkey.Tables.Count != 0 && idkey.Tables[0].Rows.Count != 0 )
-						{
-							foreach(DataRow dr in idkey.Tables[0].Rows )
-							{
-								if( this.sqlVersion == 2000 )
-								{
-									if( (short)dr["colid"] == (short)ds.Tables[tbname].Rows[i]["colid"] )
-									{
-										istr +=" PRIMARY KEY";
-									}
-								}
-								else
-								{
-									if( (int)dr["colid"] == (int)ds.Tables[tbname].Rows[i]["colid"] )
-									{
-										istr +=" PRIMARY KEY";
-									}
-								}
-							}
-						}
-					}
-					this.fieldListbox.Items.Add(istr);
-				}
-			}
-			catch( Exception exp )
-			{
-				this.SetErrorMessage(exp);
-			}
-		}
-
-
-		private void makefldlist(object sender, System.EventArgs e)
-		{
-			crefldlst(false,true);
-		}
-
-		private void makefldListLF(object sender, System.EventArgs e)
-		{
-			crefldlst(true,true);
-		}
-
-		private void makefldListNoComma(object sender, System.EventArgs e)
-		{
-			crefldlst(true,false);
-		}
-
-		private void tableList_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			if( this.chkDspData.CheckState == CheckState.Checked &&
-				this.tableList.SelectedItems.Count == 1 )
-			{
-				// 1件のみ選択されている場合
-
-				if( isInCmbEvent == false )
-				{
-					// 選択されたTable/View を記憶する
-					if( this.selectedTables.Contains(this.tableList.SelectedItem.ToString()) == false )
-					{
-						if( this.selectedTables.Count > MaxTableHistory )
-						{
-							this.selectedTables.RemoveAt(0);
-						}
-					}
-					else
-					{
-						this.selectedTables.Remove(this.tableList.SelectedItem.ToString());
-
-					}
-					this.selectedTables.Add(this.tableList.SelectedItem.ToString());
-					this.cmbHistory.DataSource = null;
-					this.cmbHistory.DataSource = this.selectedTables;
-					int i = this.cmbHistory.FindStringExact(this.tableList.SelectedItem.ToString());
-					this.cmbHistory.SelectedIndex = i;
-					this.cmbHistory.Refresh();
-				}
-
-
-				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtWhere.Text,ref this.whereHistory);
-				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtSort.Text,ref this.sortHistory);
-				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtAlias.Text,ref this.aliasHistory);
-				// データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
-			}
-			else
-			{
-				qdbeUtil.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
-				qdbeUtil.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
-				qdbeUtil.SetNewHistory("",this.txtAlias.Text,ref this.aliasHistory);
-				DspData("");
-			}
-			if( this.tableList.SelectedItems.Count == 1 )
-			{
-				dspfldlist(this.tableList.SelectedItem.ToString());
-			}
-			else
-			{
-				dspfldlist("");
-			}
-			if( indexdlg != null && indexdlg.Visible == true )
-			{
-				if( this.tableList.SelectedItems.Count == 1 )
-				{
-					indexdlg.settabledsp(this.tableList.SelectedItem.ToString());
-				}
-				else
-				{
-					indexdlg.settabledsp("");
-				}
-				indexdlg.Show();
-			}
-		}
-
-
-		private void makeCSV(object sender, System.EventArgs e)
-		{
-			crecsv(false, ",");
-		}
-
 		private void crecsv(bool isdquote, string separater)
 		{
 			SqlDataReader dr = null;
@@ -2946,356 +5140,10 @@ namespace quickDBExplorer
 			// set datas to clipboard
 		}
 
-		private void makeCSVQuote(object sender, System.EventArgs e)
-		{
-			crecsv(true,",");
-		}
-
-		private void rdoDspView_CheckedChanged(object sender, System.EventArgs e)
-		{
-			// テーブルの選択履歴をクリア
-			this.selectedTables.Clear();
-			this.cmbHistory.DataSource = null;
-			this.cmbHistory.DataSource = this.selectedTables;
-			this.cmbHistory.Refresh();
-			
-
-			dspTableList();
-		}
-
-		private void rdoSortTable_CheckedChanged(object sender, System.EventArgs e)
-		{
-			dspTableList();
-		}
-
-		private void insertmakeDelete(object sender, System.EventArgs e)
-		{
-			this.CreInsert( true, true,false );
-		}
-
-		private void insertmakeNoField(object sender, System.EventArgs e)
-		{
-			this.CreInsert(false,false,false );
-		}
-
-		private void insertmakeNoFieldDelete(object sender, System.EventArgs e)
-		{
-			this.CreInsert(false,true,false);
-		}
-
-		private void btnSelect_Click(object sender, System.EventArgs e)
-		{
-			// select 文の作成
-
-			this.InitErrMessage();
-
-			try
-			{
-				if( this.tableList.SelectedItems.Count == 0 )
-				{
-					return;
-				}
-				if( CheckFileSpec() == false )
-				{
-					return;
-				}
-
-				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
-				StringBuilder fname = new StringBuilder();
-
-				if( this.rdoClipboard.Checked == true) 
-				{
-					wr = new StringWriter(strline);
-				}
-				else if( this.rdoOutFile.Checked == true ) 
-				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
-					sw.AutoFlush = false;
-					wr = sw;
-					fname.Append(this.txtOutput.Text);
-				}
-
-				foreach( String tbname in this.tableList.SelectedItems )
-				{
-
-					if( this.rdoOutFolder.Checked == true ) 
-					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
-						sw.AutoFlush = false;
-						wr = sw;
-						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
-					}
-					// get id 
-					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",qdbeUtil.GetTbname(tbname)), this.sqlConnection1);
-
-					DataSet ds = new DataSet();
-					ds.CaseSensitive = true;
-					da.Fill(ds,tbname);
-	
-					wr.Write("select {0}",wr.NewLine);
-					int		maxcol = ds.Tables[tbname].Columns.Count;
-					for( int i = 0; i < maxcol ; i++ )
-					{
-						if( i != 0 )
-						{
-							wr.Write(",{0}", wr.NewLine);
-						}
-						wr.Write("\t{0}", ds.Tables[tbname].Columns[i].ColumnName);
-					
-					}
-					wr.Write(wr.NewLine);
-					wr.Write(" from {0}{1}", gettbnameWithAlias(tbname),wr.NewLine);
-					if( this.txtWhere.Text.Trim() != "" )
-					{
-						wr.Write(" where {0}{1}", this.txtWhere.Text.Trim(),wr.NewLine);
-					}
-					if( this.txtSort.Text.Trim() != "" )
-					{
-						wr.Write(" order by {0}{1}", this.txtSort.Text.Trim(),wr.NewLine);
-					}
-					if( this.rdoOutFolder.Checked == true ) 
-					{
-						wr.Close();
-					}
-				}
-				if( this.rdoOutFolder.Checked == false ) 
-				{
-					wr.Close();
-				}
-
-				if( this.rdoClipboard.Checked == true ) 
-				{
-					Clipboard.SetDataObject(strline.ToString(),true );
-				}
-				else
-				{
-					Clipboard.SetDataObject(fname.ToString(),true );
-				}
-
-				MessageBox.Show( "処理を終了しました" );
-			}
-			catch( Exception exp )
-			{
-				this.SetErrorMessage(exp);
-			}
-		}
-
-		private void ownerListbox_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			if( this.ownerListbox.IsAllSelecting == true )
-			{
-				return;
-			}
-			if( this.ownerListbox.SelectedItem != null )
-			{
-				// 選択したDBの最終オーナーを記録する
-				ArrayList saveownerlist;
-				if( svdata.Dbopt[svdata.LastDb] == null )
-				{
-					saveownerlist = new ArrayList();
-					svdata.Dbopt[svdata.LastDb] = saveownerlist;
-				}
-				else
-				{
-					saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDb];
-				}
-				saveownerlist.Clear();
-				foreach( string itm in this.ownerListbox.SelectedItems )
-				{
-					saveownerlist.Add(itm);
-				}
-			}
-			// テーブルの選択履歴をクリア
-			this.selectedTables.Clear();
-			this.cmbHistory.DataSource = null;
-			this.cmbHistory.DataSource = this.selectedTables;
-			this.cmbHistory.Refresh();
-			
-
-			dspTableList();
-		}
-
 		/// <summary>
 		/// 現在の画面上のDB、Owner から、テーブル一覧を表示する
 		/// </summary>
-		private void dspTableList()
-		{
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
-
-			this.InitErrMessage();
-
-			try 
-			{
-				if( this.dbList.SelectedItem == null )
-				{
-					return ;
-				}
-				this.sqlConnection1.ChangeDatabase((String)this.dbList.SelectedItem);
-				
-				// listbox2 にテーブル一覧を表示
-
-				string sortkey;
-				if( this.rdoSortTable.Checked == true )
-				{
-					sortkey = " order by 1 ";
-				}
-				else
-				{
-					sortkey = " order by 2,1 ";
-				}
-
-				if( this.rdoDspView.Checked == true )
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
-					}
-					else
-					{
-						cm.CommandText = @"select 
-	sys.all_objects.name as tbname, 
-	sys.schemas.name as uname 
-from 
-	sys.all_objects, 
-	sys.schemas 
-where 
-	( sys.all_objects.type='U' 
-	  or sys.all_objects.type='V' 
-	  or
-	  (sys.all_objects.type='SN' and 
-		exists ( select 'X' from sys.synonyms t2 
-			inner join sys.all_objects t3 on
-			OBJECT_ID(t2.base_object_name) = t3.object_id
-			and (t3.type='U' or t3.type='V' )
-				where
-				sys.all_objects.object_id = t2.object_id 
-				)
-	   )
-	) and 
-	sys.all_objects.schema_id = sys.schemas.schema_id";
-					}
-				}
-				else
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
-					}
-					else
-					{
-						cm.CommandText = @"select 
-	sys.all_objects.name as tbname, 
-	sys.schemas.name as uname 
-from 
-	sys.all_objects, 
-	sys.schemas 
-where 
-	( sys.all_objects.type='U' 
-	  or
-	  (sys.all_objects.type='SN' and 
-		exists ( select 'X' from sys.synonyms t2 
-			inner join sys.all_objects t3 on
-			OBJECT_ID(t2.base_object_name) = t3.object_id
-			and (t3.type='U')
-				where
-				sys.all_objects.object_id = t2.object_id 
-				)
-	   )
-	) and 
-	sys.all_objects.schema_id = sys.schemas.schema_id";
-					}
-				}
-
-				if( this.ownerListbox.SelectedItem != null )
-				{
-					bool	allsele = false;
-					// 選択があれば、そのOWNERのみのテーブルを表示する
-					string ownerlist = "";
-					foreach( String owname in this.ownerListbox.SelectedItems )
-					{
-						if( owname == "全て" )
-						{
-							allsele = true;
-							break;
-						}
-						if( ownerlist != "" )
-						{
-							ownerlist += ",";
-						}
-						ownerlist += "'" + owname + "'";
-					}
-					if( allsele == false )
-					{
-						if( this.sqlVersion == 2000 )
-						{
-							cm.CommandText += " and sysusers.name in ( " + ownerlist + " ) ";
-						}
-						else
-						{
-							cm.CommandText += " and sys.schemas.name in ( " + ownerlist + " ) ";
-						}
-					}
-				}
-				cm.CommandText += sortkey;
-				cm.Connection = this.sqlConnection1;
-
-				dr = cm.ExecuteReader();
-
-				this.tableList.Items.Clear();
-				while ( dr.Read())
-				{
-					this.tableList.Items.Add(dr["uname"] + "." + dr["tbname"]);
-				}
-				dr.Close();
-			}
-			catch ( System.Data.SqlClient.SqlException se )
-			{
-				if( dr != null )
-				{
-					dr.Close();
-				}
-				this.SetErrorMessage(se);
-			}
-			catch ( Exception se )
-			{
-				if( dr != null )
-				{
-					dr.Close();
-				}
-				this.SetErrorMessage(se);
-			}
-			finally 
-			{
-				cm.Dispose();
-			}
-		
-		}
-
-		private void makeDDL(object sender, System.EventArgs e)
-		{
-			this.CreDDL(false, false);
-		}
-
-		private void makeDDLDrop(object sender, System.EventArgs e)
-		{
-			this.CreDDL(true, false);
-		}
-		
-		private void makeDDLPare(object sender, System.EventArgs e)
-		{
-			this.CreDDL(false, true);
-		
-		}
-
-		private void makeDDLDropPare(object sender, System.EventArgs e)
-		{
-			this.CreDDL(true, true);
-		}
-
-		private void	CreDDL(bool bDrop, bool usekakko)
+		private void CreDDL(bool bDrop, bool usekakko)
 		{	
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
@@ -3596,28 +5444,6 @@ order by colorder",
 			}
 		}
 
-		private void chkDspData_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if( this.chkDspData.CheckState == CheckState.Checked &&
-				this.tableList.SelectedItems.Count == 1 )
-			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
-			}
-			else
-			{
-				DspData("");
-			}
-			if( this.chkDspData.CheckState == CheckState.Checked )
-			{
-				svdata.ShowGrid[svdata.LastDb] = 1;
-			}
-			else
-			{
-				svdata.ShowGrid[svdata.LastDb] = 0;
-			}
-		}
-
 		/// <summary>
 		/// 指定されたテーブルの情報を表示する
 		/// </summary>
@@ -3795,155 +5621,6 @@ order by colorder",
 			}
 		}
 
-		private void txtDspCount_Leave(object sender, System.EventArgs e)
-		{
-			if( this.chkDspData.CheckState == CheckState.Checked &&
-				this.tableList.SelectedItems.Count == 1 )
-			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
-			}
-			else
-			{
-				DspData("");
-			}
-		}
-
-		private void txtWhere_Leave(object sender, System.EventArgs e)
-		{
-			string tbname = "";
-			if( this.chkDspData.CheckState == CheckState.Checked &&
-				this.tableList.SelectedItems.Count == 1 )
-			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.tableList.SelectedItem.ToString();
-			}
-			else
-			{
-				tbname = "";
-			}
-			DspData(tbname);
-
-			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
-
-		}
-
-		private void txtSort_Leave(object sender, System.EventArgs e)
-		{
-			string tbname = "";
-			if( this.chkDspData.CheckState == CheckState.Checked &&
-				this.tableList.SelectedItems.Count == 1 )
-			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.tableList.SelectedItem.ToString();
-			}
-			else
-			{
-				tbname = "";
-			}
-			DspData(tbname);
-
-			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
-		}
-
-		private void rdoDspSysUser_CheckedChanged(object sender, System.EventArgs e)
-		{
-			// テーブルの選択履歴をクリア
-			this.selectedTables.Clear();
-			this.cmbHistory.DataSource = null;
-			this.cmbHistory.DataSource = this.selectedTables;
-			this.cmbHistory.Refresh();
-			
-
-			dspTableList();
-			displistowner();
-		}
-
-		private void displistowner()
-		{
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
-
-			this.InitErrMessage();
-
-			try 
-			{
-				if( rdoDspSysUser.Checked )
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						cm.CommandText = "select * from sysusers order by name";
-					}
-					else
-					{
-						cm.CommandText = "select * from sys.schemas order by name";
-					}
-				}
-				else
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						cm.CommandText = "select * from sysusers where name not like 'db_%' order by name";
-					}
-					else
-					{
-						cm.CommandText = @"select * from sys.schemas where name not in ( 'sys', 'INFORMATION_SCHEMA', 'guest', 'db_owner', 
-							'db_accessadmin', 'db_securityadmin', 'db_ddladmin', 'db_backupoperator', 'db_datareader',
-							'db_datawriter', 'db_denydatareader', 'db_denydatawriter'  ) order by name";
-					}
-				}
-				cm.Connection = this.sqlConnection1;
-
-				dr = cm.ExecuteReader();
-
-				this.ownerListbox.Items.Clear();
-				this.ownerListbox.Items.Add("全て");
-				while ( dr.Read())
-				{
-					this.ownerListbox.Items.Add(dr["name"]);
-				}
-				dr.Close();
-			
-			}
-			catch ( Exception se )
-			{
-				if( dr != null )
-				{
-					dr.Close();
-				}
-				this.SetErrorMessage(se);
-			}
-			finally 
-			{
-				cm.Dispose();
-			}
-		}
-
-		private void rdoNotDspSysUser_CheckedChanged(object sender, System.EventArgs e)
-		{
-			// テーブルの選択履歴をクリア
-			this.selectedTables.Clear();
-			this.cmbHistory.DataSource = null;
-			this.cmbHistory.DataSource = this.selectedTables;
-			this.cmbHistory.Refresh();
-			
-
-			dspTableList();
-			displistowner();
-		}
-
-		private void menuTableCopy_Click(object sender, System.EventArgs e)
-		{
-			copytablename(false);
-		}
-
-		private void menuTableCopyCsv_Click(object sender, System.EventArgs e)
-		{
-			copytablename(true);
-		}
 		private void copytablename(bool addcomma)
 		{
 			if( this.tableList.SelectedItems.Count > 0 )
@@ -3964,79 +5641,6 @@ order by colorder",
 				Clipboard.SetDataObject(strline.ToString(),true );
 			}
 		}
-
-		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			if( this.rdoNotDspSysUser.Checked == true )
-			{
-				svdata.IsShowsysuser = 0;
-			}
-			else
-			{
-				svdata.IsShowsysuser = 1;
-			}
-
-			if( this.rdoSortOwnerTable.Checked == true )
-			{
-				svdata.SortKey = 0;
-			}
-			else
-			{
-				svdata.SortKey = 1;
-			}
-			if( this.rdoDspView.Checked == false) 
-			{
-				svdata.ShowView = 0;
-			}
-			else
-			{
-				svdata.ShowView = 1;
-			}
-
-			if( this.rdoClipboard.Checked == true) 
-			{
-				svdata.OutDest[svdata.LastDb] = 0;
-			}
-			if( this.rdoOutFile.Checked == true) 
-			{
-				svdata.OutDest[svdata.LastDb] = 1;
-			}
-			if( this.rdoOutFolder.Checked == true) 
-			{
-				svdata.OutDest[svdata.LastDb] = 2;
-			}
-			svdata.OutFile[svdata.LastDb] = this.txtOutput.Text;
-			if( this.chkDspData.CheckState == CheckState.Checked )
-			{
-				svdata.ShowGrid[svdata.LastDb] = 1;
-			}
-			else
-			{
-				svdata.ShowGrid[svdata.LastDb] = 0;
-			}
-			if( this.rdoUnicode.Checked == true )
-			{
-				svdata.TxtEncode[svdata.LastDb] = 0;
-			}
-			if( this.rdoSjis.Checked == true )
-			{
-				svdata.TxtEncode[svdata.LastDb] = 1;
-			}
-			if( this.rdoUtf8.Checked == true )
-			{
-				svdata.TxtEncode[svdata.LastDb] = 2;
-			}
-			svdata.GridDspCnt[svdata.LastDb] = this.txtDspCount.Text;
-
-			if( this.sqlConnection1 != null )
-			{
-				this.sqlConnection1.Close();
-				this.sqlConnection1.Dispose();
-				this.sqlConnection1 = null;
-			}
-		}
-
-
 
 		/// <summary>
 		/// フィールドリスト情報のコピー
@@ -4079,1690 +5683,6 @@ order by colorder",
 			{
 				Clipboard.SetDataObject(str.ToString(),true );
 			}
-		}
-
-		private void fldmenuCopy_Click(object sender, System.EventArgs e)
-		{
-			copyfldlist(true,true);
-		}
-
-		private void fldmenuCopyNoCRLF_Click(object sender, System.EventArgs e)
-		{
-			copyfldlist(false,true);
-		}
-
-		private void rdoClipboard_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if( rdoClipboard.Checked == true )
-			{
-				this.txtOutput.Enabled = false;
-				this.btnReference.Enabled = false;
-				svdata.OutDest[svdata.LastDb] = 0;
-				this.rdoUnicode.Enabled = false;
-				this.rdoSjis.Enabled = false;
-				this.rdoUtf8.Enabled = false;
-			}
-		}
-
-		private void rdoOutFolder_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if( this.rdoOutFolder.Checked == true )
-			{
-				this.txtOutput.Enabled = true;
-				this.btnReference.Enabled = true;
-				svdata.OutDest[svdata.LastDb] = 2;
-				this.rdoUnicode.Enabled = true;
-				this.rdoSjis.Enabled = true;
-				this.rdoUtf8.Enabled = true;
-			}
-		}
-
-		private void rdoOutFile_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if( this.rdoOutFile.Checked == true )
-			{
-				this.txtOutput.Enabled = true;
-				this.btnReference.Enabled = true;
-				svdata.OutDest[svdata.LastDb] = 1;
-				this.rdoUnicode.Enabled = true;
-				this.rdoSjis.Enabled = true;
-				this.rdoUtf8.Enabled = true;
-			}
-		}
-
-		private void btnReference_Click(object sender, System.EventArgs e)
-		{
-			if( this.rdoOutFile.Checked == true )
-			{
-				if( this.txtOutput.Text != "" )
-				{
-					DirectoryInfo d = new DirectoryInfo(this.txtOutput.Text);
-					if( d.Exists )
-					{
-						this.saveFileDialog1.InitialDirectory = this.txtOutput.Text;
-						this.saveFileDialog1.FileName = "";
-					}
-					else
-					{
-						this.saveFileDialog1.FileName = this.txtOutput.Text;
-					}
-				}
-				// 単独ファイルの参照指定
-				
-				this.saveFileDialog1.CreatePrompt = true;
-				this.saveFileDialog1.Filter = "SQL|*.sql|csv|*.csv|txt|*.txt|全て|*.*";
-				DialogResult ret = this.saveFileDialog1.ShowDialog();
-				if( ret == DialogResult.OK )
-				{
-					this.txtOutput.Text = this.saveFileDialog1.FileName;
-				}
-			}
-			else
-			{
-				// 複数ファイルのディレクトリ参照指定
-				if( this.txtOutput.Text != "" )
-				{
-					FileInfo f = new FileInfo(this.txtOutput.Text);
-					if( f.Exists &&
-						( f.Attributes & FileAttributes.Directory ) == FileAttributes.Directory)
-					{
-						this.folderBrowserDialog1.SelectedPath = this.txtOutput.Text;
-					}
-					else if( f.Exists && (f.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
-					{
-						this.folderBrowserDialog1.SelectedPath = f.Directory.FullName;
-					}
-					else if( !f.Exists )
-					{
-						this.folderBrowserDialog1.SelectedPath = this.txtOutput.Text;
-					}
-					else
-					{
-						this.folderBrowserDialog1.SelectedPath = "";
-					}
-				}
-				else
-				{
-					this.folderBrowserDialog1.SelectedPath = "";
-				}
-				
-				this.folderBrowserDialog1.ShowNewFolderButton = true;
-				DialogResult ret = this.folderBrowserDialog1.ShowDialog();
-				if( ret == DialogResult.OK )
-				{
-					this.txtOutput.Text = this.folderBrowserDialog1.SelectedPath;
-				}
-			}
-		}
-
-		private void txtOutput_TextChanged(object sender, System.EventArgs e)
-		{
-			this.toolTip1.SetToolTip(this.txtOutput,this.txtOutput.Text);
-			svdata.OutFile[svdata.LastDb] = this.txtOutput.Text;
-		}
-
-
-		private void txtDspCount_TextChanged(object sender, System.EventArgs e)
-		{
-			svdata.GridDspCnt[svdata.LastDb] = this.txtDspCount.Text;
-		}
-
-		private void fldmenuCopyNoComma_Click(object sender, System.EventArgs e)
-		{
-			copyfldlist(true,false);
-		}
-
-		private void fldmenuCopyNoCRLFNoComma_Click(object sender, System.EventArgs e)
-		{
-			copyfldlist(false,false);
-		}
-
-		private void rdoUnicode_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if( this.rdoUnicode.Checked == true )
-			{
-				svdata.TxtEncode[svdata.LastDb] = 0;
-			}
-		}
-
-		private void rdoSjis_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if( this.rdoSjis.Checked == true )
-			{
-				svdata.TxtEncode[svdata.LastDb] = 1;
-			}
-		}
-
-		private void rdoUtf8_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if( this.rdoUtf8.Checked == true )
-			{
-				svdata.TxtEncode[svdata.LastDb] = 2;
-			}
-		}
-		private System.Text.Encoding GetEncode()
-		{
-			if( this.rdoUnicode.Checked == true )
-			{
-				// UNICODE
-				return new System.Text.UnicodeEncoding();
-			}
-			else if( this.rdoSjis.Checked == true )
-			{
-				// (MS932)ShiftJIS
-				return Encoding.GetEncoding("shift-jis");
-			}
-			else
-			{
-				// UTF-8
-				return new System.Text.UTF8Encoding();
-			}
-		}
-
-		private void chkDspFieldAttr_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if( this.tableList.SelectedItems.Count == 1 )
-			{
-				dspfldlist(this.tableList.SelectedItem.ToString());
-			}
-			else
-			{
-				dspfldlist("");
-			}
-		}
-
-		private void btnQuerySelect_Click(object sender, System.EventArgs e)
-		{
-			try
-			{
-				this.InitErrMessage();
-
-				Sqldlg.DHistory = this.selectHistory;
-
-				if( Sqldlg.ShowDialog() == DialogResult.OK )
-				{
-					SqlDataAdapter da = new SqlDataAdapter(Sqldlg.SelectSql, this.sqlConnection1);
-					da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-					dspdt = new DataSet();
-					dspdt.CaseSensitive = true;
-
-					da.Fill(dspdt,"aaaa");
-
-					//新しいDataGridTableStyleの作成
-					DataGridTableStyle ts = new DataGridTableStyle();
-					//マップ名を指定する
-					ts.MappingName = "aaaa";
-
-					QdbeDataGridTextBoxColumn cs;
-					foreach( DataColumn col in dspdt.Tables[0].Columns )
-					{
-						//列スタイルにQdbeDataGridTextBoxColumnを使う
-						cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col);
-						// 各種書式の指定
-						if( col.DataType.FullName == "System.Int32" ||
-							col.DataType.FullName == "System.Int16" ||
-							col.DataType.FullName == "System.Int64" ||
-							col.DataType.FullName == "System.UInt32" ||
-							col.DataType.FullName == "System.UInt16" ||
-							col.DataType.FullName == "System.UInt64" ||
-							col.DataType.FullName == "System.Decimal" )
-						{
-							cs.Format = getFormat(this.NumFormat);
-						}
-						if( col.DataType.FullName == "System.Double" ||
-							col.DataType.FullName == "System.Single" )
-						{
-							cs.Format = getFormat(this.FloatFormat);
-						}
-						if( col.DataType.FullName == "System.DateTime" )
-						{
-							cs.Format = getFormat(this.DateFormat);
-						}
-
-						//DataGridTableStyleに追加する
-						ts.GridColumnStyles.Add(cs);
-					}
-
-					//テーブルスタイルをDataGridに追加する
-					this.dbGrid.TableStyles.Clear();
-					this.dbGrid.TableStyles.Add(ts);
-
-					this.dbGrid.ReadOnly = true;
-					this.btnDataEdit.BackColor = this.btnBackColor;
-					this.btnDataEdit.ForeColor = this.btnForeColor;
-					this.btnTmpAllDsp.BackColor = this.btnBackColor;
-					this.btnTmpAllDsp.ForeColor = this.btnForeColor;
-					this.btnDataEdit.Text = "データ編集(&T)";
-					this.btnDataUpdate.Enabled = true;
-					this.btnDataEdit.Enabled = true;
-					this.btnGridFormat.Enabled = true;
-					this.chkDspData.Checked = true;
-					this.dbGrid.AllowSorting = true;
-					this.toolTip3.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
-					this.dbGrid.SetDataBinding(dspdt,"aaaa");
-					this.dbGrid.Show();
-				}
-			}
-			catch( Exception exp)
-			{
-				this.SetErrorMessage(exp);
-			}
-		}
-
-		private void btnDataUpdate_Click(object sender, System.EventArgs e)
-		{
-			SqlTransaction tran	= null;
-			try
-			{
-				this.InitErrMessage();
-
-				this.dbGrid.EndEdit(this.dbGrid.TableStyles[0].GridColumnStyles[this.dbGrid.CurrentCell.ColumnNumber],this.dbGrid.CurrentCell.RowNumber,false);
-
-				if( this.chkDspData.CheckState == CheckState.Checked &&
-					this.tableList.SelectedItems.Count == 1 &&
-					this.dspdt.GetChanges() != null &&
-					this.dspdt.GetChanges().Tables[0].Rows.Count > 0 &&
-					MessageBox.Show("本当に更新してよろしいですか","",MessageBoxButtons.YesNo) == DialogResult.Yes
-					)
-				{
-					// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-					string tbname = this.tableList.SelectedItem.ToString();
-					string sqlstr;
-					sqlstr = "select ";
-					int	maxlines;
-					if( this.txtDspCount.Text != "" )
-					{
-						maxlines = int.Parse(this.txtDspCount.Text);
-					}
-					else
-					{
-						maxlines = 0;
-					}
-					if( maxlines != 0 )
-					{
-						sqlstr += " TOP " + this.txtDspCount.Text;
-					}
-
-					sqlstr += string.Format(" * from {0}",gettbnameWithAlias(tbname));
-					//sqlstr += " * from [" + tbname + "]";
-					if( this.txtWhere.Text.Trim() != "" )
-					{
-						sqlstr += " where " + this.txtWhere.Text.Trim();
-					}
-					if( this.txtSort.Text.Trim() != "" )
-					{
-						sqlstr += " order by " + this.txtSort.Text.Trim();
-					}
-					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-										
-					tran = this.sqlConnection1.BeginTransaction();
-					da.SelectCommand.Transaction = tran;
-					SqlCommandBuilder  cb = new SqlCommandBuilder(da);
-					da.Update(dspdt, "aaaa");
-					tran.Commit();
-
-					this.dbGrid.SetDataBinding(dspdt, "aaaa");
-				}
-			}
-			catch( Exception exp )
-			{
-				this.SetErrorMessage(exp);
-				tran.Rollback();
-			}
-
-		}
-
-		private void btnDataEdit_Click(object sender, System.EventArgs e)
-		{
-			try
-			{
-				this.InitErrMessage();
-
-				if( this.dbGrid.ReadOnly == true )
-				{
-					// 編集可にする
-					this.dbGrid.ReadOnly = false;
-					this.btnDataEdit.Text = "データ編集終了(&T)";
-					this.btnDataEdit.ForeColor = Color.WhiteSmoke;
-					this.btnDataEdit.BackColor = Color.Navy;
-				}
-				else
-				{
-					// 編集不可にする
-					if( this.dspdt.Tables["aaaa"].GetChanges() == null ||
-						this.dspdt.Tables["aaaa"].GetChanges().Rows.Count == 0 )
-					{
-						this.dbGrid.ReadOnly = true;
-						this.btnDataEdit.Text = "データ編集(&T)";
-						this.btnDataEdit.BackColor = this.btnBackColor;
-						this.btnDataEdit.ForeColor = this.btnForeColor;
-					}
-					else
-					{
-						// 変更があった
-						if( MessageBox.Show("変更を破棄してもよろしいですか?","",MessageBoxButtons.YesNo) == DialogResult.Yes )
-						{
-							this.dspdt.Tables["aaaa"].RejectChanges();
-							this.dbGrid.SetDataBinding(dspdt, "aaaa");
-							this.dbGrid.Show();
-							this.dbGrid.ReadOnly = true;
-							this.btnDataEdit.Text = "データ編集(&T)";
-							this.btnDataEdit.BackColor = this.btnBackColor;
-							this.btnDataEdit.ForeColor = this.btnForeColor;
-						}
-					}
-					
-				}
-			}
-			catch( Exception exp )
-			{
-				this.SetErrorMessage(exp);
-			}
-		}
-		private void dbGrid_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-		{
-			if( this.dspdt == null ||
-				this.dspdt.Tables.Count == 0 ||
-				this.dspdt.Tables["aaaa"].Rows.Count == 0 )
-			{
-				return;
-			}
-
-			int row=0;
-			int yDelta = dbGrid.GetCellBounds(row, 0).Height + 1;
-			int y = dbGrid.GetCellBounds(row, 0).Top + 2;
-			if( y < yDelta )
-			{
-				// 複数行がスクロールで隠れているはずなので、その行数分をスキップする
-				while( y < yDelta )
-				{
-					y += yDelta;
-					row ++;
-				}
-			}
-     
-			CurrencyManager cm = (CurrencyManager) this.BindingContext[dbGrid.DataSource, dbGrid.DataMember];
-			while((y <= dbGrid.Height) && (row < cm.Count))
-			{
-				//get & draw the header text...
-				string text = string.Format("{0}", row+1);
-				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 10, y);
-				y += yDelta;
-				row++;
-			}
-		}
-
-		private void btnGridFormat_Click(object sender, System.EventArgs e)
-		{
-			GridFormatDialog dlg = new GridFormatDialog();
-			dlg.Gfont = gfont;
-			dlg.Gcolor = gcolor;
-			dlg.NumFormat = this.NumFormat;
-			dlg.FloatFormat = this.FloatFormat;
-			dlg.DateFormat = this.DateFormat;
-			
-			if( dlg.ShowDialog() == DialogResult.OK )
-			{
-				this.gfont = dlg.Gfont;
-				this.gcolor = dlg.Gcolor;
-				this.dbGrid.Font = this.gfont;
-				this.dbGrid.ForeColor = this.gcolor;
-				this.NumFormat = dlg.NumFormat;
-				this.FloatFormat = dlg.FloatFormat;
-				this.DateFormat = dlg.DateFormat;
-			}
-		}
-
-
-		private void btnQueryNonSelect_Click(object sender, System.EventArgs e)
-		{
-			SqlTransaction tran	= null;
-			try
-			{
-				this.InitErrMessage();
-
-				Sqldlg2.DHistory = this.DMLHistory;
-
-				if( Sqldlg2.ShowDialog() == DialogResult.OK )
-				{
-					tran = this.sqlConnection1.BeginTransaction();
-
-					SqlCommand cm = new SqlCommand(Sqldlg2.SelectSql,this.sqlConnection1,tran);
-					cm.CommandTimeout = this.SqlTimeOut;
-
-					string msg = "";
-					if( Sqldlg2.HasReturn == true )
-					{
-						object ret = cm.ExecuteScalar();
-						tran.Commit();
-						msg = string.Format("処理が終了しました。\r\nリターン値は [{0}] です", ret.ToString() );
-					}
-					else
-					{
-						int cnt = cm.ExecuteNonQuery();
-						tran.Commit();
-						msg = string.Format("処理が終了しました。\r\n影響した件数は {0} 件です", cnt );
-					}
-					MessageBox.Show(msg);
-				}
-			}
-			catch( Exception exp)
-			{
-				if( tran != null )
-				{
-					tran.Rollback();
-				}
-				this.SetErrorMessage(exp);
-			}
-		}
-
-		/// <summary>
-		/// from 句で利用するために、テーブル修飾子をつけて、テーブル名を変換する
-		/// 基の名前は[]が付いていないことが前提
-		/// </summary>
-		/// <param name="tbname">テーブル名(owner.tablename形式)</param>
-		/// <returns>解析後のテーブル名([owner].[tabblname] alias 形式)</returns>
-		protected string gettbnameWithAlias(string tbname)
-		{
-			string tbl = qdbeUtil.GetTbname(tbname);
-			if( this.txtAlias.Text != "" )
-			{
-				tbl += " " + this.txtAlias.Text;
-			}
-			return tbl;
-		}
-
-		private void Redisp_Click(object sender, System.EventArgs e)
-		{
-			//再描画ボタン押下
-			if( this.chkDspData.CheckState == CheckState.Checked &&
-				this.tableList.SelectedItems.Count == 1 )
-			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
-			}
-			else
-			{
-				DspData("");
-			}
-		}
-
-		/// <summary>
-		/// フォーマット文字列を取得する
-		/// </summary>
-		/// <param name="fstr">基の表示書式</param>
-		/// <returns>表示書式文字列</returns>
-		protected string getFormat(string fstr)
-		{
-			if(fstr == null)
-			{
-				return "";
-			}
-			int termp = fstr.IndexOf("	");
-			if( termp == -1 )
-			{
-				return fstr;
-			}
-			return fstr.Substring(0,termp);
-		}
-
-		private void btnIndex_Click(object sender, System.EventArgs e)
-		{
-			if( indexdlg == null )
-			{
-				indexdlg = new IndexViewDialog();
-				indexdlg.SqlVersion = this.sqlVersion;
-
-				indexdlg.SqlConnection = this.sqlConnection1;
-				if( this.tableList.SelectedItems.Count == 1 )
-				{
-					indexdlg.DspTbname = this.tableList.SelectedItem.ToString();
-				}
-				else
-				{
-					indexdlg.DspTbname = "";
-				}
-				indexdlg.Show();
-			}
-			else
-			{
-				if( this.tableList.SelectedItems.Count == 1 )
-				{
-					indexdlg.settabledsp(this.tableList.SelectedItem.ToString());
-				}
-				else
-				{
-					indexdlg.settabledsp("");
-				}
-				indexdlg.Show();
-				indexdlg.BringToFront();
-			}
-		}
-
-		private void btnTmpAllDsp_Click(object sender, System.EventArgs e)
-		{
-			//再描画ボタン押下
-			if( this.chkDspData.CheckState == CheckState.Checked &&
-				this.tableList.SelectedItems.Count == 1 )
-			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString(),true);
-				this.btnTmpAllDsp.ForeColor = Color.WhiteSmoke;
-				this.btnTmpAllDsp.BackColor = Color.Navy;
-				this.btnTmpAllDsp.Enabled = true;
-			}
-			else
-			{
-				DspData("");
-			}
-		}
-
-		/// <summary>
-		/// 選択されたテーブルに関する依存関係を出力する
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void DependOutPut(object sender, System.EventArgs e)
-		{
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
-
-			if( this.tableList.SelectedItems.Count == 0 )
-			{
-				return;
-			}
-			if( CheckFileSpec() == false )
-			{
-				return;
-			}
-			
-			this.InitErrMessage();
-
-			try
-			{
-				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
-				StringBuilder fname = new StringBuilder();
-
-				if( this.rdoClipboard.Checked == true) 
-				{
-					wr = new StringWriter(strline);
-					wr.Write("テーブル名");
-					wr.Write("\t依存関係先名称");
-					wr.Write("\t種類");
-					wr.Write("\t更新あり");
-					wr.Write("\tselectでの利用");
-					wr.Write("\t従属性が存在する列またはパラメータ");
-					wr.Write(wr.NewLine);
-				}
-				else if( this.rdoOutFile.Checked == true ) 
-				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
-					sw.AutoFlush = false;
-					wr = sw;
-					fname.Append(this.txtOutput.Text);
-					wr.Write("テーブル名");
-					wr.Write("\t依存関係先名称");
-					wr.Write("\t種類");
-					wr.Write("\t更新あり");
-					wr.Write("\tselectでの利用");
-					wr.Write("\t従属性が存在する列またはパラメータ");
-					wr.Write(wr.NewLine);
-				}
-
-				foreach( String tbname in this.tableList.SelectedItems )
-				{
-					if( this.rdoOutFolder.Checked == true ) 
-					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv",false, GetEncode());
-						sw.AutoFlush = false;
-						wr = sw;
-						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
-						wr.Write("テーブル名");
-						wr.Write("\t依存関係先名称");
-						wr.Write("\t種類");
-						wr.Write("\t更新あり");
-						wr.Write("\tselectでの利用");
-						wr.Write("\t従属性が存在する列またはパラメータ");
-						wr.Write(wr.NewLine);
-					}
-
-					// 依存関係の情報を取得し、
-
-					// get id 
-					string sqlstr;
-					// split owner.table -> owner, table
-
-					string delimStr = ".";
-					string []str = tbname.Split(delimStr.ToCharArray(), 2);
-					sqlstr = "sp_depends N'[" + str[0] +"].[" + str[1] + "]'";
-					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-					DataSet ds = new DataSet();
-					ds.CaseSensitive = true;
-					da.Fill(ds,tbname);
-
-					if(	ds.Tables.Count != 0 &&
-						ds.Tables[tbname].Rows != null &&
-						ds.Tables[tbname].Rows.Count != 0)
-					{
-						foreach(DataRow dr in ds.Tables[tbname].Rows)
-						{
-							// テーブル名
-							wr.Write(tbname);
-							foreach( DataColumn col in ds.Tables[tbname].Columns)
-							{
-								wr.Write("\t");
-								wr.Write(dr[col.ColumnName].ToString());
-							}
-							wr.Write(wr.NewLine);
-						}
-					}
-
-					if( this.rdoOutFolder.Checked == true ) 
-					{
-						wr.Close();
-					}
-				}
-				if( this.rdoOutFolder.Checked == false ) 
-				{
-					wr.Close();
-				}
-				if( this.rdoClipboard.Checked == true ) 
-				{
-					Clipboard.SetDataObject(strline.ToString(),true );
-				}
-				else
-				{
-					Clipboard.SetDataObject(fname.ToString(),true );
-				}
-				MessageBox.Show("処理を完了しました");
-			}
-			catch ( Exception se )
-			{
-				this.SetErrorMessage(se);
-			}
-			finally 
-			{
-				if( cm != null )
-				{
-					cm.Dispose();
-				}
-			}
-
-		
-		}
-
-		/// <summary>
-		/// 選択されたテーブルに関するデータ件数を出力する
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void RecordCountOutPut(object sender, System.EventArgs e)
-		{
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
-
-			if( this.tableList.SelectedItems.Count == 0 )
-			{
-				return;
-			}
-			if( this.tableList.SelectedItems.Count > 1 &&
-				this.txtWhere.Text != null &&
-				this.txtWhere.Text.Trim() != "" )
-			{
-				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
-					== System.Windows.Forms.DialogResult.No )
-				{
-					return;
-				}
-			}
-
-			if( CheckFileSpec() == false )
-			{
-				return;
-			}
-
-			this.InitErrMessage();
-
-			int			rowcount = 0;
-			int			trow = 0;
-			try
-			{
-
-				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
-				StringBuilder fname = new StringBuilder();
-
-				if( this.rdoClipboard.Checked == true) 
-				{
-					wr = new StringWriter(strline);
-					wr.WriteLine("テーブル名,データ件数");
-				}
-				else if( this.rdoOutFile.Checked == true ) 
-				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
-					sw.AutoFlush = false;
-					wr = sw;
-					fname.Append(this.txtOutput.Text);
-					wr.WriteLine("テーブル名,データ件数");
-				}
-
-				foreach( String tbname in this.tableList.SelectedItems )
-				{
-
-					if( this.rdoOutFolder.Checked == true ) 
-					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv.tmp",false, GetEncode());
-						sw.AutoFlush = false;
-						wr = sw;
-						wr.WriteLine("テーブル名,データ件数");
-					}
-					trow = 0;
-					string sqlstr;
-					sqlstr = string.Format("select  count(1) from {0} ",gettbnameWithAlias(tbname));
-					if( this.txtWhere.Text.Trim() != "" )
-					{
-						sqlstr += " where " + this.txtWhere.Text.Trim();
-					}
-
-					cm.CommandText = sqlstr;
-					cm.Connection = this.sqlConnection1;
-
-					dr = cm.ExecuteReader();
-
-					ArrayList fldname = new ArrayList();
-					ArrayList strint = new ArrayList();
-	
-					fldname.Clear();
-					strint.Clear();
-
-
-					// データの書き出し
-					while (dr.Read())
-					{
-						rowcount++;
-						trow++;
-						wr.Write(qdbeUtil.GetTbname(tbname));
-						wr.Write(",");
-						if( dr.IsDBNull(0) )
-						{
-							wr.WriteLine( "0" );
-						}
-						else
-						{
-							wr.WriteLine( dr.GetValue(0).ToString() );
-						}
-					}
-					if( dr != null && dr.IsClosed == false )
-					{
-						dr.Close();
-					}
-					if( this.rdoOutFolder.Checked == true ) 
-					{
-						wr.Close();
-						File.Delete(this.txtOutput.Text + "\\" + tbname + ".csv");
-						if( trow > 0 )
-						{
-							fname.Append(this.txtOutput.Text + "\\" + tbname + ".csv\r\n");
-							// ファイルをリネームする
-							File.Move(this.txtOutput.Text + "\\" + tbname + ".csv.tmp", 
-								this.txtOutput.Text + "\\" + tbname + ".csv");
-						}
-					}
-				}
-				if( this.rdoOutFolder.Checked == false ) 
-				{
-					wr.Close();
-				}
-				if( rowcount == 0 )
-				{
-					MessageBox.Show("対象データがありませんでした");
-				}
-				else
-				{
-					if( this.rdoClipboard.Checked == true ) 
-					{
-						Clipboard.SetDataObject(strline.ToString(),true );
-					}
-					else
-					{
-						Clipboard.SetDataObject(fname.ToString(),true );
-					}
-					MessageBox.Show("処理を完了しました");
-				}
-			}
-			catch ( System.Data.SqlClient.SqlException se )
-			{
-				if( dr != null && dr.IsClosed == false )
-				{
-					dr.Close();
-				}
-				this.SetErrorMessage(se);
-				return;
-			}
-			catch( Exception se )
-			{
-				if( dr != null && dr.IsClosed == false )
-				{
-					dr.Close();
-				}
-				this.SetErrorMessage(se);
-			}
-			finally 
-			{
-				if( cm != null )
-				{
-					cm.Dispose();
-				}
-			}
-
-			// set datas to clipboard
-		}
-
-		private void btnEtc_Click(object sender, System.EventArgs e)
-		{
-			//this.etcContextMenu.MenuItems.Clear();
-			//this.etcContextMenu.MenuItems.Add(this.menuDepend);
-			//this.etcContextMenu.MenuItems.Add(this.menuQuery);
-
-			this.etcContextMenu.Show(this.btnEtc,new Point(0,0));
-		}
-
-		/// <summary>
-		/// 現在接続先のDBを初期値として、クエリアナライザを起動する
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CallISQLW(object sender, System.EventArgs e)
-		{
-			if( this.sqlVersion != 2000 )
-			{
-				this.CallEPM(sender,e);
-				return;
-			}
-
-			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = "isqlw";
-			isqlProcess.StartInfo.ErrorDialog = true;
-			string serverstr = "";
-			if( this.instanceName != "" )
-			{
-				serverstr = this.serverRealName + "\\" + this.instanceName;
-			}
-			else
-			{
-				serverstr = this.serverRealName;
-			}
-			if( this.IsUseTruse == true )
-			{
-				if( this.dbList.SelectedItems.Count != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E ",
-						serverstr,
-						(string)this.dbList.SelectedItem
-						);
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E ",
-						serverstr
-						);
-				}
-			}
-			else
-			{
-				if( this.dbList.SelectedItems.Count != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} ",
-						serverstr,
-						(string)this.dbList.SelectedItem,
-						this.loginUid,
-						this.loginPasswd );
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} ",
-						serverstr,
-						this.loginUid,
-						this.loginPasswd );
-				}
-			}
-			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-			isqlProcess.Start();
-		}
-
-		/// <summary>
-		/// 現在接続先のDBを初期値として、クエリアナライザを起動する
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CallProfile(object sender, System.EventArgs e)
-		{
-			Process isqlProcess = new Process();
-			if( this.sqlVersion == 2000 )
-			{
-				isqlProcess.StartInfo.FileName = "profiler.exe";
-			}
-			else
-			{
-				isqlProcess.StartInfo.FileName = "profiler90.exe";
-			}
-			isqlProcess.StartInfo.ErrorDialog = true;
-			string serverstr = "";
-			if( this.instanceName != "" )
-			{
-				serverstr = this.serverRealName + "\\" + this.instanceName;
-			}
-			else
-			{
-				serverstr = this.serverRealName;
-			}
-			if( this.IsUseTruse == true )
-			{
-				if( this.dbList.SelectedItems.Count != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /D{1} /E ",
-						serverstr,
-						(string)this.dbList.SelectedItem
-						);
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /E ",
-						serverstr
-						);
-				}
-			}
-			else
-			{
-				if( this.dbList.SelectedItems.Count != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} D{1} /U{2} /P{3} ",
-						serverstr,
-						(string)this.dbList.SelectedItem,
-						this.loginUid,
-						this.loginPasswd );
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} /U{2} /P{3} ",
-						serverstr,
-						this.loginUid,
-						this.loginPasswd );
-				}
-			}
-			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-			isqlProcess.Start();
-		}
-
-		/// <summary>
-		/// エンタープライズマネージャーを起動する
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void CallEPM(object sender, System.EventArgs e)
-		{
-			Process isqlProcess = new Process();
-			if( this.sqlVersion == 2000 )
-			{
-				isqlProcess.StartInfo.FileName = "SQL Server Enterprise Manager.MSC";
-			}
-			else
-			{
-				isqlProcess.StartInfo.FileName = "SqlWb";
-				string serverstr = "";
-				if( this.instanceName != "" )
-				{
-					serverstr = this.serverRealName + "\\" + this.instanceName;
-				}
-				else
-				{
-					serverstr = this.serverRealName;
-				}
-				if( this.IsUseTruse == true )
-				{
-					if( this.dbList.SelectedItems.Count != 0 )
-					{
-						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E -nosplash",
-							serverstr,
-							(string)this.dbList.SelectedItem
-							);
-					}
-					else
-					{
-						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E -nosplash",
-							serverstr
-							);
-					}
-				}
-				else
-				{
-					if( this.dbList.SelectedItems.Count != 0 )
-					{
-						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} -nosplash",
-							serverstr,
-							(string)this.dbList.SelectedItem,
-							this.loginUid,
-							this.loginPasswd );
-					}
-					else
-					{
-						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} -nosplash",
-							serverstr,
-							this.loginUid,
-							this.loginPasswd );
-					}
-				}
-			}
-			isqlProcess.StartInfo.ErrorDialog = true;
-
-			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-			isqlProcess.Start();
-		}
-
-		private void mainContextMenu_Popup(object sender, System.EventArgs e)
-		{
-		
-		}
-
-		private void menuMakeTab_Click(object sender, System.EventArgs e)
-		{
-			crecsv(false,"	");
-		}
-
-		private void menuMakeTabDQ_Click(object sender, System.EventArgs e)
-		{
-			crecsv(true,"	");
-		}
-
-		private void btnWhereZoom_Click(object sender, System.EventArgs e)
-		{
-			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
-			dlg.EditText = this.txtWhere.Text;
-			dlg.LableName = "where 指定";
-			dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
-			dlg.Show();
-			dlg.BringToFront();
-			dlg.Focus();
-		}
-
-		private void dlgWhereZoom_Click(object sender, System.EventArgs e)
-		{
-			this.txtWhere.Text = ((ZoomDialog)sender).EditText;
-
-			string targetTable = "";
-			if( this.tableList.SelectedItems.Count == 1 )
-			{
-				targetTable = this.tableList.SelectedItem.ToString();
-			}
-			DspData(targetTable);
-		}
-
-		private void btnOrderZoom_Click(object sender, System.EventArgs e)
-		{
-			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
-			dlg.EditText = this.txtSort.Text;
-			dlg.LableName = "order by 指定";
-			dlg.Enter += new System.EventHandler(this.dlgSortZoom_Click);
-			dlg.Show();
-			dlg.BringToFront();
-			dlg.Focus();
-		}
-		private void dlgSortZoom_Click(object sender, System.EventArgs e)
-		{
-			this.txtSort.Text = ((ZoomDialog)sender).EditText;
-			string targetTable = "";
-			if( this.tableList.SelectedItems.Count == 1 )
-			{
-				targetTable = this.tableList.SelectedItem.ToString();
-			}
-			DspData(targetTable);
-		}
-
-		private void useCheckBox_CheckedChanged(object sender, System.EventArgs e)
-		{
-		
-		}
-
-		private void menuInsertDeleteTaihi_Click(object sender, System.EventArgs e)
-		{
-			this.CreInsert(true,true,true);
-		}
-
-		private void menuInsertNoFldDeleteTaihi_Click(object sender, System.EventArgs e)
-		{
-			this.CreInsert(false,true,true);
-		}
-
-		private void menuRecordCountDsp_Click(object sender, System.EventArgs e)
-		{
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
-
-			DataTable	rcdt = new DataTable("RecordCount");
-			rcdt.CaseSensitive = true;
-
-			if( this.tableList.SelectedItems.Count == 0 )
-			{
-				return;
-			}
-			if( this.tableList.SelectedItems.Count > 1 &&
-				this.txtWhere.Text != null &&
-				this.txtWhere.Text.Trim() != "" )
-			{
-				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
-					== System.Windows.Forms.DialogResult.No )
-				{
-					return;
-				}
-			}
-
-			this.InitErrMessage();
-
-			int			rowcount = 0;
-			int			trow = 0;
-			rcdt.Columns.Add("テーブル名");
-			rcdt.Columns.Add("データ件数",typeof(int));
-
-			try
-			{
-
-				foreach( String tbname in this.tableList.SelectedItems )
-				{
-					trow = 0;
-					string sqlstr;
-					sqlstr = string.Format("select  count(1) from {0} ",gettbnameWithAlias(tbname));
-					if( this.txtWhere.Text.Trim() != "" )
-					{
-						sqlstr += " where " + this.txtWhere.Text.Trim();
-					}
-
-					cm.CommandText = sqlstr;
-					cm.Connection = this.sqlConnection1;
-
-					dr = cm.ExecuteReader();
-
-					ArrayList fldname = new ArrayList();
-					ArrayList strint = new ArrayList();
-	
-					fldname.Clear();
-					strint.Clear();
-
-
-					// データの書き出し
-					while (dr.Read())
-					{
-						rowcount++;
-						trow++;
-						DataRow addrow = rcdt.NewRow();
-						addrow[0] = qdbeUtil.GetTbname(tbname);
-						if( dr.IsDBNull(0) )
-						{
-							addrow[1] = 0;
-						}
-						else
-						{
-							addrow[1] = dr.GetValue(0);
-						}
-						rcdt.Rows.Add(addrow);
-					}
-					if( dr != null && dr.IsClosed == false )
-					{
-						dr.Close();
-					}
-				}
-				if( rowcount == 0 )
-				{
-					MessageBox.Show("対象データがありませんでした");
-				}
-				else
-				{
-					DataGridViewBase dlg = new DataGridViewBase(rcdt,"データ件数");
-					dlg.ShowDialog();
-				}
-			}
-			catch ( System.Data.SqlClient.SqlException se )
-			{
-				if( dr != null && dr.IsClosed == false )
-				{
-					dr.Close();
-				}
-				this.SetErrorMessage(se);
-				return;
-			}
-			catch( Exception se )
-			{
-				if( dr != null && dr.IsClosed == false )
-				{
-					dr.Close();
-				}
-				this.SetErrorMessage(se);
-			}
-			finally 
-			{
-				if( cm != null )
-				{
-					cm.Dispose();
-				}
-			}
-
-			// set datas to clipboard
-		
-		}
-
-		private void copyDbGridMenu_Click(object sender, System.EventArgs e)
-		{
-			if( this.dbGrid.Visible == false )
-			{
-				return;
-			}
-			if( this.dbGrid.DataSource == null )
-			{
-				return;
-			}
-			DataTable dt = null;
-			if( this.dbGrid.DataSource is DataSet )
-			{
-				dt = ((DataSet)this.dbGrid.DataSource).Tables[0];
-			}
-			else if( this.dbGrid.DataSource is DataTable )
-			{
-				dt = (DataTable)this.dbGrid.DataSource;
-			}
-			if( dt == null ||
-				dt.Rows.Count == 0 )
-			{
-				return;
-			}
-			StringBuilder strline = new StringBuilder();
-			StringWriter wr = new StringWriter(strline);
-			// header 
-			int cnt = 0;
-			foreach( DataColumn col in dt.Columns )
-			{
-				if( cnt != 0 )
-				{
-					wr.Write("\t");
-				}
-				wr.Write(col.ColumnName);
-				cnt++;
-			}
-			wr.Write(wr.NewLine);
-
-			foreach( DataRow dr in dt.Rows )
-			{
-				for( int i = 0; i < dt.Columns.Count; i++ )
-				{
-					if( i != 0 )
-					{
-						wr.Write("\t");
-					}
-					if( dr[i] != DBNull.Value )
-					{
-						wr.Write(dr[i].ToString());
-					}
-				}
-				wr.Write(wr.NewLine);
-			}
-			Clipboard.SetDataObject(strline.ToString(),true );
-			MessageBox.Show("処理を完了しました");
-		}
-
-		/// <summary>
-		/// 新規スレッドを開始する
-		/// </summary>
-		/// <param name="callb">終了時に呼び出されるCallBack関数</param>
-		/// <param name="tags">CallBack時に引き渡される情報</param>
-		/// <returns>スレッドが正常に開始できたか否か</returns>
-		protected bool	BeginNewThread(WaitCallback callb, object tags)
-		{
-			if( this.IsThreadAlive > 0 )
-			{
-				// 他のスレッドがあれば、スレッドを開始しない
-				return false;
-			}
-			try
-			{
-				Interlocked.Increment(ref this.IsThreadAlive);
-				ThreadPool.QueueUserWorkItem(callb,tags);
-				return true;
-			}
-			catch(Exception e)
-			{
-				this.SetErrorMessage(e);
-				if( this.IsThreadAlive != 0 )
-				{
-					Interlocked.Decrement(ref this.IsThreadAlive);
-				}
-				return false;
-			}
-		}
-
-		/// <summary>
-		/// スレッドを終了させる
-		/// </summary>
-		protected void	ThreadEndIfAlive()
-		{
-			if( this.IsThreadAlive == 0 )
-			{
-				return;
-			}
-			try
-			{
-				Interlocked.Decrement(ref this.IsThreadAlive);
-			}
-			catch
-			{
-				;
-			}
-		}
-
-		/// <summary>
-		/// キー押下時処理
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		protected void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			if( e.Control == true && e.Shift == false && e.Alt == false && e.KeyCode == Keys.G )
-			{
-				ThreadEndIfAlive();
-			}
-			if( e.Control == true && e.Shift == true && e.Alt == true && e.KeyCode == Keys.T )
-			{
-				if( this.SqlTimeOut == 0 )
-				{
-					this.SqlTimeOut = 300;
-				}
-				else
-				{
-					this.SqlTimeOut = 0;
-				}
-				MessageBox.Show("SQL Timeout値を " + this.SqlTimeOut.ToString() + "秒に設定しました" );
-			}
-		}
-
-		/// <summary>
-		/// スレッドが中止されたか否か
-		/// </summary>
-		/// <returns></returns>
-		protected bool IsProcCancel()
-		{
-			if( this.IsThreadAlive == 0 )
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		
-		/// <summary>
-		/// テーブルに対する処理用情報をセットする
-		/// </summary>
-		/// <param name="tbname"></param>
-		/// <returns></returns>
-		protected ProcCondition GetProcCondition(string tbname)
-		{
-			ProcCondition procCond = new ProcCondition();
-			if( tbname != null )
-			{
-				procCond.Tbname.Add(tbname);
-			}
-			else
-			{
-				foreach( object obj in this.tableList.SelectedItems)
-				{
-					procCond.Tbname.Add((string)obj);
-				}
-			}
-			procCond.WhereStr = this.txtWhere.Text;
-			procCond.OrderStr = this.txtSort.Text;
-			procCond.MaxStr = this.txtDspCount.Text;
-			return procCond;
-		}
-
-		/// <summary>
-		/// フィールドリストのコピーメニュー選択時処理
-		/// </summary>
-		/// <param name="sender"></param>
-		private void fieldListbox_CopyData(object sender)
-		{
-			copyfldlist(true,true);
-		}
-
-		/// <summary>
-		/// DBリストのコピーメニュー選択時処理
-		/// </summary>
-		/// <param name="sender"></param>
-		private void dbList_CopyData(object sender)
-		{
-			if( this.dbList.SelectedItems.Count > 0 )
-			{
-				StringBuilder strline =  new StringBuilder();
-				foreach( string name in dbList.SelectedItems )
-				{
-					if( strline.Length != 0 )
-					{
-						strline.Append(",");
-						strline.Append("\r\n");
-					}
-					strline.Append(name);
-				}
-				Clipboard.SetDataObject(strline.ToString(),true );
-			}
-		}
-
-		/// <summary>
-		/// Owner/Role/Schemaのコピーメニュー選択時処理
-		/// </summary>
-		/// <param name="sender"></param>
-		private void ownerListbox_CopyData(object sender)
-		{
-			// Owner/Role/Schema名のコピー
-			if( this.ownerListbox.SelectedItems.Count > 0 )
-			{
-				StringBuilder strline =  new StringBuilder();
-				foreach( string name in ownerListbox.SelectedItems )
-				{
-					if( strline.Length != 0 )
-					{
-						strline.Append(",");
-						strline.Append("\r\n");
-					}
-					strline.Append(name);
-				}
-				Clipboard.SetDataObject(strline.ToString(),true );
-			}
-		}
-
-		private void tableList_CopyData(object sender)
-		{
-			copytablename(false);
-		}
-
-		private void cmbHistory_SelectionChangeCommitted(object sender, System.EventArgs e)
-		{
-			if( this.cmbHistory.SelectedIndex < 0 )
-			{
-				return;
-			}
-			string tablename = (string)this.cmbHistory.SelectedItem;
-
-			isInCmbEvent = true;
-			int setidx = this.tableList.FindStringExact(tablename);
-			this.tableList.ClearSelected();
-			this.tableList.SelectedIndex = setidx;
-			isInCmbEvent = false;
-			this.tableList.Focus();
-		}
-
-
-		/// <summary>
-		/// where 入力テキストボックスでの特殊キー押下ハンドラ
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void txtWhere_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.W )
-			{
-				// Ctrl + W
-				// 値の拡大表示を行う
-				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
-				dlg.EditText = this.txtWhere.Text;
-				dlg.LableName = "where 指定";
-				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
-				dlg.Show();
-				dlg.BringToFront();
-				dlg.Focus();
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.D )
-			{
-				// Ctrl + D
-				// 全削除を行う
-				((TextBox)sender).Text = "";
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.S )
-			{
-				// Ctrl + S
-				// 入力履歴を表示する
-				string targetTable = "";
-				if( this.tableList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.tableList.SelectedItem.ToString();
-				}
-				HistoryViewer hv = new HistoryViewer(this.whereHistory, targetTable);
-				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.RetString)
-				{
-					this.txtWhere.Text = hv.RetString;
-					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.whereHistory);
-
-					DspData(targetTable);
-				}
-			}
-			if( e.KeyCode == Keys.Return ||
-				e.KeyCode == Keys.Enter )
-			{
-				// Enter(Return) では、入力を確定させて、グリッド表示に反映させる
-				string targetTable = "";
-				if( this.tableList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.tableList.SelectedItem.ToString();
-				}
-				qdbeUtil.SetNewHistory(targetTable,this.txtWhere.Text,ref this.whereHistory);
-				DspData(targetTable);
-			}
-		
-		}
-
-		private void txtSort_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.W )
-			{
-				// 値の拡大表示を行う
-				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
-				dlg.EditText = this.txtSort.Text;
-				dlg.LableName = "order by 指定";
-				dlg.Enter += new System.EventHandler(this.dlgSortZoom_Click);
-				dlg.Show();
-				dlg.BringToFront();
-				dlg.Focus();
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.D )
-			{
-				// 全削除を行う
-				((TextBox)sender).Text = "";
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.S )
-			{
-				string targetTable = "";
-				if( this.tableList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.tableList.SelectedItem.ToString();
-				}
-				HistoryViewer hv = new HistoryViewer(this.sortHistory, targetTable);
-				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.RetString)
-				{
-					this.txtSort.Text = hv.RetString;
-					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.sortHistory);
-
-					DspData(targetTable);
-				}
-			}
-			if( e.KeyCode == Keys.Return ||
-				e.KeyCode == Keys.Enter )
-			{
-				string targetTable = "";
-				if( this.tableList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.tableList.SelectedItem.ToString();
-				}
-				qdbeUtil.SetNewHistory(targetTable,this.txtSort.Text,ref this.sortHistory);
-				DspData(targetTable);
-			}
-		
-		}
-
-		/// <summary>
-		/// 指定されたテーブルのリストを元に、テーブルの一覧の選択状態を変更する
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void menuTableSelect_Click(object sender, System.EventArgs e)
-		{
-			TableSelectDialog dlg = new TableSelectDialog();
-			if( dlg.ShowDialog() == DialogResult.OK && dlg.ResultStr != "")
-			{
-				string tabs = dlg.ResultStr;
-				string []tablelists = tabs.Split("\r\n".ToCharArray());
-				this.tableList.BeginUpdate();
-				this.tableList.ClearSelected();
-				for( int i = 0; i < tablelists.Length; i++ )
-				{
-					int x = this.tableList.FindStringExact(tablelists[i]);
-					if( x > 0 )
-					{
-						this.tableList.SetSelected(x,true);
-					}
-				}
-				this.tableList.EndUpdate();
-			}
-		}
-
-		private void menuCSVRead_Click(object sender, System.EventArgs e)
-		{
-			this.LoadFile2Data(true,false);
-		}
-
-		private void menuCSVReadDQ_Click(object sender, System.EventArgs e)
-		{
-			this.LoadFile2Data(true,true);
-		}
-
-		private void menuTabRead_Click(object sender, System.EventArgs e)
-		{
-			this.LoadFile2Data(false,false);
-		}
-
-		private void menuTabReadDQ_Click(object sender, System.EventArgs e)
-		{
-			this.LoadFile2Data(false,true);
 		}
 
 		/// <summary>
@@ -6220,312 +6140,408 @@ order by colorder",
 			}
 		}
 
-		private void label4_DoubleClick(object sender, System.EventArgs e)
+
+		#endregion
+
+
+		#region クラス内ユーティリティ関連
+		private bool CheckFileSpec()
 		{
-			if( this.SqlTimeOut == 0 )
+			if( this.rdoOutFile.Checked == true ) 
 			{
-				this.SqlTimeOut = 300;
-			}
-			else
-			{
-				this.SqlTimeOut = 0;
-			}
-			MessageBox.Show("SQL Timeout値を " + this.SqlTimeOut.ToString() + "秒に設定しました" );
-		}
-
-		/// <summary>
-		/// 選択されたテーブルの統計情報を更新する
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void menuStasticUpdate_Click(object sender, System.EventArgs e)
-		{
-			// SQL 的には、UPDATE STATISTICS table を実施する
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
-
-			if( this.tableList.SelectedItems.Count == 0 )
-			{
-				return;
-			}
-		
-			this.InitErrMessage();
-
-			try
-			{
-				foreach( String tbname in this.tableList.SelectedItems )
+				if( this.txtOutput.Text == "" )
 				{
-					string sqlstr;
-					// split owner.table -> owner, table
-
-					string delimStr = ".";
-					string []str = tbname.Split(delimStr.ToCharArray(), 2);
-
-					if( this.sqlVersion != 2000 )
+					this.saveFileDialog1.CreatePrompt = true;
+					this.saveFileDialog1.Filter = "SQL|*.sql|csv|*.csv|txt|*.txt|全て|*.*";
+					DialogResult ret = this.saveFileDialog1.ShowDialog();
+					if( ret == DialogResult.OK )
 					{
-						// synonym かどうかをチェックする。
-						sqlstr = string.Format( @"select base_object_name from sys.synonyms 
-	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
-	where
-	sys.schemas.name = '{0}' and 
-	sys.synonyms.name = '{1}' ",
-							str[0],
-							str[1]
-							);
-						SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-						DataSet dssyn = new DataSet();
-						dssyn.CaseSensitive = true;
-						dasyn.Fill(dssyn,tbname);
-						if( dssyn.Tables[tbname].Rows.Count > 0 )
+						this.txtOutput.Text = this.saveFileDialog1.FileName;
+					}
+				}
+				else
+				{
+					DirectoryInfo d = new DirectoryInfo(this.txtOutput.Text);
+					if( d.Exists )
+					{
+						MessageBox.Show("指定されたファイル名はフォルダを指しています。ファイル名を指定してください。処理を中断します");
+						return false;
+					}
+				}
+				if( this.txtOutput.Text == "" )
+				{
+					MessageBox.Show("ファイル名が指定されていないので、処理を中断します");
+					return false;
+				}
+			}
+			if( this.rdoOutFolder.Checked == true )
+			{
+
+				if( this.txtOutput.Text == "" )
+				{
+					this.folderBrowserDialog1.SelectedPath = "";
+					this.folderBrowserDialog1.ShowNewFolderButton = true;
+					DialogResult ret = this.folderBrowserDialog1.ShowDialog();
+					if( ret == DialogResult.OK )
+					{
+						this.txtOutput.Text = this.folderBrowserDialog1.SelectedPath;
+					}
+				}
+
+				if( this.txtOutput.Text != "" )
+				{
+					DirectoryInfo d = new DirectoryInfo(this.txtOutput.Text);
+					FileInfo	f = new FileInfo(this.txtOutput.Text);
+					if( f.Exists )
+					{
+						MessageBox.Show("フォルダ名は指定されていますが、フォルダではありません。処理を中断します");
+						return false;
+					}
+					else if( !d.Exists )
+					{
+						Directory.CreateDirectory(this.txtOutput.Text);
+						DirectoryInfo ff = new DirectoryInfo(this.txtOutput.Text);
+						if( !ff.Exists )
 						{
-							// synonym は update STATISTICSができない
-							continue;
+							MessageBox.Show("フォルダ名は指定されていますが、作成できませんでした。処理を中断します");
+							return false;
 						}
 					}
-					sqlstr = "update STATISTICS " + qdbeUtil.GetTbname(tbname) ;
-					cm.CommandText = sqlstr;
-					cm.Connection = this.sqlConnection1;
-					cm.ExecuteNonQuery();
 				}
-				MessageBox.Show("処理を完了しました");
-			}
-			catch ( System.Data.SqlClient.SqlException se )
-			{
-				this.SetErrorMessage(se);
-			}
-			catch ( Exception se )
-			{
-				this.SetErrorMessage(se);
-			}
-			finally 
-			{
-				if( cm != null )
+				else
 				{
-					cm.Dispose();
+					MessageBox.Show("フォルダ名が指定されませんでした。処理を中断します");
+					return false;
 				}
+				
 			}
+			return true;
 		}
 
-		private void menuUpdateStaticsMain_Click(object sender, System.EventArgs e)
+		private string convdata(SqlDataReader dr, int i, string addstr, string unichar, bool outNull)
 		{
-			this.menuStasticUpdate_Click(sender,e);
-		}
-
-		private void menuDoQuery_Click(object sender, System.EventArgs e)
-		{
-			// テーブル名称を引数として、各種クエリの実行を可能にする
-
-			if( this.tableList.SelectedItems.Count == 0 )
+			//
+			//aaa  bigint  NOT NULL PRIMARY KEY,
+			//bbb  binary(50)  NULL,
+			//ccc  datetime  NULL,
+			//ddd  decimal(18,0)  NULL,
+			//eee  float  NULL,
+			//fff  image  NULL,
+			//ggg  int  NULL,
+			//hhh  money  NULL,
+			//iii  nchar(10)  NULL,
+			//jjj  ntext  NULL,
+			//kkk  numeric(18,0)  NULL,
+			//lll  nvarchar(50)  NULL,
+			//mmm  real  NULL,
+			//nnn  smalldatetime  NULL,
+			//ooo  smallint  NULL,
+			//ppp  smallmoney  NULL,
+			//qqq  sql_variant  NULL,
+			//rrr  text  NULL,
+			//sss  timestamp  NULL,
+			//ttt  tinyint  NULL,
+			//uuu  uniqueidentifier  NULL,
+			//vvv  varbinary(50)  NULL,
+			//www  varchar(50)  NULL
+			string fldtypename = dr.GetDataTypeName(i);
+			if( dr.IsDBNull(i) )
 			{
-				return;
-			}
-
-			SqlCommand cm = new SqlCommand();
-			SqlDataAdapter da = new SqlDataAdapter();
-			try
-			{
-				this.InitErrMessage();
-
-				this.cmdDialog.SelectSql = " {0} ";
-				this.cmdDialog.DHistory = this.cmdHistory;
-
-				if( cmdDialog.ShowDialog() == DialogResult.OK )
+				if( outNull )
 				{
-					cm.CommandTimeout = this.SqlTimeOut;
-					DataSet	ds = new DataSet("retData");
-					ds.CaseSensitive = true;
-					cm.Connection = this.sqlConnection1;
-
-					foreach( String tbname in this.tableList.SelectedItems )
+					return "null";
+				}
+				else
+				{
+					return "";
+				}
+			}
+			else if( fldtypename.Equals("bigint") )
+			{
+				return dr.GetInt64(i).ToString();
+			}
+			else if( fldtypename.Equals("image") ||
+				fldtypename.Equals("varbinary") ||
+				fldtypename.Equals("binary"))
+			{
+				if( outNull )
+				{	
+					return string.Format("null" );
+				}
+				else
+				{
+					// バイナリはヘキサ文字列で出しておく
+					byte []odata = dr.GetSqlBinary(i).Value;
+					string sodata ="0x";
+					for(int k = 0; k < odata.Length; k++ )
 					{
-						cm.CommandText = string.Format(this.cmdDialog.SelectSql,
-							qdbeUtil.GetTbname(tbname));
-
-						if( cmdDialog.HasReturn == true )
-						{
-							// 戻り値あり
-							da.SelectCommand = cm;
-							da.Fill(ds,"retdata");
-						}
-						else
-						{
-							int cnt = cm.ExecuteNonQuery();
-						}
+						sodata += odata[k].ToString("X2");
 					}
-					if( cmdDialog.HasReturn == true )
-					{
-						this.dbGrid.SetDataBinding(ds,"retdata");
-						this.dbGrid.Show();
-						this.dbGrid.ReadOnly = true;
-						this.btnDataEdit.Text = "データ編集(&T)";
-						this.btnDataEdit.BackColor = this.btnBackColor;
-						this.btnDataEdit.ForeColor = this.btnForeColor;
-					}
-					MessageBox.Show("処理を完了しました");
+					return string.Format("{1}{0}{1}", sodata, addstr );
 				}
 			}
-			catch( Exception exp)
+			else if( fldtypename.Equals("datetime") ||
+				fldtypename.Equals("smalldatetime"))
 			{
-				this.SetErrorMessage(exp);
+				return string.Format("{1}{0}{1}", dr.GetDateTime(i).ToString(), addstr );
 			}
-			finally
+			else if( fldtypename.Equals("decimal") 
+				|| fldtypename.Equals("numeric"))
 			{
-				if( cm != null )
+				return dr.GetDecimal(i).ToString();
+			}
+			else if( fldtypename.Equals("float")||
+				fldtypename.Equals("double") )
+			{
+				return dr.GetDouble(i).ToString();
+			}
+			else if( fldtypename.Equals("int") )
+			{
+				return dr.GetInt32(i).ToString();
+			}
+			else if( fldtypename.Equals("smallint") )
+			{
+				return dr.GetInt16(i).ToString();
+			}
+			else if( fldtypename.Equals("tinyint") )
+			{
+				return dr.GetValue(i).ToString();
+			}
+			else if( fldtypename.Equals("money") 
+				|| fldtypename.Equals("smallmoney"))
+			{
+				return dr.GetSqlMoney(i).ToString();
+			}
+			else if( fldtypename.Equals("real"))
+			{
+				return dr.GetValue(i).ToString();
+			}
+				//							else if( fldtypename.Equals("money") )
+				//							{
+				//								wr.Write( dr.GetDouble(i).ToString() );
+				//							}
+			else if( fldtypename == "varchar" ||
+				fldtypename == "char" ||
+				fldtypename == "text" )
+			{
+				// 文字列
+				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
 				{
-					cm.Dispose();
+					return string.Format( "{0}{0}", addstr );
 				}
-			}
-		}
-
-		private void fieldListbox_ExtendedCopyData(object sender)
-		{
-			// フィールド一覧で Ctrl + F が押下された場合の処理
-			// 別ダイアログを表示してエイリアス等の指定を可能にする
-			if( this.tableList.SelectedItems.Count != 1 )
-			{
-				return;
-			}
-
-			FieldGetDialog dlg = new FieldGetDialog();
-			dlg.BaseTableName = this.tableList.SelectedItem.ToString();
-			if( dlg.ShowDialog(this) != DialogResult.OK )
-			{
-				return;
-			}
-			StringBuilder str = new StringBuilder();
-			for( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
-			{
-				if( i != 0 )
+				else
 				{
-					if( dlg.RetCRLF == true )
+					if( dr.GetString(i).IndexOf("'") >= 0 )
 					{
-						if( dlg.RetComma ) 
-						{
-							str.Append(",\r\n");
-						}
-						else
-						{
-							str.Append("\r\n");
-						}
+						// ' が文字列に入っている場合は '' に強制的に変換する
+						return string.Format( "{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""),addstr);
 					}
 					else
 					{
-						if( dlg.RetComma )
-						{
-							str.Append(",");
-						}
-						else
-						{
-							str.Append("\t");
-						}
+						return string.Format( "{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr );
 					}
 				}
-				str.Append(dlg.RetTableAccessor+".");
-				str.Append((string)this.fieldListbox.SelectedItems[i]);
 			}
-			if( str.Length != 0 )
+			else if( fldtypename == "nvarchar" ||
+				fldtypename == "nchar" ||
+				fldtypename == "xml" ||
+				fldtypename == "sql_variant" ||
+				fldtypename == "ntext")
 			{
-				Clipboard.SetDataObject(str.ToString(),true );
-			}		
-		}
-
-		private void menuFieldAliasCopy_Click(object sender, System.EventArgs e)
-		{
-			fieldListbox_ExtendedCopyData(sender);
-		}
-
-		private void label11_DoubleClick(object sender, System.EventArgs e)
-		{
-			if( this.tableList.SelectedItems.Count != 1 )
-			{
-				return;
-			}
-			this.txtAlias.Text = this.tableList.SelectedItem.ToString();
-		
-		}
-
-		private void dlgAliasZoom_Click(object sender, System.EventArgs e)
-		{
-			this.txtAlias.Text = ((ZoomDialog)sender).EditText;
-
-			string targetTable = "";
-			if( this.tableList.SelectedItems.Count == 1 )
-			{
-				targetTable = this.tableList.SelectedItem.ToString();
-			}
-			DspData(targetTable);
-		}
-
-		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.W )
-			{
-				// 値の拡大表示を行う
-				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
-				dlg.EditText = this.txtAlias.Text;
-				dlg.LableName = "Alias 指定";
-				dlg.Enter += new System.EventHandler(this.dlgAliasZoom_Click);
-				dlg.Show();
-				dlg.BringToFront();
-				dlg.Focus();
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.D )
-			{
-				// 全削除を行う
-				((TextBox)sender).Text = "";
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.S )
-			{
-				string targetTable = "";
-				if( this.tableList.SelectedItems.Count == 1 )
+				// 文字列
+				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
 				{
-					targetTable = this.tableList.SelectedItem.ToString();
+					return string.Format( "{1}{0}{0}", addstr, unichar );
 				}
-				HistoryViewer hv = new HistoryViewer(this.aliasHistory, targetTable);
-				if( DialogResult.OK == hv.ShowDialog() && ((TextBox)sender).Text != hv.RetString)
+				else
 				{
-					((TextBox)sender).Text = hv.RetString;
-					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.aliasHistory);
-
-					DspData(targetTable);
+					if( dr.GetString(i).IndexOf("'") >= 0 )
+					{
+						// ' が文字列に入っている場合は '' に強制的に変換する
+						return string.Format( "{2}{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""), addstr, unichar);
+					}
+					else
+					{
+						return string.Format( "{2}{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr, unichar );
+					}
 				}
 			}
-			if( e.KeyCode == Keys.Return ||
-				e.KeyCode == Keys.Enter )
+			else if( fldtypename == "uniqueidentifier" )
 			{
-				string targetTable = "";
-				if( this.tableList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.tableList.SelectedItem.ToString();
-				}
-				qdbeUtil.SetNewHistory(targetTable,((TextBox)sender).Text,ref this.aliasHistory);
-				DspData(targetTable);
+				return string.Format("{1}{0}{1}", dr.GetSqlGuid(i).ToString(), addstr );
 			}
-		}
-
-		private void txtAlias_Leave(object sender, System.EventArgs e)
-		{
-			string tbname = "";
-			if( this.chkDspData.CheckState == CheckState.Checked &&
-				this.tableList.SelectedItems.Count == 1 )
+			else if( fldtypename == "timestamp" )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.tableList.SelectedItem.ToString();
+				// timestamp は自動更新されるのでnullでよい
+				if( outNull )
+				{	
+					return string.Format("null" );
+				}
+				else
+				{
+					// バイナリはヘキサ文字列で出しておく
+					byte []odata = dr.GetSqlBinary(i).Value;
+					string sodata ="0x";
+					for(int k = 0; k < odata.Length; k++ )
+					{
+						sodata += odata[k].ToString("X2");
+					}
+					return string.Format("{1}{0}{1}", sodata, addstr );
+				}
 			}
 			else
 			{
-				tbname = "";
+				// sql_variant は型の決めようがないので文字列扱いにしておく
+				return string.Format("{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
 			}
-			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,((TextBox)sender).Text,ref this.aliasHistory);
 		}
 
+		private System.Text.Encoding GetEncode()
+		{
+			if( this.rdoUnicode.Checked == true )
+			{
+				// UNICODE
+				return new System.Text.UnicodeEncoding();
+			}
+			else if( this.rdoSjis.Checked == true )
+			{
+				// (MS932)ShiftJIS
+				return Encoding.GetEncoding("shift-jis");
+			}
+			else
+			{
+				// UTF-8
+				return new System.Text.UTF8Encoding();
+			}
+		}
+
+		/// <summary>
+		/// from 句で利用するために、テーブル修飾子をつけて、テーブル名を変換する
+		/// 基の名前は[]が付いていないことが前提
+		/// </summary>
+		/// <param name="tbname">テーブル名(owner.tablename形式)</param>
+		/// <returns>解析後のテーブル名([owner].[tabblname] alias 形式)</returns>
+		protected string gettbnameWithAlias(string tbname)
+		{
+			string tbl = qdbeUtil.GetTbname(tbname);
+			if( this.txtAlias.Text != "" )
+			{
+				tbl += " " + this.txtAlias.Text;
+			}
+			return tbl;
+		}
+
+		/// <summary>
+		/// フォーマット文字列を取得する
+		/// </summary>
+		/// <param name="fstr">基の表示書式</param>
+		/// <returns>表示書式文字列</returns>
+		protected string getFormat(string fstr)
+		{
+			if(fstr == null)
+			{
+				return "";
+			}
+			int termp = fstr.IndexOf("	");
+			if( termp == -1 )
+			{
+				return fstr;
+			}
+			return fstr.Substring(0,termp);
+		}
+
+
+		/// <summary>
+		/// 新規スレッドを開始する
+		/// </summary>
+		/// <param name="callb">終了時に呼び出されるCallBack関数</param>
+		/// <param name="tags">CallBack時に引き渡される情報</param>
+		/// <returns>スレッドが正常に開始できたか否か</returns>
+		protected bool	BeginNewThread(WaitCallback callb, object tags)
+		{
+			if( this.IsThreadAlive > 0 )
+			{
+				// 他のスレッドがあれば、スレッドを開始しない
+				return false;
+			}
+			try
+			{
+				Interlocked.Increment(ref this.IsThreadAlive);
+				ThreadPool.QueueUserWorkItem(callb,tags);
+				return true;
+			}
+			catch(Exception e)
+			{
+				this.SetErrorMessage(e);
+				if( this.IsThreadAlive != 0 )
+				{
+					Interlocked.Decrement(ref this.IsThreadAlive);
+				}
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// スレッドを終了させる
+		/// </summary>
+		protected void	ThreadEndIfAlive()
+		{
+			if( this.IsThreadAlive == 0 )
+			{
+				return;
+			}
+			try
+			{
+				Interlocked.Decrement(ref this.IsThreadAlive);
+			}
+			catch
+			{
+				;
+			}
+		}
+
+		/// <summary>
+		/// スレッドが中止されたか否か
+		/// </summary>
+		/// <returns></returns>
+		protected bool IsProcCancel()
+		{
+			if( this.IsThreadAlive == 0 )
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		/// <summary>
+		/// テーブルに対する処理用情報をセットする
+		/// </summary>
+		/// <param name="tbname"></param>
+		/// <returns></returns>
+		protected ProcCondition GetProcCondition(string tbname)
+		{
+			ProcCondition procCond = new ProcCondition();
+			if( tbname != null )
+			{
+				procCond.Tbname.Add(tbname);
+			}
+			else
+			{
+				foreach( object obj in this.tableList.SelectedItems)
+				{
+					procCond.Tbname.Add((string)obj);
+				}
+			}
+			procCond.WhereStr = this.txtWhere.Text;
+			procCond.OrderStr = this.txtSort.Text;
+			procCond.MaxStr = this.txtDspCount.Text;
+			return procCond;
+		}
+
+		#endregion
 	}
 
 	/// <summary>
