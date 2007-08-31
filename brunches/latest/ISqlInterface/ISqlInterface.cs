@@ -15,5 +15,6 @@ namespace quickDBExplorer
 
 		string GetOwnerLabel1();
 		string GetOwnerLabel2();
+		string GetFieldListSelect(string tbname, string []tbnamelist);
 	}
 }

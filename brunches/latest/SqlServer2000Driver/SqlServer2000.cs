@@ -7,12 +7,12 @@ namespace quickDBExplorer
 	/// <summary>
 	/// SqlServer2000 の概要の説明です。
 	/// </summary>
-	public class SqlServer2000 : ISqlInterface
+	public class SqlServerDriver : ISqlInterface
 	{
 
 		System.Data.SqlClient.SqlConnection sqlConnect;
 
-		public SqlServer2000()
+		public SqlServerDriver()
 		{
 			// 
 			// TODO: コンストラクタ ロジックをここに追加してください。
@@ -40,6 +40,11 @@ namespace quickDBExplorer
 		public string GetOwnerLabel2()
 		{
 			return "オーナー名・テーブル名";
+		}
+
+		public string GetFieldListSelect(string tbname, string []str)
+		{
+			return "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
 		}
 
 		#endregion

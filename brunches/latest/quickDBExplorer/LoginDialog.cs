@@ -387,15 +387,13 @@ namespace quickDBExplorer
 				if(con.ServerVersion.StartsWith("08") )
 				{
 					mainForm.SqlVersion = 2000;
-					dllName = "SqlServer2000Driver.dll";
-					className = "quickDBExplorer.SqlServer2000";
 				}
 				else if(con.ServerVersion.StartsWith("09") )
 				{
 					mainForm.SqlVersion = 2005;
-					dllName = "SqlServer2005Driver.dll";
-					className = "quickDBExplorer.SqlServer2005";
 				}
+				dllName = string.Format("SqlServer{0}Driver.dll", mainForm.SqlVersion );
+				className = "quickDBExplorer.SqlServerDriver";
 				asm = Assembly.LoadFrom(dllName);
 				mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className,true);
 
