@@ -23,6 +23,12 @@ namespace quickDBExplorer
 		string GetDBSelect();
 
 		/// <summary>
+		/// テーブル一覧のカラムヘッダの表示文字を取得する
+		/// </summary>
+		/// <returns></returns>
+		string GetTbListColName();
+
+		/// <summary>
 		/// DBオーナーのラベルを返す
 		/// </summary>
 		/// <returns></returns>
@@ -39,5 +45,13 @@ namespace quickDBExplorer
 		/// <param name="tbnamelist"></param>
 		/// <returns></returns>
 		string GetFieldListSelect(string tbname, string []tbnamelist);
+
+		/// <summary>
+		/// テーブル一覧の表示用SQLの取得
+		/// </summary>
+		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
+		/// <returns></returns>
+		string GetDspTableList(bool isDspView, string ownerList);
 	}
 }

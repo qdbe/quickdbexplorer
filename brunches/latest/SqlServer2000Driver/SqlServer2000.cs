@@ -32,6 +32,16 @@ namespace quickDBExplorer
 			return "SELECT name FROM sysdatabases order by name";
 		}
 
+		/// <summary>
+		/// テーブル一覧のカラムヘッダの表示文字を取得する
+		/// </summary>
+		/// <returns></returns>
+		public string GetTbListColName()
+		{
+			return "Table/View";
+		}
+
+
 		public string GetOwnerLabel1()
 		{
 			return "owner/Role(&O)";
@@ -46,6 +56,46 @@ namespace quickDBExplorer
 		{
 			return "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
 		}
+
+		/// <summary>
+		/// テーブル一覧の表示用SQLの取得
+		/// </summary>
+		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
+		/// <returns></returns>
+		public string GetDspTableList(bool isDspView, string ownerList)
+		{
+			string retsql = "";
+			if( isDspView == true )
+			{
+				retsql = @"select 
+					sysobjects.name as tbname, 
+					sysusers.name as uname ,
+					case
+					when xtype = 'U' then ' '
+					else				'V'
+					end as tvs
+					from sysobjects, sysusers 
+					where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
+			}
+			else
+			{
+				retsql = @"select 
+					sysobjects.name as tbname, 
+					sysusers.name as uname ,
+					' ' as tvs
+					from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
+			}
+
+			if( ownerList != null && 
+				ownerList != string.Empty )
+			{
+				retsql += " and sysusers.name in ( " + ownerList + " ) ";
+			}
+
+			return retsql;
+		}
+
 
 		#endregion
 	}

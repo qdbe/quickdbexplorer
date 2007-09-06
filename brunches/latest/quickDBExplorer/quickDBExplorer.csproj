@@ -228,6 +228,11 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "qdbeListView.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "qdbeUtil.cs"
                     SubType = "Code"
                     BuildAction = "Compile"
@@ -294,6 +299,11 @@
                     RelPath = "ServerSelectDialog.resx"
                     DependentUpon = "ServerSelectDialog.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "tableListView.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "TableSelectDialog.cs"

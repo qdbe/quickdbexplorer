@@ -55,7 +55,7 @@ namespace quickDBExplorer
 		private quickDBExplorer.qdbeListBox dbList;
 		private quickDBExplorer.qdbeListBox fieldListbox;
 		private quickDBExplorer.qdbeListBox ownerListbox;
-		private quickDBExplorer.qdbeListBox tableList;
+		private quickDBExplorer.tableListView tableList;
 		private System.Windows.Forms.MenuItem fldmenuCopy;
 		private System.Windows.Forms.MenuItem fldmenuCopyNoCRLF;
 		private System.Windows.Forms.MenuItem fldmenuCopyNoCRLFNoComma;
@@ -324,6 +324,9 @@ namespace quickDBExplorer
 		/// コマンド入力ダイアログ
 		/// </summary>
 		protected System.Windows.Forms.ComboBox cmbHistory;
+		private System.Windows.Forms.ColumnHeader ColTVSType;
+		private System.Windows.Forms.ColumnHeader ColOwner;
+		private System.Windows.Forms.ColumnHeader ColTbName;
 		
 		/// <summary>
 		/// メニュー情報
@@ -384,7 +387,10 @@ namespace quickDBExplorer
 			this.components = new System.ComponentModel.Container();
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainForm));
 			this.dbList = new quickDBExplorer.qdbeListBox();
-			this.tableList = new quickDBExplorer.qdbeListBox();
+			this.tableList = new quickDBExplorer.tableListView();
+			this.ColTVSType = new System.Windows.Forms.ColumnHeader();
+			this.ColOwner = new System.Windows.Forms.ColumnHeader();
+			this.ColTbName = new System.Windows.Forms.ColumnHeader();
 			this.mainContextMenu = new System.Windows.Forms.ContextMenu();
 			this.menuTableCopy = new System.Windows.Forms.MenuItem();
 			this.menuTableCopyCsv = new System.Windows.Forms.MenuItem();
@@ -532,18 +538,36 @@ namespace quickDBExplorer
 			// 
 			// tableList
 			// 
+			this.tableList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+																						this.ColTVSType,
+																						this.ColOwner,
+																						this.ColTbName});
 			this.tableList.ContextMenu = this.mainContextMenu;
 			this.tableList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.tableList.HorizontalScrollbar = true;
-			this.tableList.ItemHeight = 12;
+			this.tableList.FullRowSelect = true;
 			this.tableList.Location = new System.Drawing.Point(240, 24);
 			this.tableList.Name = "tableList";
-			this.tableList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.tableList.Size = new System.Drawing.Size(256, 292);
 			this.tableList.TabIndex = 22;
-			this.tableList.CopyData += new quickDBExplorer.qdbeListBox.CopyDataHandler(this.tableList_CopyData);
+			this.tableList.View = System.Windows.Forms.View.Details;
+			this.tableList.CopyData += new quickDBExplorer.qdbeListView.CopyDataHandler(this.tableList_CopyData);
 			this.tableList.DoubleClick += new System.EventHandler(this.insertmake);
 			this.tableList.SelectedIndexChanged += new System.EventHandler(this.tableList_SelectedIndexChanged);
+			// 
+			// ColTVSType
+			// 
+			this.ColTVSType.Text = "";
+			this.ColTVSType.Width = 10;
+			// 
+			// ColOwner
+			// 
+			this.ColOwner.Text = "owner";
+			this.ColOwner.Width = 50;
+			// 
+			// ColTbName
+			// 
+			this.ColTbName.Text = "Table/View";
+			this.ColTbName.Width = 190;
 			// 
 			// mainContextMenu
 			// 
@@ -1579,10 +1603,17 @@ namespace quickDBExplorer
 			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
 			MenuItem[] cplist = new MenuItem[list.Length];
 			// メニューの各項目の先頭に、(1) のようなアクセラレーターキーを追加する
+			int j = 1;
 			for( int i = 0; i<list.Length; i++ )
 			{
 				cplist[i] = list[i].CloneMenu();
-				cplist[i].Text = string.Format("(&{0}) {1}",i+1,cplist[i].Text );
+				if( list[i].Text == "-" )
+				{
+					// セパレーターはショートカットは無用
+					continue;
+				}
+				cplist[i].Text = string.Format("(&{0}) {1}",j,cplist[i].Text );
+				j++;
 			}
 			tmpmenu.MenuItems.AddRange(cplist);
 
@@ -1859,6 +1890,7 @@ namespace quickDBExplorer
 				// ラベル・ボタンの設定
 				this.label5.Text = this.sqlDriver.GetOwnerLabel1();
 				this.rdoSortOwnerTable.Text = this.sqlDriver.GetOwnerLabel2();
+				this.ColTbName.Text = this.sqlDriver.GetTbListColName();
 
 				this.Text = servername;
 
@@ -2165,7 +2197,7 @@ namespace quickDBExplorer
 				if( isInCmbEvent == false )
 				{
 					// 選択されたTable/View を記憶する
-					if( this.selectedTables.Contains(this.tableList.SelectedItem.ToString()) == false )
+					if( this.selectedTables.Contains(this.tableList.GetSelectOneTableName()) == false )
 					{
 						if( this.selectedTables.Count > MaxTableHistory )
 						{
@@ -2174,23 +2206,23 @@ namespace quickDBExplorer
 					}
 					else
 					{
-						this.selectedTables.Remove(this.tableList.SelectedItem.ToString());
+						this.selectedTables.Remove(this.tableList.GetSelectOneTableName());
 
 					}
-					this.selectedTables.Add(this.tableList.SelectedItem.ToString());
+					this.selectedTables.Add(this.tableList.GetSelectOneTableName());
 					this.cmbHistory.DataSource = null;
 					this.cmbHistory.DataSource = this.selectedTables;
-					int i = this.cmbHistory.FindStringExact(this.tableList.SelectedItem.ToString());
+					int i = this.cmbHistory.FindStringExact(this.tableList.GetSelectOneTableName());
 					this.cmbHistory.SelectedIndex = i;
 					this.cmbHistory.Refresh();
 				}
 
 
-				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtWhere.Text,ref this.whereHistory);
-				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtSort.Text,ref this.sortHistory);
-				qdbeUtil.SetNewHistory(this.tableList.SelectedItem.ToString(),this.txtAlias.Text,ref this.aliasHistory);
+				qdbeUtil.SetNewHistory(this.tableList.GetSelectOneTableName(),this.txtWhere.Text,ref this.whereHistory);
+				qdbeUtil.SetNewHistory(this.tableList.GetSelectOneTableName(),this.txtSort.Text,ref this.sortHistory);
+				qdbeUtil.SetNewHistory(this.tableList.GetSelectOneTableName(),this.txtAlias.Text,ref this.aliasHistory);
 				// データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
+				DspData(this.tableList.GetSelectOneTableName());
 			}
 			else
 			{
@@ -2201,7 +2233,7 @@ namespace quickDBExplorer
 			}
 			if( this.tableList.SelectedItems.Count == 1 )
 			{
-				dspfldlist(this.tableList.SelectedItem.ToString());
+				dspfldlist(this.tableList.GetSelectOneTableName());
 			}
 			else
 			{
@@ -2211,7 +2243,7 @@ namespace quickDBExplorer
 			{
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					indexdlg.settabledsp(this.tableList.SelectedItem.ToString());
+					indexdlg.settabledsp(this.tableList.GetSelectOneTableName());
 				}
 				else
 				{
@@ -2244,7 +2276,7 @@ namespace quickDBExplorer
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
+				DspData(this.tableList.GetSelectOneTableName());
 			}
 			else
 			{
@@ -2266,7 +2298,7 @@ namespace quickDBExplorer
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
+				DspData(this.tableList.GetSelectOneTableName());
 			}
 			else
 			{
@@ -2281,7 +2313,7 @@ namespace quickDBExplorer
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.tableList.SelectedItem.ToString();
+				tbname = this.tableList.GetSelectOneTableName();
 			}
 			else
 			{
@@ -2301,7 +2333,7 @@ namespace quickDBExplorer
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.tableList.SelectedItem.ToString();
+				tbname = this.tableList.GetSelectOneTableName();
 			}
 			else
 			{
@@ -2494,7 +2526,7 @@ namespace quickDBExplorer
 		{
 			if( this.tableList.SelectedItems.Count == 1 )
 			{
-				dspfldlist(this.tableList.SelectedItem.ToString());
+				dspfldlist(this.tableList.GetSelectOneTableName());
 			}
 			else
 			{
@@ -2519,7 +2551,7 @@ namespace quickDBExplorer
 					)
 				{
 					// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-					string tbname = this.tableList.SelectedItem.ToString();
+					string tbname = this.tableList.GetSelectOneTableName();
 					string sqlstr;
 					sqlstr = "select ";
 					int	maxlines;
@@ -2676,7 +2708,7 @@ namespace quickDBExplorer
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString());
+				DspData(this.tableList.GetSelectOneTableName());
 			}
 			else
 			{
@@ -2691,7 +2723,7 @@ namespace quickDBExplorer
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.tableList.SelectedItem.ToString(),true);
+				DspData(this.tableList.GetSelectOneTableName(),true);
 				this.btnTmpAllDsp.ForeColor = Color.WhiteSmoke;
 				this.btnTmpAllDsp.BackColor = Color.Navy;
 				this.btnTmpAllDsp.Enabled = true;
@@ -2720,7 +2752,7 @@ namespace quickDBExplorer
 			string targetTable = "";
 			if( this.tableList.SelectedItems.Count == 1 )
 			{
-				targetTable = this.tableList.SelectedItem.ToString();
+				targetTable = this.tableList.GetSelectOneTableName();
 			}
 			DspData(targetTable);
 		}
@@ -2741,7 +2773,7 @@ namespace quickDBExplorer
 			string targetTable = "";
 			if( this.tableList.SelectedItems.Count == 1 )
 			{
-				targetTable = this.tableList.SelectedItem.ToString();
+				targetTable = this.tableList.GetSelectOneTableName();
 			}
 			DspData(targetTable);
 		}
@@ -2753,7 +2785,7 @@ namespace quickDBExplorer
 			string targetTable = "";
 			if( this.tableList.SelectedItems.Count == 1 )
 			{
-				targetTable = this.tableList.SelectedItem.ToString();
+				targetTable = this.tableList.GetSelectOneTableName();
 			}
 			DspData(targetTable);
 		}
@@ -2765,7 +2797,7 @@ namespace quickDBExplorer
 				this.tableList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.tableList.SelectedItem.ToString();
+				tbname = this.tableList.GetSelectOneTableName();
 			}
 			else
 			{
@@ -2804,7 +2836,7 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.tableList.SelectedItem.ToString();
+					targetTable = this.tableList.GetSelectOneTableName();
 				}
 				HistoryViewer hv = new HistoryViewer(this.aliasHistory, targetTable);
 				if( DialogResult.OK == hv.ShowDialog() && ((TextBox)sender).Text != hv.RetString)
@@ -2821,7 +2853,7 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.tableList.SelectedItem.ToString();
+					targetTable = this.tableList.GetSelectOneTableName();
 				}
 				qdbeUtil.SetNewHistory(targetTable,((TextBox)sender).Text,ref this.aliasHistory);
 				DspData(targetTable);
@@ -2892,7 +2924,7 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.tableList.SelectedItem.ToString();
+					targetTable = this.tableList.GetSelectOneTableName();
 				}
 				HistoryViewer hv = new HistoryViewer(this.whereHistory, targetTable);
 				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.RetString)
@@ -2910,7 +2942,7 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.tableList.SelectedItem.ToString();
+					targetTable = this.tableList.GetSelectOneTableName();
 				}
 				qdbeUtil.SetNewHistory(targetTable,this.txtWhere.Text,ref this.whereHistory);
 				DspData(targetTable);
@@ -2947,7 +2979,7 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.tableList.SelectedItem.ToString();
+					targetTable = this.tableList.GetSelectOneTableName();
 				}
 				HistoryViewer hv = new HistoryViewer(this.sortHistory, targetTable);
 				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.RetString)
@@ -2964,7 +2996,7 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.tableList.SelectedItem.ToString();
+					targetTable = this.tableList.GetSelectOneTableName();
 				}
 				qdbeUtil.SetNewHistory(targetTable,this.txtSort.Text,ref this.sortHistory);
 				DspData(targetTable);
@@ -2985,13 +3017,13 @@ namespace quickDBExplorer
 				string tabs = dlg.ResultStr;
 				string []tablelists = tabs.Split("\r\n".ToCharArray());
 				this.tableList.BeginUpdate();
-				this.tableList.ClearSelected();
+				this.tableList.Items.Clear();
 				for( int i = 0; i < tablelists.Length; i++ )
 				{
 					int x = this.tableList.FindStringExact(tablelists[i]);
 					if( x > 0 )
 					{
-						this.tableList.SetSelected(x,true);
+						this.tableList.Items[x].Selected = true;
 					}
 				}
 				this.tableList.EndUpdate();
@@ -3049,8 +3081,9 @@ namespace quickDBExplorer
 					fname.Append(this.txtOutput.Text);
 				}
 
-				foreach( String tbname in this.tableList.SelectedItems )
+				for( int k = 0; k < this.tableList.SelectedItems.Count; k++ )
 				{
+					String tbname = this.tableList.SelectedItems[k].Tag.ToString();
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
@@ -3125,7 +3158,7 @@ namespace quickDBExplorer
 				indexdlg.SqlConnection = this.sqlConnection1;
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					indexdlg.DspTbname = this.tableList.SelectedItem.ToString();
+					indexdlg.DspTbname = this.tableList.GetSelectOneTableName();
 				}
 				else
 				{
@@ -3137,7 +3170,7 @@ namespace quickDBExplorer
 			{
 				if( this.tableList.SelectedItems.Count == 1 )
 				{
-					indexdlg.settabledsp(this.tableList.SelectedItem.ToString());
+					indexdlg.settabledsp(this.tableList.GetSelectOneTableName());
 				}
 				else
 				{
@@ -4087,7 +4120,7 @@ namespace quickDBExplorer
 			}
 
 			FieldGetDialog dlg = new FieldGetDialog();
-			dlg.BaseTableName = this.tableList.SelectedItem.ToString();
+			dlg.BaseTableName = this.tableList.GetSelectOneTableName();
 			if( dlg.ShowDialog(this) != DialogResult.OK )
 			{
 				return;
@@ -4135,7 +4168,7 @@ namespace quickDBExplorer
 			{
 				return;
 			}
-			this.txtAlias.Text = this.tableList.SelectedItem.ToString();
+			this.txtAlias.Text = this.tableList.GetSelectOneTableName();
 		
 		}
 
@@ -4201,7 +4234,7 @@ namespace quickDBExplorer
 			isInCmbEvent = true;
 			int setidx = this.tableList.FindStringExact(tablename);
 			this.tableList.ClearSelected();
-			this.tableList.SelectedIndex = setidx;
+			this.tableList.Items[setidx].Selected = true;
 			isInCmbEvent = false;
 			this.tableList.Focus();
 		}
@@ -4390,6 +4423,9 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// テーブル一覧の表示
+		/// </summary>
 		private void dspTableList()
 		{
 			SqlDataReader dr = null;
@@ -4418,78 +4454,15 @@ namespace quickDBExplorer
 					sortkey = " order by 2,1 ";
 				}
 
-				if( this.rdoDspView.Checked == true )
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
-					}
-					else
-					{
-						cm.CommandText = @"select 
-	sys.all_objects.name as tbname, 
-	sys.schemas.name as uname 
-from 
-	sys.all_objects, 
-	sys.schemas 
-where 
-	( sys.all_objects.type='U' 
-	  or sys.all_objects.type='V' 
-	  or
-	  (sys.all_objects.type='SN' and 
-		exists ( select 'X' from sys.synonyms t2 
-			inner join sys.all_objects t3 on
-			OBJECT_ID(t2.base_object_name) = t3.object_id
-			and (t3.type='U' or t3.type='V' )
-				where
-				sys.all_objects.object_id = t2.object_id 
-				)
-	   )
-	) and 
-	sys.all_objects.schema_id = sys.schemas.schema_id";
-					}
-				}
-				else
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						cm.CommandText = "select sysobjects.name as tbname, sysusers.name as uname from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
-					}
-					else
-					{
-						cm.CommandText = @"select 
-	sys.all_objects.name as tbname, 
-	sys.schemas.name as uname 
-from 
-	sys.all_objects, 
-	sys.schemas 
-where 
-	( sys.all_objects.type='U' 
-	  or
-	  (sys.all_objects.type='SN' and 
-		exists ( select 'X' from sys.synonyms t2 
-			inner join sys.all_objects t3 on
-			OBJECT_ID(t2.base_object_name) = t3.object_id
-			and (t3.type='U')
-				where
-				sys.all_objects.object_id = t2.object_id 
-				)
-	   )
-	) and 
-	sys.all_objects.schema_id = sys.schemas.schema_id";
-					}
-				}
-
+				string ownerlist = "";
 				if( this.ownerListbox.SelectedItem != null )
 				{
-					bool	allsele = false;
 					// 選択があれば、そのOWNERのみのテーブルを表示する
-					string ownerlist = "";
 					foreach( String owname in this.ownerListbox.SelectedItems )
 					{
 						if( owname == "全て" )
 						{
-							allsele = true;
+							ownerlist = "";
 							break;
 						}
 						if( ownerlist != "" )
@@ -4498,18 +4471,9 @@ where
 						}
 						ownerlist += "'" + owname + "'";
 					}
-					if( allsele == false )
-					{
-						if( this.sqlVersion == 2000 )
-						{
-							cm.CommandText += " and sysusers.name in ( " + ownerlist + " ) ";
-						}
-						else
-						{
-							cm.CommandText += " and sys.schemas.name in ( " + ownerlist + " ) ";
-						}
-					}
 				}
+				cm.CommandText = this.sqlDriver.GetDspTableList(this.rdoDspView.Checked,ownerlist);
+
 				cm.CommandText += sortkey;
 				cm.Connection = this.sqlConnection1;
 
@@ -4518,7 +4482,10 @@ where
 				this.tableList.Items.Clear();
 				while ( dr.Read())
 				{
-					this.tableList.Items.Add(dr["uname"] + "." + dr["tbname"]);
+					this.tableList.AddItem(
+						(string)dr["tvs"],
+						(string)dr["uname"],
+						(string)dr["tbname"]);
 				}
 				dr.Close();
 			}
@@ -5746,7 +5713,7 @@ order by colorder",
 				System.Data.SqlClient.SqlDataAdapter da = new SqlDataAdapter();
 				cm.CommandTimeout = this.SqlTimeOut;
 
-				String tbname = this.tableList.SelectedItem.ToString();
+				String tbname = this.tableList.GetSelectOneTableName();
 			
 
 				// get id 

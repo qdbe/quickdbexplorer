@@ -30,6 +30,16 @@ namespace quickDBExplorer
 			return "SELECT name FROM sys.databases  order by name";;
 		}
 
+		/// <summary>
+		/// テーブル一覧のカラムヘッダの表示文字を取得する
+		/// </summary>
+		/// <returns></returns>
+		public string GetTbListColName()
+		{
+			return "Table/View/Synonym";
+		}
+
+
 		public string GetOwnerLabel1()
 		{
 			return "Schema(&O)";
@@ -126,6 +136,84 @@ order by colorder",
 					);
 			}
 			return sqlstr;
+		}
+
+		/// <summary>
+		/// テーブル一覧の表示用SQLの取得
+		/// </summary>
+		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
+		/// <returns></returns>
+		public string GetDspTableList(bool isDspView, string ownerList)
+		{
+			string retsql = "";
+
+
+			if( isDspView == true )
+			{
+				retsql = @"select 
+	sys.all_objects.name as tbname, 
+	sys.schemas.name as uname ,
+	case
+	when sys.all_objects.type = 'U' then ' '
+	when sys.all_objects.type = 'V' then 'V'
+	when sys.all_objects.type = 'SN' then 'S'
+	end as tvs
+from 
+	sys.all_objects, 
+	sys.schemas 
+where 
+	( sys.all_objects.type='U' 
+	  or sys.all_objects.type='V' 
+	  or
+	  (sys.all_objects.type='SN' and 
+		exists ( select 'X' from sys.synonyms t2 
+			inner join sys.all_objects t3 on
+			OBJECT_ID(t2.base_object_name) = t3.object_id
+			and (t3.type='U' or t3.type='V' )
+				where
+				sys.all_objects.object_id = t2.object_id 
+				)
+	   )
+	) and 
+	sys.all_objects.schema_id = sys.schemas.schema_id";
+			}
+			else
+			{
+				retsql = @"select 
+	sys.all_objects.name as tbname, 
+	sys.schemas.name as uname ,
+	case
+	when sys.all_objects.type = 'U' then ' '
+	when sys.all_objects.type = 'V' then 'V'
+	when sys.all_objects.type = 'SN' then 'S'
+	end as tvs
+from 
+	sys.all_objects, 
+	sys.schemas 
+where 
+	( sys.all_objects.type='U' 
+	  or
+	  (sys.all_objects.type='SN' and 
+		exists ( select 'X' from sys.synonyms t2 
+			inner join sys.all_objects t3 on
+			OBJECT_ID(t2.base_object_name) = t3.object_id
+			and (t3.type='U')
+				where
+				sys.all_objects.object_id = t2.object_id 
+				)
+	   )
+	) and 
+	sys.all_objects.schema_id = sys.schemas.schema_id";
+			}
+
+			if( ownerList != null && 
+				ownerList != string.Empty )
+			{
+				retsql += " and sys.schemas.name in ( " + ownerList + " ) ";
+			}
+
+			return retsql;
 		}
 
 		#endregion
