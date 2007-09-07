@@ -538,6 +538,8 @@ namespace quickDBExplorer
 			// 
 			// tableList
 			// 
+			this.tableList.Activation = System.Windows.Forms.ItemActivation.OneClick;
+			this.tableList.AllowColumnReorder = true;
 			this.tableList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 																						this.ColTVSType,
 																						this.ColOwner,
@@ -545,9 +547,12 @@ namespace quickDBExplorer
 			this.tableList.ContextMenu = this.mainContextMenu;
 			this.tableList.Font = new System.Drawing.Font("ÇlÇr ÉSÉVÉbÉN", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.tableList.FullRowSelect = true;
+			this.tableList.GridLines = true;
+			this.tableList.HideSelection = false;
 			this.tableList.Location = new System.Drawing.Point(240, 24);
 			this.tableList.Name = "tableList";
 			this.tableList.Size = new System.Drawing.Size(256, 292);
+			this.tableList.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.tableList.TabIndex = 22;
 			this.tableList.View = System.Windows.Forms.View.Details;
 			this.tableList.CopyData += new quickDBExplorer.qdbeListView.CopyDataHandler(this.tableList_CopyData);
@@ -4479,14 +4484,21 @@ namespace quickDBExplorer
 
 				dr = cm.ExecuteReader();
 
+				this.tableList.BeginUpdate();
 				this.tableList.Items.Clear();
+				ArrayList ar = new ArrayList();
+
 				while ( dr.Read())
 				{
-					this.tableList.AddItem(
-						(string)dr["tvs"],
-						(string)dr["uname"],
-						(string)dr["tbname"]);
+					ar.Add(
+						this.tableList.CreateItem(
+							(string)dr["tvs"],
+							(string)dr["uname"],
+							(string)dr["tbname"])
+						);
 				}
+				this.tableList.Items.AddRange((ListViewItem[])ar.ToArray(typeof(ListViewItem)));
+				this.tableList.EndUpdate();
 				dr.Close();
 			}
 			catch ( System.Data.SqlClient.SqlException se )

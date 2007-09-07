@@ -306,6 +306,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "tableListView.resx"
+                    DependentUpon = "tableListView.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "TableSelectDialog.cs"
                     SubType = "Form"
                     BuildAction = "Compile"

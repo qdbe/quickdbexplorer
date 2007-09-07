@@ -15,7 +15,7 @@ namespace quickDBExplorer
 			//
 		}
 
-		public void	AddItem(string tvs, string owner, string tbname)
+		public ListViewItem	CreateItem(string tvs, string owner, string tbname)
 		{
 
 			ListViewItem it = new ListViewItem( new string[]{ 
@@ -25,7 +25,7 @@ namespace quickDBExplorer
 															}
 				);
 			it.Tag = string.Format("{0}.{1}", owner, tbname );
-			this.Items.Add(it);
+			return it;
 		}
 
 		public string GetSelectOneTableName()
