@@ -125,6 +125,7 @@ namespace quickDBExplorer
 			set { this.sqlDriver = value; }
 		}
 
+
 		/// <summary>
 		///  接続先のサーバー名。表示用にのみ利用
 		/// </summary>
@@ -539,7 +540,6 @@ namespace quickDBExplorer
 			// tableList
 			// 
 			this.tableList.Activation = System.Windows.Forms.ItemActivation.OneClick;
-			this.tableList.AllowColumnReorder = true;
 			this.tableList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 																						this.ColTVSType,
 																						this.ColOwner,
@@ -557,12 +557,13 @@ namespace quickDBExplorer
 			this.tableList.View = System.Windows.Forms.View.Details;
 			this.tableList.CopyData += new quickDBExplorer.qdbeListView.CopyDataHandler(this.tableList_CopyData);
 			this.tableList.DoubleClick += new System.EventHandler(this.insertmake);
+			this.tableList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.tableList_ColumnClick);
 			this.tableList.SelectedIndexChanged += new System.EventHandler(this.tableList_SelectedIndexChanged);
 			// 
 			// ColTVSType
 			// 
 			this.ColTVSType.Text = "";
-			this.ColTVSType.Width = 10;
+			this.ColTVSType.Width = 12;
 			// 
 			// ColOwner
 			// 
@@ -1877,6 +1878,16 @@ namespace quickDBExplorer
 			copyfldlist(true,true);
 		}
 
+		/// <summary>
+		/// テーブル一覧のカラムクリック時処理
+		/// </summary>
+		/// <param name="sender">-</param>
+		/// <param name="e">-</param>
+		private void tableList_ColumnClick(object sender, System.Windows.Forms.ColumnClickEventArgs e)
+		{
+			this.tableList.SetColumClick(e.Column);
+		}
+
 		#endregion
 
 		#region 画面制御
@@ -1928,11 +1939,19 @@ namespace quickDBExplorer
 			{
 				this.rdoSortTable.Checked = false;
 				this.rdoSortOwnerTable.Checked = true;
+				this.tableList.SortOrder = new TableColumnSortOrder[] {
+																		  new TableColumnSortOrder(1,true),
+																		  new TableColumnSortOrder(2,true)
+																	  };
+																		
 			}
 			else
 			{
 				this.rdoSortTable.Checked = true;
 				this.rdoSortOwnerTable.Checked = false;
+				this.tableList.SortOrder = new TableColumnSortOrder[] {
+																		  new TableColumnSortOrder(2,true)
+																	  };
 			}
 			if( svdata.ShowView == 0 )
 			{
@@ -2272,7 +2291,22 @@ namespace quickDBExplorer
 
 		private void rdoSortTable_CheckedChanged(object sender, System.EventArgs e)
 		{
-			dspTableList();
+			if( this.rdoSortTable.Checked == true )
+			{
+				this.tableList.SortOrder = new TableColumnSortOrder[] {
+																		  new TableColumnSortOrder(2,true)
+																	  };
+			}
+			else
+			{
+				this.tableList.SortOrder = new TableColumnSortOrder[] {
+																		  new TableColumnSortOrder(1,true),
+																		  new TableColumnSortOrder(2,true)
+																	  };
+			}
+			this.tableList.Sort();
+				 
+			//dspTableList();
 		}
 
 		private void chkDspData_CheckedChanged(object sender, System.EventArgs e)
@@ -6555,6 +6589,7 @@ order by colorder",
 		}
 
 		#endregion
+
 	}
 
 	/// <summary>

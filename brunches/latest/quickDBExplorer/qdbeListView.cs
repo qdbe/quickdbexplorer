@@ -45,6 +45,9 @@ namespace quickDBExplorer
 			get { return this.isAllSelecting; }
 		}
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public qdbeListView()
 		{
 			// 
@@ -100,6 +103,9 @@ namespace quickDBExplorer
 			return base.ProcessCmdKey (ref msg, keyData);
 		}
 
+		/// <summary>
+		/// 全ての選択状態をクリアする
+		/// </summary>
 		public void ClearSelected()
 		{
 			this.BeginUpdate();
@@ -110,6 +116,12 @@ namespace quickDBExplorer
 			this.EndUpdate();
 		}
 
+		/// <summary>
+		/// 指定した値と全く同じものを持つキーを検索する
+		/// .NET 標準と違い、大文字・小文字を区別する
+		/// </summary>
+		/// <param name="itemkey"></param>
+		/// <returns></returns>
 		public int FindStringExact(string itemkey)
 		{
 			for( int i = 0; i < this.Items.Count; i++ )
