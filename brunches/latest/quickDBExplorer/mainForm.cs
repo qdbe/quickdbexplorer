@@ -794,7 +794,7 @@ namespace quickDBExplorer
 			// menuStasticUpdate
 			// 
 			this.menuStasticUpdate.Index = 9;
-			this.menuStasticUpdate.Text = "(&8) 統計情報更新";
+			this.menuStasticUpdate.Text = "統計情報更新";
 			this.menuStasticUpdate.Click += new System.EventHandler(this.menuStasticUpdate_Click);
 			// 
 			// menuISQLW
@@ -3086,9 +3086,9 @@ namespace quickDBExplorer
 					fname.Append(this.txtOutput.Text);
 				}
 
-				for( int k = 0; k < this.tableList.SelectedItems.Count; k++ )
+				for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 				{
-					String tbname = this.tableList.SelectedItems[k].Tag.ToString();
+					String tbname = this.tableList.GetSelectTableName(ti);
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
@@ -3239,8 +3239,10 @@ namespace quickDBExplorer
 					wr.Write(wr.NewLine);
 				}
 
-				foreach( String tbname in this.tableList.SelectedItems )
+				String tbname = "";
+				for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 				{
+					tbname = this.tableList.GetSelectTableName(ti);
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv",false, GetEncode());
@@ -3377,8 +3379,11 @@ namespace quickDBExplorer
 					wr.WriteLine("テーブル名,データ件数");
 				}
 
-				foreach( String tbname in this.tableList.SelectedItems )
+
+				String tbname = "";
+				for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 				{
+					tbname = this.tableList.GetSelectTableName(ti);
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
@@ -3715,8 +3720,11 @@ namespace quickDBExplorer
 			try
 			{
 
-				foreach( String tbname in this.tableList.SelectedItems )
+				String tbname = "";
+				for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 				{
+					tbname = this.tableList.GetSelectTableName(ti);
+
 					trow = 0;
 					string sqlstr;
 					sqlstr = string.Format("select  count(1) from {0} ",gettbnameWithAlias(tbname));
@@ -3996,8 +4004,12 @@ namespace quickDBExplorer
 
 			try
 			{
-				foreach( String tbname in this.tableList.SelectedItems )
+
+				String tbname = "";
+				for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 				{
+					tbname = this.tableList.GetSelectTableName(ti);
+
 					string sqlstr;
 					// split owner.table -> owner, table
 
@@ -4074,8 +4086,11 @@ namespace quickDBExplorer
 					ds.CaseSensitive = true;
 					cm.Connection = this.sqlConnection1;
 
-					foreach( String tbname in this.tableList.SelectedItems )
+					
+					String tbname = "";
+					for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 					{
+						tbname = this.tableList.GetSelectTableName(ti);
 						cm.CommandText = string.Format(this.cmdDialog.SelectSql,
 							qdbeUtil.GetTbname(tbname));
 
@@ -4649,8 +4664,11 @@ namespace quickDBExplorer
 				cm.CommandTimeout = this.SqlTimeOut;
 			
 
-				foreach( String tbname in this.tableList.SelectedItems )
+				String tbname = "";
+				for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 				{
+					tbname = this.tableList.GetSelectTableName(ti);
+					
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql.tmp",false, GetEncode());
@@ -4858,8 +4876,11 @@ namespace quickDBExplorer
 					fname.Append(this.txtOutput.Text);
 				}
 
-				foreach( String tbname in this.tableList.SelectedItems )
+				String tbname = "";
+				for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 				{
+					tbname = this.tableList.GetSelectTableName(ti);
+
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
@@ -4979,8 +5000,10 @@ namespace quickDBExplorer
 					fname.Append(this.txtOutput.Text);
 				}
 
-				foreach( String tbname in this.tableList.SelectedItems )
+				string tbname = "";
+				for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 				{
+					tbname = this.tableList.GetSelectTableName(ti);
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
@@ -5157,8 +5180,12 @@ namespace quickDBExplorer
 					fname.Append(this.txtOutput.Text);
 				}
 
-				foreach( String tbname in this.tableList.SelectedItems )
+
+				String tbname = "";
+				for( int ti = 0; ti < this.tableList.SelectedItems.Count; ti++ )
 				{
+					tbname = this.tableList.GetSelectTableName(ti);
+
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
@@ -5605,8 +5632,12 @@ order by colorder",
 			if( this.tableList.SelectedItems.Count > 0 )
 			{
 				StringBuilder strline =  new StringBuilder();
-				foreach( string name in tableList.SelectedItems )
+
+				string name = "";
+				for( int i = 0; i < this.tableList.SelectedItems.Count; i++ )
 				{
+					name = this.tableList.GetSelectTableName(i);
+
 					if( strline.Length != 0 )
 					{
 						if( addcomma )
@@ -6509,8 +6540,11 @@ order by colorder",
 			}
 			else
 			{
-				foreach( object obj in this.tableList.SelectedItems)
+				
+				object obj;
+				for( int i = 0; i < this.tableList.SelectedItems.Count; i++ )
 				{
+					obj = this.tableList.GetSelectTableName(i);
 					procCond.Tbname.Add((string)obj);
 				}
 			}

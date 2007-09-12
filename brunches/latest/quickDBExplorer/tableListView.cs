@@ -36,5 +36,14 @@ namespace quickDBExplorer
 			}
 			return string.Empty;
 		}
+
+		public string GetSelectTableName(int i)
+		{
+			if( this.SelectedItems.Count == 0 )
+			{
+				return "";
+			}
+			return this.SelectedItems[i].Tag.ToString();
+		}
 	}
 }
