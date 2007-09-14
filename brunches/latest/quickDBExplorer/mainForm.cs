@@ -327,7 +327,8 @@ namespace quickDBExplorer
 		protected System.Windows.Forms.ComboBox cmbHistory;
 		private System.Windows.Forms.ColumnHeader ColTVSType;
 		private System.Windows.Forms.ColumnHeader ColOwner;
-		private System.Windows.Forms.ColumnHeader ColTbName;
+		private System.Windows.Forms.ColumnHeader ColObjName;
+		private System.Windows.Forms.ColumnHeader ColCredate;
 		
 		/// <summary>
 		/// メニュー情報
@@ -391,7 +392,7 @@ namespace quickDBExplorer
 			this.objectList = new quickDBExplorer.ObjectListView();
 			this.ColTVSType = new System.Windows.Forms.ColumnHeader();
 			this.ColOwner = new System.Windows.Forms.ColumnHeader();
-			this.ColTbName = new System.Windows.Forms.ColumnHeader();
+			this.ColObjName = new System.Windows.Forms.ColumnHeader();
 			this.mainContextMenu = new System.Windows.Forms.ContextMenu();
 			this.menuTableCopy = new System.Windows.Forms.MenuItem();
 			this.menuTableCopyCsv = new System.Windows.Forms.MenuItem();
@@ -510,6 +511,7 @@ namespace quickDBExplorer
 			this.label11 = new System.Windows.Forms.Label();
 			this.txtAlias = new quickDBExplorer.quickDBExplorerTextBox();
 			this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
+			this.ColCredate = new System.Windows.Forms.ColumnHeader();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -541,9 +543,10 @@ namespace quickDBExplorer
 			// 
 			this.objectList.Activation = System.Windows.Forms.ItemActivation.OneClick;
 			this.objectList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-																						this.ColTVSType,
-																						this.ColOwner,
-																						this.ColTbName});
+																						 this.ColTVSType,
+																						 this.ColOwner,
+																						 this.ColObjName,
+																						 this.ColCredate});
 			this.objectList.ContextMenu = this.mainContextMenu;
 			this.objectList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.objectList.FullRowSelect = true;
@@ -567,13 +570,13 @@ namespace quickDBExplorer
 			// 
 			// ColOwner
 			// 
-			this.ColOwner.Text = "owner";
+			this.ColOwner.Text = "Owner";
 			this.ColOwner.Width = 50;
 			// 
-			// ColTbName
+			// ColObjName
 			// 
-			this.ColTbName.Text = "Table/View";
-			this.ColTbName.Width = 190;
+			this.ColObjName.Text = "Name";
+			this.ColObjName.Width = 190;
 			// 
 			// mainContextMenu
 			// 
@@ -1492,6 +1495,10 @@ namespace quickDBExplorer
 			this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
 			this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
 			// 
+			// ColCredate
+			// 
+			this.ColCredate.Text = "Create Date";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -1906,7 +1913,7 @@ namespace quickDBExplorer
 				// ラベル・ボタンの設定
 				this.label5.Text = this.sqlDriver.GetOwnerLabel1();
 				this.rdoSortOwnerTable.Text = this.sqlDriver.GetOwnerLabel2();
-				this.ColTbName.Text = this.sqlDriver.GetTbListColName();
+				//this.ColObjName.Text = this.sqlDriver.GetTbListColName();
 
 				this.Text = servername;
 
@@ -4526,7 +4533,14 @@ namespace quickDBExplorer
 						ownerlist += "'" + owname + "'";
 					}
 				}
-				cm.CommandText = this.sqlDriver.GetDspTableList(this.rdoDspView.Checked,ownerlist);
+				cm.CommandText = this.sqlDriver.GetDspObjList(
+					true,
+					this.rdoDspView.Checked,
+					true,
+					true,
+					true,
+					ownerlist
+					);
 
 				cm.CommandText += sortkey;
 				cm.Connection = this.sqlConnection1;
@@ -4543,7 +4557,9 @@ namespace quickDBExplorer
 						this.objectList.CreateItem(
 							(string)dr["tvs"],
 							(string)dr["uname"],
-							(string)dr["tbname"])
+							(string)dr["tbname"],
+							(string)dr["cretime"].ToString()
+						)
 						);
 				}
 				this.objectList.Items.AddRange((ListViewItem[])ar.ToArray(typeof(ListViewItem)));

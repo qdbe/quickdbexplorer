@@ -47,11 +47,11 @@ namespace quickDBExplorer
 		string GetFieldListSelect(string tbname, string []tbnamelist);
 
 		/// <summary>
-		/// テーブル一覧の表示用SQLの取得
+		/// オブジェクト一覧の表示用SQLの取得
 		/// </summary>
 		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
-		string GetDspTableList(bool isDspView, string ownerList);
+		string GetDspObjList(bool isDspTable, bool isDspView, bool Synonym, bool isDspFunc, bool isDspSP, string ownerList);
 	}
 }

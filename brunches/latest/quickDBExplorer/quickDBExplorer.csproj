@@ -213,6 +213,16 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "objectListView.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "objectListView.resx"
+                    DependentUpon = "objectListView.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "QdbeDataGridTextBoxColumn.cs"
                     SubType = "Component"
                     BuildAction = "Compile"
@@ -298,16 +308,6 @@
                 <File
                     RelPath = "ServerSelectDialog.resx"
                     DependentUpon = "ServerSelectDialog.cs"
-                    BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "tableListView.cs"
-                    SubType = "Component"
-                    BuildAction = "Compile"
-                />
-                <File
-                    RelPath = "tableListView.resx"
-                    DependentUpon = "tableListView.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File

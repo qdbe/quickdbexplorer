@@ -42,17 +42,29 @@ namespace quickDBExplorer
 			set { this.objname = value; }
 		}
 
+		private string createTime;
+		/// <summary>
+		/// オブジェクトが生成された日時
+		/// </summary>
+		public string CreateTime
+		{
+			get { return this.createTime; }
+			set { this.createTime = value; }
+		}
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="otype">オブジェクトの型</param>
 		/// <param name="owner">オブジェクトの所有者名</param>
 		/// <param name="name">オブジェクトの名称</param>
-		public DBObjectInfo( string otype, string owner, string name )
+		/// <param name="cretime">オブジェクトの作成日時</param>
+		public DBObjectInfo( string otype, string owner, string name, string cretime )
 		{
 			this.objType = otype;
 			this.owner = owner;
 			this.objname = name;
+			this.createTime = cretime;
 		}
 
 		/// <summary>
@@ -103,17 +115,19 @@ namespace quickDBExplorer
 		/// <param name="tvs">テーブル・View・Schemaの区分</param>
 		/// <param name="owner">オブジェクトの所有者</param>
 		/// <param name="tbname">オブジェクト名</param>
+		/// <param name="cretime">オブジェクトの作成日時</param>
 		/// <returns></returns>
-		public ListViewItem	CreateItem(string tvs, string owner, string tbname)
+		public ListViewItem	CreateItem(string tvs, string owner, string tbname, string cretime)
 		{
 
 			ListViewItem it = new ListViewItem( new string[]{ 
 																tvs,
 																owner,
-																tbname
+																tbname,
+																cretime
 															}
 				);
-			it.Tag = new DBObjectInfo(tvs,owner,tbname);
+			it.Tag = new DBObjectInfo(tvs,owner,tbname,cretime);
 			return it;
 		}
 

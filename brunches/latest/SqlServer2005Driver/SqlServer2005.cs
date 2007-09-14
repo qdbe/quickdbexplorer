@@ -139,12 +139,12 @@ order by colorder",
 		}
 
 		/// <summary>
-		/// テーブル一覧の表示用SQLの取得
+		/// オブジェクト一覧の表示用SQLの取得
 		/// </summary>
 		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
-		public string GetDspTableList(bool isDspView, string ownerList)
+		public string GetDspObjList(bool isDspTable, bool isDspView, bool Synonym, bool isDspFunc, bool isDspSP, string ownerList)
 		{
 			string retsql = "";
 
@@ -158,7 +158,8 @@ order by colorder",
 	when sys.all_objects.type = 'U' then ' '
 	when sys.all_objects.type = 'V' then 'V'
 	when sys.all_objects.type = 'SN' then 'S'
-	end as tvs
+	end as tvs,
+	sys.all_objects.create_date as cretime
 from 
 	sys.all_objects, 
 	sys.schemas 

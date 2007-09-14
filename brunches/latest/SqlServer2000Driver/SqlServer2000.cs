@@ -58,12 +58,12 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブル一覧の表示用SQLの取得
+		/// オブジェクト一覧の表示用SQLの取得
 		/// </summary>
 		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
-		public string GetDspTableList(bool isDspView, string ownerList)
+		public string GetDspObjList(bool isDspTable, bool isDspView, bool Synonym, bool isDspFunc, bool isDspSP, string ownerList)
 		{
 			string retsql = "";
 			if( isDspView == true )
@@ -74,7 +74,8 @@ namespace quickDBExplorer
 					case
 					when xtype = 'U' then ' '
 					else				'V'
-					end as tvs
+					end as tvs,
+					sysobjects.crdate as cretime
 					from sysobjects, sysusers 
 					where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
 			}
@@ -83,7 +84,8 @@ namespace quickDBExplorer
 				retsql = @"select 
 					sysobjects.name as tbname, 
 					sysusers.name as uname ,
-					' ' as tvs
+					' ' as tvs,
+					sysobjects.crdate as cretime
 					from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
 			}
 
