@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -52,9 +53,9 @@ namespace quickDBExplorer
 			return "オーナー名・テーブル名";
 		}
 
-		public string GetFieldListSelect(string tbname, string []str)
+		public string GetFieldListSelect(DBObjectInfo dboInfo)
 		{
-			return "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+			return "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + dboInfo.Owner +"' and sysobjects.name = '" + dboInfo.ObjName + "' order by syscolumns.colorder";
 		}
 
 		/// <summary>
@@ -63,31 +64,64 @@ namespace quickDBExplorer
 		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
-		public string GetDspObjList(bool isDspTable, bool isDspView, bool Synonym, bool isDspFunc, bool isDspSP, string ownerList)
+		public string GetDspObjList(bool isDspTable, bool isDspView, bool isDspSyn, bool isDspFunc, bool isDspSP, string ownerList)
 		{
 			string retsql = "";
+
+			string destObj = "";
+
+			ArrayList ar = new ArrayList();
+
+			if( isDspTable == true )
+			{
+				ar.Add("U");
+			}
+
 			if( isDspView == true )
 			{
-				retsql = @"select 
-					sysobjects.name as tbname, 
-					sysusers.name as uname ,
-					case
-					when xtype = 'U' then ' '
-					else				'V'
-					end as tvs,
-					sysobjects.crdate as cretime
-					from sysobjects, sysusers 
-					where ( xtype='U' or xtype='V' ) and sysobjects.uid = sysusers.uid ";
+				ar.Add("V");
 			}
-			else
+
+			if( isDspSyn == true )
 			{
-				retsql = @"select 
+				ar.Add("SN");
+			}
+
+			if( isDspFunc == true )
+			{
+				ar.Add("FN");
+			}
+
+			if( isDspSP == true )
+			{
+				ar.Add("P");
+				ar.Add("PC");
+			}
+
+			if( ar.Count == 0 )
+			{
+				// 何も指定がなければ、テーブルのみにしておく
+				ar.Add("U");
+			}
+
+			for( int i = 0; i < ar.Count; i++ )
+			{
+				if( i != 0 )
+				{
+					destObj += ",";
+				}
+				destObj += "'" + (string)ar[i] + "'";
+			}
+			retsql = string.Format(@"select 
 					sysobjects.name as tbname, 
 					sysusers.name as uname ,
-					' ' as tvs,
-					sysobjects.crdate as cretime
-					from sysobjects, sysusers where xtype='U' and sysobjects.uid = sysusers.uid ";
-			}
+					xtype as tvs,
+					sysobjects.crdate as cretime,
+					'' as synbase,
+					'' as syntype
+					from sysobjects, sysusers 
+					where xtype in ( {0} ) and sysobjects.uid = sysusers.uid ",
+				destObj );
 
 			if( ownerList != null && 
 				ownerList != string.Empty )

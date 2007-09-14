@@ -2228,7 +2228,7 @@ namespace quickDBExplorer
 				if( isInCmbEvent == false )
 				{
 					// 選択されたTable/View を記憶する
-					if( this.selectedTables.Contains(this.objectList.GetSelectOneTableName()) == false )
+					if( this.selectedTables.Contains(this.objectList.GetSelectOneObjectName()) == false )
 					{
 						if( this.selectedTables.Count > MaxTableHistory )
 						{
@@ -2237,44 +2237,44 @@ namespace quickDBExplorer
 					}
 					else
 					{
-						this.selectedTables.Remove(this.objectList.GetSelectOneTableName());
+						this.selectedTables.Remove(this.objectList.GetSelectOneObjectName());
 
 					}
-					this.selectedTables.Add(this.objectList.GetSelectOneTableName());
+					this.selectedTables.Add(this.objectList.GetSelectOneObjectName());
 					this.cmbHistory.DataSource = null;
 					this.cmbHistory.DataSource = this.selectedTables;
-					int i = this.cmbHistory.FindStringExact(this.objectList.GetSelectOneTableName());
+					int i = this.cmbHistory.FindStringExact(this.objectList.GetSelectOneObjectName());
 					this.cmbHistory.SelectedIndex = i;
 					this.cmbHistory.Refresh();
 				}
 
 
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneTableName(),this.txtWhere.Text,ref this.whereHistory);
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneTableName(),this.txtSort.Text,ref this.sortHistory);
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneTableName(),this.txtAlias.Text,ref this.aliasHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtWhere.Text,ref this.whereHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,ref this.sortHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtAlias.Text,ref this.aliasHistory);
 				// データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectOneTableName());
+				DspData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
 				qdbeUtil.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
 				qdbeUtil.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
 				qdbeUtil.SetNewHistory("",this.txtAlias.Text,ref this.aliasHistory);
-				DspData("");
+				DspData(null);
 			}
 			if( this.objectList.SelectedItems.Count == 1 )
 			{
-				dspfldlist(this.objectList.GetSelectOneTableName());
+				dspfldlist(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				dspfldlist("");
+				dspfldlist(null);
 			}
 			if( indexdlg != null && indexdlg.Visible == true )
 			{
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					indexdlg.settabledsp(this.objectList.GetSelectOneTableName());
+					indexdlg.settabledsp(this.objectList.GetSelectOneObjectName());
 				}
 				else
 				{
@@ -2322,11 +2322,11 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectOneTableName());
+				DspData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				DspData("");
+				DspData(null);
 			}
 			if( this.chkDspData.CheckState == CheckState.Checked )
 			{
@@ -2344,11 +2344,11 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectOneTableName());
+				DspData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				DspData("");
+				DspData(null);
 			}
 		}
 
@@ -2359,13 +2359,14 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.objectList.GetSelectOneTableName();
+				tbname = this.objectList.GetSelectObject(0).FormalName;
+				DspData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
 				tbname = "";
+				DspData(null);
 			}
-			DspData(tbname);
 
 			// 履歴に現在の値を記録 TODO
 			qdbeUtil.SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
@@ -2379,13 +2380,14 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.objectList.GetSelectOneTableName();
+				tbname = this.objectList.GetSelectObject(0).FormalName;
+				DspData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
 				tbname = "";
+				DspData(null);
 			}
-			DspData(tbname);
 
 			// 履歴に現在の値を記録 TODO
 			qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
@@ -2572,11 +2574,11 @@ namespace quickDBExplorer
 		{
 			if( this.objectList.SelectedItems.Count == 1 )
 			{
-				dspfldlist(this.objectList.GetSelectOneTableName());
+				dspfldlist(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				dspfldlist("");
+				dspfldlist(null);
 			}
 		}
 
@@ -2597,7 +2599,7 @@ namespace quickDBExplorer
 					)
 				{
 					// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-					string tbname = this.objectList.GetSelectOneTableName();
+					DBObjectInfo	dboInfo = this.objectList.GetSelectObject(0);
 					string sqlstr;
 					sqlstr = "select ";
 					int	maxlines;
@@ -2614,8 +2616,7 @@ namespace quickDBExplorer
 						sqlstr += " TOP " + this.txtDspCount.Text;
 					}
 
-					sqlstr += string.Format(" * from {0}",gettbnameWithAlias(tbname));
-					//sqlstr += " * from [" + tbname + "]";
+					sqlstr += string.Format(" * from {0}",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						sqlstr += " where " + this.txtWhere.Text.Trim();
@@ -2754,11 +2755,11 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectOneTableName());
+				DspData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				DspData("");
+				DspData(null);
 			}
 		}
 
@@ -2769,14 +2770,14 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectOneTableName(),true);
+				DspData(this.objectList.GetSelectObject(0),true);
 				this.btnTmpAllDsp.ForeColor = Color.WhiteSmoke;
 				this.btnTmpAllDsp.BackColor = Color.Navy;
 				this.btnTmpAllDsp.Enabled = true;
 			}
 			else
 			{
-				DspData("");
+				DspData(null);
 			}
 		}
 
@@ -2795,12 +2796,7 @@ namespace quickDBExplorer
 		{
 			this.txtWhere.Text = ((ZoomDialog)sender).EditText;
 
-			string targetTable = "";
-			if( this.objectList.SelectedItems.Count == 1 )
-			{
-				targetTable = this.objectList.GetSelectOneTableName();
-			}
-			DspData(targetTable);
+			DspData(this.objectList.GetSelectObject(0));
 		}
 
 		private void btnOrderZoom_Click(object sender, System.EventArgs e)
@@ -2816,24 +2812,14 @@ namespace quickDBExplorer
 		private void dlgSortZoom_Click(object sender, System.EventArgs e)
 		{
 			this.txtSort.Text = ((ZoomDialog)sender).EditText;
-			string targetTable = "";
-			if( this.objectList.SelectedItems.Count == 1 )
-			{
-				targetTable = this.objectList.GetSelectOneTableName();
-			}
-			DspData(targetTable);
+			DspData(this.objectList.GetSelectObject(0));
 		}
 
 		private void dlgAliasZoom_Click(object sender, System.EventArgs e)
 		{
 			this.txtAlias.Text = ((ZoomDialog)sender).EditText;
 
-			string targetTable = "";
-			if( this.objectList.SelectedItems.Count == 1 )
-			{
-				targetTable = this.objectList.GetSelectOneTableName();
-			}
-			DspData(targetTable);
+			DspData(this.objectList.GetSelectObject(0));
 		}
 
 		private void txtAlias_Leave(object sender, System.EventArgs e)
@@ -2843,7 +2829,7 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.objectList.GetSelectOneTableName();
+				tbname = this.objectList.GetSelectOneObjectName();
 			}
 			else
 			{
@@ -2855,6 +2841,8 @@ namespace quickDBExplorer
 
 		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
+			DBObjectInfo	dboInfo = null;
+
 			if( e.Alt == false &&
 				e.Control == true &&
 				e.KeyCode == Keys.W )
@@ -2882,7 +2870,8 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.objectList.GetSelectOneTableName();
+					targetTable = this.objectList.GetSelectOneObjectName();
+					dboInfo = this.objectList.GetSelectObject(0);
 				}
 				HistoryViewer hv = new HistoryViewer(this.aliasHistory, targetTable);
 				if( DialogResult.OK == hv.ShowDialog() && ((TextBox)sender).Text != hv.RetString)
@@ -2890,19 +2879,14 @@ namespace quickDBExplorer
 					((TextBox)sender).Text = hv.RetString;
 					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.aliasHistory);
 
-					DspData(targetTable);
+					DspData(dboInfo);
 				}
 			}
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
-				string targetTable = "";
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.objectList.GetSelectOneTableName();
-				}
-				qdbeUtil.SetNewHistory(targetTable,((TextBox)sender).Text,ref this.aliasHistory);
-				DspData(targetTable);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),((TextBox)sender).Text,ref this.aliasHistory);
+				DspData(this.objectList.GetSelectObject(0));
 			}
 		}
 
@@ -2970,7 +2954,7 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.objectList.GetSelectOneTableName();
+					targetTable = this.objectList.GetSelectOneObjectName();
 				}
 				HistoryViewer hv = new HistoryViewer(this.whereHistory, targetTable);
 				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.RetString)
@@ -2978,20 +2962,15 @@ namespace quickDBExplorer
 					this.txtWhere.Text = hv.RetString;
 					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.whereHistory);
 
-					DspData(targetTable);
+					DspData(this.objectList.GetSelectObject(0));
 				}
 			}
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
 				// Enter(Return) では、入力を確定させて、グリッド表示に反映させる
-				string targetTable = "";
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.objectList.GetSelectOneTableName();
-				}
-				qdbeUtil.SetNewHistory(targetTable,this.txtWhere.Text,ref this.whereHistory);
-				DspData(targetTable);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtWhere.Text,ref this.whereHistory);
+				DspData(this.objectList.GetSelectObject(0));
 			}
 		
 		}
@@ -3023,29 +3002,21 @@ namespace quickDBExplorer
 				e.KeyCode == Keys.S )
 			{
 				string targetTable = "";
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.objectList.GetSelectOneTableName();
-				}
+				targetTable = this.objectList.GetSelectOneObjectName();
 				HistoryViewer hv = new HistoryViewer(this.sortHistory, targetTable);
 				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.RetString)
 				{
 					this.txtSort.Text = hv.RetString;
 					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.sortHistory);
 
-					DspData(targetTable);
+					DspData(this.objectList.GetSelectObject(0));
 				}
 			}
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
-				string targetTable = "";
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.objectList.GetSelectOneTableName();
-				}
-				qdbeUtil.SetNewHistory(targetTable,this.txtSort.Text,ref this.sortHistory);
-				DspData(targetTable);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,ref this.sortHistory);
+				DspData(this.objectList.GetSelectObject(0));
 			}
 		
 		}
@@ -3129,35 +3100,37 @@ namespace quickDBExplorer
 
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
-					String tbname = this.objectList.GetSelectTableName(ti);
+					DBObjectInfo dboInfo = this.objectList.GetSelectObject(ti);
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + 
+							dboInfo.ToString()
+							+ ".sql",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
+						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 					}
 					// get id 
-					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",qdbeUtil.GetTbname(tbname)), this.sqlConnection1);
+					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",dboInfo.FormalName), this.sqlConnection1);
 
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
-					da.Fill(ds,tbname);
+					da.Fill(ds,dboInfo.ToString());
 	
 					wr.Write("select {0}",wr.NewLine);
-					int		maxcol = ds.Tables[tbname].Columns.Count;
+					int		maxcol = ds.Tables[dboInfo.ToString()].Columns.Count;
 					for( int i = 0; i < maxcol ; i++ )
 					{
 						if( i != 0 )
 						{
 							wr.Write(",{0}", wr.NewLine);
 						}
-						wr.Write("\t{0}", ds.Tables[tbname].Columns[i].ColumnName);
+						wr.Write("\t{0}", ds.Tables[dboInfo.ToString()].Columns[i].ColumnName);
 					
 					}
 					wr.Write(wr.NewLine);
-					wr.Write(" from {0}{1}", gettbnameWithAlias(tbname),wr.NewLine);
+					wr.Write(" from {0}{1}", dboInfo.GetAliasName(this.getAlias()),wr.NewLine);
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						wr.Write(" where {0}{1}", this.txtWhere.Text.Trim(),wr.NewLine);
@@ -3202,26 +3175,13 @@ namespace quickDBExplorer
 				indexdlg.SqlVersion = this.sqlVersion;
 
 				indexdlg.SqlConnection = this.sqlConnection1;
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					indexdlg.DspTbname = this.objectList.GetSelectOneTableName();
-				}
-				else
-				{
-					indexdlg.DspTbname = "";
-				}
+				indexdlg.DspTbname = this.objectList.GetSelectOneObjectName();
+
 				indexdlg.Show();
 			}
 			else
 			{
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					indexdlg.settabledsp(this.objectList.GetSelectOneTableName());
-				}
-				else
-				{
-					indexdlg.settabledsp("");
-				}
+				indexdlg.settabledsp(this.objectList.GetSelectOneObjectName());
 				indexdlg.Show();
 				indexdlg.BringToFront();
 			}
@@ -3280,16 +3240,16 @@ namespace quickDBExplorer
 					wr.Write(wr.NewLine);
 				}
 
-				String tbname = "";
+				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
-					tbname = this.objectList.GetSelectTableName(ti);
+					dboInfo = this.objectList.GetSelectObject(ti);
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
+						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 						wr.Write("テーブル名");
 						wr.Write("\t依存関係先名称");
 						wr.Write("\t種類");
@@ -3303,25 +3263,22 @@ namespace quickDBExplorer
 
 					// get id 
 					string sqlstr;
-					// split owner.table -> owner, table
 
-					string delimStr = ".";
-					string []str = tbname.Split(delimStr.ToCharArray(), 2);
-					sqlstr = "sp_depends N'[" + str[0] +"].[" + str[1] + "]'";
+					sqlstr = string.Format("sp_depends N'{0}'", dboInfo.FormalName );
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
-					da.Fill(ds,tbname);
+					da.Fill(ds,dboInfo.ToString());
 
 					if(	ds.Tables.Count != 0 &&
-						ds.Tables[tbname].Rows != null &&
-						ds.Tables[tbname].Rows.Count != 0)
+						ds.Tables[dboInfo.ToString()].Rows != null &&
+						ds.Tables[dboInfo.ToString()].Rows.Count != 0)
 					{
-						foreach(DataRow dr in ds.Tables[tbname].Rows)
+						foreach(DataRow dr in ds.Tables[dboInfo.ToString()].Rows)
 						{
 							// テーブル名
-							wr.Write(tbname);
-							foreach( DataColumn col in ds.Tables[tbname].Columns)
+							wr.Write(dboInfo.FormalName);
+							foreach( DataColumn col in ds.Tables[dboInfo.ToString()].Columns)
 							{
 								wr.Write("\t");
 								wr.Write(dr[col.ColumnName].ToString());
@@ -3421,21 +3378,21 @@ namespace quickDBExplorer
 				}
 
 
-				String tbname = "";
+				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
-					tbname = this.objectList.GetSelectTableName(ti);
+					dboInfo = this.objectList.GetSelectObject(ti);
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv.tmp",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						wr.WriteLine("テーブル名,データ件数");
 					}
 					trow = 0;
 					string sqlstr;
-					sqlstr = string.Format("select  count(1) from {0} ",gettbnameWithAlias(tbname));
+					sqlstr = string.Format("select  count(1) from {0} ",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						sqlstr += " where " + this.txtWhere.Text.Trim();
@@ -3458,7 +3415,7 @@ namespace quickDBExplorer
 					{
 						rowcount++;
 						trow++;
-						wr.Write(qdbeUtil.GetTbname(tbname));
+						wr.Write(dboInfo.FormalName);
 						wr.Write(",");
 						if( dr.IsDBNull(0) )
 						{
@@ -3476,13 +3433,13 @@ namespace quickDBExplorer
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
-						File.Delete(this.txtOutput.Text + "\\" + tbname + ".csv");
+						File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
 						if( trow > 0 )
 						{
-							fname.Append(this.txtOutput.Text + "\\" + tbname + ".csv\r\n");
+							fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv\r\n");
 							// ファイルをリネームする
-							File.Move(this.txtOutput.Text + "\\" + tbname + ".csv.tmp", 
-								this.txtOutput.Text + "\\" + tbname + ".csv");
+							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp", 
+								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
 						}
 					}
 				}
@@ -3761,14 +3718,14 @@ namespace quickDBExplorer
 			try
 			{
 
-				String tbname = "";
+				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
-					tbname = this.objectList.GetSelectTableName(ti);
+					dboInfo = this.objectList.GetSelectObject(ti);
 
 					trow = 0;
 					string sqlstr;
-					sqlstr = string.Format("select  count(1) from {0} ",gettbnameWithAlias(tbname));
+					sqlstr = string.Format("select  count(1) from {0} ",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						sqlstr += " where " + this.txtWhere.Text.Trim();
@@ -3792,7 +3749,7 @@ namespace quickDBExplorer
 						rowcount++;
 						trow++;
 						DataRow addrow = rcdt.NewRow();
-						addrow[0] = qdbeUtil.GetTbname(tbname);
+						addrow[0] = dboInfo.FormalName;
 						if( dr.IsDBNull(0) )
 						{
 							addrow[1] = 0;
@@ -4046,39 +4003,20 @@ namespace quickDBExplorer
 			try
 			{
 
-				String tbname = "";
+				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
-					tbname = this.objectList.GetSelectTableName(ti);
+					dboInfo = this.objectList.GetSelectObject(ti);
 
 					string sqlstr;
-					// split owner.table -> owner, table
 
-					string delimStr = ".";
-					string []str = tbname.Split(delimStr.ToCharArray(), 2);
 
-					if( this.sqlVersion != 2000 )
+					if( dboInfo.CanStatistics ==  false )
 					{
-						// synonym かどうかをチェックする。
-						sqlstr = string.Format( @"select base_object_name from sys.synonyms 
-	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
-	where
-	sys.schemas.name = '{0}' and 
-	sys.synonyms.name = '{1}' ",
-							str[0],
-							str[1]
-							);
-						SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-						DataSet dssyn = new DataSet();
-						dssyn.CaseSensitive = true;
-						dasyn.Fill(dssyn,tbname);
-						if( dssyn.Tables[tbname].Rows.Count > 0 )
-						{
-							// synonym は update STATISTICSができない
-							continue;
-						}
+						continue;
 					}
-					sqlstr = "update STATISTICS " + qdbeUtil.GetTbname(tbname) ;
+
+					sqlstr = "update STATISTICS " + dboInfo.RealObjName;
 					cm.CommandText = sqlstr;
 					cm.Connection = this.sqlConnection1;
 					cm.ExecuteNonQuery();
@@ -4128,12 +4066,12 @@ namespace quickDBExplorer
 					cm.Connection = this.sqlConnection1;
 
 					
-					String tbname = "";
+					DBObjectInfo dboInfo;
 					for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 					{
-						tbname = this.objectList.GetSelectTableName(ti);
+						dboInfo = this.objectList.GetSelectObject(ti);
 						cm.CommandText = string.Format(this.cmdDialog.SelectSql,
-							qdbeUtil.GetTbname(tbname));
+							dboInfo.FormalName);
 
 						if( cmdDialog.HasReturn == true )
 						{
@@ -4181,7 +4119,7 @@ namespace quickDBExplorer
 			}
 
 			FieldGetDialog dlg = new FieldGetDialog();
-			dlg.BaseTableName = this.objectList.GetSelectOneTableName();
+			dlg.BaseTableName = this.objectList.GetSelectOneObjectName();
 			if( dlg.ShowDialog(this) != DialogResult.OK )
 			{
 				return;
@@ -4229,7 +4167,7 @@ namespace quickDBExplorer
 			{
 				return;
 			}
-			this.txtAlias.Text = this.objectList.GetSelectOneTableName();
+			this.txtAlias.Text = this.objectList.GetSelectOneObjectName();
 		
 		}
 
@@ -4302,12 +4240,12 @@ namespace quickDBExplorer
 
 
 
-		private void dspfldlist(string tbname)
+		private void dspfldlist(DBObjectInfo dboInfo)
 		{
 			try
 			{
 				this.fieldListbox.Items.Clear();
-				if( tbname == "" )
+				if( dboInfo == null )
 				{
 					return;
 				}
@@ -4322,21 +4260,17 @@ namespace quickDBExplorer
 					dodsp = false;
 				}
 
-				string delimStr = ".";
-				string []str = tbname.Split(delimStr.ToCharArray(), 2);
 				string sqlstr;
-				// split owner.table -> owner, table
 
-
-				sqlstr = this.sqlDriver.GetFieldListSelect(tbname,str);
+				sqlstr = this.sqlDriver.GetFieldListSelect(dboInfo);
 
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
-				da.Fill(ds,tbname);
+				da.Fill(ds,dboInfo.ToString());
 
 
-				if( ds.Tables[tbname].Rows.Count == 0 )
+				if( ds.Tables[dboInfo.ToString()].Rows.Count == 0 )
 				{
 					// 通常はありえないが、念の為、空の表示を行う
 					if( this.sqlVersion == 2000 )
@@ -4355,7 +4289,7 @@ namespace quickDBExplorer
 					if( this.sqlVersion == 2000 )
 					{
 						sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
-							(int)ds.Tables[tbname].Rows[0]["id"] );
+							(int)ds.Tables[dboInfo.ToString()].Rows[0]["id"] );
 					}
 					else
 					{
@@ -4363,14 +4297,14 @@ namespace quickDBExplorer
 							@"select * from sys.indexes where 
 							object_id = {0}
 						and is_primary_key = 1",
-							(int)ds.Tables[tbname].Rows[0]["id"] );
+							(int)ds.Tables[dboInfo.ToString()].Rows[0]["id"] );
 					}
 				}
 
 				SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 				DataSet idx = new DataSet();
 				idx.CaseSensitive = true;
-				daa.Fill(idx,tbname);
+				daa.Fill(idx,dboInfo.ToString());
 
 				int indid = -1;
 				DataSet idkey = new DataSet();
@@ -4381,21 +4315,21 @@ namespace quickDBExplorer
 					{
 						indid = (short)idx.Tables[0].Rows[0]["indid"];
 						sqlstr = string.Format("select * from sysindexkeys where id={0} and indid={1}",
-							(int)ds.Tables[tbname].Rows[0]["id"],
+							(int)ds.Tables[dboInfo.ToString()].Rows[0]["id"],
 							(short)indid );
 					}
 					else
 					{
 						indid = (int)idx.Tables[0].Rows[0]["index_id"];
 						sqlstr = string.Format("select object_id,index_id,index_column_id,column_id as colid,key_ordinal,partition_ordinal,is_descending_key,is_included_column from sys.index_columns where object_id={0} and index_id={1}",
-							(int)ds.Tables[tbname].Rows[0]["id"],
+							(int)ds.Tables[dboInfo.ToString()].Rows[0]["id"],
 							(short)indid );
 					}
 					SqlDataAdapter dai = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-					dai.Fill(idkey,tbname);
+					dai.Fill(idkey,dboInfo.ToString());
 				}
 
-				int		maxRow = ds.Tables[tbname].Rows.Count;
+				int		maxRow = ds.Tables[dboInfo.ToString()].Rows.Count;
 
 				string	valtype;
 				string	istr = "";
@@ -4403,11 +4337,11 @@ namespace quickDBExplorer
 				{
 					if( dodsp == false )
 					{
-						istr = (string)ds.Tables[tbname].Rows[i][0] + " ";
+						istr = (string)ds.Tables[dboInfo.ToString()].Rows[i][0] + " ";
 					}
 					else
 					{
-						valtype = (string)ds.Tables[tbname].Rows[i][1];
+						valtype = (string)ds.Tables[dboInfo.ToString()].Rows[i][1];
 						if( valtype == "varchar" ||
 							valtype == "varbinary" ||
 							valtype == "nvarchar" ||
@@ -4415,18 +4349,18 @@ namespace quickDBExplorer
 							valtype == "nchar" ||
 							valtype == "binary" )
 						{
-							if( (Int16)ds.Tables[tbname].Rows[i][3] == -1 )
+							if( (Int16)ds.Tables[dboInfo.ToString()].Rows[i][3] == -1 )
 							{
 								istr = string.Format("{0}  {1}(max) ",
-									ds.Tables[tbname].Rows[i][0],
-									ds.Tables[tbname].Rows[i][1]);
+									ds.Tables[dboInfo.ToString()].Rows[i][0],
+									ds.Tables[dboInfo.ToString()].Rows[i][1]);
 							}
 							else
 							{
 								istr = string.Format("{0}  {1}({2}) ",
-									ds.Tables[tbname].Rows[i][0],
-									ds.Tables[tbname].Rows[i][1],
-									ds.Tables[tbname].Rows[i][3]);
+									ds.Tables[dboInfo.ToString()].Rows[i][0],
+									ds.Tables[dboInfo.ToString()].Rows[i][1],
+									ds.Tables[dboInfo.ToString()].Rows[i][3]);
 							}
 										 
 						}
@@ -4434,19 +4368,19 @@ namespace quickDBExplorer
 							valtype == "decimal" )
 						{
 							istr = string.Format("{0}  {1}({2},{3}) ",
-								ds.Tables[tbname].Rows[i][0],
-								ds.Tables[tbname].Rows[i][1],
-								ds.Tables[tbname].Rows[i][3],
-								ds.Tables[tbname].Rows[i][4]);
+								ds.Tables[dboInfo.ToString()].Rows[i][0],
+								ds.Tables[dboInfo.ToString()].Rows[i][1],
+								ds.Tables[dboInfo.ToString()].Rows[i][3],
+								ds.Tables[dboInfo.ToString()].Rows[i][4]);
 
 						}
 						else
 						{
 							istr = string.Format("{0}  {1} ",
-								ds.Tables[tbname].Rows[i][0],
-								ds.Tables[tbname].Rows[i][1]);
+								ds.Tables[dboInfo.ToString()].Rows[i][0],
+								ds.Tables[dboInfo.ToString()].Rows[i][1]);
 						}
-						if( (int)ds.Tables[tbname].Rows[i]["isnullable"] == 0 )
+						if( (int)ds.Tables[dboInfo.ToString()].Rows[i]["isnullable"] == 0 )
 						{
 							istr +=" NOT NULL";
 						}
@@ -4460,14 +4394,14 @@ namespace quickDBExplorer
 							{
 								if( this.sqlVersion == 2000 )
 								{
-									if( (short)dr["colid"] == (short)ds.Tables[tbname].Rows[i]["colid"] )
+									if( (short)dr["colid"] == (short)ds.Tables[dboInfo.ToString()].Rows[i]["colid"] )
 									{
 										istr +=" PRIMARY KEY";
 									}
 								}
 								else
 								{
-									if( (int)dr["colid"] == (int)ds.Tables[tbname].Rows[i]["colid"] )
+									if( (int)dr["colid"] == (int)ds.Tables[dboInfo.ToString()].Rows[i]["colid"] )
 									{
 										istr +=" PRIMARY KEY";
 									}
@@ -4537,8 +4471,8 @@ namespace quickDBExplorer
 					true,
 					this.rdoDspView.Checked,
 					true,
-					true,
-					true,
+					false,
+					false,
 					ownerlist
 					);
 
@@ -4554,12 +4488,7 @@ namespace quickDBExplorer
 				while ( dr.Read())
 				{
 					ar.Add(
-						this.objectList.CreateItem(
-							(string)dr["tvs"],
-							(string)dr["uname"],
-							(string)dr["tbname"],
-							(string)dr["cretime"].ToString()
-						)
+						this.objectList.CreateItem(dr)
 						);
 				}
 				this.objectList.Items.AddRange((ListViewItem[])ar.ToArray(typeof(ListViewItem)));
@@ -4714,14 +4643,14 @@ namespace quickDBExplorer
 				cm.CommandTimeout = this.SqlTimeOut;
 			
 
-				String tbname = "";
+				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
-					tbname = this.objectList.GetSelectTableName(ti);
+					dboInfo = this.objectList.GetSelectObject(ti);
 					
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql.tmp",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						wr.Write("SET NOCOUNT ON{0}GO{0}{0}",wr.NewLine);
@@ -4729,8 +4658,7 @@ namespace quickDBExplorer
 
 					// get id 
 					string sqlstr;
-					sqlstr = string.Format("select  * from {0} ",gettbnameWithAlias(tbname));
-					//sqlstr = "select * from [" + tbname + "]";
+					sqlstr = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						sqlstr += " where " + this.txtWhere.Text.Trim();
@@ -4764,20 +4692,19 @@ namespace quickDBExplorer
 						if( (Boolean)draw["IsIdentity"] == true )
 						{
 							// Identity 列がある場合、SET IDENTITY_INSERT table on をつける
-							string addidinsert = string.Format("SET IDENTITY_INSERT {0} on ",qdbeUtil.GetTbname(tbname));
+							string addidinsert = string.Format("SET IDENTITY_INSERT {0} on ",dboInfo.FormalName);
 							wr.WriteLine(addidinsert);
 							wr.Write(wr.NewLine);
 							break;
 						}
 					}
-					//ds.Tables[tbname].Columns.Count;
 
 					if( isTaihi == true )
 					{
 						string taihistr = 
 							String.Format("select * into {1} from {0} ",
-							gettbnameWithAlias(tbname),
-							qdbeUtil.GetTbnameAdd(tbname,DateTime.Now.ToString("yyyyMMdd"))
+							dboInfo.GetAliasName(this.getAlias()),
+							dboInfo.GetNameAdd(DateTime.Now.ToString("yyyyMMdd"))
 							);
 						if( this.txtWhere.Text.Trim() != "" )
 						{
@@ -4792,7 +4719,7 @@ namespace quickDBExplorer
 					if( deletefrom == true && dr.HasRows == true)
 					{
 						wr.Write("delete from  ");
-						wr.Write(qdbeUtil.GetTbname(tbname));
+						wr.Write(dboInfo.FormalName);
 						if( this.txtWhere.Text.Trim() != "" )
 						{
 							wr.Write( " where {0}", this.txtWhere.Text.Trim() );
@@ -4813,7 +4740,7 @@ namespace quickDBExplorer
 						rowcount ++;
 						if( fieldlst == true )
 						{
-							wr.Write("insert into {0} ( ", qdbeUtil.GetTbname(tbname) );
+							wr.Write("insert into {0} ( ", dboInfo.FormalName );
 							for( int i = 0 ; i < maxcol; i++ )
 							{
 								if( i != 0 )
@@ -4826,7 +4753,7 @@ namespace quickDBExplorer
 						}
 						else
 						{
-							wr.Write("insert into {0} values ( ", qdbeUtil.GetTbname(tbname) );
+							wr.Write("insert into {0} values ( ", dboInfo.FormalName );
 						}
 
 						for( int i = 0 ; i < maxcol; i++ )
@@ -4846,13 +4773,13 @@ namespace quickDBExplorer
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
-						File.Delete(this.txtOutput.Text + "\\" + tbname + ".sql");
+						File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql");
 						if( trow > 0 )
 						{
-							fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
+							fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 							// ファイルをリネームする
-							File.Move(this.txtOutput.Text + "\\" + tbname + ".sql.tmp", 
-								this.txtOutput.Text + "\\" + tbname + ".sql");
+							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp", 
+								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql");
 						}
 					}
 					if( dr != null && dr.IsClosed == false )
@@ -4926,29 +4853,29 @@ namespace quickDBExplorer
 					fname.Append(this.txtOutput.Text);
 				}
 
-				String tbname = "";
+				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
-					tbname = this.objectList.GetSelectTableName(ti);
+					dboInfo = this.objectList.GetSelectObject(ti);
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
+						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 					}
 
 					// get id 
-					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",qdbeUtil.GetTbname(tbname)), this.sqlConnection1);
+					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",dboInfo.FormalName), this.sqlConnection1);
 
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
-					da.Fill(ds,tbname);
+					da.Fill(ds,dboInfo.ToString());
 	
-					wr.Write(tbname);
+					wr.Write(dboInfo.FormalName);
 					wr.Write(":");
-					int		maxcol = ds.Tables[tbname].Columns.Count;
+					int		maxcol = ds.Tables[dboInfo.ToString()].Columns.Count;
 					for( int i = 0; i < maxcol ; i++ )
 					{
 						if( i != 0 && iscomma )
@@ -4959,7 +4886,7 @@ namespace quickDBExplorer
 						{
 							wr.Write("{0}\t",wr.NewLine);
 						}
-						wr.Write(ds.Tables[tbname].Columns[i].ColumnName);
+						wr.Write(ds.Tables[dboInfo.ToString()].Columns[i].ColumnName);
 					}
 					wr.Write(wr.NewLine);
 
@@ -5050,22 +4977,20 @@ namespace quickDBExplorer
 					fname.Append(this.txtOutput.Text);
 				}
 
-				string tbname = "";
+				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
-					tbname = this.objectList.GetSelectTableName(ti);
+					dboInfo = this.objectList.GetSelectObject(ti);
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".csv.tmp",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 					}
 					trow = 0;
-					// get id 
 					string sqlstr;
-					sqlstr = string.Format("select  * from {0} ",gettbnameWithAlias(tbname));
-					//sqlstr = "select * from [" + tbname + "]";
+					sqlstr = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						sqlstr += " where " + this.txtWhere.Text.Trim();
@@ -5133,13 +5058,13 @@ namespace quickDBExplorer
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
-						File.Delete(this.txtOutput.Text + "\\" + tbname + ".csv");
+						File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
 						if( trow > 0 )
 						{
-							fname.Append(this.txtOutput.Text + "\\" + tbname + ".csv\r\n");
+							fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv\r\n");
 							// ファイルをリネームする
-							File.Move(this.txtOutput.Text + "\\" + tbname + ".csv.tmp", 
-								this.txtOutput.Text + "\\" + tbname + ".csv");
+							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp", 
+								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
 						}
 					}
 				}
@@ -5231,74 +5156,47 @@ namespace quickDBExplorer
 				}
 
 
-				String tbname = "";
+				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
-					tbname = this.objectList.GetSelectTableName(ti);
+					dboInfo = this.objectList.GetSelectObject(ti);
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + tbname + ".sql",false, GetEncode());
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						fname.Append(this.txtOutput.Text + "\\" + tbname + ".sql\r\n");
+						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 					}
 
 					// get id 
 					string sqlstr;
 					// split owner.table -> owner, table
 
-					string delimStr = ".";
-					string []str = tbname.Split(delimStr.ToCharArray(), 2);
 					if( this.sqlVersion == 2000 )
 					{
-						if( bDrop )
-						{
-							wr.Write( "DROP TABLE " );
-							wr.Write("{0}{1}", qdbeUtil.GetTbname(tbname),wr.NewLine);
-							wr.Write( "GO{0}",wr.NewLine);
-						}
-						sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + str[0] +"' and sysobjects.name = '" + str[1] + "' order by syscolumns.colorder";
+						sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + dboInfo.Owner +"' and sysobjects.name = '" + dboInfo.ObjName + "' order by syscolumns.colorder";
 					}
 					else
 					{
-						// synonym ？
-						sqlstr = string.Format( @"select * from sys.synonyms 
-	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
-	where
-	sys.schemas.name = '{0}' and 
-	sys.synonyms.name = '{1}' ",
-							str[0],
-							str[1]
-							);
-						SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-						DataSet dssyn = new DataSet();
-						dssyn.CaseSensitive = true;
-						dasyn.Fill(dssyn,tbname);
-						if( dssyn.Tables[tbname].Rows.Count > 0 )
+						if( dboInfo.IsSynonym )
 						{
 							// Synonym 
 							if( bDrop )
 							{
 								wr.Write( "DROP SYNONYM " );
-								wr.Write("{0}{1}", qdbeUtil.GetTbname(tbname),wr.NewLine);
+								wr.Write("{0}{1}", dboInfo.FormalName,wr.NewLine);
 								wr.Write( "GO{0}",wr.NewLine);
 							}
 							wr.Write( string.Format("create synonym {0} for {1}",
-								qdbeUtil.GetTbname(tbname),
-								dssyn.Tables[tbname].Rows[0]["base_object_name"] )
+								dboInfo.FormalName,
+								dboInfo.SynonymBase )
 								);
 							wr.Write("{0}{0}Go{0}",wr.NewLine);
 
-							if( bDrop )
-							{
-								wr.Write( "DROP TABLE " );
-								wr.Write("{0}{1}", qdbeUtil.GetTbname(tbname),wr.NewLine);
-								wr.Write( "GO{0}",wr.NewLine);
-							}
-							// not synonym 
-							sqlstr = string.Format(
-								@"select 
+						}
+						sqlstr = string.Format(
+							@"select 
 	sys.all_columns.name colname, 
 	st.name valtype, 
 	convert(smallint,sys.all_columns.max_length) as length, 
@@ -5324,66 +5222,29 @@ from
 where 
 	sys.synonyms.object_id = OBJECT_ID('{0}')
 order by colorder",
-								qdbeUtil.GetTbname(tbname)
-								);
-
-						}
-						else
-						{
-							if( bDrop )
-							{
-								wr.Write( "DROP TABLE " );
-								wr.Write("{0}{1}", qdbeUtil.GetTbname(tbname),wr.NewLine);
-								wr.Write( "GO{0}",wr.NewLine);
-							}
-							// not synonym 
-							sqlstr = string.Format(
-								@"select 
-	sys.all_columns.name colname, 
-	st.name valtype, 
-	convert(smallint,sys.all_columns.max_length) as length, 
-	convert(smallint,
-	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	ELSE sys.all_columns.precision	
-	end ) as [prec], 
-	convert(smallint,sys.all_columns.scale) as xscale, 
-	sys.all_columns.column_id as colid, 
-	sys.all_columns.column_id as colorder, 
-	convert(int,sys.all_columns.is_nullable) as isnullable, 
-	sys.all_columns.collation_name as collation, 
-	sys.all_objects.object_id as id
-from 
-	sys.all_objects 
-	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
-	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
-	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
-	LEFT OUTER JOIN sys.types AS baset ON 
-		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
-where 
-	sys.schemas.name = '{0}' and 
-	sys.all_objects.name = '{1}' 
-order by colorder",
-								str[0],
-								str[1]
-								);
-						}
+							dboInfo.SynonymBase
+							);
 					}
+					if( bDrop )
+					{
+						wr.Write( "DROP TABLE " );
+						wr.Write("{0}{1}", dboInfo.FormalName,wr.NewLine);
+						wr.Write( "GO{0}",wr.NewLine);
+					}
+
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
-					da.Fill(ds,tbname);
+					da.Fill(ds,dboInfo.ToString());
 
-					int		maxRow = ds.Tables[tbname].Rows.Count;
+					int		maxRow = ds.Tables[dboInfo.ToString()].Rows.Count;
 					if( usekakko )
 					{
-						wr.Write("Create table [{0}] ", str[0]);
-						wr.Write(".[{0}]",str[1]);
+						wr.Write("Create table {0} ", dboInfo.FormalName);
 					}
 					else
 					{
-						wr.Write("Create table {0} ", tbname);
+						wr.Write("Create table {0} ", dboInfo.ToString());
 					}
 					wr.Write(" ( {0}",wr.NewLine);
 					string	valtype;
@@ -5396,15 +5257,15 @@ order by colorder",
 						//フィールド名
 						if( usekakko )
 						{
-							wr.Write("\t[{0}]", ds.Tables[tbname].Rows[i][0]);
+							wr.Write("\t[{0}]", ds.Tables[dboInfo.ToString()].Rows[i][0]);
 						}
 						else
 						{
-							wr.Write("\t{0}", ds.Tables[tbname].Rows[i][0]);
+							wr.Write("\t{0}", ds.Tables[dboInfo.ToString()].Rows[i][0]);
 						}
 						wr.Write("\t");
 						// 型
-						valtype = (string)ds.Tables[tbname].Rows[i][1];
+						valtype = (string)ds.Tables[dboInfo.ToString()].Rows[i][1];
 
 						wr.Write("\t");
 
@@ -5423,30 +5284,30 @@ order by colorder",
 							valtype == "nchar" ||
 							valtype == "binary" )
 						{
-							if( (Int16)ds.Tables[tbname].Rows[i][3] == -1 )
+							if( (Int16)ds.Tables[dboInfo.ToString()].Rows[i][3] == -1 )
 							{
 								wr.Write(" (max)");
 							}
 							else
 							{
-								wr.Write(" ({0})", ds.Tables[tbname].Rows[i][3]);
+								wr.Write(" ({0})", ds.Tables[dboInfo.ToString()].Rows[i][3]);
 							}
 						}
 						else if( valtype == "numeric" ||
 							valtype == "decimal" )
 						{
-							wr.Write(" ({0},", ds.Tables[tbname].Rows[i][3]);
-							wr.Write("{0})", ds.Tables[tbname].Rows[i][4]);
+							wr.Write(" ({0},", ds.Tables[dboInfo.ToString()].Rows[i][3]);
+							wr.Write("{0})", ds.Tables[dboInfo.ToString()].Rows[i][4]);
 						}
 						wr.Write("\t");
 						
-						if( !ds.Tables[tbname].Rows[i].IsNull("collation"))
+						if( !ds.Tables[dboInfo.ToString()].Rows[i].IsNull("collation"))
 						{
-							wr.Write("COLLATE {0}",ds.Tables[tbname].Rows[i]["collation"]);
+							wr.Write("COLLATE {0}",ds.Tables[dboInfo.ToString()].Rows[i]["collation"]);
 							wr.Write("\t");
 						}
 						
-						if( (int)ds.Tables[tbname].Rows[i]["isnullable"] == 0 )
+						if( (int)ds.Tables[dboInfo.ToString()].Rows[i]["isnullable"] == 0 )
 						{
 							wr.Write("\tNOT NULL");
 						}
@@ -5503,20 +5364,19 @@ order by colorder",
 		/// <summary>
 		/// 指定されたテーブルの情報を表示する
 		/// </summary>
-		/// <param name="tbname">表示するテーブル名</param>
-		protected void DspData(string tbname)
+		protected void DspData(DBObjectInfo dboInfo)
 		{
-			DspData(tbname,false);
+			DspData(dboInfo,false);
 		}
 		
 		/// <summary>
 		/// 指定されたテーブルの情報を表示する
 		/// </summary>
-		/// <param name="tbname">表示するテーブル名</param>
+		/// <param name="dboInfo">表示するオブジェクトの情報</param>
 		/// <param name="isAllDsp">全て表示するか否かの指定
 		/// true: 全て表示する
 		/// false; 全て表示しない</param>
-		protected void DspData(string tbname, bool isAllDsp)
+		protected void DspData(DBObjectInfo dboInfo, bool isAllDsp)
 		{
 			try
 			{
@@ -5536,7 +5396,7 @@ order by colorder",
 				}
 
 				// テーブル名が指定されていない場合は何も表示せず、グリッドを隠す
-				if( tbname == "" )
+				if( dboInfo == null )
 				{
 					this.dbGrid.Hide();
 					this.btnDataUpdate.Enabled = false;
@@ -5545,7 +5405,7 @@ order by colorder",
 					return;
 				}
 
-				ProcCondition procCond = GetProcCondition(tbname);
+				ProcCondition procCond = GetProcCondition(dboInfo.FormalName);
 				procCond.IsAllDisp = isAllDsp;
 
 				int	maxlines;
@@ -5577,8 +5437,8 @@ order by colorder",
 					sqlstrDisp += " TOP " + maxlines.ToString();
 				}
 
-				sqlstr += string.Format(" * from {0}",gettbnameWithAlias(tbname));
-				sqlstrDisp += string.Format(" * from {0}",gettbnameWithAlias(tbname));
+				sqlstr += string.Format(" * from {0}", dboInfo.GetAliasName(this.getAlias()));
+				sqlstrDisp += string.Format(" * from {0}",dboInfo.GetAliasName(this.getAlias()));
 				if( procCond.WhereStr.Trim() != "" )
 				{
 					sqlstr += " where " + procCond.WhereStr.Trim();
@@ -5686,7 +5546,7 @@ order by colorder",
 				string name = "";
 				for( int i = 0; i < this.objectList.SelectedItems.Count; i++ )
 				{
-					name = this.objectList.GetSelectTableName(i);
+					name = this.objectList.GetSelectObjectName(i);
 
 					if( strline.Length != 0 )
 					{
@@ -5806,7 +5666,7 @@ order by colorder",
 				System.Data.SqlClient.SqlDataAdapter da = new SqlDataAdapter();
 				cm.CommandTimeout = this.SqlTimeOut;
 
-				String tbname = this.objectList.GetSelectOneTableName();
+				String tbname = this.objectList.GetSelectOneObjectName();
 			
 
 				// get id 
@@ -6476,6 +6336,15 @@ order by colorder",
 		}
 
 		/// <summary>
+		/// from 句で利用するためのテーブル修飾子を取得する
+		/// </summary>
+		/// <returns>テーブル修飾子</returns>
+		protected string getAlias()
+		{
+			return this.txtAlias.Text;
+		}
+
+		/// <summary>
 		/// from 句で利用するために、テーブル修飾子をつけて、テーブル名を変換する
 		/// 基の名前は[]が付いていないことが前提
 		/// </summary>
@@ -6483,12 +6352,13 @@ order by colorder",
 		/// <returns>解析後のテーブル名([owner].[tabblname] alias 形式)</returns>
 		protected string gettbnameWithAlias(string tbname)
 		{
-			string tbl = qdbeUtil.GetTbname(tbname);
+			string retstr = qdbeUtil.GetTbname(tbname);
 			if( this.txtAlias.Text != "" )
 			{
-				tbl += " " + this.txtAlias.Text;
+				retstr += " " + this.txtAlias.Text;
 			}
-			return tbl;
+			
+			return retstr;
 		}
 
 		/// <summary>
@@ -6594,7 +6464,7 @@ order by colorder",
 				object obj;
 				for( int i = 0; i < this.objectList.SelectedItems.Count; i++ )
 				{
-					obj = this.objectList.GetSelectTableName(i);
+					obj = this.objectList.GetSelectObjectName(i);
 					procCond.Tbname.Add((string)obj);
 				}
 			}

@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using System.Collections;
 using System.Data.SqlClient;
 
 namespace quickDBExplorer
@@ -50,92 +51,36 @@ namespace quickDBExplorer
 			return "スキーマ名・テーブル名";
 		}
 
-		public string GetFieldListSelect(string tbname, string []str)
+		public string GetFieldListSelect(DBObjectInfo dboInfo)
 		{
-			string sqlstr = string.Format( @"select OBJECT_ID(base_object_name) from sys.synonyms 
-	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
-	where
-	sys.schemas.name = '{0}' and 
-	sys.synonyms.name = '{1}' ",
-				str[0],
-				str[1]
+			return string.Format(
+				@"select 
+	sys.all_columns.name colname, 
+	st.name valtype, 
+	convert(smallint,sys.all_columns.max_length) as length, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
+	end ) as [prec], 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
+	sys.all_objects.object_id = OBJECT_ID('{0}')
+order by colorder",
+				dboInfo.RealObjName
 				);
-			SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnect);
-			DataSet dssyn = new DataSet();
-			dssyn.CaseSensitive = true;
-			dasyn.Fill(dssyn,tbname);
-			if( dssyn.Tables[tbname].Rows.Count > 0 &&
-				(int)dssyn.Tables[tbname].Rows[0][0] != 0 )
-			{
-				// Synonym 
-				sqlstr = string.Format(
-					@"select 
-	sys.all_columns.name colname, 
-	st.name valtype, 
-	convert(smallint,sys.all_columns.max_length) as length, 
-	convert(smallint,
-	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	ELSE sys.all_columns.precision	
-	end ) as [prec], 
-	convert(smallint,sys.all_columns.scale) as xscale, 
-	sys.all_columns.column_id as colid, 
-	sys.all_columns.column_id as colorder, 
-	convert(int,sys.all_columns.is_nullable) as isnullable, 
-	sys.all_columns.collation_name as collation, 
-	sys.all_objects.object_id as id
-from 
-	sys.all_objects 
-	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
-	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
-	LEFT OUTER JOIN sys.types AS baset ON 
-		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
-where 
-	sys.all_objects.object_id = {0} 
-order by colorder",
-					(int)dssyn.Tables[tbname].Rows[0][0]
-					);
-			}
-			else
-			{
-				// Not Synonym
-
-	
-
-				sqlstr = string.Format(
-					@"select 
-	sys.all_columns.name colname, 
-	st.name valtype, 
-	convert(smallint,sys.all_columns.max_length) as length, 
-	convert(smallint,
-	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	ELSE sys.all_columns.precision	
-	end ) as [prec], 
-	convert(smallint,sys.all_columns.scale) as xscale, 
-	sys.all_columns.column_id as colid, 
-	sys.all_columns.column_id as colorder, 
-	convert(int,sys.all_columns.is_nullable) as isnullable, 
-	sys.all_columns.collation_name as collation, 
-	sys.all_objects.object_id as id
-from 
-	sys.all_objects 
-	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
-	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
-	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
-	LEFT OUTER JOIN sys.types AS baset ON 
-		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
-where 
-	sys.schemas.name = '{0}' and 
-	sys.all_objects.name = '{1}' 
-order by colorder",
-					str[0],
-					str[1]
-					);
-			}
-			return sqlstr;
 		}
 
 		/// <summary>
@@ -144,74 +89,81 @@ order by colorder",
 		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
-		public string GetDspObjList(bool isDspTable, bool isDspView, bool Synonym, bool isDspFunc, bool isDspSP, string ownerList)
+		public string GetDspObjList(bool isDspTable, bool isDspView, bool isDspSyn, bool isDspFunc, bool isDspSP, string ownerList)
 		{
 			string retsql = "";
 
+			string destObj = "";
+
+			ArrayList ar = new ArrayList();
+
+			if( isDspTable == true )
+			{
+				ar.Add("U");
+			}
 
 			if( isDspView == true )
 			{
-				retsql = @"select 
-	sys.all_objects.name as tbname, 
-	sys.schemas.name as uname ,
-	case
-	when sys.all_objects.type = 'U' then ' '
-	when sys.all_objects.type = 'V' then 'V'
-	when sys.all_objects.type = 'SN' then 'S'
-	end as tvs,
-	sys.all_objects.create_date as cretime
-from 
-	sys.all_objects, 
-	sys.schemas 
-where 
-	( sys.all_objects.type='U' 
-	  or sys.all_objects.type='V' 
-	  or
-	  (sys.all_objects.type='SN' and 
-		exists ( select 'X' from sys.synonyms t2 
-			inner join sys.all_objects t3 on
-			OBJECT_ID(t2.base_object_name) = t3.object_id
-			and (t3.type='U' or t3.type='V' )
-				where
-				sys.all_objects.object_id = t2.object_id 
-				)
-	   )
-	) and 
-	sys.all_objects.schema_id = sys.schemas.schema_id";
+				ar.Add("V");
 			}
-			else
+
+			if( isDspSyn == true )
 			{
-				retsql = @"select 
-	sys.all_objects.name as tbname, 
-	sys.schemas.name as uname ,
-	case
-	when sys.all_objects.type = 'U' then ' '
-	when sys.all_objects.type = 'V' then 'V'
-	when sys.all_objects.type = 'SN' then 'S'
-	end as tvs
-from 
-	sys.all_objects, 
-	sys.schemas 
-where 
-	( sys.all_objects.type='U' 
-	  or
-	  (sys.all_objects.type='SN' and 
-		exists ( select 'X' from sys.synonyms t2 
-			inner join sys.all_objects t3 on
-			OBJECT_ID(t2.base_object_name) = t3.object_id
-			and (t3.type='U')
-				where
-				sys.all_objects.object_id = t2.object_id 
-				)
-	   )
-	) and 
-	sys.all_objects.schema_id = sys.schemas.schema_id";
+				ar.Add("SN");
 			}
+
+			if( isDspFunc == true )
+			{
+				ar.Add("FN");
+			}
+
+			if( isDspSP == true )
+			{
+				ar.Add("P");
+				ar.Add("PC");
+			}
+
+			if( ar.Count == 0 )
+			{
+				// 何も指定がなければ、テーブルのみにしておく
+				ar.Add("U");
+			}
+
+			for( int i = 0; i < ar.Count; i++ )
+			{
+				if( i != 0 )
+				{
+					destObj += ",";
+				}
+				destObj += "'" + (string)ar[i] + "'";
+			}
+
+			retsql = string.Format(@"select 
+	t1.name as tbname, 
+	t2.name as uname ,
+	t1.type as tvs,
+	t1.create_date as cretime,
+	isnull(t3.base_object_name,'') as synbase,
+	isnull(t4.type, ' ') as syntype
+from 
+	sys.all_objects t1
+	inner join 	sys.schemas t2 on 
+		t1.schema_id = t2.schema_id
+	left outer join sys.synonyms t3 on
+		t1.object_id = t3.object_id 
+	left outer join sys.all_objects t4 on
+		OBJECT_ID(t3.base_object_name) = t4.object_id
+where 
+	t1.type in ( {0} ) or
+	( t1.type = 'SN' and 
+	  t4.type in ( {0} ) )
+",
+				destObj );
 
 			if( ownerList != null && 
 				ownerList != string.Empty )
 			{
-				retsql += " and sys.schemas.name in ( " + ownerList + " ) ";
+				retsql += " and t2.name in ( " + ownerList + " ) ";
 			}
 
 			return retsql;

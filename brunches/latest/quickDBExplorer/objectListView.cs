@@ -1,84 +1,11 @@
 using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Collections;
 using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
-
-	/// <summary>
-	/// リストに表示する DB オブジェクトの情報を管理する
-	/// </summary>
-	public class	DBObjectInfo
-	{
-		private		string objType;
-		/// <summary>
-		/// オブジェクトの種類
-		/// 空白: Table
-		/// V:		View
-		/// S:		Synonym
-		/// </summary>
-		public		string	ObjType
-		{
-			get { return this.objType; }
-			set { this.objType = value; }
-		}
-		private		string	owner;
-		/// <summary>
-		/// オブジェクトの所有者名
-		/// </summary>
-		public	string	Owner
-		{
-			get { return this.owner; }
-			set { this.owner = value; }
-		}
-
-		private		string	objname;
-		/// <summary>
-		/// オブジェクトの名称
-		/// </summary>
-		public	string ObjName
-		{
-			get { return this.objname; }
-			set { this.objname = value; }
-		}
-
-		private string createTime;
-		/// <summary>
-		/// オブジェクトが生成された日時
-		/// </summary>
-		public string CreateTime
-		{
-			get { return this.createTime; }
-			set { this.createTime = value; }
-		}
-
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		/// <param name="otype">オブジェクトの型</param>
-		/// <param name="owner">オブジェクトの所有者名</param>
-		/// <param name="name">オブジェクトの名称</param>
-		/// <param name="cretime">オブジェクトの作成日時</param>
-		public DBObjectInfo( string otype, string owner, string name, string cretime )
-		{
-			this.objType = otype;
-			this.owner = owner;
-			this.objname = name;
-			this.createTime = cretime;
-		}
-
-		/// <summary>
-		/// 文字列化する。
-		/// 所有者名+"."+オブジェクト名
-		/// を返す
-		/// </summary>
-		/// <returns></returns>
-		public override string ToString()
-		{
-			return string.Format("{0}.{1}", this.owner, this.objname );
-		}
-	}
-
 	/// <summary>
 	/// Table等DBオブジェクトの一覧表示専用クラス
 	/// </summary>
@@ -112,22 +39,27 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 一覧に追加するアイテムを作成作成する
 		/// </summary>
-		/// <param name="tvs">テーブル・View・Schemaの区分</param>
-		/// <param name="owner">オブジェクトの所有者</param>
-		/// <param name="tbname">オブジェクト名</param>
-		/// <param name="cretime">オブジェクトの作成日時</param>
+		/// <param name="dr">データを参照するDataReader</param>
 		/// <returns></returns>
-		public ListViewItem	CreateItem(string tvs, string owner, string tbname, string cretime)
+		public ListViewItem	CreateItem(SqlDataReader dr)
 		{
+			DBObjectInfo dboInfo = new DBObjectInfo(
+				(string)dr["tvs"],
+				(string)dr["uname"],
+				(string)dr["tbname"],
+				(string)dr["cretime"].ToString(),
+				(string)dr["synbase"],
+				(string)dr["syntype"]
+				);
 
 			ListViewItem it = new ListViewItem( new string[]{ 
-																tvs,
-																owner,
-																tbname,
-																cretime
+																dboInfo.DspObjType,
+																dboInfo.Owner,
+																dboInfo.ObjName,
+																dboInfo.CreateTime
 															}
 				);
-			it.Tag = new DBObjectInfo(tvs,owner,tbname,cretime);
+			it.Tag = dboInfo;
 			return it;
 		}
 
@@ -135,7 +67,7 @@ namespace quickDBExplorer
 		/// 単一選択されているテーブル名を取得する
 		/// </summary>
 		/// <returns></returns>
-		public string GetSelectOneTableName()
+		public string GetSelectOneObjectName()
 		{
 			if( this.SelectedItems.Count == 1 )
 			{
@@ -149,13 +81,27 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="i"></param>
 		/// <returns></returns>
-		public string GetSelectTableName(int i)
+		public string GetSelectObjectName(int i)
 		{
 			if( this.SelectedItems.Count == 0 )
 			{
 				return "";
 			}
 			return this.SelectedItems[i].Tag.ToString();
+		}
+
+		/// <summary>
+		/// 選択された項目のうち、指定されたオブジェクト名の情報を取得する
+		/// </summary>
+		/// <param name="i"></param>
+		/// <returns></returns>
+		public DBObjectInfo	GetSelectObject(int i)
+		{
+			if( this.SelectedItems.Count == 0 )
+			{
+				return null;
+			}
+			return (DBObjectInfo)this.SelectedItems[i].Tag;
 		}
 
 		/// <summary>

@@ -41,10 +41,9 @@ namespace quickDBExplorer
 		/// <summary>
 		/// フィールド一覧の取得用SQL文を返す
 		/// </summary>
-		/// <param name="tbname"></param>
-		/// <param name="tbnamelist"></param>
+		/// <param name="dboInfo">オブジェクト情報</param>
 		/// <returns></returns>
-		string GetFieldListSelect(string tbname, string []tbnamelist);
+		string GetFieldListSelect(DBObjectInfo dboInfo);
 
 		/// <summary>
 		/// オブジェクト一覧の表示用SQLの取得
