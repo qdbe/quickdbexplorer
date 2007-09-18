@@ -154,9 +154,9 @@ from
 	left outer join sys.all_objects t4 on
 		OBJECT_ID(t3.base_object_name) = t4.object_id
 where 
-	t1.type in ( {0} ) or
+	( t1.type in ( {0} ) or
 	( t1.type = 'SN' and 
-	  t4.type in ( {0} ) )
+	  t4.type in ( {0} ) ) )
 ",
 				destObj );
 

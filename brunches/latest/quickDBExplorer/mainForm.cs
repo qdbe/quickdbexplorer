@@ -13,6 +13,43 @@ using System.Reflection;
 
 namespace quickDBExplorer
 {
+	class	qdbeMenuItem 
+	{
+		private	bool	isSeparater = false;
+		private	bool	isObjTarget = true;
+		public  bool	IsObjTarget 
+		{
+			get { return this.isObjTarget; }
+		}
+		private	string	callBtnName;
+		private	string	menuName = "";
+		private	System.EventHandler	 clickHandler;
+		public	qdbeMenuItem(bool iss, bool isot, string btn, string text, System.EventHandler clickEv)
+		{
+			this.isSeparater = iss;
+			this.isObjTarget = isot;
+			this.callBtnName = btn;
+			this.menuName = text;
+			this.clickHandler = clickEv;
+		}
+
+		public	MenuItem	CreateItem(int index)
+		{
+			MenuItem	it = new MenuItem();
+			it.Index = index;
+			if( this.isSeparater == true )
+			{
+				it.Text = "-";
+			}
+			else
+			{
+				it.Text = string.Format("(&{0}) {1}",
+					index, this.menuName );
+				it.Click += this.clickHandler;
+			}
+			return it;
+		}
+	}
 	/// <summary>
 	/// メインとなる画面
 	/// DBの選択、オーナーの選択、テーブルの選択、処理の選択などのメインとなる処理を全て実装している
@@ -356,6 +393,7 @@ namespace quickDBExplorer
 			this.selectHistory = svdata.SelectHistory;
 			this.DMLHistory = svdata.DMLHistory;
 			this.cmdHistory = svdata.CmdHistory;
+			InitMenu();
 		}
 
 		/// <summary>
@@ -393,6 +431,7 @@ namespace quickDBExplorer
 			this.ColTVSType = new System.Windows.Forms.ColumnHeader();
 			this.ColOwner = new System.Windows.Forms.ColumnHeader();
 			this.ColObjName = new System.Windows.Forms.ColumnHeader();
+			this.ColCredate = new System.Windows.Forms.ColumnHeader();
 			this.mainContextMenu = new System.Windows.Forms.ContextMenu();
 			this.menuTableCopy = new System.Windows.Forms.MenuItem();
 			this.menuTableCopyCsv = new System.Windows.Forms.MenuItem();
@@ -577,6 +616,11 @@ namespace quickDBExplorer
 			// 
 			this.ColObjName.Text = "Name";
 			this.ColObjName.Width = 190;
+			// 
+			// ColCredate
+			// 
+			this.ColCredate.Text = "Create Date";
+			this.ColCredate.Width = 150;
 			// 
 			// mainContextMenu
 			// 
@@ -1495,10 +1539,6 @@ namespace quickDBExplorer
 			this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
 			this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
 			// 
-			// ColCredate
-			// 
-			this.ColCredate.Text = "Create Date";
-			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -1631,6 +1671,12 @@ namespace quickDBExplorer
 			tmpmenu.MenuItems.AddRange(cplist);
 
 			tmpmenu.Show((Control)sender,new Point(0,0));
+		}
+
+		private	void	InitMenu()
+		{
+			ArrayList	menuAr = new ArrayList();
+			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー", new System.EventHandler(this.menuTableCopy_Click) ) );
 		}
 
 		// INSERT文生成ボタン
@@ -5192,7 +5238,7 @@ namespace quickDBExplorer
 								dboInfo.FormalName,
 								dboInfo.SynonymBase )
 								);
-							wr.Write("{0}{0}Go{0}",wr.NewLine);
+							wr.Write("{0}Go{0}{0}",wr.NewLine);
 
 						}
 						sqlstr = string.Format(
@@ -5214,22 +5260,22 @@ namespace quickDBExplorer
 	sys.all_objects.object_id as id
 from 
 	sys.all_objects 
-	inner join sys.synonyms on sys.all_objects.object_id = OBJECT_ID(sys.synonyms.base_object_name) 
 	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
 	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
 	LEFT OUTER JOIN sys.types AS baset ON 
 		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
 where 
-	sys.synonyms.object_id = OBJECT_ID('{0}')
+	sys.all_objects.object_id = OBJECT_ID('{0}')
 order by colorder",
-							dboInfo.SynonymBase
+							dboInfo.RealObjName
 							);
 					}
 					if( bDrop )
 					{
 						wr.Write( "DROP TABLE " );
 						wr.Write("{0}{1}", dboInfo.FormalName,wr.NewLine);
-						wr.Write( "GO{0}",wr.NewLine);
+						wr.Write( "GO{0}{0}",wr.NewLine);
 					}
 
 					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
