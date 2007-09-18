@@ -13,43 +13,6 @@ using System.Reflection;
 
 namespace quickDBExplorer
 {
-	class	qdbeMenuItem 
-	{
-		private	bool	isSeparater = false;
-		private	bool	isObjTarget = true;
-		public  bool	IsObjTarget 
-		{
-			get { return this.isObjTarget; }
-		}
-		private	string	callBtnName;
-		private	string	menuName = "";
-		private	System.EventHandler	 clickHandler;
-		public	qdbeMenuItem(bool iss, bool isot, string btn, string text, System.EventHandler clickEv)
-		{
-			this.isSeparater = iss;
-			this.isObjTarget = isot;
-			this.callBtnName = btn;
-			this.menuName = text;
-			this.clickHandler = clickEv;
-		}
-
-		public	MenuItem	CreateItem(int index)
-		{
-			MenuItem	it = new MenuItem();
-			it.Index = index;
-			if( this.isSeparater == true )
-			{
-				it.Text = "-";
-			}
-			else
-			{
-				it.Text = string.Format("(&{0}) {1}",
-					index, this.menuName );
-				it.Click += this.clickHandler;
-			}
-			return it;
-		}
-	}
 	/// <summary>
 	/// メインとなる画面
 	/// DBの選択、オーナーの選択、テーブルの選択、処理の選択などのメインとなる処理を全て実装している
@@ -6602,6 +6565,44 @@ order by colorder",
 			this.OrderStr = "";
 			this.MaxStr = "";
 			this.isAllDisp = false;
+		}
+	}
+
+	class	qdbeMenuItem 
+	{
+		private	bool	isSeparater = false;
+		private	bool	isObjTarget = true;
+		public  bool	IsObjTarget 
+		{
+			get { return this.isObjTarget; }
+		}
+		private	string	callBtnName;
+		private	string	menuName = "";
+		private	System.EventHandler	 clickHandler;
+		public	qdbeMenuItem(bool iss, bool isot, string btn, string text, System.EventHandler clickEv)
+		{
+			this.isSeparater = iss;
+			this.isObjTarget = isot;
+			this.callBtnName = btn;
+			this.menuName = text;
+			this.clickHandler = clickEv;
+		}
+
+		public	MenuItem	CreateItem(int index)
+		{
+			MenuItem	it = new MenuItem();
+			it.Index = index;
+			if( this.isSeparater == true )
+			{
+				it.Text = "-";
+			}
+			else
+			{
+				it.Text = string.Format("(&{0}) {1}",
+					index, this.menuName );
+				it.Click += this.clickHandler;
+			}
+			return it;
 		}
 	}
 }
