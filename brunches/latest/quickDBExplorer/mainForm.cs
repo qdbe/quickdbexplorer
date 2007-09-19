@@ -1639,7 +1639,61 @@ namespace quickDBExplorer
 		private	void	InitMenu()
 		{
 			ArrayList	menuAr = new ArrayList();
-			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー", new System.EventHandler(this.menuTableCopy_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー", new EventHandler(this.menuTableCopy_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー カンマ付き", new EventHandler(this.menuTableCopyCsv_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,null,"指定テーブル選択", new EventHandler(this.menuTableSelect_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnInsert","INSERT文作成", new EventHandler(this.insertmake) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnInsert","INSERT文作成(DELETE文付き)", new EventHandler(this.insertmakeDelete) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnInsert","INSERT文作成(フィールドリストなし)", new EventHandler(this.insertmakeNoField) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnInsert","INSERT文作成(フィールドリストなし　DELETE文付き)", new EventHandler(this.insertmakeNoFieldDelete) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnInsert","INSERT文作成(DELETE文付き、退避付き)", new EventHandler(this.menuInsertDeleteTaihi_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnInsert","INSERT文作成(フィールドなし DELETE文付き 退避付き)", new EventHandler(this.menuInsertNoFldDeleteTaihi_Click) ) );
+			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnFieldList","フィールドリスト作成", new EventHandler(this.makefldlist) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnFieldList","フィールドリスト改行作成", new EventHandler(this.makefldListLF) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnFieldList","フィールドリストカンマなし作成", new EventHandler(this.makefldListNoComma) ) );
+			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnDDL","簡易定義文生成", new EventHandler(this.makeDDL) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnDDL","簡易定義文生成 DROP文付き", new EventHandler(this.makeDDLDrop) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnDDL","簡易定義文生成([]付き)", new EventHandler(this.makeDDLPare) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnDDL","簡易定義文生成( DROP []付き)", new EventHandler(this.makeDDLDropPare) ) );
+			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
+			menuAr.Add(new qdbeMenuItem(false,true,null,"Select文生成", new EventHandler(this.btnSelect_Click) ) );
+			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnCSV","CSV作成", new EventHandler(this.makeCSV) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnCSV","CSV作成(”付き)", new EventHandler(this.makeCSVQuote) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnCSV","Tab区切出力", new EventHandler(this.menuMakeTab_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnCSV","Tab区切出力(\"付き)", new EventHandler(this.menuMakeTabDQ_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnCSV","CSV読込", new EventHandler(this.menuCSVRead_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnCSV","CSV読込(\"付き)", new EventHandler(this.menuCSVReadDQ_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnCSV","Tab区切読込", new EventHandler(this.menuTabRead_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnCSV","Tab区切読込（”付き)", new EventHandler(this.menuTabReadDQ_Click) ) );
+			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnEtc","簡易クエリ実行（Select以外）", new EventHandler(this.btnQueryNonSelect_Click) ) );
+			menuAr.Add(new qdbeMenuItem(true,true,"btnEtc","-", null ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnEtc","クエリアナライザ起動", new EventHandler(this.CallISQLW) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnEtc","プロファイラ起動", new EventHandler(this.CallProfile) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnEtc","エンタープライズマネージャー起動", new EventHandler(this.CallEPM) ) );
+			menuAr.Add(new qdbeMenuItem(true,true,"btnEtc","-", null ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnEtc","依存関係出力", new EventHandler(this.DependOutPut) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnEtc","データ件数出力", new EventHandler(this.RecordCountOutPut) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnEtc","データ件数表示", new EventHandler(this.menuRecordCountDsp_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnEtc","統計情報更新", new EventHandler(this.menuUpdateStaticsMain_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,"btnEtc","各種コマンド実行", new EventHandler(this.menuDoQuery_Click) ) );
+
+			ContextMenu objMenu = new System.Windows.Forms.ContextMenu();
+			int		idx = 0;
+			foreach(qdbeMenuItem it in menuAr)
+			{
+				if( it.IsObjTarget == false )
+				{
+					continue;
+				}
+				objMenu.MenuItems.Add(it.CreateItem(idx,false));
+				idx++;
+			}
+			this.objectList.ContextMenu = objMenu;
+			
 		}
 
 		// INSERT文生成ボタン
@@ -6571,6 +6625,10 @@ order by colorder",
 	class	qdbeMenuItem 
 	{
 		private	bool	isSeparater = false;
+		public bool		IsSeparater
+		{
+			get { return this.isSeparater; }
+		}
 		private	bool	isObjTarget = true;
 		public  bool	IsObjTarget 
 		{
@@ -6588,7 +6646,7 @@ order by colorder",
 			this.clickHandler = clickEv;
 		}
 
-		public	MenuItem	CreateItem(int index)
+		public	MenuItem	CreateItem(int index, bool isShortCut)
 		{
 			MenuItem	it = new MenuItem();
 			it.Index = index;
@@ -6598,8 +6656,16 @@ order by colorder",
 			}
 			else
 			{
-				it.Text = string.Format("(&{0}) {1}",
-					index, this.menuName );
+				if( isShortCut == true )
+				{
+					it.Text = string.Format("(&{0}) {1}",
+						index, this.menuName );
+				}
+				else
+				{
+					it.Text = string.Format("{1}",
+						index, this.menuName );
+				}
 				it.Click += this.clickHandler;
 			}
 			return it;
