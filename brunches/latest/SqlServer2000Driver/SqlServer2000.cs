@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Text;
 
 namespace quickDBExplorer
 {
@@ -132,6 +134,150 @@ namespace quickDBExplorer
 			return retsql;
 		}
 
+		public string GetDspFldListDummy()
+		{
+			return string.Format(
+				@"select * from sysindexes where 0=1" );
+		}
+
+		public string	GetOwnerList(bool isDspSysUser)
+		{
+			if( isDspSysUser )
+			{
+				return "select * from sysusers order by name";
+			}
+			else
+			{
+				return "select * from sysusers where name not like 'db_%' order by name";
+			}
+		}
+
+		public string	GetDDLSelectStr(DBObjectInfo dboInfo)
+		{
+			return "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + dboInfo.Owner +"' and sysobjects.name = '" + dboInfo.ObjName + "' order by syscolumns.colorder";
+		}
+
+		public string	GetDDLDropStr(DBObjectInfo dboInfo)
+		{
+			switch( dboInfo.ObjType )
+			{
+				case	"U":
+					return string.Format("DROP TABLE {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+				case	"V":
+					return string.Format("DROP VIEW {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+				case	"SN":
+					if( dboInfo.SynonymBaseType == "U" )
+					{
+						return string.Format("DROP TABLE {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+					}
+					else
+					{
+						return string.Format("DROP VIEW {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+					}
+				default:
+					return	string.Empty;
+			}
+		}
+
+
+		public string	GetDDLCreateStr(DBObjectInfo dboInfo, bool usekakko)
+		{
+			StringBuilder strline =  new StringBuilder();
+			TextWriter	wr = new StringWriter(strline);
+
+			if( dboInfo.ObjType == "U" )
+			{
+
+				string sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + dboInfo.Owner +"' and sysobjects.name = '" + dboInfo.ObjName + "' order by syscolumns.colorder";
+
+				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnect);
+				DataSet ds = new DataSet();
+				ds.CaseSensitive = true;
+				da.Fill(ds,dboInfo.ToString());
+
+				int		maxRow = ds.Tables[dboInfo.ToString()].Rows.Count;
+				if( usekakko )
+				{
+					wr.Write("Create table {0} ", dboInfo.FormalName);
+				}
+				else
+				{
+					wr.Write("Create table {0} ", dboInfo.ToString());
+				}
+				wr.Write(" ( {0}",wr.NewLine);
+				string	valtype;
+				for( int i = 0; i < maxRow ; i++ )
+				{
+					if( i != 0 )
+					{
+						wr.Write(",{0}",wr.NewLine);
+					}
+					//フィールド名
+					if( usekakko )
+					{
+						wr.Write("\t[{0}]", ds.Tables[dboInfo.ToString()].Rows[i][0]);
+					}
+					else
+					{
+						wr.Write("\t{0}", ds.Tables[dboInfo.ToString()].Rows[i][0]);
+					}
+					wr.Write("\t");
+					// 型
+					valtype = (string)ds.Tables[dboInfo.ToString()].Rows[i][1];
+
+					wr.Write("\t");
+
+					if( usekakko )
+					{
+						wr.Write("[{0}]",valtype);
+					}
+					else
+					{
+						wr.Write(valtype);
+					}
+					if( valtype == "varchar" ||
+						valtype == "varbinary" ||
+						valtype == "nvarchar" ||
+						valtype == "char" ||
+						valtype == "nchar" ||
+						valtype == "binary" )
+					{
+						if( (Int16)ds.Tables[dboInfo.ToString()].Rows[i][3] == -1 )
+						{
+							wr.Write(" (max)");
+						}
+						else
+						{
+							wr.Write(" ({0})", ds.Tables[dboInfo.ToString()].Rows[i][3]);
+						}
+					}
+					else if( valtype == "numeric" ||
+						valtype == "decimal" )
+					{
+						wr.Write(" ({0},", ds.Tables[dboInfo.ToString()].Rows[i][3]);
+						wr.Write("{0})", ds.Tables[dboInfo.ToString()].Rows[i][4]);
+					}
+					wr.Write("\t");
+						
+					if( !ds.Tables[dboInfo.ToString()].Rows[i].IsNull("collation"))
+					{
+						wr.Write("COLLATE {0}",ds.Tables[dboInfo.ToString()].Rows[i]["collation"]);
+						wr.Write("\t");
+					}
+						
+					if( (int)ds.Tables[dboInfo.ToString()].Rows[i]["isnullable"] == 0 )
+					{
+						wr.Write("\tNOT NULL");
+					}
+					else
+					{
+						wr.Write("\tNULL");
+					}
+				}
+				wr.Write("{0}){0}Go{0}",wr.NewLine);
+			}
+			return strline.ToString();
+		}
 
 		#endregion
 	}

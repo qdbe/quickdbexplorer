@@ -1,7 +1,9 @@
 using System;
-using System.Data;
 using System.Collections;
+using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Text;
 
 namespace quickDBExplorer
 {
@@ -167,6 +169,182 @@ where
 			}
 
 			return retsql;
+		}
+
+		public string GetDspFldListDummy()
+		{
+			return string.Format(
+				@"select * from sys.indexes where 0=1" );
+		}
+
+
+		public string	GetOwnerList(bool isDspSysUser)
+		{
+			if( isDspSysUser )
+			{
+				return  "select * from sys.schemas order by name";
+			}
+			else
+			{
+				return @"select * from sys.schemas where name not in ( 'sys', 'INFORMATION_SCHEMA', 'guest', 'db_owner', 
+							'db_accessadmin', 'db_securityadmin', 'db_ddladmin', 'db_backupoperator', 'db_datareader',
+							'db_datawriter', 'db_denydatareader', 'db_denydatawriter'  ) order by name";
+			}
+		}
+
+		public string	GetDDLSelectStr(DBObjectInfo dboInfo)
+		{
+			return string.Format(
+				@"select 
+	sys.all_columns.name colname, 
+	st.name valtype, 
+	convert(smallint,sys.all_columns.max_length) as length, 
+	convert(smallint,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
+	end ) as [prec], 
+	convert(smallint,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
+	sys.all_objects.object_id = OBJECT_ID('{0}')
+order by colorder",
+				dboInfo.RealObjName
+				);
+		}
+
+		public string	GetDDLDropStr(DBObjectInfo dboInfo)
+		{
+			switch( dboInfo.ObjType )
+			{
+				case	"U":
+					return string.Format("DROP TABLE {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+				case	"V":
+					return string.Format("DROP VIEW {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+				case	"SN":
+					if( dboInfo.SynonymBaseType == "U" )
+					{
+						return string.Format("DROP TABLE {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+					}
+					else
+					{
+						return string.Format("DROP VIEW {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+					}
+				default:
+					return	string.Empty;
+			}
+		}
+
+
+		public string	GetDDLCreateStr(DBObjectInfo dboInfo, bool usekakko)
+		{
+			StringBuilder strline =  new StringBuilder();
+			TextWriter	wr = new StringWriter(strline);
+
+			if( dboInfo.ObjType == "U" )
+			{
+
+				string sqlstr = this.GetDDLSelectStr(dboInfo);
+
+				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnect);
+				DataSet ds = new DataSet();
+				ds.CaseSensitive = true;
+				da.Fill(ds,dboInfo.ToString());
+
+				int		maxRow = ds.Tables[dboInfo.ToString()].Rows.Count;
+				if( usekakko )
+				{
+					wr.Write("Create table {0} ", dboInfo.FormalName);
+				}
+				else
+				{
+					wr.Write("Create table {0} ", dboInfo.ToString());
+				}
+				wr.Write(" ( {0}",wr.NewLine);
+				string	valtype;
+				for( int i = 0; i < maxRow ; i++ )
+				{
+					if( i != 0 )
+					{
+						wr.Write(",{0}",wr.NewLine);
+					}
+					//フィールド名
+					if( usekakko )
+					{
+						wr.Write("\t[{0}]", ds.Tables[dboInfo.ToString()].Rows[i][0]);
+					}
+					else
+					{
+						wr.Write("\t{0}", ds.Tables[dboInfo.ToString()].Rows[i][0]);
+					}
+					wr.Write("\t");
+					// 型
+					valtype = (string)ds.Tables[dboInfo.ToString()].Rows[i][1];
+
+					wr.Write("\t");
+
+					if( usekakko )
+					{
+						wr.Write("[{0}]",valtype);
+					}
+					else
+					{
+						wr.Write(valtype);
+					}
+					if( valtype == "varchar" ||
+						valtype == "varbinary" ||
+						valtype == "nvarchar" ||
+						valtype == "char" ||
+						valtype == "nchar" ||
+						valtype == "binary" )
+					{
+						if( (Int16)ds.Tables[dboInfo.ToString()].Rows[i][3] == -1 )
+						{
+							wr.Write(" (max)");
+						}
+						else
+						{
+							wr.Write(" ({0})", ds.Tables[dboInfo.ToString()].Rows[i][3]);
+						}
+					}
+					else if( valtype == "numeric" ||
+						valtype == "decimal" )
+					{
+						wr.Write(" ({0},", ds.Tables[dboInfo.ToString()].Rows[i][3]);
+						wr.Write("{0})", ds.Tables[dboInfo.ToString()].Rows[i][4]);
+					}
+					wr.Write("\t");
+						
+					if( !ds.Tables[dboInfo.ToString()].Rows[i].IsNull("collation"))
+					{
+						wr.Write("COLLATE {0}",ds.Tables[dboInfo.ToString()].Rows[i]["collation"]);
+						wr.Write("\t");
+					}
+						
+					if( (int)ds.Tables[dboInfo.ToString()].Rows[i]["isnullable"] == 0 )
+					{
+						wr.Write("\tNOT NULL");
+					}
+					else
+					{
+						wr.Write("\tNULL");
+					}
+				}
+				wr.Write("{0}){0}Go{0}",wr.NewLine);
+			}
+			return strline.ToString();
 		}
 
 		#endregion

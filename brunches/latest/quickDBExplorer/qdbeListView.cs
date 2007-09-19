@@ -126,7 +126,7 @@ namespace quickDBExplorer
 		{
 			for( int i = 0; i < this.Items.Count; i++ )
 			{
-				if( (string)this.Items[i].Tag == itemkey )
+				if( (string)this.Items[i].Tag.ToString() == itemkey )
 				{
 					return i;
 				}

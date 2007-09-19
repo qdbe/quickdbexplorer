@@ -52,5 +52,15 @@ namespace quickDBExplorer
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
 		string GetDspObjList(bool isDspTable, bool isDspView, bool Synonym, bool isDspFunc, bool isDspSP, string ownerList);
+
+		string GetDspFldListDummy();
+
+		string	GetOwnerList(bool isDspSysUser);
+
+		string	GetDDLCreateStr(DBObjectInfo dboInfo, bool usekakko);
+
+		string	GetDDLDropStr(DBObjectInfo dboInfo);
+
+		//string GetDspFldList();
 	}
 }

@@ -91,6 +91,48 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// コンストラクタ
+		/// データカラムに応じ、自動的に、
+		/// 空白文字列の設定が可能か否か
+		/// 管理するデータがイメージか否か
+		/// を設定する
+		/// また、データカラムに応じ、自動的に書式を設定する
+		/// </summary>
+		/// <param name="pa">親となるグリッド</param>
+		/// <param name="col">結合させるデータカラム</param>
+		/// <param name="NumFormat">整数表示の場合の書式</param>
+		/// <param name="FloatFormat">小数点表示の場合の書式</param>
+		/// <param name="DateFormat">日付表示の場合の書式</param>
+		public QdbeDataGridTextBoxColumn(
+			DataGrid pa, 
+			DataColumn col,
+			string NumFormat,
+			string FloatFormat,
+			string DateFormat
+			) : this(pa,col)
+		{
+			if( col.DataType.FullName == "System.Int32" ||
+				col.DataType.FullName == "System.Int16" ||
+				col.DataType.FullName == "System.Int64" ||
+				col.DataType.FullName == "System.UInt32" ||
+				col.DataType.FullName == "System.UInt16" ||
+				col.DataType.FullName == "System.UInt64" ||
+				col.DataType.FullName == "System.Decimal" )
+			{
+				this.Format = NumFormat;
+			}
+			if( col.DataType.FullName == "System.Double" ||
+				col.DataType.FullName == "System.Single" )
+			{
+				this.Format = FloatFormat;
+			}
+			if( col.DataType.FullName == "System.DateTime" )
+			{
+				this.Format = DateFormat;
+			}
+		}
+
 
 		/// <summary>
 		/// コンストラクタ
