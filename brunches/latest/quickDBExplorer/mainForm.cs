@@ -1909,11 +1909,11 @@ namespace quickDBExplorer
 			{
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					indexdlg.settabledsp(this.objectList.GetSelectOneObjectName());
+					indexdlg.settabledsp(this.objectList.GetSelectObject(0));
 				}
 				else
 				{
-					indexdlg.settabledsp("");
+					indexdlg.settabledsp(null);
 				}
 				indexdlg.Show();
 			}
@@ -2810,13 +2810,13 @@ namespace quickDBExplorer
 				indexdlg.SqlVersion = this.sqlVersion;
 
 				indexdlg.SqlConnection = this.sqlConnection1;
-				indexdlg.DspTbname = this.objectList.GetSelectOneObjectName();
+				indexdlg.DspObj = this.objectList.GetSelectObject(0);
 
 				indexdlg.Show();
 			}
 			else
 			{
-				indexdlg.settabledsp(this.objectList.GetSelectOneObjectName());
+				indexdlg.settabledsp(this.objectList.GetSelectObject(0));
 				indexdlg.Show();
 				indexdlg.BringToFront();
 			}
@@ -4752,10 +4752,6 @@ namespace quickDBExplorer
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 					}
-
-					// get id 
-					string sqlstr;
-					// split owner.table -> owner, table
 
 					if( dboInfo.IsSynonym )
 					{

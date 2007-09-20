@@ -53,12 +53,32 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		string GetDspObjList(bool isDspTable, bool isDspView, bool Synonym, bool isDspFunc, bool isDspSP, string ownerList);
 
+		/// <summary>
+		/// フィールドリスト取得時のダミークエリを生成する
+		/// </summary>
+		/// <returns></returns>
 		string GetDspFldListDummy();
 
+		/// <summary>
+		/// Owner の一覧を取得するSQLを生成する
+		/// </summary>
+		/// <param name="isDspSysUser"></param>
+		/// <returns></returns>
 		string	GetOwnerList(bool isDspSysUser);
 
+		/// <summary>
+		/// オブジェクトに対する Create 文を生成する
+		/// </summary>
+		/// <param name="dboInfo"></param>
+		/// <param name="usekakko"></param>
+		/// <returns></returns>
 		string	GetDDLCreateStr(DBObjectInfo dboInfo, bool usekakko);
 
+		/// <summary>
+		/// オブジェクトに対するDROP 文を生成する
+		/// </summary>
+		/// <param name="dboInfo"></param>
+		/// <returns></returns>
 		string	GetDDLDropStr(DBObjectInfo dboInfo);
 
 		//string GetDspFldList();

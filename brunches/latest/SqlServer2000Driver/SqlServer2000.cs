@@ -134,12 +134,21 @@ namespace quickDBExplorer
 			return retsql;
 		}
 
+		/// <summary>
+		/// フィールドリスト取得時のダミークエリを生成する
+		/// </summary>
+		/// <returns></returns>
 		public string GetDspFldListDummy()
 		{
 			return string.Format(
 				@"select * from sysindexes where 0=1" );
 		}
 
+		/// <summary>
+		/// Owner の一覧を取得するSQLを生成する
+		/// </summary>
+		/// <param name="isDspSysUser"></param>
+		/// <returns></returns>
 		public string	GetOwnerList(bool isDspSysUser)
 		{
 			if( isDspSysUser )
@@ -157,6 +166,11 @@ namespace quickDBExplorer
 			return "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + dboInfo.Owner +"' and sysobjects.name = '" + dboInfo.ObjName + "' order by syscolumns.colorder";
 		}
 
+		/// <summary>
+		/// オブジェクトに対するDROP 文を生成する
+		/// </summary>
+		/// <param name="dboInfo"></param>
+		/// <returns></returns>
 		public string	GetDDLDropStr(DBObjectInfo dboInfo)
 		{
 			switch( dboInfo.ObjType )
@@ -180,6 +194,12 @@ namespace quickDBExplorer
 		}
 
 
+		/// <summary>
+		/// オブジェクトに対する Create 文を生成する
+		/// </summary>
+		/// <param name="dboInfo"></param>
+		/// <param name="usekakko"></param>
+		/// <returns></returns>
 		public string	GetDDLCreateStr(DBObjectInfo dboInfo, bool usekakko)
 		{
 			StringBuilder strline =  new StringBuilder();

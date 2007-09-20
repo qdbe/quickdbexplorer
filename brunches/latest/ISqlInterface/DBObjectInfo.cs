@@ -186,6 +186,25 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
+		/// 実際のオブジェクトの型を取得する
+		/// シノニムの場合はその参照先のオブジェクトの型を返す
+		/// </summary>
+		public string	RealObjType
+		{
+			get 
+			{
+				if( this.objType == "SN" )
+				{
+					return this.synonymBaseType;
+				}
+				else
+				{
+					return this.objType;
+				}
+			}
+		}
+
+		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="otype">オブジェクトの型</param>

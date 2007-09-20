@@ -24,14 +24,14 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示するテーブル名称
 		/// </summary>
-		protected string dsptbname;
+		protected DBObjectInfo dspObj;
 		/// <summary>
 		/// 表示するテーブル名称
 		/// </summary>
-		public string DspTbname
+		public DBObjectInfo DspObj
 		{
-			get { return this.dsptbname; }
-			set { this.dsptbname = value; }
+			get { return this.dspObj; }
+			set { this.dspObj = value; }
 		}
 
 		/// <summary>
@@ -158,10 +158,12 @@ namespace quickDBExplorer
 		/// <summary>
 		/// INDEX情報を表示するテーブルを切り替える
 		/// </summary>
-		/// <param name="tbname">新規に表示するテーブル名称</param>
-		public void settabledsp(string tbname)
+		/// <param name="dboInfo">新規に表示するオブジェクト情報</param>
+		public void settabledsp(DBObjectInfo dboInfo)
 		{
-			if( tbname == null || tbname == "" )
+			if( dboInfo == null || 
+				( dboInfo.RealObjType != "U" &&
+				dboInfo.RealObjType != "V" ) )
 			{
 				this.dataGrid1.Hide();
 				return;
@@ -179,43 +181,11 @@ namespace quickDBExplorer
 				}
 			}
 
-			this.dsptbname = tbname;
+			this.dspObj = dboInfo;
 
-			// split owner.table -> owner, table
-			string delimStr = ".";
-			string []str = tbname.Split(delimStr.ToCharArray(), 2);
 			string sqlstr;
 
-			if( this.sqlVersion != 2000 )
-			{
-				// SQL Server 2005 以降 では、synonym が指定される可能性がある為、そのチェックを行う
-				sqlstr = string.Format( @"select base_object_name from sys.synonyms 
-	inner join sys.schemas on sys.synonyms.schema_id= sys.schemas.schema_id 
-	where
-	sys.schemas.name = '{0}' and 
-	sys.synonyms.name = '{1}' ",
-					str[0],
-					str[1]
-					);
-				SqlDataAdapter dasyn = new SqlDataAdapter(sqlstr, this.sqlConnection);
-				DataSet dssyn = new DataSet();
-				dssyn.CaseSensitive = true;
-				dasyn.Fill(dssyn,tbname);
-				if( dssyn.Tables[tbname].Rows.Count > 0 )
-				{
-					// Synonym の場合、その親となるオブジェクトに対して 実施する必要あり
-					sqlstr = string.Format(@"sp_helpindex '{0}'", dssyn.Tables[tbname].Rows[0]["base_object_name"] );
-				}
-				else
-				{
-					sqlstr = string.Format(@"sp_helpindex '{0}'", tbname );
-				}
-			}
-			else
-			{
-				// SQL Server 2000 では、synonym の考慮は必要なし
-				sqlstr = string.Format(@"sp_helpindex '{0}'", tbname );
-			}
+			sqlstr = string.Format(@"sp_helpindex '{0}'", dboInfo.RealObjName );
 
 			SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection);
 			DataSet baseidx = new DataSet();
@@ -316,9 +286,9 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void IndexViewDialog_Load(object sender, System.EventArgs e)
 		{
-			if(dsptbname != "" )
+			if( this.dspObj != null )
 			{
-				settabledsp(dsptbname);
+				settabledsp(dspObj);
 			}
 		}
 

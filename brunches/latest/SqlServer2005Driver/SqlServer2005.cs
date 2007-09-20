@@ -171,6 +171,10 @@ where
 			return retsql;
 		}
 
+		/// <summary>
+		/// フィールドリスト取得時のダミークエリを生成する
+		/// </summary>
+		/// <returns></returns>
 		public string GetDspFldListDummy()
 		{
 			return string.Format(
@@ -178,6 +182,11 @@ where
 		}
 
 
+		/// <summary>
+		/// Owner の一覧を取得するSQLを生成する
+		/// </summary>
+		/// <param name="isDspSysUser"></param>
+		/// <returns></returns>
 		public string	GetOwnerList(bool isDspSysUser)
 		{
 			if( isDspSysUser )
@@ -192,7 +201,12 @@ where
 			}
 		}
 
-		public string	GetDDLSelectStr(DBObjectInfo dboInfo)
+		/// <summary>
+		/// テーブル情報取得の為のSQL文を生成する
+		/// </summary>
+		/// <param name="dboInfo"></param>
+		/// <returns></returns>
+		string	GetDDLTableSelectStr(DBObjectInfo dboInfo)
 		{
 			return string.Format(
 				@"select 
@@ -225,6 +239,12 @@ order by colorder",
 				);
 		}
 
+
+		/// <summary>
+		/// オブジェクトに対するDROP 文を生成する
+		/// </summary>
+		/// <param name="dboInfo"></param>
+		/// <returns></returns>
 		public string	GetDDLDropStr(DBObjectInfo dboInfo)
 		{
 			switch( dboInfo.ObjType )
@@ -247,7 +267,12 @@ order by colorder",
 			}
 		}
 
-
+		/// <summary>
+		/// オブジェクトに対する Create 文を生成する
+		/// </summary>
+		/// <param name="dboInfo"></param>
+		/// <param name="usekakko"></param>
+		/// <returns></returns>
 		public string	GetDDLCreateStr(DBObjectInfo dboInfo, bool usekakko)
 		{
 			StringBuilder strline =  new StringBuilder();
@@ -256,7 +281,7 @@ order by colorder",
 			if( dboInfo.ObjType == "U" )
 			{
 
-				string sqlstr = this.GetDDLSelectStr(dboInfo);
+				string sqlstr = this.GetDDLTableSelectStr(dboInfo);
 
 				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnect);
 				DataSet ds = new DataSet();
