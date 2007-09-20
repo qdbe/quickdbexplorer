@@ -299,6 +299,100 @@ namespace quickDBExplorer
 			return strline.ToString();
 		}
 
+		/// <summary>
+		/// オブジェクト情報をセットするDataTableを初期化する
+		/// </summary>
+		/// <param name="dt"></param>
+		public void	InitObjTable(DataTable objTable)
+		{
+			objTable.Columns.Add("オブジェクトID",typeof(int));
+			objTable.Columns.Add("オブジェクト名");
+			objTable.Columns.Add("所有者");
+			objTable.Columns.Add("オブジェクトの型");
+			objTable.Columns.Add("作成日時");
+		}
+
+		/// <summary>
+		/// オブジェクトの情報を、DataTable に追加する
+		/// </summary>
+		/// <param name="dboInfo">対象となるオブジェクト</param>
+		/// <param name="dt"></param>
+		public void	AddObjectInfo(DBObjectInfo dboInfo, DataTable dt)
+		{
+			string	strsql = string.Format("select * from sysobjects where id = OBJECT_ID('{0}') ",
+				dboInfo.FormalName );
+			SqlCommand	cm = new SqlCommand(strsql,this.sqlConnect);
+
+			SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
+			DataTable	odt = new DataTable("sysobjects");
+			da.Fill(odt);
+
+
+
+			DataRow dr = dt.NewRow();
+
+			if( odt.Rows.Count != 0 )
+			{
+				dr[0] = odt.Rows[0]["id"];
+			}
+			dr[1] = dboInfo.ObjName;
+			dr[2] = dboInfo.Owner;
+			dr[4] = dboInfo.CreateTime;
+
+			switch( dboInfo.ObjType )
+			{
+				case	"C":
+					dr[3] = "CHECK 制約";
+					break;
+				case	"D":
+					dr[3] = "Default または DEFAULT 制約";
+					break;
+				case	"F":
+					dr[3] = "FOREIGN KEY 制約";
+					break;
+				case	"L":
+					dr[3] = "ログ";
+					break;
+				case	"FN":
+					dr[3] = "スカラ関数";
+					break;
+				case	"IF":
+					dr[3] = "インライン テーブル関数";
+					break;
+				case	"P":
+					dr[3] = "ストアド プロシージャ";
+					break;
+				case	"PK":
+					dr[3] = "PRIMARY KEY 制約 (タイプ K)";
+					break;
+				case	"RF":
+					dr[3] = "レプリケーション フィルタ ストアド プロシージャ";
+					break;
+				case	"S":
+					dr[3] = "システム テーブル";
+					break;
+				case	"TF":
+					dr[3] = "テーブル関数";
+					break;
+				case	"TR":
+					dr[3] = "トリガ";
+					break;
+				case	"U":
+					dr[3] = "ユーザー テーブル";
+					break;
+				case	"UQ":
+					dr[3] = "UNIQUE 制約 (タイプ K)";
+					break;
+				case	"V":
+					dr[3] = "ビュー";
+					break;
+				case	"X":
+					dr[3] = "拡張ストアド プロシージャ";
+					break;
+			}
+			dt.Rows.Add(dr);
+		}
+
 		#endregion
 	}
 }

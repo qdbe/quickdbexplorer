@@ -372,6 +372,96 @@ order by colorder",
 			return strline.ToString();
 		}
 
+		/// <summary>
+		/// オブジェクト情報をセットするDataTableを初期化する
+		/// </summary>
+		/// <param name="dt"></param>
+		public void	InitObjTable(DataTable objTable)
+		{
+			objTable.Columns.Add("オブジェクトID");
+			objTable.Columns.Add("オブジェクト名");
+			objTable.Columns.Add("所有者");
+			objTable.Columns.Add("オブジェクトの型");
+			objTable.Columns.Add("作成日時");
+			objTable.Columns.Add("更新日時");
+			objTable.Columns.Add("シノニム参照先");
+			objTable.Columns.Add("シノニム参照先オブジェクトの型");
+		}
+
+		/// <summary>
+		/// オブジェクトの情報を、DataTable に追加する
+		/// </summary>
+		/// <param name="dboInfo">対象となるオブジェクト</param>
+		/// <param name="dt"></param>
+		public void	AddObjectInfo(DBObjectInfo dboInfo, DataTable dt)
+		{
+			string	strsql = string.Format("select * from sys.all_objects where object_id = OBJECT_ID('{0}') ",
+				dboInfo.FormalName );
+			SqlCommand	cm = new SqlCommand(strsql,this.sqlConnect);
+
+			SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
+			DataTable	odt = new DataTable("sysobjects");
+			da.Fill(odt);
+
+
+
+			DataRow dr = dt.NewRow();
+
+			if( odt.Rows.Count != 0 )
+			{
+				dr[0] = odt.Rows[0]["object_id"];
+				dr[5] = odt.Rows[0]["modify_date"].ToString();
+			}
+			dr[1] = dboInfo.ObjName;
+			dr[2] = dboInfo.Owner;
+			dr[3] = this.GetObjTypeName(dboInfo.ObjType);
+			dr[4] = dboInfo.CreateTime;
+			if( dboInfo.IsSynonym )
+			{
+				dr[6] = dboInfo.SynonymBase;
+				dr[7] = this.GetObjTypeName(dboInfo.SynonymBaseType);
+			}
+			else
+			{
+				dr[6] = string.Empty;
+				dr[7] = string.Empty;
+			}
+
+			dt.Rows.Add(dr);
+		}
+
+		internal string GetObjTypeName(string objType)
+		{
+			switch( objType )
+			{
+
+				case	"AF":	return "集計関数 (CLR)";
+				case	"C":	return "CHECK 制約";
+				case	"D":	return "DEFAULT (制約またはスタンドアロン)";
+				case	"F":	return "FOREIGN KEY 制約";
+				case	"PK":	return "PRIMARY KEY 制約";
+				case	"P":	return "SQL ストアド プロシージャ";
+				case	"PC":	return "アセンブリ (CLR) ストアド プロシージャ";
+				case	"FN":	return "SQL スカラ関数";
+				case	"FS":	return "アセンブリ (CLR) スカラ関数";
+				case	"FT":	return "アセンブリ (CLR) テーブル値関数";
+				case	"R":	return "ルール (旧形式、スタンドアロン)";
+				case	"RF":	return "レプリケーション フィルタ プロシージャ";
+				case	"SN":	return "シノニム";
+				case	"SQ":	return "サービス キュー";
+				case	"TA":	return "アセンブリ (CLR) トリガ";
+				case	"TR":	return "SQL トリガ";
+				case	"IF":	return "SQL インライン テーブル値関数";
+				case	"TF":	return "SQL テーブル値関数";
+				case	"U":	return "テーブル (ユーザー定義)";
+				case	"UQ":	return "UNIQUE 制約";
+				case	"V":	return "ビュー";
+				case	"X":	return "拡張ストアド プロシージャ";
+				case	"IT":	return "内部テーブル";
+				default:
+					return	string.Empty;
+			}
+		}
 		#endregion
 	}
 }

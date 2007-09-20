@@ -112,6 +112,7 @@ namespace quickDBExplorer
 			for( int i = 0; i < this.Items.Count; i++ )
 			{
 				this.Items[i].Selected = false;
+				this.Items[i].Focused = false;
 			}
 			this.EndUpdate();
 		}

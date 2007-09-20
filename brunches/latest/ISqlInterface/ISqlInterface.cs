@@ -81,6 +81,17 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		string	GetDDLDropStr(DBObjectInfo dboInfo);
 
-		//string GetDspFldList();
+		/// <summary>
+		/// オブジェクト情報をセットするDataTableを初期化する
+		/// </summary>
+		/// <param name="dt"></param>
+		void	InitObjTable(DataTable dt);
+
+		/// <summary>
+		/// オブジェクトの情報を、DataTable に追加する
+		/// </summary>
+		/// <param name="dboInfo">対象となるオブジェクト</param>
+		/// <param name="dt"></param>
+		void	AddObjectInfo(DBObjectInfo dboInfo, DataTable dt);
 	}
 }

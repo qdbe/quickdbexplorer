@@ -25,7 +25,7 @@ namespace quickDBExplorer
 		/// </summary>
 		public string ResultStr
 		{
-			get { return this.ResultStr; }
+			get { return this.resultStr; }
 			set { this.resultStr = value; }
 		}
 

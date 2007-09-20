@@ -307,7 +307,9 @@ namespace quickDBExplorer
 			this.selectHistory = svdata.SelectHistory;
 			this.DMLHistory = svdata.DMLHistory;
 			this.cmdHistory = svdata.CmdHistory;
-			InitMenu();
+
+			// 右クリックメニューや、ボタンポップアップメニューを初期化する
+			InitPopupMenu();
 		}
 
 		/// <summary>
@@ -464,7 +466,7 @@ namespace quickDBExplorer
 			this.objectList.TabIndex = 22;
 			this.objectList.View = System.Windows.Forms.View.Details;
 			this.objectList.CopyData += new quickDBExplorer.qdbeListView.CopyDataHandler(this.objectList_CopyData);
-			this.objectList.DoubleClick += new System.EventHandler(this.insertmake);
+			this.objectList.DoubleClick += new System.EventHandler(this.InsertMake);
 			this.objectList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.objectList_ColumnClick);
 			this.objectList.SelectedIndexChanged += new System.EventHandler(this.objectList_SelectedIndexChanged);
 			// 
@@ -1233,17 +1235,17 @@ namespace quickDBExplorer
 			tmpmenu.Show((Control)sender,new Point(0,0));
 		}
 
-		private	void	InitMenu()
+		private	void	InitPopupMenu()
 		{
 			ArrayList	menuAr = new ArrayList();
 			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー", new EventHandler(this.menuTableCopy_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー カンマ付き", new EventHandler(this.menuTableCopyCsv_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,null,"指定テーブル選択", new EventHandler(this.menuTableSelect_Click) ) );
 			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成", new EventHandler(this.insertmake) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(DELETE文付き)", new EventHandler(this.insertmakeDelete) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(フィールドリストなし)", new EventHandler(this.insertmakeNoField) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(フィールドリストなし　DELETE文付き)", new EventHandler(this.insertmakeNoFieldDelete) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成", new EventHandler(this.InsertMake) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(DELETE文付き)", new EventHandler(this.InsertMakeDelete) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(フィールドリストなし)", new EventHandler(this.InsertMakeNoField) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(フィールドリストなし　DELETE文付き)", new EventHandler(this.InsertMakeNoFieldDelete) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(DELETE文付き、退避付き)", new EventHandler(this.menuInsertDeleteTaihi_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(フィールドなし DELETE文付き 退避付き)", new EventHandler(this.menuInsertNoFldDeleteTaihi_Click) ) );
 			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
@@ -1278,6 +1280,7 @@ namespace quickDBExplorer
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"データ件数表示", new EventHandler(this.menuRecordCountDsp_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"統計情報更新", new EventHandler(this.menuUpdateStaticsMain_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"各種コマンド実行", new EventHandler(this.menuDoQuery_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"オブジェクト情報表示", new EventHandler(this.DspObjectInfo) ) );
 
 			ContextMenu objMenu = new System.Windows.Forms.ContextMenu();
 			int		idx = 0;
@@ -1340,47 +1343,57 @@ namespace quickDBExplorer
 		#endregion
 
 		#region メニュー関連ボタンイベントハンドラ
-		private void insertmake(object sender, System.EventArgs e)
+		private void InsertMake(object sender, System.EventArgs e)
 		{
 			this.CreInsert(true,false,false);
 		}
 
 		private void makefldlist(object sender, System.EventArgs e)
 		{
-			crefldlst(false,true);
+			CreateFldList(false,true);
 		}
 
 		private void makefldListLF(object sender, System.EventArgs e)
 		{
-			crefldlst(true,true);
+			CreateFldList(true,true);
 		}
 
 		private void makefldListNoComma(object sender, System.EventArgs e)
 		{
-			crefldlst(true,false);
+			CreateFldList(true,false);
 		}
 
 		private void makeCSV(object sender, System.EventArgs e)
 		{
-			crecsv(false, ",");
+			CreateTCsvText(false, ",");
 		}
 
 		private void makeCSVQuote(object sender, System.EventArgs e)
 		{
-			crecsv(true,",");
+			CreateTCsvText(true,",");
 		}
 
-		private void insertmakeDelete(object sender, System.EventArgs e)
+		private void menuMakeTab_Click(object sender, System.EventArgs e)
+		{
+			CreateTCsvText(false,"	");
+		}
+
+		private void menuMakeTabDQ_Click(object sender, System.EventArgs e)
+		{
+			CreateTCsvText(true,"	");
+		}
+
+		private void InsertMakeDelete(object sender, System.EventArgs e)
 		{
 			this.CreInsert( true, true,false );
 		}
 
-		private void insertmakeNoField(object sender, System.EventArgs e)
+		private void InsertMakeNoField(object sender, System.EventArgs e)
 		{
 			this.CreInsert(false,false,false );
 		}
 
-		private void insertmakeNoFieldDelete(object sender, System.EventArgs e)
+		private void InsertMakeNoFieldDelete(object sender, System.EventArgs e)
 		{
 			this.CreInsert(false,true,false);
 		}
@@ -1408,33 +1421,33 @@ namespace quickDBExplorer
 
 		private void menuTableCopy_Click(object sender, System.EventArgs e)
 		{
-			copytablename(false);
+			CopyTableName(false);
 		}
 
 		private void menuTableCopyCsv_Click(object sender, System.EventArgs e)
 		{
-			copytablename(true);
+			CopyTableName(true);
 		}
 
 
 		private void fldmenuCopy_Click(object sender, System.EventArgs e)
 		{
-			copyfldlist(true,true);
+			CopyFldList(true,true);
 		}
 
 		private void fldmenuCopyNoCRLF_Click(object sender, System.EventArgs e)
 		{
-			copyfldlist(false,true);
+			CopyFldList(false,true);
 		}
 
 		private void fldmenuCopyNoComma_Click(object sender, System.EventArgs e)
 		{
-			copyfldlist(true,false);
+			CopyFldList(true,false);
 		}
 
 		private void fldmenuCopyNoCRLFNoComma_Click(object sender, System.EventArgs e)
 		{
-			copyfldlist(false,false);
+			CopyFldList(false,false);
 		}
 
 		private void rdoUnicode_CheckedChanged(object sender, System.EventArgs e)
@@ -1461,15 +1474,6 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void menuMakeTab_Click(object sender, System.EventArgs e)
-		{
-			crecsv(false,"	");
-		}
-
-		private void menuMakeTabDQ_Click(object sender, System.EventArgs e)
-		{
-			crecsv(true,"	");
-		}
 
 		private void menuInsertDeleteTaihi_Click(object sender, System.EventArgs e)
 		{
@@ -1517,7 +1521,7 @@ namespace quickDBExplorer
 		/// <param name="sender"></param>
 		private void fieldListbox_CopyData(object sender)
 		{
-			copyfldlist(true,true);
+			CopyFldList(true,true);
 		}
 
 		/// <summary>
@@ -1725,9 +1729,9 @@ namespace quickDBExplorer
 			
 
 			// 対象となるテーブル一覧の表示
-			dspobjectList();
+			DspObjectList();
 			// 対象となる owner/role/schema の表示
-			displistowner();
+			DispListOwner();
 			if( svdata.Dbopt[svdata.LastDb] != null )
 			{
 				if( svdata.Dbopt[svdata.LastDb] is ArrayList )
@@ -1899,11 +1903,11 @@ namespace quickDBExplorer
 			}
 			if( this.objectList.SelectedItems.Count == 1 )
 			{
-				dspfldlist(this.objectList.GetSelectObject(0));
+				DispFldList(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				dspfldlist(null);
+				DispFldList(null);
 			}
 			if( indexdlg != null && indexdlg.Visible == true )
 			{
@@ -1928,7 +1932,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dspobjectList();
+			DspObjectList();
 		}
 
 		private void rdoSortTable_CheckedChanged(object sender, System.EventArgs e)
@@ -1948,7 +1952,7 @@ namespace quickDBExplorer
 			}
 			this.objectList.Sort();
 				 
-			//dspobjectList();
+			//DspObjectList();
 		}
 
 		private void chkDspData_CheckedChanged(object sender, System.EventArgs e)
@@ -2037,8 +2041,8 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dspobjectList();
-			displistowner();
+			DspObjectList();
+			DispListOwner();
 		}
 
 		private void ownerListbox_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -2073,7 +2077,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dspobjectList();
+			DspObjectList();
 		}
 
 		private void rdoNotDspSysUser_CheckedChanged(object sender, System.EventArgs e)
@@ -2085,8 +2089,8 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			dspobjectList();
-			displistowner();
+			DspObjectList();
+			DispListOwner();
 		}
 
 		private void rdoClipboard_CheckedChanged(object sender, System.EventArgs e)
@@ -2209,11 +2213,11 @@ namespace quickDBExplorer
 		{
 			if( this.objectList.SelectedItems.Count == 1 )
 			{
-				dspfldlist(this.objectList.GetSelectObject(0));
+				DispFldList(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				dspfldlist(null);
+				DispFldList(null);
 			}
 		}
 
@@ -2667,9 +2671,9 @@ namespace quickDBExplorer
 			if( dlg.ShowDialog() == DialogResult.OK && dlg.ResultStr != "")
 			{
 				string tabs = dlg.ResultStr;
-				string []objectLists = tabs.Split("\r\n".ToCharArray());
+				string []objectLists = tabs.Replace("\r\n","\r").Split("\r\n".ToCharArray());
 				this.objectList.BeginUpdate();
-				this.objectList.Items.Clear();
+				this.objectList.ClearSelected();
 				for( int i = 0; i < objectLists.Length; i++ )
 				{
 					int x = this.objectList.FindStringExact(objectLists[i]);
@@ -3725,6 +3729,43 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 選択されたオブジェクトの基礎情報を表示する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DspObjectInfo(object sender, System.EventArgs e)
+		{
+			if( this.objectList.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+
+			DataTable	objTable = new DataTable("ObjectInfo");
+			objTable.CaseSensitive = true;
+
+			this.InitErrMessage();
+			this.sqlDriver.InitObjTable(objTable);
+
+			try
+			{
+				DBObjectInfo	dboInfo;
+				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
+				{
+					dboInfo = this.objectList.GetSelectObject(ti);
+					this.sqlDriver.AddObjectInfo(dboInfo,objTable);
+				}
+
+				DataGridViewBase dlg = new DataGridViewBase(objTable,"オブジェクト情報");
+				dlg.ShowDialog();
+			}
+			catch( Exception se )
+			{
+				this.SetErrorMessage(se);
+			}
+		}
+
+
 		private void fieldListbox_ExtendedCopyData(object sender)
 		{
 			// フィールド一覧で Ctrl + F が押下された場合の処理
@@ -3835,7 +3876,7 @@ namespace quickDBExplorer
 
 		private void objectList_CopyData(object sender)
 		{
-			copytablename(false);
+			CopyTableName(false);
 		}
 
 		private void cmbHistory_SelectionChangeCommitted(object sender, System.EventArgs e)
@@ -3856,7 +3897,7 @@ namespace quickDBExplorer
 
 
 
-		private void dspfldlist(DBObjectInfo dboInfo)
+		private void DispFldList(DBObjectInfo dboInfo)
 		{
 			try
 			{
@@ -4028,7 +4069,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// テーブル一覧の表示
 		/// </summary>
-		private void dspobjectList()
+		private void DspObjectList()
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
@@ -4125,7 +4166,7 @@ namespace quickDBExplorer
 		
 		}
 
-		private void displistowner()
+		private void DispListOwner()
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
@@ -4346,7 +4387,7 @@ namespace quickDBExplorer
 							{
 								wr.Write( ", " );
 							}
-							wr.Write(convdata(dr, i, "'","N",true));
+							wr.Write(ConvData(dr, i, "'","N",true));
 						}
 						wr.Write( " ) {0}",wr.NewLine );
 					}
@@ -4405,7 +4446,7 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void crefldlst(bool isLF, bool iscomma)
+		private void CreateFldList(bool isLF, bool iscomma)
 		{
 			try
 			{
@@ -4502,7 +4543,7 @@ namespace quickDBExplorer
 		}
 
 		// フィールドのリストを表示する
-		private void crecsv(bool isdquote, string separater)
+		private void CreateTCsvText(bool isdquote, string separater)
 		{
 			SqlDataReader dr = null;
 			SqlCommand	cm = new SqlCommand();
@@ -4626,11 +4667,11 @@ namespace quickDBExplorer
 							}
 							if ( isdquote == false )
 							{
-								wr.Write(convdata(dr, i, "","",false));
+								wr.Write(ConvData(dr, i, "","",false));
 							}
 							else
 							{
-								wr.Write(convdata(dr, i, "\"","",false));
+								wr.Write(ConvData(dr, i, "\"","",false));
 							}
 						}
 						wr.Write( wr.NewLine );
@@ -4980,7 +5021,7 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void copytablename(bool addcomma)
+		private void CopyTableName(bool addcomma)
 		{
 			if( this.objectList.SelectedItems.Count > 0 )
 			{
@@ -5010,7 +5051,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="lf">改行をつけるか否か</param>
 		/// <param name="docomma">カンマをつけるか否か</param>
-		protected void copyfldlist(bool lf, bool docomma)
+		protected void CopyFldList(bool lf, bool docomma)
 		{
 			StringBuilder str = new StringBuilder();
 			for( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
@@ -5109,12 +5150,11 @@ namespace quickDBExplorer
 				System.Data.SqlClient.SqlDataAdapter da = new SqlDataAdapter();
 				cm.CommandTimeout = this.SqlTimeOut;
 
-				String tbname = this.objectList.GetSelectOneObjectName();
-			
+				DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
 
 				// get id 
 				string sqlstr;
-				sqlstr = string.Format("select  * from {0} ",gettbnameWithAlias(tbname));
+				sqlstr = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()) );
 				cm.CommandText = sqlstr;
 				cm.Connection = this.sqlConnection1;
 
@@ -5581,7 +5621,7 @@ namespace quickDBExplorer
 			return true;
 		}
 
-		private string convdata(SqlDataReader dr, int i, string addstr, string unichar, bool outNull)
+		private string ConvData(SqlDataReader dr, int i, string addstr, string unichar, bool outNull)
 		{
 			//
 			//aaa  bigint  NOT NULL PRIMARY KEY,
@@ -5785,23 +5825,6 @@ namespace quickDBExplorer
 		protected string getAlias()
 		{
 			return this.txtAlias.Text;
-		}
-
-		/// <summary>
-		/// from 句で利用するために、テーブル修飾子をつけて、テーブル名を変換する
-		/// 基の名前は[]が付いていないことが前提
-		/// </summary>
-		/// <param name="tbname">テーブル名(owner.tablename形式)</param>
-		/// <returns>解析後のテーブル名([owner].[tabblname] alias 形式)</returns>
-		protected string gettbnameWithAlias(string tbname)
-		{
-			string retstr = qdbeUtil.GetTbname(tbname);
-			if( this.txtAlias.Text != "" )
-			{
-				retstr += " " + this.txtAlias.Text;
-			}
-			
-			return retstr;
 		}
 
 		/// <summary>
@@ -6067,6 +6090,7 @@ namespace quickDBExplorer
 		{
 			MenuItem	it = new MenuItem();
 			it.Index = index;
+			
 			if( this.isSeparater == true )
 			{
 				it.Text = "-";
@@ -6076,7 +6100,7 @@ namespace quickDBExplorer
 				if( shortCutNo > 0 )
 				{
 					it.Text = string.Format("(&{0}) {1}",
-						shortCutNo, this.menuName );
+						shortCutNo.ToString("x"), this.menuName );
 				}
 				else
 				{
