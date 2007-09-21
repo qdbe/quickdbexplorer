@@ -23,7 +23,7 @@ namespace quickDBExplorer
 		}
 		#region ISqlInterface ÉÅÉìÉo
 
-		public void SetConnection(System.Data.SqlClient.SqlConnection sqlConnection1)
+		public void SetConnection(IDbConnection sqlConnection1)
 		{
 			this.sqlConnect = sqlConnection1;
 		}

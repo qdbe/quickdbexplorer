@@ -14,7 +14,7 @@ namespace quickDBExplorer
 		/// SQLServerに対するコネクション情報を管理する
 		/// </summary>
 		/// <param name="sqlConnection1"></param>
-		void SetConnection(SqlConnection sqlConnection1);
+		void SetConnection(IDbConnection sqlConnection);
 
 		/// <summary>
 		/// DBの一覧表示を取得するSQL文を返す

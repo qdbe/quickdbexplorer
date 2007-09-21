@@ -89,6 +89,11 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "DBFieldInfo.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "DBObjectInfo.cs"
                     SubType = "Code"
                     BuildAction = "Compile"

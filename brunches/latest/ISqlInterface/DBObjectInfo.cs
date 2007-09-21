@@ -204,16 +204,26 @@ namespace quickDBExplorer
 			}
 		}
 
+		private	DBFieldInfo	fieldInfo;
 		/// <summary>
-		/// コンストラクタ
+		/// テーブルのフィールド情報をキャッシュして保持する
 		/// </summary>
-		/// <param name="otype">オブジェクトの型</param>
-		/// <param name="owner">オブジェクトの所有者名</param>
-		/// <param name="name">オブジェクトの名称</param>
-		/// <param name="cretime">オブジェクトの作成日時</param>
-		/// <param name="synbase">シノニムの場合、その参照先のオブジェクト名</param>
-		/// <param name="synbtype">シノニムの場合、その参照先のオブジェクトの型</param>
-		public DBObjectInfo( string otype, string owner, string name, string cretime, string synbase, string synbtype )
+		public	DBFieldInfo	FieldInfo
+		{
+			get { return this.fieldInfo; }
+			set { this.fieldInfo = value; }
+		}
+
+			/// <summary>
+			/// コンストラクタ
+			/// </summary>
+			/// <param name="otype">オブジェクトの型</param>
+			/// <param name="owner">オブジェクトの所有者名</param>
+			/// <param name="name">オブジェクトの名称</param>
+			/// <param name="cretime">オブジェクトの作成日時</param>
+			/// <param name="synbase">シノニムの場合、その参照先のオブジェクト名</param>
+			/// <param name="synbtype">シノニムの場合、その参照先のオブジェクトの型</param>
+			public DBObjectInfo( string otype, string owner, string name, string cretime, string synbase, string synbtype )
 		{
 			this.objType = otype.TrimEnd(null);
 			this.owner = owner;
