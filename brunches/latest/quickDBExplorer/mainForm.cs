@@ -3917,79 +3917,18 @@ namespace quickDBExplorer
 					dodsp = false;
 				}
 
-				string sqlstr;
-
-				sqlstr = this.sqlDriver.GetFieldListSelect(dboInfo);
-
-				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-				DataSet ds = new DataSet();
-				ds.CaseSensitive = true;
-				da.Fill(ds,dboInfo.ToString());
-
-
-				if( ds.Tables[dboInfo.ToString()].Rows.Count == 0 )
-				{
-					// 通常はありえないが、念の為、空の表示を行う
-					sqlstr = this.sqlDriver.GetDspFldListDummy();
-				}
-				else
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						sqlstr = string.Format("select * from sysindexes where id={0} and indid > 0 and indid < 255 and (status & 2048)=2048",
-							(int)ds.Tables[dboInfo.ToString()].Rows[0]["id"] );
-					}
-					else
-					{
-						sqlstr = string.Format(
-							@"select * from sys.indexes where 
-							object_id = {0}
-						and is_primary_key = 1",
-							(int)ds.Tables[dboInfo.ToString()].Rows[0]["id"] );
-					}
-				}
-
-				SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-				DataSet idx = new DataSet();
-				idx.CaseSensitive = true;
-				daa.Fill(idx,dboInfo.ToString());
-
-				int indid = -1;
-				DataSet idkey = new DataSet();
-				idkey.CaseSensitive = true;
-				if( dodsp == true && idx.Tables[0].Rows.Count != 0 )
-				{
-					if( this.sqlVersion == 2000 )
-					{
-						indid = (short)idx.Tables[0].Rows[0]["indid"];
-						sqlstr = string.Format("select * from sysindexkeys where id={0} and indid={1}",
-							(int)ds.Tables[dboInfo.ToString()].Rows[0]["id"],
-							(short)indid );
-					}
-					else
-					{
-						indid = (int)idx.Tables[0].Rows[0]["index_id"];
-						sqlstr = string.Format("select object_id,index_id,index_column_id,column_id as colid,key_ordinal,partition_ordinal,is_descending_key,is_included_column from sys.index_columns where object_id={0} and index_id={1}",
-							(int)ds.Tables[dboInfo.ToString()].Rows[0]["id"],
-							(short)indid );
-					}
-					SqlDataAdapter dai = new SqlDataAdapter(sqlstr, this.sqlConnection1);
-					dai.Fill(idkey,dboInfo.ToString());
-				}
-
-				int		maxRow = ds.Tables[dboInfo.ToString()].Rows.Count;
-
 				string	valtype;
 				string	istr = "";
-				for( int i = 0; i < maxRow ; i++ )
+
+				foreach(DBFieldInfo fi in dboInfo.FieldInfo)
 				{
 					if( dodsp == false )
 					{
-						istr = (string)ds.Tables[dboInfo.ToString()].Rows[i][0] + " ";
+						istr = fi.Name + " ";
 					}
 					else
 					{
-						valtype = (string)ds.Tables[dboInfo.ToString()].Rows[i][1];
+						valtype = fi.TypeName;
 						if( valtype == "varchar" ||
 							valtype == "varbinary" ||
 							valtype == "nvarchar" ||
@@ -3997,18 +3936,18 @@ namespace quickDBExplorer
 							valtype == "nchar" ||
 							valtype == "binary" )
 						{
-							if( (Int16)ds.Tables[dboInfo.ToString()].Rows[i][3] == -1 )
+							if( fi.Length == -1 )
 							{
 								istr = string.Format("{0}  {1}(max) ",
-									ds.Tables[dboInfo.ToString()].Rows[i][0],
-									ds.Tables[dboInfo.ToString()].Rows[i][1]);
+									fi.Name,
+									fi.TypeName);
 							}
 							else
 							{
 								istr = string.Format("{0}  {1}({2}) ",
-									ds.Tables[dboInfo.ToString()].Rows[i][0],
-									ds.Tables[dboInfo.ToString()].Rows[i][1],
-									ds.Tables[dboInfo.ToString()].Rows[i][3]);
+									fi.Name,
+									fi.TypeName,
+									fi.Length);
 							}
 										 
 						}
@@ -4016,19 +3955,19 @@ namespace quickDBExplorer
 							valtype == "decimal" )
 						{
 							istr = string.Format("{0}  {1}({2},{3}) ",
-								ds.Tables[dboInfo.ToString()].Rows[i][0],
-								ds.Tables[dboInfo.ToString()].Rows[i][1],
-								ds.Tables[dboInfo.ToString()].Rows[i][3],
-								ds.Tables[dboInfo.ToString()].Rows[i][4]);
+								fi.Name,
+								fi.TypeName,
+								fi.Prec,
+								fi.Xscale);
 
 						}
 						else
 						{
 							istr = string.Format("{0}  {1} ",
-								ds.Tables[dboInfo.ToString()].Rows[i][0],
-								ds.Tables[dboInfo.ToString()].Rows[i][1]);
+								fi.Name,
+								fi.TypeName);
 						}
-						if( (int)ds.Tables[dboInfo.ToString()].Rows[i]["isnullable"] == 0 )
+						if( fi.IsNullable == false )
 						{
 							istr +=" NOT NULL";
 						}
@@ -4036,25 +3975,9 @@ namespace quickDBExplorer
 						{
 							istr +=" NULL";
 						}
-						if( idkey.Tables.Count != 0 && idkey.Tables[0].Rows.Count != 0 )
+						if( fi.PrimaryKeyOrder >= 0 )
 						{
-							foreach(DataRow dr in idkey.Tables[0].Rows )
-							{
-								if( this.sqlVersion == 2000 )
-								{
-									if( (short)dr["colid"] == (short)ds.Tables[dboInfo.ToString()].Rows[i]["colid"] )
-									{
-										istr +=" PRIMARY KEY";
-									}
-								}
-								else
-								{
-									if( (int)dr["colid"] == (int)ds.Tables[dboInfo.ToString()].Rows[i]["colid"] )
-									{
-										istr +=" PRIMARY KEY";
-									}
-								}
-							}
+							istr +=" PRIMARY KEY";
 						}
 					}
 					this.fieldListbox.Items.Add(istr);
@@ -4136,7 +4059,7 @@ namespace quickDBExplorer
 				while ( dr.Read())
 				{
 					ar.Add(
-						this.objectList.CreateItem(dr)
+						this.objectList.CreateItem(dr, this.sqlDriver.ObjectDetailSet())
 						);
 				}
 				this.objectList.Items.AddRange((ListViewItem[])ar.ToArray(typeof(ListViewItem)));
@@ -4747,10 +4670,6 @@ namespace quickDBExplorer
 		/// </summary>
 		private void CreDDL(bool bDrop, bool usekakko)
 		{	
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
-
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
 				return;
@@ -4837,28 +4756,9 @@ namespace quickDBExplorer
 				}
 				MessageBox.Show("処理を完了しました");
 			}
-			catch ( System.Data.SqlClient.SqlException se )
-			{
-				if( dr != null && dr.IsClosed == false )
-				{
-					dr.Close();
-				}
-				this.SetErrorMessage(se);
-			}
 			catch ( Exception se )
 			{
-				if( dr != null && dr.IsClosed == false )
-				{
-					dr.Close();
-				}
 				this.SetErrorMessage(se);
-			}
-			finally 
-			{
-				if( cm != null )
-				{
-					cm.Dispose();
-				}
 			}
 		}
 

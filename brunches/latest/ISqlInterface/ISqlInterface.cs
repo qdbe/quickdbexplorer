@@ -38,12 +38,6 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <returns></returns>
 		string GetOwnerLabel2();
-		/// <summary>
-		/// フィールド一覧の取得用SQL文を返す
-		/// </summary>
-		/// <param name="dboInfo">オブジェクト情報</param>
-		/// <returns></returns>
-		string GetFieldListSelect(DBObjectInfo dboInfo);
 
 		/// <summary>
 		/// オブジェクト一覧の表示用SQLの取得
@@ -93,5 +87,7 @@ namespace quickDBExplorer
 		/// <param name="dboInfo">対象となるオブジェクト</param>
 		/// <param name="dt"></param>
 		void	AddObjectInfo(DBObjectInfo dboInfo, DataTable dt);
+
+		DBObjectInfo.DataGetEventHandler ObjectDetailSet();
 	}
 }

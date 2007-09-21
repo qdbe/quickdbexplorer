@@ -26,7 +26,7 @@ namespace quickDBExplorer
 
 		public void SetConnection(IDbConnection sqlConnection1)
 		{
-			this.sqlConnect = sqlConnection1;
+			this.sqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection1;
 			// TODO:  SqlServer2000.SetConnection 実装を追加します。
 		}
 
@@ -53,11 +53,6 @@ namespace quickDBExplorer
 		public string GetOwnerLabel2()
 		{
 			return "オーナー名・テーブル名";
-		}
-
-		public string GetFieldListSelect(DBObjectInfo dboInfo)
-		{
-			return "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation, sysobjects.id  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + dboInfo.Owner +"' and sysobjects.name = '" + dboInfo.ObjName + "' order by syscolumns.colorder";
 		}
 
 		/// <summary>
@@ -391,6 +386,95 @@ namespace quickDBExplorer
 					break;
 			}
 			dt.Rows.Add(dr);
+		}
+
+		public DBObjectInfo.DataGetEventHandler ObjectDetailSet()
+		{
+			return new DBObjectInfo.DataGetEventHandler(this.dbObjSet);
+		}
+
+		private	void	dbObjSet(object sender)
+		{
+			DBObjectInfo	dboInfo = (DBObjectInfo)sender;
+			DataSet		ds = new DataSet(dboInfo.ObjName);
+
+
+			// まずは必要な情報を全て収集する
+
+			// FillSchema での情報収集
+			string strsql = string.Format("select * from {0} where 0=1",
+				dboInfo.FormalName );
+			SqlDataAdapter da = new SqlDataAdapter(strsql,this.sqlConnect);
+			DataTable []dt = da.FillSchema(ds,SchemaType.Mapped,"schema");
+			dboInfo.SchemaBaseInfo = dt[0];
+
+			// 実際の細かい情報を直接取得する
+			SqlDataAdapter tableda = new SqlDataAdapter(
+				string.Format(
+				@"select 
+syscolumns.name colname, 
+systypes.name valtype, 
+convert(int,syscolumns.length) as length, 
+isnull(convert(int,syscolumns.prec),0) as prec, 
+isnull(convert(int,syscolumns.xscale),0) as xscale, 
+convert(int,syscolumns.colid) as colid, 
+convert(int,syscolumns.colorder) as colorder, 
+syscolumns.isnullable, 
+syscolumns.collation, 
+sysobjects.id  
+from 
+	sysobjects, 
+	syscolumns, 
+	sysusers, 
+	systypes 
+where 
+	sysobjects.id = syscolumns.id 
+and sysobjects.uid= sysusers.uid 
+and syscolumns.xusertype=systypes.xusertype 
+and sysobjects.id = OBJECT_ID('{0}')
+order by syscolumns.colorder",
+				dboInfo.RealObjName
+				),
+				this.sqlConnect );
+			tableda.Fill(ds,"fieldList");
+
+			DBFieldInfo addInfo;
+			ArrayList	ar = new ArrayList();
+			foreach(DataRow fdr in ds.Tables["fieldList"].Rows )
+			{
+				// フィールドの情報でぐるぐるまわって、セットしていく
+				addInfo = new DBFieldInfo();
+				addInfo.Col = ds.Tables["schema"].Columns[fdr["colname"].ToString()];
+				addInfo.Colid = (int)fdr["colid"];
+				if( fdr["collation"] != DBNull.Value )
+				{
+					addInfo.Collation = (string)fdr["collation"];
+				}
+				addInfo.Colorder = (int)fdr["colorder"];
+				if( addInfo.Col.MaxLength < 0 &&
+					(int)fdr["length"] > 0 )
+				{
+					addInfo.Length = (int)fdr["length"];
+				}
+				else
+				{
+					addInfo.Length = addInfo.Col.MaxLength;
+				}
+				addInfo.Prec = (int)fdr["prec"];
+				addInfo.Xscale = (int)fdr["xscale"];
+				addInfo.TypeName = (string)fdr["valtype"];
+				// プライマリキーかどうかをチェック
+				for(int i = 0; i < ds.Tables["schema"].PrimaryKey.Length; i++ )
+				{
+					if( addInfo.Col.ColumnName == ds.Tables["schema"].PrimaryKey[i].ColumnName )
+					{
+						addInfo.PrimaryKeyOrder = i;
+						break;
+					}
+				}
+				ar.Add(addInfo);
+			}
+			dboInfo.FieldInfo = ar;
 		}
 
 		#endregion

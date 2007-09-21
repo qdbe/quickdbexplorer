@@ -40,8 +40,9 @@ namespace quickDBExplorer
 		/// 一覧に追加するアイテムを作成作成する
 		/// </summary>
 		/// <param name="dr">データを参照するDataReader</param>
+		/// <param name="dataSetter">オブジェクトの詳細を設定するメソッド</param>
 		/// <returns></returns>
-		public ListViewItem	CreateItem(SqlDataReader dr)
+		public ListViewItem	CreateItem(SqlDataReader dr, DBObjectInfo.DataGetEventHandler dataSetter)
 		{
 			DBObjectInfo dboInfo = new DBObjectInfo(
 				(string)dr["tvs"],
@@ -51,6 +52,7 @@ namespace quickDBExplorer
 				(string)dr["synbase"],
 				(string)dr["syntype"]
 				);
+			dboInfo.DataGet	+= dataSetter;
 
 			ListViewItem it = new ListViewItem( new string[]{ 
 																dboInfo.DspObjType,

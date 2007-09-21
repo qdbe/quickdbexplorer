@@ -1,4 +1,6 @@
-using System;
+using	System;
+using	System.Data;
+using	System.Collections;
 
 namespace quickDBExplorer
 {
@@ -7,6 +9,17 @@ namespace quickDBExplorer
 	/// </summary>
 	public class	DBObjectInfo
 	{
+
+		/// <summary>
+		/// フィールド情報取得時のデータ再取得用イベントハンドラ
+		/// </summary>
+		public delegate void DataGetEventHandler(object sender);
+		/// <summary>
+		/// フィールド情報取得時に情報がまだ未取得時に発生するイベント
+		/// このイベントハンドラにより、データをセットさせる
+		/// </summary>
+		public event DataGetEventHandler DataGet = null;
+
 		private		string objType;
 		/// <summary>
 		/// オブジェクトの種類
@@ -204,17 +217,45 @@ namespace quickDBExplorer
 			}
 		}
 
-		private	DBFieldInfo	fieldInfo;
+		private	ArrayList	fieldInfo = null;
 		/// <summary>
 		/// テーブルのフィールド情報をキャッシュして保持する
+		/// フィールド情報のコレクションを管理する
 		/// </summary>
-		public	DBFieldInfo	FieldInfo
+		public	ArrayList	FieldInfo
 		{
-			get { return this.fieldInfo; }
-			set { this.fieldInfo = value; }
+			get 
+			{ 
+				if( this.fieldInfo == null )
+				{
+					this.DataGet(this);
+				}
+				return this.fieldInfo; 
+			}
+			set 
+			{
+				this.fieldInfo = value;
+			}
 		}
 
-			/// <summary>
+		private DataTable	shemaBaseInfo;
+		/// <summary>
+		/// スキーマ情報を保持している DataTable
+		/// 行は保持していない
+		/// </summary>
+		public	DataTable	SchemaBaseInfo
+		{
+			get { 
+				if( this.fieldInfo == null )
+				{
+					this.DataGet(this);
+				}
+				return this.shemaBaseInfo; 
+			}
+			set { this.shemaBaseInfo = value; }
+		}
+
+		/// <summary>
 			/// コンストラクタ
 			/// </summary>
 			/// <param name="otype">オブジェクトの型</param>
@@ -223,7 +264,7 @@ namespace quickDBExplorer
 			/// <param name="cretime">オブジェクトの作成日時</param>
 			/// <param name="synbase">シノニムの場合、その参照先のオブジェクト名</param>
 			/// <param name="synbtype">シノニムの場合、その参照先のオブジェクトの型</param>
-			public DBObjectInfo( string otype, string owner, string name, string cretime, string synbase, string synbtype )
+		public DBObjectInfo( string otype, string owner, string name, string cretime, string synbase, string synbtype )
 		{
 			this.objType = otype.TrimEnd(null);
 			this.owner = owner;
@@ -268,6 +309,11 @@ namespace quickDBExplorer
 		public string	GetNameAdd(string addstr)
 		{
 			return string.Format("[{0}].[{1}_{2}]",this.owner, this.objname, addstr);
+		}
+
+		public	void	ReloadInfo()
+		{
+			this.DataGet(this);
 		}
 	}
 }

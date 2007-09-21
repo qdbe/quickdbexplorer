@@ -25,7 +25,7 @@ namespace quickDBExplorer
 
 		public void SetConnection(IDbConnection sqlConnection1)
 		{
-			this.sqlConnect = sqlConnection1;
+			this.sqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection1;
 		}
 
 		public string GetDBSelect()
@@ -51,38 +51,6 @@ namespace quickDBExplorer
 		public string GetOwnerLabel2()
 		{
 			return "スキーマ名・テーブル名";
-		}
-
-		public string GetFieldListSelect(DBObjectInfo dboInfo)
-		{
-			return string.Format(
-				@"select 
-	sys.all_columns.name colname, 
-	st.name valtype, 
-	convert(smallint,sys.all_columns.max_length) as length, 
-	convert(smallint,
-	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	ELSE sys.all_columns.precision	
-	end ) as [prec], 
-	convert(smallint,sys.all_columns.scale) as xscale, 
-	sys.all_columns.column_id as colid, 
-	sys.all_columns.column_id as colorder, 
-	convert(int,sys.all_columns.is_nullable) as isnullable, 
-	sys.all_columns.collation_name as collation, 
-	sys.all_objects.object_id as id
-from 
-	sys.all_objects 
-	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
-	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
-	LEFT OUTER JOIN sys.types AS baset ON 
-		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
-where 
-	sys.all_objects.object_id = OBJECT_ID('{0}')
-order by colorder",
-				dboInfo.RealObjName
-				);
 		}
 
 		/// <summary>
@@ -280,15 +248,7 @@ order by colorder",
 
 			if( dboInfo.ObjType == "U" )
 			{
-
-				string sqlstr = this.GetDDLTableSelectStr(dboInfo);
-
-				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnect);
-				DataSet ds = new DataSet();
-				ds.CaseSensitive = true;
-				da.Fill(ds,dboInfo.ToString());
-
-				int		maxRow = ds.Tables[dboInfo.ToString()].Rows.Count;
+				int		maxRow = dboInfo.FieldInfo.Count;
 				if( usekakko )
 				{
 					wr.Write("Create table {0} ", dboInfo.FormalName);
@@ -308,15 +268,15 @@ order by colorder",
 					//フィールド名
 					if( usekakko )
 					{
-						wr.Write("\t[{0}]", ds.Tables[dboInfo.ToString()].Rows[i][0]);
+						wr.Write("\t[{0}]", ((DBFieldInfo)dboInfo.FieldInfo[i]).Name);
 					}
 					else
 					{
-						wr.Write("\t{0}", ds.Tables[dboInfo.ToString()].Rows[i][0]);
+						wr.Write("\t{0}", ((DBFieldInfo)dboInfo.FieldInfo[i]).Name);
 					}
 					wr.Write("\t");
 					// 型
-					valtype = (string)ds.Tables[dboInfo.ToString()].Rows[i][1];
+					valtype = ((DBFieldInfo)dboInfo.FieldInfo[i]).TypeName;
 
 					wr.Write("\t");
 
@@ -335,30 +295,30 @@ order by colorder",
 						valtype == "nchar" ||
 						valtype == "binary" )
 					{
-						if( (Int16)ds.Tables[dboInfo.ToString()].Rows[i][3] == -1 )
+						if( ((DBFieldInfo)dboInfo.FieldInfo[i]).Length == -1 )
 						{
 							wr.Write(" (max)");
 						}
 						else
 						{
-							wr.Write(" ({0})", ds.Tables[dboInfo.ToString()].Rows[i][3]);
+							wr.Write(" ({0})", ((DBFieldInfo)dboInfo.FieldInfo[i]).Length);
 						}
 					}
 					else if( valtype == "numeric" ||
 						valtype == "decimal" )
 					{
-						wr.Write(" ({0},", ds.Tables[dboInfo.ToString()].Rows[i][3]);
-						wr.Write("{0})", ds.Tables[dboInfo.ToString()].Rows[i][4]);
+						wr.Write(" ({0},{1})", ((DBFieldInfo)dboInfo.FieldInfo[i]).Prec,
+							((DBFieldInfo)dboInfo.FieldInfo[i]).Xscale);
 					}
 					wr.Write("\t");
 						
-					if( !ds.Tables[dboInfo.ToString()].Rows[i].IsNull("collation"))
+					if( ((DBFieldInfo)dboInfo.FieldInfo[i]).Collation != string.Empty)
 					{
-						wr.Write("COLLATE {0}",ds.Tables[dboInfo.ToString()].Rows[i]["collation"]);
+						wr.Write("COLLATE {0}",((DBFieldInfo)dboInfo.FieldInfo[i]).Collation);
 						wr.Write("\t");
 					}
 						
-					if( (int)ds.Tables[dboInfo.ToString()].Rows[i]["isnullable"] == 0 )
+					if( ((DBFieldInfo)dboInfo.FieldInfo[i]).IsNullable == false )
 					{
 						wr.Write("\tNOT NULL");
 					}
@@ -462,6 +422,92 @@ order by colorder",
 					return	string.Empty;
 			}
 		}
+
+		public DBObjectInfo.DataGetEventHandler ObjectDetailSet()
+		{
+			return new DBObjectInfo.DataGetEventHandler(this.dbObjSet);
+		}
+
+		private	void	dbObjSet(object sender)
+		{
+			DBObjectInfo	dboInfo = (DBObjectInfo)sender;
+			DataSet		ds = new DataSet(dboInfo.ObjName);
+
+
+			// まずは必要な情報を全て収集する
+
+			// FillSchema での情報収集
+			string strsql = string.Format("select * from {0} where 0=1",
+				dboInfo.FormalName );
+			SqlDataAdapter da = new SqlDataAdapter(strsql,this.sqlConnect);
+			DataTable []dt = da.FillSchema(ds,SchemaType.Mapped,"schema");
+			dboInfo.SchemaBaseInfo = dt[0];
+
+			// 実際の細かい情報を直接取得する
+			SqlDataAdapter tableda = new SqlDataAdapter(
+				string.Format(
+				@"select 
+	sys.all_columns.name colname, 
+	st.name valtype, 
+	convert(int,sys.all_columns.max_length) as length, 
+	convert(int,
+	CASE 
+	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
+	ELSE sys.all_columns.precision	
+	end ) as [prec], 
+	convert(int,sys.all_columns.scale) as xscale, 
+	sys.all_columns.column_id as colid, 
+	sys.all_columns.column_id as colorder, 
+	convert(int,sys.all_columns.is_nullable) as isnullable, 
+	sys.all_columns.collation_name as collation, 
+	sys.all_objects.object_id as id
+from 
+	sys.all_objects 
+	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
+	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
+	LEFT OUTER JOIN sys.types AS baset ON 
+		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+where 
+	sys.all_objects.object_id = OBJECT_ID('{0}')
+order by colorder",
+				dboInfo.RealObjName
+				),
+				this.sqlConnect );
+			tableda.Fill(ds,"fieldList");
+
+			DBFieldInfo addInfo;
+			ArrayList	ar = new ArrayList();
+			foreach(DataRow fdr in ds.Tables["fieldList"].Rows )
+			{
+				// フィールドの情報でぐるぐるまわって、セットしていく
+				addInfo = new DBFieldInfo();
+				addInfo.Col = ds.Tables["schema"].Columns[fdr["colname"].ToString()];
+				addInfo.Colid = (int)fdr["colid"];
+				if( fdr["collation"] != DBNull.Value )
+				{
+					addInfo.Collation = (string)fdr["collation"];
+				}
+				addInfo.Colorder = (int)fdr["colorder"];
+				addInfo.Length = addInfo.Col.MaxLength;
+				addInfo.Prec = (int)fdr["prec"];
+				addInfo.Xscale = (int)fdr["xscale"];
+				addInfo.TypeName = (string)fdr["valtype"];
+				// プライマリキーかどうかをチェック
+				for(int i = 0; i < ds.Tables["schema"].PrimaryKey.Length; i++ )
+				{
+					if( addInfo.Col.ColumnName == ds.Tables["schema"].PrimaryKey[i].ColumnName )
+					{
+						addInfo.PrimaryKeyOrder = i;
+						break;
+					}
+				}
+				ar.Add(addInfo);
+			}
+			dboInfo.FieldInfo = ar;
+		}
+
+
 		#endregion
 	}
 }

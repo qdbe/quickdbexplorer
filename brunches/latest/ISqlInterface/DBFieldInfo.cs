@@ -1,20 +1,36 @@
-using System;
+using	System;
+using	System.Data;
 
-namespace ISqlInterface
+namespace quickDBExplorer
 {
 	/// <summary>
 	/// テーブル等のフィールド項目の情報を管理するクラス
 	/// </summary>
 	public class DBFieldInfo
 	{
-		private string	name = "";
+
+		private	DataColumn	col;
+		/// <summary>
+		/// 対応するDataColumn
+		/// </summary>
+		public	DataColumn	Col
+		{
+			get	{ return this.col; }
+			set { this.col = value; }
+		}
+
+		/// <summary>
+		/// フィールド名
+		/// </summary>
 		public string	Name
 		{
-			get { return this.Name; }
-			set { this.Name = value; }
+			get { return this.col.ColumnName; }
 		}
 
 		private	string	typeName = "";
+		/// <summary>
+		/// フィールドの型
+		/// </summary>
 		public  string	TypeName
 		{
 			get { return this.typeName; }
@@ -22,13 +38,19 @@ namespace ISqlInterface
 		}
 
 		private	int		length = 0;
+		/// <summary>
+		/// フィールドの最大長(文字列の場合)
+		/// </summary>
 		public	int		Length
 		{
 			get { return this.length; }
-			set { this.length = 0; }
+			set { this.length = value; }
 		}
 
 		private	int		prec = 0;
+		/// <summary>
+		/// 小数点の場合の整数値の最大桁数
+		/// </summary>
 		public	int		Prec
 		{
 			get { return this.prec; }
@@ -36,6 +58,9 @@ namespace ISqlInterface
 		}
 
 		private	int		xscale = 0;
+		/// <summary>
+		/// 小数点の場合の小数点値の最大桁数
+		/// </summary>
 		public	int		Xscale
 		{
 			get { return this.xscale; }
@@ -56,11 +81,9 @@ namespace ISqlInterface
 			set { this.colorder = value; }
 		}
 
-		private	bool	isnullable = false;
-		public	int		IsNullable
+		public	bool		IsNullable
 		{
-			get { return this.isnullable; }
-			set { this.isnullable = value; }
+			get { return this.col.AllowDBNull; }
 		}
 
 		private	string	collation = string.Empty;
