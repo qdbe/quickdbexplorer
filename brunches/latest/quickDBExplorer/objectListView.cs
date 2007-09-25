@@ -106,6 +106,18 @@ namespace quickDBExplorer
 			return (DBObjectInfo)this.SelectedItems[i].Tag;
 		}
 
+		public void	ReloadSelectObjectInfo()
+		{
+			if( this.SelectedItems.Count == 0 )
+			{
+				return;
+			}
+			for( int i = 0; i < this.SelectedItems.Count; i++ )
+			{
+				((DBObjectInfo)this.SelectedItems[i].Tag).ReloadInfo();
+			}
+		}
+
 		/// <summary>
 		/// カラムヘッダがクリックされたことによるソート順を書き換える
 		/// </summary>

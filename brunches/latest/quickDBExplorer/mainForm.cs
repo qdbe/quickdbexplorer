@@ -284,7 +284,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ColumnHeader ColTVSType;
 		private System.Windows.Forms.ColumnHeader ColOwner;
 		private System.Windows.Forms.ColumnHeader ColObjName;
-		private System.Windows.Forms.ColumnHeader ColCredate;
+		private System.Windows.Forms.ColumnHeader ColCreateDate;
 
 		/// <summary>
 		/// コンストラクタ
@@ -347,7 +347,7 @@ namespace quickDBExplorer
 			this.ColTVSType = new System.Windows.Forms.ColumnHeader();
 			this.ColOwner = new System.Windows.Forms.ColumnHeader();
 			this.ColObjName = new System.Windows.Forms.ColumnHeader();
-			this.ColCredate = new System.Windows.Forms.ColumnHeader();
+			this.ColCreateDate = new System.Windows.Forms.ColumnHeader();
 			this.menuISQLW = new System.Windows.Forms.MenuItem();
 			this.btnInsert = new System.Windows.Forms.Button();
 			this.btnFieldList = new System.Windows.Forms.Button();
@@ -454,7 +454,8 @@ namespace quickDBExplorer
 			this.objectList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 																						 this.ColTVSType,
 																						 this.ColOwner,
-																						 this.ColObjName});
+																						 this.ColObjName,
+																						 this.ColCreateDate});
 			this.objectList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
 			this.objectList.FullRowSelect = true;
 			this.objectList.GridLines = true;
@@ -484,6 +485,11 @@ namespace quickDBExplorer
 			// 
 			this.ColObjName.Text = "Name";
 			this.ColObjName.Width = 190;
+			// 
+			// ColCreateDate
+			// 
+			this.ColCreateDate.Text = "ColCreateDate";
+			this.ColCreateDate.Width = 130;
 			// 
 			// menuISQLW
 			// 
@@ -1241,6 +1247,7 @@ namespace quickDBExplorer
 			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー", new EventHandler(this.menuTableCopy_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー カンマ付き", new EventHandler(this.menuTableCopyCsv_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,null,"指定テーブル選択", new EventHandler(this.menuTableSelect_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル情報更新", new EventHandler(this.TableInfoUpdate) ) );
 			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成", new EventHandler(this.InsertMake) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(DELETE文付き)", new EventHandler(this.InsertMakeDelete) ) );
@@ -1343,6 +1350,12 @@ namespace quickDBExplorer
 		#endregion
 
 		#region メニュー関連ボタンイベントハンドラ
+
+		private void TableInfoUpdate(object sender, System.EventArgs e)
+		{
+			this.objectList.ReloadSelectObjectInfo();
+		}
+		
 		private void InsertMake(object sender, System.EventArgs e)
 		{
 			this.CreInsert(true,false,false);
@@ -1525,7 +1538,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブル一覧のカラムクリック時処理
+		/// テーブル一覧のヘッダカラムクリック時処理
 		/// </summary>
 		/// <param name="sender">-</param>
 		/// <param name="e">-</param>
@@ -3967,6 +3980,14 @@ namespace quickDBExplorer
 								fi.Name,
 								fi.TypeName);
 						}
+
+						if( fi.IncSeed != 0)
+						{
+							istr += string.Format(" IDENTITY({0},{1})",
+								fi.IncSeed,
+								fi.IncStep );
+						}
+
 						if( fi.IsNullable == false )
 						{
 							istr +=" NOT NULL";

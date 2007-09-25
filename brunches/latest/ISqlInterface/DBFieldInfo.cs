@@ -100,6 +100,21 @@ namespace quickDBExplorer
 			set { this.primaryKeyOrder = value; }
 		}
 
+		private decimal	incSeed = 0;
+		public  decimal	IncSeed	
+		{
+			get { return this.incSeed; }
+			set { this.incSeed = value; }
+		}
+
+		private decimal incStep = 0;
+		public decimal IncStep 
+		{
+			get { return this.incStep; }
+			set { this.incStep = value; }
+		}
+
+
 		public DBFieldInfo()
 		{
 			// 

@@ -170,45 +170,6 @@ where
 		}
 
 		/// <summary>
-		/// テーブル情報取得の為のSQL文を生成する
-		/// </summary>
-		/// <param name="dboInfo"></param>
-		/// <returns></returns>
-		string	GetDDLTableSelectStr(DBObjectInfo dboInfo)
-		{
-			return string.Format(
-				@"select 
-	sys.all_columns.name colname, 
-	st.name valtype, 
-	convert(smallint,sys.all_columns.max_length) as length, 
-	convert(smallint,
-	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	ELSE sys.all_columns.precision	
-	end ) as [prec], 
-	convert(smallint,sys.all_columns.scale) as xscale, 
-	sys.all_columns.column_id as colid, 
-	sys.all_columns.column_id as colorder, 
-	convert(int,sys.all_columns.is_nullable) as isnullable, 
-	sys.all_columns.collation_name as collation, 
-	sys.all_objects.object_id as id
-from 
-	sys.all_objects 
-	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
-	inner join sys.schemas on sys.all_objects.schema_id= sys.schemas.schema_id 
-	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
-	LEFT OUTER JOIN sys.types AS baset ON 
-		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
-where 
-	sys.all_objects.object_id = OBJECT_ID('{0}')
-order by colorder",
-				dboInfo.RealObjName
-				);
-		}
-
-
-		/// <summary>
 		/// オブジェクトに対するDROP 文を生成する
 		/// </summary>
 		/// <param name="dboInfo"></param>
@@ -316,6 +277,13 @@ order by colorder",
 					{
 						wr.Write("COLLATE {0}",((DBFieldInfo)dboInfo.FieldInfo[i]).Collation);
 						wr.Write("\t");
+					}
+
+					if( ((DBFieldInfo)dboInfo.FieldInfo[i]).IncSeed != 0)
+					{
+						wr.Write("\tIDENTITY({0},{1})",
+							((DBFieldInfo)dboInfo.FieldInfo[i]).IncSeed,
+							((DBFieldInfo)dboInfo.FieldInfo[i]).IncStep );
 					}
 						
 					if( ((DBFieldInfo)dboInfo.FieldInfo[i]).IsNullable == false )
@@ -447,29 +415,56 @@ order by colorder",
 			SqlDataAdapter tableda = new SqlDataAdapter(
 				string.Format(
 				@"select 
-	sys.all_columns.name colname, 
-	st.name valtype, 
-	convert(int,sys.all_columns.max_length) as length, 
+	t1.name colname, 
+	case 
+	when t1.user_type_id != t1.system_type_id then 1
+	else	0
+	end	as isUserType,
+	t2.name valtype, 
+	t3.name	typeSchema, 
+	t1.max_length	,
+	t4.name as baseValType,
+ convert(int,
+	CASE 
+	WHEN t1.user_type_id = t1.system_type_id and  t2.name IN (N'nchar', N'nvarchar') and t1.max_length != -1 THEN t1.max_length/2 
+	WHEN t1.user_type_id != t1.system_type_id and  t4.name IN (N'nchar', N'nvarchar') and t1.max_length != -1 THEN t1.max_length/2 
+	ELSE t1.max_length	
+	end) as length, 
 	convert(int,
 	CASE 
-	WHEN st.user_type_id = st.system_type_id and st.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	WHEN st.user_type_id != st.system_type_id and baset.name IN (N'nchar', N'nvarchar') THEN sys.all_columns.max_length/2 
-	ELSE sys.all_columns.precision	
+	WHEN t1.user_type_id = t1.system_type_id and t2.name IN (N'nchar', N'nvarchar') THEN t1.max_length/2 
+	WHEN t1.user_type_id != t1.system_type_id and t2.name IN (N'nchar', N'nvarchar') THEN t1.max_length/2 
+	ELSE t1.precision	
 	end ) as [prec], 
-	convert(int,sys.all_columns.scale) as xscale, 
-	sys.all_columns.column_id as colid, 
-	sys.all_columns.column_id as colorder, 
-	convert(int,sys.all_columns.is_nullable) as isnullable, 
-	sys.all_columns.collation_name as collation, 
-	sys.all_objects.object_id as id
+	convert(int,t1.scale) as xscale, 
+	t1.column_id as colid, 
+	t1.column_id as colorder, 
+	convert(int,t1.is_nullable) as isnullable, 
+	t1.collation_name as collation, 
+	t1.object_id as id,
+	case 
+	when t5.object_id is not null then ident_seed('{0}') 
+	else null
+	end as seed,
+	case 
+	when t5.object_id is not null then ident_incr('{0}') 
+	else null
+	end as incr
 from 
-	sys.all_objects 
-	inner join sys.all_columns on sys.all_objects.object_id = sys.all_columns.object_id 
-	inner join sys.types st on sys.all_columns.user_type_id  = st.user_type_id  
-	LEFT OUTER JOIN sys.types AS baset ON 
-		baset.user_type_id = st.system_type_id and baset.user_type_id = baset.system_type_id
+	sys.all_columns t1 
+	inner join sys.types t2 on 
+		t1.user_type_id  = t2.user_type_id  and 
+		t1.system_type_id = t2.system_type_id 
+	inner JOIN sys.schemas as t3 on 
+		t2.schema_id = t3.schema_id
+	left outer join sys.types t4 on
+		t4.user_type_id = t1.system_type_id and
+		t4.system_type_id = t4.user_type_id 
+	left outer join sys.identity_columns t5 on
+		t1.object_id = t5.object_id and 
+		t1.column_id = t5.column_id
 where 
-	sys.all_objects.object_id = OBJECT_ID('{0}')
+	t1.object_id = OBJECT_ID('{0}')
 order by colorder",
 				dboInfo.RealObjName
 				),
@@ -489,10 +484,29 @@ order by colorder",
 					addInfo.Collation = (string)fdr["collation"];
 				}
 				addInfo.Colorder = (int)fdr["colorder"];
-				addInfo.Length = addInfo.Col.MaxLength;
+				addInfo.Length = (int)fdr["length"];
 				addInfo.Prec = (int)fdr["prec"];
 				addInfo.Xscale = (int)fdr["xscale"];
-				addInfo.TypeName = (string)fdr["valtype"];
+				if( (int)fdr["isUserType"] == 0 )
+				{
+					// システムの定義
+					addInfo.TypeName = (string)fdr["valtype"];
+				}
+				else
+				{
+					// ユーザー定義型
+					addInfo.TypeName = string.Format("[{0}].[{1}]",
+							(string)fdr["typeSchema"] ,
+							(string)fdr["valtype"] );
+				}
+				if( fdr["seed"] != DBNull.Value )
+				{
+					addInfo.IncSeed = (decimal)fdr["seed"];
+				}
+				if( fdr["incr"] != DBNull.Value )
+				{
+					addInfo.IncStep = (decimal)fdr["incr"];
+				}
 				// プライマリキーかどうかをチェック
 				for(int i = 0; i < ds.Tables["schema"].PrimaryKey.Length; i++ )
 				{
