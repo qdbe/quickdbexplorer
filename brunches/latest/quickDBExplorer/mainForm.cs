@@ -1247,7 +1247,7 @@ namespace quickDBExplorer
 			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー", new EventHandler(this.menuTableCopy_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー カンマ付き", new EventHandler(this.menuTableCopyCsv_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,null,"指定テーブル選択", new EventHandler(this.menuTableSelect_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル情報更新", new EventHandler(this.TableInfoUpdate) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,null,"オブジェクト情報再読込", new EventHandler(this.TableInfoUpdate) ) );
 			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成", new EventHandler(this.InsertMake) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(DELETE文付き)", new EventHandler(this.InsertMakeDelete) ) );
@@ -1354,6 +1354,11 @@ namespace quickDBExplorer
 		private void TableInfoUpdate(object sender, System.EventArgs e)
 		{
 			this.objectList.ReloadSelectObjectInfo();
+			if( this.objectList.SelectedItems.Count == 1 )
+			{
+				// 一件だけの選択ならフィールドのリストを更新する
+				this.DispFldList(this.objectList.GetSelectObject(0));
+			}
 		}
 		
 		private void InsertMake(object sender, System.EventArgs e)
@@ -2750,6 +2755,8 @@ namespace quickDBExplorer
 					fname.Append(this.txtOutput.Text);
 				}
 
+				string alias = this.getAlias();
+
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
 					DBObjectInfo dboInfo = this.objectList.GetSelectObject(ti);
@@ -2764,21 +2771,24 @@ namespace quickDBExplorer
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 					}
 					// get id 
-					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",dboInfo.FormalName), this.sqlConnection1);
 
-					DataSet ds = new DataSet();
-					ds.CaseSensitive = true;
-					da.Fill(ds,dboInfo.ToString());
-	
 					wr.Write("select {0}",wr.NewLine);
-					int		maxcol = ds.Tables[dboInfo.ToString()].Columns.Count;
+					int		maxcol = dboInfo.FieldInfo.Count;
 					for( int i = 0; i < maxcol ; i++ )
 					{
 						if( i != 0 )
 						{
 							wr.Write(",{0}", wr.NewLine);
 						}
-						wr.Write("\t{0}", ds.Tables[dboInfo.ToString()].Columns[i].ColumnName);
+
+						wr.Write("\t");
+						if( alias != string.Empty )
+						{
+							wr.Write(alias + ".");
+						}
+
+
+						wr.Write("{0}", ((DBFieldInfo)dboInfo.FieldInfo[i]).Name);
 					
 					}
 					wr.Write(wr.NewLine);
@@ -4436,15 +4446,10 @@ namespace quickDBExplorer
 					}
 
 					// get id 
-					SqlDataAdapter da = new SqlDataAdapter(string.Format("select  * from {0} where 0=1",dboInfo.FormalName), this.sqlConnection1);
-
-					DataSet ds = new DataSet();
-					ds.CaseSensitive = true;
-					da.Fill(ds,dboInfo.ToString());
-	
 					wr.Write(dboInfo.FormalName);
 					wr.Write(":");
-					int		maxcol = ds.Tables[dboInfo.ToString()].Columns.Count;
+					int		maxcol = dboInfo.FieldInfo.Count;
+					string	alias = this.getAlias();
 					for( int i = 0; i < maxcol ; i++ )
 					{
 						if( i != 0 && iscomma )
@@ -4455,7 +4460,12 @@ namespace quickDBExplorer
 						{
 							wr.Write("{0}\t",wr.NewLine);
 						}
-						wr.Write(ds.Tables[dboInfo.ToString()].Columns[i].ColumnName);
+
+						if( alias != string.Empty )
+						{
+							wr.Write(alias + "." );
+						}
+						wr.Write(((DBFieldInfo)dboInfo.FieldInfo[i]).Name);
 					}
 					wr.Write(wr.NewLine);
 

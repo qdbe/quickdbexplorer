@@ -152,7 +152,7 @@ namespace quickDBExplorer
 			}
 			else
 			{
-				return "select * from sysusers where name not like 'db_%' order by name";
+				return "select * from sysusers where name not like 'db[_]%' order by name";
 			}
 		}
 
