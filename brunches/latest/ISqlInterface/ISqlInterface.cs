@@ -1,6 +1,8 @@
 using System;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
+
 
 namespace quickDBExplorer
 {
@@ -17,10 +19,70 @@ namespace quickDBExplorer
 		void SetConnection(IDbConnection sqlConnection);
 
 		/// <summary>
+		/// タイムアウト値を設定しなおす
+		/// </summary>
+		/// <param name="timeout"></param>
+		void SetTimeout(int timeout);
+
+		/// <summary>
+		/// DataAdapter を取得する
+		/// </summary>
+		DbDataAdapter	NewDataAdapter();
+
+		/// <summary>
+		/// IDbCommand を新規に作成する。
+		/// ただし、コネクション情報とタイムアウト値はすでにセットされている
+		/// </summary>
+		/// <returns></returns>
+		IDbCommand		NewSqlCommand();
+
+		/// <summary>
+		/// IDbCommand を新規に作成する。
+		/// ただし、コマンド文字列、コネクション情報とタイムアウト値はすでにセットされている
+		/// </summary>
+		/// <param name="sqlstr">実行するコマンド文字列</param>
+		/// <returns></returns>
+		IDbCommand		NewSqlCommand(string sqlstr);
+
+		/// <summary>
+		/// DataAdapter に IDbCommand を SelectCommandとして関連づける
+		/// </summary>
+		/// <param name="da"></param>
+		/// <param name="cmd"></param>
+		void	SetSelectCmd(DbDataAdapter da, IDbCommand cmd);
+
+		/// <summary>
+		/// トランザクション情報を設定する
+		/// </summary>
+		IDbTransaction	SetTransaction(IDbCommand cmd);
+
+		/// <summary>
+		/// select コマンドから、update, insert, delete コマンドを生成しなおす
+		/// </summary>
+		/// <param name="da"></param>
+		void	SetCommandBuilder(DbDataAdapter da);
+
+		/// <summary>
+		/// DataReaderからbyte配列を読み込む。
+		/// 指定されたフィールドはもともとバイナリデータであることが前提
+		/// </summary>
+		/// <param name="dr"></param>
+		/// <param name="col"></param>
+		/// <returns></returns>
+		byte[]	GetDataReaderBytes(IDataReader dr, int col);
+
+		/// <summary>
 		/// DBの一覧表示を取得するSQL文を返す
 		/// </summary>
 		/// <returns></returns>
 		string GetDBSelect();
+
+		/// <summary>
+		/// 指定されたデータベースへと接続を変更する
+		/// </summary>
+		/// <param name="dbName">変更先のデータベース名</param>
+		/// <returns></returns>
+		void SetDataBase(string dbName);
 
 		/// <summary>
 		/// テーブル一覧のカラムヘッダの表示文字を取得する
@@ -33,6 +95,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <returns></returns>
 		string GetOwnerLabel1();
+
 		/// <summary>
 		/// ラジオボタンのラベルを返す
 		/// </summary>
@@ -42,7 +105,11 @@ namespace quickDBExplorer
 		/// <summary>
 		/// オブジェクト一覧の表示用SQLの取得
 		/// </summary>
+		/// <param name="isDspTable">テーブルを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="Synonym">シノニムを表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isDspFunc">Functionを表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isDspSP">ストアドプロシージャを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
 		string GetDspObjList(bool isDspTable, bool isDspView, bool Synonym, bool isDspFunc, bool isDspSP, string ownerList);
@@ -88,6 +155,11 @@ namespace quickDBExplorer
 		/// <param name="dt"></param>
 		void	AddObjectInfo(DBObjectInfo dboInfo, DataTable dt);
 
+		/// <summary>
+		/// オブジェクトの詳細情報をセットするイベントハンドラを返す
+		/// </summary>
+		/// <returns></returns>
 		DBObjectInfo.DataGetEventHandler ObjectDetailSet();
+
 	}
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
 using System.Text;
@@ -13,8 +14,19 @@ namespace quickDBExplorer
 	public class SqlServerDriver : ISqlInterface
 	{
 
-		System.Data.SqlClient.SqlConnection sqlConnect;
+		/// <summary>
+		/// コネクション
+		/// </summary>
+		protected System.Data.SqlClient.SqlConnection sqlConnect;
 
+		/// <summary>
+		/// SelectCommand 等のタイムアウト値
+		/// </summary>
+		protected int	_timeout;
+
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public SqlServerDriver()
 		{
 			// 
@@ -24,15 +36,116 @@ namespace quickDBExplorer
 
 		#region ISqlInterface メンバ
 
+		/// <summary>
+		/// SQLServerに対するコネクション情報を管理する
+		/// </summary>
+		/// <param name="sqlConnection1"></param>
 		public void SetConnection(IDbConnection sqlConnection1)
 		{
 			this.sqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection1;
-			// TODO:  SqlServer2000.SetConnection 実装を追加します。
 		}
 
+		/// <summary>
+		/// タイムアウト値を設定しなおす
+		/// </summary>
+		/// <param name="timeout"></param>
+		public void SetTimeout(int timeout)
+		{
+			this._timeout = timeout;
+		}
+
+		/// <summary>
+		/// DataAdapter を取得する
+		/// </summary>
+		public DbDataAdapter NewDataAdapter()
+		{
+			return new SqlDataAdapter();
+		}
+
+		/// <summary>
+		/// IDbCommand を新規に作成する。
+		/// ただし、コネクション情報とタイムアウト値はすでにセットされている
+		/// </summary>
+		/// <returns></returns>
+		public IDbCommand	NewSqlCommand()
+		{
+			SqlCommand	sqlCmd = new SqlCommand();
+			sqlCmd.Connection = this.sqlConnect;
+			sqlCmd.CommandTimeout = this._timeout;
+			return sqlCmd;
+		}
+
+		/// <summary>
+		/// IDbCommand を新規に作成する。
+		/// ただし、コマンド文字列、コネクション情報とタイムアウト値はすでにセットされている
+		/// </summary>
+		/// <param name="sqlstr">実行するコマンド文字列</param>
+		/// <returns></returns>
+		public IDbCommand		NewSqlCommand(string sqlstr)
+		{
+			SqlCommand	sqlCmd = new SqlCommand(sqlstr,this.sqlConnect);
+			sqlCmd.CommandTimeout = this._timeout;
+			return sqlCmd;
+		}
+
+		/// <summary>
+		/// DataAdapter に IDbCommand を SelectCommandとして関連づける
+		/// </summary>
+		/// <param name="da"></param>
+		/// <param name="cmd"></param>
+		public void	SetSelectCmd(DbDataAdapter da, IDbCommand cmd)
+		{
+			((SqlDataAdapter)da).SelectCommand = (SqlCommand)cmd;
+		}
+
+		/// <summary>
+		/// トランザクション情報を取得する
+		/// </summary>
+		public IDbTransaction	SetTransaction(IDbCommand cmd)
+		{
+			cmd.Transaction = this.sqlConnect.BeginTransaction();
+			return cmd.Transaction;
+		}
+
+		/// <summary>
+		/// select コマンドから、update, insert, delete コマンドを生成しなおす
+		/// </summary>
+		/// <param name="da"></param>
+		public void	SetCommandBuilder(DbDataAdapter da)
+		{
+			SqlCommandBuilder  cb = new SqlCommandBuilder((SqlDataAdapter)da);
+		}
+
+		/// <summary>
+		/// DataReaderからbyte配列を読み込む。
+		/// 指定されたフィールドはもともとバイナリデータであることが前提
+		/// </summary>
+		/// <param name="dr"></param>
+		/// <param name="col"></param>
+		/// <returns></returns>
+		public byte[]	GetDataReaderBytes(IDataReader dr, int col)
+		{
+			return ((SqlDataReader)dr).GetSqlBinary(col).Value;
+		}
+
+
+		/// <summary>
+		/// DBの一覧表示を取得するSQL文を返す
+		/// </summary>
+		/// <returns></returns>
 		public string GetDBSelect()
 		{
 			return "SELECT name FROM sysdatabases order by name";
+		}
+
+		/// <summary>
+		/// 指定されたデータベースへと接続を変更する
+		/// </summary>
+		/// <param name="dbName">変更先のデータベース名</param>
+		/// <returns></returns>
+		public void SetDataBase(string dbName)
+		{
+			this.sqlConnect.ChangeDatabase(dbName);
 		}
 
 		/// <summary>
@@ -45,11 +158,19 @@ namespace quickDBExplorer
 		}
 
 
+		/// <summary>
+		/// DBオーナーのラベルを返す
+		/// </summary>
+		/// <returns></returns>
 		public string GetOwnerLabel1()
 		{
 			return "owner/Role(&O)";
 		}
 
+		/// <summary>
+		/// ラジオボタンのラベルを返す
+		/// </summary>
+		/// <returns></returns>
 		public string GetOwnerLabel2()
 		{
 			return "オーナー名・テーブル名";
@@ -58,7 +179,11 @@ namespace quickDBExplorer
 		/// <summary>
 		/// オブジェクト一覧の表示用SQLの取得
 		/// </summary>
+		/// <param name="isDspTable">テーブルを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isDspSyn">シノニムを表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isDspFunc">Functionを表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isDspSP">ストアドプロシージャを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
 		public string GetDspObjList(bool isDspTable, bool isDspView, bool isDspSyn, bool isDspFunc, bool isDspSP, string ownerList)
@@ -154,11 +279,6 @@ namespace quickDBExplorer
 			{
 				return "select * from sysusers where name not like 'db[_]%' order by name";
 			}
-		}
-
-		public string	GetDDLSelectStr(DBObjectInfo dboInfo)
-		{
-			return "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + dboInfo.Owner +"' and sysobjects.name = '" + dboInfo.ObjName + "' order by syscolumns.colorder";
 		}
 
 		/// <summary>
@@ -297,7 +417,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// オブジェクト情報をセットするDataTableを初期化する
 		/// </summary>
-		/// <param name="dt"></param>
+		/// <param name="objTable">対象とするDataTable</param>
 		public void	InitObjTable(DataTable objTable)
 		{
 			objTable.Columns.Add("オブジェクトID",typeof(int));
@@ -388,6 +508,10 @@ namespace quickDBExplorer
 			dt.Rows.Add(dr);
 		}
 
+		/// <summary>
+		/// オブジェクトの詳細情報をセットするイベントハンドラを返す
+		/// </summary>
+		/// <returns></returns>
 		public DBObjectInfo.DataGetEventHandler ObjectDetailSet()
 		{
 			return new DBObjectInfo.DataGetEventHandler(this.dbObjSet);

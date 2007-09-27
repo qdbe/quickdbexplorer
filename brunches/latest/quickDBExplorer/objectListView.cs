@@ -42,7 +42,7 @@ namespace quickDBExplorer
 		/// <param name="dr">データを参照するDataReader</param>
 		/// <param name="dataSetter">オブジェクトの詳細を設定するメソッド</param>
 		/// <returns></returns>
-		public ListViewItem	CreateItem(SqlDataReader dr, DBObjectInfo.DataGetEventHandler dataSetter)
+		public ListViewItem	CreateItem(IDataReader dr, DBObjectInfo.DataGetEventHandler dataSetter)
 		{
 			DBObjectInfo dboInfo = new DBObjectInfo(
 				(string)dr["tvs"],
@@ -106,6 +106,9 @@ namespace quickDBExplorer
 			return (DBObjectInfo)this.SelectedItems[i].Tag;
 		}
 
+		/// <summary>
+		/// 一覧で選択されているオブジェクトの情報を再取得しなおす
+		/// </summary>
 		public void	ReloadSelectObjectInfo()
 		{
 			if( this.SelectedItems.Count == 0 )

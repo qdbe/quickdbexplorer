@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
@@ -322,12 +323,6 @@ namespace quickDBExplorer
 				if(components != null)
 				{
 					components.Dispose();
-				}
-				if( this.sqlConnection1 != null )
-				{
-					this.sqlConnection1.Close();
-					this.sqlConnection1.Dispose();
-					this.sqlConnection1 = null;
 				}
 			}
 			base.Dispose( disposing );
@@ -1575,7 +1570,9 @@ namespace quickDBExplorer
 				this.Text = servername;
 
 				// DB一覧の表示を実行
-				SqlDataAdapter da = new SqlDataAdapter(this.sqlDriver.GetDBSelect(), this.sqlConnection1);
+				DbDataAdapter da = this.sqlDriver.NewDataAdapter();
+				IDbCommand cmd = this.sqlDriver.NewSqlCommand(this.sqlDriver.GetDBSelect());
+				this.sqlDriver.SetSelectCmd(da,cmd);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
 				da.Fill(ds,"sysdatabases");
@@ -1716,12 +1713,6 @@ namespace quickDBExplorer
 			}
 			svdata.GridDspCnt[svdata.LastDb] = this.txtDspCount.Text;
 
-			if( this.sqlConnection1 != null )
-			{
-				this.sqlConnection1.Close();
-				this.sqlConnection1.Dispose();
-				this.sqlConnection1 = null;
-			}
 		}
 
 
@@ -2241,7 +2232,7 @@ namespace quickDBExplorer
 
 		private void btnDataUpdate_Click(object sender, System.EventArgs e)
 		{
-			SqlTransaction tran	= null;
+			IDbTransaction tran	= null;
 			try
 			{
 				this.InitErrMessage();
@@ -2282,11 +2273,14 @@ namespace quickDBExplorer
 					{
 						sqlstr += " order by " + this.txtSort.Text.Trim();
 					}
-					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+
+					DbDataAdapter da = this.sqlDriver.NewDataAdapter();
+					IDbCommand cmd = this.sqlDriver.NewSqlCommand(sqlstr);
+					this.sqlDriver.SetSelectCmd(da,cmd);
+					
 										
-					tran = this.sqlConnection1.BeginTransaction();
-					da.SelectCommand.Transaction = tran;
-					SqlCommandBuilder  cb = new SqlCommandBuilder(da);
+					tran = this.sqlDriver.SetTransaction(cmd);
+					this.sqlDriver.SetCommandBuilder(da);
 					da.Update(dspdt, "aaaa");
 					tran.Commit();
 
@@ -2927,7 +2921,11 @@ namespace quickDBExplorer
 					string sqlstr;
 
 					sqlstr = string.Format("sp_depends N'{0}'", dboInfo.FormalName );
-					SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+
+					DbDataAdapter da = this.sqlDriver.NewDataAdapter();
+					IDbCommand cmd = this.sqlDriver.NewSqlCommand(sqlstr);
+					this.sqlDriver.SetSelectCmd(da,cmd);
+
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
 					da.Fill(ds,dboInfo.ToString());
@@ -2990,9 +2988,8 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void RecordCountOutPut(object sender, System.EventArgs e)
 		{
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
+			IDataReader  dr = null;
+			IDbCommand cm = this.sqlDriver.NewSqlCommand();
 
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -3061,7 +3058,6 @@ namespace quickDBExplorer
 					}
 
 					cm.CommandText = sqlstr;
-					cm.Connection = this.sqlConnection1;
 
 					dr = cm.ExecuteReader();
 
@@ -3348,9 +3344,8 @@ namespace quickDBExplorer
 
 		private void menuRecordCountDsp_Click(object sender, System.EventArgs e)
 		{
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
+			IDataReader dr = null;
+			IDbCommand	cm = this.sqlDriver.NewSqlCommand();
 
 			DataTable	rcdt = new DataTable("RecordCount");
 			rcdt.CaseSensitive = true;
@@ -3394,7 +3389,6 @@ namespace quickDBExplorer
 					}
 
 					cm.CommandText = sqlstr;
-					cm.Connection = this.sqlConnection1;
 
 					dr = cm.ExecuteReader();
 
@@ -3531,7 +3525,10 @@ namespace quickDBExplorer
 
 				if( Sqldlg.ShowDialog() == DialogResult.OK )
 				{
-					SqlDataAdapter da = new SqlDataAdapter(Sqldlg.SelectSql, this.sqlConnection1);
+					DbDataAdapter da = this.sqlDriver.NewDataAdapter();
+					IDbCommand cmd = this.sqlDriver.NewSqlCommand(Sqldlg.SelectSql);
+					this.sqlDriver.SetSelectCmd(da,cmd);
+
 					da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 					dspdt = new DataSet();
 					dspdt.CaseSensitive = true;
@@ -3585,7 +3582,7 @@ namespace quickDBExplorer
 
 		private void btnQueryNonSelect_Click(object sender, System.EventArgs e)
 		{
-			SqlTransaction tran	= null;
+			IDbTransaction tran	= null;
 			try
 			{
 				this.InitErrMessage();
@@ -3594,10 +3591,8 @@ namespace quickDBExplorer
 
 				if( Sqldlg2.ShowDialog() == DialogResult.OK )
 				{
-					tran = this.sqlConnection1.BeginTransaction();
-
-					SqlCommand cm = new SqlCommand(Sqldlg2.SelectSql,this.sqlConnection1,tran);
-					cm.CommandTimeout = this.SqlTimeOut;
+					IDbCommand cm = this.sqlDriver.NewSqlCommand(Sqldlg2.SelectSql);
+					tran = this.sqlDriver.SetTransaction(cm);
 
 					string msg = "";
 					if( Sqldlg2.HasReturn == true )
@@ -3633,8 +3628,7 @@ namespace quickDBExplorer
 		private void menuStasticUpdate_Click(object sender, System.EventArgs e)
 		{
 			// SQL 的には、UPDATE STATISTICS table を実施する
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
+			IDbCommand cm = this.sqlDriver.NewSqlCommand();
 
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -3661,14 +3655,9 @@ namespace quickDBExplorer
 
 					sqlstr = "update STATISTICS " + dboInfo.RealObjName;
 					cm.CommandText = sqlstr;
-					cm.Connection = this.sqlConnection1;
 					cm.ExecuteNonQuery();
 				}
 				MessageBox.Show("処理を完了しました");
-			}
-			catch ( System.Data.SqlClient.SqlException se )
-			{
-				this.SetErrorMessage(se);
 			}
 			catch ( Exception se )
 			{
@@ -3692,8 +3681,10 @@ namespace quickDBExplorer
 				return;
 			}
 
-			SqlCommand cm = new SqlCommand();
-			SqlDataAdapter da = new SqlDataAdapter();
+			DbDataAdapter da = this.sqlDriver.NewDataAdapter();
+			IDbCommand cm = this.sqlDriver.NewSqlCommand();
+			this.sqlDriver.SetSelectCmd(da,cm);
+
 			try
 			{
 				this.InitErrMessage();
@@ -3703,10 +3694,8 @@ namespace quickDBExplorer
 
 				if( cmdDialog.ShowDialog() == DialogResult.OK )
 				{
-					cm.CommandTimeout = this.SqlTimeOut;
 					DataSet	ds = new DataSet("retData");
 					ds.CaseSensitive = true;
-					cm.Connection = this.sqlConnection1;
 
 					
 					DBObjectInfo dboInfo;
@@ -3719,7 +3708,7 @@ namespace quickDBExplorer
 						if( cmdDialog.HasReturn == true )
 						{
 							// 戻り値あり
-							da.SelectCommand = cm;
+							this.sqlDriver.SetSelectCmd(da,cm);
 							da.Fill(ds,"retdata");
 						}
 						else
@@ -4025,9 +4014,8 @@ namespace quickDBExplorer
 		/// </summary>
 		private void DspObjectList()
 		{
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
+			IDataReader dr = null;
+			IDbCommand cm = this.sqlDriver.NewSqlCommand();
 
 			this.InitErrMessage();
 
@@ -4037,7 +4025,7 @@ namespace quickDBExplorer
 				{
 					return ;
 				}
-				this.sqlConnection1.ChangeDatabase((String)this.dbList.SelectedItem);
+				this.sqlDriver.SetDataBase((String)this.dbList.SelectedItem);
 				
 				// listbox2 にテーブル一覧を表示
 
@@ -4079,7 +4067,6 @@ namespace quickDBExplorer
 					);
 
 				cm.CommandText += sortkey;
-				cm.Connection = this.sqlConnection1;
 
 				dr = cm.ExecuteReader();
 
@@ -4122,16 +4109,14 @@ namespace quickDBExplorer
 
 		private void DispListOwner()
 		{
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
+			IDataReader dr = null;
+			IDbCommand 	cm = this.sqlDriver.NewSqlCommand();
 
 			this.InitErrMessage();
 
 			try 
 			{
 				cm.CommandText = this.sqlDriver.GetOwnerList(rdoDspSysUser.Checked);
-				cm.Connection = this.sqlConnection1;
 
 				dr = cm.ExecuteReader();
 
@@ -4217,10 +4202,8 @@ namespace quickDBExplorer
 					wr.Write("SET NOCOUNT ON{0}GO{0}{0}",wr.NewLine);
 				}
 
-				SqlDataReader dr = null;
-				SqlCommand	cm = new SqlCommand();
-				cm.CommandTimeout = this.SqlTimeOut;
-			
+				IDataReader dr = null;
+				IDbCommand 	cm = this.sqlDriver.NewSqlCommand();
 
 				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
@@ -4247,7 +4230,6 @@ namespace quickDBExplorer
 						sqlstr += " order by " + this.txtSort.Text.Trim();
 					}
 					cm.CommandText = sqlstr;
-					cm.Connection = this.sqlConnection1;
 
 					dr = cm.ExecuteReader();
 
@@ -4295,22 +4277,20 @@ namespace quickDBExplorer
 
 					}
 
-					if( deletefrom == true && dr.HasRows == true)
-					{
-						wr.Write("delete from  ");
-						wr.Write(dboInfo.FormalName);
-						if( this.txtWhere.Text.Trim() != "" )
-						{
-							wr.Write( " where {0}", this.txtWhere.Text.Trim() );
-
-						}
-						wr.Write("{0}GO{0}",wr.NewLine );
-					}
-
-
 					trow	= 0;
 					while(dr.Read())
 					{
+						if( deletefrom == true && trow == 0)
+						{
+							wr.Write("delete from  ");
+							wr.Write(dboInfo.FormalName);
+							if( this.txtWhere.Text.Trim() != "" )
+							{
+								wr.Write( " where {0}", this.txtWhere.Text.Trim() );
+
+							}
+							wr.Write("{0}GO{0}",wr.NewLine );
+						}
 						if( trow != 0 && ( trow % 1000 == 0 ) )
 						{
 							wr.Write("GO{0}",wr.NewLine);
@@ -4499,9 +4479,8 @@ namespace quickDBExplorer
 		// フィールドのリストを表示する
 		private void CreateTCsvText(bool isdquote, string separater)
 		{
-			SqlDataReader dr = null;
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
+			IDataReader dr = null;
+			IDbCommand 	cm = this.sqlDriver.NewSqlCommand();
 
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -4579,7 +4558,6 @@ namespace quickDBExplorer
 						sqlstr += " order by " + this.txtSort.Text.Trim();
 					}
 					cm.CommandText = sqlstr;
-					cm.Connection = this.sqlConnection1;
 
 					dr = cm.ExecuteReader();
 
@@ -4881,7 +4859,11 @@ namespace quickDBExplorer
 					sqlstr += " order by " + procCond.OrderStr.Trim();
 					sqlstrDisp += " order by " + procCond.OrderStr.Trim();
 				}
-				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+
+				DbDataAdapter da = this.sqlDriver.NewDataAdapter();
+				IDbCommand cm = this.sqlDriver.NewSqlCommand(sqlstr);
+				this.sqlDriver.SetSelectCmd(da,cm);
+
 				dspdt = new DataSet();
 				dspdt.CaseSensitive = true;
 				da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
@@ -5035,8 +5017,10 @@ namespace quickDBExplorer
 				return;
 			}
 
-			SqlCommand	cm = new SqlCommand();
-			SqlTransaction tran	= null;
+			DbDataAdapter da = this.sqlDriver.NewDataAdapter();
+			IDbCommand cm = this.sqlDriver.NewSqlCommand();
+			this.sqlDriver.SetSelectCmd(da,cm);
+			IDbTransaction tran	= null;
 			TextReader	wr = null;
 
 			try
@@ -5078,18 +5062,14 @@ namespace quickDBExplorer
 				}
 
 
-				System.Data.SqlClient.SqlDataAdapter da = new SqlDataAdapter();
-				cm.CommandTimeout = this.SqlTimeOut;
-
 				DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
 
 				// get id 
 				string sqlstr;
 				sqlstr = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()) );
 				cm.CommandText = sqlstr;
-				cm.Connection = this.sqlConnection1;
 
-				da.SelectCommand = cm;
+				this.sqlDriver.SetSelectCmd(da,cm);
 				DataTable dt = new DataTable();
 				dt.CaseSensitive = true;
 				da.FillSchema(dt,SchemaType.Mapped);
@@ -5444,12 +5424,13 @@ namespace quickDBExplorer
 				{
 					if( MessageBox.Show(linecount.ToString() + "件のデータを読み込みますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) == DialogResult.Yes )
 					{
-						SqlDataAdapter dda = new SqlDataAdapter(sqlstr, this.sqlConnection1);
+						DbDataAdapter uda = this.sqlDriver.NewDataAdapter();
+						IDbCommand ucm = this.sqlDriver.NewSqlCommand(sqlstr);
+						this.sqlDriver.SetSelectCmd(uda,ucm);
 										
-						tran = this.sqlConnection1.BeginTransaction();
-						dda.SelectCommand.Transaction = tran;
-						SqlCommandBuilder  cb = new SqlCommandBuilder(dda);
-						dda.Update(dt);
+						tran = this.sqlDriver.SetTransaction(ucm);
+						this.sqlDriver.SetCommandBuilder(uda);
+						uda.Update(dt);
 						tran.Commit();
 
 						MessageBox.Show("読込を完了しました");
@@ -5552,7 +5533,7 @@ namespace quickDBExplorer
 			return true;
 		}
 
-		private string ConvData(SqlDataReader dr, int i, string addstr, string unichar, bool outNull)
+		private string ConvData(IDataReader dr, int i, string addstr, string unichar, bool outNull)
 		{
 			//
 			//aaa  bigint  NOT NULL PRIMARY KEY,
@@ -5605,7 +5586,7 @@ namespace quickDBExplorer
 				else
 				{
 					// バイナリはヘキサ文字列で出しておく
-					byte []odata = dr.GetSqlBinary(i).Value;
+					byte []odata = this.sqlDriver.GetDataReaderBytes(dr, i);
 					string sodata ="0x";
 					for(int k = 0; k < odata.Length; k++ )
 					{
@@ -5644,7 +5625,7 @@ namespace quickDBExplorer
 			else if( fldtypename.Equals("money") 
 				|| fldtypename.Equals("smallmoney"))
 			{
-				return dr.GetSqlMoney(i).ToString();
+				return dr.GetValue(i).ToString();
 			}
 			else if( fldtypename.Equals("real"))
 			{
@@ -5702,7 +5683,7 @@ namespace quickDBExplorer
 			}
 			else if( fldtypename == "uniqueidentifier" )
 			{
-				return string.Format("{1}{0}{1}", dr.GetSqlGuid(i).ToString(), addstr );
+				return string.Format("{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
 			}
 			else if( fldtypename == "timestamp" )
 			{
@@ -5714,7 +5695,7 @@ namespace quickDBExplorer
 				else
 				{
 					// バイナリはヘキサ文字列で出しておく
-					byte []odata = dr.GetSqlBinary(i).Value;
+					byte []odata = this.sqlDriver.GetDataReaderBytes(dr, i);
 					string sodata ="0x";
 					for(int k = 0; k < odata.Length; k++ )
 					{
