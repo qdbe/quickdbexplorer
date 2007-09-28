@@ -382,7 +382,6 @@ namespace quickDBExplorer
 				{
 					mainForm.ServerName = this.txtServerName.Text;
 				}
-				mainForm.sqlConnection1 = con;
 
 				// SQL 処理クラスの初期化
 				if(con.ServerVersion.StartsWith("08") )
@@ -398,7 +397,7 @@ namespace quickDBExplorer
 				asm = Assembly.LoadFrom(dllName);
 				mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className,true);
 
-				mainForm.SqlDriver.SetConnection(mainForm.sqlConnection1);
+				mainForm.SqlDriver.SetConnection(con,mainForm.SqlTimeOut);
 
 				mainForm.Show();
 				// メインダイアログを表示すれば、このダイアログは不要

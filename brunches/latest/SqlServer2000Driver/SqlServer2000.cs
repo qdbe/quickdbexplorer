@@ -39,10 +39,12 @@ namespace quickDBExplorer
 		/// <summary>
 		/// SQLServerに対するコネクション情報を管理する
 		/// </summary>
-		/// <param name="sqlConnection1"></param>
-		public void SetConnection(IDbConnection sqlConnection1)
+		/// <param name="sqlConnection">コネクション情報</param>
+		/// <param name="timeout">コマンド実行タイムアウト値</param>
+		public void SetConnection(IDbConnection sqlConnection, int timeout)
 		{
-			this.sqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection1;
+			this.sqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection;
+			this._timeout = timeout;
 		}
 
 		/// <summary>

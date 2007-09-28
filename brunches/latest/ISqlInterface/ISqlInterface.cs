@@ -15,8 +15,9 @@ namespace quickDBExplorer
 		/// <summary>
 		/// SQLServerに対するコネクション情報を管理する
 		/// </summary>
-		/// <param name="sqlConnection1"></param>
-		void SetConnection(IDbConnection sqlConnection);
+		/// <param name="sqlConnection">コネクション情報</param>
+		/// <param name="timeout">コマンド実行タイムアウト値</param>
+		void SetConnection(IDbConnection sqlConnection, int timeout);
 
 		/// <summary>
 		/// タイムアウト値を設定しなおす

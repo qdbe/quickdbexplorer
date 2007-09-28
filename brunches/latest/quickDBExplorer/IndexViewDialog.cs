@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data;
+using System.Data.Common;
 
 namespace quickDBExplorer
 {
@@ -34,31 +35,17 @@ namespace quickDBExplorer
 			set { this.dspObj = value; }
 		}
 
-		/// <summary>
-		/// SQL Server へのコネクション情報
-		/// </summary>
-		protected System.Data.SqlClient.SqlConnection sqlConnection;
-		/// <summary>
-		/// SQL Server へのコネクション情報
-		/// </summary>
-		public System.Data.SqlClient.SqlConnection SqlConnection
-		{
-			get { return this.sqlConnection; }
-			set { this.sqlConnection = value; }
-		}
+		protected ISqlInterface sqlDriver = null;
 
 		/// <summary>
-		/// SQL Server のバージョン
+		/// SQL文を処理するクラス
 		/// </summary>
-		protected int		sqlVersion = 2000;
-		/// <summary>
-		/// SQL Server のバージョン
-		/// </summary>
-		public int		SqlVersion
+		public ISqlInterface SqlDriver
 		{
-			get	{ return this.sqlVersion; }
-			set { this.sqlVersion = value; }
+			get { return this.sqlDriver; }
+			set { this.sqlDriver = value; }
 		}
+
 
 		/// <summary>
 		/// コンストラクタ
@@ -187,9 +174,12 @@ namespace quickDBExplorer
 
 			sqlstr = string.Format(@"sp_helpindex '{0}'", dboInfo.RealObjName );
 
-			SqlDataAdapter daa = new SqlDataAdapter(sqlstr, this.sqlConnection);
+			DbDataAdapter da = this.sqlDriver.NewDataAdapter();
+			IDbCommand cmd = this.sqlDriver.NewSqlCommand(sqlstr);
+			this.sqlDriver.SetSelectCmd(da,cmd);
+
 			DataSet baseidx = new DataSet();
-			daa.Fill(baseidx,"basedata");
+			da.Fill(baseidx,"basedata");
 
 
 

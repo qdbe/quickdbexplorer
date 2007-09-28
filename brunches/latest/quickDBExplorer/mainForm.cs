@@ -219,7 +219,10 @@ namespace quickDBExplorer
 		public int SqlTimeOut 
 		{
 			get { return this.sqlTimeOut; }
-			set { this.sqlTimeOut = value; }
+			set { 
+				this.sqlTimeOut = value; 
+				this.sqlDriver.SetTimeout(this.sqlTimeOut);
+			}
 		}
 
 		/// <summary>
@@ -263,7 +266,6 @@ namespace quickDBExplorer
 		/// <summary>
 		/// DBê⁄ë±èÓïÒ
 		/// </summary>
-		public System.Data.SqlClient.SqlConnection sqlConnection1;
 		private System.Windows.Forms.Button btnEtc;
 		private System.Windows.Forms.MenuItem menuISQLW;
 		private System.Windows.Forms.Button btnWhereZoom;
@@ -2828,9 +2830,8 @@ namespace quickDBExplorer
 			if( indexdlg == null )
 			{
 				indexdlg = new IndexViewDialog();
-				indexdlg.SqlVersion = this.sqlVersion;
 
-				indexdlg.SqlConnection = this.sqlConnection1;
+				indexdlg.SqlDriver = this.sqlDriver;
 				indexdlg.DspObj = this.objectList.GetSelectObject(0);
 
 				indexdlg.Show();
@@ -2850,9 +2851,6 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void DependOutPut(object sender, System.EventArgs e)
 		{
-			SqlCommand	cm = new SqlCommand();
-			cm.CommandTimeout = this.SqlTimeOut;
-
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
 				return;
@@ -2970,15 +2968,6 @@ namespace quickDBExplorer
 			{
 				this.SetErrorMessage(se);
 			}
-			finally 
-			{
-				if( cm != null )
-				{
-					cm.Dispose();
-				}
-			}
-
-		
 		}
 
 		/// <summary>
