@@ -413,6 +413,20 @@ namespace quickDBExplorer
 				}
 				wr.Write("{0}){0}Go{0}",wr.NewLine);
 			}
+			else
+			{
+				DataTable dt = new DataTable();
+
+				string strsql = string.Format("sp_helptext '{0}'", dboInfo.FormalName );
+				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
+				da.SelectCommand.CommandTimeout = this._timeout;
+				da.Fill(dt);
+				foreach(DataRow dr in dt.Rows)
+				{
+					wr.Write(dr["Text"].ToString());
+				}
+				wr.Write("{0}){0}Go{0}",wr.NewLine);
+			}
 			return strline.ToString();
 		}
 
