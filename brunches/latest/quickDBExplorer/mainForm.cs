@@ -3146,60 +3146,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallISQLW(object sender, System.EventArgs e)
 		{
-			if( this.sqlVersion != 2000 )
-			{
-				this.CallEPM(sender,e);
-				return;
-			}
-
-			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = "isqlw";
-			isqlProcess.StartInfo.ErrorDialog = true;
-			string serverstr = "";
-			if( this.instanceName != "" )
-			{
-				serverstr = this.serverRealName + "\\" + this.instanceName;
-			}
-			else
-			{
-				serverstr = this.serverRealName;
-			}
-			if( this.IsUseTruse == true )
-			{
-				if( this.dbList.SelectedItems.Count != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E ",
-						serverstr,
-						(string)this.dbList.SelectedItem
-						);
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E ",
-						serverstr
-						);
-				}
-			}
-			else
-			{
-				if( this.dbList.SelectedItems.Count != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} ",
-						serverstr,
-						(string)this.dbList.SelectedItem,
-						this.loginUid,
-						this.loginPasswd );
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} ",
-						serverstr,
-						this.loginUid,
-						this.loginPasswd );
-				}
-			}
-			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-			isqlProcess.Start();
+			this.sqlDriver.CallIsql(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
 		}
 
 		/// <summary>
@@ -3209,61 +3156,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallProfile(object sender, System.EventArgs e)
 		{
-			Process isqlProcess = new Process();
-			if( this.sqlVersion == 2000 )
-			{
-				isqlProcess.StartInfo.FileName = "profiler.exe";
-			}
-			else
-			{
-				isqlProcess.StartInfo.FileName = "profiler90.exe";
-			}
-			isqlProcess.StartInfo.ErrorDialog = true;
-			string serverstr = "";
-			if( this.instanceName != "" )
-			{
-				serverstr = this.serverRealName + "\\" + this.instanceName;
-			}
-			else
-			{
-				serverstr = this.serverRealName;
-			}
-			if( this.IsUseTruse == true )
-			{
-				if( this.dbList.SelectedItems.Count != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /D{1} /E ",
-						serverstr,
-						(string)this.dbList.SelectedItem
-						);
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /E ",
-						serverstr
-						);
-				}
-			}
-			else
-			{
-				if( this.dbList.SelectedItems.Count != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} D{1} /U{2} /P{3} ",
-						serverstr,
-						(string)this.dbList.SelectedItem,
-						this.loginUid,
-						this.loginPasswd );
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} /U{2} /P{3} ",
-						serverstr,
-						this.loginUid,
-						this.loginPasswd );
-				}
-			}
-			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-			isqlProcess.Start();
+			this.sqlDriver.CallProfile(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
 		}
 
 		/// <summary>
@@ -3273,62 +3166,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallEPM(object sender, System.EventArgs e)
 		{
-			Process isqlProcess = new Process();
-			if( this.sqlVersion == 2000 )
-			{
-				isqlProcess.StartInfo.FileName = "SQL Server Enterprise Manager.MSC";
-			}
-			else
-			{
-				isqlProcess.StartInfo.FileName = "SqlWb";
-				string serverstr = "";
-				if( this.instanceName != "" )
-				{
-					serverstr = this.serverRealName + "\\" + this.instanceName;
-				}
-				else
-				{
-					serverstr = this.serverRealName;
-				}
-				if( this.IsUseTruse == true )
-				{
-					if( this.dbList.SelectedItems.Count != 0 )
-					{
-						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E -nosplash",
-							serverstr,
-							(string)this.dbList.SelectedItem
-							);
-					}
-					else
-					{
-						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E -nosplash",
-							serverstr
-							);
-					}
-				}
-				else
-				{
-					if( this.dbList.SelectedItems.Count != 0 )
-					{
-						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} -nosplash",
-							serverstr,
-							(string)this.dbList.SelectedItem,
-							this.loginUid,
-							this.loginPasswd );
-					}
-					else
-					{
-						isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} -nosplash",
-							serverstr,
-							this.loginUid,
-							this.loginPasswd );
-					}
-				}
-			}
-			isqlProcess.StartInfo.ErrorDialog = true;
-
-			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-			isqlProcess.Start();
+			this.sqlDriver.CallEpm(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
 		}
 
 		private void menuRecordCountDsp_Click(object sender, System.EventArgs e)

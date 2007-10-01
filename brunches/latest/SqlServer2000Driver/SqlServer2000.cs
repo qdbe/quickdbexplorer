@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.IO;
+using System.Diagnostics;
+using System.Threading;
 using System.Text;
 
 namespace quickDBExplorer
@@ -257,16 +259,6 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// フィールドリスト取得時のダミークエリを生成する
-		/// </summary>
-		/// <returns></returns>
-		public string GetDspFldListDummy()
-		{
-			return string.Format(
-				@"select * from sysindexes where 0=1" );
-		}
-
-		/// <summary>
 		/// Owner の一覧を取得するSQLを生成する
 		/// </summary>
 		/// <param name="isDspSysUser"></param>
@@ -282,6 +274,148 @@ namespace quickDBExplorer
 				return "select * from sysusers where name not like 'db[_]%' order by name";
 			}
 		}
+
+		/// <summary>
+		/// ISQL を起動する。
+		/// </summary>
+		/// <param name="serverRealName">サーバー名</param>
+		/// <param name="instanceName">インスタンス名</param>
+		/// <param name="IsUseTruse">信頼関係接続を利用するか否か</param>
+		/// <param name="dbName">データベース名</param>
+		/// <param name="loginUid">ログインID</param>
+		/// <param name="loginPasswd">ログインパスワード</param>
+		public void	CallIsql(string serverRealName, string instanceName, bool IsUseTruse, string dbName, string loginUid, string loginPasswd)
+		{
+			Process isqlProcess = new Process();
+			isqlProcess.StartInfo.FileName = "isqlw";
+			isqlProcess.StartInfo.ErrorDialog = true;
+			string serverstr = "";
+			if( instanceName != "" )
+			{
+				serverstr = serverRealName + "\\" + instanceName;
+			}
+			else
+			{
+				serverstr = serverRealName;
+			}
+			if( IsUseTruse == true )
+			{
+				if( dbName != "" )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E ",
+						serverstr,
+						dbName
+						);
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E ",
+						serverstr
+						);
+				}
+			}
+			else
+			{
+				if( dbName != "" )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} ",
+						serverstr,
+						dbName,
+						loginUid,
+						loginPasswd );
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} ",
+						serverstr,
+						loginUid,
+						loginPasswd );
+				}
+			}
+			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			isqlProcess.Start();
+		}
+
+		/// <summary>
+		/// EnterPriseManagerを起動する
+		/// </summary>
+		/// <param name="serverRealName">サーバー名</param>
+		/// <param name="instanceName">インスタンス名</param>
+		/// <param name="IsUseTruse">信頼関係接続を利用するか否か</param>
+		/// <param name="dbName">データベース名</param>
+		/// <param name="loginUid">ログインID</param>
+		/// <param name="loginPasswd">ログインパスワード</param>
+		public void	CallEpm(string serverRealName, string instanceName, bool IsUseTruse, string dbName, string loginUid, string loginPasswd)
+		{
+			Process isqlProcess = new Process();
+			isqlProcess.StartInfo.FileName = "SQL Server Enterprise Manager.MSC";
+			isqlProcess.StartInfo.ErrorDialog = true;
+
+			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			isqlProcess.Start();
+		}
+
+		/// <summary>
+		/// Profilerを起動する
+		/// </summary>
+		/// <param name="serverRealName">サーバー名</param>
+		/// <param name="instanceName">インスタンス名</param>
+		/// <param name="IsUseTruse">信頼関係接続を利用するか否か</param>
+		/// <param name="dbName">データベース名</param>
+		/// <param name="loginUid">ログインID</param>
+		/// <param name="loginPasswd">ログインパスワード</param>
+		public void	CallProfile(string serverRealName, string instanceName, bool IsUseTruse, string dbName, string loginUid, string loginPasswd)
+		{
+			Process isqlProcess = new Process();
+			isqlProcess.StartInfo.FileName = "profiler.exe";
+			isqlProcess.StartInfo.ErrorDialog = true;
+			string serverstr = "";
+			if( instanceName != "" )
+			{
+				serverstr = serverRealName + "\\" + instanceName;
+			}
+			else
+			{
+				serverstr = serverRealName;
+			}
+			if( IsUseTruse == true )
+			{
+				if( dbName != "" )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /D{1} /E ",
+						serverstr,
+						dbName
+						);
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /E ",
+						serverstr
+						);
+				}
+			}
+			else
+			{
+				if( dbName != "" )
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} D{1} /U{2} /P{3} ",
+						serverstr,
+						dbName,
+						loginUid,
+						loginPasswd );
+				}
+				else
+				{
+					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} /U{2} /P{3} ",
+						serverstr,
+						loginUid,
+						loginPasswd );
+				}
+			}
+			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			isqlProcess.Start();
+		}
+
 
 		/// <summary>
 		/// オブジェクトに対するDROP 文を生成する

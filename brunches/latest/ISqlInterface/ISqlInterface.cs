@@ -115,11 +115,6 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		string GetDspObjList(bool isDspTable, bool isDspView, bool Synonym, bool isDspFunc, bool isDspSP, string ownerList);
 
-		/// <summary>
-		/// フィールドリスト取得時のダミークエリを生成する
-		/// </summary>
-		/// <returns></returns>
-		string GetDspFldListDummy();
 
 		/// <summary>
 		/// Owner の一覧を取得するSQLを生成する
@@ -127,6 +122,41 @@ namespace quickDBExplorer
 		/// <param name="isDspSysUser"></param>
 		/// <returns></returns>
 		string	GetOwnerList(bool isDspSysUser);
+
+		/// <summary>
+		/// ISQL を起動する。
+		/// </summary>
+		/// <param name="serverRealName">サーバー名</param>
+		/// <param name="instanceName">インスタンス名</param>
+		/// <param name="IsUseTruse">信頼関係接続を利用するか否か</param>
+		/// <param name="dbName">データベース名</param>
+		/// <param name="loginUid">ログインID</param>
+		/// <param name="loginPasswd">ログインパスワード</param>
+		void	CallIsql(string serverRealName, string instanceName, bool IsUseTruse, string dbName, string loginUid, string loginPasswd);
+
+
+		/// <summary>
+		/// EnterPriseManagerを起動する
+		/// </summary>
+		/// <param name="serverRealName">サーバー名</param>
+		/// <param name="instanceName">インスタンス名</param>
+		/// <param name="IsUseTruse">信頼関係接続を利用するか否か</param>
+		/// <param name="dbName">データベース名</param>
+		/// <param name="loginUid">ログインID</param>
+		/// <param name="loginPasswd">ログインパスワード</param>
+		void	CallEpm(string serverRealName, string instanceName, bool IsUseTruse, string dbName, string loginUid, string loginPasswd);
+
+		/// <summary>
+		/// Profilerを起動する
+		/// </summary>
+		/// <param name="serverRealName">サーバー名</param>
+		/// <param name="instanceName">インスタンス名</param>
+		/// <param name="IsUseTruse">信頼関係接続を利用するか否か</param>
+		/// <param name="dbName">データベース名</param>
+		/// <param name="loginUid">ログインID</param>
+		/// <param name="loginPasswd">ログインパスワード</param>
+		void	CallProfile(string serverRealName, string instanceName, bool IsUseTruse, string dbName, string loginUid, string loginPasswd);
+
 
 		/// <summary>
 		/// オブジェクトに対する Create 文を生成する

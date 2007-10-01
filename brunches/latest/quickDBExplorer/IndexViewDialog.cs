@@ -35,6 +35,9 @@ namespace quickDBExplorer
 			set { this.dspObj = value; }
 		}
 
+		/// <summary>
+		/// SQLƒhƒ‰ƒCƒo
+		/// </summary>
 		protected ISqlInterface sqlDriver = null;
 
 		/// <summary>
