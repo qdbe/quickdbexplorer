@@ -15,7 +15,7 @@ using System.Net;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// Form1 の概要の説明です。
+	/// 全ての親画面となるMDIフォーム
 	/// </summary>
 	public class MainMDI : System.Windows.Forms.Form
 	{

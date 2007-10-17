@@ -392,6 +392,12 @@ namespace quickDBExplorer
 				{
 					mainForm.SqlVersion = 2005;
 				}
+				else
+				{
+					// 現時点では2005と同等と仮定する
+					mainForm.SqlVersion = 2005;
+				}
+				// SQL SERVERのバージョンに応じたDLLを読み込む
 				dllName = string.Format("SqlServer{0}Driver.dll", mainForm.SqlVersion );
 				className = "quickDBExplorer.SqlServerDriver";
 				asm = Assembly.LoadFrom(dllName);
@@ -399,6 +405,7 @@ namespace quickDBExplorer
 
 				mainForm.SqlDriver.SetConnection(con,mainForm.SqlTimeOut);
 
+				// MDI なので、モードレスでダイアログを表示する
 				mainForm.Show();
 				// メインダイアログを表示すれば、このダイアログは不要
 				this.Close();

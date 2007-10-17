@@ -50,6 +50,15 @@ namespace quickDBExplorer
 		private bool isShowTable = true;
 
 		/// <summary>
+		/// テーブル名称を表示するか否かの指定
+		/// </summary>
+		public bool IsShowTable
+		{
+			get { return this.isShowTable; }
+			set { this.isShowTable = value; }
+		}
+
+		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="hdata">履歴情報</param>
@@ -62,14 +71,6 @@ namespace quickDBExplorer
 			this.targetTable = curTable;
 		}
 
-		/// <summary>
-		/// テーブル名称を表示するか否かの指定
-		/// </summary>
-		public bool IsShowTable
-		{
-			get { return this.isShowTable; }
-			set { this.isShowTable = value; }
-		}
 
 		/// <summary>
 		/// 使用されているリソースに後処理を実行します。
@@ -195,19 +196,21 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void HistoryViewer_Load(object sender, System.EventArgs e)
 		{
-			// 一旦履歴は全てクリア
+			// 一旦履歴一覧は全てクリア
 			this.historyList.Clear();
+			// 表示するカラムのセット
 			if( isShowTable == true )
 			{
 				this.historyList.Columns.Add("テーブル",120,HorizontalAlignment.Left);
 			}
 			this.historyList.Columns.Add("履歴",this.historyList.Width - 120 - 4,HorizontalAlignment.Left);
+
+			// 一覧の内容をセットしていく
 			if( this.textHistoryDS != null && this.textHistoryDS.textHistoryData.Rows.Count != 0 )
 			{
-				// まずは、同じテーブル名のものを優先して表示する
-
 				this.historyList.BeginUpdate();
 
+				// まずは、同じテーブル名のものを優先して表示する
 				DataRow []drl = this.textHistoryDS.textHistoryData.Select(string.Format("KeyValue = '{0}'",this.targetTable),
 					"KeyNo desc");
 				ListViewItem item ;
@@ -331,7 +334,7 @@ namespace quickDBExplorer
 			{
 				return;
 			}
-			// 拡大表示ダイアログを利用して表示させる。
+			// 選択項目の内容を拡大表示ダイアログを利用して表示させる。
 			// ただし、読み取り専用
 			ZoomDialog dlg = new ZoomDialog();
 			dlg.IsDispOnly = true;

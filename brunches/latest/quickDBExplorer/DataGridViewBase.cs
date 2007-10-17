@@ -10,6 +10,8 @@ namespace quickDBExplorer
 {
 	/// <summary>
 	/// DataTable を表示するためのダイアログ
+	/// 各種情報を一覧表示する場合に、このダイアログをベースに派生する。
+	/// もしくは、直接利用する
 	/// </summary>
 	public class DataGridViewBase : quickDBExplorer.quickDBExplorerBaseForm
 	{
@@ -45,7 +47,6 @@ namespace quickDBExplorer
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
 
-			// TODO: InitializeComponent 呼び出しの後に初期化処理を追加します。
 			this.viewData = dt;
 			this.titleName = tname;
 			this.Text = tname;

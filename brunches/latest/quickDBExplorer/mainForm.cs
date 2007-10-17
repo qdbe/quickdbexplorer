@@ -50,7 +50,6 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
 		private quickDBExplorer.qdbeListBox dbList;
@@ -79,7 +78,6 @@ namespace quickDBExplorer
 		private quickDBExplorerTextBox txtSort;
 		private quickDBExplorerTextBox txtWhere;
 		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.ToolTip toolTip2;
 		private System.Windows.Forms.ToolTip toolTip3;
 
 		private QueryDialog Sqldlg2 = new QueryDialog();
@@ -330,6 +328,19 @@ namespace quickDBExplorer
 			base.Dispose( disposing );
 		}
 
+		/// <summary>
+		/// 終了処理
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnClosed(EventArgs e)
+		{
+			// SQLServerに対する接続を閉じる
+			this.sqlDriver.CloseConnection();
+
+			base.OnClosed (e);
+		}
+
+
 		#region Windows フォーム デザイナで生成されたコード 
 		/// <summary>
 		/// デザイナ サポートに必要なメソッドです。このメソッドの内容を
@@ -395,8 +406,6 @@ namespace quickDBExplorer
 			this.rdoSjis = new System.Windows.Forms.RadioButton();
 			this.rdoUnicode = new System.Windows.Forms.RadioButton();
 			this.chkDspFieldAttr = new System.Windows.Forms.CheckBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
 			this.btnQuerySelect = new System.Windows.Forms.Button();
 			this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
 			this.btnDataUpdate = new System.Windows.Forms.Button();
@@ -934,17 +943,6 @@ namespace quickDBExplorer
 			this.chkDspFieldAttr.Text = "フィールド属性を表示(&Z)";
 			this.chkDspFieldAttr.CheckedChanged += new System.EventHandler(this.chkDspFieldAttr_CheckedChanged);
 			// 
-			// label6
-			// 
-			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label6.Font = new System.Drawing.Font("MS UI Gothic", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.label6.Location = new System.Drawing.Point(4, 657);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(124, 12);
-			this.label6.TabIndex = 27;
-			this.label6.Text = "C info;";
-			this.toolTip2.SetToolTip(this.label6, "Copyright; Y.N(godz)  2004-2006");
-			// 
 			// btnQuerySelect
 			// 
 			this.btnQuerySelect.Location = new System.Drawing.Point(508, 212);
@@ -1123,7 +1121,6 @@ namespace quickDBExplorer
 			this.Controls.Add(this.btnDataEdit);
 			this.Controls.Add(this.btnDataUpdate);
 			this.Controls.Add(this.btnQuerySelect);
-			this.Controls.Add(this.label6);
 			this.Controls.Add(this.chkDspFieldAttr);
 			this.Controls.Add(this.grpCharaSet);
 			this.Controls.Add(this.fieldListbox);
@@ -1186,7 +1183,6 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.fieldListbox, 0);
 			this.Controls.SetChildIndex(this.grpCharaSet, 0);
 			this.Controls.SetChildIndex(this.chkDspFieldAttr, 0);
-			this.Controls.SetChildIndex(this.label6, 0);
 			this.Controls.SetChildIndex(this.btnQuerySelect, 0);
 			this.Controls.SetChildIndex(this.btnDataUpdate, 0);
 			this.Controls.SetChildIndex(this.btnDataEdit, 0);

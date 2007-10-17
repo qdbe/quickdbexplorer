@@ -151,6 +151,7 @@ namespace quickDBExplorer
 		/// <param name="dboInfo">新規に表示するオブジェクト情報</param>
 		public void settabledsp(DBObjectInfo dboInfo)
 		{
+			// 対象のオブジェクトがテーブルもしくはVIEWでない場合は何も表示しない
 			if( dboInfo == null || 
 				( dboInfo.RealObjType != "U" &&
 				dboInfo.RealObjType != "V" ) )

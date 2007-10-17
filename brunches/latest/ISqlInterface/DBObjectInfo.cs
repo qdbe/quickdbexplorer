@@ -225,7 +225,8 @@ namespace quickDBExplorer
 		public	ArrayList	FieldInfo
 		{
 			get 
-			{ 
+			{
+				// まだ読み込んでいない場合は、読み込みを自動的に実施する
 				if( this.fieldInfo == null )
 				{
 					this.DataGet(this);
@@ -246,6 +247,7 @@ namespace quickDBExplorer
 		public	DataTable	SchemaBaseInfo
 		{
 			get { 
+				// まだ読み込んでいない場合は、読み込みを自動的に実施する
 				if( this.fieldInfo == null )
 				{
 					this.DataGet(this);
@@ -311,6 +313,9 @@ namespace quickDBExplorer
 			return string.Format("[{0}].[{1}_{2}]",this.owner, this.objname, addstr);
 		}
 
+		/// <summary>
+		/// オブジェクトの情報を取得しなおす
+		/// </summary>
 		public	void	ReloadInfo()
 		{
 			this.DataGet(this);

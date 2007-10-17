@@ -50,6 +50,14 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
+		/// SQLSERVERに対するコネクション情報を閉じる
+		/// </summary>
+		public void CloseConnection()
+		{
+			this.sqlConnect.Close();
+		}
+
+		/// <summary>
 		/// タイムアウト値を設定しなおす
 		/// </summary>
 		/// <param name="timeout"></param>

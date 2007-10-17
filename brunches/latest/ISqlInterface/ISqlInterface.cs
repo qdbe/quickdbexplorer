@@ -20,6 +20,12 @@ namespace quickDBExplorer
 		void SetConnection(IDbConnection sqlConnection, int timeout);
 
 		/// <summary>
+		/// SQLSERVERに対するコネクション情報を閉じる
+		/// </summary>
+		void CloseConnection();
+
+
+		/// <summary>
 		/// タイムアウト値を設定しなおす
 		/// </summary>
 		/// <param name="timeout"></param>

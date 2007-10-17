@@ -8,6 +8,7 @@ namespace quickDBExplorer
 {
 	/// <summary>
 	/// フィールド情報の取得条件指定ダイアログ
+	/// フィールド情報をコピーする条件を指定する
 	/// </summary>
 	public class FieldGetDialog : quickDBExplorer.quickDBExplorerBaseForm
 	{

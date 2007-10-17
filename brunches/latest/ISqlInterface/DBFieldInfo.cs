@@ -68,6 +68,9 @@ namespace quickDBExplorer
 		}
 
 		private	int		colid = 0;
+		/// <summary>
+		/// フィールドのカラムIDを管理する
+		/// </summary>
 		public int		Colid
 		{
 			get { return this.colid; }
@@ -75,18 +78,27 @@ namespace quickDBExplorer
 		}
 
 		private	int		colorder = 0;
+		/// <summary>
+		/// フィールドのカラム順序を管理する
+		/// </summary>
 		public	int		Colorder
 		{
 			get { return this.colorder; }
 			set { this.colorder = value; }
 		}
 
+		/// <summary>
+		/// NULLを許可するか否かを管理する
+		/// </summary>
 		public	bool		IsNullable
 		{
 			get { return this.col.AllowDBNull; }
 		}
 
 		private	string	collation = string.Empty;
+		/// <summary>
+		/// 文字フィールドの場合の照合順序を管理する
+		/// </summary>
 		public	string	Collation
 		{
 			get { return this.collation; }
@@ -94,6 +106,11 @@ namespace quickDBExplorer
 		}
 
 		private	int	primaryKeyOrder = -1;
+		/// <summary>
+		/// プライマリキーの対象になっている場合のプライマリキー内の順序
+		/// 開始は0
+		/// -1の場合はプライマリキーの要素でないことを指す
+		/// </summary>
 		public	int	PrimaryKeyOrder
 		{
 			get { return this.primaryKeyOrder; }
@@ -101,6 +118,9 @@ namespace quickDBExplorer
 		}
 
 		private decimal	incSeed = 0;
+		/// <summary>
+		/// Identityフィールドの場合の Seed値
+		/// </summary>
 		public  decimal	IncSeed	
 		{
 			get { return this.incSeed; }
@@ -108,6 +128,9 @@ namespace quickDBExplorer
 		}
 
 		private decimal incStep = 0;
+		/// <summary>
+		/// Identity フィールドの場合の Step値
+		/// </summary>
 		public decimal IncStep 
 		{
 			get { return this.incStep; }
@@ -115,11 +138,11 @@ namespace quickDBExplorer
 		}
 
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public DBFieldInfo()
 		{
-			// 
-			// TODO: コンストラクタ ロジックをここに追加してください。
-			//
 		}
 	}
 }

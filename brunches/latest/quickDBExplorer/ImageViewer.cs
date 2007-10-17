@@ -80,9 +80,10 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(166, 88);
+			this.msgArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.msgArea.Location = new System.Drawing.Point(188, 84);
 			this.msgArea.Name = "msgArea";
-			this.msgArea.Visible = false;
+			this.msgArea.Size = new System.Drawing.Size(216, 80);
 			// 
 			// pictureBox1
 			// 
