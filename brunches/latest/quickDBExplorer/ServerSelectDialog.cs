@@ -11,7 +11,7 @@ namespace quickDBExplorer
 	/// </summary>
 	public class ServerSelectDialog : System.Windows.Forms.Form
 	{
-		private System.Windows.Forms.ListBox listBox1;
+		private System.Windows.Forms.ListBox serverListBox;
 		private System.Windows.Forms.Button btnOk;
 		/// <summary>
 		/// 必要なデザイナ変数です。
@@ -84,22 +84,22 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(ServerSelectDialog));
-			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.serverListBox = new System.Windows.Forms.ListBox();
 			this.btnOk = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// listBox1
+			// serverListBox
 			// 
-			this.listBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.serverListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
-			this.listBox1.ItemHeight = 12;
-			this.listBox1.Location = new System.Drawing.Point(8, 8);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(280, 244);
-			this.listBox1.TabIndex = 0;
-			this.listBox1.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick);
+			this.serverListBox.ItemHeight = 12;
+			this.serverListBox.Location = new System.Drawing.Point(8, 8);
+			this.serverListBox.Name = "serverListBox";
+			this.serverListBox.Size = new System.Drawing.Size(280, 244);
+			this.serverListBox.TabIndex = 0;
+			this.serverListBox.DoubleClick += new System.EventHandler(this.serverListBox_DoubleClick);
 			// 
 			// btnOk
 			// 
@@ -130,7 +130,7 @@ namespace quickDBExplorer
 			this.ClientSize = new System.Drawing.Size(292, 293);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOk);
-			this.Controls.Add(this.listBox1);
+			this.Controls.Add(this.serverListBox);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "ServerSelectDialog";
 			this.ShowInTaskbar = false;
@@ -143,10 +143,10 @@ namespace quickDBExplorer
 
 		private void btnOk_Click(object sender, System.EventArgs e)
 		{
-			if( this.listBox1.SelectedItem != null )
+			if( this.serverListBox.SelectedItem != null )
 			{
 				string delimStr = ":";
-				string []str = this.listBox1.SelectedItem.ToString().Split(delimStr.ToCharArray(), 2);
+				string []str = this.serverListBox.SelectedItem.ToString().Split(delimStr.ToCharArray(), 2);
 				this.selectedServer = str[0];
 				this.selectedInstance = str[1];
 			}
@@ -161,12 +161,12 @@ namespace quickDBExplorer
 		{
 			foreach( object sd in ServerList.PerServerData.Values )
 			{
-				this.listBox1.Items.Add(((ServerData)sd).Servername + ":" + ((ServerData)sd).InstanceName );
+				this.serverListBox.Items.Add(((ServerData)sd).Servername + ":" + ((ServerData)sd).InstanceName );
 			}
-			this.listBox1.Refresh();
+			this.serverListBox.Refresh();
 		}
 
-		private void listBox1_DoubleClick(object sender, System.EventArgs e)
+		private void serverListBox_DoubleClick(object sender, System.EventArgs e)
 		{
 			this.btnOk.PerformClick();
 		}
