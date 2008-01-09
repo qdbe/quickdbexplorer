@@ -139,7 +139,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// グリッド表示件数
 		/// </summary>
-		public 	Hashtable	GridDspCnt
+		public 	Hashtable	GridDispCnt
 		{
 			get { return this.griddspcnt; }
 			set { this.griddspcnt = value; }

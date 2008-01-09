@@ -81,7 +81,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// フィールドのカラム順序を管理する
 		/// </summary>
-		public	int		Colorder
+		public	int		ColOrder
 		{
 			get { return this.colorder; }
 			set { this.colorder = value; }

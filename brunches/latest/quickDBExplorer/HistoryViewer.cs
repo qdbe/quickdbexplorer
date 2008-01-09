@@ -29,7 +29,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 履歴拡大表示ボタン
 		/// </summary>
-		private System.Windows.Forms.Button btnDspAll;
+		private System.Windows.Forms.Button btnDispAll;
 
 		/// <summary>
 		/// 選択された入力履歴情報
@@ -98,7 +98,7 @@ namespace quickDBExplorer
 			this.btnOK = new System.Windows.Forms.Button();
 			this.btnClear = new System.Windows.Forms.Button();
 			this.historyList = new System.Windows.Forms.ListView();
-			this.btnDspAll = new System.Windows.Forms.Button();
+			this.btnDispAll = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// msgArea
@@ -153,15 +153,15 @@ namespace quickDBExplorer
 			this.historyList.View = System.Windows.Forms.View.Details;
 			this.historyList.DoubleClick += new System.EventHandler(this.historyList_DoubleClick);
 			// 
-			// btnDspAll
+			// btnDispAll
 			// 
-			this.btnDspAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnDspAll.Location = new System.Drawing.Point(210, 272);
-			this.btnDspAll.Name = "btnDspAll";
-			this.btnDspAll.Size = new System.Drawing.Size(112, 23);
-			this.btnDspAll.TabIndex = 3;
-			this.btnDspAll.Text = "履歴拡大表示(&Z)";
-			this.btnDspAll.Click += new System.EventHandler(this.btnDspAll_Click);
+			this.btnDispAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnDispAll.Location = new System.Drawing.Point(210, 272);
+			this.btnDispAll.Name = "btnDispAll";
+			this.btnDispAll.Size = new System.Drawing.Size(112, 23);
+			this.btnDispAll.TabIndex = 3;
+			this.btnDispAll.Text = "履歴拡大表示(&Z)";
+			this.btnDispAll.Click += new System.EventHandler(this.btnDispAll_Click);
 			// 
 			// HistoryViewer
 			// 
@@ -173,12 +173,12 @@ namespace quickDBExplorer
 			this.Controls.Add(this.btnClear);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnCancel);
-			this.Controls.Add(this.btnDspAll);
+			this.Controls.Add(this.btnDispAll);
 			this.Name = "HistoryViewer";
 			this.ShowInTaskbar = false;
 			this.Text = "過去入力履歴選択";
 			this.Load += new System.EventHandler(this.HistoryViewer_Load);
-			this.Controls.SetChildIndex(this.btnDspAll, 0);
+			this.Controls.SetChildIndex(this.btnDispAll, 0);
 			this.Controls.SetChildIndex(this.msgArea, 0);
 			this.Controls.SetChildIndex(this.btnCancel, 0);
 			this.Controls.SetChildIndex(this.btnOK, 0);
@@ -328,7 +328,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void btnDspAll_Click(object sender, System.EventArgs e)
+		private void btnDispAll_Click(object sender, System.EventArgs e)
 		{
 			if( this.historyList.SelectedItems.Count == 0 )
 			{

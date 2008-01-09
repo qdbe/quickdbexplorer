@@ -29,7 +29,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示するテーブル名称
 		/// </summary>
-		public DBObjectInfo DspObj
+		public DBObjectInfo DispObj
 		{
 			get { return this.dspObj; }
 			set { this.dspObj = value; }
@@ -174,12 +174,12 @@ namespace quickDBExplorer
 
 			this.dspObj = dboInfo;
 
-			string sqlstr;
+			string stSql;
 
-			sqlstr = string.Format(@"sp_helpindex '{0}'", dboInfo.RealObjName );
+			stSql = string.Format(@"sp_helpindex '{0}'", dboInfo.RealObjName );
 
 			DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-			IDbCommand cmd = this.sqlDriver.NewSqlCommand(sqlstr);
+			IDbCommand cmd = this.sqlDriver.NewSqlCommand(stSql);
 			this.sqlDriver.SetSelectCmd(da,cmd);
 
 			DataSet baseidx = new DataSet();

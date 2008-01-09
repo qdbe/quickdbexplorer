@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		
+[assembly: System.Runtime.InteropServices.ComVisible(false)]
 
 //
 // アセンブリのバージョン情報は、以下の 4 つの属性で構成されます :

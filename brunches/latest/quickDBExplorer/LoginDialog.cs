@@ -256,7 +256,7 @@ namespace quickDBExplorer
 
 			this.chkSaveInfo.Checked = true;
 			// 最後に表示したサーバーの情報があれば、それを表示する
-			if( initopt.LastServerKey != "" )
+			if( initopt.LastServerKey.Length != 0 )
 			{
 				// 記憶されたサーバー別の記憶情報
 				ServerData sv = (ServerData)initopt.PerServerData[initopt.LastServerKey];
@@ -294,7 +294,7 @@ namespace quickDBExplorer
 			if( this.chkTrust.Checked == false )
 			{
 				// ユーザー名での接続
-				if( this.txtInstance.Text != "" )
+				if( this.txtInstance.Text.Length != 0 )
 				{
 					// インスタンス名あり
 					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
@@ -311,7 +311,7 @@ namespace quickDBExplorer
 			else
 			{
 				// 信頼関係接続
-				if( this.txtInstance.Text != "" )
+				if( this.txtInstance.Text.Length != 0 )
 				{
 					// インスタンス名あり
 					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
@@ -374,7 +374,7 @@ namespace quickDBExplorer
 				mainForm.LoginUid = this.txtUser.Text;
 				mainForm.LoginPasswd = this.txtPassword.Text;
 				mainForm.IsUseTruse = this.chkTrust.Checked;
-				if( this.txtInstance.Text != "" )
+				if( this.txtInstance.Text.Length != 0 )
 				{
 					mainForm.ServerName = this.txtServerName.Text + "@" + this.txtInstance.Text;
 				}

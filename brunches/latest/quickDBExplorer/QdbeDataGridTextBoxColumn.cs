@@ -215,7 +215,7 @@ namespace quickDBExplorer
 				{
 					dlg.LableName = "ílï“èW";
 					if( dlg.ShowDialog() == DialogResult.OK &&
-						dlg.EditText != "" )
+						dlg.EditText.Length != 0 )
 					{
 						this.TextBox.Text = dlg.EditText;
 						SetColumnValueAtRow(this._sorce, this.editrow, dlg.EditText);

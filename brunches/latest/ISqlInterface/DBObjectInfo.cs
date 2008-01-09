@@ -5,15 +5,16 @@ using	System.Collections;
 namespace quickDBExplorer
 {
 	/// <summary>
+	/// フィールド情報取得時のデータ再取得用イベントハンドラ
+	/// </summary>
+	public delegate void DataGetEventHandler(object sender, System.EventArgs e);
+
+	/// <summary>
 	/// リストに表示する DB オブジェクトの情報を管理する
 	/// </summary>
 	public class	DBObjectInfo
 	{
 
-		/// <summary>
-		/// フィールド情報取得時のデータ再取得用イベントハンドラ
-		/// </summary>
-		public delegate void DataGetEventHandler(object sender);
 		/// <summary>
 		/// フィールド情報取得時に情報がまだ未取得時に発生するイベント
 		/// このイベントハンドラにより、データをセットさせる
@@ -40,7 +41,7 @@ namespace quickDBExplorer
 		/// V:		View
 		/// S:		Synonym
 		/// </summary>
-		public		string DspObjType
+		public		string DisplayObjType
 		{
 			get 
 			{
@@ -229,7 +230,7 @@ namespace quickDBExplorer
 				// まだ読み込んでいない場合は、読み込みを自動的に実施する
 				if( this.fieldInfo == null )
 				{
-					this.DataGet(this);
+					this.DataGet(this, new EventArgs());
 				}
 				return this.fieldInfo; 
 			}
@@ -250,7 +251,7 @@ namespace quickDBExplorer
 				// まだ読み込んでいない場合は、読み込みを自動的に実施する
 				if( this.fieldInfo == null )
 				{
-					this.DataGet(this);
+					this.DataGet(this, new EventArgs());
 				}
 				return this.shemaBaseInfo; 
 			}
@@ -260,20 +261,29 @@ namespace quickDBExplorer
 		/// <summary>
 			/// コンストラクタ
 			/// </summary>
-			/// <param name="otype">オブジェクトの型</param>
+			/// <param name="objectType">オブジェクトの型</param>
 			/// <param name="owner">オブジェクトの所有者名</param>
 			/// <param name="name">オブジェクトの名称</param>
-			/// <param name="cretime">オブジェクトの作成日時</param>
-			/// <param name="synbase">シノニムの場合、その参照先のオブジェクト名</param>
-			/// <param name="synbtype">シノニムの場合、その参照先のオブジェクトの型</param>
-		public DBObjectInfo( string otype, string owner, string name, string cretime, string synbase, string synbtype )
+			/// <param name="createdTime">オブジェクトの作成日時</param>
+			/// <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
+			/// <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
+		public DBObjectInfo( string objectType, string owner, string name, string createdTime, string synonymBase, string synonymBaseType )
 		{
-			this.objType = otype.TrimEnd(null);
+			if( objectType == null )
+			{
+				throw new ArgumentNullException("objectType");
+			}
+			if( synonymBaseType == null )
+			{
+				throw new ArgumentNullException("synonymBaseType");
+			}
+
+			this.objType = objectType.TrimEnd(null);
 			this.owner = owner;
 			this.objname = name;
-			this.createTime = cretime;
-			this.synonymBase = synbase;
-			this.synonymBaseType = synbtype.TrimEnd(null);
+			this.createTime = createdTime;
+			this.synonymBase = synonymBase;
+			this.synonymBaseType = synonymBaseType.TrimEnd(null);
 		}
 
 		/// <summary>
@@ -284,7 +294,7 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format("{0}.{1}", this.owner, this.objname );
+			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}.{1}", this.owner, this.objname );
 		}
 
 		/// <summary>
@@ -296,7 +306,7 @@ namespace quickDBExplorer
 		{
 			string retstr;
 			retstr = this.FormalName;
-			if( alias != "" )
+			if( alias != null && alias.Length != 0 )
 			{
 				retstr += " " + alias;
 			}
@@ -306,11 +316,11 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 正式名称に指定れた文字列を付加したものにして返す
 		/// </summary>
-		/// <param name="addstr">付加する文字列</param>
+		/// <param name="suffix">付加する文字列</param>
 		/// <returns></returns>
-		public string	GetNameAdd(string addstr)
+		public string	GetNameAdd(string suffix)
 		{
-			return string.Format("[{0}].[{1}_{2}]",this.owner, this.objname, addstr);
+			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"[{0}].[{1}_{2}]",this.owner, this.objname, suffix);
 		}
 
 		/// <summary>
@@ -318,7 +328,7 @@ namespace quickDBExplorer
 		/// </summary>
 		public	void	ReloadInfo()
 		{
-			this.DataGet(this);
+			this.DataGet(this, new EventArgs());
 		}
 	}
 }

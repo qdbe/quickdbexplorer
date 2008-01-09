@@ -33,14 +33,14 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Button btnRedisp;
 		private System.Windows.Forms.Button btnReference;
 		private System.Windows.Forms.Button btnSelect;
-		private System.Windows.Forms.Button btnTmpAllDsp;
-		private System.Windows.Forms.CheckBox chkDspData;
-		private System.Windows.Forms.CheckBox chkDspFieldAttr;
+		private System.Windows.Forms.Button btnTmpAllDisp;
+		private System.Windows.Forms.CheckBox chkDispData;
+		private System.Windows.Forms.CheckBox chkDispFieldAttr;
 		private System.Windows.Forms.ContextMenu fldContextMenu;
 		private System.Windows.Forms.DataGrid dbGrid;
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
 		private System.Windows.Forms.GroupBox grpCharaSet;
-		private System.Windows.Forms.GroupBox grpDataDspMode;
+		private System.Windows.Forms.GroupBox grpDataDispMode;
 		private System.Windows.Forms.GroupBox grpOutputMode;
 		private System.Windows.Forms.GroupBox grpSortMode;
 		private System.Windows.Forms.GroupBox grpSysUserMode;
@@ -60,10 +60,10 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem fldmenuCopyNoCRLF;
 		private System.Windows.Forms.MenuItem fldmenuCopyNoCRLFNoComma;
 		private System.Windows.Forms.MenuItem fldmenuCopyNoComma;
-		private System.Windows.Forms.RadioButton rdoDspSysUser;
-		private System.Windows.Forms.RadioButton rdoNotDspSysUser;
-		private System.Windows.Forms.RadioButton rdoDspView;
-		private System.Windows.Forms.RadioButton rdoNotDspView;
+		private System.Windows.Forms.RadioButton rdoDispSysUser;
+		private System.Windows.Forms.RadioButton rdoNotDispSysUser;
+		private System.Windows.Forms.RadioButton rdoDispView;
+		private System.Windows.Forms.RadioButton rdoNotDispView;
 		private System.Windows.Forms.RadioButton rdoClipboard;
 		private System.Windows.Forms.RadioButton rdoOutFile;
 		private System.Windows.Forms.RadioButton rdoOutFolder;
@@ -73,7 +73,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.RadioButton rdoUnicode;
 		private System.Windows.Forms.RadioButton rdoUtf8;
 		private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-		private quickDBExplorerTextBox txtDspCount;
+		private quickDBExplorerTextBox txtDispCount;
 		private quickDBExplorerTextBox txtOutput;
 		private quickDBExplorerTextBox txtSort;
 		private quickDBExplorerTextBox txtWhere;
@@ -360,9 +360,9 @@ namespace quickDBExplorer
 			this.btnInsert = new System.Windows.Forms.Button();
 			this.btnFieldList = new System.Windows.Forms.Button();
 			this.btnCSV = new System.Windows.Forms.Button();
-			this.rdoDspView = new System.Windows.Forms.RadioButton();
+			this.rdoDispView = new System.Windows.Forms.RadioButton();
 			this.grpViewMode = new System.Windows.Forms.GroupBox();
-			this.rdoNotDspView = new System.Windows.Forms.RadioButton();
+			this.rdoNotDispView = new System.Windows.Forms.RadioButton();
 			this.grpSortMode = new System.Windows.Forms.GroupBox();
 			this.rdoSortOwnerTable = new System.Windows.Forms.RadioButton();
 			this.rdoSortTable = new System.Windows.Forms.RadioButton();
@@ -376,13 +376,13 @@ namespace quickDBExplorer
 			this.dbGrid = new System.Windows.Forms.DataGrid();
 			this.dbGridMenu = new System.Windows.Forms.ContextMenu();
 			this.copyDbGridMenu = new System.Windows.Forms.MenuItem();
-			this.chkDspData = new System.Windows.Forms.CheckBox();
-			this.grpDataDspMode = new System.Windows.Forms.GroupBox();
-			this.txtDspCount = new quickDBExplorer.quickDBExplorerTextBox();
+			this.chkDispData = new System.Windows.Forms.CheckBox();
+			this.grpDataDispMode = new System.Windows.Forms.GroupBox();
+			this.txtDispCount = new quickDBExplorer.quickDBExplorerTextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.grpSysUserMode = new System.Windows.Forms.GroupBox();
-			this.rdoNotDspSysUser = new System.Windows.Forms.RadioButton();
-			this.rdoDspSysUser = new System.Windows.Forms.RadioButton();
+			this.rdoNotDispSysUser = new System.Windows.Forms.RadioButton();
+			this.rdoDispSysUser = new System.Windows.Forms.RadioButton();
 			this.grpOutputMode = new System.Windows.Forms.GroupBox();
 			this.btnReference = new System.Windows.Forms.Button();
 			this.txtOutput = new quickDBExplorer.quickDBExplorerTextBox();
@@ -405,7 +405,7 @@ namespace quickDBExplorer
 			this.rdoUtf8 = new System.Windows.Forms.RadioButton();
 			this.rdoSjis = new System.Windows.Forms.RadioButton();
 			this.rdoUnicode = new System.Windows.Forms.RadioButton();
-			this.chkDspFieldAttr = new System.Windows.Forms.CheckBox();
+			this.chkDispFieldAttr = new System.Windows.Forms.CheckBox();
 			this.btnQuerySelect = new System.Windows.Forms.Button();
 			this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
 			this.btnDataUpdate = new System.Windows.Forms.Button();
@@ -415,7 +415,7 @@ namespace quickDBExplorer
 			this.label8 = new System.Windows.Forms.Label();
 			this.btnIndex = new System.Windows.Forms.Button();
 			this.btnRedisp = new System.Windows.Forms.Button();
-			this.btnTmpAllDsp = new System.Windows.Forms.Button();
+			this.btnTmpAllDisp = new System.Windows.Forms.Button();
 			this.btnEtc = new System.Windows.Forms.Button();
 			this.btnWhereZoom = new System.Windows.Forms.Button();
 			this.btnOrderZoom = new System.Windows.Forms.Button();
@@ -430,7 +430,7 @@ namespace quickDBExplorer
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
-			this.grpDataDspMode.SuspendLayout();
+			this.grpDataDispMode.SuspendLayout();
 			this.grpSysUserMode.SuspendLayout();
 			this.grpOutputMode.SuspendLayout();
 			this.grpCharaSet.SuspendLayout();
@@ -527,19 +527,19 @@ namespace quickDBExplorer
 			this.btnCSV.TabIndex = 27;
 			this.btnCSV.Text = "CSV等作成・読込(&K)";
 			// 
-			// rdoDspView
+			// rdoDispView
 			// 
-			this.rdoDspView.Location = new System.Drawing.Point(8, 16);
-			this.rdoDspView.Name = "rdoDspView";
-			this.rdoDspView.Size = new System.Drawing.Size(88, 16);
-			this.rdoDspView.TabIndex = 0;
-			this.rdoDspView.Text = "表示する";
-			this.rdoDspView.CheckedChanged += new System.EventHandler(this.rdoDspView_CheckedChanged);
+			this.rdoDispView.Location = new System.Drawing.Point(8, 16);
+			this.rdoDispView.Name = "rdoDispView";
+			this.rdoDispView.Size = new System.Drawing.Size(88, 16);
+			this.rdoDispView.TabIndex = 0;
+			this.rdoDispView.Text = "表示する";
+			this.rdoDispView.CheckedChanged += new System.EventHandler(this.rdoDispView_CheckedChanged);
 			// 
 			// grpViewMode
 			// 
-			this.grpViewMode.Controls.Add(this.rdoNotDspView);
-			this.grpViewMode.Controls.Add(this.rdoDspView);
+			this.grpViewMode.Controls.Add(this.rdoNotDispView);
+			this.grpViewMode.Controls.Add(this.rdoDispView);
 			this.grpViewMode.Location = new System.Drawing.Point(8, 220);
 			this.grpViewMode.Name = "grpViewMode";
 			this.grpViewMode.Size = new System.Drawing.Size(216, 40);
@@ -547,13 +547,13 @@ namespace quickDBExplorer
 			this.grpViewMode.TabStop = false;
 			this.grpViewMode.Text = "VIEWを一覧に";
 			// 
-			// rdoNotDspView
+			// rdoNotDispView
 			// 
-			this.rdoNotDspView.Location = new System.Drawing.Point(112, 16);
-			this.rdoNotDspView.Name = "rdoNotDspView";
-			this.rdoNotDspView.Size = new System.Drawing.Size(88, 16);
-			this.rdoNotDspView.TabIndex = 1;
-			this.rdoNotDspView.Text = "表示しない";
+			this.rdoNotDispView.Location = new System.Drawing.Point(112, 16);
+			this.rdoNotDispView.Name = "rdoNotDispView";
+			this.rdoNotDispView.Size = new System.Drawing.Size(88, 16);
+			this.rdoNotDispView.TabIndex = 1;
+			this.rdoNotDispView.Text = "表示しない";
 			// 
 			// grpSortMode
 			// 
@@ -690,39 +690,39 @@ namespace quickDBExplorer
 			this.copyDbGridMenu.Text = "クリップボードにコピー";
 			this.copyDbGridMenu.Click += new System.EventHandler(this.copyDbGridMenu_Click);
 			// 
-			// chkDspData
+			// chkDispData
 			// 
-			this.chkDspData.Location = new System.Drawing.Point(24, 584);
-			this.chkDspData.Name = "chkDspData";
-			this.chkDspData.Size = new System.Drawing.Size(52, 24);
-			this.chkDspData.TabIndex = 19;
-			this.chkDspData.Text = "表示";
-			this.chkDspData.CheckedChanged += new System.EventHandler(this.chkDspData_CheckedChanged);
+			this.chkDispData.Location = new System.Drawing.Point(24, 584);
+			this.chkDispData.Name = "chkDispData";
+			this.chkDispData.Size = new System.Drawing.Size(52, 24);
+			this.chkDispData.TabIndex = 19;
+			this.chkDispData.Text = "表示";
+			this.chkDispData.CheckedChanged += new System.EventHandler(this.chkDispData_CheckedChanged);
 			// 
-			// grpDataDspMode
+			// grpDataDispMode
 			// 
-			this.grpDataDspMode.Controls.Add(this.txtDspCount);
-			this.grpDataDspMode.Controls.Add(this.label3);
-			this.grpDataDspMode.Location = new System.Drawing.Point(8, 568);
-			this.grpDataDspMode.Name = "grpDataDspMode";
-			this.grpDataDspMode.Size = new System.Drawing.Size(216, 44);
-			this.grpDataDspMode.TabIndex = 18;
-			this.grpDataDspMode.TabStop = false;
-			this.grpDataDspMode.Text = "データグリッド";
+			this.grpDataDispMode.Controls.Add(this.txtDispCount);
+			this.grpDataDispMode.Controls.Add(this.label3);
+			this.grpDataDispMode.Location = new System.Drawing.Point(8, 568);
+			this.grpDataDispMode.Name = "grpDataDispMode";
+			this.grpDataDispMode.Size = new System.Drawing.Size(216, 44);
+			this.grpDataDispMode.TabIndex = 18;
+			this.grpDataDispMode.TabStop = false;
+			this.grpDataDispMode.Text = "データグリッド";
 			// 
-			// txtDspCount
+			// txtDispCount
 			// 
-			this.txtDspCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.txtDspCount.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-			this.txtDspCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
-			this.txtDspCount.Location = new System.Drawing.Point(132, 16);
-			this.txtDspCount.MaxLength = 300;
-			this.txtDspCount.Name = "txtDspCount";
-			this.txtDspCount.Size = new System.Drawing.Size(72, 19);
-			this.txtDspCount.TabIndex = 1;
-			this.txtDspCount.Text = "1000";
-			this.txtDspCount.Leave += new System.EventHandler(this.txtDspCount_Leave);
-			this.txtDspCount.TextChanged += new System.EventHandler(this.txtDspCount_TextChanged);
+			this.txtDispCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.txtDispCount.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+			this.txtDispCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
+			this.txtDispCount.Location = new System.Drawing.Point(132, 16);
+			this.txtDispCount.MaxLength = 300;
+			this.txtDispCount.Name = "txtDispCount";
+			this.txtDispCount.Size = new System.Drawing.Size(72, 19);
+			this.txtDispCount.TabIndex = 1;
+			this.txtDispCount.Text = "1000";
+			this.txtDispCount.Leave += new System.EventHandler(this.txtDispCount_Leave);
+			this.txtDispCount.TextChanged += new System.EventHandler(this.txtDispCount_TextChanged);
 			// 
 			// label3
 			// 
@@ -735,8 +735,8 @@ namespace quickDBExplorer
 			// 
 			// grpSysUserMode
 			// 
-			this.grpSysUserMode.Controls.Add(this.rdoNotDspSysUser);
-			this.grpSysUserMode.Controls.Add(this.rdoDspSysUser);
+			this.grpSysUserMode.Controls.Add(this.rdoNotDispSysUser);
+			this.grpSysUserMode.Controls.Add(this.rdoDispSysUser);
 			this.grpSysUserMode.Location = new System.Drawing.Point(8, 176);
 			this.grpSysUserMode.Name = "grpSysUserMode";
 			this.grpSysUserMode.Size = new System.Drawing.Size(216, 40);
@@ -744,25 +744,25 @@ namespace quickDBExplorer
 			this.grpSysUserMode.TabStop = false;
 			this.grpSysUserMode.Text = "システムユーザーを";
 			// 
-			// rdoNotDspSysUser
+			// rdoNotDispSysUser
 			// 
-			this.rdoNotDspSysUser.Checked = true;
-			this.rdoNotDspSysUser.Location = new System.Drawing.Point(112, 16);
-			this.rdoNotDspSysUser.Name = "rdoNotDspSysUser";
-			this.rdoNotDspSysUser.Size = new System.Drawing.Size(88, 16);
-			this.rdoNotDspSysUser.TabIndex = 1;
-			this.rdoNotDspSysUser.TabStop = true;
-			this.rdoNotDspSysUser.Text = "表示しない";
-			this.rdoNotDspSysUser.CheckedChanged += new System.EventHandler(this.rdoNotDspSysUser_CheckedChanged);
+			this.rdoNotDispSysUser.Checked = true;
+			this.rdoNotDispSysUser.Location = new System.Drawing.Point(112, 16);
+			this.rdoNotDispSysUser.Name = "rdoNotDispSysUser";
+			this.rdoNotDispSysUser.Size = new System.Drawing.Size(88, 16);
+			this.rdoNotDispSysUser.TabIndex = 1;
+			this.rdoNotDispSysUser.TabStop = true;
+			this.rdoNotDispSysUser.Text = "表示しない";
+			this.rdoNotDispSysUser.CheckedChanged += new System.EventHandler(this.rdoNotDispSysUser_CheckedChanged);
 			// 
-			// rdoDspSysUser
+			// rdoDispSysUser
 			// 
-			this.rdoDspSysUser.Location = new System.Drawing.Point(8, 16);
-			this.rdoDspSysUser.Name = "rdoDspSysUser";
-			this.rdoDspSysUser.Size = new System.Drawing.Size(88, 16);
-			this.rdoDspSysUser.TabIndex = 0;
-			this.rdoDspSysUser.Text = "表示する";
-			this.rdoDspSysUser.CheckedChanged += new System.EventHandler(this.rdoDspSysUser_CheckedChanged);
+			this.rdoDispSysUser.Location = new System.Drawing.Point(8, 16);
+			this.rdoDispSysUser.Name = "rdoDispSysUser";
+			this.rdoDispSysUser.Size = new System.Drawing.Size(88, 16);
+			this.rdoDispSysUser.TabIndex = 0;
+			this.rdoDispSysUser.Text = "表示する";
+			this.rdoDispSysUser.CheckedChanged += new System.EventHandler(this.rdoDispSysUser_CheckedChanged);
 			// 
 			// grpOutputMode
 			// 
@@ -934,14 +934,14 @@ namespace quickDBExplorer
 			this.rdoUnicode.Text = "UNICODE";
 			this.rdoUnicode.CheckedChanged += new System.EventHandler(this.rdoUnicode_CheckedChanged);
 			// 
-			// chkDspFieldAttr
+			// chkDispFieldAttr
 			// 
-			this.chkDspFieldAttr.Location = new System.Drawing.Point(656, 16);
-			this.chkDspFieldAttr.Name = "chkDspFieldAttr";
-			this.chkDspFieldAttr.Size = new System.Drawing.Size(244, 20);
-			this.chkDspFieldAttr.TabIndex = 33;
-			this.chkDspFieldAttr.Text = "フィールド属性を表示(&Z)";
-			this.chkDspFieldAttr.CheckedChanged += new System.EventHandler(this.chkDspFieldAttr_CheckedChanged);
+			this.chkDispFieldAttr.Location = new System.Drawing.Point(656, 16);
+			this.chkDispFieldAttr.Name = "chkDispFieldAttr";
+			this.chkDispFieldAttr.Size = new System.Drawing.Size(244, 20);
+			this.chkDispFieldAttr.TabIndex = 33;
+			this.chkDispFieldAttr.Text = "フィールド属性を表示(&Z)";
+			this.chkDispFieldAttr.CheckedChanged += new System.EventHandler(this.chkDispFieldAttr_CheckedChanged);
 			// 
 			// btnQuerySelect
 			// 
@@ -1013,14 +1013,14 @@ namespace quickDBExplorer
 			this.btnRedisp.Text = "グリッド再描画(&L)";
 			this.btnRedisp.Click += new System.EventHandler(this.Redisp_Click);
 			// 
-			// btnTmpAllDsp
+			// btnTmpAllDisp
 			// 
-			this.btnTmpAllDsp.Location = new System.Drawing.Point(752, 360);
-			this.btnTmpAllDsp.Name = "btnTmpAllDsp";
-			this.btnTmpAllDsp.Size = new System.Drawing.Size(156, 20);
-			this.btnTmpAllDsp.TabIndex = 40;
-			this.btnTmpAllDsp.Text = "一時的に全データを表示(&A)";
-			this.btnTmpAllDsp.Click += new System.EventHandler(this.btnTmpAllDsp_Click);
+			this.btnTmpAllDisp.Location = new System.Drawing.Point(752, 360);
+			this.btnTmpAllDisp.Name = "btnTmpAllDisp";
+			this.btnTmpAllDisp.Size = new System.Drawing.Size(156, 20);
+			this.btnTmpAllDisp.TabIndex = 40;
+			this.btnTmpAllDisp.Text = "一時的に全データを表示(&A)";
+			this.btnTmpAllDisp.Click += new System.EventHandler(this.btnTmpAllDisp_Click);
 			// 
 			// btnEtc
 			// 
@@ -1112,7 +1112,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label9);
 			this.Controls.Add(this.btnWhereZoom);
 			this.Controls.Add(this.btnEtc);
-			this.Controls.Add(this.btnTmpAllDsp);
+			this.Controls.Add(this.btnTmpAllDisp);
 			this.Controls.Add(this.btnRedisp);
 			this.Controls.Add(this.btnIndex);
 			this.Controls.Add(this.label8);
@@ -1121,12 +1121,12 @@ namespace quickDBExplorer
 			this.Controls.Add(this.btnDataEdit);
 			this.Controls.Add(this.btnDataUpdate);
 			this.Controls.Add(this.btnQuerySelect);
-			this.Controls.Add(this.chkDspFieldAttr);
+			this.Controls.Add(this.chkDispFieldAttr);
 			this.Controls.Add(this.grpCharaSet);
 			this.Controls.Add(this.fieldListbox);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.grpOutputMode);
-			this.Controls.Add(this.chkDspData);
+			this.Controls.Add(this.chkDispData);
 			this.Controls.Add(this.dbGrid);
 			this.Controls.Add(this.btnDDL);
 			this.Controls.Add(this.ownerListbox);
@@ -1142,7 +1142,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.btnInsert);
 			this.Controls.Add(this.objectList);
 			this.Controls.Add(this.dbList);
-			this.Controls.Add(this.grpDataDspMode);
+			this.Controls.Add(this.grpDataDispMode);
 			this.Controls.Add(this.grpSysUserMode);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.btnOrderZoom);
@@ -1151,7 +1151,7 @@ namespace quickDBExplorer
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "MainForm";
 			this.ShowInTaskbar = false;
-			this.Text = "DataBase選択";
+			this.Text = "Database選択";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
@@ -1161,7 +1161,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
 			this.Controls.SetChildIndex(this.label5, 0);
 			this.Controls.SetChildIndex(this.grpSysUserMode, 0);
-			this.Controls.SetChildIndex(this.grpDataDspMode, 0);
+			this.Controls.SetChildIndex(this.grpDataDispMode, 0);
 			this.Controls.SetChildIndex(this.dbList, 0);
 			this.Controls.SetChildIndex(this.objectList, 0);
 			this.Controls.SetChildIndex(this.btnInsert, 0);
@@ -1177,12 +1177,12 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.ownerListbox, 0);
 			this.Controls.SetChildIndex(this.btnDDL, 0);
 			this.Controls.SetChildIndex(this.dbGrid, 0);
-			this.Controls.SetChildIndex(this.chkDspData, 0);
+			this.Controls.SetChildIndex(this.chkDispData, 0);
 			this.Controls.SetChildIndex(this.grpOutputMode, 0);
 			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.fieldListbox, 0);
 			this.Controls.SetChildIndex(this.grpCharaSet, 0);
-			this.Controls.SetChildIndex(this.chkDspFieldAttr, 0);
+			this.Controls.SetChildIndex(this.chkDispFieldAttr, 0);
 			this.Controls.SetChildIndex(this.btnQuerySelect, 0);
 			this.Controls.SetChildIndex(this.btnDataUpdate, 0);
 			this.Controls.SetChildIndex(this.btnDataEdit, 0);
@@ -1191,7 +1191,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.label8, 0);
 			this.Controls.SetChildIndex(this.btnIndex, 0);
 			this.Controls.SetChildIndex(this.btnRedisp, 0);
-			this.Controls.SetChildIndex(this.btnTmpAllDsp, 0);
+			this.Controls.SetChildIndex(this.btnTmpAllDisp, 0);
 			this.Controls.SetChildIndex(this.btnEtc, 0);
 			this.Controls.SetChildIndex(this.btnWhereZoom, 0);
 			this.Controls.SetChildIndex(this.label9, 0);
@@ -1202,7 +1202,7 @@ namespace quickDBExplorer
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
-			this.grpDataDspMode.ResumeLayout(false);
+			this.grpDataDispMode.ResumeLayout(false);
 			this.grpSysUserMode.ResumeLayout(false);
 			this.grpOutputMode.ResumeLayout(false);
 			this.grpCharaSet.ResumeLayout(false);
@@ -1212,7 +1212,7 @@ namespace quickDBExplorer
 		#endregion
 
 		#region ボタンメニュー関連処理
-		private void DspButtonMenu(object sender, System.EventArgs e, MenuItem[] list)
+		private void DispButtonMenu(object sender, System.EventArgs e, MenuItem[] list)
 		{
 			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
 			MenuItem[] cplist = new MenuItem[list.Length];
@@ -1277,10 +1277,10 @@ namespace quickDBExplorer
 			menuAr.Add(new qdbeMenuItem(true,true,this.btnEtc.Name,"-", null ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"依存関係出力", new EventHandler(this.DependOutPut) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"データ件数出力", new EventHandler(this.RecordCountOutPut) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"データ件数表示", new EventHandler(this.menuRecordCountDsp_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"データ件数表示", new EventHandler(this.menuRecordCountDisp_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"統計情報更新", new EventHandler(this.menuUpdateStaticsMain_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"各種コマンド実行", new EventHandler(this.menuDoQuery_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"オブジェクト情報表示", new EventHandler(this.DspObjectInfo) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"オブジェクト情報表示", new EventHandler(this.DispObjectInfo) ) );
 
 			ContextMenu objMenu = new System.Windows.Forms.ContextMenu();
 			int		idx = 0;
@@ -1563,7 +1563,7 @@ namespace quickDBExplorer
 				// ラベル・ボタンの設定
 				this.label5.Text = this.sqlDriver.GetOwnerLabel1();
 				this.rdoSortOwnerTable.Text = this.sqlDriver.GetOwnerLabel2();
-				//this.ColObjName.Text = this.sqlDriver.GetTbListColName();
+				//this.ColObjName.Text = this.sqlDriver.GetTableListColumnName();
 
 				this.Text = servername;
 
@@ -1586,13 +1586,13 @@ namespace quickDBExplorer
 			}
 			if( svdata.IsShowsysuser == 0 )
 			{
-				this.rdoNotDspSysUser.Checked = true;
-				this.rdoDspSysUser.Checked = false;
+				this.rdoNotDispSysUser.Checked = true;
+				this.rdoDispSysUser.Checked = false;
 			}
 			else
 			{
-				this.rdoNotDspSysUser.Checked = false;
-				this.rdoDspSysUser.Checked = true;
+				this.rdoNotDispSysUser.Checked = false;
+				this.rdoDispSysUser.Checked = true;
 			}
 			if( svdata.SortKey == 0 )
 			{
@@ -1614,13 +1614,13 @@ namespace quickDBExplorer
 			}
 			if( svdata.ShowView == 0 )
 			{
-				this.rdoDspView.Checked = false;
-				this.rdoNotDspView.Checked = true;
+				this.rdoDispView.Checked = false;
+				this.rdoNotDispView.Checked = true;
 			}
 			else
 			{
-				this.rdoDspView.Checked = true;
-				this.rdoNotDspView.Checked = false;
+				this.rdoDispView.Checked = true;
+				this.rdoNotDispView.Checked = false;
 			}
 
 			// 前回の値を元にDB先を変更する
@@ -1650,7 +1650,7 @@ namespace quickDBExplorer
 
 		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			if( this.rdoNotDspSysUser.Checked == true )
+			if( this.rdoNotDispSysUser.Checked == true )
 			{
 				svdata.IsShowsysuser = 0;
 			}
@@ -1667,7 +1667,7 @@ namespace quickDBExplorer
 			{
 				svdata.SortKey = 1;
 			}
-			if( this.rdoDspView.Checked == false) 
+			if( this.rdoDispView.Checked == false) 
 			{
 				svdata.ShowView = 0;
 			}
@@ -1689,7 +1689,7 @@ namespace quickDBExplorer
 				svdata.OutDest[svdata.LastDb] = 2;
 			}
 			svdata.OutFile[svdata.LastDb] = this.txtOutput.Text;
-			if( this.chkDspData.CheckState == CheckState.Checked )
+			if( this.chkDispData.CheckState == CheckState.Checked )
 			{
 				svdata.ShowGrid[svdata.LastDb] = 1;
 			}
@@ -1709,7 +1709,7 @@ namespace quickDBExplorer
 			{
 				svdata.TxtEncode[svdata.LastDb] = 2;
 			}
-			svdata.GridDspCnt[svdata.LastDb] = this.txtDspCount.Text;
+			svdata.GridDispCnt[svdata.LastDb] = this.txtDispCount.Text;
 
 		}
 
@@ -1736,7 +1736,7 @@ namespace quickDBExplorer
 			
 
 			// 対象となるテーブル一覧の表示
-			DspObjectList();
+			DispObjectList();
 			// 対象となる owner/role/schema の表示
 			DispListOwner();
 			if( svdata.Dbopt[svdata.LastDb] != null )
@@ -1813,32 +1813,32 @@ namespace quickDBExplorer
 			{
 				if( (int)svdata.ShowGrid[svdata.LastDb] == 0 )
 				{
-					this.chkDspData.CheckState = CheckState.Unchecked;
+					this.chkDispData.CheckState = CheckState.Unchecked;
 				}
 				else
 				{
-					this.chkDspData.CheckState = CheckState.Checked;
+					this.chkDispData.CheckState = CheckState.Checked;
 				}	
 			}
 			else
 			{
-				this.chkDspData.CheckState = CheckState.Checked;
+				this.chkDispData.CheckState = CheckState.Checked;
 			}
 
-			if( svdata.GridDspCnt[svdata.LastDb] != null )
+			if( svdata.GridDispCnt[svdata.LastDb] != null )
 			{
-				if( (string)svdata.GridDspCnt[svdata.LastDb] != "" )
+				if( (string)svdata.GridDispCnt[svdata.LastDb] != "" )
 				{
-					this.txtDspCount.Text = (string)svdata.GridDspCnt[svdata.LastDb];
+					this.txtDispCount.Text = (string)svdata.GridDispCnt[svdata.LastDb];
 				}
 				else
 				{
-					this.txtDspCount.Text = "";
+					this.txtDispCount.Text = "";
 				}
 			}
 			else
 			{
-				this.txtDspCount.Text = "1000";
+				this.txtDispCount.Text = "1000";
 			}
 
 			if( svdata.TxtEncode[svdata.LastDb] != null )
@@ -1866,7 +1866,7 @@ namespace quickDBExplorer
 
 		private void objectList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if( this.chkDspData.CheckState == CheckState.Checked &&
+			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合
@@ -1899,14 +1899,14 @@ namespace quickDBExplorer
 				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,ref this.sortHistory);
 				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtAlias.Text,ref this.aliasHistory);
 				// データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectObject(0));
+				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
 				qdbeUtil.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
 				qdbeUtil.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
 				qdbeUtil.SetNewHistory("",this.txtAlias.Text,ref this.aliasHistory);
-				DspData(null);
+				DispData(null);
 			}
 			if( this.objectList.SelectedItems.Count == 1 )
 			{
@@ -1930,7 +1930,7 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void rdoDspView_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoDispView_CheckedChanged(object sender, System.EventArgs e)
 		{
 			// テーブルの選択履歴をクリア
 			this.selectedTables.Clear();
@@ -1939,7 +1939,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			DspObjectList();
+			DispObjectList();
 		}
 
 		private void rdoSortTable_CheckedChanged(object sender, System.EventArgs e)
@@ -1959,22 +1959,22 @@ namespace quickDBExplorer
 			}
 			this.objectList.Sort();
 				 
-			//DspObjectList();
+			//DispObjectList();
 		}
 
-		private void chkDspData_CheckedChanged(object sender, System.EventArgs e)
+		private void chkDispData_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.chkDspData.CheckState == CheckState.Checked &&
+			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectObject(0));
+				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				DspData(null);
+				DispData(null);
 			}
-			if( this.chkDspData.CheckState == CheckState.Checked )
+			if( this.chkDispData.CheckState == CheckState.Checked )
 			{
 				svdata.ShowGrid[svdata.LastDb] = 1;
 			}
@@ -1984,34 +1984,34 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void txtDspCount_Leave(object sender, System.EventArgs e)
+		private void txtDispCount_Leave(object sender, System.EventArgs e)
 		{
-			if( this.chkDspData.CheckState == CheckState.Checked &&
+			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectObject(0));
+				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				DspData(null);
+				DispData(null);
 			}
 		}
 
 		private void txtWhere_Leave(object sender, System.EventArgs e)
 		{
 			string tbname = "";
-			if( this.chkDspData.CheckState == CheckState.Checked &&
+			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
 				tbname = this.objectList.GetSelectObject(0).FormalName;
-				DspData(this.objectList.GetSelectObject(0));
+				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
 				tbname = "";
-				DspData(null);
+				DispData(null);
 			}
 
 			// 履歴に現在の値を記録 TODO
@@ -2022,24 +2022,24 @@ namespace quickDBExplorer
 		private void txtSort_Leave(object sender, System.EventArgs e)
 		{
 			string tbname = "";
-			if( this.chkDspData.CheckState == CheckState.Checked &&
+			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
 				tbname = this.objectList.GetSelectObject(0).FormalName;
-				DspData(this.objectList.GetSelectObject(0));
+				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
 				tbname = "";
-				DspData(null);
+				DispData(null);
 			}
 
 			// 履歴に現在の値を記録 TODO
 			qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
 		}
 
-		private void rdoDspSysUser_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoDispSysUser_CheckedChanged(object sender, System.EventArgs e)
 		{
 			// テーブルの選択履歴をクリア
 			this.selectedTables.Clear();
@@ -2048,7 +2048,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			DspObjectList();
+			DispObjectList();
 			DispListOwner();
 		}
 
@@ -2084,10 +2084,10 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			DspObjectList();
+			DispObjectList();
 		}
 
-		private void rdoNotDspSysUser_CheckedChanged(object sender, System.EventArgs e)
+		private void rdoNotDispSysUser_CheckedChanged(object sender, System.EventArgs e)
 		{
 			// テーブルの選択履歴をクリア
 			this.selectedTables.Clear();
@@ -2096,7 +2096,7 @@ namespace quickDBExplorer
 			this.cmbHistory.Refresh();
 			
 
-			DspObjectList();
+			DispObjectList();
 			DispListOwner();
 		}
 
@@ -2211,12 +2211,12 @@ namespace quickDBExplorer
 		}
 
 
-		private void txtDspCount_TextChanged(object sender, System.EventArgs e)
+		private void txtDispCount_TextChanged(object sender, System.EventArgs e)
 		{
-			svdata.GridDspCnt[svdata.LastDb] = this.txtDspCount.Text;
+			svdata.GridDispCnt[svdata.LastDb] = this.txtDispCount.Text;
 		}
 
-		private void chkDspFieldAttr_CheckedChanged(object sender, System.EventArgs e)
+		private void chkDispFieldAttr_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if( this.objectList.SelectedItems.Count == 1 )
 			{
@@ -2237,7 +2237,7 @@ namespace quickDBExplorer
 
 				this.dbGrid.EndEdit(this.dbGrid.TableStyles[0].GridColumnStyles[this.dbGrid.CurrentCell.ColumnNumber],this.dbGrid.CurrentCell.RowNumber,false);
 
-				if( this.chkDspData.CheckState == CheckState.Checked &&
+				if( this.chkDispData.CheckState == CheckState.Checked &&
 					this.objectList.SelectedItems.Count == 1 &&
 					this.dspdt.GetChanges() != null &&
 					this.dspdt.GetChanges().Tables[0].Rows.Count > 0 &&
@@ -2246,12 +2246,12 @@ namespace quickDBExplorer
 				{
 					// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
 					DBObjectInfo	dboInfo = this.objectList.GetSelectObject(0);
-					string sqlstr;
-					sqlstr = "select ";
+					string stSql;
+					stSql = "select ";
 					int	maxlines;
-					if( this.txtDspCount.Text != "" )
+					if( this.txtDispCount.Text != "" )
 					{
-						maxlines = int.Parse(this.txtDspCount.Text);
+						maxlines = int.Parse(this.txtDispCount.Text);
 					}
 					else
 					{
@@ -2259,21 +2259,21 @@ namespace quickDBExplorer
 					}
 					if( maxlines != 0 )
 					{
-						sqlstr += " TOP " + this.txtDspCount.Text;
+						stSql += " TOP " + this.txtDispCount.Text;
 					}
 
-					sqlstr += string.Format(" * from {0}",dboInfo.GetAliasName(this.getAlias()));
+					stSql += string.Format(" * from {0}",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
-						sqlstr += " where " + this.txtWhere.Text.Trim();
+						stSql += " where " + this.txtWhere.Text.Trim();
 					}
 					if( this.txtSort.Text.Trim() != "" )
 					{
-						sqlstr += " order by " + this.txtSort.Text.Trim();
+						stSql += " order by " + this.txtSort.Text.Trim();
 					}
 
 					DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-					IDbCommand cmd = this.sqlDriver.NewSqlCommand(sqlstr);
+					IDbCommand cmd = this.sqlDriver.NewSqlCommand(stSql);
 					this.sqlDriver.SetSelectCmd(da,cmd);
 					
 										
@@ -2400,33 +2400,33 @@ namespace quickDBExplorer
 		private void Redisp_Click(object sender, System.EventArgs e)
 		{
 			//再描画ボタン押下
-			if( this.chkDspData.CheckState == CheckState.Checked &&
+			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectObject(0));
+				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				DspData(null);
+				DispData(null);
 			}
 		}
 
-		private void btnTmpAllDsp_Click(object sender, System.EventArgs e)
+		private void btnTmpAllDisp_Click(object sender, System.EventArgs e)
 		{
 			//再描画ボタン押下
-			if( this.chkDspData.CheckState == CheckState.Checked &&
+			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				DspData(this.objectList.GetSelectObject(0),true);
-				this.btnTmpAllDsp.ForeColor = Color.WhiteSmoke;
-				this.btnTmpAllDsp.BackColor = Color.Navy;
-				this.btnTmpAllDsp.Enabled = true;
+				DispData(this.objectList.GetSelectObject(0),true);
+				this.btnTmpAllDisp.ForeColor = Color.WhiteSmoke;
+				this.btnTmpAllDisp.BackColor = Color.Navy;
+				this.btnTmpAllDisp.Enabled = true;
 			}
 			else
 			{
-				DspData(null);
+				DispData(null);
 			}
 		}
 
@@ -2445,7 +2445,7 @@ namespace quickDBExplorer
 		{
 			this.txtWhere.Text = ((ZoomDialog)sender).EditText;
 
-			DspData(this.objectList.GetSelectObject(0));
+			DispData(this.objectList.GetSelectObject(0));
 		}
 
 		private void btnOrderZoom_Click(object sender, System.EventArgs e)
@@ -2461,20 +2461,20 @@ namespace quickDBExplorer
 		private void dlgSortZoom_Click(object sender, System.EventArgs e)
 		{
 			this.txtSort.Text = ((ZoomDialog)sender).EditText;
-			DspData(this.objectList.GetSelectObject(0));
+			DispData(this.objectList.GetSelectObject(0));
 		}
 
 		private void dlgAliasZoom_Click(object sender, System.EventArgs e)
 		{
 			this.txtAlias.Text = ((ZoomDialog)sender).EditText;
 
-			DspData(this.objectList.GetSelectObject(0));
+			DispData(this.objectList.GetSelectObject(0));
 		}
 
 		private void txtAlias_Leave(object sender, System.EventArgs e)
 		{
 			string tbname = "";
-			if( this.chkDspData.CheckState == CheckState.Checked &&
+			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
@@ -2528,14 +2528,14 @@ namespace quickDBExplorer
 					((TextBox)sender).Text = hv.RetString;
 					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.aliasHistory);
 
-					DspData(dboInfo);
+					DispData(dboInfo);
 				}
 			}
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
 				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),((TextBox)sender).Text,ref this.aliasHistory);
-				DspData(this.objectList.GetSelectObject(0));
+				DispData(this.objectList.GetSelectObject(0));
 			}
 		}
 
@@ -2611,7 +2611,7 @@ namespace quickDBExplorer
 					this.txtWhere.Text = hv.RetString;
 					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.whereHistory);
 
-					DspData(this.objectList.GetSelectObject(0));
+					DispData(this.objectList.GetSelectObject(0));
 				}
 			}
 			if( e.KeyCode == Keys.Return ||
@@ -2619,7 +2619,7 @@ namespace quickDBExplorer
 			{
 				// Enter(Return) では、入力を確定させて、グリッド表示に反映させる
 				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtWhere.Text,ref this.whereHistory);
-				DspData(this.objectList.GetSelectObject(0));
+				DispData(this.objectList.GetSelectObject(0));
 			}
 		
 		}
@@ -2658,14 +2658,14 @@ namespace quickDBExplorer
 					this.txtSort.Text = hv.RetString;
 					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.sortHistory);
 
-					DspData(this.objectList.GetSelectObject(0));
+					DispData(this.objectList.GetSelectObject(0));
 				}
 			}
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
 				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,ref this.sortHistory);
-				DspData(this.objectList.GetSelectObject(0));
+				DispData(this.objectList.GetSelectObject(0));
 			}
 		
 		}
@@ -2828,7 +2828,7 @@ namespace quickDBExplorer
 				indexdlg = new IndexViewDialog();
 
 				indexdlg.SqlDriver = this.sqlDriver;
-				indexdlg.DspObj = this.objectList.GetSelectObject(0);
+				indexdlg.DispObj = this.objectList.GetSelectObject(0);
 
 				indexdlg.Show();
 			}
@@ -2912,12 +2912,12 @@ namespace quickDBExplorer
 					// 依存関係の情報を取得し、
 
 					// get id 
-					string sqlstr;
+					string stSql;
 
-					sqlstr = string.Format("sp_depends N'{0}'", dboInfo.FormalName );
+					stSql = string.Format("sp_depends N'{0}'", dboInfo.FormalName );
 
 					DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-					IDbCommand cmd = this.sqlDriver.NewSqlCommand(sqlstr);
+					IDbCommand cmd = this.sqlDriver.NewSqlCommand(stSql);
 					this.sqlDriver.SetSelectCmd(da,cmd);
 
 					DataSet ds = new DataSet();
@@ -3035,14 +3035,14 @@ namespace quickDBExplorer
 						wr.WriteLine("テーブル名,データ件数");
 					}
 					trow = 0;
-					string sqlstr;
-					sqlstr = string.Format("select  count(1) from {0} ",dboInfo.GetAliasName(this.getAlias()));
+					string stSql;
+					stSql = string.Format("select  count(1) from {0} ",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
-						sqlstr += " where " + this.txtWhere.Text.Trim();
+						stSql += " where " + this.txtWhere.Text.Trim();
 					}
 
-					cm.CommandText = sqlstr;
+					cm.CommandText = stSql;
 
 					dr = cm.ExecuteReader();
 
@@ -3142,7 +3142,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallISQLW(object sender, System.EventArgs e)
 		{
-			this.sqlDriver.CallIsql(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
+			this.sqlDriver.CallISQL(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
 		}
 
 		/// <summary>
@@ -3162,10 +3162,10 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallEPM(object sender, System.EventArgs e)
 		{
-			this.sqlDriver.CallEpm(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
+			this.sqlDriver.CallEPM(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
 		}
 
-		private void menuRecordCountDsp_Click(object sender, System.EventArgs e)
+		private void menuRecordCountDisp_Click(object sender, System.EventArgs e)
 		{
 			IDataReader dr = null;
 			IDbCommand	cm = this.sqlDriver.NewSqlCommand();
@@ -3204,14 +3204,14 @@ namespace quickDBExplorer
 					dboInfo = this.objectList.GetSelectObject(ti);
 
 					trow = 0;
-					string sqlstr;
-					sqlstr = string.Format("select  count(1) from {0} ",dboInfo.GetAliasName(this.getAlias()));
+					string stSql;
+					stSql = string.Format("select  count(1) from {0} ",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
-						sqlstr += " where " + this.txtWhere.Text.Trim();
+						stSql += " where " + this.txtWhere.Text.Trim();
 					}
 
-					cm.CommandText = sqlstr;
+					cm.CommandText = stSql;
 
 					dr = cm.ExecuteReader();
 
@@ -3384,13 +3384,13 @@ namespace quickDBExplorer
 					this.dbGrid.ReadOnly = true;
 					this.btnDataEdit.BackColor = this.btnBackColor;
 					this.btnDataEdit.ForeColor = this.btnForeColor;
-					this.btnTmpAllDsp.BackColor = this.btnBackColor;
-					this.btnTmpAllDsp.ForeColor = this.btnForeColor;
+					this.btnTmpAllDisp.BackColor = this.btnBackColor;
+					this.btnTmpAllDisp.ForeColor = this.btnForeColor;
 					this.btnDataEdit.Text = "データ編集(&T)";
 					this.btnDataUpdate.Enabled = true;
 					this.btnDataEdit.Enabled = true;
 					this.btnGridFormat.Enabled = true;
-					this.chkDspData.Checked = true;
+					this.chkDispData.Checked = true;
 					this.dbGrid.AllowSorting = true;
 					this.toolTip3.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
 					this.dbGrid.SetDataBinding(dspdt,"aaaa");
@@ -3468,7 +3468,7 @@ namespace quickDBExplorer
 				{
 					dboInfo = this.objectList.GetSelectObject(ti);
 
-					string sqlstr;
+					string stSql;
 
 
 					if( dboInfo.CanStatistics ==  false )
@@ -3476,8 +3476,8 @@ namespace quickDBExplorer
 						continue;
 					}
 
-					sqlstr = "update STATISTICS " + dboInfo.RealObjName;
-					cm.CommandText = sqlstr;
+					stSql = "update STATISTICS " + dboInfo.RealObjName;
+					cm.CommandText = stSql;
 					cm.ExecuteNonQuery();
 				}
 				MessageBox.Show("処理を完了しました");
@@ -3569,7 +3569,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void DspObjectInfo(object sender, System.EventArgs e)
+		private void DispObjectInfo(object sender, System.EventArgs e)
 		{
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -3743,7 +3743,7 @@ namespace quickDBExplorer
 				}
 
 				bool	dodsp;
-				if( this.chkDspFieldAttr.Checked == true )
+				if( this.chkDispFieldAttr.Checked == true )
 				{
 					dodsp = true;
 				}
@@ -3835,7 +3835,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// テーブル一覧の表示
 		/// </summary>
-		private void DspObjectList()
+		private void DispObjectList()
 		{
 			IDataReader dr = null;
 			IDbCommand cm = this.sqlDriver.NewSqlCommand();
@@ -3848,7 +3848,7 @@ namespace quickDBExplorer
 				{
 					return ;
 				}
-				this.sqlDriver.SetDataBase((String)this.dbList.SelectedItem);
+				this.sqlDriver.SetDatabase((String)this.dbList.SelectedItem);
 				
 				// listbox2 にテーブル一覧を表示
 
@@ -3880,9 +3880,9 @@ namespace quickDBExplorer
 						ownerlist += "'" + owname + "'";
 					}
 				}
-				cm.CommandText = this.sqlDriver.GetDspObjList(
+				cm.CommandText = this.sqlDriver.GetDisplayObjList(
 					true,
-					this.rdoDspView.Checked,
+					this.rdoDispView.Checked,
 					true,
 					false,
 					false,
@@ -3939,7 +3939,7 @@ namespace quickDBExplorer
 
 			try 
 			{
-				cm.CommandText = this.sqlDriver.GetOwnerList(rdoDspSysUser.Checked);
+				cm.CommandText = this.sqlDriver.GetOwnerList(rdoDispSysUser.Checked);
 
 				dr = cm.ExecuteReader();
 
@@ -4042,17 +4042,17 @@ namespace quickDBExplorer
 					}
 
 					// get id 
-					string sqlstr;
-					sqlstr = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()));
+					string stSql;
+					stSql = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
-						sqlstr += " where " + this.txtWhere.Text.Trim();
+						stSql += " where " + this.txtWhere.Text.Trim();
 					}
 					if( this.txtSort.Text.Trim() != "" )
 					{
-						sqlstr += " order by " + this.txtSort.Text.Trim();
+						stSql += " order by " + this.txtSort.Text.Trim();
 					}
-					cm.CommandText = sqlstr;
+					cm.CommandText = stSql;
 
 					dr = cm.ExecuteReader();
 
@@ -4370,17 +4370,17 @@ namespace quickDBExplorer
 						wr = sw;
 					}
 					trow = 0;
-					string sqlstr;
-					sqlstr = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()));
+					string stSql;
+					stSql = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
-						sqlstr += " where " + this.txtWhere.Text.Trim();
+						stSql += " where " + this.txtWhere.Text.Trim();
 					}
 					if( this.txtSort.Text.Trim() != "" )
 					{
-						sqlstr += " order by " + this.txtSort.Text.Trim();
+						stSql += " order by " + this.txtSort.Text.Trim();
 					}
-					cm.CommandText = sqlstr;
+					cm.CommandText = stSql;
 
 					dr = cm.ExecuteReader();
 
@@ -4500,7 +4500,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 現在の画面上のDB、Owner から、テーブル一覧を表示する
 		/// </summary>
-		private void CreDDL(bool bDrop, bool usekakko)
+		private void CreDDL(bool bDrop, bool useParentheses)
 		{	
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -4567,7 +4567,7 @@ namespace quickDBExplorer
 						wr.Write(this.sqlDriver.GetDDLDropStr(dboInfo));
 					}
 
-					wr.Write(this.sqlDriver.GetDDLCreateStr(dboInfo, usekakko));
+					wr.Write(this.sqlDriver.GetDdlCreateString(dboInfo, useParentheses));
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
@@ -4597,19 +4597,19 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 指定されたテーブルの情報を表示する
 		/// </summary>
-		protected void DspData(DBObjectInfo dboInfo)
+		protected void DispData(DBObjectInfo dboInfo)
 		{
-			DspData(dboInfo,false);
+			DispData(dboInfo,false);
 		}
 		
 		/// <summary>
 		/// 指定されたテーブルの情報を表示する
 		/// </summary>
 		/// <param name="dboInfo">表示するオブジェクトの情報</param>
-		/// <param name="isAllDsp">全て表示するか否かの指定
+		/// <param name="isAllDisp">全て表示するか否かの指定
 		/// true: 全て表示する
 		/// false; 全て表示しない</param>
-		protected void DspData(DBObjectInfo dboInfo, bool isAllDsp)
+		protected void DispData(DBObjectInfo dboInfo, bool isAllDisp)
 		{
 			try
 			{
@@ -4639,7 +4639,7 @@ namespace quickDBExplorer
 				}
 
 				ProcCondition procCond = GetProcCondition(dboInfo.FormalName);
-				procCond.IsAllDisp = isAllDsp;
+				procCond.IsAllDisp = isAllDisp;
 
 				int	maxlines;
 				int	maxGetLines;
@@ -4657,34 +4657,34 @@ namespace quickDBExplorer
 				}
 
 				// データの内容を取得し、表示する
-				string sqlstr;
-				string sqlstrDisp;
-				sqlstr = "select ";
-				sqlstrDisp = "select ";
+				string stSql;
+				string stSqlDisp;
+				stSql = "select ";
+				stSqlDisp = "select ";
 
 				maxGetLines = 0;
 				if( maxlines != 0 )
 				{
 					maxGetLines = maxlines + 1;
-					sqlstr += " TOP " + maxGetLines.ToString();
-					sqlstrDisp += " TOP " + maxlines.ToString();
+					stSql += " TOP " + maxGetLines.ToString();
+					stSqlDisp += " TOP " + maxlines.ToString();
 				}
 
-				sqlstr += string.Format(" * from {0}", dboInfo.GetAliasName(this.getAlias()));
-				sqlstrDisp += string.Format(" * from {0}",dboInfo.GetAliasName(this.getAlias()));
+				stSql += string.Format(" * from {0}", dboInfo.GetAliasName(this.getAlias()));
+				stSqlDisp += string.Format(" * from {0}",dboInfo.GetAliasName(this.getAlias()));
 				if( procCond.WhereStr.Trim() != "" )
 				{
-					sqlstr += " where " + procCond.WhereStr.Trim();
-					sqlstrDisp += " where " + procCond.WhereStr.Trim();
+					stSql += " where " + procCond.WhereStr.Trim();
+					stSqlDisp += " where " + procCond.WhereStr.Trim();
 				}
 				if( procCond.OrderStr.Trim() != "" )
 				{
-					sqlstr += " order by " + procCond.OrderStr.Trim();
-					sqlstrDisp += " order by " + procCond.OrderStr.Trim();
+					stSql += " order by " + procCond.OrderStr.Trim();
+					stSqlDisp += " order by " + procCond.OrderStr.Trim();
 				}
 
 				DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-				IDbCommand cm = this.sqlDriver.NewSqlCommand(sqlstr);
+				IDbCommand cm = this.sqlDriver.NewSqlCommand(stSql);
 				this.sqlDriver.SetSelectCmd(da,cm);
 
 				dspdt = new DataSet();
@@ -4696,20 +4696,20 @@ namespace quickDBExplorer
 				{
 					if( dspdt.Tables["aaaa"].Rows.Count == maxGetLines )
 					{
-						this.btnTmpAllDsp.Enabled = true;
+						this.btnTmpAllDisp.Enabled = true;
 						dspdt.Tables["aaaa"].Rows[maxGetLines-1].Delete();
 						dspdt.Tables["aaaa"].AcceptChanges();
 					}
 					else
 					{
 						// 取得したデータが表示件数に満たない為、一時的に全データを表示(&A) ボタンは無効でよい
-						this.btnTmpAllDsp.Enabled = false;
+						this.btnTmpAllDisp.Enabled = false;
 					}
 				}
 				else
 				{
 					// 全件表示する為、一時的に全データを表示(&A) ボタンは無効でよい
-					this.btnTmpAllDsp.Enabled = false;
+					this.btnTmpAllDisp.Enabled = false;
 				}
 
 				//新しいDataGridTableStyleの作成
@@ -4738,15 +4738,15 @@ namespace quickDBExplorer
 
 
 				this.dbGrid.AllowSorting = true;
-				this.toolTip3.SetToolTip(this.dbGrid,sqlstrDisp);
+				this.toolTip3.SetToolTip(this.dbGrid,stSqlDisp);
 				this.dbGrid.SetDataBinding(dspdt, "aaaa");
 				this.dbGrid.Show();
 				this.btnDataEdit.Text = "データ編集(&T)";
 				this.dbGrid.ReadOnly = true;
 				this.btnDataEdit.BackColor = this.btnBackColor;
 				this.btnDataEdit.ForeColor = this.btnForeColor;
-				this.btnTmpAllDsp.BackColor = this.btnBackColor;
-				this.btnTmpAllDsp.ForeColor = this.btnForeColor;
+				this.btnTmpAllDisp.BackColor = this.btnBackColor;
+				this.btnTmpAllDisp.ForeColor = this.btnForeColor;
 				this.btnDataUpdate.Enabled = true;
 				this.btnDataEdit.Enabled = true;
 				this.btnGridFormat.Enabled = true;
@@ -4888,9 +4888,9 @@ namespace quickDBExplorer
 				DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
 
 				// get id 
-				string sqlstr;
-				sqlstr = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()) );
-				cm.CommandText = sqlstr;
+				string stSql;
+				stSql = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()) );
+				cm.CommandText = stSql;
 
 				this.sqlDriver.SetSelectCmd(da,cm);
 				DataTable dt = new DataTable();
@@ -5248,7 +5248,7 @@ namespace quickDBExplorer
 					if( MessageBox.Show(linecount.ToString() + "件のデータを読み込みますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) == DialogResult.Yes )
 					{
 						DbDataAdapter uda = this.sqlDriver.NewDataAdapter();
-						IDbCommand ucm = this.sqlDriver.NewSqlCommand(sqlstr);
+						IDbCommand ucm = this.sqlDriver.NewSqlCommand(stSql);
 						this.sqlDriver.SetSelectCmd(uda,ucm);
 										
 						tran = this.sqlDriver.SetTransaction(ucm);
@@ -5671,7 +5671,7 @@ namespace quickDBExplorer
 			}
 			procCond.WhereStr = this.txtWhere.Text;
 			procCond.OrderStr = this.txtSort.Text;
-			procCond.MaxStr = this.txtDspCount.Text;
+			procCond.MaxStr = this.txtDispCount.Text;
 			return procCond;
 		}
 

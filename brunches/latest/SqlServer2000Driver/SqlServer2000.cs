@@ -24,7 +24,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// SelectCommand 等のタイムアウト値
 		/// </summary>
-		protected int	_timeout;
+		protected int	queryTimeout;
 
 		/// <summary>
 		/// コンストラクタ
@@ -46,7 +46,7 @@ namespace quickDBExplorer
 		public void SetConnection(IDbConnection sqlConnection, int timeout)
 		{
 			this.sqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection;
-			this._timeout = timeout;
+			this.queryTimeout = timeout;
 		}
 
 		/// <summary>
@@ -63,7 +63,7 @@ namespace quickDBExplorer
 		/// <param name="timeout"></param>
 		public void SetTimeout(int timeout)
 		{
-			this._timeout = timeout;
+			this.queryTimeout = timeout;
 		}
 
 		/// <summary>
@@ -83,7 +83,7 @@ namespace quickDBExplorer
 		{
 			SqlCommand	sqlCmd = new SqlCommand();
 			sqlCmd.Connection = this.sqlConnect;
-			sqlCmd.CommandTimeout = this._timeout;
+			sqlCmd.CommandTimeout = this.queryTimeout;
 			return sqlCmd;
 		}
 
@@ -91,12 +91,12 @@ namespace quickDBExplorer
 		/// IDbCommand を新規に作成する。
 		/// ただし、コマンド文字列、コネクション情報とタイムアウト値はすでにセットされている
 		/// </summary>
-		/// <param name="sqlstr">実行するコマンド文字列</param>
+		/// <param name="stSql">実行するコマンド文字列</param>
 		/// <returns></returns>
-		public IDbCommand		NewSqlCommand(string sqlstr)
+		public IDbCommand		NewSqlCommand(string stSql)
 		{
-			SqlCommand	sqlCmd = new SqlCommand(sqlstr,this.sqlConnect);
-			sqlCmd.CommandTimeout = this._timeout;
+			SqlCommand	sqlCmd = new SqlCommand(stSql,this.sqlConnect);
+			sqlCmd.CommandTimeout = this.queryTimeout;
 			return sqlCmd;
 		}
 
@@ -107,6 +107,14 @@ namespace quickDBExplorer
 		/// <param name="cmd"></param>
 		public void	SetSelectCmd(DbDataAdapter da, IDbCommand cmd)
 		{
+			if( da == null )
+			{
+				throw new ArgumentNullException("da");
+			}
+			if( cmd == null )
+			{
+				throw new ArgumentNullException("cmd");
+			}
 			((SqlDataAdapter)da).SelectCommand = (SqlCommand)cmd;
 		}
 
@@ -115,6 +123,10 @@ namespace quickDBExplorer
 		/// </summary>
 		public IDbTransaction	SetTransaction(IDbCommand cmd)
 		{
+			if( cmd == null )
+			{
+				throw new ArgumentNullException("cmd");
+			}
 			cmd.Transaction = this.sqlConnect.BeginTransaction();
 			return cmd.Transaction;
 		}
@@ -125,6 +137,10 @@ namespace quickDBExplorer
 		/// <param name="da"></param>
 		public void	SetCommandBuilder(DbDataAdapter da)
 		{
+			if( da == null )
+			{
+				throw new ArgumentNullException("da");
+			}
 			SqlCommandBuilder  cb = new SqlCommandBuilder((SqlDataAdapter)da);
 		}
 
@@ -137,6 +153,14 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public byte[]	GetDataReaderBytes(IDataReader dr, int col)
 		{
+			if( dr == null )
+			{
+				throw new ArgumentNullException("dr");
+			}
+			if( col < 0 )
+			{
+				throw new ArgumentException("col must greater equal 0");
+			}
 			return ((SqlDataReader)dr).GetSqlBinary(col).Value;
 		}
 
@@ -155,7 +179,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="dbName">変更先のデータベース名</param>
 		/// <returns></returns>
-		public void SetDataBase(string dbName)
+		public void SetDatabase(string dbName)
 		{
 			this.sqlConnect.ChangeDatabase(dbName);
 		}
@@ -164,7 +188,7 @@ namespace quickDBExplorer
 		/// テーブル一覧のカラムヘッダの表示文字を取得する
 		/// </summary>
 		/// <returns></returns>
-		public string GetTbListColName()
+		public string GetTableListColumnName()
 		{
 			return "Table/View";
 		}
@@ -191,42 +215,40 @@ namespace quickDBExplorer
 		/// <summary>
 		/// オブジェクト一覧の表示用SQLの取得
 		/// </summary>
-		/// <param name="isDspTable">テーブルを表示させるか否か true: 表示する false: 表示させない</param>
-		/// <param name="isDspView">View を表示させるか否か true: 表示する false: 表示させない</param>
-		/// <param name="isDspSyn">シノニムを表示させるか否か true: 表示する false: 表示させない</param>
-		/// <param name="isDspFunc">Functionを表示させるか否か true: 表示する false: 表示させない</param>
-		/// <param name="isDspSP">ストアドプロシージャを表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isDisplayTable">テーブルを表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isDisplayView">View を表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isSynonym">シノニムを表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isDisplayFunction">Functionを表示させるか否か true: 表示する false: 表示させない</param>
+		/// <param name="isDisplaySP">ストアドプロシージャを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
-		public string GetDspObjList(bool isDspTable, bool isDspView, bool isDspSyn, bool isDspFunc, bool isDspSP, string ownerList)
+		public string GetDisplayObjList(bool isDisplayTable, bool isDisplayView, bool isSynonym, bool isDisplayFunction, bool isDisplaySP, string ownerList)
 		{
-			string retsql = "";
-
 			string destObj = "";
 
 			ArrayList ar = new ArrayList();
 
-			if( isDspTable == true )
+			if( isDisplayTable == true )
 			{
 				ar.Add("U");
 			}
 
-			if( isDspView == true )
+			if( isDisplayView == true )
 			{
 				ar.Add("V");
 			}
 
-			if( isDspSyn == true )
+			if( isSynonym == true )
 			{
 				ar.Add("SN");
 			}
 
-			if( isDspFunc == true )
+			if( isDisplayFunction == true )
 			{
 				ar.Add("FN");
 			}
 
-			if( isDspSP == true )
+			if( isDisplaySP == true )
 			{
 				ar.Add("P");
 				ar.Add("PC");
@@ -238,42 +260,45 @@ namespace quickDBExplorer
 				ar.Add("U");
 			}
 
+			StringBuilder sb = new StringBuilder();
 			for( int i = 0; i < ar.Count; i++ )
 			{
 				if( i != 0 )
 				{
-					destObj += ",";
+					sb.Append(",");
 				}
-				destObj += "'" + (string)ar[i] + "'";
+				sb.Append("'").Append((string)ar[i]).Append("'");
 			}
-			retsql = string.Format(@"select 
+			destObj = sb.ToString();
+			sb.Length  = 0;
+			sb.AppendFormat(@"select 
 					sysobjects.name as tbname, 
 					sysusers.name as uname ,
 					xtype as tvs,
 					sysobjects.crdate as cretime,
 					'' as synbase,
-					'' as syntype
+					'' as synType
 					from sysobjects, sysusers 
 					where xtype in ( {0} ) and sysobjects.uid = sysusers.uid ",
 				destObj );
 
 			if( ownerList != null && 
-				ownerList != string.Empty )
+				ownerList.Length != 0 )
 			{
-				retsql += " and sysusers.name in ( " + ownerList + " ) ";
+				sb.AppendFormat(" and sysusers.name in ( {0} ) ", ownerList);
 			}
 
-			return retsql;
+			return sb.ToString();
 		}
 
 		/// <summary>
 		/// Owner の一覧を取得するSQLを生成する
 		/// </summary>
-		/// <param name="isDspSysUser"></param>
+		/// <param name="isDisplaySysUser"></param>
 		/// <returns></returns>
-		public string	GetOwnerList(bool isDspSysUser)
+		public string	GetOwnerList(bool isDisplaySysUser)
 		{
-			if( isDspSysUser )
+			if( isDisplaySysUser )
 			{
 				return "select * from sysusers order by name";
 			}
@@ -288,17 +313,25 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="serverRealName">サーバー名</param>
 		/// <param name="instanceName">インスタンス名</param>
-		/// <param name="IsUseTruse">信頼関係接続を利用するか否か</param>
+		/// <param name="isUseTrust">信頼関係接続を利用するか否か</param>
 		/// <param name="dbName">データベース名</param>
-		/// <param name="loginUid">ログインID</param>
-		/// <param name="loginPasswd">ログインパスワード</param>
-		public void	CallIsql(string serverRealName, string instanceName, bool IsUseTruse, string dbName, string loginUid, string loginPasswd)
+		/// <param name="logOnUserId">ログインID</param>
+		/// <param name="logOnPassword">ログインパスワード</param>
+		public void	CallISQL(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
 		{
+			if( instanceName == null )
+			{
+				throw new ArgumentNullException("instanceName");
+			}
+			if( dbName == null )
+			{
+				throw new ArgumentNullException("dbName");
+			}
 			Process isqlProcess = new Process();
 			isqlProcess.StartInfo.FileName = "isqlw";
 			isqlProcess.StartInfo.ErrorDialog = true;
 			string serverstr = "";
-			if( instanceName != "" )
+			if( instanceName.Length != 0 )
 			{
 				serverstr = serverRealName + "\\" + instanceName;
 			}
@@ -306,38 +339,38 @@ namespace quickDBExplorer
 			{
 				serverstr = serverRealName;
 			}
-			if( IsUseTruse == true )
+			if( isUseTrust == true )
 			{
-				if( dbName != "" )
+				if( dbName.Length != 0 )
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -E ",
+					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -d {1} -E ",
 						serverstr,
 						dbName
 						);
 				}
 				else
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -E ",
+					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -E ",
 						serverstr
 						);
 				}
 			}
 			else
 			{
-				if( dbName != "" )
+				if( dbName.Length != 0 )
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -d {1} -U {2} -P {3} ",
+					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -d {1} -U {2} -P {3} ",
 						serverstr,
 						dbName,
-						loginUid,
-						loginPasswd );
+						logOnUserId,
+						logOnPassword );
 				}
 				else
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(" -S {0} -U {2} -P {3} ",
+					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -U {1} -P {2} ",
 						serverstr,
-						loginUid,
-						loginPasswd );
+						logOnUserId,
+						logOnPassword );
 				}
 			}
 			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
@@ -349,11 +382,11 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="serverRealName">サーバー名</param>
 		/// <param name="instanceName">インスタンス名</param>
-		/// <param name="IsUseTruse">信頼関係接続を利用するか否か</param>
+		/// <param name="isUseTrust">信頼関係接続を利用するか否か</param>
 		/// <param name="dbName">データベース名</param>
-		/// <param name="loginUid">ログインID</param>
-		/// <param name="loginPasswd">ログインパスワード</param>
-		public void	CallEpm(string serverRealName, string instanceName, bool IsUseTruse, string dbName, string loginUid, string loginPasswd)
+		/// <param name="logOnUserId">ログインID</param>
+		/// <param name="logOnPassword">ログインパスワード</param>
+		public void	CallEPM(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
 		{
 			Process isqlProcess = new Process();
 			isqlProcess.StartInfo.FileName = "SQL Server Enterprise Manager.MSC";
@@ -368,17 +401,27 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="serverRealName">サーバー名</param>
 		/// <param name="instanceName">インスタンス名</param>
-		/// <param name="IsUseTruse">信頼関係接続を利用するか否か</param>
+		/// <param name="isUseTrust">信頼関係接続を利用するか否か</param>
 		/// <param name="dbName">データベース名</param>
-		/// <param name="loginUid">ログインID</param>
-		/// <param name="loginPasswd">ログインパスワード</param>
-		public void	CallProfile(string serverRealName, string instanceName, bool IsUseTruse, string dbName, string loginUid, string loginPasswd)
+		/// <param name="logOnUserId">ログインID</param>
+		/// <param name="logOnPassword">ログインパスワード</param>
+		public void	CallProfile(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
 		{
+			if( instanceName == null )
+			{
+				throw new ArgumentNullException("instanceName");
+			}
+			if( dbName == null )
+			{
+				throw new ArgumentNullException("dbName");
+			}
+
+			
 			Process isqlProcess = new Process();
 			isqlProcess.StartInfo.FileName = "profiler.exe";
 			isqlProcess.StartInfo.ErrorDialog = true;
 			string serverstr = "";
-			if( instanceName != "" )
+			if( instanceName.Length != 0 )
 			{
 				serverstr = serverRealName + "\\" + instanceName;
 			}
@@ -386,38 +429,38 @@ namespace quickDBExplorer
 			{
 				serverstr = serverRealName;
 			}
-			if( IsUseTruse == true )
+			if( isUseTrust == true )
 			{
-				if( dbName != "" )
+				if( dbName.Length != 0 )
 				{
-					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /D{1} /E ",
+					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture,"/S{0} /D{1} /E ",
 						serverstr,
 						dbName
 						);
 				}
 				else
 				{
-					isqlProcess.StartInfo.Arguments = string.Format("/S{0} /E ",
+					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture,"/S{0} /E ",
 						serverstr
 						);
 				}
 			}
 			else
 			{
-				if( dbName != "" )
+				if( dbName.Length != 0 )
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} D{1} /U{2} /P{3} ",
+					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} D{1} /U{2} /P{3} ",
 						serverstr,
 						dbName,
-						loginUid,
-						loginPasswd );
+						logOnUserId,
+						logOnPassword );
 				}
 				else
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(" /S{0} /U{2} /P{3} ",
+					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} /U{1} /P{2} ",
 						serverstr,
-						loginUid,
-						loginPasswd );
+						logOnUserId,
+						logOnPassword );
 				}
 			}
 			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
@@ -428,24 +471,28 @@ namespace quickDBExplorer
 		/// <summary>
 		/// オブジェクトに対するDROP 文を生成する
 		/// </summary>
-		/// <param name="dboInfo"></param>
+		/// <param name="databaseObjectInfo"></param>
 		/// <returns></returns>
-		public string	GetDDLDropStr(DBObjectInfo dboInfo)
+		public string	GetDDLDropStr(DBObjectInfo databaseObjectInfo)
 		{
-			switch( dboInfo.ObjType )
+			if( databaseObjectInfo == null )
+			{
+				throw new ArgumentNullException("databaseObjectInfo");
+			}
+			switch( databaseObjectInfo.ObjType )
 			{
 				case	"U":
-					return string.Format("DROP TABLE {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+					return string.Format(System.Globalization.CultureInfo.CurrentCulture,"DROP TABLE {0}{1}GO{1}{1}", databaseObjectInfo.FormalName,Environment.NewLine);
 				case	"V":
-					return string.Format("DROP VIEW {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+					return string.Format(System.Globalization.CultureInfo.CurrentCulture,"DROP VIEW {0}{1}GO{1}{1}", databaseObjectInfo.FormalName,Environment.NewLine);
 				case	"SN":
-					if( dboInfo.SynonymBaseType == "U" )
+					if( databaseObjectInfo.SynonymBaseType == "U" )
 					{
-						return string.Format("DROP TABLE {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+						return string.Format(System.Globalization.CultureInfo.CurrentCulture,"DROP TABLE {0}{1}GO{1}{1}", databaseObjectInfo.FormalName,Environment.NewLine);
 					}
 					else
 					{
-						return string.Format("DROP VIEW {0}{1}GO{1}{1}", dboInfo.FormalName,Environment.NewLine);
+						return string.Format(System.Globalization.CultureInfo.CurrentCulture,"DROP VIEW {0}{1}GO{1}{1}", databaseObjectInfo.FormalName,Environment.NewLine);
 					}
 				default:
 					return	string.Empty;
@@ -456,32 +503,37 @@ namespace quickDBExplorer
 		/// <summary>
 		/// オブジェクトに対する Create 文を生成する
 		/// </summary>
-		/// <param name="dboInfo"></param>
-		/// <param name="usekakko"></param>
+		/// <param name="databaseObjectInfo"></param>
+		/// <param name="useParentheses"></param>
 		/// <returns></returns>
-		public string	GetDDLCreateStr(DBObjectInfo dboInfo, bool usekakko)
+		public string	GetDdlCreateString(DBObjectInfo databaseObjectInfo, bool useParentheses)
 		{
+			if( databaseObjectInfo == null )
+			{
+				throw new ArgumentNullException("databaseObjectInfo");
+			}
 			StringBuilder strline =  new StringBuilder();
-			TextWriter	wr = new StringWriter(strline);
+			TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 
-			if( dboInfo.ObjType == "U" )
+			if( databaseObjectInfo.ObjType == "U" )
 			{
 
-				string sqlstr = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + dboInfo.Owner +"' and sysobjects.name = '" + dboInfo.ObjName + "' order by syscolumns.colorder";
+				string stSql = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + databaseObjectInfo.Owner +"' and sysobjects.name = '" + databaseObjectInfo.ObjName + "' order by syscolumns.colorder";
 
-				SqlDataAdapter da = new SqlDataAdapter(sqlstr, this.sqlConnect);
+				SqlDataAdapter da = new SqlDataAdapter(stSql, this.sqlConnect);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
-				da.Fill(ds,dboInfo.ToString());
+				ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
+				da.Fill(ds,databaseObjectInfo.ToString());
 
-				int		maxRow = ds.Tables[dboInfo.ToString()].Rows.Count;
-				if( usekakko )
+				int		maxRow = ds.Tables[databaseObjectInfo.ToString()].Rows.Count;
+				if( useParentheses )
 				{
-					wr.Write("Create table {0} ", dboInfo.FormalName);
+					wr.Write("Create table {0} ", databaseObjectInfo.FormalName);
 				}
 				else
 				{
-					wr.Write("Create table {0} ", dboInfo.ToString());
+					wr.Write("Create table {0} ", databaseObjectInfo.ToString());
 				}
 				wr.Write(" ( {0}",wr.NewLine);
 				string	valtype;
@@ -492,21 +544,21 @@ namespace quickDBExplorer
 						wr.Write(",{0}",wr.NewLine);
 					}
 					//フィールド名
-					if( usekakko )
+					if( useParentheses )
 					{
-						wr.Write("\t[{0}]", ds.Tables[dboInfo.ToString()].Rows[i][0]);
+						wr.Write("\t[{0}]", ds.Tables[databaseObjectInfo.ToString()].Rows[i][0]);
 					}
 					else
 					{
-						wr.Write("\t{0}", ds.Tables[dboInfo.ToString()].Rows[i][0]);
+						wr.Write("\t{0}", ds.Tables[databaseObjectInfo.ToString()].Rows[i][0]);
 					}
 					wr.Write("\t");
 					// 型
-					valtype = (string)ds.Tables[dboInfo.ToString()].Rows[i][1];
+					valtype = (string)ds.Tables[databaseObjectInfo.ToString()].Rows[i][1];
 
 					wr.Write("\t");
 
-					if( usekakko )
+					if( useParentheses )
 					{
 						wr.Write("[{0}]",valtype);
 					}
@@ -521,30 +573,30 @@ namespace quickDBExplorer
 						valtype == "nchar" ||
 						valtype == "binary" )
 					{
-						if( (Int16)ds.Tables[dboInfo.ToString()].Rows[i][3] == -1 )
+						if( (Int16)ds.Tables[databaseObjectInfo.ToString()].Rows[i][3] == -1 )
 						{
 							wr.Write(" (max)");
 						}
 						else
 						{
-							wr.Write(" ({0})", ds.Tables[dboInfo.ToString()].Rows[i][3]);
+							wr.Write(" ({0})", ds.Tables[databaseObjectInfo.ToString()].Rows[i][3]);
 						}
 					}
 					else if( valtype == "numeric" ||
 						valtype == "decimal" )
 					{
-						wr.Write(" ({0},", ds.Tables[dboInfo.ToString()].Rows[i][3]);
-						wr.Write("{0})", ds.Tables[dboInfo.ToString()].Rows[i][4]);
+						wr.Write(" ({0},", ds.Tables[databaseObjectInfo.ToString()].Rows[i][3]);
+						wr.Write("{0})", ds.Tables[databaseObjectInfo.ToString()].Rows[i][4]);
 					}
 					wr.Write("\t");
 						
-					if( !ds.Tables[dboInfo.ToString()].Rows[i].IsNull("collation"))
+					if( !ds.Tables[databaseObjectInfo.ToString()].Rows[i].IsNull("collation"))
 					{
-						wr.Write("COLLATE {0}",ds.Tables[dboInfo.ToString()].Rows[i]["collation"]);
+						wr.Write("COLLATE {0}",ds.Tables[databaseObjectInfo.ToString()].Rows[i]["collation"]);
 						wr.Write("\t");
 					}
 						
-					if( (int)ds.Tables[dboInfo.ToString()].Rows[i]["isnullable"] == 0 )
+					if( (int)ds.Tables[databaseObjectInfo.ToString()].Rows[i]["isnullable"] == 0 )
 					{
 						wr.Write("\tNOT NULL");
 					}
@@ -558,10 +610,12 @@ namespace quickDBExplorer
 			else
 			{
 				DataTable dt = new DataTable();
+				dt.CaseSensitive = true;
+				dt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
-				string strsql = string.Format("sp_helptext '{0}'", dboInfo.FormalName );
+				string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_helptext '{0}'", databaseObjectInfo.FormalName );
 				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
-				da.SelectCommand.CommandTimeout = this._timeout;
+				da.SelectCommand.CommandTimeout = this.queryTimeout;
 				da.Fill(dt);
 				foreach(DataRow dr in dt.Rows)
 				{
@@ -578,6 +632,10 @@ namespace quickDBExplorer
 		/// <param name="objTable">対象とするDataTable</param>
 		public void	InitObjTable(DataTable objTable)
 		{
+			if( objTable == null )
+			{
+				throw new ArgumentNullException("objTable");
+			}
 			objTable.Columns.Add("オブジェクトID",typeof(int));
 			objTable.Columns.Add("オブジェクト名");
 			objTable.Columns.Add("所有者");
@@ -588,16 +646,25 @@ namespace quickDBExplorer
 		/// <summary>
 		/// オブジェクトの情報を、DataTable に追加する
 		/// </summary>
-		/// <param name="dboInfo">対象となるオブジェクト</param>
+		/// <param name="databaseObjectInfo">対象となるオブジェクト</param>
 		/// <param name="dt"></param>
-		public void	AddObjectInfo(DBObjectInfo dboInfo, DataTable dt)
+		public void	AddObjectInfo(DBObjectInfo databaseObjectInfo, DataTable dt)
 		{
-			string	strsql = string.Format("select * from sysobjects where id = OBJECT_ID('{0}') ",
-				dboInfo.FormalName );
+			if( databaseObjectInfo == null )
+			{
+				throw new ArgumentNullException("databaseObjectInfo");
+			}
+			if( dt == null )
+			{
+				throw new ArgumentNullException("dt");
+			}
+			string	strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select * from sysobjects where id = OBJECT_ID('{0}') ",
+				databaseObjectInfo.FormalName );
 			SqlCommand	cm = new SqlCommand(strsql,this.sqlConnect);
 
 			SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
 			DataTable	odt = new DataTable("sysobjects");
+			odt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 			da.Fill(odt);
 
 
@@ -608,11 +675,11 @@ namespace quickDBExplorer
 			{
 				dr[0] = odt.Rows[0]["id"];
 			}
-			dr[1] = dboInfo.ObjName;
-			dr[2] = dboInfo.Owner;
-			dr[4] = dboInfo.CreateTime;
+			dr[1] = databaseObjectInfo.ObjName;
+			dr[2] = databaseObjectInfo.Owner;
+			dr[4] = databaseObjectInfo.CreateTime;
 
-			switch( dboInfo.ObjType )
+			switch( databaseObjectInfo.ObjType )
 			{
 				case	"C":
 					dr[3] = "CHECK 制約";
@@ -670,29 +737,31 @@ namespace quickDBExplorer
 		/// オブジェクトの詳細情報をセットするイベントハンドラを返す
 		/// </summary>
 		/// <returns></returns>
-		public DBObjectInfo.DataGetEventHandler ObjectDetailSet()
+		public DataGetEventHandler ObjectDetailSet()
 		{
-			return new DBObjectInfo.DataGetEventHandler(this.dbObjSet);
+			return new DataGetEventHandler(this.dbObjSet);
 		}
 
-		private	void	dbObjSet(object sender)
+		private	void	dbObjSet(object sender, System.EventArgs e)
 		{
-			DBObjectInfo	dboInfo = (DBObjectInfo)sender;
-			DataSet		ds = new DataSet(dboInfo.ObjName);
+			DBObjectInfo	databaseObjectInfo = (DBObjectInfo)sender;
+			DataSet		ds = new DataSet(databaseObjectInfo.ObjName);
+			ds.CaseSensitive = true;
+			ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
 
 			// まずは必要な情報を全て収集する
 
 			// FillSchema での情報収集
-			string strsql = string.Format("select * from {0} where 0=1",
-				dboInfo.FormalName );
+			string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select * from {0} where 0=1",
+				databaseObjectInfo.FormalName );
 			SqlDataAdapter da = new SqlDataAdapter(strsql,this.sqlConnect);
 			DataTable []dt = da.FillSchema(ds,SchemaType.Mapped,"schema");
-			dboInfo.SchemaBaseInfo = dt[0];
+			databaseObjectInfo.SchemaBaseInfo = dt[0];
 
 			// 実際の細かい情報を直接取得する
 			SqlDataAdapter tableda = new SqlDataAdapter(
-				string.Format(
+				string.Format(System.Globalization.CultureInfo.CurrentCulture,
 				@"select 
 syscolumns.name colname, 
 systypes.name valtype, 
@@ -715,7 +784,7 @@ and sysobjects.uid= sysusers.uid
 and syscolumns.xusertype=systypes.xusertype 
 and sysobjects.id = OBJECT_ID('{0}')
 order by syscolumns.colorder",
-				dboInfo.RealObjName
+				databaseObjectInfo.RealObjName
 				),
 				this.sqlConnect );
 			tableda.Fill(ds,"fieldList");
@@ -732,7 +801,7 @@ order by syscolumns.colorder",
 				{
 					addInfo.Collation = (string)fdr["collation"];
 				}
-				addInfo.Colorder = (int)fdr["colorder"];
+				addInfo.ColOrder = (int)fdr["colorder"];
 				if( addInfo.Col.MaxLength < 0 &&
 					(int)fdr["length"] > 0 )
 				{
@@ -756,7 +825,7 @@ order by syscolumns.colorder",
 				}
 				ar.Add(addInfo);
 			}
-			dboInfo.FieldInfo = ar;
+			databaseObjectInfo.FieldInfo = ar;
 		}
 
 		#endregion
