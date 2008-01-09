@@ -28,6 +28,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: AssemblyVersion("1.9.0.*")]
 [assembly: AssemblyInformationalVersion("1.9.0")]
+[assembly: System.Resources.NeutralResourcesLanguage("ja-JP")]
 
 //
 // アセンブリに署名するには、使用するキーを指定しなければなりません。 

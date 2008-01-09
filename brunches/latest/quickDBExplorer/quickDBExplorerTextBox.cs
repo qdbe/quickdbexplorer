@@ -23,7 +23,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="ev"></param>
-		protected virtual void quickDBExplorerTextBox_KeyDown(object sender, KeyEventArgs ev)
+		internal virtual void quickDBExplorerTextBox_KeyDown(object sender, KeyEventArgs ev)
 		{
 			if( ((TextBox)sender).Multiline != true &&
 				ev.Alt != true &&

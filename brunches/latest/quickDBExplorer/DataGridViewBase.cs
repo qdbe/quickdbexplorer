@@ -13,43 +13,45 @@ namespace quickDBExplorer
 	/// 各種情報を一覧表示する場合に、このダイアログをベースに派生する。
 	/// もしくは、直接利用する
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class DataGridViewBase : quickDBExplorer.quickDBExplorerBaseForm
 	{
 		/// <summary>
 		///  クリップボードコピーボタン
 		/// </summary>
-		protected System.Windows.Forms.Button btnClopboard;
+		private System.Windows.Forms.Button btnClipboard;
 		/// <summary>
 		/// データ表示エリア
 		/// </summary>
-		protected System.Windows.Forms.DataGrid dataViewGrid;
+		private System.Windows.Forms.DataGrid dataViewGrid;
 		private System.ComponentModel.IContainer components = null;
 		/// <summary>
 		/// 閉じるボタン
 		/// </summary>
-		protected System.Windows.Forms.Button btnClose;
+		private System.Windows.Forms.Button btnClose;
 		/// <summary>
 		/// 表示するデータ
 		/// </summary>
-		protected DataTable viewData = new DataTable("viewData");
+		//protected DataTable viewData = new DataTable("viewData");
+		private DataTable viewData = null;
 		/// <summary>
 		/// タイトル表示
 		/// </summary>
-		protected string  titleName	= "";
+		//private string  titleName	= "";
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="dt">表示するデータ</param>
-		/// <param name="tname">表示タイトル</param>
-		public DataGridViewBase(DataTable dt, string tname)
+		/// <param name="tableName">表示タイトル</param>
+		public DataGridViewBase(DataTable dt, string tableName)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
 
 			this.viewData = dt;
-			this.titleName = tname;
-			this.Text = tname;
+			//this.titleName = tableName;
+			this.Text = tableName;
 		}
 
 		/// <summary>
@@ -76,7 +78,7 @@ namespace quickDBExplorer
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(DataGridViewBase));
 			this.dataViewGrid = new System.Windows.Forms.DataGrid();
-			this.btnClopboard = new System.Windows.Forms.Button();
+			this.btnClipboard = new System.Windows.Forms.Button();
 			this.btnClose = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.dataViewGrid)).BeginInit();
 			this.SuspendLayout();
@@ -102,15 +104,15 @@ namespace quickDBExplorer
 			this.dataViewGrid.Size = new System.Drawing.Size(490, 194);
 			this.dataViewGrid.TabIndex = 0;
 			// 
-			// btnClopboard
+			// btnClipboard
 			// 
-			this.btnClopboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnClopboard.Location = new System.Drawing.Point(12, 218);
-			this.btnClopboard.Name = "btnClopboard";
-			this.btnClopboard.Size = new System.Drawing.Size(136, 26);
-			this.btnClopboard.TabIndex = 1;
-			this.btnClopboard.Text = "クリップボードにコピー(&B)";
-			this.btnClopboard.Click += new System.EventHandler(this.btnClopboard_Click);
+			this.btnClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnClipboard.Location = new System.Drawing.Point(12, 218);
+			this.btnClipboard.Name = "btnClipboard";
+			this.btnClipboard.Size = new System.Drawing.Size(136, 26);
+			this.btnClipboard.TabIndex = 1;
+			this.btnClipboard.Text = "クリップボードにコピー(&B)";
+			this.btnClipboard.Click += new System.EventHandler(this.btnClipboard_Click);
 			// 
 			// btnClose
 			// 
@@ -127,14 +129,14 @@ namespace quickDBExplorer
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(516, 252);
 			this.Controls.Add(this.btnClose);
-			this.Controls.Add(this.btnClopboard);
+			this.Controls.Add(this.btnClipboard);
 			this.Controls.Add(this.dataViewGrid);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "DataGridViewBase";
 			this.ShowInTaskbar = false;
 			this.Load += new System.EventHandler(this.DataGridViewBase_Load);
 			this.Controls.SetChildIndex(this.dataViewGrid, 0);
-			this.Controls.SetChildIndex(this.btnClopboard, 0);
+			this.Controls.SetChildIndex(this.btnClipboard, 0);
 			this.Controls.SetChildIndex(this.btnClose, 0);
 			this.Controls.SetChildIndex(this.msgArea, 0);
 			((System.ComponentModel.ISupportInitialize)(this.dataViewGrid)).EndInit();
@@ -148,7 +150,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender">--</param>
 		/// <param name="e">--</param>
-		private void btnClopboard_Click(object sender, System.EventArgs e)
+		private void btnClipboard_Click(object sender, System.EventArgs e)
 		{
 			if( this.viewData == null )
 			{
@@ -156,7 +158,7 @@ namespace quickDBExplorer
 			}
 			if( this.viewData.Rows.Count == 0 )
 			{
-				MessageBox.Show("表示されているデータはありません");
+				MessageBox.Show(this,"表示されているデータはありません");
 				return;
 			}
 

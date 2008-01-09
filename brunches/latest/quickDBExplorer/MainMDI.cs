@@ -17,7 +17,8 @@ namespace quickDBExplorer
 	/// <summary>
 	/// 全ての親画面となるMDIフォーム
 	/// </summary>
-	public class MainMDI : System.Windows.Forms.Form
+	[System.Runtime.InteropServices.ComVisible(false)]
+	public class MainMdi : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.StatusBar statusBar1;
 		private System.Windows.Forms.MainMenu mainMenu1;
@@ -35,18 +36,18 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 前回操作時の各種記憶情報
 		/// </summary>
-		protected saveClass	initopt;
+		private saveClass	initopt;
 		/// <summary>
 		/// 表示エラーメッセージ
 		/// </summary>
-		protected string  errMessage = "";
+		private string  errMessage = "";
 
 
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public MainMDI()
+		public MainMdi()
 		{
 			//
 			// Windows フォーム デザイナ サポートに必要です。
@@ -77,7 +78,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainMDI));
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainMdi));
 			this.statusBar1 = new System.Windows.Forms.StatusBar();
 			this.mainMenu1 = new System.Windows.Forms.MainMenu();
 			this.menuConnect = new System.Windows.Forms.MenuItem();
@@ -164,7 +165,7 @@ namespace quickDBExplorer
 			this.menuVersion.Text = "最新バージョンのチェック";
 			this.menuVersion.Click += new System.EventHandler(this.menuVersion_Click);
 			// 
-			// MainMDI
+			// MainMdi
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(960, 641);
@@ -172,10 +173,10 @@ namespace quickDBExplorer
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.IsMdiContainer = true;
 			this.Menu = this.mainMenu1;
-			this.Name = "MainMDI";
+			this.Name = "MainMdi";
 			this.Text = "quickDBExplorer";
-			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainMDI_Closing);
-			this.Load += new System.EventHandler(this.MainMDI_Load);
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainMdi_Closing);
+			this.Load += new System.EventHandler(this.MainMdi_Load);
 			this.ResumeLayout(false);
 
 		}
@@ -187,7 +188,7 @@ namespace quickDBExplorer
 		[STAThread]
 		static void Main() 
 		{
-			Application.Run(new MainMDI());
+			Application.Run(new MainMdi());
 		}
 
 		/// <summary>
@@ -197,7 +198,7 @@ namespace quickDBExplorer
 		/// <param name="e">--</param>
 		private void menuNewConnect_Click(object sender, System.EventArgs e)
 		{
-			LoginDialog logindlg = new LoginDialog(this.initopt);
+			LogOnDialog logindlg = new LogOnDialog(this.initopt);
 			logindlg.MdiParent = this;
 			logindlg.Show();
 			logindlg.Focus();
@@ -244,7 +245,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender">--</param>
 		/// <param name="e">--</param>
-		private void MainMDI_Load(object sender, System.EventArgs e)
+		private void MainMdi_Load(object sender, System.EventArgs e)
 		{
 
 			// 設定ファイルの読み込みストリーム
@@ -287,7 +288,7 @@ namespace quickDBExplorer
 			CheckNewVersion(false);
 
 			// 最初は強制的にログインを表示する
-			LoginDialog logindlg = new LoginDialog(this.initopt);
+			LogOnDialog logindlg = new LogOnDialog(this.initopt);
 			logindlg.MdiParent = this;
 			logindlg.Show();
 			logindlg.Focus();
@@ -298,7 +299,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender">--</param>
 		/// <param name="e">--</param>
-		private void MainMDI_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		private void MainMdi_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			FileStream fs = null;
 

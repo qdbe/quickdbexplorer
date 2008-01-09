@@ -13,7 +13,7 @@ namespace quickDBExplorer
 	/// サーバー別の各種指定履歴データを管理する
 	/// </summary>
 	[Serializable]
-	public class ServerData : ISerializable
+	public class ServerData : ISerializable, IDisposable 
 	{
 		/// <summary>
 		/// 接続先サーバー名
@@ -292,6 +292,34 @@ namespace quickDBExplorer
 			selectHistory = new textHistory();
 			DMLHistory = new textHistory();
 		}
+
+		/// <summary>
+		/// 内部リソースを破棄する
+		/// </summary>
+		/// <param name="disposing">破棄するか否かのフラグ</param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				// dispose managed resources
+				whereHistory.Dispose();
+				sortHistory.Dispose();
+				aliasHistory.Dispose();
+				selectHistory.Dispose();
+				DMLHistory.Dispose();
+			}
+			// free native resources
+		}
+
+		/// <summary>
+		/// 内部リソースを破棄する
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
 
 		/// <summary>
 		/// シリアライズ処理用コンストラクタ

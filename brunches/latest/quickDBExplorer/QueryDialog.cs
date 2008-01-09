@@ -249,7 +249,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected virtual void btnGo_Click(object sender, System.EventArgs e)
+		internal virtual void btnGo_Click(object sender, System.EventArgs e)
 		{
 			SelectSql = this.txtInput.Text;
 			if( this.chkReturn.Checked == true )

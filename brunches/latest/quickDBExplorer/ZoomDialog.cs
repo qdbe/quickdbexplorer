@@ -195,7 +195,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected virtual void ZoomDialog_Load(object sender, System.EventArgs e)
+		internal virtual void ZoomDialog_Load(object sender, System.EventArgs e)
 		{
 			this.txtZoom.Text = this.editText;
 			if( this.isDispOnly == true)

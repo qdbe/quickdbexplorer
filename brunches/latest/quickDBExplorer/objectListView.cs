@@ -9,6 +9,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// Table等DBオブジェクトの一覧表示専用クラス
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class ObjectListView : qdbeListView
 	{
 		/// <summary>
@@ -42,7 +43,7 @@ namespace quickDBExplorer
 		/// <param name="dr">データを参照するDataReader</param>
 		/// <param name="dataSetter">オブジェクトの詳細を設定するメソッド</param>
 		/// <returns></returns>
-		public ListViewItem	CreateItem(IDataReader dr, DataGetEventHandler dataSetter)
+		public ListViewItem	CreateItem(IDataRecord dr, DataGetEventHandler dataSetter)
 		{
 			DBObjectInfo dboInfo = new DBObjectInfo(
 				(string)dr["tvs"],

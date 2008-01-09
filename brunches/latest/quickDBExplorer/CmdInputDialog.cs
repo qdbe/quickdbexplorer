@@ -9,6 +9,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// テーブルに対する各種コマンド実行 のコマンド入力用ダイアログ
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class CmdInputDialog : quickDBExplorer.QueryDialog
 	{
 		private System.Windows.Forms.Label label1;
@@ -101,7 +102,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected override void btnGo_Click(object sender, EventArgs e)
+		internal override void btnGo_Click(object sender, EventArgs e)
 		{
 			if( this.txtInput.Text != "" &&
 				this.txtInput.Text.IndexOf("{0}") < 0 )

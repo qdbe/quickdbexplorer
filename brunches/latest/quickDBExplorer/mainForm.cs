@@ -18,6 +18,7 @@ namespace quickDBExplorer
 	/// メインとなる画面
 	/// DBの選択、オーナーの選択、テーブルの選択、処理の選択などのメインとなる処理を全て実装している
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class MainForm : quickDBExplorerBaseForm
 	{
 		private System.ComponentModel.IContainer components;
@@ -95,131 +96,131 @@ namespace quickDBExplorer
 		private	string	DateFormat;
 
 		#region 公開メンバ
-		private ISqlInterface	sqlDriver = null;
+		private ISqlInterface	pSqlDriver = null;
 		/// <summary>
 		/// SQL文を処理するクラス
 		/// </summary>
 		public	ISqlInterface	SqlDriver
 		{
-			get { return this.sqlDriver; }
-			set { this.sqlDriver = value; }
+			get { return this.pSqlDriver; }
+			set { this.pSqlDriver = value; }
 		}
 
 
 		/// <summary>
 		///  接続先のサーバー名。表示用にのみ利用
 		/// </summary>
-		protected string servername = "";
+		private string pServerName = "";
 		/// <summary>
 		///  接続先のサーバー名。表示用にのみ利用
 		/// </summary>
 		public string ServerName
 		{
-			get { return this.servername; }
-			set { this.servername = value; }
+			get { return this.pServerName; }
+			set { this.pServerName = value; }
 		}
 
 		/// <summary>
 		/// 接続先サーバーの本当の名前。インスタンス名を含まない
 		/// </summary>
-		protected string serverRealName = "";
+		private string pServerRealName = "";
 		/// <summary>
 		/// 接続先サーバーの本当の名前。インスタンス名を含まない
 		/// </summary>
 		public string ServerRealName 
 		{
-			get { return this.serverRealName; }
-			set { this.serverRealName = value; }
+			get { return this.pServerRealName; }
+			set { this.pServerRealName = value; }
 		}
 
 		/// <summary>
 		/// 接続先サーバーのインスタンス名
 		/// </summary>
-		protected string instanceName = "";
+		private string pInstanceName = "";
 		/// <summary>
 		/// 接続先サーバーのインスタンス名
 		/// </summary>
 		public string InstanceName 
 		{
-			get { return this.instanceName; }
-			set { this.instanceName = value; }
+			get { return this.pInstanceName; }
+			set { this.pInstanceName = value; }
 		}
 
 		/// <summary>
 		/// ログインID
 		/// </summary>
-		protected string loginUid = "";
+		private string pLogOnUid = "";
 		/// <summary>
 		/// ログインID
 		/// </summary>
-		public string LoginUid 
+		public string LogOnUid 
 		{
-			get { return this.loginUid; }
-			set { this.loginUid = value; }
+			get { return this.pLogOnUid; }
+			set { this.pLogOnUid = value; }
 		}
 
 		/// <summary>
 		/// ログイン用パスワード
 		/// </summary>
-		protected string loginPasswd = "";
+		private string pLogOnPassword = "";
 		/// <summary>
 		/// ログイン用パスワード
 		/// </summary>
-		public string LoginPasswd 
+		public string LogOnPassword 
 		{
-			get { return this.loginPasswd; }
-			set { this.loginPasswd = value; }
+			get { return this.pLogOnPassword; }
+			set { this.pLogOnPassword = value; }
 		}
 
 		/// <summary>
 		/// 信頼関係接続を利用するか否か
 		/// </summary>
-		protected bool isUseTruse = false;
+		private bool pIsUseTrust = false;
 		/// <summary>
 		/// 信頼関係接続を利用するか否か
 		/// </summary>
 		public bool IsUseTruse 
 		{
-			get { return this.isUseTruse; }
-			set { this.isUseTruse = value; }
+			get { return this.pIsUseTrust; }
+			set { this.pIsUseTrust = value; }
 		}
 
 		/// <summary>
 		/// スレッドの稼動状態を表す
 		/// 処理中=1 中断された、または未処理 = 0
 		/// </summary>
-		protected int IsThreadAlive = 0;
+		private int isThreadAlive = 0;
 
 		/// <summary>
 		/// Table/View リストの選択履歴
 		/// Max10件を想定
 		/// </summary>
-		protected ArrayList selectedTables = new ArrayList();
+		private ArrayList selectedTables = new ArrayList();
 
 
 		/// <summary>
 		/// Table/View リストの選択履歴 MAX件数
 		/// </summary>
-		protected const int MaxTableHistory = 10;
+		private const int MaxTableHistory = 10;
 
 		/// <summary>
 		///  コンボボックスのイベント処理中か否か
 		/// </summary>
-		protected bool isInCmbEvent = false;
+		private bool isInCmbEvent = false;
 
 		/// <summary>
 		/// SQL のクエリ実行タイムアウト値
 		/// </summary>
-		protected int sqlTimeOut = 300;
+		private int pSqlTimeout = 300;
 		/// <summary>
 		/// SQL のクエリ実行タイムアウト値
 		/// </summary>
-		public int SqlTimeOut 
+		public int SqlTimeout 
 		{
-			get { return this.sqlTimeOut; }
+			get { return this.pSqlTimeout; }
 			set { 
-				this.sqlTimeOut = value; 
-				this.sqlDriver.SetTimeout(this.sqlTimeOut);
+				this.pSqlTimeout = value; 
+				this.pSqlDriver.SetTimeout(this.pSqlTimeout);
 			}
 		}
 
@@ -281,7 +282,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// コマンド入力ダイアログ
 		/// </summary>
-		protected System.Windows.Forms.ComboBox cmbHistory;
+		private System.Windows.Forms.ComboBox cmbHistory;
 		private System.Windows.Forms.ColumnHeader ColTVSType;
 		private System.Windows.Forms.ColumnHeader ColOwner;
 		private System.Windows.Forms.ColumnHeader ColObjName;
@@ -335,7 +336,7 @@ namespace quickDBExplorer
 		protected override void OnClosed(EventArgs e)
 		{
 			// SQLServerに対する接続を閉じる
-			this.sqlDriver.CloseConnection();
+			this.pSqlDriver.CloseConnection();
 
 			base.OnClosed (e);
 		}
@@ -1212,6 +1213,8 @@ namespace quickDBExplorer
 		#endregion
 
 		#region ボタンメニュー関連処理
+#if false
+		// 現在未使用
 		private void DispButtonMenu(object sender, System.EventArgs e, MenuItem[] list)
 		{
 			ContextMenu tmpmenu = new System.Windows.Forms.ContextMenu();
@@ -1226,13 +1229,14 @@ namespace quickDBExplorer
 					// セパレーターはショートカットは無用
 					continue;
 				}
-				cplist[i].Text = string.Format("(&{0}) {1}",j,cplist[i].Text );
+				cplist[i].Text = string.Format(System.Globalization.CultureInfo.CurrentCulture,"(&{0}) {1}",j,cplist[i].Text );
 				j++;
 			}
 			tmpmenu.MenuItems.AddRange(cplist);
 
 			tmpmenu.Show((Control)sender,new Point(0,0));
 		}
+#endif
 
 		private	void	InitPopupMenu()
 		{
@@ -1561,18 +1565,19 @@ namespace quickDBExplorer
 			try
 			{
 				// ラベル・ボタンの設定
-				this.label5.Text = this.sqlDriver.GetOwnerLabel1();
-				this.rdoSortOwnerTable.Text = this.sqlDriver.GetOwnerLabel2();
-				//this.ColObjName.Text = this.sqlDriver.GetTableListColumnName();
+				this.label5.Text = this.pSqlDriver.GetOwnerLabel1();
+				this.rdoSortOwnerTable.Text = this.pSqlDriver.GetOwnerLabel2();
+				//this.ColObjName.Text = this.pSqlDriver.GetTableListColumnName();
 
-				this.Text = servername;
+				this.Text = pServerName;
 
 				// DB一覧の表示を実行
-				DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-				IDbCommand cmd = this.sqlDriver.NewSqlCommand(this.sqlDriver.GetDBSelect());
-				this.sqlDriver.SetSelectCmd(da,cmd);
+				DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
+				IDbCommand cmd = this.pSqlDriver.NewSqlCommand(this.pSqlDriver.GetDBSelect());
+				this.pSqlDriver.SetSelectCmd(da,cmd);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
+				ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
 				da.Fill(ds,"sysdatabases");
 
 				foreach (DataRow row in ds.Tables["sysdatabases"].Rows )
@@ -1860,7 +1865,7 @@ namespace quickDBExplorer
 			{
 				this.rdoUnicode.Checked = true;
 			}
-			this.Text = servername + "@" + (string)this.dbList.SelectedItem;
+			this.Text = pServerName + "@" + (string)this.dbList.SelectedItem;
 			this.dbList.Focus();	//フォーカスを元に戻す
 		}
 
@@ -1920,11 +1925,11 @@ namespace quickDBExplorer
 			{
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					indexdlg.settabledsp(this.objectList.GetSelectObject(0));
+					indexdlg.SetDisplayTable(this.objectList.GetSelectObject(0));
 				}
 				else
 				{
-					indexdlg.settabledsp(null);
+					indexdlg.SetDisplayTable(null);
 				}
 				indexdlg.Show();
 			}
@@ -2251,7 +2256,7 @@ namespace quickDBExplorer
 					int	maxlines;
 					if( this.txtDispCount.Text != "" )
 					{
-						maxlines = int.Parse(this.txtDispCount.Text);
+						maxlines = int.Parse(this.txtDispCount.Text,System.Globalization.CultureInfo.CurrentCulture);
 					}
 					else
 					{
@@ -2262,7 +2267,7 @@ namespace quickDBExplorer
 						stSql += " TOP " + this.txtDispCount.Text;
 					}
 
-					stSql += string.Format(" * from {0}",dboInfo.GetAliasName(this.getAlias()));
+					stSql += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}",dboInfo.GetAliasName(this.GetAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
@@ -2272,13 +2277,13 @@ namespace quickDBExplorer
 						stSql += " order by " + this.txtSort.Text.Trim();
 					}
 
-					DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-					IDbCommand cmd = this.sqlDriver.NewSqlCommand(stSql);
-					this.sqlDriver.SetSelectCmd(da,cmd);
+					DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
+					IDbCommand cmd = this.pSqlDriver.NewSqlCommand(stSql);
+					this.pSqlDriver.SetSelectCmd(da,cmd);
 					
 										
-					tran = this.sqlDriver.SetTransaction(cmd);
-					this.sqlDriver.SetCommandBuilder(da);
+					tran = this.pSqlDriver.SetTransaction(cmd);
+					this.pSqlDriver.SetCommandBuilder(da);
 					da.Update(dspdt, "aaaa");
 					tran.Commit();
 
@@ -2367,7 +2372,7 @@ namespace quickDBExplorer
 			while((y <= dbGrid.Height) && (row < cm.Count))
 			{
 				//get & draw the header text...
-				string text = string.Format("{0}", row+1);
+				string text = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}", row+1);
 				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 10, y);
 				y += yDelta;
 				row++;
@@ -2473,6 +2478,7 @@ namespace quickDBExplorer
 
 		private void txtAlias_Leave(object sender, System.EventArgs e)
 		{
+			TextBox			senderText = sender as TextBox;
 			string tbname = "";
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
@@ -2485,12 +2491,13 @@ namespace quickDBExplorer
 				tbname = "";
 			}
 			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,((TextBox)sender).Text,ref this.aliasHistory);
+			qdbeUtil.SetNewHistory(tbname,senderText.Text,ref this.aliasHistory);
 		}
 
 		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			DBObjectInfo	dboInfo = null;
+			TextBox			senderText = sender as TextBox;
 
 			if( e.Alt == false &&
 				e.Control == true &&
@@ -2510,7 +2517,7 @@ namespace quickDBExplorer
 				e.KeyCode == Keys.D )
 			{
 				// 全削除を行う
-				((TextBox)sender).Text = "";
+				senderText.Text = "";
 			}
 			if( e.Alt == false &&
 				e.Control == true &&
@@ -2523,9 +2530,9 @@ namespace quickDBExplorer
 					dboInfo = this.objectList.GetSelectObject(0);
 				}
 				HistoryViewer hv = new HistoryViewer(this.aliasHistory, targetTable);
-				if( DialogResult.OK == hv.ShowDialog() && ((TextBox)sender).Text != hv.RetString)
+				if( DialogResult.OK == hv.ShowDialog() && senderText.Text != hv.RetString)
 				{
-					((TextBox)sender).Text = hv.RetString;
+					senderText.Text = hv.RetString;
 					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.aliasHistory);
 
 					DispData(dboInfo);
@@ -2534,7 +2541,7 @@ namespace quickDBExplorer
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),((TextBox)sender).Text,ref this.aliasHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),senderText.Text,ref this.aliasHistory);
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		}
@@ -2545,7 +2552,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		protected void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		internal void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			if( e.Control == true && e.Shift == false && e.Alt == false && e.KeyCode == Keys.G )
 			{
@@ -2553,15 +2560,15 @@ namespace quickDBExplorer
 			}
 			if( e.Control == true && e.Shift == true && e.Alt == true && e.KeyCode == Keys.T )
 			{
-				if( this.SqlTimeOut == 0 )
+				if( this.SqlTimeout == 0 )
 				{
-					this.SqlTimeOut = 300;
+					this.SqlTimeout = 300;
 				}
 				else
 				{
-					this.SqlTimeOut = 0;
+					this.SqlTimeout = 0;
 				}
-				MessageBox.Show("SQL Timeout値を " + this.SqlTimeOut.ToString() + "秒に設定しました" );
+				MessageBox.Show("SQL Timeout値を " + this.SqlTimeout.ToString(System.Globalization.CultureInfo.CurrentCulture) + "秒に設定しました" );
 			}
 		}
 
@@ -2572,6 +2579,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void txtWhere_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
+			TextBox			senderText = sender as TextBox;
 			if( e.Alt == false &&
 				e.Control == true &&
 				e.KeyCode == Keys.W )
@@ -2592,7 +2600,7 @@ namespace quickDBExplorer
 			{
 				// Ctrl + D
 				// 全削除を行う
-				((TextBox)sender).Text = "";
+				senderText.Text = "";
 			}
 			if( e.Alt == false &&
 				e.Control == true &&
@@ -2626,6 +2634,7 @@ namespace quickDBExplorer
 
 		private void txtSort_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
+			TextBox			senderText = sender as TextBox;
 			if( e.Alt == false &&
 				e.Control == true &&
 				e.KeyCode == Keys.W )
@@ -2644,7 +2653,7 @@ namespace quickDBExplorer
 				e.KeyCode == Keys.D )
 			{
 				// 全削除を行う
-				((TextBox)sender).Text = "";
+				senderText.Text = "";
 			}
 			if( e.Alt == false &&
 				e.Control == true &&
@@ -2698,15 +2707,15 @@ namespace quickDBExplorer
 
 		private void label4_DoubleClick(object sender, System.EventArgs e)
 		{
-			if( this.SqlTimeOut == 0 )
+			if( this.SqlTimeout == 0 )
 			{
-				this.SqlTimeOut = 300;
+				this.SqlTimeout = 300;
 			}
 			else
 			{
-				this.SqlTimeOut = 0;
+				this.SqlTimeout = 0;
 			}
-			MessageBox.Show("SQL Timeout値を " + this.SqlTimeOut.ToString() + "秒に設定しました" );
+			MessageBox.Show("SQL Timeout値を " + this.SqlTimeout.ToString(System.Globalization.CultureInfo.CurrentCulture) + "秒に設定しました" );
 		}
 
 
@@ -2732,12 +2741,12 @@ namespace quickDBExplorer
 				}
 
 				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
+				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
 				if( this.rdoClipboard.Checked == true) 
 				{
-					wr = new StringWriter(strline);
+					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
@@ -2747,7 +2756,7 @@ namespace quickDBExplorer
 					fname.Append(this.txtOutput.Text);
 				}
 
-				string alias = this.getAlias();
+				string alias = this.GetAlias();
 
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
@@ -2784,7 +2793,7 @@ namespace quickDBExplorer
 					
 					}
 					wr.Write(wr.NewLine);
-					wr.Write(" from {0}{1}", dboInfo.GetAliasName(this.getAlias()),wr.NewLine);
+					wr.Write(" from {0}{1}", dboInfo.GetAliasName(this.GetAlias()),wr.NewLine);
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						wr.Write(" where {0}{1}", this.txtWhere.Text.Trim(),wr.NewLine);
@@ -2827,14 +2836,14 @@ namespace quickDBExplorer
 			{
 				indexdlg = new IndexViewDialog();
 
-				indexdlg.SqlDriver = this.sqlDriver;
-				indexdlg.DispObj = this.objectList.GetSelectObject(0);
+				indexdlg.SqlDriver = this.pSqlDriver;
+				indexdlg.DisplayObj = this.objectList.GetSelectObject(0);
 
 				indexdlg.Show();
 			}
 			else
 			{
-				indexdlg.settabledsp(this.objectList.GetSelectObject(0));
+				indexdlg.SetDisplayTable(this.objectList.GetSelectObject(0));
 				indexdlg.Show();
 				indexdlg.BringToFront();
 			}
@@ -2861,12 +2870,12 @@ namespace quickDBExplorer
 			try
 			{
 				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
+				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
 				if( this.rdoClipboard.Checked == true) 
 				{
-					wr = new StringWriter(strline);
+					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 					wr.Write("テーブル名");
 					wr.Write("\t依存関係先名称");
 					wr.Write("\t種類");
@@ -2914,14 +2923,15 @@ namespace quickDBExplorer
 					// get id 
 					string stSql;
 
-					stSql = string.Format("sp_depends N'{0}'", dboInfo.FormalName );
+					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_depends N'{0}'", dboInfo.FormalName );
 
-					DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-					IDbCommand cmd = this.sqlDriver.NewSqlCommand(stSql);
-					this.sqlDriver.SetSelectCmd(da,cmd);
+					DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
+					IDbCommand cmd = this.pSqlDriver.NewSqlCommand(stSql);
+					this.pSqlDriver.SetSelectCmd(da,cmd);
 
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
+					ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
 					da.Fill(ds,dboInfo.ToString());
 
 					if(	ds.Tables.Count != 0 &&
@@ -2974,7 +2984,7 @@ namespace quickDBExplorer
 		private void RecordCountOutPut(object sender, System.EventArgs e)
 		{
 			IDataReader  dr = null;
-			IDbCommand cm = this.sqlDriver.NewSqlCommand();
+			IDbCommand cm = this.pSqlDriver.NewSqlCommand();
 
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -3004,12 +3014,12 @@ namespace quickDBExplorer
 			{
 
 				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
+				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
 				if( this.rdoClipboard.Checked == true) 
 				{
-					wr = new StringWriter(strline);
+					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 					wr.WriteLine("テーブル名,データ件数");
 				}
 				else if( this.rdoOutFile.Checked == true ) 
@@ -3036,7 +3046,7 @@ namespace quickDBExplorer
 					}
 					trow = 0;
 					string stSql;
-					stSql = string.Format("select  count(1) from {0} ",dboInfo.GetAliasName(this.getAlias()));
+					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  count(1) from {0} ",dboInfo.GetAliasName(this.GetAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
@@ -3142,7 +3152,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallISQLW(object sender, System.EventArgs e)
 		{
-			this.sqlDriver.CallISQL(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
+			this.pSqlDriver.CallISQL(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnPassword, this.pLogOnPassword );
 		}
 
 		/// <summary>
@@ -3152,7 +3162,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallProfile(object sender, System.EventArgs e)
 		{
-			this.sqlDriver.CallProfile(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
+			this.pSqlDriver.CallProfile(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnPassword, this.pLogOnPassword );
 		}
 
 		/// <summary>
@@ -3162,16 +3172,17 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallEPM(object sender, System.EventArgs e)
 		{
-			this.sqlDriver.CallEPM(this.serverRealName,this.instanceName, this.isUseTruse, (string)this.dbList.SelectedItem,this.loginPasswd, this.loginPasswd );
+			this.pSqlDriver.CallEPM(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnPassword, this.pLogOnPassword );
 		}
 
 		private void menuRecordCountDisp_Click(object sender, System.EventArgs e)
 		{
 			IDataReader dr = null;
-			IDbCommand	cm = this.sqlDriver.NewSqlCommand();
+			IDbCommand	cm = this.pSqlDriver.NewSqlCommand();
 
 			DataTable	rcdt = new DataTable("RecordCount");
 			rcdt.CaseSensitive = true;
+			rcdt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -3205,7 +3216,7 @@ namespace quickDBExplorer
 
 					trow = 0;
 					string stSql;
-					stSql = string.Format("select  count(1) from {0} ",dboInfo.GetAliasName(this.getAlias()));
+					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  count(1) from {0} ",dboInfo.GetAliasName(this.GetAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
@@ -3305,7 +3316,7 @@ namespace quickDBExplorer
 				return;
 			}
 			StringBuilder strline = new StringBuilder();
-			StringWriter wr = new StringWriter(strline);
+			StringWriter wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 			// header 
 			int cnt = 0;
 			foreach( DataColumn col in dt.Columns )
@@ -3348,13 +3359,14 @@ namespace quickDBExplorer
 
 				if( Sqldlg.ShowDialog() == DialogResult.OK )
 				{
-					DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-					IDbCommand cmd = this.sqlDriver.NewSqlCommand(Sqldlg.SelectSql);
-					this.sqlDriver.SetSelectCmd(da,cmd);
+					DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
+					IDbCommand cmd = this.pSqlDriver.NewSqlCommand(Sqldlg.SelectSql);
+					this.pSqlDriver.SetSelectCmd(da,cmd);
 
 					da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 					dspdt = new DataSet();
 					dspdt.CaseSensitive = true;
+					dspdt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
 					da.Fill(dspdt,"aaaa");
 
@@ -3368,9 +3380,9 @@ namespace quickDBExplorer
 					{
 						//列スタイルにQdbeDataGridTextBoxColumnを使う
 						cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col, 
-							getFormat(this.NumFormat),
-							getFormat(this.FloatFormat),
-							getFormat(this.DateFormat)
+							GetFormat(this.NumFormat),
+							GetFormat(this.FloatFormat),
+							GetFormat(this.DateFormat)
 							);
 
 						//DataGridTableStyleに追加する
@@ -3414,21 +3426,21 @@ namespace quickDBExplorer
 
 				if( Sqldlg2.ShowDialog() == DialogResult.OK )
 				{
-					IDbCommand cm = this.sqlDriver.NewSqlCommand(Sqldlg2.SelectSql);
-					tran = this.sqlDriver.SetTransaction(cm);
+					IDbCommand cm = this.pSqlDriver.NewSqlCommand(Sqldlg2.SelectSql);
+					tran = this.pSqlDriver.SetTransaction(cm);
 
 					string msg = "";
 					if( Sqldlg2.HasReturn == true )
 					{
 						object ret = cm.ExecuteScalar();
 						tran.Commit();
-						msg = string.Format("処理が終了しました。\r\nリターン値は [{0}] です", ret.ToString() );
+						msg = string.Format(System.Globalization.CultureInfo.CurrentCulture,"処理が終了しました。\r\nリターン値は [{0}] です", ret.ToString() );
 					}
 					else
 					{
 						int cnt = cm.ExecuteNonQuery();
 						tran.Commit();
-						msg = string.Format("処理が終了しました。\r\n影響した件数は {0} 件です", cnt );
+						msg = string.Format(System.Globalization.CultureInfo.CurrentCulture,"処理が終了しました。\r\n影響した件数は {0} 件です", cnt );
 					}
 					MessageBox.Show(msg);
 				}
@@ -3451,7 +3463,7 @@ namespace quickDBExplorer
 		private void menuStasticUpdate_Click(object sender, System.EventArgs e)
 		{
 			// SQL 的には、UPDATE STATISTICS table を実施する
-			IDbCommand cm = this.sqlDriver.NewSqlCommand();
+			IDbCommand cm = this.pSqlDriver.NewSqlCommand();
 
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -3504,9 +3516,9 @@ namespace quickDBExplorer
 				return;
 			}
 
-			DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-			IDbCommand cm = this.sqlDriver.NewSqlCommand();
-			this.sqlDriver.SetSelectCmd(da,cm);
+			DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
+			IDbCommand cm = this.pSqlDriver.NewSqlCommand();
+			this.pSqlDriver.SetSelectCmd(da,cm);
 
 			try
 			{
@@ -3519,24 +3531,25 @@ namespace quickDBExplorer
 				{
 					DataSet	ds = new DataSet("retData");
 					ds.CaseSensitive = true;
+					ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
 					
 					DBObjectInfo dboInfo;
 					for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 					{
 						dboInfo = this.objectList.GetSelectObject(ti);
-						cm.CommandText = string.Format(this.cmdDialog.SelectSql,
+						cm.CommandText = string.Format(System.Globalization.CultureInfo.CurrentCulture,this.cmdDialog.SelectSql,
 							dboInfo.FormalName);
 
 						if( cmdDialog.HasReturn == true )
 						{
 							// 戻り値あり
-							this.sqlDriver.SetSelectCmd(da,cm);
+							this.pSqlDriver.SetSelectCmd(da,cm);
 							da.Fill(ds,"retdata");
 						}
 						else
 						{
-							int cnt = cm.ExecuteNonQuery();
+							cm.ExecuteNonQuery();
 						}
 					}
 					if( cmdDialog.HasReturn == true )
@@ -3578,9 +3591,10 @@ namespace quickDBExplorer
 
 			DataTable	objTable = new DataTable("ObjectInfo");
 			objTable.CaseSensitive = true;
+			objTable.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
 			this.InitErrMessage();
-			this.sqlDriver.InitObjTable(objTable);
+			this.pSqlDriver.InitObjTable(objTable);
 
 			try
 			{
@@ -3588,7 +3602,7 @@ namespace quickDBExplorer
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
 					dboInfo = this.objectList.GetSelectObject(ti);
-					this.sqlDriver.AddObjectInfo(dboInfo,objTable);
+					this.pSqlDriver.AddObjectInfo(dboInfo,objTable);
 				}
 
 				DataGridViewBase dlg = new DataGridViewBase(objTable,"オブジェクト情報");
@@ -3621,7 +3635,7 @@ namespace quickDBExplorer
 			{
 				if( i != 0 )
 				{
-					if( dlg.RetCRLF == true )
+					if( dlg.RetCrlf == true )
 					{
 						if( dlg.RetComma ) 
 						{
@@ -3773,13 +3787,13 @@ namespace quickDBExplorer
 						{
 							if( fi.Length == -1 )
 							{
-								istr = string.Format("{0}  {1}(max) ",
+								istr = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}  {1}(max) ",
 									fi.Name,
 									fi.TypeName);
 							}
 							else
 							{
-								istr = string.Format("{0}  {1}({2}) ",
+								istr = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}  {1}({2}) ",
 									fi.Name,
 									fi.TypeName,
 									fi.Length);
@@ -3789,7 +3803,7 @@ namespace quickDBExplorer
 						else if( valtype == "numeric" ||
 							valtype == "decimal" )
 						{
-							istr = string.Format("{0}  {1}({2},{3}) ",
+							istr = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}  {1}({2},{3}) ",
 								fi.Name,
 								fi.TypeName,
 								fi.Prec,
@@ -3798,14 +3812,14 @@ namespace quickDBExplorer
 						}
 						else
 						{
-							istr = string.Format("{0}  {1} ",
+							istr = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}  {1} ",
 								fi.Name,
 								fi.TypeName);
 						}
 
 						if( fi.IncSeed != 0)
 						{
-							istr += string.Format(" IDENTITY({0},{1})",
+							istr += string.Format(System.Globalization.CultureInfo.CurrentCulture," IDENTITY({0},{1})",
 								fi.IncSeed,
 								fi.IncStep );
 						}
@@ -3838,7 +3852,7 @@ namespace quickDBExplorer
 		private void DispObjectList()
 		{
 			IDataReader dr = null;
-			IDbCommand cm = this.sqlDriver.NewSqlCommand();
+			IDbCommand cm = this.pSqlDriver.NewSqlCommand();
 
 			this.InitErrMessage();
 
@@ -3848,7 +3862,7 @@ namespace quickDBExplorer
 				{
 					return ;
 				}
-				this.sqlDriver.SetDatabase((String)this.dbList.SelectedItem);
+				this.pSqlDriver.SetDatabase((String)this.dbList.SelectedItem);
 				
 				// listbox2 にテーブル一覧を表示
 
@@ -3880,7 +3894,7 @@ namespace quickDBExplorer
 						ownerlist += "'" + owname + "'";
 					}
 				}
-				cm.CommandText = this.sqlDriver.GetDisplayObjList(
+				cm.CommandText = this.pSqlDriver.GetDisplayObjList(
 					true,
 					this.rdoDispView.Checked,
 					true,
@@ -3900,7 +3914,7 @@ namespace quickDBExplorer
 				while ( dr.Read())
 				{
 					ar.Add(
-						this.objectList.CreateItem(dr, this.sqlDriver.ObjectDetailSet())
+						this.objectList.CreateItem(dr, this.pSqlDriver.ObjectDetailSet())
 						);
 				}
 				this.objectList.Items.AddRange((ListViewItem[])ar.ToArray(typeof(ListViewItem)));
@@ -3933,13 +3947,13 @@ namespace quickDBExplorer
 		private void DispListOwner()
 		{
 			IDataReader dr = null;
-			IDbCommand 	cm = this.sqlDriver.NewSqlCommand();
+			IDbCommand 	cm = this.pSqlDriver.NewSqlCommand();
 
 			this.InitErrMessage();
 
 			try 
 			{
-				cm.CommandText = this.sqlDriver.GetOwnerList(rdoDispSysUser.Checked);
+				cm.CommandText = this.pSqlDriver.GetOwnerList(rdoDispSysUser.Checked);
 
 				dr = cm.ExecuteReader();
 
@@ -4006,12 +4020,12 @@ namespace quickDBExplorer
 				int			rowcount = 0;
 				int			trow	= 0;
 				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
+				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
 				if( this.rdoClipboard.Checked == true) 
 				{
-					wr = new StringWriter(strline);
+					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
@@ -4026,7 +4040,7 @@ namespace quickDBExplorer
 				}
 
 				IDataReader dr = null;
-				IDbCommand 	cm = this.sqlDriver.NewSqlCommand();
+				IDbCommand 	cm = this.pSqlDriver.NewSqlCommand();
 
 				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
@@ -4043,7 +4057,7 @@ namespace quickDBExplorer
 
 					// get id 
 					string stSql;
-					stSql = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()));
+					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} ",dboInfo.GetAliasName(this.GetAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
@@ -4076,7 +4090,7 @@ namespace quickDBExplorer
 						if( (Boolean)draw["IsIdentity"] == true )
 						{
 							// Identity 列がある場合、SET IDENTITY_INSERT table on をつける
-							string addidinsert = string.Format("SET IDENTITY_INSERT {0} on ",dboInfo.FormalName);
+							string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture,"SET IDENTITY_INSERT {0} on ",dboInfo.FormalName);
 							wr.WriteLine(addidinsert);
 							wr.Write(wr.NewLine);
 							break;
@@ -4086,13 +4100,13 @@ namespace quickDBExplorer
 					if( isTaihi == true )
 					{
 						string taihistr = 
-							String.Format("select * into {1} from {0} ",
-							dboInfo.GetAliasName(this.getAlias()),
-							dboInfo.GetNameAdd(DateTime.Now.ToString("yyyyMMdd"))
+							String.Format(System.Globalization.CultureInfo.CurrentCulture,"select * into {1} from {0} ",
+							dboInfo.GetAliasName(this.GetAlias()),
+							dboInfo.GetNameAdd(DateTime.Now.ToString("yyyyMMdd",System.Globalization.CultureInfo.CurrentCulture))
 							);
 						if( this.txtWhere.Text.Trim() != "" )
 						{
-							taihistr += string.Format(" where {0}", this.txtWhere.Text.Trim() );
+							taihistr += string.Format(System.Globalization.CultureInfo.CurrentCulture," where {0}", this.txtWhere.Text.Trim() );
 						}
 						wr.Write("{0}GO{0}",wr.NewLine );
 						wr.Write(taihistr);
@@ -4220,12 +4234,12 @@ namespace quickDBExplorer
 				}
 
 				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
+				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
 				if( this.rdoClipboard.Checked == true) 
 				{
-					wr = new StringWriter(strline);
+					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
@@ -4252,7 +4266,7 @@ namespace quickDBExplorer
 					wr.Write(dboInfo.FormalName);
 					wr.Write(":");
 					int		maxcol = dboInfo.FieldInfo.Count;
-					string	alias = this.getAlias();
+					string	alias = this.GetAlias();
 					for( int i = 0; i < maxcol ; i++ )
 					{
 						if( i != 0 && iscomma )
@@ -4303,7 +4317,7 @@ namespace quickDBExplorer
 		private void CreateTCsvText(bool isdquote, string separater)
 		{
 			IDataReader dr = null;
-			IDbCommand 	cm = this.sqlDriver.NewSqlCommand();
+			IDbCommand 	cm = this.pSqlDriver.NewSqlCommand();
 
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -4343,12 +4357,12 @@ namespace quickDBExplorer
 			{
 
 				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
+				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
 				if( this.rdoClipboard.Checked == true) 
 				{
-					wr = new StringWriter(strline);
+					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
@@ -4371,7 +4385,7 @@ namespace quickDBExplorer
 					}
 					trow = 0;
 					string stSql;
-					stSql = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()));
+					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} ",dboInfo.GetAliasName(this.GetAlias()));
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
@@ -4516,12 +4530,12 @@ namespace quickDBExplorer
 			try
 			{
 				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline);
+				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
 				if( this.rdoClipboard.Checked == true) 
 				{
-					wr = new StringWriter(strline);
+					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
@@ -4554,7 +4568,7 @@ namespace quickDBExplorer
 							wr.Write("{0}{1}", dboInfo.FormalName,wr.NewLine);
 							wr.Write( "GO{0}",wr.NewLine);
 						}
-						wr.Write( string.Format("create synonym {0} for {1}",
+						wr.Write( string.Format(System.Globalization.CultureInfo.CurrentCulture,"create synonym {0} for {1}",
 							dboInfo.FormalName,
 							dboInfo.SynonymBase )
 							);
@@ -4564,10 +4578,10 @@ namespace quickDBExplorer
 
 					if( bDrop )
 					{
-						wr.Write(this.sqlDriver.GetDDLDropStr(dboInfo));
+						wr.Write(this.pSqlDriver.GetDDLDropStr(dboInfo));
 					}
 
-					wr.Write(this.sqlDriver.GetDdlCreateString(dboInfo, useParentheses));
+					wr.Write(this.pSqlDriver.GetDdlCreateString(dboInfo, useParentheses));
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
@@ -4617,7 +4631,7 @@ namespace quickDBExplorer
 
 				// 編集中の可能性があるので、これをキャンセルする
 				DataGridCell curcell = this.dbGrid.CurrentCell;
-				int rownum = curcell.RowNumber;
+				//int rownum = curcell.RowNumber;
 				int colnum  = curcell.ColumnNumber;
 				DataSet ds = (DataSet)this.dbGrid.DataSource;
 				if( ds != null )
@@ -4645,7 +4659,7 @@ namespace quickDBExplorer
 				int	maxGetLines;
 				if( procCond.MaxStr != "" )
 				{
-					maxlines = int.Parse(procCond.MaxStr);
+					maxlines = int.Parse(procCond.MaxStr,System.Globalization.CultureInfo.CurrentCulture);
 				}
 				else
 				{
@@ -4666,12 +4680,12 @@ namespace quickDBExplorer
 				if( maxlines != 0 )
 				{
 					maxGetLines = maxlines + 1;
-					stSql += " TOP " + maxGetLines.ToString();
-					stSqlDisp += " TOP " + maxlines.ToString();
+					stSql += " TOP " + maxGetLines.ToString(System.Globalization.CultureInfo.CurrentCulture);
+					stSqlDisp += " TOP " + maxlines.ToString(System.Globalization.CultureInfo.CurrentCulture);
 				}
 
-				stSql += string.Format(" * from {0}", dboInfo.GetAliasName(this.getAlias()));
-				stSqlDisp += string.Format(" * from {0}",dboInfo.GetAliasName(this.getAlias()));
+				stSql += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}", dboInfo.GetAliasName(this.GetAlias()));
+				stSqlDisp += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}",dboInfo.GetAliasName(this.GetAlias()));
 				if( procCond.WhereStr.Trim() != "" )
 				{
 					stSql += " where " + procCond.WhereStr.Trim();
@@ -4683,12 +4697,13 @@ namespace quickDBExplorer
 					stSqlDisp += " order by " + procCond.OrderStr.Trim();
 				}
 
-				DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-				IDbCommand cm = this.sqlDriver.NewSqlCommand(stSql);
-				this.sqlDriver.SetSelectCmd(da,cm);
+				DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
+				IDbCommand cm = this.pSqlDriver.NewSqlCommand(stSql);
+				this.pSqlDriver.SetSelectCmd(da,cm);
 
 				dspdt = new DataSet();
 				dspdt.CaseSensitive = true;
+				dspdt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 				da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
 				da.Fill(dspdt, "aaaa");
 
@@ -4722,9 +4737,9 @@ namespace quickDBExplorer
 				{
 					//列スタイルにQdbeDataGridTextBoxColumnを使う
 					cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col, 
-						getFormat(this.NumFormat),
-						getFormat(this.FloatFormat),
-						getFormat(this.DateFormat)
+						GetFormat(this.NumFormat),
+						GetFormat(this.FloatFormat),
+						GetFormat(this.DateFormat)
 						);
 					
 					//DataGridTableStyleに追加する
@@ -4840,9 +4855,9 @@ namespace quickDBExplorer
 				return;
 			}
 
-			DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-			IDbCommand cm = this.sqlDriver.NewSqlCommand();
-			this.sqlDriver.SetSelectCmd(da,cm);
+			DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
+			IDbCommand cm = this.pSqlDriver.NewSqlCommand();
+			this.pSqlDriver.SetSelectCmd(da,cm);
 			IDbTransaction tran	= null;
 			TextReader	wr = null;
 
@@ -4889,12 +4904,13 @@ namespace quickDBExplorer
 
 				// get id 
 				string stSql;
-				stSql = string.Format("select  * from {0} ",dboInfo.GetAliasName(this.getAlias()) );
+				stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} ",dboInfo.GetAliasName(this.GetAlias()) );
 				cm.CommandText = stSql;
 
-				this.sqlDriver.SetSelectCmd(da,cm);
+				this.pSqlDriver.SetSelectCmd(da,cm);
 				DataTable dt = new DataTable();
 				dt.CaseSensitive = true;
+				dt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 				da.FillSchema(dt,SchemaType.Mapped);
 
 				if( dt.Columns.Count == 0 )
@@ -4982,7 +4998,7 @@ namespace quickDBExplorer
 
 					if( ar.Count != dt.Columns.Count )
 					{
-						MessageBox.Show("項目数が違います 行:" + linecount.ToString() );
+						MessageBox.Show("項目数が違います 行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture) );
 						isSetAll = false;
 						break;
 					}
@@ -5007,13 +5023,13 @@ namespace quickDBExplorer
 						if( col.AllowDBNull == false && 
 							(string)ar[col.Ordinal] == string.Empty )
 						{
-							MessageBox.Show("項目 " + col.ColumnName + "には値の指定が必要です。行:" + linecount.ToString());
+							MessageBox.Show("項目 " + col.ColumnName + "には値の指定が必要です。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 							isSetAll = false;
 							break;
 						}
 						if( col.AutoIncrement == true && (string)ar[col.Ordinal] != string.Empty)
 						{
-							MessageBox.Show("項目 " + col.ColumnName + "は自動採番されるので値は指定できません。行:" + linecount.ToString());
+							MessageBox.Show("項目 " + col.ColumnName + "は自動採番されるので値は指定できません。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 							isSetAll = false;
 							break;
 						}
@@ -5028,12 +5044,12 @@ namespace quickDBExplorer
 								}
 								else
 								{
-									dr[col.ColumnName] = Int16.Parse(ar[col.Ordinal].ToString());
+									dr[col.ColumnName] = Int16.Parse(ar[col.Ordinal].ToString(),System.Globalization.CultureInfo.CurrentCulture);
 								}
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には Int16 の整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Int16 の整数を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5049,12 +5065,12 @@ namespace quickDBExplorer
 								}
 								else
 								{
-									dr[col.ColumnName] = Int32.Parse(ar[col.Ordinal].ToString());
+									dr[col.ColumnName] = Int32.Parse(ar[col.Ordinal].ToString(),System.Globalization.CultureInfo.CurrentCulture);
 								}
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には Int32の整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Int32の整数を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5070,12 +5086,12 @@ namespace quickDBExplorer
 								}
 								else
 								{
-									dr[col.ColumnName] = Int64.Parse(ar[col.Ordinal].ToString());
+									dr[col.ColumnName] = Int64.Parse(ar[col.Ordinal].ToString(),System.Globalization.CultureInfo.CurrentCulture);
 								}
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には Int64の整数を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Int64の整数を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5085,7 +5101,7 @@ namespace quickDBExplorer
 						{
 							if( col.MaxLength < ar[col.Ordinal].ToString().Length )
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には " + col.MaxLength + "桁以上の値は指定できません。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には " + col.MaxLength + "桁以上の値は指定できません。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5100,7 +5116,7 @@ namespace quickDBExplorer
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には Boolean値を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Boolean値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5116,12 +5132,12 @@ namespace quickDBExplorer
 								}
 								else
 								{
-									dr[col.ColumnName] = DateTime.Parse(ar[col.Ordinal].ToString());
+									dr[col.ColumnName] = DateTime.Parse(ar[col.Ordinal].ToString(),System.Globalization.CultureInfo.CurrentCulture);
 								}
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には DateTimeを表す値を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には DateTimeを表す値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5137,12 +5153,12 @@ namespace quickDBExplorer
 								}
 								else
 								{
-									dr[col.ColumnName] = Decimal.Parse(ar[col.Ordinal].ToString());
+									dr[col.ColumnName] = Decimal.Parse(ar[col.Ordinal].ToString(),System.Globalization.CultureInfo.CurrentCulture);
 								}
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には Decimal値を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Decimal値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5158,12 +5174,12 @@ namespace quickDBExplorer
 								}
 								else
 								{
-									dr[col.ColumnName] = Double.Parse(ar[col.Ordinal].ToString());
+									dr[col.ColumnName] = Double.Parse(ar[col.Ordinal].ToString(),System.Globalization.CultureInfo.CurrentCulture);
 								}
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には Double値を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Double値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5179,12 +5195,12 @@ namespace quickDBExplorer
 								}
 								else
 								{
-									dr[col.ColumnName] = Single.Parse(ar[col.Ordinal].ToString());
+									dr[col.ColumnName] = Single.Parse(ar[col.Ordinal].ToString(),System.Globalization.CultureInfo.CurrentCulture);
 								}
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には Single値を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Single値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5198,7 +5214,7 @@ namespace quickDBExplorer
 							}
 							catch ( Exception e )
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には 指定された値は指定できません。行:" + linecount.ToString() + "\r\n" + e.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には 指定された値は指定できません。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture) + "\r\n" + e.ToString());
 								isSetAll = false;
 								break;
 							}
@@ -5208,11 +5224,11 @@ namespace quickDBExplorer
 						{
 							try
 							{
-								dr[col.ColumnName] = Byte.Parse(ar[col.Ordinal].ToString());
+								dr[col.ColumnName] = Byte.Parse(ar[col.Ordinal].ToString(),System.Globalization.CultureInfo.CurrentCulture);
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には Byte値を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Byte値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5226,7 +5242,7 @@ namespace quickDBExplorer
 							}
 							catch
 							{
-								MessageBox.Show("項目 " + col.ColumnName + "には Guidを表す文字列を指定してください。行:" + linecount.ToString());
+								MessageBox.Show("項目 " + col.ColumnName + "には Guidを表す文字列を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;
 								break;
 							}
@@ -5245,14 +5261,14 @@ namespace quickDBExplorer
 				// データベースへ更新する
 				if( isSetAll == true )
 				{
-					if( MessageBox.Show(linecount.ToString() + "件のデータを読み込みますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) == DialogResult.Yes )
+					if( MessageBox.Show(linecount.ToString(System.Globalization.CultureInfo.CurrentCulture) + "件のデータを読み込みますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) == DialogResult.Yes )
 					{
-						DbDataAdapter uda = this.sqlDriver.NewDataAdapter();
-						IDbCommand ucm = this.sqlDriver.NewSqlCommand(stSql);
-						this.sqlDriver.SetSelectCmd(uda,ucm);
+						DbDataAdapter uda = this.pSqlDriver.NewDataAdapter();
+						IDbCommand ucm = this.pSqlDriver.NewSqlCommand(stSql);
+						this.pSqlDriver.SetSelectCmd(uda,ucm);
 										
-						tran = this.sqlDriver.SetTransaction(ucm);
-						this.sqlDriver.SetCommandBuilder(uda);
+						tran = this.pSqlDriver.SetTransaction(ucm);
+						this.pSqlDriver.SetCommandBuilder(uda);
 						uda.Update(dt);
 						tran.Commit();
 
@@ -5396,7 +5412,7 @@ namespace quickDBExplorer
 			}
 			else if( fldtypename.Equals("bigint") )
 			{
-				return dr.GetInt64(i).ToString();
+				return dr.GetInt64(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
 			}
 			else if( fldtypename.Equals("image") ||
 				fldtypename.Equals("varbinary") ||
@@ -5404,42 +5420,42 @@ namespace quickDBExplorer
 			{
 				if( outNull )
 				{	
-					return string.Format("null" );
+					return string.Format(System.Globalization.CultureInfo.CurrentCulture,"null" );
 				}
 				else
 				{
 					// バイナリはヘキサ文字列で出しておく
-					byte []odata = this.sqlDriver.GetDataReaderBytes(dr, i);
+					byte []odata = this.pSqlDriver.GetDataReaderBytes(dr, i);
 					string sodata ="0x";
 					for(int k = 0; k < odata.Length; k++ )
 					{
-						sodata += odata[k].ToString("X2");
+						sodata += odata[k].ToString("X2",System.Globalization.CultureInfo.InvariantCulture);
 					}
-					return string.Format("{1}{0}{1}", sodata, addstr );
+					return string.Format(System.Globalization.CultureInfo.InvariantCulture,"{1}{0}{1}", sodata, addstr );
 				}
 			}
 			else if( fldtypename.Equals("datetime") ||
 				fldtypename.Equals("smalldatetime"))
 			{
-				return string.Format("{1}{0}{1}", dr.GetDateTime(i).ToString(), addstr );
+				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", dr.GetDateTime(i).ToString(System.Globalization.CultureInfo.CurrentCulture), addstr );
 			}
 			else if( fldtypename.Equals("decimal") 
 				|| fldtypename.Equals("numeric"))
 			{
-				return dr.GetDecimal(i).ToString();
+				return dr.GetDecimal(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
 			}
 			else if( fldtypename.Equals("float")||
 				fldtypename.Equals("double") )
 			{
-				return dr.GetDouble(i).ToString();
+				return dr.GetDouble(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
 			}
 			else if( fldtypename.Equals("int") )
 			{
-				return dr.GetInt32(i).ToString();
+				return dr.GetInt32(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
 			}
 			else if( fldtypename.Equals("smallint") )
 			{
-				return dr.GetInt16(i).ToString();
+				return dr.GetInt16(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
 			}
 			else if( fldtypename.Equals("tinyint") )
 			{
@@ -5465,18 +5481,18 @@ namespace quickDBExplorer
 				// 文字列
 				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
 				{
-					return string.Format( "{0}{0}", addstr );
+					return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0}{0}", addstr );
 				}
 				else
 				{
 					if( dr.GetString(i).IndexOf("'") >= 0 )
 					{
 						// ' が文字列に入っている場合は '' に強制的に変換する
-						return string.Format( "{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""),addstr);
+						return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""),addstr);
 					}
 					else
 					{
-						return string.Format( "{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr );
+						return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr );
 					}
 				}
 			}
@@ -5489,48 +5505,48 @@ namespace quickDBExplorer
 				// 文字列
 				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
 				{
-					return string.Format( "{1}{0}{0}", addstr, unichar );
+					return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{0}", addstr, unichar );
 				}
 				else
 				{
 					if( dr.GetString(i).IndexOf("'") >= 0 )
 					{
 						// ' が文字列に入っている場合は '' に強制的に変換する
-						return string.Format( "{2}{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""), addstr, unichar);
+						return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{2}{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""), addstr, unichar);
 					}
 					else
 					{
-						return string.Format( "{2}{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr, unichar );
+						return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{2}{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr, unichar );
 					}
 				}
 			}
 			else if( fldtypename == "uniqueidentifier" )
 			{
-				return string.Format("{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
+				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
 			}
 			else if( fldtypename == "timestamp" )
 			{
 				// timestamp は自動更新されるのでnullでよい
 				if( outNull )
 				{	
-					return string.Format("null" );
+					return string.Format(System.Globalization.CultureInfo.CurrentCulture,"null" );
 				}
 				else
 				{
 					// バイナリはヘキサ文字列で出しておく
-					byte []odata = this.sqlDriver.GetDataReaderBytes(dr, i);
+					byte []odata = this.pSqlDriver.GetDataReaderBytes(dr, i);
 					string sodata ="0x";
 					for(int k = 0; k < odata.Length; k++ )
 					{
-						sodata += odata[k].ToString("X2");
+						sodata += odata[k].ToString("X2",System.Globalization.CultureInfo.CurrentCulture);
 					}
-					return string.Format("{1}{0}{1}", sodata, addstr );
+					return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", sodata, addstr );
 				}
 			}
 			else
 			{
 				// sql_variant は型の決めようがないので文字列扱いにしておく
-				return string.Format("{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
+				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
 			}
 		}
 
@@ -5557,7 +5573,7 @@ namespace quickDBExplorer
 		/// from 句で利用するためのテーブル修飾子を取得する
 		/// </summary>
 		/// <returns>テーブル修飾子</returns>
-		protected string getAlias()
+		protected string GetAlias()
 		{
 			return this.txtAlias.Text;
 		}
@@ -5567,7 +5583,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="fstr">基の表示書式</param>
 		/// <returns>表示書式文字列</returns>
-		protected string getFormat(string fstr)
+		protected string GetFormat(string fstr)
 		{
 			if(fstr == null)
 			{
@@ -5590,23 +5606,23 @@ namespace quickDBExplorer
 		/// <returns>スレッドが正常に開始できたか否か</returns>
 		protected bool	BeginNewThread(WaitCallback callb, object tags)
 		{
-			if( this.IsThreadAlive > 0 )
+			if( this.isThreadAlive > 0 )
 			{
 				// 他のスレッドがあれば、スレッドを開始しない
 				return false;
 			}
 			try
 			{
-				Interlocked.Increment(ref this.IsThreadAlive);
+				Interlocked.Increment(ref this.isThreadAlive);
 				ThreadPool.QueueUserWorkItem(callb,tags);
 				return true;
 			}
 			catch(Exception e)
 			{
 				this.SetErrorMessage(e);
-				if( this.IsThreadAlive != 0 )
+				if( this.isThreadAlive != 0 )
 				{
-					Interlocked.Decrement(ref this.IsThreadAlive);
+					Interlocked.Decrement(ref this.isThreadAlive);
 				}
 				return false;
 			}
@@ -5617,13 +5633,13 @@ namespace quickDBExplorer
 		/// </summary>
 		protected void	ThreadEndIfAlive()
 		{
-			if( this.IsThreadAlive == 0 )
+			if( this.isThreadAlive == 0 )
 			{
 				return;
 			}
 			try
 			{
-				Interlocked.Decrement(ref this.IsThreadAlive);
+				Interlocked.Decrement(ref this.isThreadAlive);
 			}
 			catch
 			{
@@ -5637,7 +5653,7 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		protected bool IsProcCancel()
 		{
-			if( this.IsThreadAlive == 0 )
+			if( this.isThreadAlive == 0 )
 			{
 				return true;
 			}
@@ -5834,12 +5850,12 @@ namespace quickDBExplorer
 			{
 				if( shortCutNo > 0 )
 				{
-					it.Text = string.Format("(&{0}) {1}",
+					it.Text = string.Format(System.Globalization.CultureInfo.CurrentCulture,"(&{0}) {1}",
 						shortCutNo.ToString("x"), this.menuName );
 				}
 				else
 				{
-					it.Text = string.Format("{0}",
+					it.Text = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}",
 						this.menuName );
 				}
 				it.Click += this.clickHandler;

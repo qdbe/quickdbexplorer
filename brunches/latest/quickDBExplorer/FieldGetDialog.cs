@@ -10,6 +10,7 @@ namespace quickDBExplorer
 	/// フィールド情報の取得条件指定ダイアログ
 	/// フィールド情報をコピーする条件を指定する
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class FieldGetDialog : quickDBExplorer.quickDBExplorerBaseForm
 	{
 		private System.Windows.Forms.Label label1;
@@ -25,54 +26,54 @@ namespace quickDBExplorer
 		/// <summary>
 		/// テーブル名
 		/// </summary>
-		protected string	baseTableName = "";
+		private string	pBaseTableName = "";
 		/// <summary>
 		/// テーブル名
 		/// </summary>
 		public string	BaseTableName
 		{
-			get { return this.baseTableName; }
-			set { this.baseTableName = value; }
+			get { return this.pBaseTableName; }
+			set { this.pBaseTableName = value; }
 		}
 
 		/// <summary>
 		/// テーブルの修飾子(alias) 戻り値
 		/// </summary>
-		protected string retTableAccessor = "";
+		private string pRetTableAccessor = "";
 
 		/// <summary>
 		/// テーブルの修飾子(alias) 戻り値
 		/// </summary>
 		public string RetTableAccessor
 		{
-			get { return this.retTableAccessor; }
-			set { this.retTableAccessor = value; }
+			get { return this.pRetTableAccessor; }
+			set { this.pRetTableAccessor = value; }
 		}
 
 		/// <summary>
 		/// 改行をつけるかつけないかの指定(戻り値)
 		/// </summary>
-		protected bool retCRLF = false;
+		private bool pRetCrlf = false;
 		/// <summary>
 		/// 改行をつけるかつけないかの指定(戻り値)
 		/// </summary>
-		public bool RetCRLF 
+		public bool RetCrlf 
 		{
-			get { return this.retCRLF; }
-			set { this.retCRLF = value; }
+			get { return this.pRetCrlf; }
+			set { this.pRetCrlf = value; }
 		}
 		private System.Windows.Forms.ToolTip toolTip1;
 		/// <summary>
 		/// カンマをつけるかつけないか(戻り値)
 		/// </summary>
-		protected bool retComma = false;
+		private bool pRetComma = false;
 		/// <summary>
 		/// カンマをつけるかつけないか(戻り値)
 		/// </summary>
 		public bool RetComma 
 		{
-			get { return this.retComma; }
-			set { this.retComma = value; }
+			get { return this.pRetComma; }
+			set { this.pRetComma = value; }
 		}
 
 		/// <summary>
@@ -266,22 +267,22 @@ namespace quickDBExplorer
 		{
 			string []selstr = this.cmbPattern.SelectedItem.ToString().Split(new char[]{':'},3)[2].Split(new char[]{','},3);
 			// テーブル修飾子の指定
-			switch( int.Parse(selstr[0]) )
+			switch( int.Parse(selstr[0],System.Globalization.CultureInfo.CurrentCulture) )
 			{
 				case 1:
 					this.txtAlias.Text = "t1";
 					break;
 				case 2:
-					this.txtAlias.Text = qdbeUtil.SplitTbname(this.baseTableName)[1];
+					this.txtAlias.Text = qdbeUtil.SplitTbname(this.pBaseTableName)[1];
 					break;
 				case 3:
-					this.txtAlias.Text = qdbeUtil.GetTbname(this.baseTableName);
+					this.txtAlias.Text = qdbeUtil.GetTbname(this.pBaseTableName);
 					break;
 				default:
 					break;
 			}
 			// カンマ利用の指定
-			if(int.Parse(selstr[1]) == 1 )
+			if(int.Parse(selstr[1],System.Globalization.CultureInfo.CurrentCulture) == 1 )
 			{
 				this.chkComma.Checked = true;
 			}
@@ -290,7 +291,7 @@ namespace quickDBExplorer
 				this.chkComma.Checked = false;
 			}
 			// 改行付加の指定
-			if(int.Parse(selstr[2]) == 1 )
+			if(int.Parse(selstr[2],System.Globalization.CultureInfo.CurrentCulture) == 1 )
 			{
 				this.chkCRLF.Checked = true;
 			}
@@ -308,9 +309,9 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void btnOK_Click(object sender, System.EventArgs e)
 		{
-			this.retTableAccessor = this.txtAlias.Text;
-			this.retCRLF = this.chkCRLF.Checked;
-			this.retComma = this.chkComma.Checked;
+			this.pRetTableAccessor = this.txtAlias.Text;
+			this.pRetCrlf = this.chkCRLF.Checked;
+			this.pRetComma = this.chkComma.Checked;
 			this.DialogResult = DialogResult.OK;
 		}
 	}

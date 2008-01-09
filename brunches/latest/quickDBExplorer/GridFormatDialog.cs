@@ -11,6 +11,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// データグリッドの表示書式を指定する
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class GridFormatDialog : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.Button btnCancel;
@@ -36,63 +37,63 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示フォントの指定
 		/// </summary>
-		protected	Font	gfont;
+		private	Font	gridFont;
 		/// <summary>
 		/// 表示フォントの指定
 		/// </summary>
 		public	Font	Gfont
 		{
-			get { return this.gfont; }
-			set { this.gfont = value; }
+			get { return this.gridFont; }
+			set { this.gridFont = value; }
 		}
 		/// <summary>
 		/// フォント表示色の指定
 		/// </summary>
-		protected	Color	gcolor;
+		private	Color	gridColor;
 		/// <summary>
 		/// フォント表示色の指定
 		/// </summary>
 		public	Color	Gcolor
 		{
-			get { return this.gcolor; }
-			set { this.gcolor = value; }
+			get { return this.gridColor; }
+			set { this.gridColor = value; }
 		}
 		/// <summary>
 		/// 数値変換書式の指定
 		/// </summary>
-		protected	string	numFormat;
+		private	string	numberFormat;
 		/// <summary>
 		/// 数値変換書式の指定
 		/// </summary>
 		public	string	NumFormat
 		{
-			get { return this.numFormat; }
-			set { this.numFormat = value; }
+			get { return this.numberFormat; }
+			set { this.numberFormat = value; }
 
 		}
 		/// <summary>
 		/// 小数点書式の指定
 		/// </summary>
-		protected	string	floatFormat;
+		private	string	gridFloatFormat;
 		/// <summary>
 		/// 小数点書式の指定
 		/// </summary>
 		public	string	FloatFormat
 		{
-			get { return this.floatFormat; }
-			set { this.floatFormat = value; }
+			get { return this.gridFloatFormat; }
+			set { this.gridFloatFormat = value; }
 		}
 		/// <summary>
 		/// 日付変換書式の指定
 		/// </summary>
-		protected	string	dateFormat;
+		private	string	gridDateFormat;
 		/// <summary>
 		/// 日付変換書式の指定
 		/// </summary>
 		public	string	DateFormat
 		{
-			get { return this.dateFormat; }
-			set { this.dateFormat = value; }
+			get { return this.gridDateFormat; }
+			set { this.gridDateFormat = value; }
 		}
 
 		/// <summary>
@@ -324,25 +325,25 @@ namespace quickDBExplorer
 
 		private void btnFont_Click(object sender, System.EventArgs e)
 		{
-			this.fontDialog1.Font = gfont;
-			this.fontDialog1.Color = gcolor;
+			this.fontDialog1.Font = gridFont;
+			this.fontDialog1.Color = gridColor;
 			this.fontDialog1.ShowColor = false;
 			
 			if( this.fontDialog1.ShowDialog() == DialogResult.OK )
 			{
-				this.gfont = this.fontDialog1.Font;
-				this.gcolor = Color.FromArgb(this.fontDialog1.Color.ToArgb());
-				this.txtFontDisp.Text = this.gfont.Name;
-				this.txtFontDisp.ForeColor = this.gcolor;
-				this.txtFontDisp.Font = this.gfont;
+				this.gridFont = this.fontDialog1.Font;
+				this.gridColor = Color.FromArgb(this.fontDialog1.Color.ToArgb());
+				this.txtFontDisp.Text = this.gridFont.Name;
+				this.txtFontDisp.ForeColor = this.gridColor;
+				this.txtFontDisp.Font = this.gridFont;
 			}
 		}
 
 		private void GridFormatDialog_Load(object sender, System.EventArgs e)
 		{
-			this.txtFontDisp.Text = this.gfont.Name;
-			this.txtFontDisp.ForeColor = this.gcolor;
-			this.txtFontDisp.Font = this.gfont;
+			this.txtFontDisp.Text = this.gridFont.Name;
+			this.txtFontDisp.ForeColor = this.gridColor;
+			this.txtFontDisp.Font = this.gridFont;
 			if( this.NumFormat != null )
 			{
 				this.cmbNumFormat.SelectedItem = this.NumFormat;
@@ -372,18 +373,18 @@ namespace quickDBExplorer
 		private void cmbNumFormat_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			int i = 1234;
-			this.txtNumDisp.Text = i.ToString(getFormat(this.cmbNumFormat.SelectedItem.ToString()));
+			this.txtNumDisp.Text = i.ToString(GetFormat(this.cmbNumFormat.SelectedItem.ToString()),System.Globalization.CultureInfo.CurrentCulture);
 		}
 
 		private void cmbDecimalFormat_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			double dd = 1234.23;
-			this.txtDecimalDisp.Text = dd.ToString(getFormat(this.cmbDecimalFormat.SelectedItem.ToString()));
+			this.txtDecimalDisp.Text = dd.ToString(GetFormat(this.cmbDecimalFormat.SelectedItem.ToString()),System.Globalization.CultureInfo.CurrentCulture);
 		}
 
 		private void cmbDateFormat_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			this.txtDateTimeDisp.Text = DateTime.Now.ToString(getFormat(this.cmbDateFormat.SelectedItem.ToString()));
+			this.txtDateTimeDisp.Text = DateTime.Now.ToString(GetFormat(this.cmbDateFormat.SelectedItem.ToString()),System.Globalization.CultureInfo.CurrentCulture);
 		}
 
 		/// <summary>
@@ -391,7 +392,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="fstr">基の表示書式</param>
 		/// <returns>表示書式文字列</returns>
-		protected string getFormat(string fstr)
+		protected static string GetFormat(string fstr)
 		{
 			// \t\t があれば、プログラムの初期選択枝からの選択
 			int termp = fstr.IndexOf("	");

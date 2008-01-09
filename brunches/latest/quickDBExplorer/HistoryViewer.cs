@@ -11,6 +11,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// 各種入力履歴の選択ダイアログ
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class HistoryViewer : quickDBExplorer.quickDBExplorerBaseForm
 	{
 		private System.Windows.Forms.Button btnCancel;
@@ -34,28 +35,28 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 選択された入力履歴情報
 		/// </summary>
-		protected string retString = "";
+		private string pRetString = "";
 		/// <summary>
 		/// 選択された入力履歴情報
 		/// </summary>
 		public string RetString 
 		{
-			get { return this.retString; }
-			set { this.retString = value; }
+			get { return this.pRetString; }
+			set { this.pRetString = value; }
 		}
 
 		/// <summary>
 		/// テーブル名称を表示するか否かの指定
 		/// </summary>
-		private bool isShowTable = true;
+		private bool pIsShowTable = true;
 
 		/// <summary>
 		/// テーブル名称を表示するか否かの指定
 		/// </summary>
 		public bool IsShowTable
 		{
-			get { return this.isShowTable; }
-			set { this.isShowTable = value; }
+			get { return this.pIsShowTable; }
+			set { this.pIsShowTable = value; }
 		}
 
 		/// <summary>
@@ -199,7 +200,7 @@ namespace quickDBExplorer
 			// 一旦履歴一覧は全てクリア
 			this.historyList.Clear();
 			// 表示するカラムのセット
-			if( isShowTable == true )
+			if( pIsShowTable == true )
 			{
 				this.historyList.Columns.Add("テーブル",120,HorizontalAlignment.Left);
 			}
@@ -211,12 +212,12 @@ namespace quickDBExplorer
 				this.historyList.BeginUpdate();
 
 				// まずは、同じテーブル名のものを優先して表示する
-				DataRow []drl = this.textHistoryDS.textHistoryData.Select(string.Format("KeyValue = '{0}'",this.targetTable),
+				DataRow []drl = this.textHistoryDS.textHistoryData.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue = '{0}'",this.targetTable),
 					"KeyNo desc");
 				ListViewItem item ;
 				for( int i = 0 ; i < drl.Length; i++ )
 				{
-					if( isShowTable == true )
+					if( pIsShowTable == true )
 					{
 						item = new ListViewItem(
 							new string[] {
@@ -237,11 +238,11 @@ namespace quickDBExplorer
 				}
 
 				// 次に違うテーブルのものを表示
-				drl = this.textHistoryDS.textHistoryData.Select(string.Format("KeyValue <> '{0}'",this.targetTable),
+				drl = this.textHistoryDS.textHistoryData.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue <> '{0}'",this.targetTable),
 					"KeyNo desc");
 				for( int i = 0 ; i < drl.Length; i++ )
 				{
-					if( isShowTable == true )
+					if( pIsShowTable == true )
 					{
 						item = new ListViewItem(
 							new string[] {
@@ -300,13 +301,13 @@ namespace quickDBExplorer
 			if( this.historyList.SelectedItems.Count > 0 )
 			{
 				// 選択項目があれば、それを戻す
-				if( isShowTable == true )
+				if( pIsShowTable == true )
 				{
-					this.retString = this.historyList.SelectedItems[0].SubItems[1].Text;
+					this.pRetString = this.historyList.SelectedItems[0].SubItems[1].Text;
 				}
 				else
 				{
-					this.retString = this.historyList.SelectedItems[0].SubItems[0].Text;
+					this.pRetString = this.historyList.SelectedItems[0].SubItems[0].Text;
 				}
 			}
 			this.DialogResult = DialogResult.OK;
@@ -338,7 +339,7 @@ namespace quickDBExplorer
 			// ただし、読み取り専用
 			ZoomDialog dlg = new ZoomDialog();
 			dlg.IsDispOnly = true;
-			if( isShowTable == true )
+			if( pIsShowTable == true )
 			{
 				dlg.EditText = this.historyList.SelectedItems[0].SubItems[1].Text;
 			}

@@ -12,6 +12,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// 指定されたテーブルのINDEX情報の表示ダイアログ
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class IndexViewDialog : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.CheckBox chkTopStay;
@@ -25,28 +26,28 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示するテーブル名称
 		/// </summary>
-		protected DBObjectInfo dspObj;
+		private DBObjectInfo pDisplayObj;
 		/// <summary>
 		/// 表示するテーブル名称
 		/// </summary>
-		public DBObjectInfo DispObj
+		public DBObjectInfo DisplayObj
 		{
-			get { return this.dspObj; }
-			set { this.dspObj = value; }
+			get { return this.pDisplayObj; }
+			set { this.pDisplayObj = value; }
 		}
 
 		/// <summary>
 		/// SQLドライバ
 		/// </summary>
-		protected ISqlInterface sqlDriver = null;
+		private ISqlInterface pSqlDriver = null;
 
 		/// <summary>
 		/// SQL文を処理するクラス
 		/// </summary>
 		public ISqlInterface SqlDriver
 		{
-			get { return this.sqlDriver; }
-			set { this.sqlDriver = value; }
+			get { return this.pSqlDriver; }
+			set { this.pSqlDriver = value; }
 		}
 
 
@@ -149,7 +150,7 @@ namespace quickDBExplorer
 		/// INDEX情報を表示するテーブルを切り替える
 		/// </summary>
 		/// <param name="dboInfo">新規に表示するオブジェクト情報</param>
-		public void settabledsp(DBObjectInfo dboInfo)
+		public void SetDisplayTable(DBObjectInfo dboInfo)
 		{
 			// 対象のオブジェクトがテーブルもしくはVIEWでない場合は何も表示しない
 			if( dboInfo == null || 
@@ -172,17 +173,19 @@ namespace quickDBExplorer
 				}
 			}
 
-			this.dspObj = dboInfo;
+			this.pDisplayObj = dboInfo;
 
 			string stSql;
 
-			stSql = string.Format(@"sp_helpindex '{0}'", dboInfo.RealObjName );
+			stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,@"sp_helpindex '{0}'", dboInfo.RealObjName );
 
-			DbDataAdapter da = this.sqlDriver.NewDataAdapter();
-			IDbCommand cmd = this.sqlDriver.NewSqlCommand(stSql);
-			this.sqlDriver.SetSelectCmd(da,cmd);
+			DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
+			IDbCommand cmd = this.pSqlDriver.NewSqlCommand(stSql);
+			this.pSqlDriver.SetSelectCmd(da,cmd);
 
 			DataSet baseidx = new DataSet();
+			baseidx.CaseSensitive = true;
+			baseidx.Locale = System.Globalization.CultureInfo.CurrentCulture;
 			da.Fill(baseidx,"basedata");
 
 
@@ -191,6 +194,8 @@ namespace quickDBExplorer
 			// 名称, 属性、順序、フィールドに分割
 
 			DataSet idx = new DataSet();
+			idx.CaseSensitive = true;
+			idx.Locale = System.Globalization.CultureInfo.CurrentCulture;
 			idx.Tables.Add("abc");
 			idx.Tables["abc"].Columns.Add("名称");
 			idx.Tables["abc"].Columns.Add("属性");
@@ -280,9 +285,9 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void IndexViewDialog_Load(object sender, System.EventArgs e)
 		{
-			if( this.dspObj != null )
+			if( this.pDisplayObj != null )
 			{
-				settabledsp(dspObj);
+				this.SetDisplayTable(pDisplayObj);
 			}
 		}
 

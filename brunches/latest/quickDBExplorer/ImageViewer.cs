@@ -9,6 +9,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// イメージの表示ダイアログ
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class ImageViewer : quickDBExplorer.quickDBExplorerBaseForm
 	{
 		private System.ComponentModel.IContainer components = null;
@@ -24,15 +25,15 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示するイメージ情報
 		/// </summary>
-		protected Image viewImage;
+		private Image pViewImage;
 
 		/// <summary>
 		/// 表示するイメージ情報の取得・設定
 		/// </summary>
 		public Image ViewImage
 		{
-			get { return this.viewImage; }
-			set { this.viewImage = value; }
+			get { return this.pViewImage; }
+			set { this.pViewImage = value; }
 		}
 
 
@@ -207,16 +208,16 @@ namespace quickDBExplorer
 			int basewidth = this.pictureBox1.Width;
 			int baseheight = this.pictureBox1.Height;
 			// 表示イメージの設定
-			this.pictureBox1.Image = this.viewImage;
+			this.pictureBox1.Image = this.pViewImage;
 			// もともとのイメージ表示エリアのサイズとの差分を取得して
-			int diffwidth = this.viewImage.Width - basewidth;
-			int diffheight = this.viewImage.Height - baseheight;
+			int diffwidth = this.pViewImage.Width - basewidth;
+			int diffheight = this.pViewImage.Height - baseheight;
 			// このダイアログ自体のサイズを動的に変更する
 			this.Width += diffwidth;
 			this.Height += diffheight;
 			// イメージの幅、高さ情報の表示
-			this.PixcelHeight.Text = this.viewImage.Height.ToString();
-			this.PixcelWidth.Text = this.viewImage.Width.ToString();
+			this.PixcelHeight.Text = this.pViewImage.Height.ToString(System.Globalization.CultureInfo.CurrentCulture);
+			this.PixcelWidth.Text = this.pViewImage.Width.ToString(System.Globalization.CultureInfo.CurrentCulture);
 		}
 
 		/// <summary>
