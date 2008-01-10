@@ -452,7 +452,7 @@ namespace quickDBExplorer
 			this.dbList.Name = "dbList";
 			this.dbList.Size = new System.Drawing.Size(160, 52);
 			this.dbList.TabIndex = 1;
-			this.dbList.CopyData += new quickDBExplorer.qdbeListBox.CopyDataHandler(this.dbList_CopyData);
+			this.dbList.CopyData += new quickDBExplorer.qdbeListBox.CopyDataEventHandler(this.dbList_CopyData);
 			this.dbList.SelectedIndexChanged += new System.EventHandler(this.dbList_SelectedIndexChanged);
 			// 
 			// objectList
@@ -638,7 +638,7 @@ namespace quickDBExplorer
 			this.ownerListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.ownerListbox.Size = new System.Drawing.Size(160, 88);
 			this.ownerListbox.TabIndex = 4;
-			this.ownerListbox.CopyData += new quickDBExplorer.qdbeListBox.CopyDataHandler(this.ownerListbox_CopyData);
+			this.ownerListbox.CopyData += new quickDBExplorer.qdbeListBox.CopyDataEventHandler(this.ownerListbox_CopyData);
 			this.ownerListbox.SelectedIndexChanged += new System.EventHandler(this.ownerListbox_SelectedIndexChanged);
 			// 
 			// btnDDL
@@ -854,8 +854,8 @@ namespace quickDBExplorer
 			this.fieldListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.fieldListbox.Size = new System.Drawing.Size(240, 268);
 			this.fieldListbox.TabIndex = 34;
-			this.fieldListbox.CopyData += new quickDBExplorer.qdbeListBox.CopyDataHandler(this.fieldListbox_CopyData);
-			this.fieldListbox.ExtendedCopyData += new quickDBExplorer.qdbeListBox.ExTendedCopyDataHandler(this.fieldListbox_ExtendedCopyData);
+			this.fieldListbox.CopyData += new quickDBExplorer.qdbeListBox.CopyDataEventHandler(this.fieldListbox_CopyData);
+			this.fieldListbox.ExtendedCopyData += new quickDBExplorer.qdbeListBox.ExTendedCopyDataEventHandler(this.fieldListbox_ExtendedCopyData);
 			// 
 			// fldContextMenu
 			// 
@@ -1527,14 +1527,14 @@ namespace quickDBExplorer
 
 		private void menuFieldAliasCopy_Click(object sender, System.EventArgs e)
 		{
-			fieldListbox_ExtendedCopyData(sender);
+			fieldListbox_ExtendedCopyData(sender, new System.EventArgs());
 		}
 
 		/// <summary>
 		/// フィールドリストのコピーメニュー選択時処理
 		/// </summary>
 		/// <param name="sender"></param>
-		private void fieldListbox_CopyData(object sender)
+		private void fieldListbox_CopyData(object sender, System.EventArgs e)
 		{
 			CopyFldList(true,true);
 		}
@@ -3615,7 +3615,7 @@ namespace quickDBExplorer
 		}
 
 
-		private void fieldListbox_ExtendedCopyData(object sender)
+		private void fieldListbox_ExtendedCopyData(object sender, System.EventArgs e)
 		{
 			// フィールド一覧で Ctrl + F が押下された場合の処理
 			// 別ダイアログを表示してエイリアス等の指定を可能にする
@@ -3682,7 +3682,7 @@ namespace quickDBExplorer
 		/// DBリストのコピーメニュー選択時処理
 		/// </summary>
 		/// <param name="sender"></param>
-		private void dbList_CopyData(object sender)
+		private void dbList_CopyData(object sender, System.EventArgs e)
 		{
 			if( this.dbList.SelectedItems.Count > 0 )
 			{
@@ -3704,7 +3704,7 @@ namespace quickDBExplorer
 		/// Owner/Role/Schemaのコピーメニュー選択時処理
 		/// </summary>
 		/// <param name="sender"></param>
-		private void ownerListbox_CopyData(object sender)
+		private void ownerListbox_CopyData(object sender, System.EventArgs e)
 		{
 			// Owner/Role/Schema名のコピー
 			if( this.ownerListbox.SelectedItems.Count > 0 )
@@ -5702,64 +5702,64 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 選択されたテーブルの一覧
 		/// </summary>
-		protected ArrayList	tbname;
+		private ArrayList	pTableName;
 		/// <summary>
 		/// 選択されたテーブルの一覧
 		/// </summary>
 		public ArrayList	Tbname
 		{
-			get { return this.tbname; }
-			set { this.tbname = value; }
+			get { return this.pTableName; }
+			set { this.pTableName = value; }
 		}
 
 		/// <summary>
 		/// where 句の指定
 		/// </summary>
-		protected string		whereStr;
+		private string		pWhereStr;
 		/// <summary>
 		/// where 句の指定
 		/// </summary>
 		public string		WhereStr
 		{
-			get { return this.whereStr; }
-			set { this.whereStr = value; }
+			get { return this.pWhereStr; }
+			set { this.pWhereStr = value; }
 		}
 		/// <summary>
 		/// Order by 句の指定
 		/// </summary>
-		protected string		orderStr;
+		private string		pOrderStr;
 		/// <summary>
 		/// Order by 句の指定
 		/// </summary>
 		public string		OrderStr
 		{
-			get { return this.orderStr; }
-			set { this.orderStr = value; }
+			get { return this.pOrderStr; }
+			set { this.pOrderStr = value; }
 		}
 		/// <summary>
 		/// 最大件数の指定
 		/// </summary>
-		protected string		maxStr;
+		private string		pMaxString;
 		/// <summary>
 		/// 最大件数の指定
 		/// </summary>
 		public string		MaxStr
 		{
-			get { return this.maxStr; }
-			set { this.maxStr = value; }
+			get { return this.pMaxString; }
+			set { this.pMaxString = value; }
 		}
 
 		/// <summary>
 		/// グリッドにデータを全て表示するか否かの指定
 		/// </summary>
-		protected bool		isAllDisp;
+		protected bool		pIsAllDisp;
 		/// <summary>
 		/// グリッドにデータを全て表示するか否かの指定
 		/// </summary>
 		public bool		IsAllDisp
 		{
-			get { return this.isAllDisp; }
-			set { this.isAllDisp = value; }
+			get { return this.pIsAllDisp; }
+			set { this.pIsAllDisp = value; }
 		}
 
 		/// <summary>
@@ -5771,7 +5771,7 @@ namespace quickDBExplorer
 			this.WhereStr = "";
 			this.OrderStr = "";
 			this.MaxStr = "";
-			this.isAllDisp = false;
+			this.pIsAllDisp = false;
 		}
 	}
 

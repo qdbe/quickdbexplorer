@@ -10,6 +10,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// データグリッドの表示形式を管理する
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class QdbeDataGridTextBoxColumn : DataGridTextBoxColumn
 	{
 		private CurrencyManager _sorce;
@@ -101,15 +102,15 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="pa">親となるグリッド</param>
 		/// <param name="col">結合させるデータカラム</param>
-		/// <param name="NumFormat">整数表示の場合の書式</param>
-		/// <param name="FloatFormat">小数点表示の場合の書式</param>
-		/// <param name="DateFormat">日付表示の場合の書式</param>
+		/// <param name="numberFormat">整数表示の場合の書式</param>
+		/// <param name="floatFormat">小数点表示の場合の書式</param>
+		/// <param name="dateFormat">日付表示の場合の書式</param>
 		public QdbeDataGridTextBoxColumn(
 			DataGrid pa, 
 			DataColumn col,
-			string NumFormat,
-			string FloatFormat,
-			string DateFormat
+			string numberFormat,
+			string floatFormat,
+			string dateFormat
 			) : this(pa,col)
 		{
 			if( col.DataType.FullName == "System.Int32" ||
@@ -120,16 +121,16 @@ namespace quickDBExplorer
 				col.DataType.FullName == "System.UInt64" ||
 				col.DataType.FullName == "System.Decimal" )
 			{
-				this.Format = NumFormat;
+				this.Format = numberFormat;
 			}
 			if( col.DataType.FullName == "System.Double" ||
 				col.DataType.FullName == "System.Single" )
 			{
-				this.Format = FloatFormat;
+				this.Format = floatFormat;
 			}
 			if( col.DataType.FullName == "System.DateTime" )
 			{
-				this.Format = DateFormat;
+				this.Format = dateFormat;
 			}
 		}
 
@@ -183,7 +184,7 @@ namespace quickDBExplorer
 				Object obj = GetColumnValueAtRow(this._sorce, this.editrow );
 				if( obj is byte[] )
 				{
-					MemoryStream ms = new MemoryStream((byte[])obj);
+					MemoryStream ms = new MemoryStream(obj as byte[]);
 					try
 					{
 						Image gazo = Image.FromStream(ms);
@@ -325,8 +326,8 @@ namespace quickDBExplorer
 			}
 			else if( cellValue is string && 
 				( 
-				((string)cellValue).IndexOf("\r\n") >= 0 ||
-				((string)cellValue).IndexOf("\n") >= 0 ) )
+				(cellValue as string).IndexOf("\r\n") >= 0 ||
+				(cellValue as string).IndexOf("\n") >= 0 ) )
 			{
 				// 文字列で複数行にわたる場合、とき色に着色
 				backBrush = new SolidBrush(Color.FromArgb(0xf4,0xb3,0xc2));

@@ -7,32 +7,35 @@ namespace quickDBExplorer
 	/// リストボックスの拡張機能版
 	/// キー押下時の特殊処理(delegateでのイベントハンドラ呼び出し処理)が組み込んである
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class qdbeListBox : System.Windows.Forms.ListBox
 	{
 
 		/// <summary>
 		/// Ctrl+C 押下時の デリゲート
 		/// </summary>
-		public delegate void CopyDataHandler(
-			object sender
+		public delegate void CopyDataEventHandler(
+			object sender,
+			System.EventArgs e
 			);
 
 		/// <summary>
 		/// Ctrl+Cが押された場合のイベント
 		/// </summary>
-		public event CopyDataHandler CopyData = null;
+		public event CopyDataEventHandler CopyData = null;
 
 		/// <summary>
 		/// Ctrl + F 押下時のデリゲート
 		/// </summary>
-		public delegate void ExTendedCopyDataHandler(
-			object sender
+		public delegate void ExTendedCopyDataEventHandler(
+			object sender,
+			System.EventArgs e
 			);
 
 		/// <summary>
 		/// Ctrl+F 押下時のイベント
 		/// </summary>
-		public event ExTendedCopyDataHandler ExtendedCopyData = null;
+		public event ExTendedCopyDataEventHandler ExtendedCopyData = null;
 
 
 		private bool isAllSelecting = false;
@@ -65,7 +68,7 @@ namespace quickDBExplorer
 			{
 				if( this.CopyData != null )
 				{
-					this.CopyData(this);
+					this.CopyData(this, new System.EventArgs());
 				}
 				return true;
 			}
@@ -74,7 +77,7 @@ namespace quickDBExplorer
 			{
 				if( this.ExtendedCopyData != null )
 				{
-					this.ExtendedCopyData(this);
+					this.ExtendedCopyData(this, new System.EventArgs());
 				}
 				return true;
 			}
