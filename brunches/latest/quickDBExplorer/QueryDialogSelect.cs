@@ -9,6 +9,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// select 文を入力する為のダイアログ
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class QueryDialogSelect : quickDBExplorer.QueryDialog
 	{
 		private System.ComponentModel.IContainer components = null;
@@ -46,7 +47,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			((System.ComponentModel.ISupportInitialize)(this.dHistory)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.DHistory)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtInput
@@ -71,7 +72,7 @@ namespace quickDBExplorer
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(480, 325);
 			this.Name = "QueryDialogSelect";
-			((System.ComponentModel.ISupportInitialize)(this.dHistory)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.DHistory)).EndInit();
 			this.ResumeLayout(false);
 
 		}

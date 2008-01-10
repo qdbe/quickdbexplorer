@@ -321,22 +321,22 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "textHistory.xsd"
+                    RelPath = "TextHistoryDataSet.xsd"
                     BuildAction = "Content"
                     Generator = "MSDataSetGenerator"
-                    LastGenOutput = "textHistory.cs"
+                    LastGenOutput = "TextHistoryDataSet.cs"
                 />
                 <File
-                    RelPath = "textHistory.cs"
-                    DependentUpon = "textHistory.xsd"
+                    RelPath = "TextHistoryDataSet.cs"
+                    DependentUpon = "TextHistoryDataSet.xsd"
                     SubType = "code"
                     BuildAction = "Compile"
                     DesignTime = "True"
                     AutoGen = "True"
                 />
                 <File
-                    RelPath = "textHistory.xsx"
-                    DependentUpon = "textHistory.xsd"
+                    RelPath = "TextHistoryDataSet.xsx"
+                    DependentUpon = "TextHistoryDataSet.xsd"
                     BuildAction = "None"
                 />
                 <File

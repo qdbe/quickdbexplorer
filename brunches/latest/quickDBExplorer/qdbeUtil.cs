@@ -7,8 +7,16 @@ namespace quickDBExplorer
 	/// 各種ユーティリティ関数
 	/// Static メソッドのみ保持している
 	/// </summary>
-	public class qdbeUtil
+	public sealed class qdbeUtil
 	{
+
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		private qdbeUtil()
+		{
+		}
+
 		/// <summary>
 		/// テーブル名を解析し、[owner]、[tablename]に分割する
 		/// 基の名前は[]が付いていないことが前提
@@ -20,8 +28,8 @@ namespace quickDBExplorer
 			string delimStr = ".";
 			string []str = tbname.Split(delimStr.ToCharArray(), 2);
 			string []retstr = new string[2];
-			retstr[0] = string.Format("[{0}]",str[0]);
-			retstr[1] = string.Format("[{0}]",str[1]);
+			retstr[0] = string.Format(System.Globalization.CultureInfo.CurrentCulture,"[{0}]",str[0]);
+			retstr[1] = string.Format(System.Globalization.CultureInfo.CurrentCulture,"[{0}]",str[1]);
 			return retstr;
 		}
 
@@ -35,7 +43,7 @@ namespace quickDBExplorer
 		{
 			string delimStr = ".";
 			string []str = tbname.Split(delimStr.ToCharArray(), 2);
-			return string.Format("[{0}].[{1}]",str[0],str[1]);
+			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"[{0}].[{1}]",str[0],str[1]);
 		}
 
 		/// <summary>
@@ -50,7 +58,7 @@ namespace quickDBExplorer
 		{
 			string delimStr = ".";
 			string []str = tbname.Split(delimStr.ToCharArray(), 2);
-			return string.Format("[{0}].[{1}_{2}]",str[0], str[1], addstr);
+			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"[{0}].[{1}_{2}]",str[0], str[1], addstr);
 		}
 
 		/// <summary>
@@ -59,14 +67,14 @@ namespace quickDBExplorer
 		/// <param name="key">テーブル名称</param>
 		/// <param name="hvalue">追加する履歴項目</param>
 		/// <param name="tdata">追加する先の履歴情報</param>
-		static public void SetNewHistory(string key, string hvalue, ref textHistory tdata)
+		static public void SetNewHistory(string key, string hvalue, TextHistoryDataSet tdata)
 		{
 			if( hvalue == null || hvalue == "" )
 			{
 				return;
 			}
 
-			DataRow []drl = tdata.textHistoryData.Select( string.Format("KeyValue = '{0}'", key ) );
+			DataRow []drl = tdata.TextHistoryDataSets.Select( string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue = '{0}'", key ) );
 
 			for( int i = 0; i < drl.Length; i++ )
 			{
@@ -77,10 +85,10 @@ namespace quickDBExplorer
 				}
 			}
 			
-			textHistory.textHistoryDataRow ndr = tdata.textHistoryData.NewtextHistoryDataRow();
+			TextHistoryDataSet.TextHistoryDataSetsRow ndr = tdata.TextHistoryDataSets.NewTextHistoryDataSetsRow();
 			ndr.KeyValue = key;
 			ndr.DataValue = hvalue;
-			tdata.textHistoryData.Rows.Add(ndr);
+			tdata.TextHistoryDataSets.Rows.Add(ndr);
 		}
 
 	}

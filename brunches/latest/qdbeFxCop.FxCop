@@ -21,285 +21,10 @@
   <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
  </ProjectOptions>
  <Targets>
-  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/ISqlInterface.dll" Analyze="False" AnalyzeAllChildren="False" />
-  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/quickDBExplorer.exe" Analyze="True" AnalyzeAllChildren="False">
-   <Modules AnalyzeAllChildren="False">
-    <Module Name="quickdbexplorer.exe" Analyze="True" AnalyzeAllChildren="False">
-     <Namespaces AnalyzeAllChildren="False">
-      <Namespace Name="quickDBExplorer" Analyze="False" AnalyzeAllChildren="False">
-       <Types AnalyzeAllChildren="False">
-        <Type Name="CmdInputDialog" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="DataGridViewBase" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="FieldGetDialog" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="GridFormatDialog" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="HistoryViewer" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ImageViewer" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="IndexViewDialog" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="LogOnDialog" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="MainForm" Analyze="True" AnalyzeAllChildren="False">
-         <Members AnalyzeAllChildren="False">
-          <Member Name="#.ctor(quickDBExplorer.ServerData)" Analyze="True" />
-          <Member Name="#aliasHistory" Analyze="True" />
-          <Member Name="#BeginNewThread(System.Threading.WaitCallback,System.Object)" Analyze="True" />
-          <Member Name="#btn_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnBackColor" Analyze="True" />
-          <Member Name="#btnCSV" Analyze="True" />
-          <Member Name="#btnDataEdit" Analyze="True" />
-          <Member Name="#btnDataEdit_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnDataUpdate" Analyze="True" />
-          <Member Name="#btnDataUpdate_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnDDL" Analyze="True" />
-          <Member Name="#btnEtc" Analyze="True" />
-          <Member Name="#btnFieldList" Analyze="True" />
-          <Member Name="#btnForeColor" Analyze="True" />
-          <Member Name="#btnGridFormat" Analyze="True" />
-          <Member Name="#btnGridFormat_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnIndex" Analyze="True" />
-          <Member Name="#btnIndex_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnInsert" Analyze="True" />
-          <Member Name="#btnOrderZoom" Analyze="True" />
-          <Member Name="#btnOrderZoom_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnQueryNonSelect_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnQuerySelect" Analyze="True" />
-          <Member Name="#btnQuerySelect_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnRedisp" Analyze="True" />
-          <Member Name="#btnReference" Analyze="True" />
-          <Member Name="#btnReference_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnSelect" Analyze="True" />
-          <Member Name="#btnSelect_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnTmpAllDisp" Analyze="True" />
-          <Member Name="#btnTmpAllDisp_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#btnWhereZoom" Analyze="True" />
-          <Member Name="#btnWhereZoom_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#CallEPM(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#CallISQLW(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#CallProfile(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#CheckFileSpec()" Analyze="True" />
-          <Member Name="#chkDispData" Analyze="True" />
-          <Member Name="#chkDispData_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#chkDispFieldAttr" Analyze="True" />
-          <Member Name="#chkDispFieldAttr_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#cmbHistory" Analyze="True" />
-          <Member Name="#cmbHistory_SelectionChangeCommitted(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#cmdDialog" Analyze="True" />
-          <Member Name="#cmdHistory" Analyze="True" />
-          <Member Name="#ColCreateDate" Analyze="True" />
-          <Member Name="#ColObjName" Analyze="True" />
-          <Member Name="#ColOwner" Analyze="True" />
-          <Member Name="#ColTVSType" Analyze="True" />
-          <Member Name="#components" Analyze="True" />
-          <Member Name="#ConvData(System.Data.IDataReader,System.Int32,System.String,System.String,System.Boolean)" Analyze="True" />
-          <Member Name="#copyDbGridMenu" Analyze="True" />
-          <Member Name="#copyDbGridMenu_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#CopyFldList(System.Boolean,System.Boolean)" Analyze="True" />
-          <Member Name="#CopyTableName(System.Boolean)" Analyze="True" />
-          <Member Name="#CreateFldList(System.Boolean,System.Boolean)" Analyze="True" />
-          <Member Name="#CreateTCsvText(System.Boolean,System.String)" Analyze="True" />
-          <Member Name="#CreDDL(System.Boolean,System.Boolean)" Analyze="True" />
-          <Member Name="#CreInsert(System.Boolean,System.Boolean,System.Boolean)" Analyze="True" />
-          <Member Name="#DateFormat" Analyze="True" />
-          <Member Name="#dbGrid" Analyze="True" />
-          <Member Name="#dbGrid_Paint(System.Object,System.Windows.Forms.PaintEventArgs)" Analyze="True" />
-          <Member Name="#dbGridMenu" Analyze="True" />
-          <Member Name="#dbList" Analyze="True" />
-          <Member Name="#dbList_SelectedIndexChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#DependOutPut(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#DispData(quickDBExplorer.DBObjectInfo)" Analyze="True" />
-          <Member Name="#DispData(quickDBExplorer.DBObjectInfo,System.Boolean)" Analyze="True" />
-          <Member Name="#DispFldList(quickDBExplorer.DBObjectInfo)" Analyze="True" />
-          <Member Name="#DispListOwner()" Analyze="True" />
-          <Member Name="#DispObjectInfo(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#DispObjectList()" Analyze="True" />
-          <Member Name="#Dispose(System.Boolean)" Analyze="True" />
-          <Member Name="#dlgAliasZoom_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#dlgSortZoom_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#dlgWhereZoom_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#DMLHistory" Analyze="True" />
-          <Member Name="#dspdt" Analyze="True" />
-          <Member Name="#fieldListbox" Analyze="True" />
-          <Member Name="#fldContextMenu" Analyze="True" />
-          <Member Name="#fldmenuCopy" Analyze="True" />
-          <Member Name="#fldmenuCopy_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#fldmenuCopyNoComma" Analyze="True" />
-          <Member Name="#fldmenuCopyNoComma_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#fldmenuCopyNoCRLF" Analyze="True" />
-          <Member Name="#fldmenuCopyNoCRLF_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#fldmenuCopyNoCRLFNoComma" Analyze="True" />
-          <Member Name="#fldmenuCopyNoCRLFNoComma_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#FloatFormat" Analyze="True" />
-          <Member Name="#folderBrowserDialog1" Analyze="True" />
-          <Member Name="#gcolor" Analyze="True" />
-          <Member Name="#GetAlias()" Analyze="True" />
-          <Member Name="#GetEncode()" Analyze="True" />
-          <Member Name="#GetFormat(System.String)" Analyze="True" />
-          <Member Name="#GetProcCondition(System.String)" Analyze="True" />
-          <Member Name="#gfont" Analyze="True" />
-          <Member Name="#grpCharaSet" Analyze="True" />
-          <Member Name="#grpDataDispMode" Analyze="True" />
-          <Member Name="#grpOutputMode" Analyze="True" />
-          <Member Name="#grpSortMode" Analyze="True" />
-          <Member Name="#grpSysUserMode" Analyze="True" />
-          <Member Name="#grpViewMode" Analyze="True" />
-          <Member Name="#indexdlg" Analyze="True" />
-          <Member Name="#InitializeComponent()" Analyze="True" />
-          <Member Name="#InitPopupMenu()" Analyze="True" />
-          <Member Name="#InsertMake(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#InsertMakeDelete(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#InsertMakeNoField(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#InsertMakeNoFieldDelete(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#InstanceName" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#isInCmbEvent" Analyze="True" />
-          <Member Name="#IsProcCancel()" Analyze="True" />
-          <Member Name="#isThreadAlive" Analyze="True" />
-          <Member Name="#IsUseTruse" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#label1" Analyze="True" />
-          <Member Name="#label10" Analyze="True" />
-          <Member Name="#label11" Analyze="True" />
-          <Member Name="#label11_DoubleClick(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#label2" Analyze="True" />
-          <Member Name="#label3" Analyze="True" />
-          <Member Name="#label4" Analyze="True" />
-          <Member Name="#label4_DoubleClick(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#label5" Analyze="True" />
-          <Member Name="#label7" Analyze="True" />
-          <Member Name="#label8" Analyze="True" />
-          <Member Name="#label9" Analyze="True" />
-          <Member Name="#LoadFile2Data(System.Boolean,System.Boolean)" Analyze="True" />
-          <Member Name="#LogOnPassword" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#LogOnUid" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#MainForm_Closing(System.Object,System.ComponentModel.CancelEventArgs)" Analyze="True" />
-          <Member Name="#MainForm_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)" Analyze="True" />
-          <Member Name="#MainForm_Load(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#makeCSV(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#makeCSVQuote(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#makeDDL(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#makeDDLDrop(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#makeDDLDropPare(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#makeDDLPare(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#makefldlist(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#makefldListLF(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#makefldListNoComma(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#MaxTableHistory" Analyze="True" />
-          <Member Name="#menuCSVRead_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuCSVReadDQ_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuDoQuery_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuFieldAliasCopy" Analyze="True" />
-          <Member Name="#menuFieldAliasCopy_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuInsertDeleteTaihi_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuInsertNoFldDeleteTaihi_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuISQLW" Analyze="True" />
-          <Member Name="#menuMakeTab_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuMakeTabDQ_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuRecordCountDisp_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuStasticUpdate_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuTableCopy_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuTableCopyCsv_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuTableSelect_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuTabRead_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuTabReadDQ_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#menuUpdateStaticsMain_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#NumFormat" Analyze="True" />
-          <Member Name="#objectList" Analyze="True" />
-          <Member Name="#objectList_ColumnClick(System.Object,System.Windows.Forms.ColumnClickEventArgs)" Analyze="True" />
-          <Member Name="#objectList_CopyData(System.Object)" Analyze="True" />
-          <Member Name="#objectList_SelectedIndexChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#OnClosed(System.EventArgs)" Analyze="True" />
-          <Member Name="#openFileDialog1" Analyze="True" />
-          <Member Name="#ownerListbox" Analyze="True" />
-          <Member Name="#ownerListbox_SelectedIndexChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#pInstanceName" Analyze="True" />
-          <Member Name="#pIsUseTrust" Analyze="True" />
-          <Member Name="#pLogOnPassword" Analyze="True" />
-          <Member Name="#pLogOnUid" Analyze="True" />
-          <Member Name="#pServerName" Analyze="True" />
-          <Member Name="#pServerRealName" Analyze="True" />
-          <Member Name="#pSqlDriver" Analyze="True" />
-          <Member Name="#pSqlTimeout" Analyze="True" />
-          <Member Name="#rdoClipboard" Analyze="True" />
-          <Member Name="#rdoClipboard_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#rdoDispSysUser" Analyze="True" />
-          <Member Name="#rdoDispSysUser_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#rdoDispView" Analyze="True" />
-          <Member Name="#rdoDispView_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#rdoNotDispSysUser" Analyze="True" />
-          <Member Name="#rdoNotDispSysUser_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#rdoNotDispView" Analyze="True" />
-          <Member Name="#rdoOutFile" Analyze="True" />
-          <Member Name="#rdoOutFile_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#rdoOutFolder" Analyze="True" />
-          <Member Name="#rdoOutFolder_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#rdoSjis" Analyze="True" />
-          <Member Name="#rdoSjis_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#rdoSortOwnerTable" Analyze="True" />
-          <Member Name="#rdoSortTable" Analyze="True" />
-          <Member Name="#rdoSortTable_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#rdoUnicode" Analyze="True" />
-          <Member Name="#rdoUnicode_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#rdoUtf8" Analyze="True" />
-          <Member Name="#rdoUtf8_CheckedChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#RecordCountOutPut(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#Redisp_Click(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#saveFileDialog1" Analyze="True" />
-          <Member Name="#selectedTables" Analyze="True" />
-          <Member Name="#selectHistory" Analyze="True" />
-          <Member Name="#ServerName" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#ServerRealName" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#sortHistory" Analyze="True" />
-          <Member Name="#Sqldlg" Analyze="True" />
-          <Member Name="#Sqldlg2" Analyze="True" />
-          <Member Name="#SqlDriver" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#SqlTimeout" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#sqlVersion" Analyze="True" />
-          <Member Name="#SqlVersion" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#svdata" Analyze="True" />
-          <Member Name="#TableInfoUpdate(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#ThreadEndIfAlive()" Analyze="True" />
-          <Member Name="#toolTip1" Analyze="True" />
-          <Member Name="#toolTip3" Analyze="True" />
-          <Member Name="#toolTip4" Analyze="True" />
-          <Member Name="#txtAlias" Analyze="True" />
-          <Member Name="#txtAlias_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)" Analyze="True" />
-          <Member Name="#txtAlias_Leave(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#txtDispCount" Analyze="True" />
-          <Member Name="#txtDispCount_Leave(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#txtDispCount_TextChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#txtOutput" Analyze="True" />
-          <Member Name="#txtOutput_TextChanged(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#txtSort" Analyze="True" />
-          <Member Name="#txtSort_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)" Analyze="True" />
-          <Member Name="#txtSort_Leave(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#txtWhere" Analyze="True" />
-          <Member Name="#txtWhere_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)" Analyze="True" />
-          <Member Name="#txtWhere_Leave(System.Object,System.EventArgs)" Analyze="True" />
-          <Member Name="#useCheckBox" Analyze="True" />
-          <Member Name="#whereHistory" Analyze="True" />
-         </Members>
-        </Type>
-        <Type Name="MainMdi" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ObjectColumnSortOrder" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ObjectListView" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="ProcCondition" Analyze="True" AnalyzeAllChildren="False">
-         <Members AnalyzeAllChildren="False">
-          <Member Name="#.ctor()" Analyze="True" />
-          <Member Name="#IsAllDisp" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#MaxStr" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#OrderStr" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#Tbname" Analyze="True" AnalyzeAllChildren="True" />
-          <Member Name="#WhereStr" Analyze="True" AnalyzeAllChildren="True" />
-         </Members>
-        </Type>
-        <Type Name="QdbeDataGridTextBoxColumn" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="qdbeListBox" Analyze="True" AnalyzeAllChildren="True" />
-        <Type Name="qdbeListView" Analyze="True" AnalyzeAllChildren="True" />
-       </Types>
-      </Namespace>
-     </Namespaces>
-     <Resources AnalyzeAllChildren="False" />
-    </Module>
-   </Modules>
-  </Target>
-  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/SqlServer2000Driver.dll" Analyze="False" AnalyzeAllChildren="False" />
-  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/SqlServer2005Driver.dll" Analyze="False" AnalyzeAllChildren="False" />
+  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/ISqlInterface.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/quickDBExplorer.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/SqlServer2000Driver.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/SqlServer2005Driver.dll" Analyze="True" AnalyzeAllChildren="True" />
  </Targets>
  <Rules>
   <RuleFiles>
@@ -1309,13 +1034,7 @@
          </Type>
          <Type Name="qdbeListView">
           <Messages>
-           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Created="2008-01-10 03:40:05Z">
-            <Issue>
-             <Item>'qdbeListView'</Item>
-             <Item> System.Windows.Forms.ListView, System.Windows.Forms.Control, System.ComponentModel.Component</Item>
-            </Issue>
-           </Message>
-           <Message Id="qdbe" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-01-10 03:40:05Z">
+           <Message Id="qdbe" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 03:40:05Z">
             <Issue Name="Type">
              <Item>qdbe</Item>
              <Item>'qdbeListView'</Item>
@@ -1335,55 +1054,89 @@
              </Message>
             </Messages>
            </Member>
-           <Member Name="#CopyData" Kind="Event">
+          </Members>
+         </Type>
+         <Type Name="qdbeListView+CopyDataEventHandler">
+          <Messages>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:34:16Z">
+            <Issue>
+             <Item>'qdbeListView.CopyDataEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="qdbeListView+ExtendedCopyDataEventHandler">
+          <Messages>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:42:27Z">
+            <Issue>
+             <Item>'qdbeListView.ExtendedCopyDataEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="qdbeUtil">
+          <Messages>
+           <Message Id="qdbe" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 12:15:42Z">
+            <Issue Name="Type">
+             <Item>qdbe</Item>
+             <Item>'qdbeUtil'</Item>
+             <Item>Qdbe</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="QueryDialog">
+          <Members>
+           <Member Name="#btnGo">
             <Messages>
-             <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Created="2008-01-10 03:40:05Z">
-              <Issue Name="Second">
-               <Item>'qdbeListView.CopyDataHandler'</Item>
-              </Issue>
-             </Message>
-             <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Created="2008-01-10 03:40:05Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 12:30:53Z">
               <Issue>
-               <Item>'qdbeListView.CopyDataHandler'</Item>
-               <Item>EventHandler</Item>
+               <Item>'QueryDialog.btnGo'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
-           <Member Name="#ExtendedCopyData" Kind="Event">
+           <Member Name="#chkReturn">
             <Messages>
-             <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Created="2008-01-10 03:40:05Z">
-              <Issue Name="Second">
-               <Item>'qdbeListView.ExTendedCopyDataHandler'</Item>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 12:30:53Z">
+              <Issue>
+               <Item>'QueryDialog.chkReturn'</Item>
               </Issue>
              </Message>
-             <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Created="2008-01-10 03:40:05Z">
+            </Messages>
+           </Member>
+           <Member Name="#txtInput">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 12:30:53Z">
               <Issue>
-               <Item>'qdbeListView.ExTendedCopyDataHandler'</Item>
-               <Item>EventHandler</Item>
+               <Item>'QueryDialog.txtInput'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
           </Members>
          </Type>
-         <Type Name="saveClass">
-          <Members>
-           <Member Name="#.ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
-            <Messages>
-             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2008-01-09 03:44:11Z">
-              <Issue>
-               <Item>'saveClass.saveClass(SerializationInfo, StreamingContext)'</Item>
-               <Item>'object'</Item>
-              </Issue>
-              <Issue>
-               <Item>'saveClass.saveClass(SerializationInfo, StreamingContext)'</Item>
-               <Item>'object'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
+         <Type Name="quickDBExplorerBaseForm">
+          <Messages>
+           <Message Id="quick" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 12:36:49Z">
+            <Issue Name="Type">
+             <Item>quick</Item>
+             <Item>'quickDBExplorerBaseForm'</Item>
+             <Item>Quick</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="quickDBExplorerTextBox">
+          <Messages>
+           <Message Id="quick" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 12:45:45Z">
+            <Issue Name="Type">
+             <Item>quick</Item>
+             <Item>'quickDBExplorerTextBox'</Item>
+             <Item>Quick</Item>
+            </Issue>
+           </Message>
+          </Messages>
          </Type>
          <Type Name="ServerData">
           <Members>
@@ -1477,6 +1230,162 @@
               <Issue>
                <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
                <Item>'object'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DMLHistory">
+            <Messages>
+             <Message Id="DML" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 12:57:40Z">
+              <Issue Name="Member">
+               <Item>DML</Item>
+               <Item>'ServerData.DMLHistory'</Item>
+               <Item>Dml</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TextHistoryDataSet">
+          <Messages>
+           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet'</Item>
+             <Item> System.Data.DataSet, System.ComponentModel.MarshalByValueComponent</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <Messages>
+             <Message TypeName="CallBaseClassMethodsOnISerializableTypes" Category="Microsoft.Usage" CheckId="CA2236" Status="Excluded" Created="2008-01-10 13:33:21Z">
+              <Issue>
+               <Item>'TextHistoryDataSet.TextHistoryDataSet(SerializationInfo, StreamingContext)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TextHistoryDataSet+TextHistoryDataSetsDataTable">
+          <Messages>
+           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable'</Item>
+             <Item> System.Data.DataTable, System.ComponentModel.MarshalByValueComponent</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable'</Item>
+             <Item>Collection</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#AddTextHistoryDataSetsRow(System.Int32,System.String,System.String)">
+            <Messages>
+             <Message Id="Data" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 13:33:21Z">
+              <Issue Name="MemberParameter">
+               <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable.AddTextHistoryDataSetsRow(int, string, string)'</Item>
+               <Item>Data</Item>
+               <Item>'DataValue'</Item>
+               <Item>data</Item>
+              </Issue>
+             </Message>
+             <Message Id="Key" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 13:33:21Z">
+              <Issue Name="MemberParameter">
+               <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable.AddTextHistoryDataSetsRow(int, string, string)'</Item>
+               <Item>Key</Item>
+               <Item>'KeyNo'</Item>
+               <Item>key</Item>
+              </Issue>
+              <Issue Name="MemberParameter">
+               <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable.AddTextHistoryDataSetsRow(int, string, string)'</Item>
+               <Item>Key</Item>
+               <Item>'KeyValue'</Item>
+               <Item>key</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TextHistoryDataSet+TextHistoryDataSetsRow">
+          <Messages>
+           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRow'</Item>
+             <Item> System.Data.DataRow</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRow'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TextHistoryDataSet+TextHistoryDataSetsRowChangeEvent">
+          <Messages>
+           <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRowChangeEvent'</Item>
+             <Item>EventArgs</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRowChangeEvent'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TextHistoryDataSet+TextHistoryDataSetsRowChangeEventHandler">
+          <Messages>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRowChangeEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ZoomDialog">
+          <Members>
+           <Member Name="#btnClose">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 13:38:59Z">
+              <Issue>
+               <Item>'ZoomDialog.btnClose'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnOk">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 13:38:59Z">
+              <Issue>
+               <Item>'ZoomDialog.btnOk'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#txtZoom">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 13:38:59Z">
+              <Issue>
+               <Item>'ZoomDialog.txtZoom'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1739,14 +1648,14 @@
    </User>
   </Notes>
   <Rules>
+   <Rule TypeName="CallBaseClassMethodsOnISerializableTypes" Category="Microsoft.Usage" CheckId="CA2236">
+    <Resolution Name="Default">Method {0} should be modified to call its base class implementation.</Resolution>
+   </Rule>
    <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
     <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
    </Rule>
    <Rule TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405">
     <Resolution Name="Default">{0} is marked ComVisible(true) but has the following ComVisible(false) types in its object hierarchy: {1}</Resolution>
-   </Rule>
-   <Rule TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009">
-    <Resolution Name="Second">Declare the second parameter of {0} as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Resolution>
    </Rule>
    <Rule TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214">
     <Resolution Name="Default">{0} contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: {1}</Resolution>
@@ -1768,6 +1677,9 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="Assembly">Correct the casing of '{0}' in assembly name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="MemberParameter">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
+    <Resolution Name="Namespace">Correct the casing of '{0}' in namespace name '{1}' by changing it to '{2}'.</Resolution>
     <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
@@ -1777,8 +1689,14 @@
    <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
     <Resolution Name="Default">Rename {0} to end in '{1}'.</Resolution>
    </Rule>
+   <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
+    <Resolution Name="Default">Add [Serializable] to {0} as this type implements ISerializable.</Resolution>
+   </Rule>
    <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
     <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
+    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
    </Rule>
    <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
     <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>

@@ -32,12 +32,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示するデータ
 		/// </summary>
-		//protected DataTable viewData = new DataTable("viewData");
 		private DataTable viewData = null;
-		/// <summary>
-		/// タイトル表示
-		/// </summary>
-		//private string  titleName	= "";
 
 		/// <summary>
 		/// コンストラクタ
@@ -85,11 +80,11 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.MsgArea.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
-			this.msgArea.Location = new System.Drawing.Point(152, 220);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Size = new System.Drawing.Size(254, 24);
+			this.MsgArea.Location = new System.Drawing.Point(152, 220);
+			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Size = new System.Drawing.Size(254, 24);
 			// 
 			// dataViewGrid
 			// 
@@ -138,7 +133,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.dataViewGrid, 0);
 			this.Controls.SetChildIndex(this.btnClipboard, 0);
 			this.Controls.SetChildIndex(this.btnClose, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			((System.ComponentModel.ISupportInitialize)(this.dataViewGrid)).EndInit();
 			this.ResumeLayout(false);
 

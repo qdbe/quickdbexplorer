@@ -22,7 +22,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 入力履歴情報
 		/// </summary>
-		private textHistory	textHistoryDS = new textHistory();
+		private TextHistoryDataSet	TextHistoryDataSetDS = new TextHistoryDataSet();
 		/// <summary>
 		/// 対象テーブル名称
 		/// </summary>
@@ -64,11 +64,11 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="hdata">履歴情報</param>
 		/// <param name="curTable">現在選択されているテーブル名称</param>
-		public HistoryViewer(textHistory hdata, string curTable)
+		public HistoryViewer(TextHistoryDataSet hdata, string curTable)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
-			this.textHistoryDS = hdata;
+			this.TextHistoryDataSetDS = hdata;
 			this.targetTable = curTable;
 		}
 
@@ -104,10 +104,10 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(358, 270);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Size = new System.Drawing.Size(98, 24);
-			this.msgArea.TabIndex = 3;
+			this.MsgArea.Location = new System.Drawing.Point(358, 270);
+			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Size = new System.Drawing.Size(98, 24);
+			this.MsgArea.TabIndex = 3;
 			// 
 			// btnCancel
 			// 
@@ -180,7 +180,7 @@ namespace quickDBExplorer
 			this.Text = "過去入力履歴選択";
 			this.Load += new System.EventHandler(this.HistoryViewer_Load);
 			this.Controls.SetChildIndex(this.btnDispAll, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.Controls.SetChildIndex(this.btnCancel, 0);
 			this.Controls.SetChildIndex(this.btnOK, 0);
 			this.Controls.SetChildIndex(this.btnClear, 0);
@@ -207,12 +207,12 @@ namespace quickDBExplorer
 			this.historyList.Columns.Add("履歴",this.historyList.Width - 120 - 4,HorizontalAlignment.Left);
 
 			// 一覧の内容をセットしていく
-			if( this.textHistoryDS != null && this.textHistoryDS.textHistoryData.Rows.Count != 0 )
+			if( this.TextHistoryDataSetDS != null && this.TextHistoryDataSetDS.TextHistoryDataSets.Rows.Count != 0 )
 			{
 				this.historyList.BeginUpdate();
 
 				// まずは、同じテーブル名のものを優先して表示する
-				DataRow []drl = this.textHistoryDS.textHistoryData.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue = '{0}'",this.targetTable),
+				DataRow []drl = this.TextHistoryDataSetDS.TextHistoryDataSets.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue = '{0}'",this.targetTable),
 					"KeyNo desc");
 				ListViewItem item ;
 				for( int i = 0 ; i < drl.Length; i++ )
@@ -238,7 +238,7 @@ namespace quickDBExplorer
 				}
 
 				// 次に違うテーブルのものを表示
-				drl = this.textHistoryDS.textHistoryData.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue <> '{0}'",this.targetTable),
+				drl = this.TextHistoryDataSetDS.TextHistoryDataSets.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue <> '{0}'",this.targetTable),
 					"KeyNo desc");
 				for( int i = 0 ; i < drl.Length; i++ )
 				{
@@ -275,7 +275,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void btnClear_Click(object sender, System.EventArgs e)
 		{
-			this.textHistoryDS.textHistoryData.Rows.Clear();
+			this.TextHistoryDataSetDS.TextHistoryDataSets.Rows.Clear();
 			this.historyList.Clear();
 		}
 

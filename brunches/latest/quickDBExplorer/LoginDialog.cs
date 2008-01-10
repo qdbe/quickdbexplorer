@@ -22,7 +22,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 以前までの接続時記録情報
 		/// </summary>
-		private saveClass	initOpt;
+		private ConditionRecorder	initOpt;
 
 		private System.Windows.Forms.CheckBox chkTrust;
 		private System.Windows.Forms.Label label5;
@@ -43,7 +43,7 @@ namespace quickDBExplorer
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="initialOption">記憶された設定情報</param>
-		public LogOnDialog(saveClass initialOption)
+		public LogOnDialog(ConditionRecorder initialOption)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
@@ -92,8 +92,8 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(152, 240);
-			this.msgArea.Name = "msgArea";
+			this.MsgArea.Location = new System.Drawing.Point(152, 240);
+			this.MsgArea.Name = "msgArea";
 			// 
 			// chkTrust
 			// 
@@ -227,7 +227,7 @@ namespace quickDBExplorer
 			this.Text = "ログイン";
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.LogOnDialog_Closing);
 			this.Load += new System.EventHandler(this.LogOnDialog_Load);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
@@ -270,7 +270,7 @@ namespace quickDBExplorer
 				else
 				{
 					this.chkTrust.Checked = false;
-					this.txtUser.Text = sv.LoginUser;
+					this.txtUser.Text = sv.LogOnUser;
 				}
 				// パスワードは記憶していないので戻す必要なし
 			}
@@ -362,7 +362,7 @@ namespace quickDBExplorer
 					sv.IsSaveKey = true;
 				}
 				sv.IsUseTrust = this.chkTrust.Checked;
-				sv.LoginUser = this.txtUser.Text;
+				sv.LogOnUser = this.txtUser.Text;
 				// 最後に接続したサーバーを更新
 				initOpt.LastServerKey = sv.KeyName;
 

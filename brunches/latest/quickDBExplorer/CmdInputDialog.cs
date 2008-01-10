@@ -49,7 +49,7 @@ namespace quickDBExplorer
 		{
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.dHistory)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.DHistory)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtInput
@@ -91,7 +91,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.btnGo, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
-			((System.ComponentModel.ISupportInitialize)(this.dHistory)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.DHistory)).EndInit();
 			this.ResumeLayout(false);
 
 		}

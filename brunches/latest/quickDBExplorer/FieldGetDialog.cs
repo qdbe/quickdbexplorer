@@ -123,9 +123,9 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(144, 240);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Size = new System.Drawing.Size(320, 24);
+			this.MsgArea.Location = new System.Drawing.Point(144, 240);
+			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Size = new System.Drawing.Size(320, 24);
 			// 
 			// txtAlias
 			// 
@@ -227,7 +227,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.cmbPattern, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.btnCancel, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.ResumeLayout(false);
 
 		}

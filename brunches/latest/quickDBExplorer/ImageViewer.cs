@@ -81,10 +81,10 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.msgArea.Location = new System.Drawing.Point(188, 84);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Size = new System.Drawing.Size(216, 80);
+			this.MsgArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.MsgArea.Location = new System.Drawing.Point(188, 84);
+			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Size = new System.Drawing.Size(216, 80);
 			// 
 			// pictureBox1
 			// 
@@ -190,7 +190,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.PixcelHeight, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.Controls.SetChildIndex(this.btnClose, 0);
 			this.ResumeLayout(false);
 

@@ -9,6 +9,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// ServerSelectDialog の概要の説明です。
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class ServerSelectDialog : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.ListBox serverListBox;
@@ -18,38 +19,38 @@ namespace quickDBExplorer
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 		private System.Windows.Forms.Button btnCancel;
-		private	saveClass	ServerList;
+		private	ConditionRecorder	ServerList;
 
 		/// <summary>
 		/// 選択されたサーバー名
 		/// </summary>
-		protected	string selectedServer;
+		private	string pSelectedServer;
 		/// <summary>
 		/// 選択されたサーバー名
 		/// </summary>
 		public	string SelectedServer
 		{
-			get { return this.selectedServer; }
-			set { this.selectedServer = value; }
+			get { return this.pSelectedServer; }
+			set { this.pSelectedServer = value; }
 		}
 		/// <summary>
 		/// 選択されたインスタンス名
 		/// </summary>
-		protected  string selectedInstance;
+		private  string pSelectedInstance;
 		/// <summary>
 		/// 選択されたインスタンス名
 		/// </summary>
 		public  string SelectedInstance
 		{
-			get { return this.selectedInstance; }
-			set { this.selectedInstance = value; }
+			get { return this.pSelectedInstance; }
+			set { this.pSelectedInstance = value; }
 		}
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="cl">過去の接続サーバー履歴情報</param>
-		public ServerSelectDialog(saveClass cl)
+		public ServerSelectDialog(ConditionRecorder cl)
 		{
 			//
 			// Windows フォーム デザイナ サポートに必要です。
@@ -57,8 +58,8 @@ namespace quickDBExplorer
 			InitializeComponent();
 
 			ServerList = cl;
-			selectedServer = "";
-			selectedInstance = "";
+			pSelectedServer = "";
+			pSelectedInstance = "";
 		}
 
 		/// <summary>
@@ -147,21 +148,23 @@ namespace quickDBExplorer
 			{
 				string delimStr = ":";
 				string []str = this.serverListBox.SelectedItem.ToString().Split(delimStr.ToCharArray(), 2);
-				this.selectedServer = str[0];
-				this.selectedInstance = str[1];
+				this.pSelectedServer = str[0];
+				this.pSelectedInstance = str[1];
 			}
 			else
 			{
-				this.selectedServer = "";
-				this.selectedInstance = "";
+				this.pSelectedServer = "";
+				this.pSelectedInstance = "";
 			}
 		}
 
 		private void ServerSelectDialog_Load(object sender, System.EventArgs e)
 		{
+			
 			foreach( object sd in ServerList.PerServerData.Values )
 			{
-				this.serverListBox.Items.Add(((ServerData)sd).Servername + ":" + ((ServerData)sd).InstanceName );
+				ServerData svd = (ServerData)sd;
+				this.serverListBox.Items.Add(svd.Servername + ":" + svd.InstanceName );
 			}
 			this.serverListBox.Refresh();
 		}

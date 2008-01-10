@@ -7,32 +7,35 @@ namespace quickDBExplorer
 	/// <summary>
 	/// qdbeListView の概要の説明です。
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class qdbeListView : ListView
 	{
 
 		/// <summary>
 		/// Ctrl+C 押下時の デリゲート
 		/// </summary>
-		public delegate void CopyDataHandler(
-			object sender
+		public delegate void CopyDataEventHandler(
+			object sender,
+			System.EventArgs e
 			);
 
 		/// <summary>
 		/// Ctrl+Cが押された場合のイベント
 		/// </summary>
-		public event CopyDataHandler CopyData = null;
+		public event CopyDataEventHandler CopyData = null;
 
 		/// <summary>
 		/// Ctrl + F 押下時のデリゲート
 		/// </summary>
-		public delegate void ExTendedCopyDataHandler(
-			object sender
+		public delegate void ExtendedCopyDataEventHandler(
+			object sender,
+			System.EventArgs e
 			);
 
 		/// <summary>
 		/// Ctrl+F 押下時のイベント
 		/// </summary>
-		public event ExTendedCopyDataHandler ExtendedCopyData = null;
+		public event ExtendedCopyDataEventHandler ExtendedCopyData = null;
 
 
 		private bool isAllSelecting = false;
@@ -68,7 +71,7 @@ namespace quickDBExplorer
 			{
 				if( this.CopyData != null )
 				{
-					this.CopyData(this);
+					this.CopyData(this, new System.EventArgs());
 				}
 				return true;
 			}
@@ -77,7 +80,7 @@ namespace quickDBExplorer
 			{
 				if( this.ExtendedCopyData != null )
 				{
-					this.ExtendedCopyData(this);
+					this.ExtendedCopyData(this, new System.EventArgs());
 				}
 				return true;
 			}

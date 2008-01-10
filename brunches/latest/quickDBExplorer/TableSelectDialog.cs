@@ -10,6 +10,7 @@ namespace quickDBExplorer
 	/// テーブル指定ダイアログ
 	/// オブジェクト一覧から特定のオブジェクトを選択する 入力用ダイアログ
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class TableSelectDialog : quickDBExplorer.quickDBExplorerBaseForm
 	{
 		private System.Windows.Forms.Button btnCancel;
@@ -20,14 +21,14 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 当ダイアログでの入力結果
 		/// </summary>
-		protected string resultStr = "";
+		private string pResultStr = "";
 		/// <summary>
 		/// 当ダイアログでの入力結果
 		/// </summary>
 		public string ResultStr
 		{
-			get { return this.resultStr; }
-			set { this.resultStr = value; }
+			get { return this.pResultStr; }
+			set { this.pResultStr = value; }
 		}
 
 		/// <summary>
@@ -70,9 +71,9 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(136, 236);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Size = new System.Drawing.Size(232, 16);
+			this.MsgArea.Location = new System.Drawing.Point(136, 236);
+			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Size = new System.Drawing.Size(232, 16);
 			// 
 			// btnCancel
 			// 
@@ -114,7 +115,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.btnOk);
 			this.Name = "TableSelectDialog";
 			this.Load += new System.EventHandler(this.TableSelectDialog_Load);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.Controls.SetChildIndex(this.btnOk, 0);
 			this.Controls.SetChildIndex(this.btnCancel, 0);
 			this.Controls.SetChildIndex(this.txtTableSelect, 0);

@@ -227,26 +227,26 @@ namespace quickDBExplorer
 		/// <summary>
 		/// where 句の入力履歴情報
 		/// </summary>
-		private textHistory  whereHistory = new textHistory();
+		private TextHistoryDataSet  whereHistory = new TextHistoryDataSet();
 
 		/// <summary>
 		/// order by 句の入力履歴情報
 		/// </summary>
-		private textHistory  sortHistory = new textHistory();
+		private TextHistoryDataSet  sortHistory = new TextHistoryDataSet();
 
 		/// <summary>
 		/// alias 句の入力履歴情報
 		/// </summary>
-		private textHistory  aliasHistory = new textHistory();
+		private TextHistoryDataSet  aliasHistory = new TextHistoryDataSet();
 
 		/// <summary>
 		/// select 実行履歴情報
 		/// </summary>
-		private textHistory  selectHistory = new textHistory();
+		private TextHistoryDataSet  selectHistory = new TextHistoryDataSet();
 
-		private textHistory  DMLHistory = new textHistory();
+		private TextHistoryDataSet  DMLHistory = new TextHistoryDataSet();
 
-		private textHistory  cmdHistory = new textHistory();
+		private TextHistoryDataSet  cmdHistory = new TextHistoryDataSet();
 
 		/// <summary>
 		/// 接続した先のSQL Serverのバージョン
@@ -439,10 +439,10 @@ namespace quickDBExplorer
 			// 
 			// msgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(176, 624);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Size = new System.Drawing.Size(652, 16);
-			this.msgArea.TabIndex = 42;
+			this.MsgArea.Location = new System.Drawing.Point(176, 624);
+			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Size = new System.Drawing.Size(652, 16);
+			this.MsgArea.TabIndex = 42;
 			// 
 			// dbList
 			// 
@@ -452,7 +452,7 @@ namespace quickDBExplorer
 			this.dbList.Name = "dbList";
 			this.dbList.Size = new System.Drawing.Size(160, 52);
 			this.dbList.TabIndex = 1;
-			this.dbList.CopyData += new quickDBExplorer.qdbeListBox.CopyDataEventHandler(this.dbList_CopyData);
+			this.dbList.CopyData += new quickDBExplorer.CopyDataEventHandler(this.dbList_CopyData);
 			this.dbList.SelectedIndexChanged += new System.EventHandler(this.dbList_SelectedIndexChanged);
 			// 
 			// objectList
@@ -473,7 +473,7 @@ namespace quickDBExplorer
 			this.objectList.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.objectList.TabIndex = 22;
 			this.objectList.View = System.Windows.Forms.View.Details;
-			this.objectList.CopyData += new quickDBExplorer.qdbeListView.CopyDataHandler(this.objectList_CopyData);
+			this.objectList.CopyData += new quickDBExplorer.qdbeListView.CopyDataEventHandler(this.objectList_CopyData);
 			this.objectList.DoubleClick += new System.EventHandler(this.InsertMake);
 			this.objectList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.objectList_ColumnClick);
 			this.objectList.SelectedIndexChanged += new System.EventHandler(this.objectList_SelectedIndexChanged);
@@ -638,7 +638,7 @@ namespace quickDBExplorer
 			this.ownerListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.ownerListbox.Size = new System.Drawing.Size(160, 88);
 			this.ownerListbox.TabIndex = 4;
-			this.ownerListbox.CopyData += new quickDBExplorer.qdbeListBox.CopyDataEventHandler(this.ownerListbox_CopyData);
+			this.ownerListbox.CopyData += new quickDBExplorer.CopyDataEventHandler(this.ownerListbox_CopyData);
 			this.ownerListbox.SelectedIndexChanged += new System.EventHandler(this.ownerListbox_SelectedIndexChanged);
 			// 
 			// btnDDL
@@ -854,8 +854,8 @@ namespace quickDBExplorer
 			this.fieldListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
 			this.fieldListbox.Size = new System.Drawing.Size(240, 268);
 			this.fieldListbox.TabIndex = 34;
-			this.fieldListbox.CopyData += new quickDBExplorer.qdbeListBox.CopyDataEventHandler(this.fieldListbox_CopyData);
-			this.fieldListbox.ExtendedCopyData += new quickDBExplorer.qdbeListBox.ExTendedCopyDataEventHandler(this.fieldListbox_ExtendedCopyData);
+			this.fieldListbox.CopyData += new quickDBExplorer.CopyDataEventHandler(this.fieldListbox_CopyData);
+			this.fieldListbox.ExtendedCopyData += new quickDBExplorer.ExtendedCopyDataEventHandler(this.fieldListbox_ExtendedCopyData);
 			// 
 			// fldContextMenu
 			// 
@@ -1199,7 +1199,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.useCheckBox, 0);
 			this.Controls.SetChildIndex(this.label10, 0);
 			this.Controls.SetChildIndex(this.cmbHistory, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
@@ -1469,7 +1469,7 @@ namespace quickDBExplorer
 		{
 			if( this.rdoUnicode.Checked == true )
 			{
-				svdata.TxtEncode[svdata.LastDb] = 0;
+				svdata.TxtEncode[svdata.LastDatabase] = 0;
 			}
 		}
 
@@ -1477,7 +1477,7 @@ namespace quickDBExplorer
 		{
 			if( this.rdoSjis.Checked == true )
 			{
-				svdata.TxtEncode[svdata.LastDb] = 1;
+				svdata.TxtEncode[svdata.LastDatabase] = 1;
 			}
 		}
 
@@ -1485,7 +1485,7 @@ namespace quickDBExplorer
 		{
 			if( this.rdoUtf8.Checked == true )
 			{
-				svdata.TxtEncode[svdata.LastDb] = 2;
+				svdata.TxtEncode[svdata.LastDatabase] = 2;
 			}
 		}
 
@@ -1534,6 +1534,7 @@ namespace quickDBExplorer
 		/// フィールドリストのコピーメニュー選択時処理
 		/// </summary>
 		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void fieldListbox_CopyData(object sender, System.EventArgs e)
 		{
 			CopyFldList(true,true);
@@ -1629,11 +1630,11 @@ namespace quickDBExplorer
 			}
 
 			// 前回の値を元にDB先を変更する
-			if(  svdata.LastDb != null && svdata.LastDb != "" )
+			if(  svdata.LastDatabase != null && svdata.LastDatabase != "" )
 			{
 				for( int i = 0; i < this.dbList.Items.Count; i++  )
 				{
-					if( (string)this.dbList.Items[i] == svdata.LastDb )
+					if( (string)this.dbList.Items[i] == svdata.LastDatabase )
 					{
 						this.dbList.SetSelected(i,true);
 						this.dbList.Focus();
@@ -1683,38 +1684,38 @@ namespace quickDBExplorer
 
 			if( this.rdoClipboard.Checked == true) 
 			{
-				svdata.OutDest[svdata.LastDb] = 0;
+				svdata.OutDest[svdata.LastDatabase] = 0;
 			}
 			if( this.rdoOutFile.Checked == true) 
 			{
-				svdata.OutDest[svdata.LastDb] = 1;
+				svdata.OutDest[svdata.LastDatabase] = 1;
 			}
 			if( this.rdoOutFolder.Checked == true) 
 			{
-				svdata.OutDest[svdata.LastDb] = 2;
+				svdata.OutDest[svdata.LastDatabase] = 2;
 			}
-			svdata.OutFile[svdata.LastDb] = this.txtOutput.Text;
+			svdata.OutFile[svdata.LastDatabase] = this.txtOutput.Text;
 			if( this.chkDispData.CheckState == CheckState.Checked )
 			{
-				svdata.ShowGrid[svdata.LastDb] = 1;
+				svdata.ShowGrid[svdata.LastDatabase] = 1;
 			}
 			else
 			{
-				svdata.ShowGrid[svdata.LastDb] = 0;
+				svdata.ShowGrid[svdata.LastDatabase] = 0;
 			}
 			if( this.rdoUnicode.Checked == true )
 			{
-				svdata.TxtEncode[svdata.LastDb] = 0;
+				svdata.TxtEncode[svdata.LastDatabase] = 0;
 			}
 			if( this.rdoSjis.Checked == true )
 			{
-				svdata.TxtEncode[svdata.LastDb] = 1;
+				svdata.TxtEncode[svdata.LastDatabase] = 1;
 			}
 			if( this.rdoUtf8.Checked == true )
 			{
-				svdata.TxtEncode[svdata.LastDb] = 2;
+				svdata.TxtEncode[svdata.LastDatabase] = 2;
 			}
-			svdata.GridDispCnt[svdata.LastDb] = this.txtDispCount.Text;
+			svdata.GridDispCnt[svdata.LastDatabase] = this.txtDispCount.Text;
 
 		}
 
@@ -1731,7 +1732,7 @@ namespace quickDBExplorer
 		{
 			if( this.dbList.SelectedItems.Count != 0 )
 			{
-				svdata.LastDb = (string)this.dbList.SelectedItem;
+				svdata.LastDatabase = (string)this.dbList.SelectedItem;
 			}
 			// テーブルの選択履歴をクリア
 			this.selectedTables.Clear();
@@ -1744,12 +1745,12 @@ namespace quickDBExplorer
 			DispObjectList();
 			// 対象となる owner/role/schema の表示
 			DispListOwner();
-			if( svdata.Dbopt[svdata.LastDb] != null )
+			if( svdata.Dbopt[svdata.LastDatabase] != null )
 			{
-				if( svdata.Dbopt[svdata.LastDb] is ArrayList )
+				if( svdata.Dbopt[svdata.LastDatabase] is ArrayList )
 				{
 
-					ArrayList saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDb];
+					ArrayList saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDatabase];
 
 					// 該当DBの最後に選択したユーザーを選択する
 					string []olist = (string[])saveownerlist.ToArray(typeof(string));
@@ -1764,7 +1765,7 @@ namespace quickDBExplorer
 				}
 				else
 				{
-					svdata.Dbopt[svdata.LastDb] = null;
+					svdata.Dbopt[svdata.LastDatabase] = null;
 				}
 			}
 
@@ -1773,10 +1774,10 @@ namespace quickDBExplorer
 				// 選択がない場合、一番最初をディフォルトで選択する
 				this.ownerListbox.SetSelected(0,true);
 			}
-			if( svdata.OutDest[svdata.LastDb] != null )
+			if( svdata.OutDest[svdata.LastDatabase] != null )
 			{
 				// 該当DBの最後の出力先をセットする
-				switch( (int)svdata.OutDest[svdata.LastDb] )
+				switch( (int)svdata.OutDest[svdata.LastDatabase] )
 				{
 					case	0:
 						//クリップボード
@@ -1804,9 +1805,9 @@ namespace quickDBExplorer
 				this.rdoOutFolder.Checked = false;
 			}
 
-			if( svdata.OutFile[svdata.LastDb] != null )
+			if( svdata.OutFile[svdata.LastDatabase] != null )
 			{
-				this.txtOutput.Text = (string)svdata.OutFile[svdata.LastDb];
+				this.txtOutput.Text = (string)svdata.OutFile[svdata.LastDatabase];
 			}
 			else
 			{
@@ -1814,9 +1815,9 @@ namespace quickDBExplorer
 			}
 			
 
-			if( svdata.ShowGrid[svdata.LastDb] != null )
+			if( svdata.ShowGrid[svdata.LastDatabase] != null )
 			{
-				if( (int)svdata.ShowGrid[svdata.LastDb] == 0 )
+				if( (int)svdata.ShowGrid[svdata.LastDatabase] == 0 )
 				{
 					this.chkDispData.CheckState = CheckState.Unchecked;
 				}
@@ -1830,11 +1831,11 @@ namespace quickDBExplorer
 				this.chkDispData.CheckState = CheckState.Checked;
 			}
 
-			if( svdata.GridDispCnt[svdata.LastDb] != null )
+			if( svdata.GridDispCnt[svdata.LastDatabase] != null )
 			{
-				if( (string)svdata.GridDispCnt[svdata.LastDb] != "" )
+				if( (string)svdata.GridDispCnt[svdata.LastDatabase] != "" )
 				{
-					this.txtDispCount.Text = (string)svdata.GridDispCnt[svdata.LastDb];
+					this.txtDispCount.Text = (string)svdata.GridDispCnt[svdata.LastDatabase];
 				}
 				else
 				{
@@ -1846,13 +1847,13 @@ namespace quickDBExplorer
 				this.txtDispCount.Text = "1000";
 			}
 
-			if( svdata.TxtEncode[svdata.LastDb] != null )
+			if( svdata.TxtEncode[svdata.LastDatabase] != null )
 			{
-				if( (int)svdata.TxtEncode[svdata.LastDb] == 0 )
+				if( (int)svdata.TxtEncode[svdata.LastDatabase] == 0 )
 				{
 					this.rdoUnicode.Checked = true;
 				}
-				else if( (int)svdata.TxtEncode[svdata.LastDb] == 1 )
+				else if( (int)svdata.TxtEncode[svdata.LastDatabase] == 1 )
 				{
 					this.rdoSjis.Checked = true;
 				}
@@ -1900,17 +1901,17 @@ namespace quickDBExplorer
 				}
 
 
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtWhere.Text,ref this.whereHistory);
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,ref this.sortHistory);
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtAlias.Text,ref this.aliasHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtWhere.Text,this.whereHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,this.sortHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtAlias.Text,this.aliasHistory);
 				// データ表示部に、該当テーブルのデータを表示する
 				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
-				qdbeUtil.SetNewHistory("",this.txtWhere.Text,ref this.whereHistory);
-				qdbeUtil.SetNewHistory("",this.txtSort.Text,ref this.sortHistory);
-				qdbeUtil.SetNewHistory("",this.txtAlias.Text,ref this.aliasHistory);
+				qdbeUtil.SetNewHistory("",this.txtWhere.Text,this.whereHistory);
+				qdbeUtil.SetNewHistory("",this.txtSort.Text,this.sortHistory);
+				qdbeUtil.SetNewHistory("",this.txtAlias.Text,this.aliasHistory);
 				DispData(null);
 			}
 			if( this.objectList.SelectedItems.Count == 1 )
@@ -1981,11 +1982,11 @@ namespace quickDBExplorer
 			}
 			if( this.chkDispData.CheckState == CheckState.Checked )
 			{
-				svdata.ShowGrid[svdata.LastDb] = 1;
+				svdata.ShowGrid[svdata.LastDatabase] = 1;
 			}
 			else
 			{
-				svdata.ShowGrid[svdata.LastDb] = 0;
+				svdata.ShowGrid[svdata.LastDatabase] = 0;
 			}
 		}
 
@@ -2020,7 +2021,7 @@ namespace quickDBExplorer
 			}
 
 			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,this.txtWhere.Text,ref this.whereHistory);
+			qdbeUtil.SetNewHistory(tbname,this.txtWhere.Text,this.whereHistory);
 
 		}
 
@@ -2041,7 +2042,7 @@ namespace quickDBExplorer
 			}
 
 			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,ref this.sortHistory);
+			qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,this.sortHistory);
 		}
 
 		private void rdoDispSysUser_CheckedChanged(object sender, System.EventArgs e)
@@ -2067,14 +2068,14 @@ namespace quickDBExplorer
 			{
 				// 選択したDBの最終オーナーを記録する
 				ArrayList saveownerlist;
-				if( svdata.Dbopt[svdata.LastDb] == null )
+				if( svdata.Dbopt[svdata.LastDatabase] == null )
 				{
 					saveownerlist = new ArrayList();
-					svdata.Dbopt[svdata.LastDb] = saveownerlist;
+					svdata.Dbopt[svdata.LastDatabase] = saveownerlist;
 				}
 				else
 				{
-					saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDb];
+					saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDatabase];
 				}
 				saveownerlist.Clear();
 				foreach( string itm in this.ownerListbox.SelectedItems )
@@ -2111,7 +2112,7 @@ namespace quickDBExplorer
 			{
 				this.txtOutput.Enabled = false;
 				this.btnReference.Enabled = false;
-				svdata.OutDest[svdata.LastDb] = 0;
+				svdata.OutDest[svdata.LastDatabase] = 0;
 				this.rdoUnicode.Enabled = false;
 				this.rdoSjis.Enabled = false;
 				this.rdoUtf8.Enabled = false;
@@ -2124,7 +2125,7 @@ namespace quickDBExplorer
 			{
 				this.txtOutput.Enabled = true;
 				this.btnReference.Enabled = true;
-				svdata.OutDest[svdata.LastDb] = 2;
+				svdata.OutDest[svdata.LastDatabase] = 2;
 				this.rdoUnicode.Enabled = true;
 				this.rdoSjis.Enabled = true;
 				this.rdoUtf8.Enabled = true;
@@ -2137,7 +2138,7 @@ namespace quickDBExplorer
 			{
 				this.txtOutput.Enabled = true;
 				this.btnReference.Enabled = true;
-				svdata.OutDest[svdata.LastDb] = 1;
+				svdata.OutDest[svdata.LastDatabase] = 1;
 				this.rdoUnicode.Enabled = true;
 				this.rdoSjis.Enabled = true;
 				this.rdoUtf8.Enabled = true;
@@ -2212,13 +2213,13 @@ namespace quickDBExplorer
 		private void txtOutput_TextChanged(object sender, System.EventArgs e)
 		{
 			this.toolTip1.SetToolTip(this.txtOutput,this.txtOutput.Text);
-			svdata.OutFile[svdata.LastDb] = this.txtOutput.Text;
+			svdata.OutFile[svdata.LastDatabase] = this.txtOutput.Text;
 		}
 
 
 		private void txtDispCount_TextChanged(object sender, System.EventArgs e)
 		{
-			svdata.GridDispCnt[svdata.LastDb] = this.txtDispCount.Text;
+			svdata.GridDispCnt[svdata.LastDatabase] = this.txtDispCount.Text;
 		}
 
 		private void chkDispFieldAttr_CheckedChanged(object sender, System.EventArgs e)
@@ -2491,7 +2492,7 @@ namespace quickDBExplorer
 				tbname = "";
 			}
 			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,senderText.Text,ref this.aliasHistory);
+			qdbeUtil.SetNewHistory(tbname,senderText.Text,this.aliasHistory);
 		}
 
 		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -2533,7 +2534,7 @@ namespace quickDBExplorer
 				if( DialogResult.OK == hv.ShowDialog() && senderText.Text != hv.RetString)
 				{
 					senderText.Text = hv.RetString;
-					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.aliasHistory);
+					qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.aliasHistory);
 
 					DispData(dboInfo);
 				}
@@ -2541,7 +2542,7 @@ namespace quickDBExplorer
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),senderText.Text,ref this.aliasHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),senderText.Text,this.aliasHistory);
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		}
@@ -2617,7 +2618,7 @@ namespace quickDBExplorer
 				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.RetString)
 				{
 					this.txtWhere.Text = hv.RetString;
-					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.whereHistory);
+					qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.whereHistory);
 
 					DispData(this.objectList.GetSelectObject(0));
 				}
@@ -2626,7 +2627,7 @@ namespace quickDBExplorer
 				e.KeyCode == Keys.Enter )
 			{
 				// Enter(Return) では、入力を確定させて、グリッド表示に反映させる
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtWhere.Text,ref this.whereHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtWhere.Text,this.whereHistory);
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		
@@ -2665,7 +2666,7 @@ namespace quickDBExplorer
 				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.RetString)
 				{
 					this.txtSort.Text = hv.RetString;
-					qdbeUtil.SetNewHistory(targetTable,hv.RetString,ref this.sortHistory);
+					qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.sortHistory);
 
 					DispData(this.objectList.GetSelectObject(0));
 				}
@@ -2673,7 +2674,7 @@ namespace quickDBExplorer
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,ref this.sortHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,this.sortHistory);
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		
@@ -3682,6 +3683,7 @@ namespace quickDBExplorer
 		/// DBリストのコピーメニュー選択時処理
 		/// </summary>
 		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void dbList_CopyData(object sender, System.EventArgs e)
 		{
 			if( this.dbList.SelectedItems.Count > 0 )
@@ -3704,6 +3706,7 @@ namespace quickDBExplorer
 		/// Owner/Role/Schemaのコピーメニュー選択時処理
 		/// </summary>
 		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ownerListbox_CopyData(object sender, System.EventArgs e)
 		{
 			// Owner/Role/Schema名のコピー
@@ -3723,7 +3726,7 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void objectList_CopyData(object sender)
+		private void objectList_CopyData(object sender, System.EventArgs e)
 		{
 			CopyTableName(false);
 		}
@@ -5752,7 +5755,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// グリッドにデータを全て表示するか否かの指定
 		/// </summary>
-		protected bool		pIsAllDisp;
+		private bool		pIsAllDisp;
 		/// <summary>
 		/// グリッドにデータを全て表示するか否かの指定
 		/// </summary>
@@ -5851,7 +5854,7 @@ namespace quickDBExplorer
 				if( shortCutNo > 0 )
 				{
 					it.Text = string.Format(System.Globalization.CultureInfo.CurrentCulture,"(&{0}) {1}",
-						shortCutNo.ToString("x"), this.menuName );
+						shortCutNo.ToString("x",System.Globalization.CultureInfo.CurrentCulture), this.menuName );
 				}
 				else
 				{

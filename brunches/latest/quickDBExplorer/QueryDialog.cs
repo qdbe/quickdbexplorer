@@ -9,32 +9,33 @@ namespace quickDBExplorer
 	/// <summary>
 	/// クエリ等を入力する為のダイアログ
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class QueryDialog : System.Windows.Forms.Form
 	{
 
 		/// <summary>
 		/// 入力された文字列
 		/// </summary>
-		protected string	selectSql = "";
+		private string	pSelectSql = "";
 		/// <summary>
 		/// 入力された文字列
 		/// </summary>
 		public string	SelectSql
 		{
-			get { return this.selectSql; }
-			set { this.selectSql = value ; }
+			get { return this.pSelectSql; }
+			set { this.pSelectSql = value ; }
 		}
 		/// <summary>
 		/// 結果に戻り値があるかどうか
 		/// </summary>
-		protected bool		hasReturn = false;
+		private bool		pHasReturn = false;
 		/// <summary>
 		/// 結果に戻り値があるかどうか
 		/// </summary>
 		public bool		HasReturn
 		{
-			get { return this.hasReturn; }
-			set { this.hasReturn = value; }
+			get { return this.pHasReturn; }
+			set { this.pHasReturn = value; }
 		}
 		
 		/// <summary>
@@ -66,7 +67,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 入力履歴データ
 		/// </summary>
-		protected textHistory  dHistory = new textHistory();
+		private TextHistoryDataSet  pdHistory = new TextHistoryDataSet();
 
 		/// <summary>
 		/// 必要なデザイナ変数です。
@@ -88,10 +89,10 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 入力履歴情報
 		/// </summary>
-		public textHistory DHistory
+		public TextHistoryDataSet DHistory
 		{
-			get { return this.dHistory; }
-			set { this.dHistory = value; }
+			get { return this.pdHistory; }
+			set { this.pdHistory = value; }
 		}
 
 		/// <summary>
@@ -254,14 +255,14 @@ namespace quickDBExplorer
 			SelectSql = this.txtInput.Text;
 			if( this.chkReturn.Checked == true )
 			{
-				this.hasReturn = true;
+				this.pHasReturn = true;
 			}
 			else
 			{
-				this.hasReturn = false;
+				this.pHasReturn = false;
 			}
 			//this.DialogResult = DialogResult.OK;
-			qdbeUtil.SetNewHistory("",this.txtInput.Text,ref this.dHistory);
+			qdbeUtil.SetNewHistory("",this.txtInput.Text,this.pdHistory);
 		}
 
 		private void QueryDialog_Load(object sender, System.EventArgs e)
@@ -298,13 +299,13 @@ namespace quickDBExplorer
 		private void btnHistory_Click(object sender, System.EventArgs e)
 		{
 			// 入力履歴の選択ダイアログを表示する
-			HistoryViewer hv = new HistoryViewer(this.dHistory, "");
+			HistoryViewer hv = new HistoryViewer(this.pdHistory, "");
 			hv.IsShowTable = false;
 			if( DialogResult.OK == hv.ShowDialog() && this.txtInput.Text != hv.RetString)
 			{
 				//違う情報であれば、それを表示し、履歴として追加する
 				this.txtInput.Text = hv.RetString;
-				qdbeUtil.SetNewHistory("",hv.RetString,ref this.dHistory);
+				qdbeUtil.SetNewHistory("",hv.RetString,this.pdHistory);
 			}
 		}
 
@@ -329,12 +330,12 @@ namespace quickDBExplorer
 				e.Control == true &&
 				e.KeyCode == Keys.S )
 			{
-				HistoryViewer hv = new HistoryViewer(this.dHistory, "");
+				HistoryViewer hv = new HistoryViewer(this.pdHistory, "");
 				hv.IsShowTable = false;
 				if( DialogResult.OK == hv.ShowDialog() && this.txtInput.Text != hv.RetString)
 				{
 					this.txtInput.Text = hv.RetString;
-					qdbeUtil.SetNewHistory("",hv.RetString,ref this.dHistory);
+					qdbeUtil.SetNewHistory("",hv.RetString,this.pdHistory);
 				}
 			}
 		

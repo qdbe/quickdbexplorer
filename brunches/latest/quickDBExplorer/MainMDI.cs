@@ -36,7 +36,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 前回操作時の各種記憶情報
 		/// </summary>
-		private saveClass	initopt;
+		private ConditionRecorder	initopt;
 		/// <summary>
 		/// 表示エラーメッセージ
 		/// </summary>
@@ -254,7 +254,7 @@ namespace quickDBExplorer
 			// エラーメッセージを初期化
 			this.InitErrMessage();
 
-			initopt = new saveClass();
+			initopt = new ConditionRecorder();
 			try
 			{
 				// 設定ファイルを読み込み
@@ -264,7 +264,7 @@ namespace quickDBExplorer
 				SoapFormatter sf = new SoapFormatter();
 				if( fs != null && fs.CanRead )
 				{
-					initopt = (saveClass)sf.Deserialize(fs);
+					initopt = (ConditionRecorder)sf.Deserialize(fs);
 				}
 			}
 			catch(	System.IO.FileNotFoundException )
@@ -275,7 +275,7 @@ namespace quickDBExplorer
 			catch( Exception exp )
 			{
 				this.SetErrorMessage(exp);
-				initopt = new saveClass();
+				initopt = new ConditionRecorder();
 			}
 			finally
 			{
@@ -285,7 +285,8 @@ namespace quickDBExplorer
 				}
 			}
 			// 最新バージョンの存在チェックを実施
-			CheckNewVersion(false);
+			// 自動的にやってしまうと問題なので、ここではやらない
+			//CheckNewVersion(false);
 
 			// 最初は強制的にログインを表示する
 			LogOnDialog logindlg = new LogOnDialog(this.initopt);

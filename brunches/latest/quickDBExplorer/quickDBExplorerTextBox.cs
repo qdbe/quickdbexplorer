@@ -7,6 +7,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// CTRL+Aでの全選択機能を追加したテキストボックス
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class quickDBExplorerTextBox : TextBox
 	{
 		/// <summary>

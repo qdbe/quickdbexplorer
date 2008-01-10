@@ -4,6 +4,22 @@ using System.Windows.Forms;
 namespace quickDBExplorer
 {
 	/// <summary>
+	/// Ctrl+C 押下時の デリゲート
+	/// </summary>
+	public delegate void CopyDataEventHandler(
+	object sender,
+	System.EventArgs e
+	);
+
+	/// <summary>
+	/// Ctrl + F 押下時のデリゲート
+	/// </summary>
+	public delegate void ExtendedCopyDataEventHandler(
+	object sender,
+	System.EventArgs e
+	);
+
+	/// <summary>
 	/// リストボックスの拡張機能版
 	/// キー押下時の特殊処理(delegateでのイベントハンドラ呼び出し処理)が組み込んである
 	/// </summary>
@@ -11,31 +27,17 @@ namespace quickDBExplorer
 	public class qdbeListBox : System.Windows.Forms.ListBox
 	{
 
-		/// <summary>
-		/// Ctrl+C 押下時の デリゲート
-		/// </summary>
-		public delegate void CopyDataEventHandler(
-			object sender,
-			System.EventArgs e
-			);
 
 		/// <summary>
 		/// Ctrl+Cが押された場合のイベント
 		/// </summary>
 		public event CopyDataEventHandler CopyData = null;
 
-		/// <summary>
-		/// Ctrl + F 押下時のデリゲート
-		/// </summary>
-		public delegate void ExTendedCopyDataEventHandler(
-			object sender,
-			System.EventArgs e
-			);
 
 		/// <summary>
 		/// Ctrl+F 押下時のイベント
 		/// </summary>
-		public event ExTendedCopyDataEventHandler ExtendedCopyData = null;
+		public event ExtendedCopyDataEventHandler ExtendedCopyData = null;
 
 
 		private bool isAllSelecting = false;

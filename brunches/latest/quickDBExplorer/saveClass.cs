@@ -13,39 +13,39 @@ namespace quickDBExplorer
 	/// サーバー別の各種指定履歴データを管理する
 	/// </summary>
 	[Serializable]
-	public class ServerData : ISerializable, IDisposable 
+	public sealed class ServerData : ISerializable, IDisposable 
 	{
 		/// <summary>
 		/// 接続先サーバー名
 		/// </summary>
-		protected string		servername;
+		private string		servername;
 		/// <summary>
 		/// 接続先インスタンス名
 		/// </summary>
-		protected string		instancename;
+		private string		instancename;
 		/// <summary>
 		/// サーバー＋インスタンスを利用した接続先サーバーのHashtableのキー情報
 		/// </summary>
-		protected string		keyname;
+		private string		keyname;
 
 		/// <summary>
 		/// 最後に利用したDB名
 		/// </summary>
-		protected string		lastdb;		
+		private string		pLastDatabase;		
 		/// <summary>
 		/// 最後に利用したDB名
 		/// </summary>
-		public string		LastDb
+		public string		LastDatabase
 		{
-			get { return this.lastdb; }
-			set { this.lastdb = value; }
+			get { return this.pLastDatabase; }
+			set { this.pLastDatabase = value; }
 		}
 
 		/// <summary>
 		/// // DB 毎の最終ユーザーを記録する
 		/// 複数を登録させるため、内部はstring の要素を持ったArrayListとする
 		/// </summary>
-		protected Hashtable		dbopt;	
+		private Hashtable		dbopt;	
 		/// <summary>
 		/// // DB 毎の最終ユーザーを記録する
 		/// 複数を登録させるため、内部はstring の要素を持ったArrayListとする
@@ -53,13 +53,13 @@ namespace quickDBExplorer
 		public Hashtable		Dbopt
 		{
 			get { return this.dbopt; }
-			set { this.dbopt = value; }
+			//set { this.dbopt = value; }
 		}
 
 		/// <summary>
 		/// システムユーザーを表示するか否か
 		/// </summary>
-		protected int	isShowsysuser;	
+		private int	isShowsysuser;	
 		/// <summary>
 		/// システムユーザーを表示するか否か
 		/// </summary>
@@ -72,7 +72,7 @@ namespace quickDBExplorer
 		/// <summary>
 		///table/view リストのソート順 
 		/// </summary>
-		protected int	sortKey;
+		private int	sortKey;
 		/// <summary>
 		///table/view リストのソート順 
 		/// </summary>
@@ -85,7 +85,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// view を表示させるかどうか
 		/// </summary>
-		protected int	showView;
+		private int	showView;
 		/// <summary>
 		/// view を表示させるかどうか
 		/// </summary>
@@ -98,69 +98,69 @@ namespace quickDBExplorer
 		/// <summary>
 		/// データ出力先の指定
 		/// </summary>
-		protected	Hashtable	outdest;
+		private Hashtable	outdest;
 		/// <summary>
 		/// データ出力先の指定
 		/// </summary>
 		public	Hashtable	OutDest
 		{
 			get { return this.outdest; }
-			set { this.outdest = value; }
+			//set { this.outdest = value; }
 		}
 		/// <summary>
 		/// データ出力先のファイル・フォルダ名
 		/// </summary>
-		protected	Hashtable	outfile;
+		private Hashtable	outfile;
 		/// <summary>
 		/// データ出力先のファイル・フォルダ名
 		/// </summary>
 		public	Hashtable	OutFile
 		{
 			get { return this.outfile; }
-			set { this.outfile = value; }
+			//set { this.outfile = value; }
 		}
 		/// <summary>
 		/// データグリッドを表示するか否か
 		/// </summary>
-		protected	Hashtable	showgrid;
+		private Hashtable	showgrid;
 		/// <summary>
 		/// データグリッドを表示するか否か
 		/// </summary>
 		public	Hashtable	ShowGrid
 		{
 			get { return this.showgrid; }
-			set { this.showgrid = value; }
+			//set { this.showgrid = value; }
 		}
 
 		/// <summary>
 		/// グリッド表示件数
 		/// </summary>
-		protected 	Hashtable	griddspcnt;
+		private Hashtable	griddspcnt;
 		/// <summary>
 		/// グリッド表示件数
 		/// </summary>
 		public 	Hashtable	GridDispCnt
 		{
 			get { return this.griddspcnt; }
-			set { this.griddspcnt = value; }
+			//set { this.griddspcnt = value; }
 		}
 		
 		/// <summary>
 		/// テキスト出力時の文字コード
 		/// </summary>
-		protected	Hashtable	txtencode;
+		private Hashtable	txtencode;
 		/// <summary>
 		/// テキスト出力時の文字コード
 		/// </summary>
 		public	Hashtable	TxtEncode
 		{
 			get { return this.txtencode; }
-			set { this.txtencode = value; }
+			//set { this.txtencode = value; }
 		}
         /// <summary>
 		/// サーバー別情報を記憶するか否か
 		/// </summary>
-		protected	bool	isSaveKey = true;
+		private bool	isSaveKey = true;
 		/// <summary>
 		/// サーバー別情報を記憶するか否か
 		/// </summary>
@@ -172,7 +172,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 信頼関係接続を利用するか否か
 		/// </summary>
-		protected	bool	isUseTrust = false;
+		private bool	isUseTrust = false;
 		/// <summary>
 		/// 信頼関係接続を利用するか否か
 		/// </summary>
@@ -184,23 +184,23 @@ namespace quickDBExplorer
 		/// <summary>
 		/// ログインユーザー名
 		/// </summary>
-		protected	string	loginUser = "";
+		private string	pLogOnUser = "";
 		/// <summary>
 		/// ログインユーザー名
 		/// </summary>
-		public	string	LoginUser
+		public	string	LogOnUser
 		{
-			get { return this.loginUser; }
-			set { this.loginUser = value; }
+			get { return this.pLogOnUser; }
+			set { this.pLogOnUser = value; }
 		}
 		/// <summary>
 		/// where 句の入力履歴情報
 		/// </summary>
-		protected textHistory  whereHistory;
+		private TextHistoryDataSet  whereHistory;
 		/// <summary>
 		/// where 句の入力履歴情報
 		/// </summary>
-		public textHistory  WhereHistory
+		public TextHistoryDataSet  WhereHistory
 		{
 			get { return this.whereHistory; }
 			set { this.whereHistory = value; }
@@ -209,11 +209,11 @@ namespace quickDBExplorer
 		/// <summary>
 		/// order by 句の入力履歴情報
 		/// </summary>
-		protected textHistory  sortHistory;
+		private TextHistoryDataSet  sortHistory;
 		/// <summary>
 		/// order by 句の入力履歴情報
 		/// </summary>
-		public textHistory  SortHistory
+		public TextHistoryDataSet  SortHistory
 		{
 			get { return this.sortHistory; }
 			set { this.sortHistory = value; }
@@ -222,11 +222,11 @@ namespace quickDBExplorer
 		/// <summary>
 		/// order by 句の入力履歴情報
 		/// </summary>
-		protected textHistory  aliasHistory;
+		private TextHistoryDataSet  aliasHistory;
 		/// <summary>
 		/// order by 句の入力履歴情報
 		/// </summary>
-		public textHistory  AliasHistory
+		public TextHistoryDataSet  AliasHistory
 		{
 			get { return this.aliasHistory; }
 			set { this.aliasHistory = value; }
@@ -235,11 +235,11 @@ namespace quickDBExplorer
 		/// <summary>
 		/// select 実行履歴情報
 		/// </summary>
-		protected textHistory  selectHistory;
+		private TextHistoryDataSet  selectHistory;
 		/// <summary>
 		/// select 実行履歴情報
 		/// </summary>
-		public textHistory  SelectHistory
+		public TextHistoryDataSet  SelectHistory
 		{
 			get { return this.selectHistory; }
 			set { this.selectHistory = value; }
@@ -248,11 +248,11 @@ namespace quickDBExplorer
 		/// <summary>
 		/// クエリ発行時の入力履歴
 		/// </summary>
-		protected textHistory  dmlHistory;
+		private TextHistoryDataSet  dmlHistory;
 		/// <summary>
 		/// クエリ発行時の入力履歴
 		/// </summary>
-		public textHistory  DMLHistory
+		public TextHistoryDataSet  DMLHistory
 		{
 			get { return this.dmlHistory; }
 			set { this.dmlHistory = value; }
@@ -261,11 +261,11 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 各種コマンド入力履歴
 		/// </summary>
-		protected textHistory  cmdHistory;
+		private TextHistoryDataSet  cmdHistory;
 		/// <summary>
 		/// 各種コマンド入力履歴
 		/// </summary>
-		public textHistory  CmdHistory
+		public TextHistoryDataSet  CmdHistory
 		{
 			get { return this.cmdHistory; }
 			set { this.cmdHistory = value; }
@@ -286,18 +286,18 @@ namespace quickDBExplorer
 			showgrid =  new Hashtable();
 			griddspcnt =  new Hashtable();
 			txtencode = new Hashtable();
-			whereHistory = new textHistory();
-			sortHistory = new textHistory();
-			aliasHistory = new textHistory();
-			selectHistory = new textHistory();
-			DMLHistory = new textHistory();
+			whereHistory = new TextHistoryDataSet();
+			sortHistory = new TextHistoryDataSet();
+			aliasHistory = new TextHistoryDataSet();
+			selectHistory = new TextHistoryDataSet();
+			DMLHistory = new TextHistoryDataSet();
 		}
 
 		/// <summary>
 		/// 内部リソースを破棄する
 		/// </summary>
 		/// <param name="disposing">破棄するか否かのフラグ</param>
-		protected virtual void Dispose(bool disposing)
+		private void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
@@ -307,6 +307,7 @@ namespace quickDBExplorer
 				aliasHistory.Dispose();
 				selectHistory.Dispose();
 				DMLHistory.Dispose();
+				cmdHistory.Dispose();
 			}
 			// free native resources
 		}
@@ -326,12 +327,12 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
-		public ServerData(SerializationInfo info, StreamingContext context)
+		private ServerData(SerializationInfo info, StreamingContext context)
 		{
 			servername = "";
 			instancename = "";
 			keyname = "";
-			lastdb = "";
+			pLastDatabase = "";
 			dbopt = new Hashtable();
 			isShowsysuser = 0;
 			sortKey = 0;
@@ -342,12 +343,12 @@ namespace quickDBExplorer
 			showgrid =  new Hashtable();
 			griddspcnt =  new Hashtable();
 			txtencode = new Hashtable();
-			whereHistory = new textHistory();
-			sortHistory = new textHistory();
-			aliasHistory = new textHistory();
-			selectHistory = new textHistory();
-			DMLHistory = new textHistory();
-			cmdHistory = new textHistory();
+			whereHistory = new TextHistoryDataSet();
+			sortHistory = new TextHistoryDataSet();
+			aliasHistory = new TextHistoryDataSet();
+			selectHistory = new TextHistoryDataSet();
+			DMLHistory = new TextHistoryDataSet();
+			cmdHistory = new TextHistoryDataSet();
 
 			try
 			{
@@ -366,7 +367,7 @@ namespace quickDBExplorer
 			catch {}
 			try
 			{
-				this.lastdb = info.GetString("lastdb");
+				this.pLastDatabase = info.GetString("pLastDatabase");
 			}
 			catch {}
 			try
@@ -438,38 +439,38 @@ namespace quickDBExplorer
 
 			try
 			{
-				this.loginUser = info.GetString("loginUser");
+				this.pLogOnUser = info.GetString("pLogOnUser");
 			}
 			catch{}
 
 			try
 			{
-				this.whereHistory = (textHistory)info.GetValue("whereHistory",typeof(textHistory));
+				this.whereHistory = (TextHistoryDataSet)info.GetValue("whereHistory",typeof(TextHistoryDataSet));
 			}
 			catch{}
 			try
 			{
-				this.sortHistory = (textHistory)info.GetValue("sortHistory",typeof(textHistory));
+				this.sortHistory = (TextHistoryDataSet)info.GetValue("sortHistory",typeof(TextHistoryDataSet));
 			}
 			catch{}
 			try
 			{
-				this.aliasHistory = (textHistory)info.GetValue("aliasHistory",typeof(textHistory));
+				this.aliasHistory = (TextHistoryDataSet)info.GetValue("aliasHistory",typeof(TextHistoryDataSet));
 			}
 			catch{}
 			try
 			{
-				this.selectHistory = (textHistory)info.GetValue("selectHistory",typeof(textHistory));
+				this.selectHistory = (TextHistoryDataSet)info.GetValue("selectHistory",typeof(TextHistoryDataSet));
 			}
 			catch{}
 			try
 			{
-				this.DMLHistory = (textHistory)info.GetValue("DMLHistory",typeof(textHistory));
+				this.DMLHistory = (TextHistoryDataSet)info.GetValue("DMLHistory",typeof(TextHistoryDataSet));
 			}
 			catch{}
 			try
 			{
-				this.cmdHistory = (textHistory)info.GetValue("cmdHistory",typeof(textHistory));
+				this.cmdHistory = (TextHistoryDataSet)info.GetValue("cmdHistory",typeof(TextHistoryDataSet));
 			}
 			catch{}
 
@@ -481,13 +482,13 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
-		public virtual void GetObjectData(
+		public void GetObjectData(
 			SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue("servername",	servername );
 			info.AddValue("instancename", instancename );
 			info.AddValue("keyname", keyname );
-			info.AddValue("lastdb", lastdb );
+			info.AddValue("pLastDatabase", pLastDatabase );
 			info.AddValue("dbopt", dbopt);
 			info.AddValue("isShowsysuser",isShowsysuser);
 			info.AddValue("sortKey", sortKey );
@@ -499,7 +500,7 @@ namespace quickDBExplorer
 			info.AddValue("griddspcnt", griddspcnt );
 			info.AddValue("txtencode", txtencode );
 			info.AddValue("isSaveKey", isSaveKey );
-			info.AddValue("loginUser", loginUser );
+			info.AddValue("pLogOnUser", pLogOnUser );
 			info.AddValue("whereHistory", whereHistory );
 			info.AddValue("sortHistory", sortHistory );
 			info.AddValue("aliasHistory", aliasHistory );
@@ -545,16 +546,16 @@ namespace quickDBExplorer
 	}
 
 	/// <summary>
-	/// saveClass の概要の説明です。
+	/// ConditionRecorder の概要の説明です。
 	/// </summary>
 	[Serializable]
-	public class saveClass : ISerializable
+	public sealed class ConditionRecorder : ISerializable
 	{
 		/// <summary>
 		/// サーバー別情報を管理するハッシュテーブル
 		/// サーバー名＋インスタンス名をキーとする
 		/// </summary>
-		protected Hashtable	perServerData;
+		private Hashtable	perServerData;
 		/// <summary>
 		/// サーバー別情報を管理するハッシュテーブル
 		/// サーバー名＋インスタンス名をキーとする
@@ -562,13 +563,13 @@ namespace quickDBExplorer
 		public Hashtable	PerServerData
 		{
 			get { return this.perServerData; }
-			set { this.perServerData = value; }
+			//set { this.perServerData = value; }
 		}
 
 		/// <summary>
 		/// 最後に接続したサーバーのHashkey
 		/// </summary>
-		protected string lastserverkey = "";
+		private string lastserverkey = "";
 		/// <summary>
 		/// 最後に接続したサーバーのHashkey
 		/// </summary>
@@ -581,7 +582,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public saveClass()
+		public ConditionRecorder()
 		{
 			this.perServerData = new Hashtable();
 		}
@@ -591,7 +592,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
-		public saveClass(SerializationInfo info, StreamingContext context)
+		private ConditionRecorder(SerializationInfo info, StreamingContext context)
 		{
 			try 
 			{ 
@@ -615,7 +616,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="info"></param>
 		/// <param name="context"></param>
-		public virtual void GetObjectData(
+		public void GetObjectData(
 			SerializationInfo info, StreamingContext context)
 		{
 			info.AddValue("LASTSERVERKEY", this.lastserverkey);
