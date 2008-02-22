@@ -13,7 +13,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// SqlServer2005 の概要の説明です。
 	/// </summary>
-	public class SqlServerDriver : ISqlInterface
+	public class SqlServerDriver2005 : ISqlInterface
 	{
 
 		/// <summary>
@@ -29,7 +29,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public SqlServerDriver()
+		public SqlServerDriver2005()
 		{
 			// 
 			// TODO: コンストラクタ ロジックをここに追加してください。

@@ -2,6 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 8.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorer", "quickDBExplorer\quickDBExplorer.csproj", "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FD530F44-EA9F-444D-A9A2-807C2489626E} = {FD530F44-EA9F-444D-A9A2-807C2489626E}
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11} = {629DC552-A57E-4795-B1C3-7A61F08A8E11}
 		{2B92D958-AA17-4D48-BEB0-9CA792A0015B} = {2B92D958-AA17-4D48-BEB0-9CA792A0015B}
 	EndProjectSection
 EndProject
@@ -19,6 +20,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2005Driver", "SqlS
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISqlInterface", "ISqlInterface\ISqlInterface.csproj", "{607646D5-0110-4F20-8916-E1C7B75FF090}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2008Driver", "SqlServer2008Driver\SqlServer2008Driver.csproj", "{629DC552-A57E-4795-B1C3-7A61F08A8E11}"
 	ProjectSection(ProjectDependencies) = postProject
 	EndProjectSection
 EndProject
@@ -49,6 +54,10 @@ Global
 		{607646D5-0110-4F20-8916-E1C7B75FF090}.Debug.Build.0 = Debug|.NET
 		{607646D5-0110-4F20-8916-E1C7B75FF090}.Release.ActiveCfg = Release|.NET
 		{607646D5-0110-4F20-8916-E1C7B75FF090}.Release.Build.0 = Release|.NET
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Debug.ActiveCfg = Debug|.NET
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Debug.Build.0 = Debug|.NET
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Release.ActiveCfg = Release|.NET
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Release.Build.0 = Release|.NET
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

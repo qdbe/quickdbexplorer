@@ -393,14 +393,19 @@ namespace quickDBExplorer
 				{
 					mainForm.SqlVersion = 2005;
 				}
+				else if(con.ServerVersion.StartsWith("10") )
+				{
+					// 現時点では2008と同等と仮定する
+					mainForm.SqlVersion = 2008;
+				}
 				else
 				{
-					// 現時点では2005と同等と仮定する
-					mainForm.SqlVersion = 2005;
+					// 現時点では2008と同等と仮定する
+					mainForm.SqlVersion = 2008;
 				}
 				// SQL SERVERのバージョンに応じたDLLを読み込む
 				dllName = string.Format(System.Globalization.CultureInfo.CurrentCulture,Application.StartupPath + "\\SqlServer{0}Driver.dll", mainForm.SqlVersion );
-				className = "quickDBExplorer.SqlServerDriver";
+				className = string.Format("quickDBExplorer.SqlServerDriver{0}", mainForm.SqlVersion );
 				asm = Assembly.LoadFrom(dllName);
 				mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className,true);
 
