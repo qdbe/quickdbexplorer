@@ -13,23 +13,16 @@ namespace quickDBExplorer
 	[System.Runtime.InteropServices.ComVisible(false)]
 	public class quickDBExplorerBaseForm : System.Windows.Forms.Form
 	{
-		/// <summary>
-		/// メッセージ表示エリア
-		/// </summary>
-		private System.Windows.Forms.Label pMsgArea;
 
-		/// <summary>
-		/// メッセージ表示エリア
-		/// </summary>
-		protected System.Windows.Forms.Label MsgArea
-		{
-			get { return this.pMsgArea; }
-		}
 		/// <summary>
 		/// 必要なデザイナ変数です。
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 		private System.Windows.Forms.ErrorProvider errorProvider1;
+		/// <summary>
+		/// メッセージ表示エリア
+		/// </summary>
+		protected System.Windows.Forms.Label MsgArea;
 
 		/// <summary>
 		/// 表示するエラーメッセージ
@@ -81,30 +74,31 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(quickDBExplorerBaseForm));
-			this.pMsgArea = new System.Windows.Forms.Label();
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
+			this.MsgArea = new System.Windows.Forms.Label();
 			this.SuspendLayout();
-			// 
-			// msgArea
-			// 
-			this.pMsgArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.pMsgArea.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.pMsgArea.ForeColor = System.Drawing.Color.Red;
-			this.pMsgArea.Location = new System.Drawing.Point(48, 224);
-			this.pMsgArea.Name = "msgArea";
-			this.pMsgArea.Size = new System.Drawing.Size(232, 24);
-			this.pMsgArea.TabIndex = 10;
-			this.pMsgArea.DoubleClick += new System.EventHandler(this.msgArea_DoubleClick);
 			// 
 			// errorProvider1
 			// 
 			this.errorProvider1.ContainerControl = this;
 			// 
+			// MsgArea
+			// 
+			this.MsgArea.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right)));
+			this.MsgArea.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+			this.MsgArea.ForeColor = System.Drawing.Color.Red;
+			this.MsgArea.Location = new System.Drawing.Point(160, 472);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(568, 16);
+			this.MsgArea.TabIndex = 0;
+			this.MsgArea.DoubleClick += new System.EventHandler(this.msgArea_DoubleClick);
+			// 
 			// quickDBExplorerBaseForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(288, 266);
-			this.Controls.Add(this.pMsgArea);
+			this.ClientSize = new System.Drawing.Size(744, 493);
+			this.Controls.Add(this.MsgArea);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "quickDBExplorerBaseForm";
 			this.Text = "quickDBExplorerBaseForm";
@@ -116,7 +110,7 @@ namespace quickDBExplorer
 
 		private void quickDBExplorerBaseForm_Load(object sender, System.EventArgs e)
 		{
-			this.pMsgArea.Text = "";
+			this.MsgArea.Text = "";
 		}
 
 		/// <summary>
@@ -124,10 +118,10 @@ namespace quickDBExplorer
 		/// </summary>
 		protected void InitErrMessage()
 		{
-			this.pMsgArea.Text = "";
+			this.MsgArea.Text = "";
 			this.ErrMessage = "";
-			this.errorProvider1.SetIconAlignment(this.pMsgArea,ErrorIconAlignment.MiddleLeft);
-			this.errorProvider1.SetError(this.pMsgArea,"");
+			this.errorProvider1.SetIconAlignment(this.MsgArea,ErrorIconAlignment.MiddleLeft);
+			this.errorProvider1.SetError(this.MsgArea,"");
 		}
 
 		/// <summary>
@@ -137,9 +131,9 @@ namespace quickDBExplorer
 		/// このException の Message がエラーメッセージ領域に表示され、ToString()した結果が ダブルクリック時のクリップボード貼り付け対象となる</param>
 		protected void SetErrorMessage(Exception ex)
 		{
-			this.pMsgArea.Text = ex.Message;
+			this.MsgArea.Text = ex.Message;
 			this.ErrMessage = ex.ToString();
-			this.errorProvider1.SetError(this.pMsgArea,this.pMsgArea.Text);
+			this.errorProvider1.SetError(this.MsgArea,this.MsgArea.Text);
 		}
 
 		/// <summary>
@@ -148,7 +142,7 @@ namespace quickDBExplorer
 		/// <param name="dspdata"></param>
 		protected void SetMessageArea(object dspdata)
 		{
-			this.pMsgArea.Text = dspdata.ToString();
+			this.MsgArea.Text = dspdata.ToString();
 			Application.DoEvents();
 		}
 

@@ -199,6 +199,18 @@ namespace quickDBExplorer
 			}
 		}
 
+		public string	RealObjNameNoPare
+		{
+			get
+			{
+				if( this.objType == "SN" )
+				{
+					return this.synonymBase;
+				}
+				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}.{1}", this.owner, this.objname );
+			}
+		}
+
 		/// <summary>
 		/// 実際のオブジェクトの型を取得する
 		/// シノニムの場合はその参照先のオブジェクトの型を返す

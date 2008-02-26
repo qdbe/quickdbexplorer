@@ -496,11 +496,11 @@ where
 				case	"SN":
 					if( databaseObjectInfo.SynonymBaseType == "U" )
 					{
-						return string.Format(System.Globalization.CultureInfo.CurrentCulture,"DROP TABLE {0}{1}GO{1}{1}", databaseObjectInfo.FormalName,Environment.NewLine);
+						return string.Format(System.Globalization.CultureInfo.CurrentCulture,"DROP TABLE {0}{1}GO{1}{1}", databaseObjectInfo.RealObjName,Environment.NewLine);
 					}
 					else
 					{
-						return string.Format(System.Globalization.CultureInfo.CurrentCulture,"DROP VIEW {0}{1}GO{1}{1}", databaseObjectInfo.FormalName,Environment.NewLine);
+						return string.Format(System.Globalization.CultureInfo.CurrentCulture,"DROP VIEW {0}{1}GO{1}{1}", databaseObjectInfo.RealObjName,Environment.NewLine);
 					}
 				default:
 					return	string.Empty;
@@ -522,16 +522,16 @@ where
 			StringBuilder strline =  new StringBuilder();
 			TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
 
-			if( databaseObjectInfo.ObjType == "U" )
+			if( databaseObjectInfo.RealObjType == "U" )
 			{
 				int		maxRow = databaseObjectInfo.FieldInfo.Count;
 				if( useParentheses )
 				{
-					wr.Write("Create table {0} ", databaseObjectInfo.FormalName);
+					wr.Write("Create table {0} ", databaseObjectInfo.RealObjName);
 				}
 				else
 				{
-					wr.Write("Create table {0} ", databaseObjectInfo.ToString());
+					wr.Write("Create table {0} ", databaseObjectInfo.RealObjNameNoPare);
 				}
 				wr.Write(" ( {0}",wr.NewLine);
 				string	valtype;
@@ -619,15 +619,25 @@ where
 				dt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
 
-				string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_helptext '{0}'", databaseObjectInfo.FormalName );
+				string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_helptext '{0}'", databaseObjectInfo.RealObjName );
 				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
 				da.SelectCommand.CommandTimeout = this.queryTimeout;
 				da.Fill(dt);
+				// òAë±ÇµÇΩãÛîíçsÇÕó}êßÇ∑ÇÈÇÊÇ§Ç…Ç∑ÇÈ
+				string pretext = "";
 				foreach(DataRow dr in dt.Rows)
 				{
-					wr.Write(dr["Text"].ToString());
+					if( dr["Text"] != DBNull.Value &&
+						dr["Text"] is string &&
+						pretext == string.Empty &&
+						dr["Text"].ToString().Trim() == string.Empty )
+					{
+						continue;
+					}
+					pretext = dr["Text"].ToString().Trim();
+					wr.WriteLine(dr["Text"].ToString().Trim());
 				}
-				wr.Write("{0}){0}Go{0}",wr.NewLine);
+				wr.WriteLine("Go");
 			}
 			return strline.ToString();
 		}

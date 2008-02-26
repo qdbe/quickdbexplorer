@@ -437,11 +437,11 @@ namespace quickDBExplorer
 			this.grpCharaSet.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.MsgArea.Location = new System.Drawing.Point(176, 624);
-			this.MsgArea.Name = "msgArea";
-			this.MsgArea.Size = new System.Drawing.Size(652, 16);
+			this.MsgArea.Location = new System.Drawing.Point(240, 624);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(660, 16);
 			this.MsgArea.TabIndex = 42;
 			// 
 			// dbList
