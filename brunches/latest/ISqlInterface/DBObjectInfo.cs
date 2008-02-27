@@ -199,6 +199,11 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 実際のオブジェクト名を取得する
+		/// 名称には[]はつかない
+		/// シノニムの場合はその参照先のオブジェクト名を返す
+		/// </summary>
 		public string	RealObjNameNoPare
 		{
 			get
@@ -252,7 +257,7 @@ namespace quickDBExplorer
 			}
 		}
 
-		private DataTable	shemaBaseInfo;
+		private DataTable	pSchemaBaseInfo;
 		/// <summary>
 		/// スキーマ情報を保持している DataTable
 		/// 行は保持していない
@@ -265,9 +270,9 @@ namespace quickDBExplorer
 				{
 					this.DataGet(this, new EventArgs());
 				}
-				return this.shemaBaseInfo; 
+				return this.pSchemaBaseInfo; 
 			}
-			set { this.shemaBaseInfo = value; }
+			set { this.pSchemaBaseInfo = value; }
 		}
 
 		/// <summary>
