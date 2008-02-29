@@ -67,7 +67,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 単一選択されているテーブル名を取得する
+		/// 単一選択されているテーブル名を取得する([]なし)
 		/// </summary>
 		/// <returns></returns>
 		public string GetSelectOneObjectName()
@@ -75,6 +75,19 @@ namespace quickDBExplorer
 			if( this.SelectedItems.Count == 1 )
 			{
 				return this.SelectedItems[0].Tag.ToString();
+			}
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// 単一選択されているテーブル名を取得する([]あり)
+		/// </summary>
+		/// <returns></returns>
+		public string GetSelectOneObjectFormalName()
+		{
+			if( this.SelectedItems.Count == 1 )
+			{
+				return ((DBObjectInfo)this.SelectedItems[0].Tag).FormalName;
 			}
 			return string.Empty;
 		}
@@ -153,6 +166,26 @@ namespace quickDBExplorer
 			}
 			this.Sort();
 
+		}
+
+		/// <summary>
+		/// 指定した値と全く同じものを持つキーを検索する
+		/// .NET 標準と違い、大文字・小文字を区別する
+		/// </summary>
+		/// <param name="itemkey"></param>
+		/// <returns></returns>
+		public override int FindStringExact(string itemkey)
+		{
+			for( int i = 0; i < this.Items.Count; i++ )
+			{
+				if( (string)this.Items[i].Tag.ToString() == itemkey ||
+					((DBObjectInfo)this.Items[i].Tag).FormalName == itemkey
+					)
+				{
+					return i;
+				}
+			}
+			return -1;
 		}
 	}
 

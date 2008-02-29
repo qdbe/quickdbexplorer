@@ -16,9 +16,9 @@
   <Spelling Locale="en-US" />
   <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
   <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
-  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <SearchGlobalAssemblyCache>True</SearchGlobalAssemblyCache>
   <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
-  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+  <IgnoreGeneratedCode>True</IgnoreGeneratedCode>
  </ProjectOptions>
  <Targets>
   <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/ISqlInterface.dll" Analyze="True" AnalyzeAllChildren="True" />
@@ -565,6 +565,21 @@
               <Issue Name="Member">
                <Item>Crlf</Item>
                <Item>'FieldGetDialog.RetCrlf'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="LogOnDialog">
+          <Members>
+           <Member Name="#btnLogin_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-02-29 00:43:30Z">
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'LogOnDialog.btnLogin_Click(object, EventArgs)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1126,6 +1141,17 @@
             </Issue>
            </Message>
           </Messages>
+          <Members>
+           <Member Name="#MsgArea">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-29 00:43:30Z">
+              <Issue>
+               <Item>'quickDBExplorerBaseForm.MsgArea'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
          </Type>
          <Type Name="quickDBExplorerTextBox">
           <Messages>
@@ -1404,125 +1430,125 @@
       <Namespaces>
        <Namespace Name="quickDBExplorer">
         <Types>
-         <Type Name="SqlServerDriver">
+         <Type Name="SqlServerDriver2000">
           <Members>
            <Member Name="#CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-01-09 03:37:24Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'Process.Start()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'Process.StartInfo.get()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.FileName.set(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#CallISQL(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-01-09 03:37:24Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
               <Issue>
-               <Item>'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
                <Item>'Process.Start()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
                <Item>'Process.StartInfo.get()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.FileName.set(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#CallProfile(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-01-09 03:37:24Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'Process.Start()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'Process.StartInfo.get()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.FileName.set(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#queryTimeout">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-08 16:49:59Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-29 00:43:30Z">
               <Issue>
-               <Item>'SqlServerDriver.queryTimeout'</Item>
+               <Item>'SqlServerDriver2000.queryTimeout'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#sqlConnect">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-08 16:39:17Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-29 00:43:30Z">
               <Issue>
-               <Item>'SqlServerDriver.sqlConnect'</Item>
+               <Item>'SqlServerDriver2000.sqlConnect'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1541,94 +1567,94 @@
       <Namespaces>
        <Namespace Name="quickDBExplorer">
         <Types>
-         <Type Name="SqlServerDriver">
+         <Type Name="SqlServerDriver2005">
           <Members>
            <Member Name="#CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-01-09 03:37:24Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'Process.Start()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'Process.StartInfo.get()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.FileName.set(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#CallProfile(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
             <Messages>
-             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-01-09 03:37:24Z">
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'Process.Start()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'Process.StartInfo.get()'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.FileName.set(string)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
               <Issue>
-               <Item>'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
                <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
-               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#queryTimeout">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-08 17:20:24Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-29 00:43:30Z">
               <Issue>
-               <Item>'SqlServerDriver.queryTimeout'</Item>
+               <Item>'SqlServerDriver2005.queryTimeout'</Item>
               </Issue>
              </Message>
             </Messages>
            </Member>
            <Member Name="#sqlConnect">
             <Messages>
-             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-08 17:20:24Z">
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-29 00:43:30Z">
               <Issue>
-               <Item>'SqlServerDriver.sqlConnect'</Item>
+               <Item>'SqlServerDriver2005.sqlConnect'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1703,6 +1729,9 @@
    </Rule>
    <Rule TypeName="SetLocaleForDataTypes" Category="Microsoft.Globalization" CheckId="CA1306">
     <Resolution Name="Default">Be sure to set the {0} Locale property wherever {1} creates an instance of that type.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
    </Rule>
    <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
     <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>

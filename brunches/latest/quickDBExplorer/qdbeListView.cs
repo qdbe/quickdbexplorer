@@ -126,7 +126,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="itemkey"></param>
 		/// <returns></returns>
-		public int FindStringExact(string itemkey)
+		public virtual int FindStringExact(string itemkey)
 		{
 			for( int i = 0; i < this.Items.Count; i++ )
 			{

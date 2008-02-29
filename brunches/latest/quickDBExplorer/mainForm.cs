@@ -1901,9 +1901,9 @@ namespace quickDBExplorer
 				}
 
 
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtWhere.Text,this.whereHistory);
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,this.sortHistory);
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtAlias.Text,this.aliasHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtWhere.Text,this.whereHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtSort.Text,this.sortHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtAlias.Text,this.aliasHistory);
 				// データ表示部に、該当テーブルのデータを表示する
 				DispData(this.objectList.GetSelectObject(0));
 			}
@@ -2485,7 +2485,7 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
-				tbname = this.objectList.GetSelectOneObjectName();
+				tbname = this.objectList.GetSelectOneObjectFormalName();
 			}
 			else
 			{
@@ -2527,7 +2527,7 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.objectList.GetSelectOneObjectName();
+					targetTable = this.objectList.GetSelectOneObjectFormalName();
 					dboInfo = this.objectList.GetSelectObject(0);
 				}
 				HistoryViewer hv = new HistoryViewer(this.aliasHistory, targetTable);
@@ -2542,7 +2542,7 @@ namespace quickDBExplorer
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),senderText.Text,this.aliasHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),senderText.Text,this.aliasHistory);
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		}
@@ -2612,7 +2612,7 @@ namespace quickDBExplorer
 				string targetTable = "";
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					targetTable = this.objectList.GetSelectOneObjectName();
+					targetTable = this.objectList.GetSelectOneObjectFormalName();
 				}
 				HistoryViewer hv = new HistoryViewer(this.whereHistory, targetTable);
 				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.RetString)
@@ -2627,7 +2627,7 @@ namespace quickDBExplorer
 				e.KeyCode == Keys.Enter )
 			{
 				// Enter(Return) では、入力を確定させて、グリッド表示に反映させる
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtWhere.Text,this.whereHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtWhere.Text,this.whereHistory);
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		
@@ -2661,7 +2661,7 @@ namespace quickDBExplorer
 				e.KeyCode == Keys.S )
 			{
 				string targetTable = "";
-				targetTable = this.objectList.GetSelectOneObjectName();
+				targetTable = this.objectList.GetSelectOneObjectFormalName();
 				HistoryViewer hv = new HistoryViewer(this.sortHistory, targetTable);
 				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.RetString)
 				{
@@ -2674,7 +2674,7 @@ namespace quickDBExplorer
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectName(),this.txtSort.Text,this.sortHistory);
+				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtSort.Text,this.sortHistory);
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		
@@ -2694,13 +2694,22 @@ namespace quickDBExplorer
 				string []objectLists = tabs.Replace("\r\n","\r").Split("\r\n".ToCharArray());
 				this.objectList.BeginUpdate();
 				this.objectList.ClearSelected();
+				int startPosition = -1;
 				for( int i = 0; i < objectLists.Length; i++ )
 				{
 					int x = this.objectList.FindStringExact(objectLists[i]);
 					if( x > 0 )
 					{
 						this.objectList.Items[x].Selected = true;
+						if( startPosition < x )
+						{
+							startPosition = x;
+						}
 					}
+				}
+				if( startPosition >= 0 )
+				{
+					this.objectList.EnsureVisible(startPosition);
 				}
 				this.objectList.EndUpdate();
 			}
@@ -3743,6 +3752,7 @@ namespace quickDBExplorer
 			int setidx = this.objectList.FindStringExact(tablename);
 			this.objectList.ClearSelected();
 			this.objectList.Items[setidx].Selected = true;
+			this.objectList.EnsureVisible(setidx);
 			isInCmbEvent = false;
 			this.objectList.Focus();
 		}
