@@ -42,7 +42,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sqlConnection">コネクション情報</param>
 		/// <param name="timeout">コマンド実行タイムアウト値</param>
-		public void SetConnection(IDbConnection sqlConnection, int timeout)
+		public virtual void SetConnection(IDbConnection sqlConnection, int timeout)
 		{
 			this.sqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection;
 			this.queryTimeout = timeout;
@@ -51,7 +51,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// SQLSERVERに対するコネクション情報を閉じる
 		/// </summary>
-		public void CloseConnection()
+		public virtual void CloseConnection()
 		{
 			this.sqlConnect.Close();
 		}
@@ -60,7 +60,7 @@ namespace quickDBExplorer
 		/// タイムアウト値を設定しなおす
 		/// </summary>
 		/// <param name="timeout"></param>
-		public void SetTimeout(int timeout)
+		public virtual void SetTimeout(int timeout)
 		{
 			this.queryTimeout = timeout;
 		}
@@ -68,7 +68,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// DataAdapter を取得する
 		/// </summary>
-		public DbDataAdapter NewDataAdapter()
+		public virtual DbDataAdapter NewDataAdapter()
 		{
 			return new SqlDataAdapter();
 		}
@@ -78,7 +78,7 @@ namespace quickDBExplorer
 		/// ただし、コネクション情報とタイムアウト値はすでにセットされている
 		/// </summary>
 		/// <returns></returns>
-		public IDbCommand	NewSqlCommand()
+		public virtual IDbCommand	NewSqlCommand()
 		{
 			SqlCommand	sqlCmd = new SqlCommand();
 			sqlCmd.Connection = this.sqlConnect;
@@ -91,7 +91,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="da"></param>
 		/// <param name="cmd"></param>
-		public void	SetSelectCmd(DbDataAdapter da, IDbCommand cmd)
+		public virtual void	SetSelectCmd(DbDataAdapter da, IDbCommand cmd)
 		{
 			if( da == null )
 			{
@@ -110,7 +110,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="stSql">実行するコマンド文字列</param>
 		/// <returns></returns>
-		public IDbCommand		NewSqlCommand(string stSql)
+		public virtual IDbCommand		NewSqlCommand(string stSql)
 		{
 			SqlCommand	sqlCmd = new SqlCommand(stSql,this.sqlConnect);
 			sqlCmd.CommandTimeout = this.queryTimeout;
@@ -120,7 +120,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// トランザクション情報を取得する
 		/// </summary>
-		public IDbTransaction	SetTransaction(IDbCommand cmd)
+		public virtual IDbTransaction	SetTransaction(IDbCommand cmd)
 		{
 			if( cmd == null )
 			{
@@ -134,7 +134,7 @@ namespace quickDBExplorer
 		/// select コマンドから、update, insert, delete コマンドを生成しなおす
 		/// </summary>
 		/// <param name="da"></param>
-		public void	SetCommandBuilder(DbDataAdapter da)
+		public virtual void	SetCommandBuilder(DbDataAdapter da)
 		{
 			if( da == null )
 			{
@@ -151,7 +151,7 @@ namespace quickDBExplorer
 		/// <param name="dr"></param>
 		/// <param name="col"></param>
 		/// <returns></returns>
-		public byte[]	GetDataReaderBytes(IDataReader dr, int col)
+		public virtual byte[]	GetDataReaderBytes(IDataReader dr, int col)
 		{
 			if( dr == null )
 			{
@@ -168,7 +168,7 @@ namespace quickDBExplorer
 		/// DBの一覧表示を取得するSQL文を返す
 		/// </summary>
 		/// <returns></returns>
-		public string GetDBSelect()
+		public virtual string GetDBSelect()
 		{
 			return "SELECT name FROM sys.databases  order by name";;
 		}
@@ -178,7 +178,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="dbName">変更先のデータベース名</param>
 		/// <returns></returns>
-		public void SetDatabase(string dbName)
+		public virtual void SetDatabase(string dbName)
 		{
 			this.sqlConnect.ChangeDatabase(dbName);
 		}
@@ -187,7 +187,7 @@ namespace quickDBExplorer
 		/// テーブル一覧のカラムヘッダの表示文字を取得する
 		/// </summary>
 		/// <returns></returns>
-		public string GetTableListColumnName()
+		public virtual string GetTableListColumnName()
 		{
 			return "Table/View/Synonym";
 		}
@@ -197,7 +197,7 @@ namespace quickDBExplorer
 		/// DBオーナーのラベルを返す
 		/// </summary>
 		/// <returns></returns>
-		public string GetOwnerLabel1()
+		public virtual string GetOwnerLabel1()
 		{
 			return "Schema(&O)";
 		}
@@ -206,7 +206,7 @@ namespace quickDBExplorer
 		/// ラジオボタンのラベルを返す
 		/// </summary>
 		/// <returns></returns>
-		public string GetOwnerLabel2()
+		public virtual string GetOwnerLabel2()
 		{
 			return "スキーマ名・テーブル名";
 		}
@@ -221,7 +221,7 @@ namespace quickDBExplorer
 		/// <param name="isDisplaySP">ストアドプロシージャを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
-		public string GetDisplayObjList(bool isDisplayTable, bool isDisplayView, bool isSynonym, bool isDisplayFunction, bool isDisplaySP, string ownerList)
+		public virtual string GetDisplayObjList(bool isDisplayTable, bool isDisplayView, bool isSynonym, bool isDisplayFunction, bool isDisplaySP, string ownerList)
 		{
 			string retsql = "";
 
@@ -307,7 +307,7 @@ where
 		/// </summary>
 		/// <param name="isDisplaySysUser"></param>
 		/// <returns></returns>
-		public string	GetOwnerList(bool isDisplaySysUser)
+		public virtual string	GetOwnerList(bool isDisplaySysUser)
 		{
 			if( isDisplaySysUser )
 			{
@@ -330,7 +330,7 @@ where
 		/// <param name="dbName">データベース名</param>
 		/// <param name="logOnUserId">ログインID</param>
 		/// <param name="logOnPassword">ログインパスワード</param>
-		public void	CallISQL(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
+		public virtual void	CallISQL(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
 		{
 			this.CallEPM(serverRealName, instanceName, isUseTrust, dbName, logOnUserId, logOnPassword);
 		}
@@ -344,7 +344,7 @@ where
 		/// <param name="dbName">データベース名</param>
 		/// <param name="logOnUserId">ログインID</param>
 		/// <param name="logOnPassword">ログインパスワード</param>
-		public void	CallEPM(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
+		public virtual void	CallEPM(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
 		{
 			if( instanceName == null )
 			{
@@ -415,7 +415,7 @@ where
 		/// <param name="dbName">データベース名</param>
 		/// <param name="logOnUserId">ログインID</param>
 		/// <param name="logOnPassword">ログインパスワード</param>
-		public void	CallProfile(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
+		public virtual void	CallProfile(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
 		{
 			if( instanceName == null )
 			{
@@ -481,7 +481,7 @@ where
 		/// </summary>
 		/// <param name="databaseObjectInfo"></param>
 		/// <returns></returns>
-		public string	GetDDLDropStr(DBObjectInfo databaseObjectInfo)
+		public virtual string	GetDDLDropStr(DBObjectInfo databaseObjectInfo)
 		{
 			if( databaseObjectInfo == null )
 			{
@@ -513,7 +513,7 @@ where
 		/// <param name="databaseObjectInfo"></param>
 		/// <param name="useParentheses"></param>
 		/// <returns></returns>
-		public string	GetDdlCreateString(DBObjectInfo databaseObjectInfo, bool useParentheses)
+		public virtual string	GetDdlCreateString(DBObjectInfo databaseObjectInfo, bool useParentheses)
 		{
 			if( databaseObjectInfo == null )
 			{
@@ -646,7 +646,7 @@ where
 		/// オブジェクト情報をセットするDataTableを初期化する
 		/// </summary>
 		/// <param name="objTable">対象とするDataTable</param>
-		public void	InitObjTable(DataTable objTable)
+		public virtual void	InitObjTable(DataTable objTable)
 		{
 			if( objTable == null )
 			{
@@ -667,7 +667,7 @@ where
 		/// </summary>
 		/// <param name="databaseObjectInfo">対象となるオブジェクト</param>
 		/// <param name="dt"></param>
-		public void	AddObjectInfo(DBObjectInfo databaseObjectInfo, DataTable dt)
+		public virtual void	AddObjectInfo(DBObjectInfo databaseObjectInfo, DataTable dt)
 		{
 			if( databaseObjectInfo == null )
 			{
@@ -750,12 +750,17 @@ where
 		/// オブジェクトの詳細情報をセットするイベントハンドラを返す
 		/// </summary>
 		/// <returns></returns>
-		public DataGetEventHandler ObjectDetailSet()
+		public virtual DataGetEventHandler ObjectDetailSet()
 		{
 			return new DataGetEventHandler(this.dbObjSet);
 		}
 
-		private	void	dbObjSet(object sender, System.EventArgs e)
+		/// <summary>
+		/// DBオブジェクトを取得する
+		/// </summary>
+		/// <param name="sender">-</param>
+		/// <param name="e">-</param>
+		protected	virtual void	dbObjSet(object sender, System.EventArgs e)
 		{
 			DBObjectInfo	databaseObjectInfo = (DBObjectInfo)sender;
 			DataSet		ds = new DataSet(databaseObjectInfo.ObjName);
