@@ -3172,7 +3172,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallProfile(object sender, System.EventArgs e)
 		{
-			this.pSqlDriver.CallProfile(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnPassword, this.pLogOnPassword );
+			this.pSqlDriver.CallProfile(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnUid, this.pLogOnPassword );
 		}
 
 		/// <summary>
@@ -3182,7 +3182,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallEPM(object sender, System.EventArgs e)
 		{
-			this.pSqlDriver.CallEPM(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnPassword, this.pLogOnPassword );
+			this.pSqlDriver.CallEPM(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnUid, this.pLogOnPassword );
 		}
 
 		private void menuRecordCountDisp_Click(object sender, System.EventArgs e)
