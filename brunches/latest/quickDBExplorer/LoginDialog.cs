@@ -81,10 +81,10 @@ namespace quickDBExplorer
 			this.btnServerHistory = new System.Windows.Forms.Button();
 			this.btnLogin = new System.Windows.Forms.Button();
 			this.label4 = new System.Windows.Forms.Label();
-			this.txtPassword = new quickDBExplorerTextBox();
-			this.txtUser = new quickDBExplorerTextBox();
-			this.txtInstance = new quickDBExplorerTextBox();
-			this.txtServerName = new quickDBExplorerTextBox();
+			this.txtPassword = new quickDBExplorer.quickDBExplorerTextBox();
+			this.txtUser = new quickDBExplorer.quickDBExplorerTextBox();
+			this.txtInstance = new quickDBExplorer.quickDBExplorerTextBox();
+			this.txtServerName = new quickDBExplorer.quickDBExplorerTextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -207,6 +207,7 @@ namespace quickDBExplorer
 			// 
 			// LogOnDialog
 			// 
+			this.AcceptButton = this.btnLogin;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(520, 266);
 			this.Controls.Add(this.chkTrust);

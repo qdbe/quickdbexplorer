@@ -4190,6 +4190,11 @@ namespace quickDBExplorer
 							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp", 
 								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql");
 						}
+						else
+						{
+							File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp");
+						}
+
 					}
 					if( dr != null && dr.IsClosed == false )
 					{
