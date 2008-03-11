@@ -121,10 +121,10 @@ namespace quickDBExplorer
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
 			this.MsgArea.Location = new System.Drawing.Point(144, 240);
-			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Name = "MsgArea";
 			this.MsgArea.Size = new System.Drawing.Size(320, 24);
 			// 
 			// txtAlias

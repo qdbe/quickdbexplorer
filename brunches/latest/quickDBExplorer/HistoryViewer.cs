@@ -102,11 +102,11 @@ namespace quickDBExplorer
 			this.btnDispAll = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.MsgArea.Location = new System.Drawing.Point(358, 270);
-			this.MsgArea.Name = "msgArea";
-			this.MsgArea.Size = new System.Drawing.Size(98, 24);
+			this.MsgArea.Location = new System.Drawing.Point(332, 270);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(124, 24);
 			this.MsgArea.TabIndex = 3;
 			// 
 			// btnCancel

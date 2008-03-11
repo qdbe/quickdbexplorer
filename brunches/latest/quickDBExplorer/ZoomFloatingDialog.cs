@@ -71,11 +71,11 @@ namespace quickDBExplorer
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(80, 26);
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.MsgArea.Location = new System.Drawing.Point(220, 234);
-			this.MsgArea.Name = "msgArea";
-			this.MsgArea.Size = new System.Drawing.Size(80, 26);
+			this.MsgArea.Location = new System.Drawing.Point(106, 234);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(246, 26);
 			// 
 			// chkStayOnTop
 			// 

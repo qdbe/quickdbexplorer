@@ -79,11 +79,11 @@ namespace quickDBExplorer
 			this.btnClose = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
 			this.MsgArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.MsgArea.Location = new System.Drawing.Point(188, 84);
-			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Name = "MsgArea";
 			this.MsgArea.Size = new System.Drawing.Size(216, 80);
 			// 
 			// pictureBox1

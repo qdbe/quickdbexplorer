@@ -90,10 +90,10 @@ namespace quickDBExplorer
 			this.label1 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
 			this.MsgArea.Location = new System.Drawing.Point(152, 240);
-			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Name = "MsgArea";
 			// 
 			// chkTrust
 			// 

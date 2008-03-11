@@ -130,10 +130,11 @@ namespace quickDBExplorer
 			this.btnClose = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.MsgArea.Location = new System.Drawing.Point(110, 230);
-			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Location = new System.Drawing.Point(88, 234);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(366, 16);
 			// 
 			// txtZoom
 			// 

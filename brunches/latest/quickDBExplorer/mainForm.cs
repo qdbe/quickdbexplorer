@@ -2183,7 +2183,7 @@ namespace quickDBExplorer
 					{
 						this.folderBrowserDialog1.SelectedPath = this.txtOutput.Text;
 					}
-					else if( f.Exists && (f.Attributes & FileAttributes.Directory) == FileAttributes.Directory)
+					else if( f.Exists && (f.Attributes & FileAttributes.Directory) != FileAttributes.Directory)
 					{
 						this.folderBrowserDialog1.SelectedPath = f.Directory.FullName;
 					}

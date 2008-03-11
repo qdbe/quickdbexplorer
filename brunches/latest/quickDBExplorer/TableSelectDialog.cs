@@ -69,11 +69,11 @@ namespace quickDBExplorer
 			this.txtTableSelect = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.MsgArea.Location = new System.Drawing.Point(136, 236);
-			this.MsgArea.Name = "msgArea";
-			this.MsgArea.Size = new System.Drawing.Size(232, 16);
+			this.MsgArea.Location = new System.Drawing.Point(112, 232);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(284, 16);
 			// 
 			// btnCancel
 			// 

@@ -78,12 +78,12 @@ namespace quickDBExplorer
 			((System.ComponentModel.ISupportInitialize)(this.dataViewGrid)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
 			this.MsgArea.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.MsgArea.Location = new System.Drawing.Point(152, 220);
-			this.MsgArea.Name = "msgArea";
+			this.MsgArea.Name = "MsgArea";
 			this.MsgArea.Size = new System.Drawing.Size(254, 24);
 			// 
 			// dataViewGrid
