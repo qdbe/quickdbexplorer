@@ -3104,6 +3104,10 @@ namespace quickDBExplorer
 							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp", 
 								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
 						}
+						else
+						{
+							File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp");
+						}
 					}
 				}
 				if( this.rdoOutFolder.Checked == false ) 
@@ -3162,7 +3166,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void CallISQLW(object sender, System.EventArgs e)
 		{
-			this.pSqlDriver.CallISQL(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnPassword, this.pLogOnPassword );
+			this.pSqlDriver.CallISQL(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnUid, this.pLogOnPassword );
 		}
 
 		/// <summary>
@@ -3503,6 +3507,10 @@ namespace quickDBExplorer
 					cm.ExecuteNonQuery();
 				}
 				MessageBox.Show("処理を完了しました");
+			}
+			catch ( System.Data.SqlClient.SqlException se )
+			{
+				this.SetErrorMessage(se);
 			}
 			catch ( Exception se )
 			{
@@ -4097,6 +4105,7 @@ namespace quickDBExplorer
 						strint.Add( dr.GetFieldType(j) );
 					}
 
+					bool IsIdentity = false;
 					DataTable dt = dr.GetSchemaTable();
 					foreach( DataRow draw in dt.Rows )
 					{
@@ -4106,6 +4115,7 @@ namespace quickDBExplorer
 							string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture,"SET IDENTITY_INSERT {0} on ",dboInfo.FormalName);
 							wr.WriteLine(addidinsert);
 							wr.Write(wr.NewLine);
+							IsIdentity = true;
 							break;
 						}
 					}
@@ -4179,6 +4189,15 @@ namespace quickDBExplorer
 					{
 						wr.Write("GO{0}{0}",wr.NewLine );
 					}
+					if( IsIdentity == true )
+					{
+						// Identity 列がある場合、SET IDENTITY_INSERT table off をつける
+						string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture,"SET IDENTITY_INSERT {0} off ",dboInfo.FormalName);
+						wr.WriteLine(addidinsert);
+						wr.Write(wr.NewLine);
+						break;
+					}
+
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
@@ -4331,7 +4350,7 @@ namespace quickDBExplorer
 			}
 		}
 
-		// フィールドのリストを表示する
+		// CSVもしくはTSVを生成する
 		private void CreateTCsvText(bool isdquote, string separater)
 		{
 			IDataReader dr = null;
@@ -4477,6 +4496,10 @@ namespace quickDBExplorer
 							// ファイルをリネームする
 							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp", 
 								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
+						}
+						else
+						{
+							File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp");
 						}
 					}
 				}
