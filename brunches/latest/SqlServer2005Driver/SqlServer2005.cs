@@ -752,7 +752,7 @@ where
 		/// <returns></returns>
 		public virtual DataGetEventHandler ObjectDetailSet()
 		{
-			return new DataGetEventHandler(this.dbObjSet);
+			return new DataGetEventHandler(this.DatabaseObjSet);
 		}
 
 		/// <summary>
@@ -760,7 +760,7 @@ where
 		/// </summary>
 		/// <param name="sender">-</param>
 		/// <param name="e">-</param>
-		protected	virtual void	dbObjSet(object sender, System.EventArgs e)
+		protected	virtual void	DatabaseObjSet(object sender, System.EventArgs e)
 		{
 			DBObjectInfo	databaseObjectInfo = (DBObjectInfo)sender;
 			DataSet		ds = new DataSet(databaseObjectInfo.ObjName);

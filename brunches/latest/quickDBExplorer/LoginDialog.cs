@@ -406,7 +406,7 @@ namespace quickDBExplorer
 				}
 				// SQL SERVER‚Ìƒo[ƒWƒ‡ƒ“‚É‰‚¶‚½DLL‚ğ“Ç‚İ‚Ş
 				dllName = string.Format(System.Globalization.CultureInfo.CurrentCulture,Application.StartupPath + "\\SqlServer{0}Driver.dll", mainForm.SqlVersion );
-				className = string.Format("quickDBExplorer.SqlServerDriver{0}", mainForm.SqlVersion );
+				className = string.Format(System.Globalization.CultureInfo.CurrentCulture,"quickDBExplorer.SqlServerDriver{0}", mainForm.SqlVersion );
 				asm = Assembly.LoadFrom(dllName);
 				mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className,true);
 

@@ -586,6 +586,7 @@ namespace quickDBExplorer
 			// 
 			// txtWhere
 			// 
+			this.txtWhere.IsDigitOnly = false;
 			this.txtWhere.Location = new System.Drawing.Point(72, 488);
 			this.txtWhere.Name = "txtWhere";
 			this.txtWhere.Size = new System.Drawing.Size(144, 19);
@@ -596,6 +597,7 @@ namespace quickDBExplorer
 			// 
 			// txtSort
 			// 
+			this.txtSort.IsDigitOnly = false;
 			this.txtSort.Location = new System.Drawing.Point(72, 516);
 			this.txtSort.Name = "txtSort";
 			this.txtSort.Size = new System.Drawing.Size(144, 19);
@@ -716,6 +718,7 @@ namespace quickDBExplorer
 			this.txtDispCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtDispCount.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
 			this.txtDispCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
+			this.txtDispCount.IsDigitOnly = true;
 			this.txtDispCount.Location = new System.Drawing.Point(132, 16);
 			this.txtDispCount.MaxLength = 300;
 			this.txtDispCount.Name = "txtDispCount";
@@ -790,6 +793,7 @@ namespace quickDBExplorer
 			// 
 			// txtOutput
 			// 
+			this.txtOutput.IsDigitOnly = false;
 			this.txtOutput.Location = new System.Drawing.Point(8, 52);
 			this.txtOutput.Name = "txtOutput";
 			this.txtOutput.Size = new System.Drawing.Size(160, 19);
@@ -1094,6 +1098,7 @@ namespace quickDBExplorer
 			// 
 			// txtAlias
 			// 
+			this.txtAlias.IsDigitOnly = false;
 			this.txtAlias.Location = new System.Drawing.Point(72, 540);
 			this.txtAlias.Name = "txtAlias";
 			this.txtAlias.Size = new System.Drawing.Size(144, 19);
@@ -4698,14 +4703,8 @@ namespace quickDBExplorer
 
 				int	maxlines;
 				int	maxGetLines;
-				if( procCond.MaxStr != "" )
-				{
-					maxlines = int.Parse(procCond.MaxStr,System.Globalization.CultureInfo.CurrentCulture);
-				}
-				else
-				{
-					maxlines = 0;
-				}
+				maxlines = procCond.MaxCount;
+
 				if( procCond.IsAllDisp == true )
 				{
 					maxlines = 0;
@@ -4725,17 +4724,17 @@ namespace quickDBExplorer
 					stSqlDisp += " TOP " + maxlines.ToString(System.Globalization.CultureInfo.CurrentCulture);
 				}
 
-				stSql += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}", dboInfo.GetAliasName(this.GetAlias()));
-				stSqlDisp += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}",dboInfo.GetAliasName(this.GetAlias()));
-				if( procCond.WhereStr.Trim() != "" )
+				stSql += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}", dboInfo.GetAliasName(procCond.AliasStr));
+				stSqlDisp += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}",dboInfo.GetAliasName(procCond.AliasStr));
+				if( procCond.WhereStr != "" )
 				{
-					stSql += " where " + procCond.WhereStr.Trim();
-					stSqlDisp += " where " + procCond.WhereStr.Trim();
+					stSql += " where " + procCond.WhereStr;
+					stSqlDisp += " where " + procCond.WhereStr;
 				}
-				if( procCond.OrderStr.Trim() != "" )
+				if( procCond.OrderStr != "" )
 				{
-					stSql += " order by " + procCond.OrderStr.Trim();
-					stSqlDisp += " order by " + procCond.OrderStr.Trim();
+					stSql += " order by " + procCond.OrderStr;
+					stSqlDisp += " order by " + procCond.OrderStr;
 				}
 
 				DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
@@ -5712,6 +5711,43 @@ namespace quickDBExplorer
 		protected ProcCondition GetProcCondition(string tbname)
 		{
 			ProcCondition procCond = new ProcCondition();
+			procCond.AliasStr = this.txtAlias.Text;
+
+
+			if( this.rdoSjis.Checked == true )
+			{
+				procCond.Encoding = System.Text.Encoding.GetEncoding("shift-jis");
+			}
+			else if( this.rdoUnicode.Checked == true )
+			{
+				procCond.Encoding = System.Text.Encoding.Unicode;
+			}
+			else 
+			{
+				procCond.Encoding = System.Text.Encoding.UTF8;
+			}
+
+			procCond.IsDisp = this.chkDispData.Checked;
+
+			procCond.MaxStr = this.txtDispCount.Text;
+
+			procCond.OrderStr = this.txtSort.Text;
+
+			if( this.rdoClipboard.Checked == true )
+			{
+				procCond.OutputDestination = 1;
+			}
+			else if( this.rdoOutFile.Checked == true )
+			{
+				procCond.OutputDestination = 2;
+			}
+			else
+			{
+				procCond.OutputDestination = 3;
+			}
+
+			procCond.OutputFile = this.txtOutput.Text;
+
 			if( tbname != null )
 			{
 				procCond.Tbname.Add(tbname);
@@ -5726,9 +5762,9 @@ namespace quickDBExplorer
 					procCond.Tbname.Add((string)obj);
 				}
 			}
+
 			procCond.WhereStr = this.txtWhere.Text;
-			procCond.OrderStr = this.txtSort.Text;
-			procCond.MaxStr = this.txtDispCount.Text;
+
 			return procCond;
 		}
 
@@ -5740,6 +5776,45 @@ namespace quickDBExplorer
 	/// </summary>
 	public class ProcCondition
 	{
+		/// <summary>
+		/// 出力先の指定
+		/// </summary>
+		private int pOutputDestination;
+		/// <summary>
+		/// 出力先の指定
+		/// </summary>
+		public int OutputDestination
+		{
+			get { return this.pOutputDestination; }
+			set { this.pOutputDestination = value; }
+		}
+
+		/// <summary>
+		/// 出力先ファイルの指定
+		/// </summary>
+		private string pOutputFile;
+		/// <summary>
+		/// 出力先ファイルの指定
+		/// </summary>
+		public string OutputFile
+		{
+			get { return this.pOutputFile; }
+			set { this.pOutputFile = value; }
+		}
+
+		/// <summary>
+		/// 文字エンコーディングの指定
+		/// </summary>
+		private System.Text.Encoding pEncoding;
+		/// <summary>
+		/// 文字エンコーディングの指定
+		/// </summary>
+		public System.Text.Encoding Encoding
+		{
+			get { return this.pEncoding; }
+			set { this.pEncoding = value; }
+		}
+
 		/// <summary>
 		/// 選択されたテーブルの一覧
 		/// </summary>
@@ -5763,7 +5838,16 @@ namespace quickDBExplorer
 		public string		WhereStr
 		{
 			get { return this.pWhereStr; }
-			set { this.pWhereStr = value; }
+			set { 
+				if( value != null )
+				{
+					this.pWhereStr = value.Trim(); 
+				}
+				else
+				{
+					this.pWhereStr = value;
+				}
+			}
 		}
 		/// <summary>
 		/// Order by 句の指定
@@ -5775,8 +5859,31 @@ namespace quickDBExplorer
 		public string		OrderStr
 		{
 			get { return this.pOrderStr; }
-			set { this.pOrderStr = value; }
+			set { 
+				if( value != null )
+				{
+					this.pOrderStr = value.Trim(); 
+				}
+				else
+				{
+					this.pOrderStr = value; 
+				}
+			}
 		}
+
+		/// <summary>
+		/// 別名の設定
+		/// </summary>
+		private string		pAliasStr;
+		/// <summary>
+		/// 別名の設定
+		/// </summary>
+		public string AliasStr
+		{
+			get { return this.pAliasStr; }
+			set { this.pAliasStr = value; }
+		}
+
 		/// <summary>
 		/// 最大件数の指定
 		/// </summary>
@@ -5788,6 +5895,38 @@ namespace quickDBExplorer
 		{
 			get { return this.pMaxString; }
 			set { this.pMaxString = value; }
+		}
+
+		/// <summary>
+		/// 最大件数の獲得
+		/// 空白の場合は0を返す
+		/// </summary>
+		public int			MaxCount
+		{
+			get
+			{
+				if( this.pMaxString == null ||
+					this.pMaxString == string.Empty )
+				{
+					return 0;
+				}
+				else
+				{
+					return int.Parse(this.pMaxString,System.Globalization.CultureInfo.CurrentCulture);
+				}
+			}
+		}
+		/// <summary>
+		/// グリッドにデータを表示するか否かの指定
+		/// </summary>
+		private bool		pIsDisp;
+		/// <summary>
+		/// グリッドにデータを表示するか否かの指定
+		/// </summary>
+		public bool		IsDisp
+		{
+			get { return this.pIsDisp; }
+			set { this.pIsDisp = value; }
 		}
 
 		/// <summary>
@@ -5808,11 +5947,16 @@ namespace quickDBExplorer
 		/// </summary>
 		public ProcCondition()
 		{
-			Tbname = new ArrayList();
-			this.WhereStr = "";
-			this.OrderStr = "";
-			this.MaxStr = "";
+			this.pAliasStr = string.Empty;
+			this.pEncoding = System.Text.Encoding.Unicode;
 			this.pIsAllDisp = false;
+			this.pIsDisp = true;
+			this.pMaxString = string.Empty;
+			this.pOrderStr = string.Empty;
+			this.pOutputDestination = 1;
+			this.pOutputFile = string.Empty;
+			this.pTableName = new ArrayList();
+			this.pWhereStr = string.Empty;
 		}
 	}
 
