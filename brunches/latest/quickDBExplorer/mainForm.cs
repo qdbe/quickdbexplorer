@@ -4197,10 +4197,10 @@ namespace quickDBExplorer
 					if( IsIdentity == true )
 					{
 						// Identity óÒÇ™Ç†ÇÈèÍçáÅASET IDENTITY_INSERT table off ÇÇ¬ÇØÇÈ
-						string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture,"SET IDENTITY_INSERT {0} off ",dboInfo.FormalName);
+						string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture,"SET IDENTITY_INSERT {0} off",dboInfo.FormalName);
 						wr.WriteLine(addidinsert);
+						wr.WriteLine("GO");
 						wr.Write(wr.NewLine);
-						break;
 					}
 
 					if( this.rdoOutFolder.Checked == true ) 
