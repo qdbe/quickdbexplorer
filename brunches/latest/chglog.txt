@@ -19,4 +19,6 @@ INSERT•¶¶¬ŽžAIDENTITY—ñ‚ª‘¶Ý‚·‚éê‡‚É SET IDENTITY_INSERT table off ‚ðÅŒã‚
 insert•¶¶¬ŽžAƒf[ƒ^‘Þ”ð‚ðŽw’è‚µ‚½ê‡‚ÉAwhere‹å‚ÌðŒ‚ð‘Þ”ð—pSQL•¶‚É’Ç‰Á‚·‚é‚æ‚¤‚É‚µ‚½B
 ‘‚«o‚µæƒtƒHƒ‹ƒ_‚ðŽw’è‚·‚éê‡‚ÉA‘‚«o‚µæƒtƒ@ƒCƒ‹‚Æ‚µ‚Ä‘¶Ý‚·‚éƒtƒ@ƒCƒ‹‚ªŠù‚ÉŽw’è‚³‚ê‚Ä‚¢‚½ê‡‚ÉŠY“–ƒtƒHƒ‹ƒ_‚ð‰ŠúƒtƒHƒ‹ƒ_‚Æ‚µ‚Ä•\Ž¦‚µ‚Ä‚¢‚È‚©‚Á‚½‚à‚Ì‚ðC³
 ŠÈˆÕ’è‹`•¶‚Ìì¬ŽžAVIEW‚Ìê‡‚àTable‚Æ‚µ‚ÄŽæ‚èˆµ‚¢Create table•¶‚ð¶¬‚µ‚Ä‚¢‚½‚ªA‚±‚ê‚ð view ‚Ìê‡‚Í‚»‚ÌView‚ð\¬‚·‚éƒeƒLƒXƒg‚ð¶¬‚·‚é‚æ‚¤‚É‚µ‚½B
+ƒf[ƒ^•\Ž¦Žž‚Ì‘Ž®‚Å decimal ‚Ìê‡‚É®”ˆµ‚¢‚Å‘Ž®‚ðÝ’è‚µ‚Ä‚µ‚Ü‚Á‚Ä‚¢‚½
+Primay Key ‚Ì‚È‚¢ƒe[ƒuƒ‹‚Ì•\Ž¦Žž‚É‚ÍAƒf[ƒ^•ÒWEƒf[ƒ^XVƒ{ƒ^ƒ“‚ð‰Ÿ‰º‚Å‚«‚È‚¢‚æ‚¤‚É‚µ‚½
 

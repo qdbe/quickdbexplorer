@@ -4797,13 +4797,22 @@ namespace quickDBExplorer
 				this.dbGrid.SetDataBinding(dspdt, "aaaa");
 				this.dbGrid.Show();
 				this.btnDataEdit.Text = "データ編集(&T)";
+				if( dspdt.Tables[0].PrimaryKey.Length == 0 )
+				{
+					// Primary Key の設定がないと編集できない
+					this.btnDataUpdate.Enabled = false;
+					this.btnDataEdit.Enabled = false;
+				}
+				else
+				{
+					this.btnDataUpdate.Enabled = true;
+					this.btnDataEdit.Enabled = true;
+				}
 				this.dbGrid.ReadOnly = true;
 				this.btnDataEdit.BackColor = this.btnBackColor;
 				this.btnDataEdit.ForeColor = this.btnForeColor;
 				this.btnTmpAllDisp.BackColor = this.btnBackColor;
 				this.btnTmpAllDisp.ForeColor = this.btnForeColor;
-				this.btnDataUpdate.Enabled = true;
-				this.btnDataEdit.Enabled = true;
 				this.btnGridFormat.Enabled = true;
 			}
 			catch( Exception exp)

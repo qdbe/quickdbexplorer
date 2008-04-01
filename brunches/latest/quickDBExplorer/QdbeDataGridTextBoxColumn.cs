@@ -118,13 +118,13 @@ namespace quickDBExplorer
 				col.DataType.FullName == "System.Int64" ||
 				col.DataType.FullName == "System.UInt32" ||
 				col.DataType.FullName == "System.UInt16" ||
-				col.DataType.FullName == "System.UInt64" ||
-				col.DataType.FullName == "System.Decimal" )
+				col.DataType.FullName == "System.UInt64"  )
 			{
 				this.Format = numberFormat;
 			}
 			if( col.DataType.FullName == "System.Double" ||
-				col.DataType.FullName == "System.Single" )
+				col.DataType.FullName == "System.Single" || 
+				col.DataType.FullName == "System.Decimal")
 			{
 				this.Format = floatFormat;
 			}
