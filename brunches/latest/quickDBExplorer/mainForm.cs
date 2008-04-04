@@ -4143,6 +4143,22 @@ namespace quickDBExplorer
 					}
 
 					trow	= 0;
+					string flds = "";
+					if( fieldlst == true )
+					{
+						StringBuilder sb = new StringBuilder();
+						sb.Append(" ( ");
+						for( int i = 0 ; i < maxcol; i++ )
+						{
+							if( i != 0 )
+							{
+								sb.Append(",");
+							}
+							sb.Append("[").Append(fldname[i]).Append("]");
+						}
+						sb.Append( " ) " );
+						flds = sb.ToString();
+					}
 					while(dr.Read())
 					{
 						if( deletefrom == true && trow == 0)
@@ -4162,23 +4178,7 @@ namespace quickDBExplorer
 						}
 						trow++;
 						rowcount ++;
-						if( fieldlst == true )
-						{
-							wr.Write("insert into {0} ( ", dboInfo.FormalName );
-							for( int i = 0 ; i < maxcol; i++ )
-							{
-								if( i != 0 )
-								{
-									wr.Write(",");
-								}
-								wr.Write( fldname[i] );
-							}
-							wr.Write(" ) values ( " );
-						}
-						else
-						{
-							wr.Write("insert into {0} values ( ", dboInfo.FormalName );
-						}
+						wr.Write("insert into {0} {1} values ( ", dboInfo.FormalName, flds );
 
 						for( int i = 0 ; i < maxcol; i++ )
 						{
