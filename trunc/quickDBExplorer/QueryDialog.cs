@@ -7,31 +7,76 @@ using System.Windows.Forms;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// QueryDialog の概要の説明です。
+	/// クエリ等を入力する為のダイアログ
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class QueryDialog : System.Windows.Forms.Form
 	{
-		protected System.Windows.Forms.TextBox textBox1;
-		protected System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
 
-		public string	SelectSql = "";
-		public bool		hasReturn = false;
+		/// <summary>
+		/// 入力された文字列
+		/// </summary>
+		private string	pSelectSql = "";
+		/// <summary>
+		/// 入力された文字列
+		/// </summary>
+		public string	SelectSql
+		{
+			get { return this.pSelectSql; }
+			set { this.pSelectSql = value ; }
+		}
+		/// <summary>
+		/// 結果に戻り値があるかどうか
+		/// </summary>
+		private bool		pHasReturn = false;
+		/// <summary>
+		/// 結果に戻り値があるかどうか
+		/// </summary>
+		public bool		HasReturn
+		{
+			get { return this.pHasReturn; }
+			set { this.pHasReturn = value; }
+		}
+		
+		/// <summary>
+		/// テキスト入力エリア
+		/// </summary>
+		protected System.Windows.Forms.TextBox txtInput;
+		/// <summary>
+		/// OKボタン
+		/// </summary>
+		protected System.Windows.Forms.Button btnGo;
+		/// <summary>
+		/// 戻るボタン
+		/// </summary>
+		private System.Windows.Forms.Button btnCancel;
+		/// <summary>
+		/// テキスト入力エリアでの右クリックメニュー
+		/// </summary>
 		private System.Windows.Forms.ContextMenu contextMenu1;
-		private System.Windows.Forms.MenuItem menuItem1;
-		private System.Windows.Forms.MenuItem menuItem2;
-		private System.Windows.Forms.MenuItem menuItem3;
-		private System.Windows.Forms.MenuItem menuItem4;
-		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.MenuItem menuCopy;
+		private System.Windows.Forms.MenuItem menuCut;
+		private System.Windows.Forms.MenuItem menuPaste;
+		private System.Windows.Forms.MenuItem menuAllSelect;
+		/// <summary>
+		/// 戻り値あり チェックボックス
+		/// </summary>
+		protected System.Windows.Forms.CheckBox chkReturn;
 		private System.Windows.Forms.Button btnHistory;
 
-		protected textHistory  dHistory = new textHistory();
+		/// <summary>
+		/// 入力履歴データ
+		/// </summary>
+		private TextHistoryDataSet  pdHistory = new TextHistoryDataSet();
 
 		/// <summary>
 		/// 必要なデザイナ変数です。
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public QueryDialog()
 		{
 			//
@@ -44,10 +89,10 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 入力履歴情報
 		/// </summary>
-		public textHistory DHistory
+		public TextHistoryDataSet DHistory
 		{
-			get { return this.dHistory; }
-			set { this.dHistory = value; }
+			get { return this.pdHistory; }
+			set { this.pdHistory = value; }
 		}
 
 		/// <summary>
@@ -73,102 +118,101 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(QueryDialog));
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.txtInput = new System.Windows.Forms.TextBox();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
-			this.menuItem1 = new System.Windows.Forms.MenuItem();
-			this.menuItem2 = new System.Windows.Forms.MenuItem();
-			this.menuItem3 = new System.Windows.Forms.MenuItem();
-			this.menuItem4 = new System.Windows.Forms.MenuItem();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.menuCopy = new System.Windows.Forms.MenuItem();
+			this.menuCut = new System.Windows.Forms.MenuItem();
+			this.menuPaste = new System.Windows.Forms.MenuItem();
+			this.menuAllSelect = new System.Windows.Forms.MenuItem();
+			this.btnGo = new System.Windows.Forms.Button();
+			this.btnCancel = new System.Windows.Forms.Button();
+			this.chkReturn = new System.Windows.Forms.CheckBox();
 			this.btnHistory = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// textBox1
+			// txtInput
 			// 
-			this.textBox1.AcceptsReturn = true;
-			this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.txtInput.AcceptsReturn = true;
+			this.txtInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
-			this.textBox1.ContextMenu = this.contextMenu1;
-			this.textBox1.ImeMode = System.Windows.Forms.ImeMode.Off;
-			this.textBox1.Location = new System.Drawing.Point(16, 24);
-			this.textBox1.Multiline = true;
-			this.textBox1.Name = "textBox1";
-			this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.textBox1.Size = new System.Drawing.Size(444, 232);
-			this.textBox1.TabIndex = 0;
-			this.textBox1.Text = "";
-			this.textBox1.WordWrap = false;
-			this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+			this.txtInput.ContextMenu = this.contextMenu1;
+			this.txtInput.ImeMode = System.Windows.Forms.ImeMode.Off;
+			this.txtInput.Location = new System.Drawing.Point(16, 24);
+			this.txtInput.Multiline = true;
+			this.txtInput.Name = "txtInput";
+			this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.txtInput.Size = new System.Drawing.Size(444, 232);
+			this.txtInput.TabIndex = 0;
+			this.txtInput.Text = "";
+			this.txtInput.WordWrap = false;
+			this.txtInput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtInput_KeyDown);
 			// 
 			// contextMenu1
 			// 
 			this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						 this.menuItem1,
-																						 this.menuItem2,
-																						 this.menuItem3,
-																						 this.menuItem4});
+																						 this.menuCopy,
+																						 this.menuCut,
+																						 this.menuPaste,
+																						 this.menuAllSelect});
 			// 
-			// menuItem1
+			// menuCopy
 			// 
-			this.menuItem1.Index = 0;
-			this.menuItem1.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
-			this.menuItem1.Text = "コピー";
-			this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
+			this.menuCopy.Index = 0;
+			this.menuCopy.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
+			this.menuCopy.Text = "コピー";
+			this.menuCopy.Click += new System.EventHandler(this.menuCopy_Click);
 			// 
-			// menuItem2
+			// menuCut
 			// 
-			this.menuItem2.Index = 1;
-			this.menuItem2.Shortcut = System.Windows.Forms.Shortcut.CtrlX;
-			this.menuItem2.Text = "切り取り";
-			this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
+			this.menuCut.Index = 1;
+			this.menuCut.Shortcut = System.Windows.Forms.Shortcut.CtrlX;
+			this.menuCut.Text = "切り取り";
+			this.menuCut.Click += new System.EventHandler(this.menuCut_Click);
 			// 
-			// menuItem3
+			// menuPaste
 			// 
-			this.menuItem3.Index = 2;
-			this.menuItem3.Shortcut = System.Windows.Forms.Shortcut.CtrlV;
-			this.menuItem3.Text = "貼り付け";
-			this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click);
+			this.menuPaste.Index = 2;
+			this.menuPaste.Shortcut = System.Windows.Forms.Shortcut.CtrlV;
+			this.menuPaste.Text = "貼り付け";
+			this.menuPaste.Click += new System.EventHandler(this.menuPaste_Click);
 			// 
-			// menuItem4
+			// menuAllSelect
 			// 
-			this.menuItem4.Index = 3;
-			this.menuItem4.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
-			this.menuItem4.Text = "全て選択";
-			this.menuItem4.Click += new System.EventHandler(this.menuItem4_Click);
+			this.menuAllSelect.Index = 3;
+			this.menuAllSelect.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
+			this.menuAllSelect.Text = "全て選択";
+			this.menuAllSelect.Click += new System.EventHandler(this.menuAllSelect_Click);
 			// 
-			// button1
+			// btnGo
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.button1.Location = new System.Drawing.Point(16, 296);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(96, 24);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "SQL実行(&O)";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.btnGo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnGo.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.btnGo.Location = new System.Drawing.Point(16, 296);
+			this.btnGo.Name = "btnGo";
+			this.btnGo.Size = new System.Drawing.Size(96, 24);
+			this.btnGo.TabIndex = 1;
+			this.btnGo.Text = "SQL実行(&O)";
+			this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
 			// 
-			// button2
+			// btnCancel
 			// 
-			this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.button2.Location = new System.Drawing.Point(348, 292);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(88, 24);
-			this.button2.TabIndex = 3;
-			this.button2.Text = "キャンセル(&X)";
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btnCancel.Location = new System.Drawing.Point(348, 292);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(88, 24);
+			this.btnCancel.TabIndex = 3;
+			this.btnCancel.Text = "キャンセル(&X)";
 			// 
-			// checkBox1
+			// chkReturn
 			// 
-			this.checkBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.checkBox1.Location = new System.Drawing.Point(40, 272);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(208, 16);
-			this.checkBox1.TabIndex = 3;
-			this.checkBox1.Text = "戻り値あり(&R)";
-			this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+			this.chkReturn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkReturn.Location = new System.Drawing.Point(40, 272);
+			this.chkReturn.Name = "chkReturn";
+			this.chkReturn.Size = new System.Drawing.Size(208, 16);
+			this.chkReturn.TabIndex = 3;
+			this.chkReturn.Text = "戻り値あり(&R)";
 			// 
 			// btnHistory
 			// 
@@ -181,15 +225,15 @@ namespace quickDBExplorer
 			// 
 			// QueryDialog
 			// 
-			this.AcceptButton = this.button1;
+			this.AcceptButton = this.btnGo;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.CancelButton = this.button2;
+			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(480, 325);
 			this.Controls.Add(this.btnHistory);
-			this.Controls.Add(this.checkBox1);
-			this.Controls.Add(this.button2);
-			this.Controls.Add(this.button1);
-			this.Controls.Add(this.textBox1);
+			this.Controls.Add(this.chkReturn);
+			this.Controls.Add(this.btnCancel);
+			this.Controls.Add(this.btnGo);
+			this.Controls.Add(this.txtInput);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "QueryDialog";
 			this.ShowInTaskbar = false;
@@ -201,65 +245,78 @@ namespace quickDBExplorer
 		#endregion
 
 
-		protected virtual void button1_Click(object sender, System.EventArgs e)
+		/// <summary>
+		/// OKボタン押下時イベントハンドラ
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal virtual void btnGo_Click(object sender, System.EventArgs e)
 		{
-			SelectSql = this.textBox1.Text;
-			if( this.checkBox1.Checked == true )
+			SelectSql = this.txtInput.Text;
+			if( this.chkReturn.Checked == true )
 			{
-				this.hasReturn = true;
+				this.pHasReturn = true;
 			}
 			else
 			{
-				this.hasReturn = false;
+				this.pHasReturn = false;
 			}
 			//this.DialogResult = DialogResult.OK;
-			MainForm.SetNewHistory("",this.textBox1.Text,ref this.dHistory);
+			qdbeUtil.SetNewHistory("",this.txtInput.Text,this.pdHistory);
 		}
 
 		private void QueryDialog_Load(object sender, System.EventArgs e)
 		{
-			this.textBox1.Text = SelectSql;
-			this.textBox1.Focus();
+			this.txtInput.Text = SelectSql;
+			this.txtInput.Focus();
 		}
 
-		private void menuItem1_Click(object sender, System.EventArgs e)
+		private void menuCopy_Click(object sender, System.EventArgs e)
 		{
-			this.textBox1.Copy();
+			this.txtInput.Copy();
 		}
 
-		private void menuItem2_Click(object sender, System.EventArgs e)
+		private void menuCut_Click(object sender, System.EventArgs e)
 		{
-			this.textBox1.Cut();
+			this.txtInput.Cut();
 		}
 
-		private void menuItem3_Click(object sender, System.EventArgs e)
+		private void menuPaste_Click(object sender, System.EventArgs e)
 		{
-			this.textBox1.Paste();
+			this.txtInput.Paste();
 		}
 
-		private void menuItem4_Click(object sender, System.EventArgs e)
+		private void menuAllSelect_Click(object sender, System.EventArgs e)
 		{
-			this.textBox1.SelectAll();
+			this.txtInput.SelectAll();
 		}
 
-		private void checkBox1_CheckedChanged(object sender, System.EventArgs e)
-		{
-		
-		}
-
+		/// <summary>
+		/// 履歴引用ボタンの押下
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnHistory_Click(object sender, System.EventArgs e)
 		{
-			HistoryViewer hv = new HistoryViewer(this.dHistory, "");
+			// 入力履歴の選択ダイアログを表示する
+			HistoryViewer hv = new HistoryViewer(this.pdHistory, "");
 			hv.IsShowTable = false;
-			if( DialogResult.OK == hv.ShowDialog() && this.textBox1.Text != hv.retString)
+			if( DialogResult.OK == hv.ShowDialog() && this.txtInput.Text != hv.RetString)
 			{
-				this.textBox1.Text = hv.retString;
-				MainForm.SetNewHistory("",hv.retString,ref this.dHistory);
+				//違う情報であれば、それを表示し、履歴として追加する
+				this.txtInput.Text = hv.RetString;
+				qdbeUtil.SetNewHistory("",hv.RetString,this.pdHistory);
 			}
 		}
 
-		private void textBox1_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		/// <summary>
+		/// キーダウンイベントハンドラ
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
+		private void txtInput_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
+			// Ctrl+Dで全入力文字削除
 			if( e.Alt == false &&
 				e.Control == true &&
 				e.KeyCode == Keys.D )
@@ -267,16 +324,18 @@ namespace quickDBExplorer
 				// 全削除を行う
 				((TextBox)sender).Text = "";
 			}
+
+			// Ctrl＋Sで過去入力履歴ダイアログを表示する
 			if( e.Alt == false &&
 				e.Control == true &&
 				e.KeyCode == Keys.S )
 			{
-				HistoryViewer hv = new HistoryViewer(this.dHistory, "");
+				HistoryViewer hv = new HistoryViewer(this.pdHistory, "");
 				hv.IsShowTable = false;
-				if( DialogResult.OK == hv.ShowDialog() && this.textBox1.Text != hv.retString)
+				if( DialogResult.OK == hv.ShowDialog() && this.txtInput.Text != hv.RetString)
 				{
-					this.textBox1.Text = hv.retString;
-					MainForm.SetNewHistory("",hv.retString,ref this.dHistory);
+					this.txtInput.Text = hv.RetString;
+					qdbeUtil.SetNewHistory("",hv.RetString,this.pdHistory);
 				}
 			}
 		

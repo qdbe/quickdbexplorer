@@ -29,7 +29,7 @@
                     CheckForOverflowUnderflow = "false"
                     ConfigurationOverrideFile = ""
                     DefineConstants = "DEBUG;TRACE"
-                    DocumentationFile = ""
+                    DocumentationFile = "quickDBExplorerDoc.xml"
                     DebugSymbols = "true"
                     FileAlignment = "4096"
                     IncrementalBuild = "false"
@@ -94,6 +94,11 @@
                     AssemblyName = "System.Runtime.Serialization.Formatters.Soap"
                     HintPath = "C:\WINNT\Microsoft.NET\Framework\v1.1.4322\System.Runtime.Serialization.Formatters.Soap.dll"
                 />
+                <Reference
+                    Name = "ISqlInterface"
+                    Project = "{607646D5-0110-4F20-8916-E1C7B75FF090}"
+                    Package = "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}"
+                />
             </References>
         </Build>
         <Files>
@@ -125,6 +130,16 @@
                 <File
                     RelPath = "DataGridViewBase.resx"
                     DependentUpon = "DataGridViewBase.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "FieldGetDialog.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "FieldGetDialog.resx"
+                    DependentUpon = "FieldGetDialog.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
@@ -179,7 +194,7 @@
                 />
                 <File
                     RelPath = "mainForm.cs"
-                    SubType = "Component"
+                    SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
@@ -198,6 +213,21 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
+                    RelPath = "objectListView.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "objectListView.resx"
+                    DependentUpon = "objectListView.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "QdbeDataGridTextBoxColumn.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
                     RelPath = "qdbeListBox.cs"
                     SubType = "Component"
                     BuildAction = "Compile"
@@ -206,6 +236,16 @@
                     RelPath = "qdbeListBox.resx"
                     DependentUpon = "qdbeListBox.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "qdbeListView.cs"
+                    SubType = "Component"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "qdbeUtil.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "QueryDialog.cs"
@@ -218,13 +258,13 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "QuerySelectDialog.cs"
+                    RelPath = "QueryDialogSelect.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
                 />
                 <File
-                    RelPath = "QuerySelectDialog.resx"
-                    DependentUpon = "QuerySelectDialog.cs"
+                    RelPath = "QueryDialogSelect.resx"
+                    DependentUpon = "QueryDialogSelect.cs"
                     BuildAction = "EmbeddedResource"
                 />
                 <File
@@ -240,10 +280,6 @@
                     RelPath = "quickDBExplorerBaseForm.resx"
                     DependentUpon = "quickDBExplorerBaseForm.cs"
                     BuildAction = "EmbeddedResource"
-                />
-                <File
-                    RelPath = "quickDBExplorerHelp.doc"
-                    BuildAction = "None"
                 />
                 <File
                     RelPath = "quickDBExplorerTextBox.cs"
@@ -285,22 +321,22 @@
                     BuildAction = "EmbeddedResource"
                 />
                 <File
-                    RelPath = "textHistory.xsd"
+                    RelPath = "TextHistoryDataSet.xsd"
                     BuildAction = "Content"
                     Generator = "MSDataSetGenerator"
-                    LastGenOutput = "textHistory.cs"
+                    LastGenOutput = "TextHistoryDataSet.cs"
                 />
                 <File
-                    RelPath = "textHistory.cs"
-                    DependentUpon = "textHistory.xsd"
+                    RelPath = "TextHistoryDataSet.cs"
+                    DependentUpon = "TextHistoryDataSet.xsd"
                     SubType = "code"
                     BuildAction = "Compile"
                     DesignTime = "True"
                     AutoGen = "True"
                 />
                 <File
-                    RelPath = "textHistory.xsx"
-                    DependentUpon = "textHistory.xsd"
+                    RelPath = "TextHistoryDataSet.xsx"
+                    DependentUpon = "TextHistoryDataSet.xsd"
                     BuildAction = "None"
                 />
                 <File

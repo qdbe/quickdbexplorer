@@ -6,6 +6,10 @@ using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// イメージの表示ダイアログ
+	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class ImageViewer : quickDBExplorer.quickDBExplorerBaseForm
 	{
 		private System.ComponentModel.IContainer components = null;
@@ -18,15 +22,24 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Button btnClose;
 
-		protected Image viewImage;
+		/// <summary>
+		/// 表示するイメージ情報
+		/// </summary>
+		private Image pViewImage;
 
+		/// <summary>
+		/// 表示するイメージ情報の取得・設定
+		/// </summary>
 		public Image ViewImage
 		{
-			get { return this.viewImage; }
-			set { this.viewImage = value; }
+			get { return this.pViewImage; }
+			set { this.pViewImage = value; }
 		}
 
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public ImageViewer()
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
@@ -66,11 +79,12 @@ namespace quickDBExplorer
 			this.btnClose = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(166, 88);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Visible = false;
+			this.MsgArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.MsgArea.Location = new System.Drawing.Point(188, 84);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(216, 80);
 			// 
 			// pictureBox1
 			// 
@@ -176,26 +190,41 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.PixcelHeight, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.Controls.SetChildIndex(this.btnClose, 0);
 			this.ResumeLayout(false);
 
 		}
 		#endregion
 
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void ImageViewer_Load(object sender, System.EventArgs e)
 		{
+			// もともとの幅、高さを一旦記憶する
 			int basewidth = this.pictureBox1.Width;
 			int baseheight = this.pictureBox1.Height;
-			this.pictureBox1.Image = this.viewImage;
-			int diffwidth = this.viewImage.Width - basewidth;
-			int diffheight = this.viewImage.Height - baseheight;
+			// 表示イメージの設定
+			this.pictureBox1.Image = this.pViewImage;
+			// もともとのイメージ表示エリアのサイズとの差分を取得して
+			int diffwidth = this.pViewImage.Width - basewidth;
+			int diffheight = this.pViewImage.Height - baseheight;
+			// このダイアログ自体のサイズを動的に変更する
 			this.Width += diffwidth;
 			this.Height += diffheight;
-			this.PixcelHeight.Text = this.viewImage.Height.ToString();
-			this.PixcelWidth.Text = this.viewImage.Width.ToString();
+			// イメージの幅、高さ情報の表示
+			this.PixcelHeight.Text = this.pViewImage.Height.ToString(System.Globalization.CultureInfo.CurrentCulture);
+			this.PixcelWidth.Text = this.pViewImage.Width.ToString(System.Globalization.CultureInfo.CurrentCulture);
 		}
 
+		/// <summary>
+		/// 閉じるボタン押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnClose_Click(object sender, System.EventArgs e)
 		{
 			this.Close();

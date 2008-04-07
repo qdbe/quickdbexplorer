@@ -7,14 +7,24 @@ using System.Windows.Forms;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// ZoomDialog の概要の説明です。
+	/// 値の拡大表示用ダイアログ
 	/// where, order 等のテキストボックスの値を、全体が見えるようにするダイアログ
 	/// ここで値の編集が可能
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class ZoomDialog : quickDBExplorerBaseForm
 	{
+		/// <summary>
+		/// 表示テキストエリア
+		/// </summary>
 		protected System.Windows.Forms.TextBox txtZoom;
+		/// <summary>
+		/// OKボタン
+		/// </summary>
 		protected System.Windows.Forms.Button btnOk;
+		/// <summary>
+		/// 閉じるボタン
+		/// </summary>
 		protected System.Windows.Forms.Button btnClose;
 		/// <summary>
 		/// 必要なデザイナ変数です。
@@ -24,29 +34,29 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示するテキストの編集値
 		/// </summary>
-		protected string   editText = "";
+		private string   pEditText = "";
 
 		/// <summary>
 		/// タイトル名称
 		/// </summary>
-		protected string	labelName = "";
+		private string	pLabelName = "";
 
 		/// <summary>
 		/// 表示のみか否か
 		/// true ： 表示のみ
 		/// false : 編集可能
 		/// </summary>
-		protected bool		isDispOnly = false;
+		private bool		pIsDisplayOnly = false;
 
 		/// <summary>
 		/// 表示するテキストの編集値
 		/// </summary>
 		public virtual string EditText
 		{
-			get { return this.editText; }
+			get { return this.pEditText; }
 			set 
 			{
-				this.editText = value; 
+				this.pEditText = value; 
 				if( this.txtZoom != null &&
 					this.txtZoom.Visible == true &&
 					this.txtZoom.IsDisposed != true )
@@ -61,10 +71,10 @@ namespace quickDBExplorer
 		/// </summary>
 		public virtual string LableName
 		{
-			get { return this.labelName; }
+			get { return this.pLabelName; }
 			set 
 			{ 
-				this.labelName = value; 
+				this.pLabelName = value; 
 				this.Text = value;
 			}
 		}
@@ -76,11 +86,13 @@ namespace quickDBExplorer
 		/// </summary>
 		public virtual bool IsDispOnly
 		{
-			get { return this.isDispOnly; }
-			set { this.isDispOnly = value; }
+			get { return this.pIsDisplayOnly; }
+			set { this.pIsDisplayOnly = value; }
 		}
 
-
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public ZoomDialog()
 		{
 			//
@@ -118,10 +130,11 @@ namespace quickDBExplorer
 			this.btnClose = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(110, 230);
-			this.msgArea.Name = "msgArea";
+			this.MsgArea.Location = new System.Drawing.Point(88, 234);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(366, 16);
 			// 
 			// txtZoom
 			// 
@@ -173,16 +186,21 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.btnOk, 0);
 			this.Controls.SetChildIndex(this.btnClose, 0);
 			this.Controls.SetChildIndex(this.txtZoom, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.ResumeLayout(false);
 
 		}
 		#endregion
 
-		protected virtual void ZoomDialog_Load(object sender, System.EventArgs e)
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal virtual void ZoomDialog_Load(object sender, System.EventArgs e)
 		{
-			this.txtZoom.Text = this.editText;
-			if( this.isDispOnly == true)
+			this.txtZoom.Text = this.pEditText;
+			if( this.pIsDisplayOnly == true)
 			{
 				this.btnOk.Enabled = false;
 			}
@@ -190,7 +208,7 @@ namespace quickDBExplorer
 
 		private void btnOk_Click(object sender, System.EventArgs e)
 		{
-			this.editText = this.txtZoom.Text;
+			this.pEditText = this.txtZoom.Text;
 			this.DialogResult = DialogResult.OK;
 			this.OnEnter(new EventArgs());
 			this.Close();

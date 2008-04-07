@@ -8,34 +8,70 @@ using quickDBExplorer;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// 各種入力履歴の選択ダイアログ
+	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class HistoryViewer : quickDBExplorer.quickDBExplorerBaseForm
 	{
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.Button btnOK;
 		private System.Windows.Forms.Button btnClear;
 		private System.ComponentModel.IContainer components = null;
 		private System.Windows.Forms.ListView historyList;
-		textHistory	textHistoryDS = new textHistory();
-		string targetTable = "";
-		private System.Windows.Forms.Button btnDspAll;
+		/// <summary>
+		/// 入力履歴情報
+		/// </summary>
+		private TextHistoryDataSet	TextHistoryDataSetDS = new TextHistoryDataSet();
+		/// <summary>
+		/// 対象テーブル名称
+		/// </summary>
+		private string targetTable = "";
+		/// <summary>
+		/// 履歴拡大表示ボタン
+		/// </summary>
+		private System.Windows.Forms.Button btnDispAll;
 
-		public string retString = "";
+		/// <summary>
+		/// 選択された入力履歴情報
+		/// </summary>
+		private string pRetString = "";
+		/// <summary>
+		/// 選択された入力履歴情報
+		/// </summary>
+		public string RetString 
+		{
+			get { return this.pRetString; }
+			set { this.pRetString = value; }
+		}
 
-		private bool isShowTable = true;
+		/// <summary>
+		/// テーブル名称を表示するか否かの指定
+		/// </summary>
+		private bool pIsShowTable = true;
 
-		public HistoryViewer(textHistory hdata, string curTable)
+		/// <summary>
+		/// テーブル名称を表示するか否かの指定
+		/// </summary>
+		public bool IsShowTable
+		{
+			get { return this.pIsShowTable; }
+			set { this.pIsShowTable = value; }
+		}
+
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="hdata">履歴情報</param>
+		/// <param name="curTable">現在選択されているテーブル名称</param>
+		public HistoryViewer(TextHistoryDataSet hdata, string curTable)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
-			this.textHistoryDS = hdata;
+			this.TextHistoryDataSetDS = hdata;
 			this.targetTable = curTable;
 		}
 
-		public bool IsShowTable
-		{
-			get { return this.isShowTable; }
-			set { this.isShowTable = value; }
-		}
 
 		/// <summary>
 		/// 使用されているリソースに後処理を実行します。
@@ -59,30 +95,30 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.button1 = new System.Windows.Forms.Button();
+			this.btnCancel = new System.Windows.Forms.Button();
 			this.btnOK = new System.Windows.Forms.Button();
 			this.btnClear = new System.Windows.Forms.Button();
 			this.historyList = new System.Windows.Forms.ListView();
-			this.btnDspAll = new System.Windows.Forms.Button();
+			this.btnDispAll = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(358, 270);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Size = new System.Drawing.Size(98, 24);
-			this.msgArea.TabIndex = 3;
+			this.MsgArea.Location = new System.Drawing.Point(332, 270);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(124, 24);
+			this.MsgArea.TabIndex = 3;
 			// 
-			// button1
+			// btnCancel
 			// 
-			this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.button1.Location = new System.Drawing.Point(462, 270);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(72, 24);
-			this.button1.TabIndex = 4;
-			this.button1.Text = "戻る(&X)";
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btnCancel.Location = new System.Drawing.Point(462, 270);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(72, 24);
+			this.btnCancel.TabIndex = 4;
+			this.btnCancel.Text = "戻る(&X)";
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
 			// btnOK
 			// 
@@ -118,34 +154,34 @@ namespace quickDBExplorer
 			this.historyList.View = System.Windows.Forms.View.Details;
 			this.historyList.DoubleClick += new System.EventHandler(this.historyList_DoubleClick);
 			// 
-			// btnDspAll
+			// btnDispAll
 			// 
-			this.btnDspAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnDspAll.Location = new System.Drawing.Point(210, 272);
-			this.btnDspAll.Name = "btnDspAll";
-			this.btnDspAll.Size = new System.Drawing.Size(112, 23);
-			this.btnDspAll.TabIndex = 3;
-			this.btnDspAll.Text = "履歴拡大表示(&Z)";
-			this.btnDspAll.Click += new System.EventHandler(this.btnDspAll_Click);
+			this.btnDispAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnDispAll.Location = new System.Drawing.Point(210, 272);
+			this.btnDispAll.Name = "btnDispAll";
+			this.btnDispAll.Size = new System.Drawing.Size(112, 23);
+			this.btnDispAll.TabIndex = 3;
+			this.btnDispAll.Text = "履歴拡大表示(&Z)";
+			this.btnDispAll.Click += new System.EventHandler(this.btnDispAll_Click);
 			// 
 			// HistoryViewer
 			// 
 			this.AcceptButton = this.btnOK;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.CancelButton = this.button1;
+			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(552, 304);
 			this.Controls.Add(this.historyList);
 			this.Controls.Add(this.btnClear);
 			this.Controls.Add(this.btnOK);
-			this.Controls.Add(this.button1);
-			this.Controls.Add(this.btnDspAll);
+			this.Controls.Add(this.btnCancel);
+			this.Controls.Add(this.btnDispAll);
 			this.Name = "HistoryViewer";
 			this.ShowInTaskbar = false;
 			this.Text = "過去入力履歴選択";
 			this.Load += new System.EventHandler(this.HistoryViewer_Load);
-			this.Controls.SetChildIndex(this.btnDspAll, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
-			this.Controls.SetChildIndex(this.button1, 0);
+			this.Controls.SetChildIndex(this.btnDispAll, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
+			this.Controls.SetChildIndex(this.btnCancel, 0);
 			this.Controls.SetChildIndex(this.btnOK, 0);
 			this.Controls.SetChildIndex(this.btnClear, 0);
 			this.Controls.SetChildIndex(this.historyList, 0);
@@ -154,28 +190,34 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void HistoryViewer_Load(object sender, System.EventArgs e)
 		{
-			// 一旦履歴は全てクリア
+			// 一旦履歴一覧は全てクリア
 			this.historyList.Clear();
-			if( isShowTable == true )
+			// 表示するカラムのセット
+			if( pIsShowTable == true )
 			{
 				this.historyList.Columns.Add("テーブル",120,HorizontalAlignment.Left);
 			}
 			this.historyList.Columns.Add("履歴",this.historyList.Width - 120 - 4,HorizontalAlignment.Left);
-			if( this.textHistoryDS != null && this.textHistoryDS.textHistoryData.Rows.Count != 0 )
+
+			// 一覧の内容をセットしていく
+			if( this.TextHistoryDataSetDS != null && this.TextHistoryDataSetDS.TextHistoryDataSets.Rows.Count != 0 )
 			{
-				// まずは、同じテーブル名のものを優先
-
-
 				this.historyList.BeginUpdate();
 
-				DataRow []drl = this.textHistoryDS.textHistoryData.Select(string.Format("KeyValue = '{0}'",this.targetTable),
+				// まずは、同じテーブル名のものを優先して表示する
+				DataRow []drl = this.TextHistoryDataSetDS.TextHistoryDataSets.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue = '{0}'",this.targetTable),
 					"KeyNo desc");
 				ListViewItem item ;
 				for( int i = 0 ; i < drl.Length; i++ )
 				{
-					if( isShowTable == true )
+					if( pIsShowTable == true )
 					{
 						item = new ListViewItem(
 							new string[] {
@@ -196,11 +238,11 @@ namespace quickDBExplorer
 				}
 
 				// 次に違うテーブルのものを表示
-				drl = this.textHistoryDS.textHistoryData.Select(string.Format("KeyValue <> '{0}'",this.targetTable),
+				drl = this.TextHistoryDataSetDS.TextHistoryDataSets.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue <> '{0}'",this.targetTable),
 					"KeyNo desc");
 				for( int i = 0 ; i < drl.Length; i++ )
 				{
-					if( isShowTable == true )
+					if( pIsShowTable == true )
 					{
 						item = new ListViewItem(
 							new string[] {
@@ -226,48 +268,78 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 履歴消去ボタン押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnClear_Click(object sender, System.EventArgs e)
 		{
-			this.textHistoryDS.textHistoryData.Rows.Clear();
+			this.TextHistoryDataSetDS.TextHistoryDataSets.Rows.Clear();
 			this.historyList.Clear();
 		}
 
-		private void button1_Click(object sender, System.EventArgs e)
+
+		/// <summary>
+		/// 戻るボタン押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnCancel_Click(object sender, System.EventArgs e)
 		{
+			this.DialogResult = DialogResult.Cancel;
 			this.Close();
 		}
 
+		/// <summary>
+		/// OKボタン押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnOK_Click(object sender, System.EventArgs e)
 		{
 			if( this.historyList.SelectedItems.Count > 0 )
 			{
-				if( isShowTable == true )
+				// 選択項目があれば、それを戻す
+				if( pIsShowTable == true )
 				{
-					this.retString = this.historyList.SelectedItems[0].SubItems[1].Text;
+					this.pRetString = this.historyList.SelectedItems[0].SubItems[1].Text;
 				}
 				else
 				{
-					this.retString = this.historyList.SelectedItems[0].SubItems[0].Text;
+					this.pRetString = this.historyList.SelectedItems[0].SubItems[0].Text;
 				}
 			}
 			this.DialogResult = DialogResult.OK;
 			this.Close();
 		}
 
+		/// <summary>
+		/// ダブルクリックは選択と同一視する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void historyList_DoubleClick(object sender, System.EventArgs e)
 		{
 			this.btnOK_Click(sender, e);
 		}
 
-		private void btnDspAll_Click(object sender, System.EventArgs e)
+		/// <summary>
+		/// 拡大表示ボタン押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnDispAll_Click(object sender, System.EventArgs e)
 		{
 			if( this.historyList.SelectedItems.Count == 0 )
 			{
 				return;
 			}
+			// 選択項目の内容を拡大表示ダイアログを利用して表示させる。
+			// ただし、読み取り専用
 			ZoomDialog dlg = new ZoomDialog();
 			dlg.IsDispOnly = true;
-			if( isShowTable == true )
+			if( pIsShowTable == true )
 			{
 				dlg.EditText = this.historyList.SelectedItems[0].SubItems[1].Text;
 			}

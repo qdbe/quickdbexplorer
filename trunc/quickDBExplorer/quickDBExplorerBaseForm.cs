@@ -7,18 +7,41 @@ using System.Windows.Forms;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// quickDBExplorerBaseForm の概要の説明です。
+	/// エラー情報表示エリアを持つ、base となるダイアログクラス。
+	/// 継承して利用することを想定
 	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class quickDBExplorerBaseForm : System.Windows.Forms.Form
 	{
-		protected System.Windows.Forms.Label msgArea;
+
 		/// <summary>
 		/// 必要なデザイナ変数です。
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 		private System.Windows.Forms.ErrorProvider errorProvider1;
-		protected string  errMessage = "";
+		/// <summary>
+		/// メッセージ表示エリア
+		/// </summary>
+		protected System.Windows.Forms.Label MsgArea;
 
+		/// <summary>
+		/// 表示するエラーメッセージ
+		/// </summary>
+		private string  pErrMessage = "";
+
+		/// <summary>
+		/// 表示するエラーメッセージ
+		/// </summary>
+		protected string  ErrMessage
+		{
+			get { return this.pErrMessage; }
+			set { this.pErrMessage = value; }
+
+		}
+
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public quickDBExplorerBaseForm()
 		{
 			//
@@ -51,30 +74,31 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(quickDBExplorerBaseForm));
-			this.msgArea = new System.Windows.Forms.Label();
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
+			this.MsgArea = new System.Windows.Forms.Label();
 			this.SuspendLayout();
-			// 
-			// msgArea
-			// 
-			this.msgArea.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.msgArea.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.msgArea.ForeColor = System.Drawing.Color.Red;
-			this.msgArea.Location = new System.Drawing.Point(48, 224);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Size = new System.Drawing.Size(232, 24);
-			this.msgArea.TabIndex = 10;
-			this.msgArea.DoubleClick += new System.EventHandler(this.msgArea_DoubleClick);
 			// 
 			// errorProvider1
 			// 
 			this.errorProvider1.ContainerControl = this;
 			// 
+			// MsgArea
+			// 
+			this.MsgArea.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+				| System.Windows.Forms.AnchorStyles.Right)));
+			this.MsgArea.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+			this.MsgArea.ForeColor = System.Drawing.Color.Red;
+			this.MsgArea.Location = new System.Drawing.Point(160, 472);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(568, 16);
+			this.MsgArea.TabIndex = 0;
+			this.MsgArea.DoubleClick += new System.EventHandler(this.msgArea_DoubleClick);
+			// 
 			// quickDBExplorerBaseForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(288, 266);
-			this.Controls.Add(this.msgArea);
+			this.ClientSize = new System.Drawing.Size(744, 493);
+			this.Controls.Add(this.MsgArea);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "quickDBExplorerBaseForm";
 			this.Text = "quickDBExplorerBaseForm";
@@ -86,35 +110,52 @@ namespace quickDBExplorer
 
 		private void quickDBExplorerBaseForm_Load(object sender, System.EventArgs e)
 		{
-			this.msgArea.Text = "";
+			this.MsgArea.Text = "";
 		}
 
+		/// <summary>
+		/// エラーメッセージを初期化し、クリアする
+		/// </summary>
 		protected void InitErrMessage()
 		{
-			this.msgArea.Text = "";
-			this.errMessage = "";
-			this.errorProvider1.SetIconAlignment(this.msgArea,ErrorIconAlignment.MiddleLeft);
-			this.errorProvider1.SetError(this.msgArea,"");
+			this.MsgArea.Text = "";
+			this.ErrMessage = "";
+			this.errorProvider1.SetIconAlignment(this.MsgArea,ErrorIconAlignment.MiddleLeft);
+			this.errorProvider1.SetError(this.MsgArea,"");
 		}
 
+		/// <summary>
+		/// Exception の内容からエラーメッセージを表示する
+		/// </summary>
+		/// <param name="ex">発生したException
+		/// このException の Message がエラーメッセージ領域に表示され、ToString()した結果が ダブルクリック時のクリップボード貼り付け対象となる</param>
 		protected void SetErrorMessage(Exception ex)
 		{
-			this.msgArea.Text = ex.Message;
-			this.errMessage = ex.ToString();
-			this.errorProvider1.SetError(this.msgArea,this.msgArea.Text);
+			this.MsgArea.Text = ex.Message;
+			this.ErrMessage = ex.ToString();
+			this.errorProvider1.SetError(this.MsgArea,this.MsgArea.Text);
 		}
 
+		/// <summary>
+		/// エラーメッセージの領域に表示する内容をセットする
+		/// </summary>
+		/// <param name="dspdata"></param>
 		protected void SetMessageArea(object dspdata)
 		{
-			this.msgArea.Text = dspdata.ToString();
+			this.MsgArea.Text = dspdata.ToString();
 			Application.DoEvents();
 		}
 
+		/// <summary>
+		/// エラーメッセージ領域をダブルクリックした場合、エラーメッセージの詳細な内容をクリップボードにコピーする
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void msgArea_DoubleClick(object sender, System.EventArgs e)
 		{
-			if( this.errMessage != "" )
+			if( this.ErrMessage != "" )
 			{
-				Clipboard.SetDataObject(this.errMessage,true );
+				Clipboard.SetDataObject(this.ErrMessage,true );
 			}
 		}
 	}

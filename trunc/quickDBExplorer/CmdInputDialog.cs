@@ -6,18 +6,23 @@ using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// テーブルに対する各種コマンド実行 のコマンド入力用ダイアログ
+	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class CmdInputDialog : quickDBExplorer.QueryDialog
 	{
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.ComponentModel.IContainer components = null;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public CmdInputDialog()
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
-
-			// TODO: InitializeComponent 呼び出しの後に初期化処理を追加します。
 		}
 
 		/// <summary>
@@ -44,18 +49,18 @@ namespace quickDBExplorer
 		{
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.dHistory)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.DHistory)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// textBox1
+			// txtInput
 			// 
-			this.textBox1.Location = new System.Drawing.Point(16, 48);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(444, 218);
+			this.txtInput.Location = new System.Drawing.Point(16, 50);
+			this.txtInput.Name = "txtInput";
+			this.txtInput.Size = new System.Drawing.Size(444, 206);
 			// 
-			// button1
+			// btnGo
 			// 
-			this.button1.Name = "button1";
+			this.btnGo.Name = "btnGo";
 			// 
 			// label1
 			// 
@@ -82,24 +87,29 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label2);
 			this.Name = "CmdInputDialog";
 			this.Text = "各種クエリ実行(テーブル引数)";
+			this.Controls.SetChildIndex(this.txtInput, 0);
+			this.Controls.SetChildIndex(this.btnGo, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
-			this.Controls.SetChildIndex(this.button1, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
-			this.Controls.SetChildIndex(this.textBox1, 0);
-			((System.ComponentModel.ISupportInitialize)(this.dHistory)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.DHistory)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 		#endregion
 
-		protected override void button1_Click(object sender, EventArgs e)
+		/// <summary>
+		/// OKボタン押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		internal override void btnGo_Click(object sender, EventArgs e)
 		{
-			if( this.textBox1.Text != "" &&
-				this.textBox1.Text.IndexOf("{0}") < 0 )
+			if( this.txtInput.Text != "" &&
+				this.txtInput.Text.IndexOf("{0}") < 0 )
 			{
 				return;
 			}
-			base.button1_Click (sender, e);
+			base.btnGo_Click (sender, e);
 			this.DialogResult = DialogResult.OK;
 			this.Close();
 		}

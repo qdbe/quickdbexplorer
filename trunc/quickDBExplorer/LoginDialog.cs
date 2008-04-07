@@ -9,16 +9,24 @@ using System.Configuration;
 using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
+using System.Reflection;
 
 namespace quickDBExplorer
 {
-	public class LoginDialog : quickDBExplorer.quickDBExplorerBaseForm
+	/// <summary>
+	/// SQL Serverへのログイン指定ダイアログ
+	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
+	public class LogOnDialog : quickDBExplorer.quickDBExplorerBaseForm
 	{
-		protected saveClass	initopt;
+		/// <summary>
+		/// 以前までの接続時記録情報
+		/// </summary>
+		private ConditionRecorder	initOpt;
 
 		private System.Windows.Forms.CheckBox chkTrust;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.CheckBox checkBox1;
+		private System.Windows.Forms.CheckBox chkSaveInfo;
 		private System.Windows.Forms.Button btnServerHistory;
 		private System.Windows.Forms.Button btnLogin;
 		private System.Windows.Forms.Label label4;
@@ -31,12 +39,16 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label1;
 		private System.ComponentModel.IContainer components = null;
 
-		public LoginDialog(saveClass initialOption)
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="initialOption">記憶された設定情報</param>
+		public LogOnDialog(ConditionRecorder initialOption)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
 
-			this.initopt = initialOption;
+			this.initOpt = initialOption;
 
 		}
 
@@ -62,26 +74,26 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(LoginDialog));
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(LogOnDialog));
 			this.chkTrust = new System.Windows.Forms.CheckBox();
 			this.label5 = new System.Windows.Forms.Label();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
+			this.chkSaveInfo = new System.Windows.Forms.CheckBox();
 			this.btnServerHistory = new System.Windows.Forms.Button();
 			this.btnLogin = new System.Windows.Forms.Button();
 			this.label4 = new System.Windows.Forms.Label();
-			this.txtPassword = new quickDBExplorerTextBox();
-			this.txtUser = new quickDBExplorerTextBox();
-			this.txtInstance = new quickDBExplorerTextBox();
-			this.txtServerName = new quickDBExplorerTextBox();
+			this.txtPassword = new quickDBExplorer.quickDBExplorerTextBox();
+			this.txtUser = new quickDBExplorer.quickDBExplorerTextBox();
+			this.txtInstance = new quickDBExplorer.quickDBExplorerTextBox();
+			this.txtServerName = new quickDBExplorer.quickDBExplorerTextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(152, 240);
-			this.msgArea.Name = "msgArea";
+			this.MsgArea.Location = new System.Drawing.Point(152, 240);
+			this.MsgArea.Name = "MsgArea";
 			// 
 			// chkTrust
 			// 
@@ -101,13 +113,13 @@ namespace quickDBExplorer
 			this.label5.TabIndex = 20;
 			this.label5.Text = "C Info;";
 			// 
-			// checkBox1
+			// chkSaveInfo
 			// 
-			this.checkBox1.Location = new System.Drawing.Point(368, 49);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(144, 16);
-			this.checkBox1.TabIndex = 13;
-			this.checkBox1.Text = "接続先を保存する(&R)";
+			this.chkSaveInfo.Location = new System.Drawing.Point(368, 49);
+			this.chkSaveInfo.Name = "chkSaveInfo";
+			this.chkSaveInfo.Size = new System.Drawing.Size(144, 16);
+			this.chkSaveInfo.TabIndex = 13;
+			this.chkSaveInfo.Text = "接続先を保存する(&R)";
 			// 
 			// btnServerHistory
 			// 
@@ -193,13 +205,14 @@ namespace quickDBExplorer
 			this.label1.TabIndex = 14;
 			this.label1.Text = "サーバーの指定(&S)";
 			// 
-			// LoginDialog
+			// LogOnDialog
 			// 
+			this.AcceptButton = this.btnLogin;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(520, 266);
 			this.Controls.Add(this.chkTrust);
 			this.Controls.Add(this.label5);
-			this.Controls.Add(this.checkBox1);
+			this.Controls.Add(this.chkSaveInfo);
 			this.Controls.Add(this.btnServerHistory);
 			this.Controls.Add(this.btnLogin);
 			this.Controls.Add(this.label4);
@@ -211,11 +224,11 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.Name = "LoginDialog";
+			this.Name = "LogOnDialog";
 			this.Text = "ログイン";
-			this.Closing += new System.ComponentModel.CancelEventHandler(this.LoginDialog_Closing);
-			this.Load += new System.EventHandler(this.LoginDialog_Load);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.LogOnDialog_Closing);
+			this.Load += new System.EventHandler(this.LogOnDialog_Load);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.label3, 0);
@@ -226,7 +239,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.label4, 0);
 			this.Controls.SetChildIndex(this.btnLogin, 0);
 			this.Controls.SetChildIndex(this.btnServerHistory, 0);
-			this.Controls.SetChildIndex(this.checkBox1, 0);
+			this.Controls.SetChildIndex(this.chkSaveInfo, 0);
 			this.Controls.SetChildIndex(this.label5, 0);
 			this.Controls.SetChildIndex(this.chkTrust, 0);
 			this.ResumeLayout(false);
@@ -234,14 +247,21 @@ namespace quickDBExplorer
 		}
 		#endregion
 
-		private void LoginDialog_Load(object sender, System.EventArgs e)
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void LogOnDialog_Load(object sender, System.EventArgs e)
 		{
 			// ローカルのファイルから　オプションを読み込む
 
-			this.checkBox1.Checked = true;
-			if( initopt.lastserverkey != "" )
+			this.chkSaveInfo.Checked = true;
+			// 最後に表示したサーバーの情報があれば、それを表示する
+			if( initOpt.LastServerKey.Length != 0 )
 			{
-				ServerData sv = (ServerData)initopt.ht[initopt.lastserverkey];
+				// 記憶されたサーバー別の記憶情報
+				ServerData sv = (ServerData)initOpt.PerServerData[initOpt.LastServerKey];
 				this.txtServerName.Text = sv.Servername;
 				this.txtInstance.Text = sv.InstanceName;
 				if( sv.IsUseTrust == true )
@@ -251,10 +271,11 @@ namespace quickDBExplorer
 				else
 				{
 					this.chkTrust.Checked = false;
-					this.txtUser.Text = sv.loginUser;
+					this.txtUser.Text = sv.LogOnUser;
 				}
+				// パスワードは記憶していないので戻す必要なし
 			}
-			if( this.initopt.ht.Count > 0 )
+			if( this.initOpt.PerServerData.Count > 0 )
 			{
 				this.btnServerHistory.Enabled = true;
 			}
@@ -264,19 +285,26 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// ログインボタン押下時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnLogin_Click(object sender, System.EventArgs e)
 		{
 			String myConnString;
 			if( this.chkTrust.Checked == false )
 			{
 				// ユーザー名での接続
-				if( this.txtInstance.Text != "" )
+				if( this.txtInstance.Text.Length != 0 )
 				{
+					// インスタンス名あり
 					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
 						+"Database=master;User ID="+this.txtUser.Text
 						+";Password="+this.txtPassword.Text;			}
 				else
 				{
+					// インスタンス名なし
 					myConnString = "Server=" + this.txtServerName.Text + ";"
 						+"Database=master;User ID="+this.txtUser.Text
 						+";Password="+this.txtPassword.Text;
@@ -285,68 +313,108 @@ namespace quickDBExplorer
 			else
 			{
 				// 信頼関係接続
-				if( this.txtInstance.Text != "" )
+				if( this.txtInstance.Text.Length != 0 )
 				{
+					// インスタンス名あり
 					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
 						+"Database=master;Integrated Security=SSPI;";
 				}
 				else
 				{
+					// インスタンス名なし
 					myConnString = "Server=" + this.txtServerName.Text + ";"
 						+"Database=master;Integrated Security=SSPI;";
 				}
 			}
-			
+
+			// エラーメッセージクリア
 			this.InitErrMessage();
 
 			try 
 			{
+				Assembly asm = null;
+				string dllName = "";
+				string className = "";
+
+				// SQL Server とのコネクションを確立する
 				System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection();
 				con.ConnectionString = myConnString;
 				con.Open();
 
+				// 以前のサーバー別情報があれば、それを再作成する
 				ServerData sv = new ServerData();
 				sv.Servername = this.txtServerName.Text;
 				sv.InstanceName = this.txtInstance.Text;
-				if( initopt.ht[sv.KeyName] == null )
+				if( initOpt.PerServerData[sv.KeyName] == null )
 				{
-					initopt.ht.Add(sv.KeyName,sv);
+					initOpt.PerServerData.Add(sv.KeyName,sv);
 				}
 				else
 				{
-					sv = (ServerData)initopt.ht[sv.KeyName];
+					sv = (ServerData)initOpt.PerServerData[sv.KeyName];
 				}
 
-				if( this.checkBox1.Checked == false )
+				if( this.chkSaveInfo.Checked == false )
 				{
-					sv.isSaveKey = false;
+					sv.IsSaveKey = false;
 				}
 				else
 				{
-					sv.isSaveKey = true;
+					sv.IsSaveKey = true;
 				}
 				sv.IsUseTrust = this.chkTrust.Checked;
-				sv.loginUser = this.txtUser.Text;
-				initopt.lastserverkey = sv.KeyName;
+				sv.LogOnUser = this.txtUser.Text;
+				// 最後に接続したサーバーを更新
+				initOpt.LastServerKey = sv.KeyName;
 
+				// メインダイアログを表示
 				MainForm mainForm = new MainForm(sv);
 				mainForm.MdiParent = this.MdiParent;
-				mainForm.servername = this.txtServerName.Text;
-				mainForm.serverRealName = this.txtServerName.Text;
-				mainForm.instanceName = this.txtInstance.Text;
-				mainForm.loginUid = this.txtUser.Text;
-				mainForm.loginPasswd = this.txtPassword.Text;
+				mainForm.ServerName = this.txtServerName.Text;
+				mainForm.ServerRealName = this.txtServerName.Text;
+				mainForm.InstanceName = this.txtInstance.Text;
+				mainForm.LogOnUid = this.txtUser.Text;
+				mainForm.LogOnPassword = this.txtPassword.Text;
 				mainForm.IsUseTruse = this.chkTrust.Checked;
-				if( this.txtInstance.Text != "" )
+				if( this.txtInstance.Text.Length != 0 )
 				{
-					mainForm.servername = this.txtServerName.Text + "@" + this.txtInstance.Text;
+					mainForm.ServerName = this.txtServerName.Text + "@" + this.txtInstance.Text;
 				}
 				else
 				{
-					mainForm.servername = this.txtServerName.Text;
+					mainForm.ServerName = this.txtServerName.Text;
 				}
-				mainForm.sqlConnection1 = con;
+
+				// SQL 処理クラスの初期化
+				if(con.ServerVersion.StartsWith("08") )
+				{
+					mainForm.SqlVersion = 2000;
+				}
+				else if(con.ServerVersion.StartsWith("09") )
+				{
+					mainForm.SqlVersion = 2005;
+				}
+				else if(con.ServerVersion.StartsWith("10") )
+				{
+					// 現時点では2008と同等と仮定する
+					mainForm.SqlVersion = 2008;
+				}
+				else
+				{
+					// 現時点では2008と同等と仮定する
+					mainForm.SqlVersion = 2008;
+				}
+				// SQL SERVERのバージョンに応じたDLLを読み込む
+				dllName = string.Format(System.Globalization.CultureInfo.CurrentCulture,Application.StartupPath + "\\SqlServer{0}Driver.dll", mainForm.SqlVersion );
+				className = string.Format(System.Globalization.CultureInfo.CurrentCulture,"quickDBExplorer.SqlServerDriver{0}", mainForm.SqlVersion );
+				asm = Assembly.LoadFrom(dllName);
+				mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className,true);
+
+				mainForm.SqlDriver.SetConnection(con,mainForm.SqlTimeout);
+
+				// MDI なので、モードレスでダイアログを表示する
 				mainForm.Show();
+				// メインダイアログを表示すれば、このダイアログは不要
 				this.Close();
 			}
 			catch ( System.Data.SqlClient.SqlException se)
@@ -358,22 +426,27 @@ namespace quickDBExplorer
 			//}
 		}
 
+		/// <summary>
+		/// 過去のサーバー接続履歴から、選択する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnServerHistory_Click(object sender, System.EventArgs e)
 		{
-			if( this.initopt.ht.Count > 0 )
+			if( this.initOpt.PerServerData.Count > 0 )
 			{
-				ServerSelectDialog dlg = new ServerSelectDialog(this.initopt);
+				ServerSelectDialog dlg = new ServerSelectDialog(this.initOpt);
 			
 				if( dlg.ShowDialog() == DialogResult.OK	)
 				{
-					this.txtServerName.Text = dlg.selectedServer;
-					this.txtInstance.Text = dlg.selectedInstance;
+					this.txtServerName.Text = dlg.SelectedServer;
+					this.txtInstance.Text = dlg.SelectedInstance;
 
 					ServerData sv = new ServerData();
 					sv.Servername = this.txtServerName.Text;
 					sv.InstanceName = this.txtInstance.Text;
 
-					ServerData selectSv = (ServerData)this.initopt.ht[sv.KeyName];
+					ServerData selectSv = (ServerData)this.initOpt.PerServerData[sv.KeyName];
 					if( selectSv != null && selectSv.IsUseTrust == true )
 					{
 						this.chkTrust.Checked = true;
@@ -388,7 +461,7 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void LoginDialog_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		private void LogOnDialog_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 		}
 

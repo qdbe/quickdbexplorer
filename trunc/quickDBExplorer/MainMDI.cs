@@ -10,32 +10,44 @@ using System.Runtime.Serialization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Soap;
 using System.Reflection;
+using System.Net;
 
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// Form1 の概要の説明です。
+	/// 全ての親画面となるMDIフォーム
 	/// </summary>
-	public class MainMDI : System.Windows.Forms.Form
+	[System.Runtime.InteropServices.ComVisible(false)]
+	public class MainMdi : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.StatusBar statusBar1;
 		private System.Windows.Forms.MainMenu mainMenu1;
-		private System.Windows.Forms.MenuItem menuItem1;
-		private System.Windows.Forms.MenuItem menuItem2;
-		private System.Windows.Forms.MenuItem menuItem3;
+		private System.Windows.Forms.MenuItem menuConnect;
+		private System.Windows.Forms.MenuItem menuWindow;
+		private System.Windows.Forms.MenuItem menuNewConnect;
 		private System.ComponentModel.IContainer components = null;
 		private System.Windows.Forms.ErrorProvider errorProvider1;
+		private System.Windows.Forms.MenuItem menuHelpMain;
+		private System.Windows.Forms.MenuItem menuQuit;
+		private System.Windows.Forms.MenuItem menuViewHelp;
+		private System.Windows.Forms.MenuItem menuVersion;
+		private System.Windows.Forms.MenuItem menuAbout;
 
-		protected saveClass	initopt;
-		private System.Windows.Forms.MenuItem menuItem4;
-		private System.Windows.Forms.MenuItem menuItem5;
-		protected string  errMessage = "";
-		private System.Windows.Forms.MenuItem menuItem6;
-		private System.Windows.Forms.MenuItem menuItem9;
+		/// <summary>
+		/// 前回操作時の各種記憶情報
+		/// </summary>
+		private ConditionRecorder	initopt;
+		/// <summary>
+		/// 表示エラーメッセージ
+		/// </summary>
+		private string  errMessage = "";
 
 
 
-		public MainMDI()
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
+		public MainMdi()
 		{
 			//
 			// Windows フォーム デザイナ サポートに必要です。
@@ -66,17 +78,18 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainMDI));
+			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainMdi));
 			this.statusBar1 = new System.Windows.Forms.StatusBar();
 			this.mainMenu1 = new System.Windows.Forms.MainMenu();
-			this.menuItem1 = new System.Windows.Forms.MenuItem();
-			this.menuItem3 = new System.Windows.Forms.MenuItem();
-			this.menuItem5 = new System.Windows.Forms.MenuItem();
-			this.menuItem2 = new System.Windows.Forms.MenuItem();
-			this.menuItem4 = new System.Windows.Forms.MenuItem();
-			this.menuItem6 = new System.Windows.Forms.MenuItem();
+			this.menuConnect = new System.Windows.Forms.MenuItem();
+			this.menuNewConnect = new System.Windows.Forms.MenuItem();
+			this.menuQuit = new System.Windows.Forms.MenuItem();
+			this.menuWindow = new System.Windows.Forms.MenuItem();
+			this.menuHelpMain = new System.Windows.Forms.MenuItem();
+			this.menuViewHelp = new System.Windows.Forms.MenuItem();
+			this.menuAbout = new System.Windows.Forms.MenuItem();
 			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
-			this.menuItem9 = new System.Windows.Forms.MenuItem();
+			this.menuVersion = new System.Windows.Forms.MenuItem();
 			this.SuspendLayout();
 			// 
 			// statusBar1
@@ -90,62 +103,69 @@ namespace quickDBExplorer
 			// mainMenu1
 			// 
 			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.menuItem1,
-																					  this.menuItem2,
-																					  this.menuItem4});
+																					  this.menuConnect,
+																					  this.menuWindow,
+																					  this.menuHelpMain});
 			// 
-			// menuItem1
+			// menuConnect
 			// 
-			this.menuItem1.Index = 0;
-			this.menuItem1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.menuItem3,
-																					  this.menuItem5});
-			this.menuItem1.Text = "接続(&C)";
+			this.menuConnect.Index = 0;
+			this.menuConnect.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					  this.menuNewConnect,
+																					  this.menuQuit});
+			this.menuConnect.Text = "接続(&C)";
 			// 
-			// menuItem3
+			// menuNewConnect
 			// 
-			this.menuItem3.Index = 0;
-			this.menuItem3.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
-			this.menuItem3.Text = "新規接続(&N)";
-			this.menuItem3.Click += new System.EventHandler(this.menuItem3_Click);
+			this.menuNewConnect.Index = 0;
+			this.menuNewConnect.Shortcut = System.Windows.Forms.Shortcut.CtrlN;
+			this.menuNewConnect.Text = "新規接続(&N)";
+			this.menuNewConnect.Click += new System.EventHandler(this.menuNewConnect_Click);
 			// 
-			// menuItem5
+			// menuQuit
 			// 
-			this.menuItem5.Index = 1;
-			this.menuItem5.Text = "終了(&Q)";
-			this.menuItem5.Click += new System.EventHandler(this.menuItem5_Click);
+			this.menuQuit.Index = 1;
+			this.menuQuit.Text = "終了(&Q)";
+			this.menuQuit.Click += new System.EventHandler(this.menuQuit_Click);
 			// 
-			// menuItem2
+			// menuWindow
 			// 
-			this.menuItem2.Index = 1;
-			this.menuItem2.MdiList = true;
-			this.menuItem2.Text = "ウィンドウ(&W)";
+			this.menuWindow.Index = 1;
+			this.menuWindow.MdiList = true;
+			this.menuWindow.Text = "ウィンドウ(&W)";
 			// 
-			// menuItem4
+			// menuHelpMain
 			// 
-			this.menuItem4.Index = 2;
-			this.menuItem4.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.menuItem6,
-																					  this.menuItem9});
-			this.menuItem4.Text = "HELP(&H)";
+			this.menuHelpMain.Index = 2;
+			this.menuHelpMain.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+																					  this.menuViewHelp,
+																					  this.menuAbout,
+																					  this.menuVersion});
+			this.menuHelpMain.Text = "HELP(&H)";
 			// 
-			// menuItem6
+			// menuViewHelp
 			// 
-			this.menuItem6.Index = 0;
-			this.menuItem6.Text = "ヘルプ参照";
-			this.menuItem6.Click += new System.EventHandler(this.menuItem6_Click);
+			this.menuViewHelp.Index = 0;
+			this.menuViewHelp.Text = "ヘルプ参照";
+			this.menuViewHelp.Click += new System.EventHandler(this.menuViewHelp_Click);
+			// 
+			// menuAbout
+			// 
+			this.menuAbout.Index = 1;
+			this.menuAbout.Text = "About";
+			this.menuAbout.Click += new System.EventHandler(this.menuAbout_Click);
 			// 
 			// errorProvider1
 			// 
 			this.errorProvider1.ContainerControl = this;
 			// 
-			// menuItem9
+			// menuVersion
 			// 
-			this.menuItem9.Index = 1;
-			this.menuItem9.Text = "About";
-			this.menuItem9.Click += new System.EventHandler(this.menuItem9_Click);
+			this.menuVersion.Index = 2;
+			this.menuVersion.Text = "最新バージョンのチェック";
+			this.menuVersion.Click += new System.EventHandler(this.menuVersion_Click);
 			// 
-			// MainMDI
+			// MainMdi
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(960, 641);
@@ -153,10 +173,10 @@ namespace quickDBExplorer
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.IsMdiContainer = true;
 			this.Menu = this.mainMenu1;
-			this.Name = "MainMDI";
+			this.Name = "MainMdi";
 			this.Text = "quickDBExplorer";
-			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainMDI_Closing);
-			this.Load += new System.EventHandler(this.MainMDI_Load);
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainMdi_Closing);
+			this.Load += new System.EventHandler(this.MainMdi_Load);
 			this.ResumeLayout(false);
 
 		}
@@ -168,17 +188,25 @@ namespace quickDBExplorer
 		[STAThread]
 		static void Main() 
 		{
-			Application.Run(new MainMDI());
+			Application.Run(new MainMdi());
 		}
 
-		private void menuItem3_Click(object sender, System.EventArgs e)
+		/// <summary>
+		/// 接続メニュークリック時イベントハンドら
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
+		private void menuNewConnect_Click(object sender, System.EventArgs e)
 		{
-			LoginDialog logindlg = new LoginDialog(this.initopt);
+			LogOnDialog logindlg = new LogOnDialog(this.initopt);
 			logindlg.MdiParent = this;
 			logindlg.Show();
 			logindlg.Focus();
 		}
 
+		/// <summary>
+		/// エラーメッセージの初期化を行う
+		/// </summary>
 		protected void InitErrMessage()
 		{
 			this.statusBar1.Text = "";
@@ -187,6 +215,10 @@ namespace quickDBExplorer
 			this.errorProvider1.SetError(this.statusBar1,"");
 		}
 
+		/// <summary>
+		/// エラーメッセージを表示する
+		/// </summary>
+		/// <param name="ex">エラーが発生したException</param>
 		protected void SetErrorMessage(Exception ex)
 		{
 			this.statusBar1.Text = ex.Message;
@@ -194,6 +226,11 @@ namespace quickDBExplorer
 			this.errorProvider1.SetError(this.statusBar1,this.statusBar1.Text);
 		}
 
+		/// <summary>
+		/// ステータスバーをダブルクリックすることで、エラーメッセージをクリップボードにコピーする
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
 		private void statusBar1_DoubleClick(object sender, System.EventArgs e)
 		{
 			if( this.errMessage != "" )
@@ -203,31 +240,42 @@ namespace quickDBExplorer
 		
 		}
 
-		private void MainMDI_Load(object sender, System.EventArgs e)
+		/// <summary>
+		/// 画面Load時の処理
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
+		private void MainMdi_Load(object sender, System.EventArgs e)
 		{
 
+			// 設定ファイルの読み込みストリーム
 			FileStream fs = null;
 
+			// エラーメッセージを初期化
 			this.InitErrMessage();
 
-			initopt = new saveClass();
+			initopt = new ConditionRecorder();
 			try
 			{
+				// 設定ファイルを読み込み
 				string path = Application.StartupPath;
 				fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Open);
+				// Soap Serialize しているので、それをDeSerialize
 				SoapFormatter sf = new SoapFormatter();
 				if( fs != null && fs.CanRead )
 				{
-					initopt = (saveClass)sf.Deserialize(fs);
+					initopt = (ConditionRecorder)sf.Deserialize(fs);
 				}
 			}
 			catch(	System.IO.FileNotFoundException )
 			{
+				// 初回インストール時はファイルがない可能性がある
 				;
 			}
 			catch( Exception exp )
 			{
 				this.SetErrorMessage(exp);
+				initopt = new ConditionRecorder();
 			}
 			finally
 			{
@@ -236,15 +284,23 @@ namespace quickDBExplorer
 					fs.Close();
 				}
 			}
+			// 最新バージョンの存在チェックを実施
+			// 自動的にやってしまうと問題なので、ここではやらない
+			//CheckNewVersion(false);
 
 			// 最初は強制的にログインを表示する
-			LoginDialog logindlg = new LoginDialog(this.initopt);
+			LogOnDialog logindlg = new LogOnDialog(this.initopt);
 			logindlg.MdiParent = this;
 			logindlg.Show();
 			logindlg.Focus();
 		}
 
-		private void MainMDI_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		/// <summary>
+		/// ダイアログのクローズ処理
+		/// </summary>
+		/// <param name="sender">--</param>
+		/// <param name="e">--</param>
+		private void MainMdi_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			FileStream fs = null;
 
@@ -259,24 +315,24 @@ namespace quickDBExplorer
 				if( fs != null && fs.CanWrite )
 				{
 					ArrayList ar = new ArrayList();
-					foreach( object keys in initopt.ht.Keys )
+					foreach( object keys in initopt.PerServerData.Keys )
 					{
-						if( ((ServerData)(initopt.ht[keys])).isSaveKey == false )
+						if( ((ServerData)(initopt.PerServerData[keys])).IsSaveKey == false )
 						{
 							ar.Add((string)keys);
 						}
 					}
 					foreach( string kk in ar )
 					{
-						initopt.ht.Remove(kk);
+						initopt.PerServerData.Remove(kk);
 					}
-					if( initopt.ht.Count == 0 )
+					if( initopt.PerServerData.Count == 0 )
 					{
 						ServerData sv = new ServerData();
 						sv.Servername = "(local)";
 						sv.InstanceName = "";
 						sv.IsUseTrust = false;
-						initopt.ht.Add(sv.KeyName,sv);
+						initopt.PerServerData.Add(sv.KeyName,sv);
 					}
 					sf.Serialize(fs,(object)initopt);
 				}
@@ -298,12 +354,12 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void menuItem5_Click(object sender, System.EventArgs e)
+		private void menuQuit_Click(object sender, System.EventArgs e)
 		{
 			this.Close();
 		}
 
-		private void menuItem6_Click(object sender, System.EventArgs e)
+		private void menuViewHelp_Click(object sender, System.EventArgs e)
 		{
 			string helpname = AppDomain.CurrentDomain.FriendlyName;
 			// D:\godz\local\quickDBExplorer\trunc\quickDBExplorer\quickDBExplorerHelp.htm
@@ -314,7 +370,7 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void menuItem9_Click(object sender, System.EventArgs e)
+		private void menuAbout_Click(object sender, System.EventArgs e)
 		{
 			object []obj = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute),false);
 			string aboutstr = Application.ProductName + " Version " + Application.ProductVersion;
@@ -327,5 +383,42 @@ namespace quickDBExplorer
 				);
 		}
 
+		private void menuVersion_Click(object sender, System.EventArgs e)
+		{
+			CheckNewVersion(true);
+		}
+
+		/// <summary>
+		/// 最新バージョンが存在するかどうかをチェックする
+		/// </summary>
+		/// <param name="catchError"></param>
+		protected void CheckNewVersion(bool catchError)
+		{
+			StreamReader sr = null;
+			try
+			{
+				WebClient cl = new WebClient();
+				sr = new StreamReader(cl.OpenRead("http://qdbe.rgr.jp/latestVersion.txt"));
+				string lastversion = sr.ReadLine();
+				if( lastversion.CompareTo(Application.ProductVersion) > 0 )
+				{
+					MessageBox.Show("最新バージョンが公開されています\r\nhttp://qdbe.rgr.jp/ をチェックしてください");
+				}
+			}
+			catch(Exception ex)
+			{
+				if( catchError == true )
+				{
+					MessageBox.Show( ex.ToString() );
+				}
+			}
+			finally
+			{
+				if( sr != null )
+				{
+					sr.Close();
+				}
+			}
+		}
 	}
 }

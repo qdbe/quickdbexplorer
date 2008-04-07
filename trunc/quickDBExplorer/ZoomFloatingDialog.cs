@@ -6,12 +6,19 @@ using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
+	/// <summary>
+	/// 値拡大表示ダイアログで、常に前面に表示する機能を追加したもの
+	/// </summary>
+	[System.Runtime.InteropServices.ComVisible(false)]
 	public class ZoomFloatingDialog : quickDBExplorer.ZoomDialog
 	{
 		private System.Windows.Forms.CheckBox chkStayOnTop;
 		private System.Windows.Forms.Button btnApply;
 		private System.ComponentModel.IContainer components = null;
 
+		/// <summary>
+		/// コンストラクタ
+		/// </summary>
 		public ZoomFloatingDialog()
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
@@ -64,11 +71,11 @@ namespace quickDBExplorer
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(80, 26);
 			// 
-			// msgArea
+			// MsgArea
 			// 
-			this.msgArea.Location = new System.Drawing.Point(220, 234);
-			this.msgArea.Name = "msgArea";
-			this.msgArea.Size = new System.Drawing.Size(80, 26);
+			this.MsgArea.Location = new System.Drawing.Point(106, 234);
+			this.MsgArea.Name = "MsgArea";
+			this.MsgArea.Size = new System.Drawing.Size(246, 26);
 			// 
 			// chkStayOnTop
 			// 
@@ -101,7 +108,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.btnOk, 0);
 			this.Controls.SetChildIndex(this.btnClose, 0);
 			this.Controls.SetChildIndex(this.txtZoom, 0);
-			this.Controls.SetChildIndex(this.msgArea, 0);
+			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.ResumeLayout(false);
 
 		}
@@ -121,7 +128,7 @@ namespace quickDBExplorer
 
 		private void btnApply_Click(object sender, System.EventArgs e)
 		{
-			this.editText = this.txtZoom.Text;
+			this.EditText = this.txtZoom.Text;
 			this.OnEnter(new EventArgs());
 		}
 	}
