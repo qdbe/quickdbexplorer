@@ -276,14 +276,14 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-			/// コンストラクタ
-			/// </summary>
-			/// <param name="objectType">オブジェクトの型</param>
-			/// <param name="owner">オブジェクトの所有者名</param>
-			/// <param name="name">オブジェクトの名称</param>
-			/// <param name="createdTime">オブジェクトの作成日時</param>
-			/// <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
-			/// <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
+		/// コンストラクタ
+		/// </summary>
+		/// <param name="objectType">オブジェクトの型</param>
+		/// <param name="owner">オブジェクトの所有者名</param>
+		/// <param name="name">オブジェクトの名称</param>
+		/// <param name="createdTime">オブジェクトの作成日時</param>
+		/// <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
+		/// <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
 		public DBObjectInfo( string objectType, string owner, string name, string createdTime, string synonymBase, string synonymBaseType )
 		{
 			if( objectType == null )
@@ -301,6 +301,7 @@ namespace quickDBExplorer
 			this.createTime = createdTime;
 			this.synonymBase = synonymBase;
 			this.synonymBaseType = synonymBaseType.TrimEnd(null);
+			this.pSchemaBaseInfo = null;
 		}
 
 		/// <summary>
@@ -347,5 +348,42 @@ namespace quickDBExplorer
 		{
 			this.DataGet(this, new EventArgs());
 		}
+
+		/// <summary>
+		/// フィールドにアセンブリを利用した型があるか否か
+		/// </summary>
+		public bool  IsUseAssemblyType
+		{
+			get 
+			{
+				foreach(DBFieldInfo fi in this.FieldInfo)
+				{
+					if( fi.IsAssembly == true )
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// フィールドに Identityを利用したものを持つか否か
+		/// </summary>
+		public bool IsUseIdentity
+		{
+			get 
+			{
+				foreach(DBFieldInfo fi in this.FieldInfo)
+				{
+					if( fi.IsIdentity == true )
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+		}
+
 	}
 }

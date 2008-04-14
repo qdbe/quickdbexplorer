@@ -9,6 +9,21 @@
             テーブル等のフィールド項目の情報を管理するクラス
             </summary>
         </member>
+        <member name="F:quickDBExplorer.DBFieldInfo.pAssemblyId">
+            <summary>
+            この型の作成元であるアセンブリの ID です。
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DBFieldInfo.pAssemblyClassName">
+            <summary>
+            この型を定義しているアセンブリ内のクラスの名前です。
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DBFieldInfo.pAssemblyQFN">
+            <summary>
+            アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.DBFieldInfo.#ctor">
             <summary>
             コンストラクタ
@@ -79,6 +94,26 @@
         <member name="P:quickDBExplorer.DBFieldInfo.IncStep">
             <summary>
             Identity フィールドの場合の Step値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyId">
+            <summary>
+            この型の作成元であるアセンブリの ID です。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyClassName">
+            <summary>
+            この型を定義しているアセンブリ内のクラスの名前です。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyQFN">
+            <summary>
+            アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IsAssembly">
+            <summary>
+            オブジェクトがアセンブリを利用しているか否か
             </summary>
         </member>
         <member name="T:quickDBExplorer.DataGetEventHandler">

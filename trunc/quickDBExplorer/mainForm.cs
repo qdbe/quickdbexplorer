@@ -4083,7 +4083,32 @@ namespace quickDBExplorer
 
 					// get id 
 					string stSql;
-					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+					if( dboInfo.IsUseAssemblyType == true )
+					{
+						// アセンブリを利用している場合、フィールド名＋.ToString()をつける必要あり
+						StringBuilder fieldStr = new StringBuilder();
+						fieldStr.Append("select ");
+						int loop = 0;
+						foreach(DBFieldInfo fi in dboInfo.FieldInfo)
+						{
+							if( loop != 0 )
+							{
+								fieldStr.Append(",");
+							}
+							fieldStr.Append(fi.Name);
+							if( fi.IsAssembly == true )
+							{
+								fieldStr.Append(".ToString()");
+							}
+							loop++;
+						}
+						fieldStr.AppendFormat(" from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+						stSql = fieldStr.ToString();
+					}
+					else
+					{
+						stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+					}
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
@@ -4111,18 +4136,13 @@ namespace quickDBExplorer
 					}
 
 					bool IsIdentity = false;
-					DataTable dt = dr.GetSchemaTable();
-					foreach( DataRow draw in dt.Rows )
+					if( dboInfo.IsUseIdentity == true )
 					{
-						if( (Boolean)draw["IsIdentity"] == true )
-						{
-							// Identity 列がある場合、SET IDENTITY_INSERT table on をつける
-							string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture,"SET IDENTITY_INSERT {0} on ",dboInfo.FormalName);
-							wr.WriteLine(addidinsert);
-							wr.Write(wr.NewLine);
-							IsIdentity = true;
-							break;
-						}
+						// Identity 列がある場合、SET IDENTITY_INSERT table on をつける
+						string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture,"SET IDENTITY_INSERT {0} on ",dboInfo.FormalName);
+						wr.WriteLine(addidinsert);
+						wr.Write(wr.NewLine);
+						IsIdentity = true;
 					}
 
 					if( isTaihi == true )
@@ -4186,7 +4206,7 @@ namespace quickDBExplorer
 							{
 								wr.Write( ", " );
 							}
-							wr.Write(ConvData(dr, i, "'","N",true));
+							wr.Write(ConvData(dr, i, "'","N",true,(DBFieldInfo)dboInfo.FieldInfo[i]));
 						}
 						wr.Write( " ) {0}",wr.NewLine );
 					}
@@ -4427,7 +4447,32 @@ namespace quickDBExplorer
 					}
 					trow = 0;
 					string stSql;
-					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+					if( dboInfo.IsUseAssemblyType == true )
+					{
+						// アセンブリを利用している場合、フィールド名＋.ToString()をつける必要あり
+						StringBuilder fieldStr = new StringBuilder();
+						fieldStr.Append("select ");
+						int loop = 0;
+						foreach(DBFieldInfo fi in dboInfo.FieldInfo)
+						{
+							if( loop != 0 )
+							{
+								fieldStr.Append(",");
+							}
+							fieldStr.Append(fi.Name);
+							if( fi.IsAssembly == true )
+							{
+								fieldStr.Append(".ToString()");
+							}
+							loop++;
+						}
+						fieldStr.AppendFormat(" from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+						stSql = fieldStr.ToString();
+					}
+					else
+					{
+						stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+					}
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
@@ -4478,11 +4523,11 @@ namespace quickDBExplorer
 							}
 							if ( isdquote == false )
 							{
-								wr.Write(ConvData(dr, i, "","",false));
+								wr.Write(ConvData(dr, i, "","",false,(DBFieldInfo)dboInfo.FieldInfo[i]));
 							}
 							else
 							{
-								wr.Write(ConvData(dr, i, "\"","",false));
+								wr.Write(ConvData(dr, i, "\"","",false,(DBFieldInfo)dboInfo.FieldInfo[i]));
 							}
 						}
 						wr.Write( wr.NewLine );
@@ -5421,7 +5466,7 @@ namespace quickDBExplorer
 			return true;
 		}
 
-		private string ConvData(IDataReader dr, int i, string addstr, string unichar, bool outNull)
+		private string ConvData(IDataReader dr, int i, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
 		{
 			//
 			//aaa  bigint  NOT NULL PRIMARY KEY,
@@ -5457,6 +5502,17 @@ namespace quickDBExplorer
 				else
 				{
 					return "";
+				}
+			}
+			else if( fieldInfo.IsAssembly == true )
+			{
+				if( outNull == true )
+				{
+					return fieldInfo.TypeName + "::Parse(N'" + dr.GetString(i) + "')";
+				}
+				else
+				{
+					return dr.GetString(i);
 				}
 			}
 			else if( fldtypename.Equals("bigint") )

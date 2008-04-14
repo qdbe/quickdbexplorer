@@ -117,6 +117,16 @@ namespace quickDBExplorer
 			set { this.primaryKeyOrder = value; }
 		}
 
+		private bool pIsIdentity = false;
+		/// <summary>
+		/// Identity 属性を持つか否か
+		/// </summary>
+		public bool IsIdentity
+		{
+			get { return this.pIsIdentity; }
+			set { this.pIsIdentity = value; }
+		}
+
 		private decimal	incSeed = 0;
 		/// <summary>
 		/// Identityフィールドの場合の Seed値
@@ -137,6 +147,65 @@ namespace quickDBExplorer
 			set { this.incStep = value; }
 		}
 
+		/// <summary>
+		/// この型の作成元であるアセンブリの ID です。
+		/// </summary>
+		private int pAssemblyId = -1;
+
+		/// <summary>
+		/// この型の作成元であるアセンブリの ID です。
+		/// </summary>
+		public int AssemblyId
+		{
+			get { return this.pAssemblyId; }
+			set { this.pAssemblyId = value; }
+		}
+
+		/// <summary>
+		/// この型を定義しているアセンブリ内のクラスの名前です。
+		/// </summary>
+		private string pAssemblyClassName = string.Empty;
+
+		/// <summary>
+		/// この型を定義しているアセンブリ内のクラスの名前です。
+		/// </summary>
+		public string AssemblyClassName
+		{
+			get { return this.pAssemblyClassName; }
+			set { this.pAssemblyClassName = value; }
+		}
+
+		/// <summary>
+		/// アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
+		/// </summary>
+		private string pAssemblyQFN = string.Empty;
+
+		/// <summary>
+		/// アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
+		/// </summary>
+		public string AssemblyQFN
+		{
+			get { return this.pAssemblyQFN; }
+			set { this.pAssemblyQFN = value; }
+		}
+
+		/// <summary>
+		/// オブジェクトがアセンブリを利用しているか否か
+		/// </summary>
+		public bool IsAssembly
+		{
+			get 
+			{ 
+				if( this.pAssemblyQFN != string.Empty )
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
 
 		/// <summary>
 		/// コンストラクタ

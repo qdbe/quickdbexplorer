@@ -709,7 +709,6 @@ where
 				dr[6] = string.Empty;
 				dr[7] = string.Empty;
 			}
-
 			dt.Rows.Add(dr);
 		}
 
@@ -808,6 +807,7 @@ where
 	convert(int,t1.is_nullable) as isnullable, 
 	t1.collation_name as collation, 
 	t1.object_id as id,
+	t1.is_identity,
 	case 
 	when t5.object_id is not null then ident_seed('{0}') 
 	else null
@@ -815,7 +815,10 @@ where
 	case 
 	when t5.object_id is not null then ident_incr('{0}') 
 	else null
-	end as incr
+	end as incr,
+	t6.assembly_id,
+	t6.assembly_class,
+	t6.assembly_qualified_name
 from 
 	sys.all_columns t1 
 	inner join sys.types t2 on 
@@ -829,6 +832,8 @@ from
 	left outer join sys.identity_columns t5 on
 		t1.object_id = t5.object_id and 
 		t1.column_id = t5.column_id
+	left outer join sys.assembly_types t6 on
+		t6.user_type_id = t1.user_type_id
 where 
 	t1.object_id = OBJECT_ID('{0}')
 order by colorder",
@@ -865,6 +870,15 @@ order by colorder",
 							(string)fdr["typeSchema"] ,
 							(string)fdr["valtype"] );
 				}
+				if( fdr["is_identity"] != DBNull.Value &&
+					(bool)fdr["is_identity"] == true )
+				{
+					addInfo.IsIdentity = true;
+				}
+				else
+				{
+					addInfo.IsIdentity = false;
+				}
 				if( fdr["seed"] != DBNull.Value )
 				{
 					addInfo.IncSeed = (decimal)fdr["seed"];
@@ -881,6 +895,18 @@ order by colorder",
 						addInfo.PrimaryKeyOrder = i;
 						break;
 					}
+				}
+				if( fdr["assembly_id"] != DBNull.Value )
+				{
+					addInfo.AssemblyId = (int)fdr["assembly_id"];
+				}
+				if( fdr["assembly_class"] != DBNull.Value )
+				{
+					addInfo.AssemblyClassName = (string)fdr["assembly_class"];
+				}
+				if( fdr["assembly_qualified_name"] != DBNull.Value )
+				{
+					addInfo.AssemblyQFN = (string)fdr["assembly_qualified_name"];
 				}
 				ar.Add(addInfo);
 			}
