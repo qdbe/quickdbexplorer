@@ -595,6 +595,13 @@ namespace quickDBExplorer
 						wr.Write("COLLATE {0}",ds.Tables[databaseObjectInfo.ToString()].Rows[i]["collation"]);
 						wr.Write("\t");
 					}
+
+					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed != 0)
+					{
+						wr.Write("\tIDENTITY({0},{1})",
+							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed,
+							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncStep );
+					}
 						
 					if( (int)ds.Tables[databaseObjectInfo.ToString()].Rows[i]["isnullable"] == 0 )
 					{
@@ -666,8 +673,6 @@ namespace quickDBExplorer
 			DataTable	odt = new DataTable("sysobjects");
 			odt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 			da.Fill(odt);
-
-
 
 			DataRow dr = dt.NewRow();
 
@@ -772,7 +777,21 @@ convert(int,syscolumns.colid) as colid,
 convert(int,syscolumns.colorder) as colorder, 
 syscolumns.isnullable, 
 syscolumns.collation, 
-sysobjects.id  
+sysobjects.id  ,
+case
+when syscolumns.colstat & 1 = 1 then 1
+else								 0
+end		as is_identity,
+case
+when syscolumns.colstat & 1 = 1 
+	then ident_seed('{0}')
+else 0
+end     as seed,
+case
+when syscolumns.colstat & 1 = 1 
+	then ident_incr('{0}')
+else 0
+end     as incr
 from 
 	sysobjects, 
 	syscolumns, 
@@ -814,6 +833,25 @@ order by syscolumns.colorder",
 				addInfo.Prec = (int)fdr["prec"];
 				addInfo.Xscale = (int)fdr["xscale"];
 				addInfo.TypeName = (string)fdr["valtype"];
+
+				if( fdr["is_identity"] != DBNull.Value &&
+					(int)fdr["is_identity"] == 1 )
+				{
+					addInfo.IsIdentity = true;
+				}
+				else
+				{
+					addInfo.IsIdentity = false;
+				}
+				if( fdr["seed"] != DBNull.Value )
+				{
+					addInfo.IncSeed = (decimal)fdr["seed"];
+				}
+				if( fdr["incr"] != DBNull.Value )
+				{
+					addInfo.IncStep = (decimal)fdr["incr"];
+				}
+
 				// プライマリキーかどうかをチェック
 				for(int i = 0; i < ds.Tables["schema"].PrimaryKey.Length; i++ )
 				{

@@ -810,11 +810,11 @@ where
 	t1.is_identity,
 	case 
 	when t5.object_id is not null then ident_seed('{0}') 
-	else null
+	else 0
 	end as seed,
 	case 
 	when t5.object_id is not null then ident_incr('{0}') 
-	else null
+	else 0
 	end as incr,
 	t6.assembly_id,
 	t6.assembly_class,
