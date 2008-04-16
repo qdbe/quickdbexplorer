@@ -80,8 +80,10 @@ namespace quickDBExplorer
 			{
 				if( (string)drl[i]["DataValue"] == hvalue )
 				{
-					// 同じテーブルに対し、既に同じ履歴が登録されているため、何もしない
-					return;
+					// 同じテーブルに対し、既に同じ履歴が登録されているため、キーNOだけ新しくするため、
+					// 過去のデータは一旦削除し新しく追加しなおす
+					drl[i].Delete();
+					break;
 				}
 			}
 			
@@ -89,6 +91,7 @@ namespace quickDBExplorer
 			ndr.KeyValue = key;
 			ndr.DataValue = hvalue;
 			tdata.TextHistoryDataSets.Rows.Add(ndr);
+			tdata.TextHistoryDataSets.AcceptChanges();
 		}
 
 	}

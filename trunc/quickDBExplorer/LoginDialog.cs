@@ -411,6 +411,7 @@ namespace quickDBExplorer
 				mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className,true);
 
 				mainForm.SqlDriver.SetConnection(con,mainForm.SqlTimeout);
+				mainForm.InitPopupMenu();
 
 				// MDI なので、モードレスでダイアログを表示する
 				mainForm.Show();

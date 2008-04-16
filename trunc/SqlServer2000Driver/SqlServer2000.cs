@@ -499,6 +499,140 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// オブジェクトに対する Create 文を生成する
+		/// </summary>
+		/// <param name="databaseObjectInfo"></param>
+		/// <param name="useParentheses"></param>
+		/// <returns></returns>
+		public virtual string	GetDdlCreateString(DBObjectInfo databaseObjectInfo, bool useParentheses)
+		{
+			if( databaseObjectInfo == null )
+			{
+				throw new ArgumentNullException("databaseObjectInfo");
+			}
+			StringBuilder strline =  new StringBuilder();
+			TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+
+			if( databaseObjectInfo.RealObjType == "U" )
+			{
+				int		maxRow = databaseObjectInfo.FieldInfo.Count;
+				if( useParentheses )
+				{
+					wr.Write("Create table {0} ", databaseObjectInfo.RealObjName);
+				}
+				else
+				{
+					wr.Write("Create table {0} ", databaseObjectInfo.RealObjNameNoPare);
+				}
+				wr.Write(" ( {0}",wr.NewLine);
+				string	valtype;
+				for( int i = 0; i < maxRow ; i++ )
+				{
+					if( i != 0 )
+					{
+						wr.Write(",{0}",wr.NewLine);
+					}
+					//フィールド名
+					if( useParentheses )
+					{
+						wr.Write("\t[{0}]", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Name);
+					}
+					else
+					{
+						wr.Write("\t{0}", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Name);
+					}
+					wr.Write("\t");
+					// 型
+					valtype = ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).TypeName;
+
+					wr.Write("\t");
+
+					if( useParentheses )
+					{
+						wr.Write("[{0}]",valtype);
+					}
+					else
+					{
+						wr.Write(valtype);
+					}
+					if( valtype == "varchar" ||
+						valtype == "varbinary" ||
+						valtype == "nvarchar" ||
+						valtype == "char" ||
+						valtype == "nchar" ||
+						valtype == "binary" )
+					{
+						if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Length == -1 )
+						{
+							wr.Write(" (max)");
+						}
+						else
+						{
+							wr.Write(" ({0})", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Length);
+						}
+					}
+					else if( valtype == "numeric" ||
+						valtype == "decimal" )
+					{
+						wr.Write(" ({0},{1})", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Prec,
+							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Xscale);
+					}
+					wr.Write("\t");
+						
+					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Collation.Length != 0)
+					{
+						wr.Write("COLLATE {0}",((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Collation);
+						wr.Write("\t");
+					}
+
+					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed != 0)
+					{
+						wr.Write("\tIDENTITY({0},{1})",
+							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed,
+							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncStep );
+					}
+						
+					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IsNullable == false )
+					{
+						wr.Write("\tNOT NULL");
+					}
+					else
+					{
+						wr.Write("\tNULL");
+					}
+				}
+				wr.Write("{0}){0}Go{0}",wr.NewLine);
+			}
+			else
+			{
+				DataTable dt = new DataTable();
+				dt.CaseSensitive = true;
+				dt.Locale = System.Globalization.CultureInfo.CurrentCulture;
+
+
+				string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_helptext '{0}'", databaseObjectInfo.RealObjName );
+				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
+				da.SelectCommand.CommandTimeout = this.queryTimeout;
+				da.Fill(dt);
+				// 連続した空白行は抑制するようにする
+				string pretext = "";
+				foreach(DataRow dr in dt.Rows)
+				{
+					if( dr["Text"] != DBNull.Value &&
+						dr["Text"] is string &&
+						pretext == string.Empty &&
+						dr["Text"].ToString().Trim() == string.Empty )
+					{
+						continue;
+					}
+					pretext = dr["Text"].ToString().Trim();
+					wr.WriteLine(dr["Text"].ToString().Trim());
+				}
+				wr.WriteLine("Go");
+			}
+			return strline.ToString();
+		}
 
 		/// <summary>
 		/// オブジェクトに対する Create 文を生成する
@@ -506,7 +640,7 @@ namespace quickDBExplorer
 		/// <param name="databaseObjectInfo"></param>
 		/// <param name="useParentheses"></param>
 		/// <returns></returns>
-		public string	GetDdlCreateString(DBObjectInfo databaseObjectInfo, bool useParentheses)
+		public string	GetDdlCreateString_OLD(DBObjectInfo databaseObjectInfo, bool useParentheses)
 		{
 			if( databaseObjectInfo == null )
 			{
@@ -744,10 +878,16 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public DataGetEventHandler ObjectDetailSet()
 		{
-			return new DataGetEventHandler(this.dbObjSet);
+			return new DataGetEventHandler(this.DatabaseObjSet);
 		}
 
-		private	void	dbObjSet(object sender, System.EventArgs e)
+		/// <summary>
+		/// 指定されたオブジェクトの詳細情報を取得する
+		/// sender に 対象オブジェクトが DBObjectInfo 型としてセットされていることが前提
+		/// </summary>
+		/// <param name="sender">対象のオブジェクト</param>
+		/// <param name="e">ダミー</param>
+		private	void	DatabaseObjSet(object sender, System.EventArgs e)
 		{
 			DBObjectInfo	databaseObjectInfo = (DBObjectInfo)sender;
 			DataSet		ds = new DataSet(databaseObjectInfo.ObjName);

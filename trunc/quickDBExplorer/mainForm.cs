@@ -286,6 +286,12 @@ namespace quickDBExplorer
 		private System.Windows.Forms.ColumnHeader ColTVSType;
 		private System.Windows.Forms.ColumnHeader ColOwner;
 		private System.Windows.Forms.ColumnHeader ColObjName;
+		private System.Windows.Forms.MenuItem allSelectDbGridMenu;
+		private System.Windows.Forms.MenuItem allUnSelectDbGridMenu;
+		private System.Windows.Forms.MenuItem readCsvDbGridMenu;
+		private System.Windows.Forms.MenuItem readTsvDbGridMenu;
+		private System.Windows.Forms.MenuItem readCsvDQDbGridMenu;
+		private System.Windows.Forms.MenuItem readTsvDQDbGridMenu;
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
 
 		/// <summary>
@@ -311,7 +317,7 @@ namespace quickDBExplorer
 			this.cmdHistory = svdata.CmdHistory;
 
 			// 右クリックメニューや、ボタンポップアップメニューを初期化する
-			InitPopupMenu();
+//			InitPopupMenu();
 		}
 
 		/// <summary>
@@ -377,6 +383,12 @@ namespace quickDBExplorer
 			this.dbGrid = new System.Windows.Forms.DataGrid();
 			this.dbGridMenu = new System.Windows.Forms.ContextMenu();
 			this.copyDbGridMenu = new System.Windows.Forms.MenuItem();
+			this.allSelectDbGridMenu = new System.Windows.Forms.MenuItem();
+			this.allUnSelectDbGridMenu = new System.Windows.Forms.MenuItem();
+			this.readCsvDbGridMenu = new System.Windows.Forms.MenuItem();
+			this.readCsvDQDbGridMenu = new System.Windows.Forms.MenuItem();
+			this.readTsvDbGridMenu = new System.Windows.Forms.MenuItem();
+			this.readTsvDQDbGridMenu = new System.Windows.Forms.MenuItem();
 			this.chkDispData = new System.Windows.Forms.CheckBox();
 			this.grpDataDispMode = new System.Windows.Forms.GroupBox();
 			this.txtDispCount = new quickDBExplorer.quickDBExplorerTextBox();
@@ -685,13 +697,56 @@ namespace quickDBExplorer
 			// dbGridMenu
 			// 
 			this.dbGridMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					   this.copyDbGridMenu});
+																					   this.copyDbGridMenu,
+																					   this.allSelectDbGridMenu,
+																					   this.allUnSelectDbGridMenu,
+																					   this.readCsvDbGridMenu,
+																					   this.readCsvDQDbGridMenu,
+																					   this.readTsvDbGridMenu,
+																					   this.readTsvDQDbGridMenu});
+			this.dbGridMenu.Popup += new System.EventHandler(this.dbGridMenu_Popup);
 			// 
 			// copyDbGridMenu
 			// 
 			this.copyDbGridMenu.Index = 0;
 			this.copyDbGridMenu.Text = "クリップボードにコピー";
 			this.copyDbGridMenu.Click += new System.EventHandler(this.copyDbGridMenu_Click);
+			// 
+			// allSelectDbGridMenu
+			// 
+			this.allSelectDbGridMenu.Index = 1;
+			this.allSelectDbGridMenu.Text = "全行選択";
+			this.allSelectDbGridMenu.Click += new System.EventHandler(this.allSelectDbGridMenu_Click);
+			// 
+			// allUnSelectDbGridMenu
+			// 
+			this.allUnSelectDbGridMenu.Index = 2;
+			this.allUnSelectDbGridMenu.Text = "全行選択解除";
+			this.allUnSelectDbGridMenu.Click += new System.EventHandler(this.allUnSelectDbGridMenu_Click);
+			// 
+			// readCsvDbGridMenu
+			// 
+			this.readCsvDbGridMenu.Index = 3;
+			this.readCsvDbGridMenu.Text = "データ取込(CSV)";
+			this.readCsvDbGridMenu.Click += new System.EventHandler(this.readCsvDbGridMenu_Click);
+			// 
+			// readCsvDQDbGridMenu
+			// 
+			this.readCsvDQDbGridMenu.Index = 4;
+			this.readCsvDQDbGridMenu.Text = "データ取込(CSV)(\\\"付き)";
+			this.readCsvDQDbGridMenu.Click += new System.EventHandler(this.readCsvDQDbGridMenu_Click);
+			// 
+			// readTsvDbGridMenu
+			// 
+			this.readTsvDbGridMenu.Index = 5;
+			this.readTsvDbGridMenu.Text = "データ取込(TAB)";
+			this.readTsvDbGridMenu.Click += new System.EventHandler(this.readTsvDbGridMenu_Click);
+			// 
+			// readTsvDQDbGridMenu
+			// 
+			this.readTsvDQDbGridMenu.Index = 6;
+			this.readTsvDQDbGridMenu.Text = "データ取込(TAB)(\\\"付き)";
+			this.readTsvDQDbGridMenu.Click += new System.EventHandler(this.readTsvDQDbGridMenu_Click);
 			// 
 			// chkDispData
 			// 
@@ -1243,7 +1298,10 @@ namespace quickDBExplorer
 		}
 #endif
 
-		private	void	InitPopupMenu()
+		/// <summary>
+		/// ポップアップ系メニューを初期化する
+		/// </summary>
+		public	void	InitPopupMenu()
 		{
 			ArrayList	menuAr = new ArrayList();
 			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー", new EventHandler(this.menuTableCopy_Click) ) );
@@ -1280,7 +1338,10 @@ namespace quickDBExplorer
 			menuAr.Add(new qdbeMenuItem(true,false,null,"-", null ) );
 			menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"簡易クエリ実行（Select以外）", new EventHandler(this.btnQueryNonSelect_Click) ) );
 			menuAr.Add(new qdbeMenuItem(true,false,this.btnEtc.Name,"-", null ) );
-			menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"クエリアナライザ起動", new EventHandler(this.CallISQLW) ) );
+			if( this.sqlVersion == 2000 )
+			{
+				menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"クエリアナライザ起動", new EventHandler(this.CallISQLW) ) );
+			}
 			menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"プロファイラ起動", new EventHandler(this.CallProfile) ) );
 			menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"エンタープライズマネージャー起動", new EventHandler(this.CallEPM) ) );
 			menuAr.Add(new qdbeMenuItem(true,true,this.btnEtc.Name,"-", null ) );
@@ -1914,9 +1975,6 @@ namespace quickDBExplorer
 			}
 			else
 			{
-				qdbeUtil.SetNewHistory("",this.txtWhere.Text,this.whereHistory);
-				qdbeUtil.SetNewHistory("",this.txtSort.Text,this.sortHistory);
-				qdbeUtil.SetNewHistory("",this.txtAlias.Text,this.aliasHistory);
 				DispData(null);
 			}
 			if( this.objectList.SelectedItems.Count == 1 )
@@ -2018,6 +2076,8 @@ namespace quickDBExplorer
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
 				tbname = this.objectList.GetSelectObject(0).FormalName;
 				DispData(this.objectList.GetSelectObject(0));
+				// 履歴に現在の値を記録 TODO
+				qdbeUtil.SetNewHistory(tbname,this.txtWhere.Text,this.whereHistory);
 			}
 			else
 			{
@@ -2025,8 +2085,6 @@ namespace quickDBExplorer
 				DispData(null);
 			}
 
-			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,this.txtWhere.Text,this.whereHistory);
 
 		}
 
@@ -2039,6 +2097,8 @@ namespace quickDBExplorer
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
 				tbname = this.objectList.GetSelectObject(0).FormalName;
 				DispData(this.objectList.GetSelectObject(0));
+				// 履歴に現在の値を記録 TODO
+				qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,this.sortHistory);
 			}
 			else
 			{
@@ -2046,8 +2106,6 @@ namespace quickDBExplorer
 				DispData(null);
 			}
 
-			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,this.sortHistory);
 		}
 
 		private void rdoDispSysUser_CheckedChanged(object sender, System.EventArgs e)
@@ -2057,7 +2115,6 @@ namespace quickDBExplorer
 			this.cmbHistory.DataSource = null;
 			this.cmbHistory.DataSource = this.selectedTables;
 			this.cmbHistory.Refresh();
-			
 
 			DispObjectList();
 			DispListOwner();
@@ -2491,13 +2548,13 @@ namespace quickDBExplorer
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
 				tbname = this.objectList.GetSelectOneObjectFormalName();
+				// 履歴に現在の値を記録 TODO
+				qdbeUtil.SetNewHistory(tbname,senderText.Text,this.aliasHistory);
 			}
 			else
 			{
 				tbname = "";
 			}
-			// 履歴に現在の値を記録 TODO
-			qdbeUtil.SetNewHistory(tbname,senderText.Text,this.aliasHistory);
 		}
 
 		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -2539,7 +2596,10 @@ namespace quickDBExplorer
 				if( DialogResult.OK == hv.ShowDialog() && senderText.Text != hv.RetString)
 				{
 					senderText.Text = hv.RetString;
-					qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.aliasHistory);
+					if( this.objectList.SelectedItems.Count == 1 )
+					{
+						qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.aliasHistory);
+					}
 
 					DispData(dboInfo);
 				}
@@ -2547,7 +2607,10 @@ namespace quickDBExplorer
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),senderText.Text,this.aliasHistory);
+				if( this.objectList.SelectedItems.Count == 1 )
+				{
+					qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),senderText.Text,this.aliasHistory);
+				}
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		}
@@ -2623,7 +2686,10 @@ namespace quickDBExplorer
 				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.RetString)
 				{
 					this.txtWhere.Text = hv.RetString;
-					qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.whereHistory);
+					if( this.objectList.SelectedItems.Count == 1 )
+					{
+						qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.whereHistory);
+					}
 
 					DispData(this.objectList.GetSelectObject(0));
 				}
@@ -2632,7 +2698,10 @@ namespace quickDBExplorer
 				e.KeyCode == Keys.Enter )
 			{
 				// Enter(Return) では、入力を確定させて、グリッド表示に反映させる
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtWhere.Text,this.whereHistory);
+				if( this.objectList.SelectedItems.Count == 1 )
+				{
+					qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtWhere.Text,this.whereHistory);
+				}
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		
@@ -2671,7 +2740,10 @@ namespace quickDBExplorer
 				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.RetString)
 				{
 					this.txtSort.Text = hv.RetString;
-					qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.sortHistory);
+					if( this.objectList.SelectedItems.Count == 1 )
+					{
+						qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.sortHistory);
+					}
 
 					DispData(this.objectList.GetSelectObject(0));
 				}
@@ -2679,7 +2751,10 @@ namespace quickDBExplorer
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtSort.Text,this.sortHistory);
+				if( this.objectList.SelectedItems.Count == 1 )
+				{
+					qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtSort.Text,this.sortHistory);
+				}
 				DispData(this.objectList.GetSelectObject(0));
 			}
 		
@@ -3367,6 +3442,72 @@ namespace quickDBExplorer
 			Clipboard.SetDataObject(strline.ToString(),true );
 			MessageBox.Show("処理を完了しました");
 		}
+
+		private void allSelectDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			if( this.dbGrid.Visible == false )
+			{
+				return;
+			}
+			if( this.dbGrid.DataSource == null )
+			{
+				return;
+			}
+			CurrencyManager cm = (CurrencyManager) this.BindingContext[this.dbGrid.DataSource, this.dbGrid.DataMember];
+			int maxCnt = cm.Count;
+			this.dbGrid.SuspendLayout();
+			for( int i = 0; i < maxCnt; i++ )
+			{
+				this.dbGrid.Select(i);
+			}
+			this.dbGrid.ResumeLayout();
+		}
+
+		private void allUnSelectDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			if( this.dbGrid.Visible == false )
+			{
+				return;
+			}
+			if( this.dbGrid.DataSource == null )
+			{
+				return;
+			}
+			CurrencyManager cm = (CurrencyManager) this.BindingContext[this.dbGrid.DataSource, this.dbGrid.DataMember];
+			int maxCnt = cm.Count;
+			this.dbGrid.SuspendLayout();
+			for( int i = 0; i < maxCnt; i++ )
+			{
+				this.dbGrid.UnSelect(i);
+			}
+			this.dbGrid.ResumeLayout();
+		}
+
+		/// <summary>
+		/// データグリッドへの CSVの取込
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void readCsvDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Grid(true,false);
+		}
+
+		private void readTsvDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Grid(false,false);
+		}
+
+		private void readCsvDQDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Grid(true,true);
+		}
+
+		private void readTsvDQDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			this.LoadFile2Grid(false,true);
+		}
+
 
 		private void btnQuerySelect_Click(object sender, System.EventArgs e)
 		{
@@ -4935,7 +5076,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// ファイルからデータを読み込み
+		/// ファイルからデータを読み込みDBへ登録する
 		/// CSV,TSVの指定、また ”の利用を指定可能
 		/// </summary>
 		/// <param name="isCsv">true: CSVでの読み込み false : TSV での読み込み</param>
@@ -5012,6 +5153,174 @@ namespace quickDBExplorer
 					return ;
 				}
 
+				ArrayList drAr = this.LoadFile2DataTable(dt,wr,isCsv,isUseDQ);
+
+				// データベースへ更新する
+				if( drAr.Count > 0 )
+				{
+					foreach(DataRow addRow in drAr)
+					{
+						dt.Rows.Add(addRow);
+					}
+					if( MessageBox.Show(drAr.Count.ToString(System.Globalization.CultureInfo.CurrentCulture) + "件のデータを読み込みますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) == DialogResult.Yes )
+					{
+
+						DbDataAdapter uda = this.pSqlDriver.NewDataAdapter();
+						IDbCommand ucm = this.pSqlDriver.NewSqlCommand(stSql);
+						this.pSqlDriver.SetSelectCmd(uda,ucm);
+										
+						tran = this.pSqlDriver.SetTransaction(ucm);
+						this.pSqlDriver.SetCommandBuilder(uda);
+						uda.Update(dt);
+						tran.Commit();
+
+						MessageBox.Show("読込を完了しました");
+					}
+				}
+
+			}
+			catch( Exception exp )
+			{
+				if( tran != null )
+				{
+					tran.Rollback();
+				}
+				this.SetErrorMessage(exp);
+			}
+			finally
+			{
+				if( wr != null )
+				{
+					wr.Close();
+				}
+			}
+		}
+
+		/// <summary>
+		/// ファイルからデータを読み込みDBへ登録する
+		/// CSV,TSVの指定、また ”の利用を指定可能
+		/// </summary>
+		/// <param name="isCsv">true: CSVでの読み込み false : TSV での読み込み</param>
+		/// <param name="isUseDQ">文字列にダブルクォートをつけているか
+		/// true: 付加されている false: 付加されていない</param>
+		protected void  LoadFile2Grid( bool isCsv, bool isUseDQ )
+		{
+			if( this.dbGrid.Visible != true )
+			{
+				return;
+			}
+			if( this.dbGrid.ReadOnly == true )
+			{
+				return;
+			}
+			if( this.dbGrid.DataSource == null )
+			{
+				return;
+			}
+
+			TextReader	wr = null;
+
+			try
+			{
+				this.InitErrMessage();
+				// insert 文の作成
+				if( ( this.txtWhere.Text != null &&
+					this.txtWhere.Text.Trim() != "" ) ||
+					( this.txtSort.Text != null &&
+					this.txtSort.Text.Trim() != "" ) )
+				{
+					if( MessageBox.Show("データ取込の場合、where, order by は無視されます","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+						== System.Windows.Forms.DialogResult.No )
+					{
+						return;
+					}
+				}
+			
+				if( MessageBox.Show("クリップボードから読み込みますか?","確認",System.Windows.Forms.MessageBoxButtons.YesNo) ==
+					DialogResult.Yes)
+				{
+					String str = Clipboard.GetDataObject().GetData(typeof(System.String)).ToString();
+					wr = new StringReader(str);
+				}
+				else
+				{
+					this.openFileDialog1.CheckFileExists = true;
+					this.openFileDialog1.CheckPathExists = true;
+					this.openFileDialog1.Filter = "csv|*.csv|txt|*.txt|全て|*.*";
+					this.openFileDialog1.Multiselect = false;
+					this.openFileDialog1.RestoreDirectory = false;
+					if( this.openFileDialog1.ShowDialog(this) != DialogResult.OK )
+					{
+						return;
+					}
+					Stream fsw = this.openFileDialog1.OpenFile();
+			
+					wr = new StreamReader(fsw,true);
+				}
+
+
+				DataTable dt = null;
+				dt = this.dspdt.Tables["aaaa"];
+
+				DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
+
+				if( dt.Columns.Count == 0 )
+				{
+					return ;
+				}
+
+				ArrayList drAr = this.LoadFile2DataTable(dt,wr,isCsv,isUseDQ);
+
+				// データベースへ更新する
+				if( drAr.Count > 0 )
+				{
+					if( MessageBox.Show(drAr.Count.ToString(System.Globalization.CultureInfo.CurrentCulture) + "件のデータを読み込みますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) == DialogResult.Yes )
+					{
+						foreach(DataRow addRow in drAr)
+						{
+							dt.Rows.Add(addRow);
+						}
+//						this.dbGrid.SetDataBinding(dspdt, "aaaa");
+						this.dbGrid.Invalidate();
+						MessageBox.Show("読込を完了しました");
+					}
+				}
+
+			}
+			catch( Exception exp )
+			{
+				this.SetErrorMessage(exp);
+			}
+			finally
+			{
+				if( wr != null )
+				{
+					wr.Close();
+				}
+			}
+		}
+
+
+		/// <summary>
+		/// ファイルからデータを読み込み
+		/// CSV,TSVの指定、また ”の利用を指定可能
+		/// </summary>
+		/// <param name="dt">読込先のDataTable</param>
+		/// <param name="wr">読み込むテキストのストリーム</param>
+		/// <param name="isCsv">true: CSVでの読み込み false : TSV での読み込み</param>
+		/// <param name="isUseDQ">文字列にダブルクォートをつけているか
+		/// true: 付加されている false: 付加されていない</param>
+		/// <returns>読み込みに成功したか否か 成功した場合、その件数
+		/// 1以上 -- 成功した
+		/// 0以下 -- 何かしらの理由で失敗した</returns>
+		protected ArrayList  LoadFile2DataTable( DataTable dt, TextReader wr, bool isCsv, bool isUseDQ )
+		{
+			bool isSetAll = true;
+			int linecount = 0;
+			ArrayList drAr = new ArrayList();
+
+			try
+			{
 				// ファイルのチェックを実施する
 
 				string readstr = "";
@@ -5025,9 +5334,7 @@ namespace quickDBExplorer
 					Separator = "\t";
 				}
 				ArrayList ar = new ArrayList();
-				bool isSetAll = true;
 
-				int linecount = 0;
 				for(;;)
 				{
 					readstr = wr.ReadLine();
@@ -5344,50 +5651,21 @@ namespace quickDBExplorer
 					}
 					if( isSetAll == true )
 					{
-						dt.Rows.Add(dr);
+						drAr.Add(dr);
 					}
 					else
 					{
 						break;
 					}
 				}
-
-				// データベースへ更新する
-				if( isSetAll == true )
-				{
-					if( MessageBox.Show(linecount.ToString(System.Globalization.CultureInfo.CurrentCulture) + "件のデータを読み込みますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) == DialogResult.Yes )
-					{
-						DbDataAdapter uda = this.pSqlDriver.NewDataAdapter();
-						IDbCommand ucm = this.pSqlDriver.NewSqlCommand(stSql);
-						this.pSqlDriver.SetSelectCmd(uda,ucm);
-										
-						tran = this.pSqlDriver.SetTransaction(ucm);
-						this.pSqlDriver.SetCommandBuilder(uda);
-						uda.Update(dt);
-						tran.Commit();
-
-						MessageBox.Show("読込を完了しました");
-					}
-				}
-
 			}
 			catch( Exception exp )
 			{
-				if( tran != null )
-				{
-					tran.Rollback();
-				}
 				this.SetErrorMessage(exp);
+				linecount = -1;
 			}
-			finally
-			{
-				if( wr != null )
-				{
-					wr.Close();
-				}
-			}
+			return drAr;
 		}
-
 
 		#endregion
 
@@ -5834,6 +6112,38 @@ namespace quickDBExplorer
 		}
 
 		#endregion
+
+		private void dbGridMenu_Popup(object sender, System.EventArgs e)
+		{
+			ArrayList controlTarget = new ArrayList();
+			controlTarget.Add(this.readCsvDbGridMenu);
+			controlTarget.Add(this.readCsvDQDbGridMenu);
+			controlTarget.Add(this.readTsvDbGridMenu);
+			controlTarget.Add(this.readTsvDQDbGridMenu);
+
+
+			if( this.dbGrid.Visible == true &&
+				this.dbGrid.ReadOnly == false &&
+				this.dbGrid.DataSource != null )
+			{
+				// 編集可能
+				foreach(MenuItem mi in controlTarget)
+				{
+					mi.Visible = true;
+				}
+			}
+			else
+			{
+				// 編集不可
+				foreach(MenuItem mi in controlTarget)
+				{
+					mi.Visible = false;
+				}
+			}
+
+		}
+
+
 	}
 
 	/// <summary>

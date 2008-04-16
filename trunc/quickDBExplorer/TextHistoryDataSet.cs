@@ -205,10 +205,10 @@ namespace quickDBExplorer {
                 this.Rows.Add(row);
             }
             
-            public TextHistoryDataSetsRow AddTextHistoryDataSetsRow(int KeyNo, string KeyValue, string DataValue) {
+            public TextHistoryDataSetsRow AddTextHistoryDataSetsRow(string KeyValue, string DataValue) {
                 TextHistoryDataSetsRow rowTextHistoryDataSetsRow = ((TextHistoryDataSetsRow)(this.NewRow()));
                 rowTextHistoryDataSetsRow.ItemArray = new object[] {
-                        KeyNo,
+                        null,
                         KeyValue,
                         DataValue};
                 this.Rows.Add(rowTextHistoryDataSetsRow);
@@ -242,6 +242,7 @@ namespace quickDBExplorer {
                 this.Columns.Add(this.columnKeyValue);
                 this.columnDataValue = new DataColumn("DataValue", typeof(string), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnDataValue);
+                this.columnKeyNo.AutoIncrement = true;
                 this.CaseSensitive = true;
             }
             

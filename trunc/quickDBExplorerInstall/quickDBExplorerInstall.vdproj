@@ -57,12 +57,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_1ACF503262C5476196F8F0435A984455"
-        "OwnerKey" = "8:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_21B0871F90A64C8A9F3A11A711A84DFA"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -231,6 +225,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_8DED057A465FE652C46F03EA9DEB950F"
+        "OwnerKey" = "8:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_8E31AE18B8034104B1E2D5C79CEA2487"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -387,6 +387,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_FDFE6E4110C744B79CABB1FCB557CC7C"
+        "OwnerKey" = "8:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_FDFE6E4110C744B79CABB1FCB557CC7C"
+        "OwnerKey" = "8:_8DED057A465FE652C46F03EA9DEB950F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FEC8301EEA0D43299E96E8F90B0A6F56"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -446,7 +458,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "SupportedRuntimes" = "8:1.1.4322"
+                "SupportedRuntimes" = "8:1.1.4322;2.0.50727"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=9832"
                 }
             }
@@ -1154,6 +1166,37 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{FB480208-1853-44D0-9ABD-A3B734C3FAAA}:_8DED057A465FE652C46F03EA9DEB950F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ISqlInterface, Version=1.0.3028.33717, Culture=neutral"
+                "ScatterAssemblies"
+                {
+                    "_8DED057A465FE652C46F03EA9DEB950F"
+                    {
+                    "Name" = "8:ISqlInterface.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ISqlInterface.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{A582A373-4685-4296-BEFE-614B80A702C3}:_8E31AE18B8034104B1E2D5C79CEA2487"
@@ -2373,7 +2416,7 @@
         }
         "MergeModule"
         {
-            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_1ACF503262C5476196F8F0435A984455"
+            "{35A69C6E-5BA4-440D-803D-762B59A45393}:_FDFE6E4110C744B79CABB1FCB557CC7C"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2392,7 +2435,7 @@
         {
             "{8062640A-2EEE-46E9-AB67-688E9A886E9F}:_C10EA1AFD7EC4F7095AF7F541C6C5EAE"
             {
-            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Debug\\quickDBExplorer.exe"
+            "SourcePath" = "8:..\\quickDBExplorer\\obj\\Release\\quickDBExplorer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_670D34C56A9A4BC5893E2853C34D5B91"

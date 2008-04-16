@@ -755,10 +755,11 @@ where
 		}
 
 		/// <summary>
-		/// DBオブジェクトを取得する
+		/// 指定されたオブジェクトの詳細情報を取得する
+		/// sender に 対象オブジェクトが DBObjectInfo 型としてセットされていることが前提
 		/// </summary>
-		/// <param name="sender">-</param>
-		/// <param name="e">-</param>
+		/// <param name="sender">対象のオブジェクト</param>
+		/// <param name="e">ダミー</param>
 		protected	virtual void	DatabaseObjSet(object sender, System.EventArgs e)
 		{
 			DBObjectInfo	databaseObjectInfo = (DBObjectInfo)sender;
