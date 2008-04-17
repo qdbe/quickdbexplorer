@@ -244,21 +244,32 @@ namespace quickDBExplorer
 		/// </summary>
 		private TextHistoryDataSet  selectHistory = new TextHistoryDataSet();
 
+		/// <summary>
+		/// select 以外のクエリ実行履歴
+		/// </summary>
 		private TextHistoryDataSet  DMLHistory = new TextHistoryDataSet();
 
+		/// <summary>
+		/// 各種コマンドの実行履歴
+		/// </summary>
 		private TextHistoryDataSet  cmdHistory = new TextHistoryDataSet();
 
 		/// <summary>
-		/// 接続した先のSQL Serverのバージョン
+		/// 検索の実行履歴
 		/// </summary>
-		private int		sqlVersion = 2000;
+		private TextHistoryDataSet  searchHistory = new TextHistoryDataSet();
+
 		/// <summary>
 		/// 接続した先のSQL Serverのバージョン
 		/// </summary>
-		public	int		SqlVersion
+		private SqlVersion pSqlVersion = null;
+		/// <summary>
+		/// 接続した先のSQL Serverのバージョン
+		/// </summary>
+		public	SqlVersion		ConnectSqlVersion
 		{
-			get { return this.sqlVersion; }
-			set { this.sqlVersion = value; }
+			get { return this.pSqlVersion; }
+			set { this.pSqlVersion = value; }
 		}
 		#endregion
 
@@ -292,13 +303,15 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem readTsvDbGridMenu;
 		private System.Windows.Forms.MenuItem readCsvDQDbGridMenu;
 		private System.Windows.Forms.MenuItem readTsvDQDbGridMenu;
+		private System.Windows.Forms.MenuItem copySelectedDbGridMenu;
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="sv">前回最終処理の記憶値</param>
-		public MainForm(ServerData sv)
+		/// <param name="sqlVer">SQL Server のバージョン情報</param>
+		public MainForm(ServerData sv, SqlVersion sqlVer)
 		{
 			//
 			// Windows フォーム デザイナ サポートに必要です。
@@ -315,6 +328,9 @@ namespace quickDBExplorer
 			this.selectHistory = svdata.SelectHistory;
 			this.DMLHistory = svdata.DMLHistory;
 			this.cmdHistory = svdata.CmdHistory;
+			this.searchHistory = svdata.SelectHistory;
+
+			this.ConnectSqlVersion = sqlVer;
 
 			// 右クリックメニューや、ボタンポップアップメニューを初期化する
 //			InitPopupMenu();
@@ -383,6 +399,7 @@ namespace quickDBExplorer
 			this.dbGrid = new System.Windows.Forms.DataGrid();
 			this.dbGridMenu = new System.Windows.Forms.ContextMenu();
 			this.copyDbGridMenu = new System.Windows.Forms.MenuItem();
+			this.copySelectedDbGridMenu = new System.Windows.Forms.MenuItem();
 			this.allSelectDbGridMenu = new System.Windows.Forms.MenuItem();
 			this.allUnSelectDbGridMenu = new System.Windows.Forms.MenuItem();
 			this.readCsvDbGridMenu = new System.Windows.Forms.MenuItem();
@@ -470,6 +487,7 @@ namespace quickDBExplorer
 			// objectList
 			// 
 			this.objectList.Activation = System.Windows.Forms.ItemActivation.OneClick;
+			this.objectList.AllowDrop = true;
 			this.objectList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
 																						 this.ColTVSType,
 																						 this.ColOwner,
@@ -698,6 +716,7 @@ namespace quickDBExplorer
 			// 
 			this.dbGridMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
 																					   this.copyDbGridMenu,
+																					   this.copySelectedDbGridMenu,
 																					   this.allSelectDbGridMenu,
 																					   this.allUnSelectDbGridMenu,
 																					   this.readCsvDbGridMenu,
@@ -709,42 +728,48 @@ namespace quickDBExplorer
 			// copyDbGridMenu
 			// 
 			this.copyDbGridMenu.Index = 0;
-			this.copyDbGridMenu.Text = "クリップボードにコピー";
+			this.copyDbGridMenu.Text = "全ての行をクリップボードにコピー";
 			this.copyDbGridMenu.Click += new System.EventHandler(this.copyDbGridMenu_Click);
+			// 
+			// copySelectedDbGridMenu
+			// 
+			this.copySelectedDbGridMenu.Index = 1;
+			this.copySelectedDbGridMenu.Text = "選択行のみクリップボードにコピー";
+			this.copySelectedDbGridMenu.Click += new System.EventHandler(this.copySelectedDbGridMenu_Click);
 			// 
 			// allSelectDbGridMenu
 			// 
-			this.allSelectDbGridMenu.Index = 1;
+			this.allSelectDbGridMenu.Index = 2;
 			this.allSelectDbGridMenu.Text = "全行選択";
 			this.allSelectDbGridMenu.Click += new System.EventHandler(this.allSelectDbGridMenu_Click);
 			// 
 			// allUnSelectDbGridMenu
 			// 
-			this.allUnSelectDbGridMenu.Index = 2;
+			this.allUnSelectDbGridMenu.Index = 3;
 			this.allUnSelectDbGridMenu.Text = "全行選択解除";
 			this.allUnSelectDbGridMenu.Click += new System.EventHandler(this.allUnSelectDbGridMenu_Click);
 			// 
 			// readCsvDbGridMenu
 			// 
-			this.readCsvDbGridMenu.Index = 3;
+			this.readCsvDbGridMenu.Index = 4;
 			this.readCsvDbGridMenu.Text = "データ取込(CSV)";
 			this.readCsvDbGridMenu.Click += new System.EventHandler(this.readCsvDbGridMenu_Click);
 			// 
 			// readCsvDQDbGridMenu
 			// 
-			this.readCsvDQDbGridMenu.Index = 4;
+			this.readCsvDQDbGridMenu.Index = 5;
 			this.readCsvDQDbGridMenu.Text = "データ取込(CSV)(\\\"付き)";
 			this.readCsvDQDbGridMenu.Click += new System.EventHandler(this.readCsvDQDbGridMenu_Click);
 			// 
 			// readTsvDbGridMenu
 			// 
-			this.readTsvDbGridMenu.Index = 5;
+			this.readTsvDbGridMenu.Index = 6;
 			this.readTsvDbGridMenu.Text = "データ取込(TAB)";
 			this.readTsvDbGridMenu.Click += new System.EventHandler(this.readTsvDbGridMenu_Click);
 			// 
 			// readTsvDQDbGridMenu
 			// 
-			this.readTsvDQDbGridMenu.Index = 6;
+			this.readTsvDQDbGridMenu.Index = 7;
 			this.readTsvDQDbGridMenu.Text = "データ取込(TAB)(\\\"付き)";
 			this.readTsvDQDbGridMenu.Click += new System.EventHandler(this.readTsvDQDbGridMenu_Click);
 			// 
@@ -1166,6 +1191,8 @@ namespace quickDBExplorer
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
+			this.AutoScroll = true;
+			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(928, 637);
 			this.Controls.Add(this.cmbHistory);
 			this.Controls.Add(this.label10);
@@ -1338,7 +1365,7 @@ namespace quickDBExplorer
 			menuAr.Add(new qdbeMenuItem(true,false,null,"-", null ) );
 			menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"簡易クエリ実行（Select以外）", new EventHandler(this.btnQueryNonSelect_Click) ) );
 			menuAr.Add(new qdbeMenuItem(true,false,this.btnEtc.Name,"-", null ) );
-			if( this.sqlVersion == 2000 )
+			if( this.ConnectSqlVersion.CanUseQueryAnalyzer == true )
 			{
 				menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"クエリアナライザ起動", new EventHandler(this.CallISQLW) ) );
 			}
@@ -1351,6 +1378,7 @@ namespace quickDBExplorer
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"統計情報更新", new EventHandler(this.menuUpdateStaticsMain_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"各種コマンド実行", new EventHandler(this.menuDoQuery_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"オブジェクト情報表示", new EventHandler(this.DispObjectInfo) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"フィールド検索", new EventHandler(this.ObjectSearch) ) );
 
 			ContextMenu objMenu = new System.Windows.Forms.ContextMenu();
 			int		idx = 0;
@@ -2162,7 +2190,6 @@ namespace quickDBExplorer
 			this.cmbHistory.DataSource = null;
 			this.cmbHistory.DataSource = this.selectedTables;
 			this.cmbHistory.Refresh();
-			
 
 			DispObjectList();
 			DispListOwner();
@@ -2343,8 +2370,7 @@ namespace quickDBExplorer
 					DbDataAdapter da = this.pSqlDriver.NewDataAdapter();
 					IDbCommand cmd = this.pSqlDriver.NewSqlCommand(stSql);
 					this.pSqlDriver.SetSelectCmd(da,cmd);
-					
-										
+
 					tran = this.pSqlDriver.SetTransaction(cmd);
 					this.pSqlDriver.SetCommandBuilder(da);
 					da.Update(dspdt, "aaaa");
@@ -2400,7 +2426,6 @@ namespace quickDBExplorer
 							this.btnDataEdit.ForeColor = this.btnForeColor;
 						}
 					}
-					
 				}
 			}
 			catch( Exception exp )
@@ -2430,7 +2455,7 @@ namespace quickDBExplorer
 					row ++;
 				}
 			}
-     
+
 			CurrencyManager cm = (CurrencyManager) this.BindingContext[dbGrid.DataSource, dbGrid.DataMember];
 			while((y <= dbGrid.Height) && (row < cm.Count))
 			{
@@ -2462,8 +2487,6 @@ namespace quickDBExplorer
 				this.DateFormat = dlg.DateFormat;
 			}
 		}
-
-
 
 		private void Redisp_Click(object sender, System.EventArgs e)
 		{
@@ -2767,7 +2790,17 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void menuTableSelect_Click(object sender, System.EventArgs e)
 		{
+			tableSelect(string.Empty);
+		}
+
+		/// <summary>
+		/// 指定されたテーブルのリストを元に、テーブルの一覧の選択状態を変更する
+		/// </summary>
+		/// <param name="tableList">初期値とセットする一覧値</param>
+		private void tableSelect(string tableList)
+		{
 			TableSelectDialog dlg = new TableSelectDialog();
+			dlg.ResultStr = tableList;
 			if( dlg.ShowDialog() == DialogResult.OK && dlg.ResultStr != "")
 			{
 				string tabs = dlg.ResultStr;
@@ -2777,7 +2810,8 @@ namespace quickDBExplorer
 				int startPosition = -1;
 				for( int i = 0; i < objectLists.Length; i++ )
 				{
-					int x = this.objectList.FindStringExact(objectLists[i]);
+					string []separatedStr = objectLists[i].Split("\t,:;".ToCharArray());
+					int x = this.objectList.FindStringExact(separatedStr[0]);
 					if( x > 0 )
 					{
 						this.objectList.Items[x].Selected = true;
@@ -3385,7 +3419,31 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// すべての行をクリップボードにコピーする
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void copyDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			copyDbGrid(false);
+		}
+
+		/// <summary>
+		/// 選択行のみクリップボードにコピーする
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void copySelectedDbGridMenu_Click(object sender, System.EventArgs e)
+		{
+			copyDbGrid(true);
+		}
+
+		/// <summary>
+		/// 選択行のみクリップボードにコピーする
+		/// </summary>
+		/// <param name="isSelectOnly">選択行のみコピーするか否か</param>
+		private void copyDbGrid(bool isSelectOnly)
 		{
 			if( this.dbGrid.Visible == false )
 			{
@@ -3424,17 +3482,24 @@ namespace quickDBExplorer
 			}
 			wr.Write(wr.NewLine);
 
-			foreach( DataRow dr in dt.Rows )
+			CurrencyManager cm = (CurrencyManager) this.BindingContext[this.dbGrid.DataSource, this.dbGrid.DataMember];
+
+			for( int y = 0; y < cm.Count; y++ )
 			{
-				for( int i = 0; i < dt.Columns.Count; i++ )
+				if( isSelectOnly == true &&
+					this.dbGrid.IsSelected(y) == false )
 				{
-					if( i != 0 )
+					continue;
+				}
+				for( int x = 0; x < dt.Columns.Count; x++ )
+				{
+					if( x != 0 )
 					{
 						wr.Write("\t");
 					}
-					if( dr[i] != DBNull.Value )
+					if( this.dbGrid[y,x] != DBNull.Value )
 					{
-						wr.Write(dr[i].ToString());
+						wr.Write(this.dbGrid[y,x].ToString());
 					}
 				}
 				wr.Write(wr.NewLine);
@@ -3778,6 +3843,66 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 選択されたオブジェクトの基礎情報を表示する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ObjectSearch(object sender, System.EventArgs e)
+		{
+			this.InitErrMessage();
+
+			SearchCondition dlg = new SearchCondition(this.ConnectSqlVersion);
+			dlg.DHistory = this.searchHistory;
+			if( dlg.ShowDialog() == DialogResult.OK )
+			{
+				//ここまでは条件が入力されただけ
+
+				// ここから検索する
+				string searchResult = this.ObjectSearchSub(
+					this.SqlDriver,
+					dlg.SelectSql,
+					dlg.IsSearchField,
+					dlg.IsSearchTable,
+					dlg.IsSearchView,
+					dlg.IsSearchSynonym
+					);
+
+				if( searchResult == null ||
+					searchResult == string.Empty )
+				{
+					MessageBox.Show("検索した結果、何も見つかりませんでした");
+					return;
+				}
+				if( dlg.IsShowTableSelect == true )
+				{
+					TableSelectDialog tdlg = new TableSelectDialog();
+					this.tableSelect(searchResult);
+				}
+			}
+		}
+
+		/// <summary>
+		/// 条件に応じてオブジェクトを検索する
+		/// </summary>
+		/// <param name="sqlDriver"></param>
+		/// <param name="searchCondition"></param>
+		/// <param name="isField"></param>
+		/// <param name="isTable"></param>
+		/// <param name="isView"></param>
+		/// <param name="isSynonym"></param>
+		/// <returns></returns>
+		private string ObjectSearchSub(
+			ISqlInterface sqlDriver,
+			string searchCondition,
+			bool isField,
+			bool isTable,
+			bool isView,
+			bool isSynonym
+			)
+		{
+			return string.Empty;
+		}
 
 		private void fieldListbox_ExtendedCopyData(object sender, System.EventArgs e)
 		{
@@ -6142,7 +6267,6 @@ namespace quickDBExplorer
 			}
 
 		}
-
 
 	}
 

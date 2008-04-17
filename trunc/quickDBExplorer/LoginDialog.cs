@@ -150,6 +150,7 @@ namespace quickDBExplorer
 			// 
 			// txtPassword
 			// 
+			this.txtPassword.IsDigitOnly = false;
 			this.txtPassword.Location = new System.Drawing.Point(144, 201);
 			this.txtPassword.Name = "txtPassword";
 			this.txtPassword.PasswordChar = '*';
@@ -159,6 +160,7 @@ namespace quickDBExplorer
 			// 
 			// txtUser
 			// 
+			this.txtUser.IsDigitOnly = false;
 			this.txtUser.Location = new System.Drawing.Point(144, 161);
 			this.txtUser.Name = "txtUser";
 			this.txtUser.Size = new System.Drawing.Size(208, 19);
@@ -167,6 +169,7 @@ namespace quickDBExplorer
 			// 
 			// txtInstance
 			// 
+			this.txtInstance.IsDigitOnly = false;
 			this.txtInstance.Location = new System.Drawing.Point(144, 89);
 			this.txtInstance.Name = "txtInstance";
 			this.txtInstance.Size = new System.Drawing.Size(208, 19);
@@ -175,6 +178,7 @@ namespace quickDBExplorer
 			// 
 			// txtServerName
 			// 
+			this.txtServerName.IsDigitOnly = false;
 			this.txtServerName.Location = new System.Drawing.Point(144, 49);
 			this.txtServerName.Name = "txtServerName";
 			this.txtServerName.Size = new System.Drawing.Size(208, 19);
@@ -226,6 +230,7 @@ namespace quickDBExplorer
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "LogOnDialog";
 			this.Text = "ログイン";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.LogOnDialog_Closing);
 			this.Load += new System.EventHandler(this.LogOnDialog_Load);
 			this.Controls.SetChildIndex(this.MsgArea, 0);
@@ -366,9 +371,11 @@ namespace quickDBExplorer
 				sv.LogOnUser = this.txtUser.Text;
 				// 最後に接続したサーバーを更新
 				initOpt.LastServerKey = sv.KeyName;
+				// SQL 処理クラスの初期化
+				SqlVersion sqlVer = new SqlVersion(con.ServerVersion);
 
 				// メインダイアログを表示
-				MainForm mainForm = new MainForm(sv);
+				MainForm mainForm = new MainForm(sv, sqlVer);
 				mainForm.MdiParent = this.MdiParent;
 				mainForm.ServerName = this.txtServerName.Text;
 				mainForm.ServerRealName = this.txtServerName.Text;
@@ -385,28 +392,9 @@ namespace quickDBExplorer
 					mainForm.ServerName = this.txtServerName.Text;
 				}
 
-				// SQL 処理クラスの初期化
-				if(con.ServerVersion.StartsWith("08") )
-				{
-					mainForm.SqlVersion = 2000;
-				}
-				else if(con.ServerVersion.StartsWith("09") )
-				{
-					mainForm.SqlVersion = 2005;
-				}
-				else if(con.ServerVersion.StartsWith("10") )
-				{
-					// 現時点では2008と同等と仮定する
-					mainForm.SqlVersion = 2008;
-				}
-				else
-				{
-					// 現時点では2008と同等と仮定する
-					mainForm.SqlVersion = 2008;
-				}
 				// SQL SERVERのバージョンに応じたDLLを読み込む
-				dllName = string.Format(System.Globalization.CultureInfo.CurrentCulture,Application.StartupPath + "\\SqlServer{0}Driver.dll", mainForm.SqlVersion );
-				className = string.Format(System.Globalization.CultureInfo.CurrentCulture,"quickDBExplorer.SqlServerDriver{0}", mainForm.SqlVersion );
+				dllName = string.Format(System.Globalization.CultureInfo.CurrentCulture,Application.StartupPath + "\\SqlServer{0}Driver.dll", sqlVer.AdapterNameString );
+				className = string.Format(System.Globalization.CultureInfo.CurrentCulture,"quickDBExplorer.SqlServerDriver{0}", sqlVer.AdapterNameString );
 				asm = Assembly.LoadFrom(dllName);
 				mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className,true);
 

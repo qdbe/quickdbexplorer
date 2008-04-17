@@ -1,7 +1,7 @@
 <VisualStudioProject>
     <CSHARP
         ProjectType = "Local"
-        ProductVersion = "7.10.6030"
+        ProductVersion = "7.10.3077"
         SchemaVersion = "2.0"
         ProjectGuid = "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
     >
@@ -301,6 +301,16 @@
                     BuildAction = "Compile"
                 />
                 <File
+                    RelPath = "SearchCondition.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "SearchCondition.resx"
+                    DependentUpon = "SearchCondition.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "ServerSelectDialog.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
@@ -309,6 +319,11 @@
                     RelPath = "ServerSelectDialog.resx"
                     DependentUpon = "ServerSelectDialog.cs"
                     BuildAction = "EmbeddedResource"
+                />
+                <File
+                    RelPath = "SqlVersion.cs"
+                    SubType = "Code"
+                    BuildAction = "Compile"
                 />
                 <File
                     RelPath = "TableSelectDialog.cs"

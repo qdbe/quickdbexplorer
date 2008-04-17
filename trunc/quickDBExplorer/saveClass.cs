@@ -272,6 +272,19 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
+		/// 検索入力履歴
+		/// </summary>
+		private TextHistoryDataSet  pSearchHistory;
+		/// <summary>
+		/// 検索入力履歴
+		/// </summary>
+		public TextHistoryDataSet  SearchHistory
+		{
+			get { return this.pSearchHistory; }
+			set { this.pSearchHistory = value; }
+		}
+
+		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public ServerData()
@@ -291,6 +304,7 @@ namespace quickDBExplorer
 			aliasHistory = new TextHistoryDataSet();
 			selectHistory = new TextHistoryDataSet();
 			DMLHistory = new TextHistoryDataSet();
+			pSearchHistory = new TextHistoryDataSet();
 		}
 
 		/// <summary>
@@ -349,6 +363,7 @@ namespace quickDBExplorer
 			selectHistory = new TextHistoryDataSet();
 			DMLHistory = new TextHistoryDataSet();
 			cmdHistory = new TextHistoryDataSet();
+			pSearchHistory = new TextHistoryDataSet();
 
 			try
 			{
@@ -473,6 +488,11 @@ namespace quickDBExplorer
 				this.cmdHistory = (TextHistoryDataSet)info.GetValue("cmdHistory",typeof(TextHistoryDataSet));
 			}
 			catch{}
+			try
+			{
+				this.pSearchHistory = (TextHistoryDataSet)info.GetValue("SearchHistory",typeof(TextHistoryDataSet));
+			}
+			catch{}
 
 
 		}
@@ -507,6 +527,7 @@ namespace quickDBExplorer
 			info.AddValue("selectHistory", selectHistory );
 			info.AddValue("DMLHistory", DMLHistory );
 			info.AddValue("cmdHistory", cmdHistory );
+			info.AddValue("SearchHistory", pSearchHistory );
 		}
 
 		/// <summary>

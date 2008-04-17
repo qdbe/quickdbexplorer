@@ -39,6 +39,8 @@ namespace quickDBExplorer
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
 
+			pResultStr = string.Empty;
+
 			// TODO: InitializeComponent 呼び出しの後に初期化処理を追加します。
 		}
 
@@ -136,8 +138,7 @@ namespace quickDBExplorer
 
 		private void TableSelectDialog_Load(object sender, System.EventArgs e)
 		{
-			this.ResultStr = "";
-			this.txtTableSelect.Text = "";
+			this.txtTableSelect.Text = this.ResultStr;
 		}
 
 		private void btnCancel_Click(object sender, System.EventArgs e)

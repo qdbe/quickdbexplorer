@@ -47,9 +47,9 @@ namespace quickDBExplorer
 		/// </summary>
 		protected System.Windows.Forms.Button btnGo;
 		/// <summary>
-		/// 戻るボタン
+		/// キャンセル（閉じる）ボタン
 		/// </summary>
-		private System.Windows.Forms.Button btnCancel;
+		protected System.Windows.Forms.Button btnCancel;
 		/// <summary>
 		/// テキスト入力エリアでの右クリックメニュー
 		/// </summary>
@@ -62,7 +62,11 @@ namespace quickDBExplorer
 		/// 戻り値あり チェックボックス
 		/// </summary>
 		protected System.Windows.Forms.CheckBox chkReturn;
-		private System.Windows.Forms.Button btnHistory;
+
+		/// <summary>
+		/// 履歴表示ボタン
+		/// </summary>
+		protected System.Windows.Forms.Button btnHistory;
 
 		/// <summary>
 		/// 入力履歴データ
@@ -199,7 +203,7 @@ namespace quickDBExplorer
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Location = new System.Drawing.Point(348, 292);
+			this.btnCancel.Location = new System.Drawing.Point(348, 296);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(88, 24);
 			this.btnCancel.TabIndex = 3;
@@ -216,9 +220,10 @@ namespace quickDBExplorer
 			// 
 			// btnHistory
 			// 
+			this.btnHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnHistory.Location = new System.Drawing.Point(144, 296);
 			this.btnHistory.Name = "btnHistory";
-			this.btnHistory.Size = new System.Drawing.Size(88, 23);
+			this.btnHistory.Size = new System.Drawing.Size(88, 24);
 			this.btnHistory.TabIndex = 2;
 			this.btnHistory.Text = "履歴引用(&L)";
 			this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
