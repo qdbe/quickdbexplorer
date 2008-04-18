@@ -198,5 +198,26 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		DataGetEventHandler ObjectDetailSet();
 
+		/// <summary>
+		/// フィールド名を検索する SQL文を生成する
+		/// </summary>
+		/// <param name="searchCondition">検索対象の文字</param>
+		/// <param name="searchType">検索方法
+		/// 0--曖昧検索
+		/// 1--前方一致
+		/// 2--完全一致</param>
+		/// <returns></returns>
+		string	GetSearchFieldSql(string searchCondition, int searchType);
+
+		/// <summary>
+		/// オブジェクト名を検索する SQL文を生成する
+		/// </summary>
+		/// <param name="searchCondition">検索対象の文字</param>
+		/// <param name="searchType">検索方法
+		/// 0--曖昧検索
+		/// 1--前方一致
+		/// 2--完全一致</param>
+		/// <returns></returns>
+		string	GetSearchObjectSql(string searchCondition, int searchType, bool isTable, bool isView, bool isSynonym, bool isProcedure, bool isFunction);
 	}
 }

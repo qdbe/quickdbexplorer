@@ -2373,10 +2373,10 @@ namespace quickDBExplorer
 
 					tran = this.pSqlDriver.SetTransaction(cmd);
 					this.pSqlDriver.SetCommandBuilder(da);
-					da.Update(dspdt, "aaaa");
+					da.Update(dspdt, dspdt.Tables[0].TableName);
 					tran.Commit();
 
-					this.dbGrid.SetDataBinding(dspdt, "aaaa");
+					this.dbGrid.SetDataBinding(dspdt, dspdt.Tables[0].TableName);
 				}
 			}
 			catch( Exception exp )
@@ -2404,8 +2404,8 @@ namespace quickDBExplorer
 				else
 				{
 					// 編集不可にする
-					if( this.dspdt.Tables["aaaa"].GetChanges() == null ||
-						this.dspdt.Tables["aaaa"].GetChanges().Rows.Count == 0 )
+					if( this.dspdt.Tables[0].GetChanges() == null ||
+						this.dspdt.Tables[0].GetChanges().Rows.Count == 0 )
 					{
 						this.dbGrid.ReadOnly = true;
 						this.btnDataEdit.Text = "データ編集(&T)";
@@ -2417,8 +2417,8 @@ namespace quickDBExplorer
 						// 変更があった
 						if( MessageBox.Show("変更を破棄してもよろしいですか?","",MessageBoxButtons.YesNo) == DialogResult.Yes )
 						{
-							this.dspdt.Tables["aaaa"].RejectChanges();
-							this.dbGrid.SetDataBinding(dspdt, "aaaa");
+							this.dspdt.Tables[0].RejectChanges();
+							this.dbGrid.SetDataBinding(dspdt, dspdt.Tables[0].TableName);
 							this.dbGrid.Show();
 							this.dbGrid.ReadOnly = true;
 							this.btnDataEdit.Text = "データ編集(&T)";
@@ -2438,7 +2438,7 @@ namespace quickDBExplorer
 		{
 			if( this.dspdt == null ||
 				this.dspdt.Tables.Count == 0 ||
-				this.dspdt.Tables["aaaa"].Rows.Count == 0 )
+				this.dspdt.Tables[0].Rows.Count == 0 )
 			{
 				return;
 			}
@@ -3630,7 +3630,7 @@ namespace quickDBExplorer
 					this.chkDispData.Checked = true;
 					this.dbGrid.AllowSorting = true;
 					this.toolTip3.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
-					this.dbGrid.SetDataBinding(dspdt,"aaaa");
+					this.dbGrid.SetDataBinding(dspdt,dspdt.Tables[0].TableName);
 					this.dbGrid.Show();
 				}
 			}
@@ -5060,11 +5060,11 @@ namespace quickDBExplorer
 
 				if( maxlines != 0 )
 				{
-					if( dspdt.Tables["aaaa"].Rows.Count == maxGetLines )
+					if( dspdt.Tables[0].Rows.Count == maxGetLines )
 					{
 						this.btnTmpAllDisp.Enabled = true;
-						dspdt.Tables["aaaa"].Rows[maxGetLines-1].Delete();
-						dspdt.Tables["aaaa"].AcceptChanges();
+						dspdt.Tables[0].Rows[maxGetLines-1].Delete();
+						dspdt.Tables[0].AcceptChanges();
 					}
 					else
 					{
@@ -5105,7 +5105,7 @@ namespace quickDBExplorer
 
 				this.dbGrid.AllowSorting = true;
 				this.toolTip3.SetToolTip(this.dbGrid,stSqlDisp);
-				this.dbGrid.SetDataBinding(dspdt, "aaaa");
+				this.dbGrid.SetDataBinding(dspdt, dspdt.Tables[0].TableName);
 				this.dbGrid.Show();
 				this.btnDataEdit.Text = "データ編集(&T)";
 				if( dspdt.Tables[0].PrimaryKey.Length == 0 )
@@ -5385,7 +5385,7 @@ namespace quickDBExplorer
 
 
 				DataTable dt = null;
-				dt = this.dspdt.Tables["aaaa"];
+				dt = this.dspdt.Tables[0];
 
 				DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
 
@@ -5405,7 +5405,6 @@ namespace quickDBExplorer
 						{
 							dt.Rows.Add(addRow);
 						}
-//						this.dbGrid.SetDataBinding(dspdt, "aaaa");
 						this.dbGrid.Invalidate();
 						MessageBox.Show("読込を完了しました");
 					}

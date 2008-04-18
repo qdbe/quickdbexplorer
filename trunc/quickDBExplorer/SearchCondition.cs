@@ -86,11 +86,42 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
+		/// 
+		/// 
+		/// </summary>
+		public bool IsSearchProcedure
+		{
+			get { return false; }
+		}
+
+		/// <summary>
 		/// 検索結果を元にオブジェクトを選択するか否か
 		/// </summary>
 		public bool IsShowTableSelect
 		{
 			get { return this.chkShowObjectSelector.Checked; }
+		}
+
+		/// <summary>
+		/// 検索方法を取得する
+		/// </summary>
+		public int SearchType
+		{
+			get 
+			{
+				if( this.rdoInclude.Checked == true )
+				{
+					return 0;
+				}
+				else if( this.rdoInclude.Checked == true )
+				{
+					return 1;
+				}
+				else 
+				{
+					return 2;
+				}
+			}
 		}
 
 		#region デザイナで生成されたコード

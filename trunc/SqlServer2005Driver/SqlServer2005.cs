@@ -914,7 +914,35 @@ order by colorder",
 			databaseObjectInfo.FieldInfo = ar;
 		}
 
+		/// <summary>
+		/// フィールド名を検索する SQL文を生成する
+		/// </summary>
+		/// <param name="searchCondition">検索対象の文字</param>
+		/// <param name="searchType">検索方法
+		/// 0--曖昧検索
+		/// 1--前方一致
+		/// 2--完全一致</param>
+		/// <returns></returns>
+		string	GetSearchFieldSql(string searchCondition, int searchType)
+		{
+			return string.Empty;
+		}
+
+		/// <summary>
+		/// オブジェクト名を検索する SQL文を生成する
+		/// </summary>
+		/// <param name="searchCondition">検索対象の文字</param>
+		/// <param name="searchType">検索方法
+		/// 0--曖昧検索
+		/// 1--前方一致
+		/// 2--完全一致</param>
+		/// <returns></returns>
+		string	GetSearchObjectSql(string searchCondition, int searchType, bool isTable, bool isView, bool isSynonym, bool isSynonym, bool isProcedure, bool isFunction)
+		{
+			return string.Empty;
+		}
 
 		#endregion
+
 	}
 }
