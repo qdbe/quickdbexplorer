@@ -918,28 +918,204 @@ order by colorder",
 		/// フィールド名を検索する SQL文を生成する
 		/// </summary>
 		/// <param name="searchCondition">検索対象の文字</param>
-		/// <param name="searchType">検索方法
-		/// 0--曖昧検索
-		/// 1--前方一致
-		/// 2--完全一致</param>
+		/// <param name="searchType">検索方法</param>
+		/// <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
+		/// <param name="limitSchema">スキーマの絞込み対象</param>
 		/// <returns></returns>
-		string	GetSearchFieldSql(string searchCondition, int searchType)
+		public string	GetSearchFieldSql(
+			string searchCondition, 
+			quickDBExplorer.SearchType searchType, 
+			bool isCaseSensitive, 
+			ArrayList limitSchema)
 		{
-			return string.Empty;
+			searchCondition = searchCondition.Replace("'","''");
+			if( isCaseSensitive == false )
+			{
+				searchCondition = searchCondition.ToLower();
+			}
+
+			string schemaFilter = string.Empty;
+			if( limitSchema != null && 
+				limitSchema.Count != 0 )
+			{
+				schemaFilter = "and t2.name in ( ";
+				for( int j = 0; j < limitSchema.Count; j++ )
+				{
+					if( j != 0 )
+					{
+						schemaFilter += ",";
+					}
+					schemaFilter += "'" + limitSchema[j].ToString() + "'";
+				}
+				schemaFilter += ")";
+			}
+
+			string condSql = string.Empty;
+
+			switch(searchType)
+			{
+				case SearchType.SearchContain:
+					condSql = string.Format(" like '%{0}%' ", searchCondition );
+					break;
+				case SearchType.SearchStartWith:
+					condSql = string.Format(" like '{0}%' ", searchCondition );
+					break;
+				case SearchType.SearchExact:
+					condSql = string.Format(" = '{0}' ", searchCondition );
+					break;
+				default:
+					break;
+			}
+
+			string addCondition = string.Empty;
+			if( isCaseSensitive == true )
+			{
+				addCondition = " t3.name ";
+			}
+			else
+			{
+				addCondition = " LOWER(t3.name) ";
+			}
+
+			return string.Format(System.Globalization.CultureInfo.CurrentCulture,
+				@"select t2.name as UserName, t1.name as ObjName, t3.name as FieldName
+from
+	sys.all_objects t1
+	inner join sys.schemas t2 on
+		t1.schema_id = t2.schema_id
+	inner join sys.all_columns t3 on
+		t1.object_id = t3.object_id
+where
+	{0} {1} {2} ", addCondition, condSql , schemaFilter
+				);
 		}
 
 		/// <summary>
 		/// オブジェクト名を検索する SQL文を生成する
 		/// </summary>
 		/// <param name="searchCondition">検索対象の文字</param>
-		/// <param name="searchType">検索方法
-		/// 0--曖昧検索
-		/// 1--前方一致
-		/// 2--完全一致</param>
+		/// <param name="searchType">検索方法</param>
+		/// <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
+		/// <param name="limitSchema">スキーマの絞込み対象</param>
+		/// <param name="isTable">テーブルを検索するか否か</param>
+		/// <param name="isView">Viewを検索するか否か</param>
+		/// <param name="isSynonym">シノニムを検索するか否か</param>
+		/// <param name="isFunction">ファンクションを検索するか否か</param>
+		/// <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
 		/// <returns></returns>
-		string	GetSearchObjectSql(string searchCondition, int searchType, bool isTable, bool isView, bool isSynonym, bool isSynonym, bool isProcedure, bool isFunction)
+		public string	GetSearchObjectSql(
+			string searchCondition, 
+			quickDBExplorer.SearchType searchType, 
+			bool isCaseSensitive, 
+			ArrayList limitSchema,
+			bool isTable, 
+			bool isView, 
+			bool isSynonym, 
+			bool isFunction, 
+			bool isProcedure)
 		{
-			return string.Empty;
+			searchCondition = searchCondition.Replace("'","''");
+			if( isCaseSensitive == false )
+			{
+				searchCondition = searchCondition.ToLower();
+			}
+
+			string condSql = string.Empty;
+
+			switch(searchType)
+			{
+				case SearchType.SearchContain:
+					condSql = string.Format(" like '%{0}%' ", searchCondition );
+					break;
+				case SearchType.SearchStartWith:
+					condSql = string.Format(" like '{0}%' ", searchCondition );
+					break;
+				case SearchType.SearchExact:
+					condSql = string.Format(" = '{0}' ", searchCondition );
+					break;
+				default:
+					break;
+			}
+
+			ArrayList ar = new ArrayList();
+
+			if( isTable == true )
+			{
+				ar.Add("U ");
+				ar.Add("S ");
+			}
+			if( isView == true )
+			{
+				ar.Add("V ");
+			}
+			if( isSynonym == true )
+			{
+				ar.Add("SN");
+			}
+
+			if( isFunction == true )
+			{
+				ar.Add("AF");
+				ar.Add("FN");
+				ar.Add("FS");
+				ar.Add("FT");
+				ar.Add("TF");
+				ar.Add("IF");
+
+			}
+
+			if( isProcedure == true )
+			{
+				ar.Add("P ");
+				ar.Add("X ");
+				ar.Add("PC");
+			}
+
+			string typeCondition = string.Empty;
+			for( int i = 0; i < ar.Count; i++ )
+			{
+				if( i != 0 )
+				{
+					typeCondition += ",";
+				}
+				typeCondition += "'" + ar[i].ToString() + "'";
+			}
+
+			string addCondition = string.Empty;
+			if( isCaseSensitive == true )
+			{
+				addCondition = " t1.name ";
+			}
+			else
+			{
+				addCondition = " LOWER(t1.name) ";
+			}
+
+			string schemaFilter = string.Empty;
+			if( limitSchema != null && 
+				limitSchema.Count != 0 )
+			{
+				schemaFilter = " and t2.name in ( ";
+				for( int j = 0; j < limitSchema.Count; j++ )
+				{
+					if( j != 0 )
+					{
+						schemaFilter += ",";
+					}
+					schemaFilter += "'" + limitSchema[j].ToString() + "'";
+				}
+				schemaFilter += ")";
+			}
+
+			return string.Format(System.Globalization.CultureInfo.CurrentCulture,
+				@"select t2.name as UserName, t1.name as ObjName, null as FieldName
+from
+	sys.all_objects t1
+	inner join sys.schemas t2 on
+		t1.schema_id = t2.schema_id
+where
+	{0} {1} and t1.type in ( {2} ) {3} ", addCondition, condSql, typeCondition, schemaFilter
+				);		
 		}
 
 		#endregion

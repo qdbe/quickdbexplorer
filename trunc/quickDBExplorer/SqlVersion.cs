@@ -110,7 +110,7 @@ namespace quickDBExplorer
 			}
 			else if(versionStr.StartsWith("09") )
 			{
-				this.pPublicVersion = 2008;
+				this.pPublicVersion = 2005;
 				this.pFullVersionString = versionStr;
 				this.pIsSynonym = true;
 				this.pCanUseQueryAnalyzer = false;

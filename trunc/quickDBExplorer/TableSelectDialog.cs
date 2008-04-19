@@ -104,6 +104,7 @@ namespace quickDBExplorer
 			this.txtTableSelect.Location = new System.Drawing.Point(20, 12);
 			this.txtTableSelect.Multiline = true;
 			this.txtTableSelect.Name = "txtTableSelect";
+			this.txtTableSelect.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.txtTableSelect.Size = new System.Drawing.Size(480, 204);
 			this.txtTableSelect.TabIndex = 13;
 			this.txtTableSelect.Text = "";

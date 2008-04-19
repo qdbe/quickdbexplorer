@@ -76,20 +76,33 @@ namespace quickDBExplorer
 
 			DataRow []drl = tdata.TextHistoryDataSets.Select( string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue = '{0}'", key ) );
 
-			for( int i = 0; i < drl.Length; i++ )
+			TextHistoryDataSet.TextHistoryDataSetsRow dr = null;
+			int maxKeyNo = 0;
+			for( int i = 0; i < tdata.TextHistoryDataSets.Rows.Count; i++ )
 			{
-				if( (string)drl[i]["DataValue"] == hvalue )
+				dr = tdata.TextHistoryDataSets[i];
+				if( dr.KeyValue == key &&
+					dr.DataValue == hvalue )
 				{
 					// 同じテーブルに対し、既に同じ履歴が登録されているため、キーNOだけ新しくするため、
 					// 過去のデータは一旦削除し新しく追加しなおす
-					drl[i].Delete();
-					break;
+					dr.Delete();
+					continue;
+				}
+				if( dr.IsKeyNoNull() == true )
+				{
+					dr.KeyNo = i;
+				}
+				if( maxKeyNo < dr.KeyNo )
+				{
+					maxKeyNo = dr.KeyNo;
 				}
 			}
-			
+			maxKeyNo++;
 			TextHistoryDataSet.TextHistoryDataSetsRow ndr = tdata.TextHistoryDataSets.NewTextHistoryDataSetsRow();
 			ndr.KeyValue = key;
 			ndr.DataValue = hvalue;
+			ndr.KeyNo = maxKeyNo;
 			tdata.TextHistoryDataSets.Rows.Add(ndr);
 			tdata.TextHistoryDataSets.AcceptChanges();
 		}

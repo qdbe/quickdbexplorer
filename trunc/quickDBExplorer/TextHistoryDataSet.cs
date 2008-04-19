@@ -243,6 +243,7 @@ namespace quickDBExplorer {
                 this.columnDataValue = new DataColumn("DataValue", typeof(string), null, System.Data.MappingType.Element);
                 this.Columns.Add(this.columnDataValue);
                 this.columnKeyNo.AutoIncrement = true;
+                this.columnKeyNo.AutoIncrementSeed = 1;
                 this.CaseSensitive = true;
             }
             
