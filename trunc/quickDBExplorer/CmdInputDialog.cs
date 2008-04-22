@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// テーブルに対する各種コマンド実行 のコマンド入力用ダイアログ
+	/// オブジェクトに対する各種コマンド実行 のコマンド入力用ダイアログ
 	/// </summary>
 	[System.Runtime.InteropServices.ComVisible(false)]
 	public class CmdInputDialog : quickDBExplorer.QueryDialog
@@ -68,7 +68,7 @@ namespace quickDBExplorer
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(434, 18);
 			this.label1.TabIndex = 4;
-			this.label1.Text = "{0}をクエリ内に記載することで、選択しているテーブル名に実行時に変換されます";
+			this.label1.Text = "{0}をクエリ内に記載することで、選択しているオブジェクト名に実行時に変換されます";
 			// 
 			// label2
 			// 
@@ -86,7 +86,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.label2);
 			this.Name = "CmdInputDialog";
-			this.Text = "各種クエリ実行(テーブル引数)";
+			this.Text = "各種クエリ実行(オブジェクト引数)";
 			this.Controls.SetChildIndex(this.txtInput, 0);
 			this.Controls.SetChildIndex(this.btnGo, 0);
 			this.Controls.SetChildIndex(this.label2, 0);

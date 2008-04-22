@@ -93,7 +93,7 @@ namespace quickDBExplorer
 		void SetDatabase(string dbName);
 
 		/// <summary>
-		/// テーブル一覧のカラムヘッダの表示文字を取得する
+		/// オブジェクト一覧のカラムヘッダの表示文字を取得する
 		/// </summary>
 		/// <returns></returns>
 		string GetTableListColumnName();
@@ -118,7 +118,7 @@ namespace quickDBExplorer
 		/// <param name="isSynonym">シノニムを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="isDisplayFunction">Functionを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="isDisplaySP">ストアドプロシージャを表示させるか否か true: 表示する false: 表示させない</param>
-		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
+		/// <param name="ownerList">特定のOwnerのオブジェクトのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
 		string GetDisplayObjList(bool isDisplayTable, bool isDisplayView, bool isSynonym, bool isDisplayFunction, bool isDisplaySP, string ownerList);
 

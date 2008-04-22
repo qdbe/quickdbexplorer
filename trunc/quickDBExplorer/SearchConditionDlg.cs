@@ -138,7 +138,7 @@ namespace quickDBExplorer
 				{
 					return quickDBExplorer.SearchType.SearchContain;
 				}
-				else if( this.rdoContain.Checked == true )
+				else if( this.rdoStartWith.Checked == true )
 				{
 					return quickDBExplorer.SearchType.SearchStartWith;
 				}
@@ -215,7 +215,7 @@ namespace quickDBExplorer
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(430, 23);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "検索するフィールド名を指定してください。検索結果はクリップボードに転送されます。";
+			this.label1.Text = "検索する名前を指定してください。検索結果はクリップボードに転送されます。";
 			// 
 			// chkField
 			// 

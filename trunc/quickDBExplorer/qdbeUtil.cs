@@ -18,10 +18,10 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブル名を解析し、[owner]、[tablename]に分割する
+		/// オブジェクト名を解析し、[owner]、[tablename]に分割する
 		/// 基の名前は[]が付いていないことが前提
 		/// </summary>
-		/// <param name="tbname">テーブル名(owner.tablename形式)</param>
+		/// <param name="tbname">オブジェクト名(owner.tablename形式)</param>
 		/// <returns>[owner]と[tablename]に分割された文字配列</returns>
 		public static string[] SplitTbname(string tbname)
 		{
@@ -34,10 +34,10 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブル名を解析し、[owner].[tablename]形式に変更する
+		/// オブジェクト名を解析し、[owner].[tablename]形式に変更する
 		/// 基の名前は[]が付いていないことが前提
 		/// </summary>
-		/// <param name="tbname">テーブル名(owner.tablename形式)</param>
+		/// <param name="tbname">オブジェクト名(owner.tablename形式)</param>
 		/// <returns></returns>
 		public static string GetTbname(string tbname)
 		{
@@ -47,13 +47,13 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブル名を解析し、[owner].[tablename]形式に変更する。
-		/// その際、指定された文字列をテーブル名称に付加した結果を返す
+		/// オブジェクト名を解析し、[owner].[tablename]形式に変更する。
+		/// その際、指定された文字列をオブジェクト名称に付加した結果を返す
 		/// 基の名前は[]が付いていないことが前提
 		/// </summary>
-		/// <param name="tbname">テーブル名(owner.tablename形式)</param>
-		/// <param name="addstr">テーブル名に付加する文字列</param>
-		/// <returns>解析後のテーブル名([owner].[tabblname]形式)</returns>
+		/// <param name="tbname">オブジェクト名(owner.tablename形式)</param>
+		/// <param name="addstr">オブジェクト名に付加する文字列</param>
+		/// <returns>解析後のオブジェクト名([owner].[tabblname]形式)</returns>
 		public static string GetTbnameAdd(string tbname,string addstr)
 		{
 			string delimStr = ".";
@@ -64,7 +64,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 各種履歴情報への項目の追加を行う
 		/// </summary>
-		/// <param name="key">テーブル名称</param>
+		/// <param name="key">オブジェクト名称</param>
 		/// <param name="hvalue">追加する履歴項目</param>
 		/// <param name="tdata">追加する先の履歴情報</param>
 		static public void SetNewHistory(string key, string hvalue, TextHistoryDataSet tdata)
@@ -84,7 +84,7 @@ namespace quickDBExplorer
 				if( dr.KeyValue == key &&
 					dr.DataValue == hvalue )
 				{
-					// 同じテーブルに対し、既に同じ履歴が登録されているため、キーNOだけ新しくするため、
+					// 同じオブジェクトに対し、既に同じ履歴が登録されているため、キーNOだけ新しくするため、
 					// 過去のデータは一旦削除し新しく追加しなおす
 					dr.Delete();
 					continue;

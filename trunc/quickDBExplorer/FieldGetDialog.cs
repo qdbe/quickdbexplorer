@@ -24,11 +24,11 @@ namespace quickDBExplorer
 		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
-		/// テーブル名
+		/// オブジェクト名
 		/// </summary>
 		private string	pBaseTableName = "";
 		/// <summary>
-		/// テーブル名
+		/// オブジェクト名
 		/// </summary>
 		public string	BaseTableName
 		{
@@ -37,12 +37,12 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブルの修飾子(alias) 戻り値
+		/// オブジェクトの修飾子(alias) 戻り値
 		/// </summary>
 		private string pRetTableAccessor = "";
 
 		/// <summary>
-		/// テーブルの修飾子(alias) 戻り値
+		/// オブジェクトの修飾子(alias) 戻り値
 		/// </summary>
 		public string RetTableAccessor
 		{
@@ -266,7 +266,7 @@ namespace quickDBExplorer
 		private void cmbPattern_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			string []selstr = this.cmbPattern.SelectedItem.ToString().Split(new char[]{':'},3)[2].Split(new char[]{','},3);
-			// テーブル修飾子の指定
+			// オブジェクト修飾子の指定
 			switch( int.Parse(selstr[0],System.Globalization.CultureInfo.CurrentCulture) )
 			{
 				case 1:

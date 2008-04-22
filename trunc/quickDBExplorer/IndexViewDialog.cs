@@ -10,7 +10,7 @@ using System.Data.Common;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// 指定されたテーブルのINDEX情報の表示ダイアログ
+	/// 指定されたオブジェクトのINDEX情報の表示ダイアログ
 	/// </summary>
 	[System.Runtime.InteropServices.ComVisible(false)]
 	public class IndexViewDialog : System.Windows.Forms.Form
@@ -24,11 +24,11 @@ namespace quickDBExplorer
 		private System.ComponentModel.Container components = null;
 
 		/// <summary>
-		/// 表示するテーブル名称
+		/// 表示するオブジェクト名称
 		/// </summary>
 		private DBObjectInfo pDisplayObj;
 		/// <summary>
-		/// 表示するテーブル名称
+		/// 表示するオブジェクト名称
 		/// </summary>
 		public DBObjectInfo DisplayObj
 		{
@@ -147,12 +147,12 @@ namespace quickDBExplorer
 		#endregion
 
 		/// <summary>
-		/// INDEX情報を表示するテーブルを切り替える
+		/// INDEX情報を表示するオブジェクトを切り替える
 		/// </summary>
 		/// <param name="dboInfo">新規に表示するオブジェクト情報</param>
 		public void SetDisplayTable(DBObjectInfo dboInfo)
 		{
-			// 対象のオブジェクトがテーブルもしくはVIEWでない場合は何も表示しない
+			// 対象のオブジェクトがオブジェクトもしくはVIEWでない場合は何も表示しない
 			if( dboInfo == null || 
 				( dboInfo.RealObjType != "U" &&
 				dboInfo.RealObjType != "V" ) )

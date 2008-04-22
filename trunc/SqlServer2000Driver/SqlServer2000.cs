@@ -185,7 +185,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブル一覧のカラムヘッダの表示文字を取得する
+		/// オブジェクト一覧のカラムヘッダの表示文字を取得する
 		/// </summary>
 		/// <returns></returns>
 		public string GetTableListColumnName()
@@ -209,7 +209,7 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public string GetOwnerLabel2()
 		{
-			return "オーナー名・テーブル名";
+			return "オーナー名・オブジェクト名";
 		}
 
 		/// <summary>
@@ -220,7 +220,7 @@ namespace quickDBExplorer
 		/// <param name="isSynonym">シノニムを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="isDisplayFunction">Functionを表示させるか否か true: 表示する false: 表示させない</param>
 		/// <param name="isDisplaySP">ストアドプロシージャを表示させるか否か true: 表示する false: 表示させない</param>
-		/// <param name="ownerList">特定のOwnerのテーブルのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
+		/// <param name="ownerList">特定のOwnerのオブジェクトのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
 		/// <returns></returns>
 		public string GetDisplayObjList(bool isDisplayTable, bool isDisplayView, bool isSynonym, bool isDisplayFunction, bool isDisplaySP, string ownerList)
 		{

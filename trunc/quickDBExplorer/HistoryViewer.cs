@@ -24,7 +24,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private TextHistoryDataSet	TextHistoryDataSetDS = new TextHistoryDataSet();
 		/// <summary>
-		/// 対象テーブル名称
+		/// 対象オブジェクト名称
 		/// </summary>
 		private string targetTable = "";
 		/// <summary>
@@ -46,12 +46,12 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブル名称を表示するか否かの指定
+		/// オブジェクト名称を表示するか否かの指定
 		/// </summary>
 		private bool pIsShowTable = true;
 
 		/// <summary>
-		/// テーブル名称を表示するか否かの指定
+		/// オブジェクト名称を表示するか否かの指定
 		/// </summary>
 		public bool IsShowTable
 		{
@@ -63,7 +63,7 @@ namespace quickDBExplorer
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="hdata">履歴情報</param>
-		/// <param name="curTable">現在選択されているテーブル名称</param>
+		/// <param name="curTable">現在選択されているオブジェクト名称</param>
 		public HistoryViewer(TextHistoryDataSet hdata, string curTable)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
@@ -202,7 +202,7 @@ namespace quickDBExplorer
 			// 表示するカラムのセット
 			if( pIsShowTable == true )
 			{
-				this.historyList.Columns.Add("テーブル",120,HorizontalAlignment.Left);
+				this.historyList.Columns.Add("オブジェクト",120,HorizontalAlignment.Left);
 			}
 			this.historyList.Columns.Add("履歴",this.historyList.Width - 120 - 4,HorizontalAlignment.Left);
 
@@ -211,7 +211,7 @@ namespace quickDBExplorer
 			{
 				this.historyList.BeginUpdate();
 
-				// まずは、同じテーブル名のものを優先して表示する
+				// まずは、同じオブジェクト名のものを優先して表示する
 				DataRow []drl = this.TextHistoryDataSetDS.TextHistoryDataSets.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue = '{0}'",this.targetTable),
 					"KeyNo desc");
 				ListViewItem item ;
@@ -237,7 +237,7 @@ namespace quickDBExplorer
 					this.historyList.Items.Add(item);
 				}
 
-				// 次に違うテーブルのものを表示
+				// 次に違うオブジェクトのものを表示
 				drl = this.TextHistoryDataSetDS.TextHistoryDataSets.Select(string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue <> '{0}'",this.targetTable),
 					"KeyNo desc");
 				for( int i = 0 ; i < drl.Length; i++ )

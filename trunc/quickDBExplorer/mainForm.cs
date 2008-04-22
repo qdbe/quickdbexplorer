@@ -16,7 +16,7 @@ namespace quickDBExplorer
 {
 	/// <summary>
 	/// メインとなる画面
-	/// DBの選択、オーナーの選択、テーブルの選択、処理の選択などのメインとなる処理を全て実装している
+	/// DBの選択、オーナーの選択、オブジェクトの選択、処理の選択などのメインとなる処理を全て実装している
 	/// </summary>
 	[System.Runtime.InteropServices.ComVisible(false)]
 	public class MainForm : quickDBExplorerBaseForm
@@ -520,12 +520,12 @@ namespace quickDBExplorer
 			// 
 			// ColObjName
 			// 
-			this.ColObjName.Text = "Name";
+			this.ColObjName.Text = "名称";
 			this.ColObjName.Width = 190;
 			// 
 			// ColCreateDate
 			// 
-			this.ColCreateDate.Text = "ColCreateDate";
+			this.ColCreateDate.Text = "作成日";
 			this.ColCreateDate.Width = 130;
 			// 
 			// menuISQLW
@@ -601,9 +601,9 @@ namespace quickDBExplorer
 			// 
 			this.rdoSortOwnerTable.Location = new System.Drawing.Point(112, 16);
 			this.rdoSortOwnerTable.Name = "rdoSortOwnerTable";
-			this.rdoSortOwnerTable.Size = new System.Drawing.Size(88, 32);
+			this.rdoSortOwnerTable.Size = new System.Drawing.Size(96, 32);
 			this.rdoSortOwnerTable.TabIndex = 1;
-			this.rdoSortOwnerTable.Text = "オーナー名・テーブル名";
+			this.rdoSortOwnerTable.Text = "オーナー名・オブジェクト名";
 			// 
 			// rdoSortTable
 			// 
@@ -611,7 +611,7 @@ namespace quickDBExplorer
 			this.rdoSortTable.Name = "rdoSortTable";
 			this.rdoSortTable.Size = new System.Drawing.Size(96, 32);
 			this.rdoSortTable.TabIndex = 0;
-			this.rdoSortTable.Text = "テーブル名のみ";
+			this.rdoSortTable.Text = "オブジェクト名のみ";
 			this.rdoSortTable.CheckedChanged += new System.EventHandler(this.rdoSortTable_CheckedChanged);
 			// 
 			// txtWhere
@@ -758,7 +758,7 @@ namespace quickDBExplorer
 			// readCsvDQDbGridMenu
 			// 
 			this.readCsvDQDbGridMenu.Index = 5;
-			this.readCsvDQDbGridMenu.Text = "データ取込(CSV)(\\\"付き)";
+			this.readCsvDQDbGridMenu.Text = "データ取込(CSV)(\"付き)";
 			this.readCsvDQDbGridMenu.Click += new System.EventHandler(this.readCsvDQDbGridMenu_Click);
 			// 
 			// readTsvDbGridMenu
@@ -770,7 +770,7 @@ namespace quickDBExplorer
 			// readTsvDQDbGridMenu
 			// 
 			this.readTsvDQDbGridMenu.Index = 7;
-			this.readTsvDQDbGridMenu.Text = "データ取込(TAB)(\\\"付き)";
+			this.readTsvDQDbGridMenu.Text = "データ取込(TAB)(\"付き)";
 			this.readTsvDQDbGridMenu.Click += new System.EventHandler(this.readTsvDQDbGridMenu_Click);
 			// 
 			// chkDispData
@@ -1154,7 +1154,7 @@ namespace quickDBExplorer
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(152, 16);
 			this.label10.TabIndex = 20;
-			this.label10.Text = "Table/View(&V)";
+			this.label10.Text = "オブジェクト(&V)";
 			// 
 			// cmbHistory
 			// 
@@ -1184,7 +1184,7 @@ namespace quickDBExplorer
 			this.txtAlias.Size = new System.Drawing.Size(144, 19);
 			this.txtAlias.TabIndex = 17;
 			this.txtAlias.Text = "";
-			this.toolTip4.SetToolTip(this.txtAlias, "選択したテーブルに別名(Alias)をつけることができます");
+			this.toolTip4.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
 			this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
 			this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
 			// 
@@ -1331,9 +1331,9 @@ namespace quickDBExplorer
 		public	void	InitPopupMenu()
 		{
 			ArrayList	menuAr = new ArrayList();
-			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー", new EventHandler(this.menuTableCopy_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,null,"テーブル名コピー カンマ付き", new EventHandler(this.menuTableCopyCsv_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,null,"指定テーブル選択", new EventHandler(this.menuTableSelect_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,null,"オブジェクト名コピー", new EventHandler(this.menuTableCopy_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,null,"オブジェクト名コピー カンマ付き", new EventHandler(this.menuTableCopyCsv_Click) ) );
+			menuAr.Add(new qdbeMenuItem(false,true,null,"指定オブジェクト選択", new EventHandler(this.menuTableSelect_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,null,"オブジェクト情報再読込", new EventHandler(this.TableInfoUpdate) ) );
 			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成", new EventHandler(this.InsertMake) ) );
@@ -1635,7 +1635,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブル一覧のヘッダカラムクリック時処理
+		/// オブジェクト一覧のヘッダカラムクリック時処理
 		/// </summary>
 		/// <param name="sender">-</param>
 		/// <param name="e">-</param>
@@ -1828,14 +1828,14 @@ namespace quickDBExplorer
 			{
 				svdata.LastDatabase = (string)this.dbList.SelectedItem;
 			}
-			// テーブルの選択履歴をクリア
+			// オブジェクトの選択履歴をクリア
 			this.selectedTables.Clear();
 			this.cmbHistory.DataSource = null;
 			this.cmbHistory.DataSource = this.selectedTables;
 			this.cmbHistory.Refresh();
 			
 
-			// 対象となるテーブル一覧の表示
+			// 対象となるオブジェクト一覧の表示
 			DispObjectList();
 			// 対象となる owner/role/schema の表示
 			DispListOwner();
@@ -1998,7 +1998,7 @@ namespace quickDBExplorer
 				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtWhere.Text,this.whereHistory);
 				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtSort.Text,this.sortHistory);
 				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtAlias.Text,this.aliasHistory);
-				// データ表示部に、該当テーブルのデータを表示する
+				// データ表示部に、該当オブジェクトのデータを表示する
 				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
@@ -2029,7 +2029,7 @@ namespace quickDBExplorer
 
 		private void rdoDispView_CheckedChanged(object sender, System.EventArgs e)
 		{
-			// テーブルの選択履歴をクリア
+			// オブジェクトの選択履歴をクリア
 			this.selectedTables.Clear();
 			this.cmbHistory.DataSource = null;
 			this.cmbHistory.DataSource = this.selectedTables;
@@ -2064,7 +2064,7 @@ namespace quickDBExplorer
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
@@ -2086,7 +2086,7 @@ namespace quickDBExplorer
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
@@ -2101,7 +2101,7 @@ namespace quickDBExplorer
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				tbname = this.objectList.GetSelectObject(0).FormalName;
 				DispData(this.objectList.GetSelectObject(0));
 				// 履歴に現在の値を記録 TODO
@@ -2122,7 +2122,7 @@ namespace quickDBExplorer
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				tbname = this.objectList.GetSelectObject(0).FormalName;
 				DispData(this.objectList.GetSelectObject(0));
 				// 履歴に現在の値を記録 TODO
@@ -2138,7 +2138,7 @@ namespace quickDBExplorer
 
 		private void rdoDispSysUser_CheckedChanged(object sender, System.EventArgs e)
 		{
-			// テーブルの選択履歴をクリア
+			// オブジェクトの選択履歴をクリア
 			this.selectedTables.Clear();
 			this.cmbHistory.DataSource = null;
 			this.cmbHistory.DataSource = this.selectedTables;
@@ -2173,7 +2173,7 @@ namespace quickDBExplorer
 					saveownerlist.Add(itm);
 				}
 			}
-			// テーブルの選択履歴をクリア
+			// オブジェクトの選択履歴をクリア
 			this.selectedTables.Clear();
 			this.cmbHistory.DataSource = null;
 			this.cmbHistory.DataSource = this.selectedTables;
@@ -2185,7 +2185,7 @@ namespace quickDBExplorer
 
 		private void rdoNotDispSysUser_CheckedChanged(object sender, System.EventArgs e)
 		{
-			// テーブルの選択履歴をクリア
+			// オブジェクトの選択履歴をクリア
 			this.selectedTables.Clear();
 			this.cmbHistory.DataSource = null;
 			this.cmbHistory.DataSource = this.selectedTables;
@@ -2339,7 +2339,7 @@ namespace quickDBExplorer
 					MessageBox.Show("本当に更新してよろしいですか","",MessageBoxButtons.YesNo) == DialogResult.Yes
 					)
 				{
-					// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+					// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 					DBObjectInfo	dboInfo = this.objectList.GetSelectObject(0);
 					string stSql;
 					stSql = "select ";
@@ -2494,7 +2494,7 @@ namespace quickDBExplorer
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				DispData(this.objectList.GetSelectObject(0));
 			}
 			else
@@ -2509,7 +2509,7 @@ namespace quickDBExplorer
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				DispData(this.objectList.GetSelectObject(0),true);
 				this.btnTmpAllDisp.ForeColor = Color.WhiteSmoke;
 				this.btnTmpAllDisp.BackColor = Color.Navy;
@@ -2569,7 +2569,7 @@ namespace quickDBExplorer
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当テーブルのデータを表示する
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				tbname = this.objectList.GetSelectOneObjectFormalName();
 				// 履歴に現在の値を記録 TODO
 				qdbeUtil.SetNewHistory(tbname,senderText.Text,this.aliasHistory);
@@ -2784,7 +2784,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 指定されたテーブルのリストを元に、テーブルの一覧の選択状態を変更する
+		/// 指定されたオブジェクトのリストを元に、オブジェクトの一覧の選択状態を変更する
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -2794,7 +2794,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 指定されたテーブルのリストを元に、テーブルの一覧の選択状態を変更する
+		/// 指定されたオブジェクトのリストを元に、オブジェクトの一覧の選択状態を変更する
 		/// </summary>
 		/// <param name="tableList">初期値とセットする一覧値</param>
 		private void tableSelect(string tableList)
@@ -2974,7 +2974,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 選択されたテーブルに関する依存関係を出力する
+		/// 選択されたオブジェクトに関する依存関係を出力する
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3000,7 +3000,7 @@ namespace quickDBExplorer
 				if( this.rdoClipboard.Checked == true) 
 				{
 					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
-					wr.Write("テーブル名");
+					wr.Write("オブジェクト名");
 					wr.Write("\t依存関係先名称");
 					wr.Write("\t種類");
 					wr.Write("\t更新あり");
@@ -3014,7 +3014,7 @@ namespace quickDBExplorer
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
-					wr.Write("テーブル名");
+					wr.Write("オブジェクト名");
 					wr.Write("\t依存関係先名称");
 					wr.Write("\t種類");
 					wr.Write("\t更新あり");
@@ -3033,7 +3033,7 @@ namespace quickDBExplorer
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
-						wr.Write("テーブル名");
+						wr.Write("オブジェクト名");
 						wr.Write("\t依存関係先名称");
 						wr.Write("\t種類");
 						wr.Write("\t更新あり");
@@ -3064,7 +3064,7 @@ namespace quickDBExplorer
 					{
 						foreach(DataRow dr in ds.Tables[dboInfo.ToString()].Rows)
 						{
-							// テーブル名
+							// オブジェクト名
 							wr.Write(dboInfo.FormalName);
 							foreach( DataColumn col in ds.Tables[dboInfo.ToString()].Columns)
 							{
@@ -3101,7 +3101,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 選択されたテーブルに関するデータ件数を出力する
+		/// 選択されたオブジェクトに関するデータ件数を出力する
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3118,7 +3118,7 @@ namespace quickDBExplorer
 				this.txtWhere.Text != null &&
 				this.txtWhere.Text.Trim() != "" )
 			{
-				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+				if( MessageBox.Show("複数オブジェクトに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 					== System.Windows.Forms.DialogResult.No )
 				{
 					return;
@@ -3144,7 +3144,7 @@ namespace quickDBExplorer
 				if( this.rdoClipboard.Checked == true) 
 				{
 					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
-					wr.WriteLine("テーブル名,データ件数");
+					wr.WriteLine("オブジェクト名,データ件数");
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
@@ -3152,7 +3152,7 @@ namespace quickDBExplorer
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
-					wr.WriteLine("テーブル名,データ件数");
+					wr.WriteLine("オブジェクト名,データ件数");
 				}
 
 
@@ -3166,7 +3166,7 @@ namespace quickDBExplorer
 						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						wr.WriteLine("テーブル名,データ件数");
+						wr.WriteLine("オブジェクト名,データ件数");
 					}
 					trow = 0;
 					string stSql;
@@ -3320,7 +3320,7 @@ namespace quickDBExplorer
 				this.txtWhere.Text != null &&
 				this.txtWhere.Text.Trim() != "" )
 			{
-				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+				if( MessageBox.Show("複数オブジェクトに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 					== System.Windows.Forms.DialogResult.No )
 				{
 					return;
@@ -3331,7 +3331,7 @@ namespace quickDBExplorer
 
 			int			rowcount = 0;
 			int			trow = 0;
-			rcdt.Columns.Add("テーブル名");
+			rcdt.Columns.Add("オブジェクト名");
 			rcdt.Columns.Add("データ件数",typeof(int));
 
 			try
@@ -3614,7 +3614,7 @@ namespace quickDBExplorer
 						ts.GridColumnStyles.Add(cs);
 					}
 
-					//テーブルスタイルをDataGridに追加する
+					//オブジェクトスタイルをDataGridに追加する
 					this.dbGrid.TableStyles.Clear();
 					this.dbGrid.TableStyles.Add(ts);
 
@@ -3681,7 +3681,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 選択されたテーブルの統計情報を更新する
+		/// 選択されたオブジェクトの統計情報を更新する
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -3738,7 +3738,7 @@ namespace quickDBExplorer
 
 		private void menuDoQuery_Click(object sender, System.EventArgs e)
 		{
-			// テーブル名称を引数として、各種クエリの実行を可能にする
+			// オブジェクト名称を引数として、各種クエリの実行を可能にする
 
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
@@ -4208,7 +4208,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// テーブル一覧の表示
+		/// オブジェクト一覧の表示
 		/// </summary>
 		private void DispObjectList()
 		{
@@ -4225,7 +4225,7 @@ namespace quickDBExplorer
 				}
 				this.SqlDriver.SetDatabase((String)this.dbList.SelectedItem);
 				
-				// listbox2 にテーブル一覧を表示
+				// listbox2 にオブジェクト一覧を表示
 
 				string sortkey;
 				if( this.rdoSortTable.Checked == true )
@@ -4240,7 +4240,7 @@ namespace quickDBExplorer
 				string ownerlist = "";
 				if( this.ownerListbox.SelectedItem != null )
 				{
-					// 選択があれば、そのOWNERのみのテーブルを表示する
+					// 選択があれば、そのOWNERのみのオブジェクトを表示する
 					foreach( String owname in this.ownerListbox.SelectedItems )
 					{
 						if( owname == "全て" )
@@ -4356,7 +4356,7 @@ namespace quickDBExplorer
 					this.txtWhere.Text != null &&
 					this.txtWhere.Text.Trim() != "" )
 				{
-					if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+					if( MessageBox.Show("複数オブジェクトに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 						== System.Windows.Forms.DialogResult.No )
 					{
 						return;
@@ -4366,7 +4366,7 @@ namespace quickDBExplorer
 					this.txtSort.Text != null &&
 					this.txtSort.Text.Trim() != "" )
 				{
-					if( MessageBox.Show("複数テーブルに同一の order by 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+					if( MessageBox.Show("複数オブジェクトに同一の order by 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 						== System.Windows.Forms.DialogResult.No )
 					{
 						return;
@@ -4724,7 +4724,7 @@ namespace quickDBExplorer
 				this.txtWhere.Text != null &&
 				this.txtWhere.Text.Trim() != "" )
 			{
-				if( MessageBox.Show("複数テーブルに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+				if( MessageBox.Show("複数オブジェクトに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 					== System.Windows.Forms.DialogResult.No )
 				{
 					return;
@@ -4734,7 +4734,7 @@ namespace quickDBExplorer
 				this.txtSort.Text != null &&
 				this.txtSort.Text.Trim() != "" )
 			{
-				if( MessageBox.Show("複数テーブルに同一の order by 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
+				if( MessageBox.Show("複数オブジェクトに同一の order by 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
 					== System.Windows.Forms.DialogResult.No )
 				{
 					return;
@@ -4938,7 +4938,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 現在の画面上のDB、Owner から、テーブル一覧を表示する
+		/// 現在の画面上のDB、Owner から、オブジェクト一覧を表示する
 		/// </summary>
 		private void CreDDL(bool bDrop, bool useParentheses)
 		{	
@@ -5035,7 +5035,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 指定されたテーブルの情報を表示する
+		/// 指定されたオブジェクトの情報を表示する
 		/// </summary>
 		protected void DispData(DBObjectInfo dboInfo)
 		{
@@ -5043,7 +5043,7 @@ namespace quickDBExplorer
 		}
 		
 		/// <summary>
-		/// 指定されたテーブルの情報を表示する
+		/// 指定されたオブジェクトの情報を表示する
 		/// </summary>
 		/// <param name="dboInfo">表示するオブジェクトの情報</param>
 		/// <param name="isAllDisp">全て表示するか否かの指定
@@ -5068,7 +5068,7 @@ namespace quickDBExplorer
 					}
 				}
 
-				// テーブル名が指定されていない場合は何も表示せず、グリッドを隠す
+				// オブジェクト名が指定されていない場合は何も表示せず、グリッドを隠す
 				if( dboInfo == null )
 				{
 					this.dbGrid.Hide();
@@ -5280,7 +5280,7 @@ namespace quickDBExplorer
 		{
 			if( this.objectList.SelectedItems.Count != 1 )
 			{
-				MessageBox.Show("対象テーブルは単独で指定してください");
+				MessageBox.Show("対象オブジェクトは単独で指定してください");
 				return;
 			}
 
@@ -5601,7 +5601,7 @@ namespace quickDBExplorer
 					{
 						if( ccol.DataType == typeof(System.Byte[]) )
 						{
-							MessageBox.Show( "バイナリデータがあるテーブルは指定できません:列" +  ccol.ColumnName );
+							MessageBox.Show( "バイナリデータがあるオブジェクトは指定できません:列" +  ccol.ColumnName );
 							isSetAll = false;
 							break;
 						}
@@ -6146,9 +6146,9 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// from 句で利用するためのテーブル修飾子を取得する
+		/// from 句で利用するためのオブジェクト修飾子を取得する
 		/// </summary>
-		/// <returns>テーブル修飾子</returns>
+		/// <returns>オブジェクト修飾子</returns>
 		protected string GetAlias()
 		{
 			return this.txtAlias.Text;
@@ -6240,7 +6240,7 @@ namespace quickDBExplorer
 		}
 		
 		/// <summary>
-		/// テーブルに対する処理用情報をセットする
+		/// オブジェクトに対する処理用情報をセットする
 		/// </summary>
 		/// <param name="tbname"></param>
 		/// <returns></returns>
@@ -6383,11 +6383,11 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 選択されたテーブルの一覧
+		/// 選択されたオブジェクトの一覧
 		/// </summary>
 		private ArrayList	pTableName;
 		/// <summary>
-		/// 選択されたテーブルの一覧
+		/// 選択されたオブジェクトの一覧
 		/// </summary>
 		public ArrayList	Tbname
 		{

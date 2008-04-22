@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// テーブル指定ダイアログ
+	/// オブジェクト指定ダイアログ
 	/// オブジェクト一覧から特定のオブジェクトを選択する 入力用ダイアログ
 	/// </summary>
 	[System.Runtime.InteropServices.ComVisible(false)]
@@ -117,6 +117,7 @@ namespace quickDBExplorer
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOk);
 			this.Name = "TableSelectDialog";
+			this.Text = "指定オブジェクト選択";
 			this.Load += new System.EventHandler(this.TableSelectDialog_Load);
 			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.Controls.SetChildIndex(this.btnOk, 0);

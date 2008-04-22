@@ -237,7 +237,7 @@ namespace quickDBExplorer
 
 		private	ArrayList	fieldInfo = null;
 		/// <summary>
-		/// テーブルのフィールド情報をキャッシュして保持する
+		/// オブジェクトのフィールド情報をキャッシュして保持する
 		/// フィールド情報のコレクションを管理する
 		/// </summary>
 		public	ArrayList	FieldInfo
@@ -318,8 +318,8 @@ namespace quickDBExplorer
 		/// <summary>
 		/// Alias が指定されていた場合に、Alias 付きのオブジェクト正式名称を返す
 		/// </summary>
-		/// <param name="alias">テーブル修飾子</param>
-		/// <returns>解析後のテーブル名([owner].[tabblname] alias 形式)</returns>
+		/// <param name="alias">オブジェクト修飾子</param>
+		/// <returns>解析後のオブジェクト名([owner].[tabblname] alias 形式)</returns>
 		public string GetAliasName(string alias)
 		{
 			string retstr;

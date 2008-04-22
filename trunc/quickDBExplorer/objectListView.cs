@@ -67,7 +67,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 単一選択されているテーブル名を取得する([]なし)
+		/// 単一選択されているオブジェクト名を取得する([]なし)
 		/// </summary>
 		/// <returns></returns>
 		public string GetSelectOneObjectName()
@@ -80,7 +80,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 単一選択されているテーブル名を取得する([]あり)
+		/// 単一選択されているオブジェクト名を取得する([]あり)
 		/// </summary>
 		/// <returns></returns>
 		public string GetSelectOneObjectFormalName()
