@@ -2444,26 +2444,28 @@ namespace quickDBExplorer
 			}
 
 			int row=0;
-			int yDelta = dbGrid.GetCellBounds(row, 0).Height + 1;
-			int y = dbGrid.GetCellBounds(row, 0).Top + 2;
-			if( y < yDelta )
-			{
-				// 複数行がスクロールで隠れているはずなので、その行数分をスキップする
-				while( y < yDelta )
-				{
-					y += yDelta;
-					row ++;
-				}
-			}
+			int yDelta = 0;
+
+			int headerHeight = this.dbGrid.PreferredRowHeight + 3;
 
 			CurrencyManager cm = (CurrencyManager) this.BindingContext[dbGrid.DataSource, dbGrid.DataMember];
-			while((y <= dbGrid.Height) && (row < cm.Count))
+			int maxCount = this.dbGrid.VisibleRowCount;
+			int dispRow = 0;
+			Rectangle rect = Rectangle.Empty;
+			while(row < cm.Count && yDelta < this.dbGrid.Height)
 			{
+				rect = dbGrid.GetCellBounds(row, 0);
+				if( ( rect.Top + 1 ) <= headerHeight )
+				{
+					row++;
+					continue;
+				}
 				//get & draw the header text...
+				yDelta = dbGrid.GetCellBounds(row, 0).Top;
 				string text = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}", row+1);
-				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 10, y);
-				y += yDelta;
+				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 10, yDelta+2);
 				row++;
+				dispRow++;
 			}
 		}
 
