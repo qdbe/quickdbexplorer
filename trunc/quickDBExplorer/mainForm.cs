@@ -5651,7 +5651,7 @@ namespace quickDBExplorer
 							}
 						}
 						// {"System.Int32"}
-						if( col.DataType == typeof(System.Int32) )
+						else if( col.DataType == typeof(System.Int32) )
 						{
 							try
 							{
@@ -5672,7 +5672,7 @@ namespace quickDBExplorer
 							}
 						}
 						// {"System.Int64"}
-						if( col.DataType == typeof(System.Int64) )
+						else if( col.DataType == typeof(System.Int64) )
 						{
 							try
 							{
@@ -5693,7 +5693,7 @@ namespace quickDBExplorer
 							}
 						}
 						// {"System.String"}
-						if( col.DataType == typeof(System.String) )
+						else if( col.DataType == typeof(System.String) )
 						{
 							if( col.MaxLength < ar[col.Ordinal].ToString().Length )
 							{
@@ -5704,7 +5704,7 @@ namespace quickDBExplorer
 							dr[col.ColumnName] = ar[col.Ordinal];
 						}
 						// {"System.Boolean"}
-						if( col.DataType == typeof(System.Boolean) )
+						else if( col.DataType == typeof(System.Boolean) )
 						{
 							try
 							{
@@ -5718,7 +5718,7 @@ namespace quickDBExplorer
 							}
 						}
 						// {"System.DateTime"}
-						if( col.DataType == typeof(System.DateTime) )
+						else if( col.DataType == typeof(System.DateTime) )
 						{
 							try
 							{
@@ -5738,8 +5738,29 @@ namespace quickDBExplorer
 								break;
 							}
 						}
-						// {"System.Decimal"}
-						if( col.DataType == typeof(System.Decimal) )
+						// SQL SERVER 2008 の time 型の場合、ここにくるはず
+						else if( col.DataType == typeof(System.TimeSpan) )
+						{
+							try
+							{
+								if( ar[col.Ordinal].ToString() == "" )
+								{
+									dr[col.ColumnName] = DBNull.Value;
+								}
+								else
+								{
+									dr[col.ColumnName] = TimeSpan.Parse(ar[col.Ordinal].ToString());
+								}
+							}
+							catch
+							{
+								MessageBox.Show("項目 " + col.ColumnName + "には DateTimeを表す値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
+								isSetAll = false;
+								break;
+							}
+						}
+							// {"System.Decimal"}
+						else if( col.DataType == typeof(System.Decimal) )
 						{
 							try
 							{
@@ -5760,7 +5781,7 @@ namespace quickDBExplorer
 							}
 						}
 						// {"System.Double"}
-						if( col.DataType == typeof(System.Double) )
+						else if( col.DataType == typeof(System.Double) )
 						{
 							try
 							{
@@ -5781,7 +5802,7 @@ namespace quickDBExplorer
 							}
 						}
 						// {"System.Single"}
-						if( col.DataType == typeof(System.Single) )
+						else if( col.DataType == typeof(System.Single) )
 						{
 							try
 							{
@@ -5802,7 +5823,7 @@ namespace quickDBExplorer
 							}
 						}
 						//{"System.Object"}
-						if( col.DataType == typeof(System.Object) )
+						else if( col.DataType == typeof(System.Object) )
 						{
 							try
 							{
@@ -5816,7 +5837,7 @@ namespace quickDBExplorer
 							}
 						}
 						//{"System.Byte"}	
-						if( col.DataType == typeof(System.Byte) )
+						else if( col.DataType == typeof(System.Byte) )
 						{
 							try
 							{
@@ -5830,7 +5851,7 @@ namespace quickDBExplorer
 							}
 						}
 						//{"System.Guid"}
-						if( col.DataType == typeof(System.Guid) )
+						else if( col.DataType == typeof(System.Guid) )
 						{
 							try
 							{
@@ -5842,6 +5863,12 @@ namespace quickDBExplorer
 								isSetAll = false;
 								break;
 							}
+						}
+						else 
+						{
+							// 想定外の型の場合、文字列扱いにする
+							// 桁数の制限もなにもわからないので、チェックなし
+							dr[col.ColumnName] = ar[col.Ordinal];
 						}
 					}
 					if( isSetAll == true )
@@ -5941,30 +5968,6 @@ namespace quickDBExplorer
 
 		private string ConvData(IDataReader dr, int i, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
 		{
-			//
-			//aaa  bigint  NOT NULL PRIMARY KEY,
-			//bbb  binary(50)  NULL,
-			//ccc  datetime  NULL,
-			//ddd  decimal(18,0)  NULL,
-			//eee  float  NULL,
-			//fff  image  NULL,
-			//ggg  int  NULL,
-			//hhh  money  NULL,
-			//iii  nchar(10)  NULL,
-			//jjj  ntext  NULL,
-			//kkk  numeric(18,0)  NULL,
-			//lll  nvarchar(50)  NULL,
-			//mmm  real  NULL,
-			//nnn  smalldatetime  NULL,
-			//ooo  smallint  NULL,
-			//ppp  smallmoney  NULL,
-			//qqq  sql_variant  NULL,
-			//rrr  text  NULL,
-			//sss  timestamp  NULL,
-			//ttt  tinyint  NULL,
-			//uuu  uniqueidentifier  NULL,
-			//vvv  varbinary(50)  NULL,
-			//www  varchar(50)  NULL
 			string fldtypename = dr.GetDataTypeName(i);
 			if( dr.IsDBNull(i) )
 			{
@@ -6013,7 +6016,11 @@ namespace quickDBExplorer
 				}
 			}
 			else if( fldtypename.Equals("datetime") ||
-				fldtypename.Equals("smalldatetime"))
+				fldtypename.Equals("smalldatetime") || 
+				fldtypename.Equals("time") || 
+				fldtypename.Equals("date") || 
+				fldtypename.Equals("datetime2") || 
+				fldtypename.Equals("datetimeoffset") )
 			{
 				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", dr.GetDateTime(i).ToString(System.Globalization.CultureInfo.CurrentCulture), addstr );
 			}
