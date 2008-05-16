@@ -2452,6 +2452,72 @@ namespace quickDBExplorer
 			int maxCount = this.dbGrid.VisibleRowCount;
 			int dispRow = 0;
 			Rectangle rect = Rectangle.Empty;
+
+
+			int firstCheckHeight = this.dbGrid.PreferredRowHeight * 2;
+			int firstCheckCol = this.dbGrid.RowHeaderWidth + 3;
+
+			DataGrid.HitTestInfo hinfo = null;
+			bool isFound = false;
+			while( firstCheckHeight > 0 && isFound == false)
+			{
+				hinfo = this.dbGrid.HitTest(firstCheckCol,firstCheckHeight);
+				switch( hinfo.Type )
+				{
+					case(System.Windows.Forms.DataGrid.HitTestType.Cell):
+						isFound = true;
+						break;
+       
+					case(System.Windows.Forms.DataGrid.HitTestType.Caption):
+						break;
+       
+					case(System.Windows.Forms.DataGrid.HitTestType.ColumnHeader):
+						firstCheckHeight++;
+						break;
+          
+					case(System.Windows.Forms.DataGrid.HitTestType.ColumnResize):
+						firstCheckHeight++;
+						break;
+          
+					case(System.Windows.Forms.DataGrid.HitTestType.ParentRows):
+						isFound = true;
+						break;
+          
+					case(System.Windows.Forms.DataGrid.HitTestType.RowHeader):
+						firstCheckHeight++;
+						break;
+          
+					case(System.Windows.Forms.DataGrid.HitTestType.RowResize):
+						firstCheckHeight++;
+						break;
+          
+					case(System.Windows.Forms.DataGrid.HitTestType.None):
+						firstCheckHeight++;
+						break;
+
+					default:
+						break;
+				}
+			}
+
+			// 最初に表示される可能性のある行を探し出す
+			row = hinfo.Row;
+			if( row < 0 )
+			{
+				row = 0;
+			}
+			else
+			{
+				for(;row > 0; row-- )
+				{
+					rect = dbGrid.GetCellBounds(row, 0);
+					if( rect.Top < 0 )
+					{
+						break;
+					}
+				}
+			}
+
 			while(row < cm.Count && yDelta < this.dbGrid.Height)
 			{
 				rect = dbGrid.GetCellBounds(row, 0);
