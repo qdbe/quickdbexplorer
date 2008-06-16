@@ -5579,6 +5579,7 @@ namespace quickDBExplorer
 			bool isSetAll = true;
 			int linecount = 0;
 			ArrayList drAr = new ArrayList();
+			bool isSkipFirstLine = false;
 
 			try
 			{
@@ -5596,6 +5597,13 @@ namespace quickDBExplorer
 				}
 				ArrayList ar = new ArrayList();
 
+				if( MessageBox.Show("先頭行は見出しですか?","確認",System.Windows.Forms.MessageBoxButtons.YesNo) ==
+					DialogResult.Yes)
+				{
+					// 一行読み飛ばし
+					isSkipFirstLine = true;
+				}
+
 				for(;;)
 				{
 					readstr = wr.ReadLine();
@@ -5608,10 +5616,20 @@ namespace quickDBExplorer
 					ar.Clear();
 					if( !isUseDQ )
 					{
+						if( linecount == 1 && isSkipFirstLine == true )
+						{
+							// 先頭行は読み飛ばし
+							continue;
+						}
 						ar.AddRange(firstsplit);
 					}
 					else
 					{
+						if( linecount == 1 && isSkipFirstLine == true )
+						{
+							// 先頭行は読み飛ばし
+							continue;
+						}
 						// ダブルクォートが指定されている為、文字の途中で切れている可能性がある
 						string addstr = "";
 						for( int j = 0; j < firstsplit.Length; j++ )
