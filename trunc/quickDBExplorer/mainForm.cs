@@ -304,6 +304,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem readCsvDQDbGridMenu;
 		private System.Windows.Forms.MenuItem readTsvDQDbGridMenu;
 		private System.Windows.Forms.MenuItem copySelectedDbGridMenu;
+		private System.Windows.Forms.MenuItem menuFieldMakeWhere;
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
 
 		/// <summary>
@@ -457,6 +458,7 @@ namespace quickDBExplorer
 			this.label11 = new System.Windows.Forms.Label();
 			this.txtAlias = new quickDBExplorer.quickDBExplorerTextBox();
 			this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
+			this.menuFieldMakeWhere = new System.Windows.Forms.MenuItem();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -948,7 +950,8 @@ namespace quickDBExplorer
 																						   this.fldmenuCopyNoCRLF,
 																						   this.fldmenuCopyNoComma,
 																						   this.fldmenuCopyNoCRLFNoComma,
-																						   this.menuFieldAliasCopy});
+																						   this.menuFieldAliasCopy,
+																						   this.menuFieldMakeWhere});
 			// 
 			// fldmenuCopy
 			// 
@@ -1187,6 +1190,12 @@ namespace quickDBExplorer
 			this.toolTip4.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
 			this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
 			this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
+			// 
+			// menuFieldMakeWhere
+			// 
+			this.menuFieldMakeWhere.Index = 5;
+			this.menuFieldMakeWhere.Text = "where 句生成";
+			this.menuFieldMakeWhere.Click += new System.EventHandler(this.menuFieldMakeWhere_Click);
 			// 
 			// MainForm
 			// 
@@ -6427,6 +6436,63 @@ namespace quickDBExplorer
 				}
 			}
 
+		}
+
+		/// <summary>
+		/// フィールドリストから where 句を生成する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void menuFieldMakeWhere_Click(object sender, System.EventArgs e)
+		{
+			// フィールドリストから where 句を生成する
+			// 別ダイアログを表示してエイリアス等の指定を可能にする
+			if( this.objectList.SelectedItems.Count != 1 )
+			{
+				return;
+			}
+
+			FieldGetDialog dlg = new FieldGetDialog();
+			dlg.BaseTableName = this.objectList.GetSelectOneObjectName();
+			if( dlg.ShowDialog(this) != DialogResult.OK )
+			{
+				return;
+			}
+			StringBuilder str = new StringBuilder();
+			for( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
+			{
+				if( i != 0 )
+				{
+					if( dlg.RetCrlf == true )
+					{
+						if( dlg.RetComma ) 
+						{
+							str.Append(",\r\n");
+						}
+						else
+						{
+							str.Append("\r\n");
+						}
+					}
+					else
+					{
+						if( dlg.RetComma )
+						{
+							str.Append(",");
+						}
+						else
+						{
+							str.Append("\t");
+						}
+					}
+				}
+				str.Append(dlg.RetTableAccessor+".");
+				str.Append((string)this.fieldListbox.SelectedItems[i]);
+			}
+			if( str.Length != 0 )
+			{
+				Clipboard.SetDataObject(str.ToString(),true );
+			}
 		}
 
 	}
