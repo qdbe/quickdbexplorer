@@ -49,11 +49,11 @@ namespace quickDBExplorer
 		{
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.DHistory)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtInput
 			// 
+			this.txtInput.IsCTRLDelete = true;
 			this.txtInput.Location = new System.Drawing.Point(16, 50);
 			this.txtInput.Name = "txtInput";
 			this.txtInput.Size = new System.Drawing.Size(444, 206);
@@ -61,6 +61,18 @@ namespace quickDBExplorer
 			// btnGo
 			// 
 			this.btnGo.Name = "btnGo";
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Name = "btnCancel";
+			// 
+			// chkReturn
+			// 
+			this.chkReturn.Name = "chkReturn";
+			// 
+			// btnHistory
+			// 
+			this.btnHistory.Name = "btnHistory";
 			// 
 			// label1
 			// 
@@ -87,11 +99,13 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label2);
 			this.Name = "CmdInputDialog";
 			this.Text = "各種クエリ実行(オブジェクト引数)";
+			this.Controls.SetChildIndex(this.btnCancel, 0);
+			this.Controls.SetChildIndex(this.chkReturn, 0);
+			this.Controls.SetChildIndex(this.btnHistory, 0);
 			this.Controls.SetChildIndex(this.txtInput, 0);
 			this.Controls.SetChildIndex(this.btnGo, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
-			((System.ComponentModel.ISupportInitialize)(this.DHistory)).EndInit();
 			this.ResumeLayout(false);
 
 		}

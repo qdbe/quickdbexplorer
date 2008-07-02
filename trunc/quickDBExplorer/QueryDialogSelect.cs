@@ -47,17 +47,21 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			((System.ComponentModel.ISupportInitialize)(this.DHistory)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtInput
 			// 
+			this.txtInput.IsCTRLDelete = true;
 			this.txtInput.Name = "txtInput";
 			this.txtInput.Size = new System.Drawing.Size(444, 256);
 			// 
 			// btnGo
 			// 
 			this.btnGo.Name = "btnGo";
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Name = "btnCancel";
 			// 
 			// chkReturn
 			// 
@@ -67,12 +71,15 @@ namespace quickDBExplorer
 			this.chkReturn.Size = new System.Drawing.Size(96, 16);
 			this.chkReturn.Visible = false;
 			// 
+			// btnHistory
+			// 
+			this.btnHistory.Name = "btnHistory";
+			// 
 			// QueryDialogSelect
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(480, 325);
 			this.Name = "QueryDialogSelect";
-			((System.ComponentModel.ISupportInitialize)(this.DHistory)).EndInit();
 			this.ResumeLayout(false);
 
 		}

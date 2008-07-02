@@ -16,9 +16,9 @@ namespace quickDBExplorer
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.TextBox PixcelHeight;
+		private quickDBExplorerTextBox PixcelHeight;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.TextBox PixcelWidth;
+		private quickDBExplorerTextBox PixcelWidth;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Button btnClose;
 
@@ -72,9 +72,9 @@ namespace quickDBExplorer
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
-			this.PixcelHeight = new System.Windows.Forms.TextBox();
+			this.PixcelHeight = new quickDBExplorerTextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.PixcelWidth = new System.Windows.Forms.TextBox();
+			this.PixcelWidth = new quickDBExplorerTextBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.btnClose = new System.Windows.Forms.Button();
 			this.SuspendLayout();

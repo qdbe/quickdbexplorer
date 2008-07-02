@@ -15,7 +15,7 @@ namespace quickDBExplorer
 	{
 		private System.Windows.Forms.Button btnCancel;
 		private System.Windows.Forms.Button btnOk;
-		private System.Windows.Forms.TextBox txtTableSelect;
+		private quickDBExplorerTextBox txtTableSelect;
 		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
@@ -68,7 +68,7 @@ namespace quickDBExplorer
 		{
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.btnOk = new System.Windows.Forms.Button();
-			this.txtTableSelect = new System.Windows.Forms.TextBox();
+			this.txtTableSelect = new quickDBExplorer.quickDBExplorerTextBox();
 			this.SuspendLayout();
 			// 
 			// MsgArea
@@ -101,6 +101,8 @@ namespace quickDBExplorer
 			// 
 			// txtTableSelect
 			// 
+			this.txtTableSelect.IsCTRLDelete = true;
+			this.txtTableSelect.IsDigitOnly = false;
 			this.txtTableSelect.Location = new System.Drawing.Point(20, 12);
 			this.txtTableSelect.Multiline = true;
 			this.txtTableSelect.Name = "txtTableSelect";

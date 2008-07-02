@@ -17,7 +17,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 表示テキストエリア
 		/// </summary>
-		protected System.Windows.Forms.TextBox txtZoom;
+		protected quickDBExplorerTextBox txtZoom;
 		/// <summary>
 		/// OKボタン
 		/// </summary>
@@ -125,7 +125,7 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(ZoomDialog));
-			this.txtZoom = new System.Windows.Forms.TextBox();
+			this.txtZoom = new quickDBExplorer.quickDBExplorerTextBox();
 			this.btnOk = new System.Windows.Forms.Button();
 			this.btnClose = new System.Windows.Forms.Button();
 			this.SuspendLayout();
@@ -141,6 +141,8 @@ namespace quickDBExplorer
 			this.txtZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
 				| System.Windows.Forms.AnchorStyles.Left) 
 				| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtZoom.IsCTRLDelete = true;
+			this.txtZoom.IsDigitOnly = false;
 			this.txtZoom.Location = new System.Drawing.Point(14, 12);
 			this.txtZoom.Multiline = true;
 			this.txtZoom.Name = "txtZoom";

@@ -304,6 +304,7 @@ namespace quickDBExplorer
 			aliasHistory = new TextHistoryDataSet();
 			selectHistory = new TextHistoryDataSet();
 			DMLHistory = new TextHistoryDataSet();
+			cmdHistory = new TextHistoryDataSet();
 			pSearchHistory = new TextHistoryDataSet();
 		}
 
@@ -322,6 +323,7 @@ namespace quickDBExplorer
 				selectHistory.Dispose();
 				DMLHistory.Dispose();
 				cmdHistory.Dispose();
+				pSearchHistory.Dispose();
 			}
 			// free native resources
 		}
@@ -494,6 +496,13 @@ namespace quickDBExplorer
 			}
 			catch{}
 
+			if( whereHistory == null ) whereHistory = new TextHistoryDataSet();
+			if( sortHistory == null ) sortHistory = new TextHistoryDataSet();
+			if( aliasHistory == null ) aliasHistory = new TextHistoryDataSet();
+			if( selectHistory == null ) selectHistory = new TextHistoryDataSet();
+			if( DMLHistory == null ) DMLHistory = new TextHistoryDataSet();
+			if( cmdHistory == null ) cmdHistory = new TextHistoryDataSet();
+			if( pSearchHistory == null ) pSearchHistory = new TextHistoryDataSet();
 
 		}
 

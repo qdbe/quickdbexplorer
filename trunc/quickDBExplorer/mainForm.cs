@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Drawing;
 using System.Collections;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Data.SqlClient;
@@ -431,6 +432,7 @@ namespace quickDBExplorer
 			this.fldmenuCopyNoComma = new System.Windows.Forms.MenuItem();
 			this.fldmenuCopyNoCRLFNoComma = new System.Windows.Forms.MenuItem();
 			this.menuFieldAliasCopy = new System.Windows.Forms.MenuItem();
+			this.menuFieldMakeWhere = new System.Windows.Forms.MenuItem();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.grpCharaSet = new System.Windows.Forms.GroupBox();
 			this.rdoUtf8 = new System.Windows.Forms.RadioButton();
@@ -458,7 +460,6 @@ namespace quickDBExplorer
 			this.label11 = new System.Windows.Forms.Label();
 			this.txtAlias = new quickDBExplorer.quickDBExplorerTextBox();
 			this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
-			this.menuFieldMakeWhere = new System.Windows.Forms.MenuItem();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -618,6 +619,7 @@ namespace quickDBExplorer
 			// 
 			// txtWhere
 			// 
+			this.txtWhere.IsCTRLDelete = true;
 			this.txtWhere.IsDigitOnly = false;
 			this.txtWhere.Location = new System.Drawing.Point(72, 488);
 			this.txtWhere.Name = "txtWhere";
@@ -629,6 +631,7 @@ namespace quickDBExplorer
 			// 
 			// txtSort
 			// 
+			this.txtSort.IsCTRLDelete = true;
 			this.txtSort.IsDigitOnly = false;
 			this.txtSort.Location = new System.Drawing.Point(72, 516);
 			this.txtSort.Name = "txtSort";
@@ -800,6 +803,7 @@ namespace quickDBExplorer
 			this.txtDispCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtDispCount.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
 			this.txtDispCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
+			this.txtDispCount.IsCTRLDelete = true;
 			this.txtDispCount.IsDigitOnly = true;
 			this.txtDispCount.Location = new System.Drawing.Point(132, 16);
 			this.txtDispCount.MaxLength = 300;
@@ -875,6 +879,7 @@ namespace quickDBExplorer
 			// 
 			// txtOutput
 			// 
+			this.txtOutput.IsCTRLDelete = true;
 			this.txtOutput.IsDigitOnly = false;
 			this.txtOutput.Location = new System.Drawing.Point(8, 52);
 			this.txtOutput.Name = "txtOutput";
@@ -982,6 +987,12 @@ namespace quickDBExplorer
 			this.menuFieldAliasCopy.Index = 4;
 			this.menuFieldAliasCopy.Text = "条件指定コピー";
 			this.menuFieldAliasCopy.Click += new System.EventHandler(this.menuFieldAliasCopy_Click);
+			// 
+			// menuFieldMakeWhere
+			// 
+			this.menuFieldMakeWhere.Index = 5;
+			this.menuFieldMakeWhere.Text = "where 句生成";
+			this.menuFieldMakeWhere.Click += new System.EventHandler(this.menuFieldMakeWhere_Click);
 			// 
 			// grpCharaSet
 			// 
@@ -1181,6 +1192,7 @@ namespace quickDBExplorer
 			// 
 			// txtAlias
 			// 
+			this.txtAlias.IsCTRLDelete = true;
 			this.txtAlias.IsDigitOnly = false;
 			this.txtAlias.Location = new System.Drawing.Point(72, 540);
 			this.txtAlias.Name = "txtAlias";
@@ -1190,12 +1202,6 @@ namespace quickDBExplorer
 			this.toolTip4.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
 			this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
 			this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
-			// 
-			// menuFieldMakeWhere
-			// 
-			this.menuFieldMakeWhere.Index = 5;
-			this.menuFieldMakeWhere.Text = "where 句生成";
-			this.menuFieldMakeWhere.Click += new System.EventHandler(this.menuFieldMakeWhere_Click);
 			// 
 			// MainForm
 			// 
@@ -2677,13 +2683,6 @@ namespace quickDBExplorer
 			}
 			if( e.Alt == false &&
 				e.Control == true &&
-				e.KeyCode == Keys.D )
-			{
-				// 全削除を行う
-				senderText.Text = "";
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
 				e.KeyCode == Keys.S )
 			{
 				string targetTable = "";
@@ -2765,14 +2764,6 @@ namespace quickDBExplorer
 			}
 			if( e.Alt == false &&
 				e.Control == true &&
-				e.KeyCode == Keys.D )
-			{
-				// Ctrl + D
-				// 全削除を行う
-				senderText.Text = "";
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
 				e.KeyCode == Keys.S )
 			{
 				// Ctrl + S
@@ -2822,13 +2813,6 @@ namespace quickDBExplorer
 				dlg.Show();
 				dlg.BringToFront();
 				dlg.Focus();
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.D )
-			{
-				// 全削除を行う
-				senderText.Text = "";
 			}
 			if( e.Alt == false &&
 				e.Control == true &&
@@ -4094,7 +4078,7 @@ namespace quickDBExplorer
 					}
 				}
 				str.Append(dlg.RetTableAccessor+".");
-				str.Append((string)this.fieldListbox.SelectedItems[i]);
+				str.Append((string)this.fieldListbox.SelectedItems[i].ToString());
 			}
 			if( str.Length != 0 )
 			{
@@ -4275,7 +4259,7 @@ namespace quickDBExplorer
 							istr +=" PRIMARY KEY";
 						}
 					}
-					this.fieldListbox.Items.Add(istr);
+					this.fieldListbox.Items.Add(new FieldListItem(istr,fi));
 				}
 			}
 			catch( Exception exp )
@@ -5338,7 +5322,7 @@ namespace quickDBExplorer
 						}
 					}
 				}
-				str.Append((string)this.fieldListbox.SelectedItems[i]);
+				str.Append((string)this.fieldListbox.SelectedItems[i].ToString());
 			}
 			if( str.Length != 0 )
 			{
@@ -6451,50 +6435,23 @@ namespace quickDBExplorer
 			{
 				return;
 			}
-
-			FieldGetDialog dlg = new FieldGetDialog();
-			dlg.BaseTableName = this.objectList.GetSelectOneObjectName();
-			if( dlg.ShowDialog(this) != DialogResult.OK )
+			if( this.fieldListbox.SelectedItems.Count == 0 )
 			{
 				return;
 			}
-			StringBuilder str = new StringBuilder();
+
+			MakeFieldWhereDlg dlg = new MakeFieldWhereDlg();
+			dlg.ObjectInfo = this.objectList.GetSelectObject(0);
+			StringCollection fcol = new StringCollection();
 			for( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
 			{
-				if( i != 0 )
-				{
-					if( dlg.RetCrlf == true )
-					{
-						if( dlg.RetComma ) 
-						{
-							str.Append(",\r\n");
+				DBFieldInfo fi = (DBFieldInfo)((FieldListItem)this.fieldListbox.SelectedItems[i]).BackObj;
+				fcol.Add(fi.Name);
 						}
-						else
-						{
-							str.Append("\r\n");
-						}
-					}
-					else
-					{
-						if( dlg.RetComma )
-						{
-							str.Append(",");
-						}
-						else
-						{
-							str.Append("\t");
-						}
-					}
-				}
-				str.Append(dlg.RetTableAccessor+".");
-				str.Append((string)this.fieldListbox.SelectedItems[i]);
-			}
-			if( str.Length != 0 )
-			{
-				Clipboard.SetDataObject(str.ToString(),true );
-			}
-		}
+			dlg.FieldList = fcol;
 
+			dlg.ShowDialog(this);
+						}
 	}
 
 	/// <summary>

@@ -41,7 +41,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// テキスト入力エリア
 		/// </summary>
-		protected System.Windows.Forms.TextBox txtInput;
+		protected quickDBExplorerTextBox txtInput;
 		/// <summary>
 		/// OKボタン
 		/// </summary>
@@ -122,7 +122,7 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(QueryDialog));
-			this.txtInput = new System.Windows.Forms.TextBox();
+			this.txtInput = new quickDBExplorer.quickDBExplorerTextBox();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
 			this.menuCopy = new System.Windows.Forms.MenuItem();
 			this.menuCut = new System.Windows.Forms.MenuItem();
@@ -142,6 +142,8 @@ namespace quickDBExplorer
 				| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtInput.ContextMenu = this.contextMenu1;
 			this.txtInput.ImeMode = System.Windows.Forms.ImeMode.Off;
+			this.txtInput.IsCTRLDelete = true;
+			this.txtInput.IsDigitOnly = false;
 			this.txtInput.Location = new System.Drawing.Point(16, 24);
 			this.txtInput.Multiline = true;
 			this.txtInput.Name = "txtInput";
@@ -321,15 +323,6 @@ namespace quickDBExplorer
 		/// <param name="e">--</param>
 		private void txtInput_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
-			// Ctrl+Dで全入力文字削除
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.D )
-			{
-				// 全削除を行う
-				((TextBox)sender).Text = "";
-			}
-
 			// Ctrl＋Sで過去入力履歴ダイアログを表示する
 			if( e.Alt == false &&
 				e.Control == true &&

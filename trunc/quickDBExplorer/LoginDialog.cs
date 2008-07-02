@@ -150,6 +150,7 @@ namespace quickDBExplorer
 			// 
 			// txtPassword
 			// 
+			this.txtPassword.IsCTRLDelete = true;
 			this.txtPassword.IsDigitOnly = false;
 			this.txtPassword.Location = new System.Drawing.Point(144, 201);
 			this.txtPassword.Name = "txtPassword";
@@ -160,6 +161,7 @@ namespace quickDBExplorer
 			// 
 			// txtUser
 			// 
+			this.txtUser.IsCTRLDelete = true;
 			this.txtUser.IsDigitOnly = false;
 			this.txtUser.Location = new System.Drawing.Point(144, 161);
 			this.txtUser.Name = "txtUser";
@@ -169,6 +171,7 @@ namespace quickDBExplorer
 			// 
 			// txtInstance
 			// 
+			this.txtInstance.IsCTRLDelete = true;
 			this.txtInstance.IsDigitOnly = false;
 			this.txtInstance.Location = new System.Drawing.Point(144, 89);
 			this.txtInstance.Name = "txtInstance";
@@ -178,6 +181,7 @@ namespace quickDBExplorer
 			// 
 			// txtServerName
 			// 
+			this.txtServerName.IsCTRLDelete = true;
 			this.txtServerName.IsDigitOnly = false;
 			this.txtServerName.Location = new System.Drawing.Point(144, 49);
 			this.txtServerName.Name = "txtServerName";

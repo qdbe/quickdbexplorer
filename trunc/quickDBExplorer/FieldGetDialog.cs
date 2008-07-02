@@ -17,7 +17,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Button btnOK;
 		private System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.TextBox txtAlias;
+		private quickDBExplorerTextBox txtAlias;
 		private System.Windows.Forms.CheckBox chkComma;
 		private System.Windows.Forms.CheckBox chkCRLF;
 		private System.Windows.Forms.ComboBox cmbPattern;
@@ -110,7 +110,7 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			this.txtAlias = new System.Windows.Forms.TextBox();
+			this.txtAlias = new quickDBExplorer.quickDBExplorerTextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnOK = new System.Windows.Forms.Button();
 			this.chkComma = new System.Windows.Forms.CheckBox();
@@ -129,6 +129,8 @@ namespace quickDBExplorer
 			// 
 			// txtAlias
 			// 
+			this.txtAlias.IsCTRLDelete = true;
+			this.txtAlias.IsDigitOnly = false;
 			this.txtAlias.Location = new System.Drawing.Point(128, 56);
 			this.txtAlias.Name = "txtAlias";
 			this.txtAlias.Size = new System.Drawing.Size(256, 19);

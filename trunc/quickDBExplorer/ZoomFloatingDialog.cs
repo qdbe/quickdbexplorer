@@ -55,6 +55,7 @@ namespace quickDBExplorer
 			// 
 			// txtZoom
 			// 
+			this.txtZoom.IsCTRLDelete = true;
 			this.txtZoom.Location = new System.Drawing.Point(14, 24);
 			this.txtZoom.Name = "txtZoom";
 			this.txtZoom.Size = new System.Drawing.Size(520, 198);

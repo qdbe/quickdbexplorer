@@ -21,10 +21,10 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Button btnFont;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TextBox txtNumDisp;
+		private quickDBExplorerTextBox txtNumDisp;
 		private System.Windows.Forms.ComboBox cmbNumFormat;
-		private System.Windows.Forms.TextBox txtDecimalDisp;
-		private System.Windows.Forms.TextBox txtDateTimeDisp;
+		private quickDBExplorerTextBox txtDecimalDisp;
+		private quickDBExplorerTextBox txtDateTimeDisp;
 		private System.Windows.Forms.ComboBox cmbDecimalFormat;
 		private System.Windows.Forms.ComboBox cmbDateFormat;
 		private System.Windows.Forms.RichTextBox txtFontDisp;
@@ -141,10 +141,10 @@ namespace quickDBExplorer
 			this.label3 = new System.Windows.Forms.Label();
 			this.btnFont = new System.Windows.Forms.Button();
 			this.label4 = new System.Windows.Forms.Label();
-			this.txtNumDisp = new System.Windows.Forms.TextBox();
+			this.txtNumDisp = new quickDBExplorerTextBox();
 			this.cmbNumFormat = new System.Windows.Forms.ComboBox();
-			this.txtDecimalDisp = new System.Windows.Forms.TextBox();
-			this.txtDateTimeDisp = new System.Windows.Forms.TextBox();
+			this.txtDecimalDisp = new quickDBExplorerTextBox();
+			this.txtDateTimeDisp = new quickDBExplorerTextBox();
 			this.cmbDecimalFormat = new System.Windows.Forms.ComboBox();
 			this.cmbDateFormat = new System.Windows.Forms.ComboBox();
 			this.fontDialog1 = new System.Windows.Forms.FontDialog();

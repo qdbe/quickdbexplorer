@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// CTRL+Aでの全選択機能を追加したテキストボックス
+	/// CTRL+Aでの全選択機能、CTRL+Dでの文字削除を追加したテキストボックス
 	/// </summary>
 	[System.Runtime.InteropServices.ComVisible(false)]
 	public class quickDBExplorerTextBox : TextBox
@@ -37,6 +37,20 @@ namespace quickDBExplorer
 			set { this.pIsDigitOnly = value; }
 		}
 
+		private bool pIsCTRLDelete = true;
+		
+		/// <summary>
+		/// CTRL+Dで文字を削除可能にするか否か
+		/// false: 削除できない
+		/// true: 削除できる(既定値)
+		/// </summary>
+		public bool IsCTRLDelete
+		{
+			get { return this.pIsCTRLDelete; }
+			set { this.pIsCTRLDelete = value; }
+		}
+
+		// 変更前のテキスト
 		private string orgString;
 
 		/// <summary>
@@ -55,6 +69,15 @@ namespace quickDBExplorer
 			{
 				this.SelectAll();
 				ev.Handled = true;
+			}
+
+			if( this.pIsCTRLDelete == true &&
+				ev.Alt != true &&
+				ev.Control == true &&
+				ev.Shift != true &&
+				ev.KeyCode == Keys.D )
+			{
+				this.Text = string.Empty;
 			}
 		}
 
