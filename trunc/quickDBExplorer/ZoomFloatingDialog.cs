@@ -55,7 +55,6 @@ namespace quickDBExplorer
 			// 
 			// txtZoom
 			// 
-			this.txtZoom.IsCTRLDelete = true;
 			this.txtZoom.Location = new System.Drawing.Point(14, 24);
 			this.txtZoom.Name = "txtZoom";
 			this.txtZoom.Size = new System.Drawing.Size(520, 198);
@@ -89,6 +88,7 @@ namespace quickDBExplorer
 			// 
 			// btnApply
 			// 
+			this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnApply.Location = new System.Drawing.Point(364, 234);
 			this.btnApply.Name = "btnApply";
 			this.btnApply.Size = new System.Drawing.Size(80, 26);

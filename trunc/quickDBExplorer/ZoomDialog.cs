@@ -132,9 +132,9 @@ namespace quickDBExplorer
 			// 
 			// MsgArea
 			// 
-			this.MsgArea.Location = new System.Drawing.Point(88, 234);
+			this.MsgArea.Location = new System.Drawing.Point(88, 240);
 			this.MsgArea.Name = "MsgArea";
-			this.MsgArea.Size = new System.Drawing.Size(366, 16);
+			this.MsgArea.Size = new System.Drawing.Size(372, 16);
 			// 
 			// txtZoom
 			// 
@@ -147,14 +147,14 @@ namespace quickDBExplorer
 			this.txtZoom.Multiline = true;
 			this.txtZoom.Name = "txtZoom";
 			this.txtZoom.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txtZoom.Size = new System.Drawing.Size(520, 210);
+			this.txtZoom.Size = new System.Drawing.Size(526, 216);
 			this.txtZoom.TabIndex = 0;
 			this.txtZoom.Text = "";
 			// 
 			// btnOk
 			// 
 			this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnOk.Location = new System.Drawing.Point(10, 232);
+			this.btnOk.Location = new System.Drawing.Point(10, 238);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(70, 26);
 			this.btnOk.TabIndex = 1;
@@ -165,7 +165,7 @@ namespace quickDBExplorer
 			// 
 			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnClose.Location = new System.Drawing.Point(462, 236);
+			this.btnClose.Location = new System.Drawing.Point(468, 242);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(70, 24);
 			this.btnClose.TabIndex = 2;
@@ -177,7 +177,7 @@ namespace quickDBExplorer
 			this.AcceptButton = this.btnOk;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.CancelButton = this.btnClose;
-			this.ClientSize = new System.Drawing.Size(544, 266);
+			this.ClientSize = new System.Drawing.Size(550, 272);
 			this.Controls.Add(this.txtZoom);
 			this.Controls.Add(this.btnClose);
 			this.Controls.Add(this.btnOk);

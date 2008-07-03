@@ -2606,10 +2606,14 @@ namespace quickDBExplorer
 
 		private void btnWhereZoom_Click(object sender, System.EventArgs e)
 		{
-			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+			WhereDialog dlg = new WhereDialog();
 			dlg.EditText = this.txtWhere.Text;
 			dlg.LableName = "where 指定";
 			dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+			if( this.objectList.SelectedItems.Count == 1 )
+			{
+				dlg.TargetObject = this.objectList.GetSelectObject(0);
+			}
 			dlg.Show();
 			dlg.BringToFront();
 			dlg.Focus();
@@ -2754,10 +2758,14 @@ namespace quickDBExplorer
 			{
 				// Ctrl + W
 				// 値の拡大表示を行う
-				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+				WhereDialog dlg = new WhereDialog();
 				dlg.EditText = this.txtWhere.Text;
 				dlg.LableName = "where 指定";
 				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+				if( this.objectList.SelectedItems.Count == 1 )
+				{
+					dlg.TargetObject = this.objectList.GetSelectObject(0);
+				}
 				dlg.Show();
 				dlg.BringToFront();
 				dlg.Focus();

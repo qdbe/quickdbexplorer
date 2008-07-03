@@ -375,6 +375,16 @@
                     BuildAction = "None"
                 />
                 <File
+                    RelPath = "WhereDialog.cs"
+                    SubType = "Form"
+                    BuildAction = "Compile"
+                />
+                <File
+                    RelPath = "WhereDialog.resx"
+                    DependentUpon = "WhereDialog.cs"
+                    BuildAction = "EmbeddedResource"
+                />
+                <File
                     RelPath = "ZoomDialog.cs"
                     SubType = "Form"
                     BuildAction = "Compile"
