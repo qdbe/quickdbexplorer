@@ -92,7 +92,8 @@ namespace quickDBExplorer
 		private Color	btnBackColor;
 		private Color	btnForeColor;
 		private	IndexViewDialog indexdlg = null;
-		private	string	NumFormat;
+		private WhereDialog wheredlg = new WhereDialog();
+		private string NumFormat;
 		private	string	FloatFormat;
 		private	string	DateFormat;
 
@@ -2040,6 +2041,9 @@ namespace quickDBExplorer
 				}
 				indexdlg.Show();
 			}
+
+			setWhereDialog();
+			
 		}
 
 		private void rdoDispView_CheckedChanged(object sender, System.EventArgs e)
@@ -2606,7 +2610,11 @@ namespace quickDBExplorer
 
 		private void btnWhereZoom_Click(object sender, System.EventArgs e)
 		{
-			WhereDialog dlg = new WhereDialog();
+			if (wheredlg == null)
+			{
+				this.wheredlg = new WhereDialog();
+			}
+			WhereDialog dlg = this.wheredlg;
 			dlg.EditText = this.txtWhere.Text;
 			dlg.LableName = "where 指定";
 			dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
@@ -2614,6 +2622,7 @@ namespace quickDBExplorer
 			{
 				dlg.TargetObject = this.objectList.GetSelectObject(0);
 			}
+			dlg.AliasName = this.txtAlias.Text;
 			dlg.Show();
 			dlg.BringToFront();
 			dlg.Focus();
@@ -2665,6 +2674,7 @@ namespace quickDBExplorer
 			{
 				tbname = "";
 			}
+			setWhereDialog();
 		}
 
 		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -2705,6 +2715,7 @@ namespace quickDBExplorer
 					}
 
 					DispData(dboInfo);
+					setWhereDialog();
 				}
 			}
 			if( e.KeyCode == Keys.Return ||
@@ -2715,6 +2726,7 @@ namespace quickDBExplorer
 					qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),senderText.Text,this.aliasHistory);
 				}
 				DispData(this.objectList.GetSelectObject(0));
+				setWhereDialog();
 			}
 		}
 
@@ -2758,7 +2770,11 @@ namespace quickDBExplorer
 			{
 				// Ctrl + W
 				// 値の拡大表示を行う
-				WhereDialog dlg = new WhereDialog();
+				if (wheredlg == null)
+				{
+					this.wheredlg = new WhereDialog();
+				}
+				WhereDialog dlg = this.wheredlg;
 				dlg.EditText = this.txtWhere.Text;
 				dlg.LableName = "where 指定";
 				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
@@ -2766,6 +2782,7 @@ namespace quickDBExplorer
 				{
 					dlg.TargetObject = this.objectList.GetSelectObject(0);
 				}
+				dlg.AliasName = this.txtAlias.Text;
 				dlg.Show();
 				dlg.BringToFront();
 				dlg.Focus();
@@ -6439,11 +6456,11 @@ namespace quickDBExplorer
 		{
 			// フィールドリストから where 句を生成する
 			// 別ダイアログを表示してエイリアス等の指定を可能にする
-			if( this.objectList.SelectedItems.Count != 1 )
+			if (this.objectList.SelectedItems.Count != 1)
 			{
 				return;
 			}
-			if( this.fieldListbox.SelectedItems.Count == 0 )
+			if (this.fieldListbox.SelectedItems.Count == 0)
 			{
 				return;
 			}
@@ -6451,15 +6468,37 @@ namespace quickDBExplorer
 			MakeFieldWhereDlg dlg = new MakeFieldWhereDlg();
 			dlg.ObjectInfo = this.objectList.GetSelectObject(0);
 			StringCollection fcol = new StringCollection();
-			for( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
+			for (int i = 0; i < this.fieldListbox.SelectedItems.Count; i++)
 			{
 				DBFieldInfo fi = (DBFieldInfo)((FieldListItem)this.fieldListbox.SelectedItems[i]).BackObj;
 				fcol.Add(fi.Name);
-						}
+			}
 			dlg.FieldList = fcol;
 
 			dlg.ShowDialog(this);
-						}
+		}
+
+		/// <summary>
+		/// where 句指定ダイアログを設定しなおす
+		/// </summary>
+		private void setWhereDialog()
+		{
+			if (wheredlg != null && wheredlg.Visible == true)
+			{
+				if (this.objectList.SelectedItems.Count == 1)
+				{
+					wheredlg.TargetObject = this.objectList.GetSelectObject(0);
+					wheredlg.AliasName = this.txtAlias.Text;
+					wheredlg.ResetTarget();
+				}
+				else
+				{
+					wheredlg.TargetObject = null;
+					wheredlg.ResetTarget();
+				}
+				wheredlg.Show();
+			}
+		}
 	}
 
 	/// <summary>

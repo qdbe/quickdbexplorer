@@ -12,9 +12,15 @@ namespace quickDBExplorer
 	[System.Runtime.InteropServices.ComVisible(false)]
 	public class ZoomFloatingDialog : quickDBExplorer.ZoomDialog
 	{
-		private System.Windows.Forms.CheckBox chkStayOnTop;
-		private System.Windows.Forms.Button btnApply;
+		/// <summary>
+		/// 常にTOPに表示
+		/// </summary>
+		protected CheckBox chkStayOnTop;
 		private System.ComponentModel.IContainer components = null;
+		/// <summary>
+		/// 適用ボタン
+		/// </summary>
+		protected Button btnApply;
 
 		/// <summary>
 		/// コンストラクタ
@@ -48,7 +54,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(ZoomFloatingDialog));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZoomFloatingDialog));
 			this.chkStayOnTop = new System.Windows.Forms.CheckBox();
 			this.btnApply = new System.Windows.Forms.Button();
 			this.SuspendLayout();
@@ -56,25 +62,21 @@ namespace quickDBExplorer
 			// txtZoom
 			// 
 			this.txtZoom.Location = new System.Drawing.Point(14, 24);
-			this.txtZoom.Name = "txtZoom";
 			this.txtZoom.Size = new System.Drawing.Size(520, 198);
 			// 
 			// btnOk
 			// 
 			this.btnOk.Location = new System.Drawing.Point(10, 234);
-			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(80, 26);
 			// 
 			// btnClose
 			// 
 			this.btnClose.Location = new System.Drawing.Point(462, 234);
-			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(80, 26);
 			// 
 			// MsgArea
 			// 
 			this.MsgArea.Location = new System.Drawing.Point(106, 234);
-			this.MsgArea.Name = "MsgArea";
 			this.MsgArea.Size = new System.Drawing.Size(246, 26);
 			// 
 			// chkStayOnTop
@@ -111,6 +113,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.txtZoom, 0);
 			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion

@@ -117,27 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        AAABAAIAEBAQAAAAAAAoAQAAJgAAACAgEAAAAAAA6AIAAE4BAAAoAAAAEAAAACAAAAABAAQAAAAAAIAA
-        AAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAgAAAgAAAAICAAIAAAACAAIAAgIAAAICAgADAwMAAAAD/AAD/
-        AAAA//8A/wAAAP8A/wD//wAA////AIiIiP//////iIiIj/////+IiIiI/////3iIiIiP////d4iIiIj/
-        //9+7szIzMhEROfuyMjIjE//537IjMiMT//nfsiMzMhET+d+x4zIjEiIfufMx8zIRER3d3d3d4iIiAB3
-        d3d3eIiIAAB3d3d3eIgAAAd3d3d3iAAAAHd3d3d4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACgAAAAgAAAAQAAAAAEABAAAAAAAAAIAAAAA
-        AAAAAAAAEAAAABAAAAAAAAAAAACAAACAAAAAgIAAgAAAAIAAgACAgAAAgICAAMDAwAAAAP8AAP8AAAD/
-        /wD/AAAA/wD/AP//AAD///8AiIiIiIiIj////////////4iIiIiIiIj///////////+IiIiIiIiI////
-        ////////d4iIiIiIiI///////////3d4iIiIiIiIj/////////93d3iIiIiIiIj/////////d3d3iIiI
-        iIiIj////////3d3d3iIiIiIiIj///////93d3d3iIiIiIiIj///////d3d3d3iIiIiIiIj//////3d3
-        d3d3eIiIiIiIj/////93d+5+d8zIiIzMyIhERE//d35353fHfIiMiIyISP///3d+fn53x3fIjIiMiEiP
-        //93fnd+d8d3yIyIjIhIiP//d353fnfHd8eMzMiIRESP/wB+d353x3fHfIiMiEiIiI8ADnd+d8d3x3yI
-        jIhIiIiIAA53fnfHfHd8eIyISIiIiAAA7ud3zMd3fMzIiERESIgAAAB3d3d3d3d3eIiIiIiIAAAAB3d3
-        d3d3d3eIiIiIiAAAAAd3d3d3d3d3eIiIiIgAAAAAd3d3d3d3d3eIiIiIAAAAAAB3d3d3d3d3eIiIiAAA
-        AAAAd3d3d3d3d3eIiIgAAAAAAAd3d3d3d3d3d4iIAAAAAAAAd3d3d3d3d3d4iAAAAAAAAAd3d3d3d3d3
-        d4gAAAAAAAAAd3d3d3d3d3d3AAAAAAAAAAd3d3d3d3d3dwAAAAAAAAAAd3d3d3d3d3cAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-</value>
-  </data>
+  <metadata name="Fields.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="fieldtypes.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="cond.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="datavalues.UserAddedColumn" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>
