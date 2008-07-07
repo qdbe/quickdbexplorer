@@ -91,12 +91,12 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			this.fieldCondition = new System.Windows.Forms.DataGridView();
-			this.btnClear = new System.Windows.Forms.Button();
-			this.cmbCondition = new System.Windows.Forms.ComboBox();
 			this.Fields = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.fieldtypes = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.cond = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.datavalues = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.btnClear = new System.Windows.Forms.Button();
+			this.cmbCondition = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.fieldCondition)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -125,6 +125,7 @@ namespace quickDBExplorer
 			// 
 			this.btnClose.Location = new System.Drawing.Point(558, 362);
 			this.btnClose.TabIndex = 7;
+			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
 			// 
 			// MsgArea
 			// 
@@ -152,29 +153,6 @@ namespace quickDBExplorer
 			this.fieldCondition.Size = new System.Drawing.Size(622, 160);
 			this.fieldCondition.TabIndex = 3;
 			this.fieldCondition.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.fieldCondition_CellEndEdit);
-			// 
-			// btnClear
-			// 
-			this.btnClear.Location = new System.Drawing.Point(14, 335);
-			this.btnClear.Name = "btnClear";
-			this.btnClear.Size = new System.Drawing.Size(181, 23);
-			this.btnClear.TabIndex = 4;
-			this.btnClear.Text = "フィールド条件クリア";
-			this.btnClear.UseVisualStyleBackColor = true;
-			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-			// 
-			// cmbCondition
-			// 
-			this.cmbCondition.FormattingEnabled = true;
-			this.cmbCondition.Items.AddRange(new object[] {
-            "AND",
-            "OR"});
-			this.cmbCondition.Location = new System.Drawing.Point(14, 144);
-			this.cmbCondition.Name = "cmbCondition";
-			this.cmbCondition.Size = new System.Drawing.Size(154, 20);
-			this.cmbCondition.TabIndex = 2;
-			this.cmbCondition.SelectedIndexChanged += new System.EventHandler(this.cmbCondition_SelectedIndexChanged);
-			this.cmbCondition.TextChanged += new System.EventHandler(this.cmbCondition_TextChanged);
 			// 
 			// Fields
 			// 
@@ -220,6 +198,29 @@ namespace quickDBExplorer
 			this.datavalues.HeaderText = "値";
 			this.datavalues.Name = "datavalues";
 			this.datavalues.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			// 
+			// btnClear
+			// 
+			this.btnClear.Location = new System.Drawing.Point(14, 335);
+			this.btnClear.Name = "btnClear";
+			this.btnClear.Size = new System.Drawing.Size(181, 23);
+			this.btnClear.TabIndex = 4;
+			this.btnClear.Text = "フィールド条件クリア";
+			this.btnClear.UseVisualStyleBackColor = true;
+			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+			// 
+			// cmbCondition
+			// 
+			this.cmbCondition.FormattingEnabled = true;
+			this.cmbCondition.Items.AddRange(new object[] {
+            "AND",
+            "OR"});
+			this.cmbCondition.Location = new System.Drawing.Point(14, 144);
+			this.cmbCondition.Name = "cmbCondition";
+			this.cmbCondition.Size = new System.Drawing.Size(154, 20);
+			this.cmbCondition.TabIndex = 2;
+			this.cmbCondition.SelectedIndexChanged += new System.EventHandler(this.cmbCondition_SelectedIndexChanged);
+			this.cmbCondition.TextChanged += new System.EventHandler(this.cmbCondition_TextChanged);
 			// 
 			// WhereDialog
 			// 
@@ -297,7 +298,10 @@ namespace quickDBExplorer
 			SetFieldCondResult();
 		}
 
-		private void SetFieldCondResult()
+		/// <summary>
+		/// 条件句を生成しなおす
+		/// </summary>
+		public void SetFieldCondResult()
 		{
 			if (fieldDs == null)
 			{
@@ -350,7 +354,7 @@ namespace quickDBExplorer
 
 				if( condstr == "=" )
 				{
-					sb.Append(alias).Append(fieldname).Append(" = ");
+					sb.Append(fieldname).Append(" = ");
 				}
 				else if(condstr == "!=" )
 				{
@@ -425,6 +429,17 @@ namespace quickDBExplorer
 		private void cmbCondition_TextChanged(object sender, EventArgs e)
 		{
 			SetFieldCondResult();
+		}
+
+		private void btnClose_Click(object sender, EventArgs e)
+		{
+			this.Visible = false;
+		}
+
+		protected override void OnClosing(CancelEventArgs e)
+		{
+			this.Visible = false;
+			e.Cancel = true;
 		}
 	}
 }

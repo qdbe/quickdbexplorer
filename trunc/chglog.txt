@@ -37,5 +37,5 @@ DBグリッドの高さを変更した場合に、行番号がおかしくなってしまう不具合を修正
 System.Windows.Forms.TextBox を quickDBExplorerTextBox に変更
 選択したフィールドからwhere 句の生成を可能にした
 quickDBExplorerTextBox で CTRL+D の処理を一括処理するようにした
-
+簡易的なWhere 句の指定を可能にした
 

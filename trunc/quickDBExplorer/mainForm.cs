@@ -96,6 +96,7 @@ namespace quickDBExplorer
 		private string NumFormat;
 		private	string	FloatFormat;
 		private	string	DateFormat;
+		private string aliasText;
 
 		#region 公開メンバ
 		private ISqlInterface	pSqlDriver = null;
@@ -375,7 +376,7 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainForm));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.dbList = new quickDBExplorer.qdbeListBox();
 			this.objectList = new quickDBExplorer.ObjectListView();
 			this.ColTVSType = new System.Windows.Forms.ColumnHeader();
@@ -473,13 +474,12 @@ namespace quickDBExplorer
 			// MsgArea
 			// 
 			this.MsgArea.Location = new System.Drawing.Point(240, 624);
-			this.MsgArea.Name = "MsgArea";
 			this.MsgArea.Size = new System.Drawing.Size(660, 16);
 			this.MsgArea.TabIndex = 42;
 			// 
 			// dbList
 			// 
-			this.dbList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+			this.dbList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.dbList.ItemHeight = 12;
 			this.dbList.Location = new System.Drawing.Point(60, 16);
 			this.dbList.Name = "dbList";
@@ -493,11 +493,11 @@ namespace quickDBExplorer
 			this.objectList.Activation = System.Windows.Forms.ItemActivation.OneClick;
 			this.objectList.AllowDrop = true;
 			this.objectList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-																						 this.ColTVSType,
-																						 this.ColOwner,
-																						 this.ColObjName,
-																						 this.ColCreateDate});
-			this.objectList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+            this.ColTVSType,
+            this.ColOwner,
+            this.ColObjName,
+            this.ColCreateDate});
+			this.objectList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.objectList.FullRowSelect = true;
 			this.objectList.GridLines = true;
 			this.objectList.HideSelection = false;
@@ -506,11 +506,12 @@ namespace quickDBExplorer
 			this.objectList.Size = new System.Drawing.Size(256, 292);
 			this.objectList.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.objectList.TabIndex = 22;
+			this.objectList.UseCompatibleStateImageBehavior = false;
 			this.objectList.View = System.Windows.Forms.View.Details;
 			this.objectList.CopyData += new quickDBExplorer.qdbeListView.CopyDataEventHandler(this.objectList_CopyData);
+			this.objectList.SelectedIndexChanged += new System.EventHandler(this.objectList_SelectedIndexChanged);
 			this.objectList.DoubleClick += new System.EventHandler(this.InsertMake);
 			this.objectList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.objectList_ColumnClick);
-			this.objectList.SelectedIndexChanged += new System.EventHandler(this.objectList_SelectedIndexChanged);
 			// 
 			// ColTVSType
 			// 
@@ -626,7 +627,6 @@ namespace quickDBExplorer
 			this.txtWhere.Name = "txtWhere";
 			this.txtWhere.Size = new System.Drawing.Size(144, 19);
 			this.txtWhere.TabIndex = 11;
-			this.txtWhere.Text = "";
 			this.txtWhere.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtWhere_KeyDown);
 			this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
 			// 
@@ -638,7 +638,6 @@ namespace quickDBExplorer
 			this.txtSort.Name = "txtSort";
 			this.txtSort.Size = new System.Drawing.Size(144, 19);
 			this.txtSort.TabIndex = 14;
-			this.txtSort.Text = "";
 			this.txtSort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSort_KeyDown);
 			this.txtSort.Leave += new System.EventHandler(this.txtSort_Leave);
 			// 
@@ -669,7 +668,7 @@ namespace quickDBExplorer
 			// 
 			// ownerListbox
 			// 
-			this.ownerListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+			this.ownerListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.ownerListbox.ItemHeight = 12;
 			this.ownerListbox.Location = new System.Drawing.Point(60, 80);
 			this.ownerListbox.Name = "ownerListbox";
@@ -690,9 +689,9 @@ namespace quickDBExplorer
 			// dbGrid
 			// 
 			this.dbGrid.AlternatingBackColor = System.Drawing.Color.Silver;
-			this.dbGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
+			this.dbGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.dbGrid.BackColor = System.Drawing.Color.White;
 			this.dbGrid.CaptionBackColor = System.Drawing.Color.Gainsboro;
 			this.dbGrid.CaptionFont = new System.Drawing.Font("Tahoma", 8F);
@@ -700,11 +699,11 @@ namespace quickDBExplorer
 			this.dbGrid.CaptionVisible = false;
 			this.dbGrid.ContextMenu = this.dbGridMenu;
 			this.dbGrid.DataMember = "";
-			this.dbGrid.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+			this.dbGrid.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.dbGrid.ForeColor = System.Drawing.Color.Black;
 			this.dbGrid.GridLineColor = System.Drawing.Color.Silver;
 			this.dbGrid.HeaderBackColor = System.Drawing.Color.Silver;
-			this.dbGrid.HeaderFont = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(0)));
+			this.dbGrid.HeaderFont = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dbGrid.HeaderForeColor = System.Drawing.Color.Black;
 			this.dbGrid.LinkColor = System.Drawing.Color.Maroon;
 			this.dbGrid.Location = new System.Drawing.Point(240, 384);
@@ -721,14 +720,14 @@ namespace quickDBExplorer
 			// dbGridMenu
 			// 
 			this.dbGridMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					   this.copyDbGridMenu,
-																					   this.copySelectedDbGridMenu,
-																					   this.allSelectDbGridMenu,
-																					   this.allUnSelectDbGridMenu,
-																					   this.readCsvDbGridMenu,
-																					   this.readCsvDQDbGridMenu,
-																					   this.readTsvDbGridMenu,
-																					   this.readTsvDQDbGridMenu});
+            this.copyDbGridMenu,
+            this.copySelectedDbGridMenu,
+            this.allSelectDbGridMenu,
+            this.allUnSelectDbGridMenu,
+            this.readCsvDbGridMenu,
+            this.readCsvDQDbGridMenu,
+            this.readTsvDbGridMenu,
+            this.readTsvDQDbGridMenu});
 			this.dbGridMenu.Popup += new System.EventHandler(this.dbGridMenu_Popup);
 			// 
 			// copyDbGridMenu
@@ -812,8 +811,8 @@ namespace quickDBExplorer
 			this.txtDispCount.Size = new System.Drawing.Size(72, 19);
 			this.txtDispCount.TabIndex = 1;
 			this.txtDispCount.Text = "1000";
-			this.txtDispCount.Leave += new System.EventHandler(this.txtDispCount_Leave);
 			this.txtDispCount.TextChanged += new System.EventHandler(this.txtDispCount_TextChanged);
+			this.txtDispCount.Leave += new System.EventHandler(this.txtDispCount_Leave);
 			// 
 			// label3
 			// 
@@ -886,7 +885,6 @@ namespace quickDBExplorer
 			this.txtOutput.Name = "txtOutput";
 			this.txtOutput.Size = new System.Drawing.Size(160, 19);
 			this.txtOutput.TabIndex = 3;
-			this.txtOutput.Text = "";
 			this.txtOutput.TextChanged += new System.EventHandler(this.txtOutput_TextChanged);
 			// 
 			// rdoOutFile
@@ -935,10 +933,10 @@ namespace quickDBExplorer
 			// 
 			// fieldListbox
 			// 
-			this.fieldListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
+			this.fieldListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.fieldListbox.ContextMenu = this.fldContextMenu;
-			this.fieldListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+			this.fieldListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.fieldListbox.HorizontalScrollbar = true;
 			this.fieldListbox.ItemHeight = 12;
 			this.fieldListbox.Location = new System.Drawing.Point(656, 40);
@@ -952,12 +950,12 @@ namespace quickDBExplorer
 			// fldContextMenu
 			// 
 			this.fldContextMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																						   this.fldmenuCopy,
-																						   this.fldmenuCopyNoCRLF,
-																						   this.fldmenuCopyNoComma,
-																						   this.fldmenuCopyNoCRLFNoComma,
-																						   this.menuFieldAliasCopy,
-																						   this.menuFieldMakeWhere});
+            this.fldmenuCopy,
+            this.fldmenuCopyNoCRLF,
+            this.fldmenuCopyNoComma,
+            this.fldmenuCopyNoCRLFNoComma,
+            this.menuFieldAliasCopy,
+            this.menuFieldMakeWhere});
 			// 
 			// fldmenuCopy
 			// 
@@ -1199,10 +1197,10 @@ namespace quickDBExplorer
 			this.txtAlias.Name = "txtAlias";
 			this.txtAlias.Size = new System.Drawing.Size(144, 19);
 			this.txtAlias.TabIndex = 17;
-			this.txtAlias.Text = "";
 			this.toolTip4.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
 			this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
 			this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
+			this.txtAlias.Enter += new System.EventHandler(this.txtAlias_Enter);
 			// 
 			// MainForm
 			// 
@@ -1257,9 +1255,9 @@ namespace quickDBExplorer
 			this.ShowInTaskbar = false;
 			this.Text = "Database選択";
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
-			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
 			this.Controls.SetChildIndex(this.txtAlias, 0);
 			this.Controls.SetChildIndex(this.label11, 0);
 			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
@@ -1307,10 +1305,13 @@ namespace quickDBExplorer
 			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
 			this.grpDataDispMode.ResumeLayout(false);
+			this.grpDataDispMode.PerformLayout();
 			this.grpSysUserMode.ResumeLayout(false);
 			this.grpOutputMode.ResumeLayout(false);
+			this.grpOutputMode.PerformLayout();
 			this.grpCharaSet.ResumeLayout(false);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion
@@ -2042,8 +2043,7 @@ namespace quickDBExplorer
 				indexdlg.Show();
 			}
 
-			setWhereDialog();
-			
+			setWhereDialog(true,false);
 		}
 
 		private void rdoDispView_CheckedChanged(object sender, System.EventArgs e)
@@ -2610,22 +2610,7 @@ namespace quickDBExplorer
 
 		private void btnWhereZoom_Click(object sender, System.EventArgs e)
 		{
-			if (wheredlg == null)
-			{
-				this.wheredlg = new WhereDialog();
-			}
-			WhereDialog dlg = this.wheredlg;
-			dlg.EditText = this.txtWhere.Text;
-			dlg.LableName = "where 指定";
-			dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
-			if( this.objectList.SelectedItems.Count == 1 )
-			{
-				dlg.TargetObject = this.objectList.GetSelectObject(0);
-			}
-			dlg.AliasName = this.txtAlias.Text;
-			dlg.Show();
-			dlg.BringToFront();
-			dlg.Focus();
+			setWhereDialog(false,true);
 		}
 
 		private void dlgWhereZoom_Click(object sender, System.EventArgs e)
@@ -2658,6 +2643,20 @@ namespace quickDBExplorer
 			DispData(this.objectList.GetSelectObject(0));
 		}
 
+		/// <summary>
+		/// Alias のフォーカスイン
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void txtAlias_Enter(object sender, EventArgs e)
+		{
+			this.aliasText = this.txtAlias.Text;
+		}
+		/// <summary>
+		/// Alias のフォーカスアウト
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void txtAlias_Leave(object sender, System.EventArgs e)
 		{
 			TextBox			senderText = sender as TextBox;
@@ -2674,7 +2673,10 @@ namespace quickDBExplorer
 			{
 				tbname = "";
 			}
-			setWhereDialog();
+			if (this.txtAlias.Text != this.aliasText)
+			{
+				setWhereDialog(false,false);
+			}
 		}
 
 		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -2715,7 +2717,7 @@ namespace quickDBExplorer
 					}
 
 					DispData(dboInfo);
-					setWhereDialog();
+					setWhereDialog(false,false);
 				}
 			}
 			if( e.KeyCode == Keys.Return ||
@@ -2726,7 +2728,10 @@ namespace quickDBExplorer
 					qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),senderText.Text,this.aliasHistory);
 				}
 				DispData(this.objectList.GetSelectObject(0));
-				setWhereDialog();
+				if (this.txtAlias.Text != this.aliasText)
+				{
+					setWhereDialog(false, false);
+				}
 			}
 		}
 
@@ -2770,22 +2775,7 @@ namespace quickDBExplorer
 			{
 				// Ctrl + W
 				// 値の拡大表示を行う
-				if (wheredlg == null)
-				{
-					this.wheredlg = new WhereDialog();
-				}
-				WhereDialog dlg = this.wheredlg;
-				dlg.EditText = this.txtWhere.Text;
-				dlg.LableName = "where 指定";
-				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					dlg.TargetObject = this.objectList.GetSelectObject(0);
-				}
-				dlg.AliasName = this.txtAlias.Text;
-				dlg.Show();
-				dlg.BringToFront();
-				dlg.Focus();
+				setWhereDialog(false,true);
 			}
 			if( e.Alt == false &&
 				e.Control == true &&
@@ -6481,9 +6471,16 @@ namespace quickDBExplorer
 		/// <summary>
 		/// where 句指定ダイアログを設定しなおす
 		/// </summary>
-		private void setWhereDialog()
+		/// <param name="isReset">フィールド情報などをリセットしなおすか否か</param>
+		/// <param name="isShow">非表示の場合にダイアログを表示するか否か</param>
+		private void setWhereDialog(bool isReset, bool isShow)
 		{
-			if (wheredlg != null && wheredlg.Visible == true)
+			if (wheredlg == null)
+			{
+				this.wheredlg = new WhereDialog();
+				isReset = false;
+			}
+			if (wheredlg.Visible == true)
 			{
 				if (this.objectList.SelectedItems.Count == 1)
 				{
@@ -6496,9 +6493,36 @@ namespace quickDBExplorer
 					wheredlg.TargetObject = null;
 					wheredlg.ResetTarget();
 				}
-				wheredlg.Show();
+				if (isShow == true)
+				{
+					wheredlg.Show();
+				}
+			}
+			else
+			{
+				WhereDialog dlg = this.wheredlg;
+				dlg.EditText = this.txtWhere.Text;
+				dlg.LableName = "where 指定";
+				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+				if (this.objectList.SelectedItems.Count == 1)
+				{
+					dlg.TargetObject = this.objectList.GetSelectObject(0);
+				}
+				dlg.AliasName = this.txtAlias.Text;
+				if (isShow == true)
+				{
+					dlg.Show();
+					dlg.BringToFront();
+					dlg.Focus();
+				}
+				if (isReset == true)
+				{
+					dlg.ResetTarget();
+				}
+				dlg.SetFieldCondResult();
 			}
 		}
+
 	}
 
 	/// <summary>
