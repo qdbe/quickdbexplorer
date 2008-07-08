@@ -311,7 +311,7 @@ namespace quickDBExplorer
 
 			StringBuilder sb = new StringBuilder();
 			string alias = this.pAliasName;
-			if( alias.Length != 0 && !alias.EndsWith(".") )
+			if (alias.Length != 0 && !alias.EndsWith("."))
 			{
 				alias += ".";
 			}
@@ -352,55 +352,69 @@ namespace quickDBExplorer
 				}
 				rowCount++;
 
-				if( condstr == "=" )
+				if (condstr == "=")
 				{
 					sb.Append(fieldname).Append(" = ");
 				}
-				else if(condstr == "!=" )
+				else if (condstr == "!=")
 				{
 					sb.Append(fieldname).Append(" != ");
 				}
-				else if(condstr == "like" )
+				else if (condstr == "like")
 				{
 					sb.Append(fieldname).Append(" like ");
 				}
-				else if(condstr == "not like" )
+				else if (condstr == "not like")
 				{
 					sb.Append(fieldname).Append(" not like ");
 				}
-				else if(condstr == "is null" )
+				else if (condstr == "is null")
 				{
 					sb.Append(fieldname).Append(" is null ");
 				}
-				else if(condstr == "is null and = \'\'" )
+				else if (condstr == "is null and = \'\'")
 				{
-					sb.Append(fieldname).AppendFormat(" is null and {0} = \'\' ",fieldname);
+					sb.Append(fieldname).AppendFormat(" is null and {0} = \'\' ", fieldname);
 				}
-				else if(condstr == "is not null" )
+				else if (condstr == "is not null")
 				{
 					sb.Append(fieldname).Append(" is not null ");
 				}
-				else if(condstr == "is not null and != \'\'" )
+				else if (condstr == "is not null and != \'\'")
 				{
-					sb.Append(fieldname).AppendFormat(" is not null and {0} != \'\' ",fieldname);
+					sb.Append(fieldname).AppendFormat(" is not null and {0} != \'\' ", fieldname);
 				}
-				else 
+				else
 				{
-					sb.Append(fieldname).Append(" ").AppendFormat(condstr,fieldname).Append(" ");
+					sb.Append(fieldname).Append(" ").AppendFormat(condstr, fieldname).Append(" ");
 				}
 
 				if (!condstr.StartsWith("is"))
 				{
 					string valtype = (string)dr[FIELDTYPE];
 					// ’l
-					if (valtype == "varchar" ||
-						valtype == "varbinary" ||
-						valtype == "nvarchar" ||
-						valtype == "char" ||
+					if (valtype == "nvarchar" ||
 						valtype == "nchar" ||
-						valtype == "binary")
+						valtype == "xml" ||
+						valtype == "sql_variant" ||
+						valtype == "ntext")
+					{
+						sb.Append(@"N'").Append(values).Append(@"'");
+					}
+					else if (valtype == "varchar" ||
+						valtype == "char" ||
+						valtype == "text")
 					{
 						sb.Append(@"'").Append(values).Append(@"'");
+					}
+					else if (valtype.Equals("datetime") ||
+						valtype.Equals("smalldatetime") ||
+						valtype.Equals("time") ||
+						valtype.Equals("date") ||
+						valtype.Equals("datetime2") ||
+						valtype.Equals("datetimeoffset"))
+					{
+						sb.Append(@"N'").Append(values).Append(@"'");
 					}
 					else
 					{
