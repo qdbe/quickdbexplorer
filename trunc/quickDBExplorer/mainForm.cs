@@ -6495,13 +6495,13 @@ namespace quickDBExplorer
 				}
 				if (isShow == true)
 				{
+					wheredlg.EditText = this.txtWhere.Text;
 					wheredlg.Show();
 				}
 			}
 			else
 			{
 				WhereDialog dlg = this.wheredlg;
-				dlg.EditText = this.txtWhere.Text;
 				dlg.LableName = "where Žw’è";
 				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
 				if (this.objectList.SelectedItems.Count == 1)
@@ -6520,6 +6520,11 @@ namespace quickDBExplorer
 					dlg.ResetTarget();
 				}
 				dlg.SetFieldCondResult();
+				if (isShow == true)
+				{
+					dlg.EditText = this.txtWhere.Text;
+				}
+
 			}
 		}
 
