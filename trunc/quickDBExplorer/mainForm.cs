@@ -5385,7 +5385,13 @@ namespace quickDBExplorer
 				if( MessageBox.Show("クリップボードから読み込みますか?","確認",System.Windows.Forms.MessageBoxButtons.YesNo) ==
 					DialogResult.Yes)
 				{
-					String str = Clipboard.GetDataObject().GetData(typeof(System.String)).ToString();
+					object clipobj = Clipboard.GetDataObject().GetData(typeof(System.String));
+					if (clipobj == null)
+					{
+						MessageBox.Show("クリップボードには読み込み可能な値がありません");
+						return;
+					}
+					String str = clipobj.ToString();
 					wr = new StringReader(str);
 				}
 				else

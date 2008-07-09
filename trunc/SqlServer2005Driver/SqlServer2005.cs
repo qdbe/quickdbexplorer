@@ -457,7 +457,7 @@ where
 			{
 				if( dbName.Length != 0 )
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} D{1} /U{2} /P{3} ",
+					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} /D{1} /U{2} /P{3} ",
 						serverstr,
 						dbName,
 						logOnUserId,
@@ -871,6 +871,8 @@ order by colorder",
 							(string)fdr["typeSchema"] ,
 							(string)fdr["valtype"] );
 				}
+				// –{—ˆ‚ÌŒ^’è‹`
+				addInfo.RealTypeName = (string)fdr["baseValType"];
 				if( fdr["is_identity"] != DBNull.Value &&
 					(bool)fdr["is_identity"] == true )
 				{

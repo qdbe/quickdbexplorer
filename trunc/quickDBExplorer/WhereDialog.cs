@@ -91,12 +91,12 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			this.fieldCondition = new System.Windows.Forms.DataGridView();
+			this.btnClear = new System.Windows.Forms.Button();
+			this.cmbCondition = new System.Windows.Forms.ComboBox();
 			this.Fields = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.fieldtypes = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.cond = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.datavalues = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.btnClear = new System.Windows.Forms.Button();
-			this.cmbCondition = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.fieldCondition)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -136,16 +136,18 @@ namespace quickDBExplorer
 			// 
 			this.fieldCondition.AllowUserToAddRows = false;
 			this.fieldCondition.AllowUserToDeleteRows = false;
-			this.fieldCondition.AllowUserToOrderColumns = true;
 			this.fieldCondition.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this.fieldCondition.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+			this.fieldCondition.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
 			this.fieldCondition.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.fieldCondition.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Fields,
             this.fieldtypes,
             this.cond,
             this.datavalues});
+			this.fieldCondition.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
 			this.fieldCondition.Location = new System.Drawing.Point(14, 169);
 			this.fieldCondition.Name = "fieldCondition";
 			this.fieldCondition.RowHeadersVisible = false;
@@ -153,51 +155,6 @@ namespace quickDBExplorer
 			this.fieldCondition.Size = new System.Drawing.Size(622, 160);
 			this.fieldCondition.TabIndex = 3;
 			this.fieldCondition.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.fieldCondition_CellEndEdit);
-			// 
-			// Fields
-			// 
-			this.Fields.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.Fields.DataPropertyName = "Fields";
-			this.Fields.HeaderText = "フィールド名";
-			this.Fields.Name = "Fields";
-			this.Fields.ReadOnly = true;
-			this.Fields.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.Fields.Width = 67;
-			// 
-			// fieldtypes
-			// 
-			this.fieldtypes.DataPropertyName = "fieldtypes";
-			this.fieldtypes.HeaderText = "";
-			this.fieldtypes.Name = "fieldtypes";
-			this.fieldtypes.ReadOnly = true;
-			this.fieldtypes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.fieldtypes.Visible = false;
-			// 
-			// cond
-			// 
-			this.cond.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.cond.DataPropertyName = "cond";
-			this.cond.HeaderText = "条件";
-			this.cond.Items.AddRange(new object[] {
-            "",
-            "=",
-            "!=",
-            "like",
-            "not like",
-            "is null",
-            "is null and = \'\'",
-            "is not null",
-            "is not null and != \'\'"});
-			this.cond.Name = "cond";
-			this.cond.Width = 35;
-			// 
-			// datavalues
-			// 
-			this.datavalues.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			this.datavalues.DataPropertyName = "datavalues";
-			this.datavalues.HeaderText = "値";
-			this.datavalues.Name = "datavalues";
-			this.datavalues.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
 			// btnClear
 			// 
@@ -221,6 +178,54 @@ namespace quickDBExplorer
 			this.cmbCondition.TabIndex = 2;
 			this.cmbCondition.SelectedIndexChanged += new System.EventHandler(this.cmbCondition_SelectedIndexChanged);
 			this.cmbCondition.TextChanged += new System.EventHandler(this.cmbCondition_TextChanged);
+			// 
+			// Fields
+			// 
+			this.Fields.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.Fields.DataPropertyName = "Fields";
+			this.Fields.HeaderText = "フィールド名";
+			this.Fields.Name = "Fields";
+			this.Fields.ReadOnly = true;
+			this.Fields.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.Fields.Width = 67;
+			// 
+			// fieldtypes
+			// 
+			this.fieldtypes.DataPropertyName = "fieldtypes";
+			this.fieldtypes.HeaderText = "";
+			this.fieldtypes.Name = "fieldtypes";
+			this.fieldtypes.ReadOnly = true;
+			this.fieldtypes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.fieldtypes.Visible = false;
+			this.fieldtypes.Width = 5;
+			// 
+			// cond
+			// 
+			this.cond.DataPropertyName = "cond";
+			this.cond.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+			this.cond.HeaderText = "結合条件指定";
+			this.cond.Items.AddRange(new object[] {
+            "",
+            "=",
+            "!=",
+            "like",
+            "not like",
+            "is null",
+            "is null and = \'\'",
+            "is not null",
+            "is not null and != \'\'"});
+			this.cond.MinimumWidth = 50;
+			this.cond.Name = "cond";
+			this.cond.Width = 53;
+			// 
+			// datavalues
+			// 
+			this.datavalues.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+			this.datavalues.DataPropertyName = "datavalues";
+			this.datavalues.HeaderText = "値";
+			this.datavalues.MinimumWidth = 100;
+			this.datavalues.Name = "datavalues";
+			this.datavalues.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
 			// WhereDialog
 			// 
@@ -276,7 +281,7 @@ namespace quickDBExplorer
 			{
 				DataRow dr = fieldDs.Tables[BASETABLE].NewRow();
 				dr[FIELDNAME] = ((DBFieldInfo)this.pTargetObject.FieldInfo[i]).Name;
-				dr[FIELDTYPE] = ((DBFieldInfo)this.pTargetObject.FieldInfo[i]).TypeName;
+				dr[FIELDTYPE] = ((DBFieldInfo)this.pTargetObject.FieldInfo[i]).RealTypeName;
 				dr[CONDCMB] = "";
 				dr[VALUES] = "";
 				this.fieldDs.Tables[BASETABLE].Rows.Add(dr);
@@ -450,6 +455,10 @@ namespace quickDBExplorer
 			this.Visible = false;
 		}
 
+		/// <summary>
+		/// 画面を閉じる場合でも、非表示にし、実体を Dispose しない
+		/// </summary>
+		/// <param name="e"></param>
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			this.Visible = false;

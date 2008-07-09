@@ -102,6 +102,7 @@
     <Content Include="TextHistoryDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>TextHistoryDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </Content>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -200,75 +201,99 @@
     </Compile>
     <EmbeddedResource Include="CmdInputDialog.resx">
       <DependentUpon>CmdInputDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DataGridViewBase.resx">
       <DependentUpon>DataGridViewBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FieldGetDialog.resx">
       <DependentUpon>FieldGetDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="GridFormatDialog.resx">
       <DependentUpon>GridFormatDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="HistoryViewer.resx">
       <DependentUpon>HistoryViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ImageViewer.resx">
       <DependentUpon>ImageViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="IndexViewDialog.resx">
       <DependentUpon>IndexViewDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginDialog.resx">
       <DependentUpon>LoginDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="mainForm.resx">
       <DependentUpon>mainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainMDI.resx">
       <DependentUpon>MainMDI.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MakeFieldWhereDlg.resx">
       <DependentUpon>MakeFieldWhereDlg.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="objectListView.resx">
       <DependentUpon>objectListView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="QdbeDataGridTextBoxColumn.resx">
       <DependentUpon>QdbeDataGridTextBoxColumn.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="qdbeListBox.resx">
       <DependentUpon>qdbeListBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="QueryDialog.resx">
       <DependentUpon>QueryDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="QueryDialogSelect.resx">
       <DependentUpon>QueryDialogSelect.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="quickDBExplorerBaseForm.resx">
       <DependentUpon>quickDBExplorerBaseForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="quickDBExplorerTextBox.resx">
       <DependentUpon>quickDBExplorerTextBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="SearchConditionDlg.resx">
       <DependentUpon>SearchConditionDlg.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ServerSelectDialog.resx">
       <DependentUpon>ServerSelectDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="TableSelectDialog.resx">
       <DependentUpon>TableSelectDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="WhereDialog.resx">
       <DependentUpon>WhereDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ZoomDialog.resx">
       <DependentUpon>ZoomDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="ZoomFloatingDialog.resx">
       <DependentUpon>ZoomFloatingDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="quickDBExplorer.exe.aconf" />
     <None Include="TextHistoryDataSet.xsx">

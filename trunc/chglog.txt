@@ -38,4 +38,4 @@ System.Windows.Forms.TextBox を quickDBExplorerTextBox に変更
 選択したフィールドからwhere 句の生成を可能にした
 quickDBExplorerTextBox で CTRL+D の処理を一括処理するようにした
 簡易的なWhere 句の指定を可能にした
-
+CSV/TSV読み込み時にクリップボードの内容が不正な場合にエラーを出すようにした

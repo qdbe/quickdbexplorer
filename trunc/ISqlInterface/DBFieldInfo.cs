@@ -37,6 +37,17 @@ namespace quickDBExplorer
 			set { this.typeName = value; }
 		}
 
+		private string pRealTypeName = "";
+
+		/// <summary>
+		/// システムの型名
+		/// </summary>
+		public string RealTypeName
+		{
+			get { return pRealTypeName; }
+			set { pRealTypeName = value; }
+		}
+
 		private	int		length = 0;
 		/// <summary>
 		/// フィールドの最大長(文字列の場合)

@@ -909,7 +909,8 @@ namespace quickDBExplorer
 				string.Format(System.Globalization.CultureInfo.CurrentCulture,
 				@"select 
 syscolumns.name colname, 
-systypes.name valtype, 
+t1.name valtype, 
+t2.name baseValType, 
 convert(int,syscolumns.length) as length, 
 isnull(convert(int,syscolumns.prec),0) as prec, 
 isnull(convert(int,syscolumns.xscale),0) as xscale, 
@@ -936,11 +937,13 @@ from
 	sysobjects, 
 	syscolumns, 
 	sysusers, 
-	systypes 
+	systypes t1,
+	systypes t2
 where 
 	sysobjects.id = syscolumns.id 
 and sysobjects.uid= sysusers.uid 
-and syscolumns.xusertype=systypes.xusertype 
+and syscolumns.xusertype=t1.xusertype 
+and syscolumns.xtype=t2.xusertype 
 and sysobjects.id = OBJECT_ID('{0}')
 order by syscolumns.colorder",
 				databaseObjectInfo.RealObjName
@@ -973,6 +976,7 @@ order by syscolumns.colorder",
 				addInfo.Prec = (int)fdr["prec"];
 				addInfo.Xscale = (int)fdr["xscale"];
 				addInfo.TypeName = (string)fdr["valtype"];
+				addInfo.RealTypeName = (string)fdr["baseValType"];
 
 				if( fdr["is_identity"] != DBNull.Value &&
 					(int)fdr["is_identity"] == 1 )
