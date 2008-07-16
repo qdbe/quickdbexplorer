@@ -372,7 +372,7 @@ namespace quickDBExplorer
 		#endregion
 
 		/// <summary>
-		/// 設定結果を反映させる
+		/// 画面条件などからwhere句を生成しなおす
 		/// </summary>
 		private void reCreateSql()
 		{
@@ -521,6 +521,9 @@ namespace quickDBExplorer
 			this.txtWhereResult.Text = sb.ToString();
 		}
 
+		/// <summary>
+		/// ラジオボタンの状況により、enble 値を変更させる
+		/// </summary>
 		private void SetRdoCondition()
 		{
 			ArrayList tar = new ArrayList();
@@ -557,53 +560,103 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// Alias 設定の変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void txtAliasT1_TextChanged(object sender, System.EventArgs e)
 		{
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// Alias 設定の変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void txtAliasT2_TextChanged(object sender, System.EventArgs e)
 		{
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// AND/OR 設定の変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void cmbANDOR_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// クリップボードへのコピー
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnOK_Click(object sender, System.EventArgs e)
 		{
 			Clipboard.SetDataObject(this.txtWhereResult.Text,true );
 		}
 
+		/// <summary>
+		/// 閉じるボタン押下イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnCancel_Click(object sender, System.EventArgs e)
 		{
 			this.Close();
 		}
 
+		/// <summary>
+		/// 選択テーブルを反映する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnRef1_Click(object sender, System.EventArgs e)
 		{
 			this.txtAliasT1.Text = this.pObjectInfo.FormalName;
 		}
 
+		/// <summary>
+		/// 選択テーブルを反映する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnRef2_Click(object sender, System.EventArgs e)
 		{
 			this.txtAliasT2.Text = this.pObjectInfo.FormalName;
 		}
 
+		/// <summary>
+		/// 選択テーブルを反映する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnRef3_Click(object sender, System.EventArgs e)
 		{
 			this.txtAlias.Text = this.pObjectInfo.FormalName;
 		}
 
 
+		/// <summary>
+		/// ラジオボタン変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void rdoTable_CheckedChanged(object sender, System.EventArgs e)
 		{
 			SetRdoCondition();
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// 画面起動時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MakeFieldWhereDlg_Load(object sender, System.EventArgs e)
 		{
 			this.cmbCondition.SelectedIndex = 0;
@@ -613,31 +666,61 @@ namespace quickDBExplorer
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// 画面条件設定変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void txtAlias_TextChanged(object sender, System.EventArgs e)
 		{
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// 画面条件設定変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void cmbCondition_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// 画面条件設定変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void cmbCondition_TextChanged(object sender, System.EventArgs e)
 		{
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// 画面条件設定変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void cmbANDOR_TextChanged(object sender, System.EventArgs e)
 		{
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// 画面条件設定変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void chkPlace_CheckedChanged(object sender, System.EventArgs e)
 		{
 			reCreateSql();
 		}
 
+		/// <summary>
+		/// 画面条件設定変更イベント
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void cmbJoinCond_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			reCreateSql();

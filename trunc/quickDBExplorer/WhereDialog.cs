@@ -253,12 +253,20 @@ namespace quickDBExplorer
 		}
 		#endregion
 
+		/// <summary>
+		/// 画面起動時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void WhereDialog_Load(object sender, System.EventArgs e)
 		{
 			this.cmbCondition.SelectedIndex = 0;
 			DispFieldCondition();
 		}
 
+		/// <summary>
+		/// フィールド一覧の設定を行う
+		/// </summary>
 		private void DispFieldCondition()
 		{
 			if( this.pTargetObject == null )
@@ -304,7 +312,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// 条件句を生成しなおす
+		/// 画面条件からwhere句を生成する
 		/// </summary>
 		public void SetFieldCondResult()
 		{
@@ -432,6 +440,11 @@ namespace quickDBExplorer
 			this.txtZoom.Text = sb.ToString();
 		}
 
+		/// <summary>
+		/// 条件をクリアする
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnClear_Click(object sender, EventArgs e)
 		{
 			DispFieldCondition();
@@ -445,13 +458,24 @@ namespace quickDBExplorer
 			DispFieldCondition();
 		}
 
+		/// <summary>
+		/// AND/OR の条件変更があった
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void cmbCondition_TextChanged(object sender, EventArgs e)
 		{
 			SetFieldCondResult();
 		}
 
+		/// <summary>
+		/// 閉じる処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnClose_Click(object sender, EventArgs e)
 		{
+			// 画面を閉じる場合でも、非表示にし、実体を close しない
 			this.Visible = false;
 		}
 
