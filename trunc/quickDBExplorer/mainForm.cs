@@ -92,7 +92,7 @@ namespace quickDBExplorer
 		private Color	btnBackColor;
 		private Color	btnForeColor;
 		private	IndexViewDialog indexdlg = null;
-		private WhereDialog wheredlg = new WhereDialog();
+		private WhereDialog wheredlg = null;
 		private string NumFormat;
 		private	string	FloatFormat;
 		private	string	DateFormat;
@@ -6481,9 +6481,11 @@ namespace quickDBExplorer
 		/// <param name="isShow">非表示の場合にダイアログを表示するか否か</param>
 		private void setWhereDialog(bool isReset, bool isShow)
 		{
+			bool isInit = false;
 			if (wheredlg == null)
 			{
 				this.wheredlg = new WhereDialog();
+				isInit = true;
 				isReset = false;
 			}
 			if (wheredlg.Visible == true)
@@ -6508,8 +6510,11 @@ namespace quickDBExplorer
 			else
 			{
 				WhereDialog dlg = this.wheredlg;
+				if (isInit == true)
+				{
+					dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
+				}
 				dlg.LableName = "where 指定";
-				dlg.Enter += new System.EventHandler(this.dlgWhereZoom_Click);
 				if (this.objectList.SelectedItems.Count == 1)
 				{
 					dlg.TargetObject = this.objectList.GetSelectObject(0);

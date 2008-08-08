@@ -291,8 +291,10 @@ namespace quickDBExplorer
 			// 
 			this.cmbCondition.Items.AddRange(new object[] {
             "is null",
-            "is null or != \'\'",
-            "is not null"});
+            "is null or = \'\'",
+            "is not null",
+            "is not null and != \'\'",
+			});
 			this.cmbCondition.Location = new System.Drawing.Point(315, 96);
 			this.cmbCondition.Name = "cmbCondition";
 			this.cmbCondition.Size = new System.Drawing.Size(224, 20);
@@ -479,13 +481,17 @@ namespace quickDBExplorer
 					{
 						sb.Append("(").Append(strAlias).Append(fname).Append(" is null ").Append(")");
 					}
-					else if ( this.cmbCondition.Text == @"is null or != ''" )
+					else if ( this.cmbCondition.Text == @"is null or = ''" )
 					{
-						sb.Append("(").Append(strAlias).Append(fname).Append(" is null or ").Append(strAlias).Append(fname).Append(" != '' ").Append(")");
+						sb.Append("(").Append(strAlias).Append(fname).Append(" is null or ").Append(strAlias).Append(fname).Append(" = '' ").Append(")");
 					}
 					else if( this.cmbCondition.Text == @"is not null" )
 					{
 						sb.Append("(").Append(strAlias).Append(fname).Append(" is not null ").Append(")");
+					}
+					else if (this.cmbCondition.Text == @"is not null and != ''")
+					{
+						sb.Append("(").Append(strAlias).Append(fname).Append(" is not null and ").Append(strAlias).Append(fname).Append(" != '' ").Append(")");
 					}
 					else
 					{
