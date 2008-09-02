@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -207,7 +208,7 @@ namespace quickDBExplorer
 		/// <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
 		/// <param name="limitSchema">スキーマの絞込み対象</param>
 		/// <returns></returns>
-		string	GetSearchFieldSql(string searchCondition, quickDBExplorer.SearchType searchType, bool isCaseSensitive, ArrayList limitSchema);
+		string	GetSearchFieldSql(string searchCondition, quickDBExplorer.SearchType searchType, bool isCaseSensitive, List<string> limitSchema);
 
 		/// <summary>
 		/// オブジェクト名を検索する SQL文を生成する
@@ -222,6 +223,6 @@ namespace quickDBExplorer
 		/// <param name="isFunction">ファンクションを検索するか否か</param>
 		/// <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
 		/// <returns></returns>
-		string	GetSearchObjectSql(string searchCondition, quickDBExplorer.SearchType searchType, bool isCaseSensitive, ArrayList limitSchema, bool isTable, bool isView, bool isSynonym, bool isFunction, bool isProcedure);
+		string GetSearchObjectSql(string searchCondition, quickDBExplorer.SearchType searchType, bool isCaseSensitive, List<string> limitSchema, bool isTable, bool isView, bool isSynonym, bool isFunction, bool isProcedure);
 	}
 }

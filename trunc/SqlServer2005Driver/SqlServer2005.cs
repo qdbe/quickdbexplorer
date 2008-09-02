@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -227,7 +228,7 @@ namespace quickDBExplorer
 
 			string destObj = "";
 
-			ArrayList ar = new ArrayList();
+			List<string> ar = new List<string>();
 
 			if( isDisplayTable == true )
 			{
@@ -267,7 +268,7 @@ namespace quickDBExplorer
 				{
 					destObj += ",";
 				}
-				destObj += "'" + (string)ar[i] + "'";
+				destObj += "'" + ar[i] + "'";
 			}
 
 			retsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,@"select 
@@ -844,7 +845,7 @@ order by colorder",
 			tableda.Fill(ds,"fieldList");
 
 			DBFieldInfo addInfo;
-			ArrayList	ar = new ArrayList();
+			List<DBFieldInfo> ar = new List<DBFieldInfo>();
 			foreach(DataRow fdr in ds.Tables["fieldList"].Rows )
 			{
 				// フィールドの情報でぐるぐるまわって、セットしていく
@@ -928,7 +929,7 @@ order by colorder",
 			string searchCondition, 
 			quickDBExplorer.SearchType searchType, 
 			bool isCaseSensitive, 
-			ArrayList limitSchema)
+			List<string> limitSchema)
 		{
 			searchCondition = searchCondition.Replace("'","''");
 			if( isCaseSensitive == false )
@@ -947,7 +948,7 @@ order by colorder",
 					{
 						schemaFilter += ",";
 					}
-					schemaFilter += "'" + limitSchema[j].ToString() + "'";
+					schemaFilter += "'" + limitSchema[j] + "'";
 				}
 				schemaFilter += ")";
 			}
@@ -1008,8 +1009,8 @@ where
 		public string	GetSearchObjectSql(
 			string searchCondition, 
 			quickDBExplorer.SearchType searchType, 
-			bool isCaseSensitive, 
-			ArrayList limitSchema,
+			bool isCaseSensitive,
+			List<string> limitSchema,
 			bool isTable, 
 			bool isView, 
 			bool isSynonym, 
@@ -1039,7 +1040,7 @@ where
 					break;
 			}
 
-			ArrayList ar = new ArrayList();
+			List<string> ar = new List<string>();
 
 			if( isTable == true )
 			{
@@ -1080,7 +1081,7 @@ where
 				{
 					typeCondition += ",";
 				}
-				typeCondition += "'" + ar[i].ToString() + "'";
+				typeCondition += "'" + ar[i] + "'";
 			}
 
 			string addCondition = string.Empty;
@@ -1104,7 +1105,7 @@ where
 					{
 						schemaFilter += ",";
 					}
-					schemaFilter += "'" + limitSchema[j].ToString() + "'";
+					schemaFilter += "'" + limitSchema[j] + "'";
 				}
 				schemaFilter += ")";
 			}

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.SqlClient;
@@ -226,7 +227,7 @@ namespace quickDBExplorer
 		{
 			string destObj = "";
 
-			ArrayList ar = new ArrayList();
+			List<string> ar = new List<string>();
 
 			if( isDisplayTable == true )
 			{
@@ -267,7 +268,7 @@ namespace quickDBExplorer
 				{
 					sb.Append(",");
 				}
-				sb.Append("'").Append((string)ar[i]).Append("'");
+				sb.Append("'").Append(ar[i]).Append("'");
 			}
 			destObj = sb.ToString();
 			sb.Length  = 0;
@@ -952,7 +953,7 @@ order by syscolumns.colorder",
 			tableda.Fill(ds,"fieldList");
 
 			DBFieldInfo addInfo;
-			ArrayList	ar = new ArrayList();
+			List<DBFieldInfo> ar = new List<DBFieldInfo>();
 			foreach(DataRow fdr in ds.Tables["fieldList"].Rows )
 			{
 				// フィールドの情報でぐるぐるまわって、セットしていく
@@ -1021,8 +1022,8 @@ order by syscolumns.colorder",
 		public string	GetSearchFieldSql(
 			string searchCondition, 
 			quickDBExplorer.SearchType searchType, 
-			bool isCaseSensitive, 
-			ArrayList limitSchema)
+			bool isCaseSensitive,
+			List<string> limitSchema)
 		{
 			searchCondition = searchCondition.Replace("'","''");
 			if( isCaseSensitive == false )
@@ -1041,7 +1042,7 @@ order by syscolumns.colorder",
 					{
 						schemaFilter += ",";
 					}
-					schemaFilter += "'" + limitSchema[j].ToString() + "'";
+					schemaFilter += "'" + limitSchema[j] + "'";
 				}
 				schemaFilter += ")";
 			}
@@ -1102,8 +1103,8 @@ where
 		public string	GetSearchObjectSql(
 			string searchCondition, 
 			quickDBExplorer.SearchType searchType, 
-			bool isCaseSensitive, 
-			ArrayList limitSchema,
+			bool isCaseSensitive,
+			List<string> limitSchema,
 			bool isTable, 
 			bool isView, 
 			bool isSynonym, 
@@ -1133,7 +1134,7 @@ where
 					break;
 			}
 
-			ArrayList ar = new ArrayList();
+			List<string> ar = new List<string>();
 
 			if( isTable == true )
 			{
@@ -1169,7 +1170,7 @@ where
 				{
 					typeCondition += ",";
 				}
-				typeCondition += "'" + ar[i].ToString() + "'";
+				typeCondition += "'" + ar[i] + "'";
 			}
 
 			string addCondition = string.Empty;
@@ -1193,7 +1194,7 @@ where
 					{
 						schemaFilter += ",";
 					}
-					schemaFilter += "'" + limitSchema[j].ToString() + "'";
+					schemaFilter += "'" + limitSchema[j] + "'";
 				}
 				schemaFilter += ")";
 			}

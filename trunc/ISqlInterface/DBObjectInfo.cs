@@ -1,6 +1,7 @@
 using	System;
 using	System.Data;
 using	System.Collections;
+using   System.Collections.Generic;
 
 namespace quickDBExplorer
 {
@@ -235,25 +236,26 @@ namespace quickDBExplorer
 			}
 		}
 
-		private	ArrayList	fieldInfo = null;
+		private	List<DBFieldInfo>	pFieldInfo = null;
+
 		/// <summary>
 		/// オブジェクトのフィールド情報をキャッシュして保持する
 		/// フィールド情報のコレクションを管理する
 		/// </summary>
-		public	ArrayList	FieldInfo
+		public List<DBFieldInfo> FieldInfo
 		{
 			get 
 			{
 				// まだ読み込んでいない場合は、読み込みを自動的に実施する
-				if( this.fieldInfo == null )
+				if( this.pFieldInfo == null )
 				{
 					this.DataGet(this, new EventArgs());
 				}
-				return this.fieldInfo; 
+				return this.pFieldInfo; 
 			}
 			set 
 			{
-				this.fieldInfo = value;
+				this.pFieldInfo = value;
 			}
 		}
 
@@ -266,7 +268,7 @@ namespace quickDBExplorer
 		{
 			get { 
 				// まだ読み込んでいない場合は、読み込みを自動的に実施する
-				if( this.fieldInfo == null )
+				if( this.pFieldInfo == null )
 				{
 					this.DataGet(this, new EventArgs());
 				}

@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using System.Drawing;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -1347,7 +1348,7 @@ namespace quickDBExplorer
 		/// </summary>
 		public	void	InitPopupMenu()
 		{
-			ArrayList	menuAr = new ArrayList();
+			List<qdbeMenuItem> menuAr = new List<qdbeMenuItem>();
 			menuAr.Add(new qdbeMenuItem(false,true,null,"オブジェクト名コピー", new EventHandler(this.menuTableCopy_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,null,"オブジェクト名コピー カンマ付き", new EventHandler(this.menuTableCopyCsv_Click) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,null,"指定オブジェクト選択", new EventHandler(this.menuTableSelect_Click) ) );
@@ -1410,7 +1411,7 @@ namespace quickDBExplorer
 			}
 			this.objectList.ContextMenu = objMenu;
 
-			ArrayList	btnAr = new ArrayList();
+			List<Control> btnAr = new List<Control>();
 			btnAr.Add(this.btnCSV);
 			btnAr.Add(this.btnDDL);
 			btnAr.Add(this.btnEtc);
@@ -3256,13 +3257,6 @@ namespace quickDBExplorer
 
 					dr = cm.ExecuteReader();
 
-					ArrayList fldname = new ArrayList();
-					ArrayList strint = new ArrayList();
-	
-					fldname.Clear();
-					strint.Clear();
-
-
 					// データの書き出し
 					while (dr.Read())
 					{
@@ -3429,13 +3423,6 @@ namespace quickDBExplorer
 					cm.CommandText = stSql;
 
 					dr = cm.ExecuteReader();
-
-					ArrayList fldname = new ArrayList();
-					ArrayList strint = new ArrayList();
-	
-					fldname.Clear();
-					strint.Clear();
-
 
 					// データの書き出し
 					while (dr.Read())
@@ -4020,7 +4007,7 @@ namespace quickDBExplorer
 			ds.Tables["SearchResult"].Columns.Add("ObjName");
 			ds.Tables["SearchResult"].Columns.Add("FieldName");
 
-			ArrayList limitSchema = new ArrayList();
+			List<string> limitSchema = new List<string>();
 			if( isLimitSchema == true )
 			{
 				foreach( string itm in this.ownerListbox.SelectedItems )
@@ -4532,8 +4519,8 @@ namespace quickDBExplorer
 
 					dr = cm.ExecuteReader();
 
-					ArrayList fldname = new ArrayList();
-					ArrayList strint = new ArrayList();
+					List<string> fldname = new List<string>();
+					List<Type> strint = new List<Type>();
 					int			maxcol;
 	
 					fldname.Clear();
