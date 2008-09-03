@@ -74,8 +74,8 @@ namespace quickDBExplorer
 			// MsgArea
 			// 
 			this.MsgArea.Location = new System.Drawing.Point(112, 232);
-			this.MsgArea.Name = "MsgArea";
 			this.MsgArea.Size = new System.Drawing.Size(284, 16);
+			this.MsgArea.TabIndex = 2;
 			// 
 			// btnCancel
 			// 
@@ -84,7 +84,7 @@ namespace quickDBExplorer
 			this.btnCancel.Location = new System.Drawing.Point(412, 228);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(88, 24);
-			this.btnCancel.TabIndex = 12;
+			this.btnCancel.TabIndex = 3;
 			this.btnCancel.Text = "ƒLƒƒƒ“ƒZƒ‹(&X)";
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
@@ -95,7 +95,7 @@ namespace quickDBExplorer
 			this.btnOk.Location = new System.Drawing.Point(12, 228);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(96, 24);
-			this.btnOk.TabIndex = 11;
+			this.btnOk.TabIndex = 1;
 			this.btnOk.Text = "Œˆ’è(&O)";
 			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
 			// 
@@ -108,8 +108,7 @@ namespace quickDBExplorer
 			this.txtTableSelect.Name = "txtTableSelect";
 			this.txtTableSelect.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.txtTableSelect.Size = new System.Drawing.Size(480, 204);
-			this.txtTableSelect.TabIndex = 13;
-			this.txtTableSelect.Text = "";
+			this.txtTableSelect.TabIndex = 0;
 			// 
 			// TableSelectDialog
 			// 
@@ -126,6 +125,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.btnCancel, 0);
 			this.Controls.SetChildIndex(this.txtTableSelect, 0);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion

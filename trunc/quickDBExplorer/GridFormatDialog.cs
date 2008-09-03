@@ -133,7 +133,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(GridFormatDialog));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GridFormatDialog));
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.btnOK = new System.Windows.Forms.Button();
 			this.label2 = new System.Windows.Forms.Label();
@@ -141,10 +141,10 @@ namespace quickDBExplorer
 			this.label3 = new System.Windows.Forms.Label();
 			this.btnFont = new System.Windows.Forms.Button();
 			this.label4 = new System.Windows.Forms.Label();
-			this.txtNumDisp = new quickDBExplorerTextBox();
+			this.txtNumDisp = new quickDBExplorer.quickDBExplorerTextBox();
 			this.cmbNumFormat = new System.Windows.Forms.ComboBox();
-			this.txtDecimalDisp = new quickDBExplorerTextBox();
-			this.txtDateTimeDisp = new quickDBExplorerTextBox();
+			this.txtDecimalDisp = new quickDBExplorer.quickDBExplorerTextBox();
+			this.txtDateTimeDisp = new quickDBExplorer.quickDBExplorerTextBox();
 			this.cmbDecimalFormat = new System.Windows.Forms.ComboBox();
 			this.cmbDateFormat = new System.Windows.Forms.ComboBox();
 			this.fontDialog1 = new System.Windows.Forms.FontDialog();
@@ -213,18 +213,20 @@ namespace quickDBExplorer
 			// 
 			// txtNumDisp
 			// 
+			this.txtNumDisp.IsCTRLDelete = true;
+			this.txtNumDisp.IsDigitOnly = false;
 			this.txtNumDisp.Location = new System.Drawing.Point(176, 16);
 			this.txtNumDisp.Name = "txtNumDisp";
 			this.txtNumDisp.ReadOnly = true;
 			this.txtNumDisp.Size = new System.Drawing.Size(168, 19);
-			this.txtNumDisp.TabIndex = 5;
-			this.txtNumDisp.Text = "";
+			this.txtNumDisp.TabIndex = 12;
+			this.txtNumDisp.TabStop = false;
 			// 
 			// cmbNumFormat
 			// 
 			this.cmbNumFormat.Items.AddRange(new object[] {
-														   "D\t\tカンマなし",
-														   "###,###,###,###\tカンマあり"});
+            "D\t\tカンマなし",
+            "###,###,###,###\tカンマあり"});
 			this.cmbNumFormat.Location = new System.Drawing.Point(360, 16);
 			this.cmbNumFormat.Name = "cmbNumFormat";
 			this.cmbNumFormat.Size = new System.Drawing.Size(272, 20);
@@ -233,29 +235,33 @@ namespace quickDBExplorer
 			// 
 			// txtDecimalDisp
 			// 
+			this.txtDecimalDisp.IsCTRLDelete = true;
+			this.txtDecimalDisp.IsDigitOnly = false;
 			this.txtDecimalDisp.Location = new System.Drawing.Point(176, 48);
 			this.txtDecimalDisp.Name = "txtDecimalDisp";
 			this.txtDecimalDisp.ReadOnly = true;
 			this.txtDecimalDisp.Size = new System.Drawing.Size(168, 19);
-			this.txtDecimalDisp.TabIndex = 7;
-			this.txtDecimalDisp.Text = "";
+			this.txtDecimalDisp.TabIndex = 12;
+			this.txtDecimalDisp.TabStop = false;
 			// 
 			// txtDateTimeDisp
 			// 
+			this.txtDateTimeDisp.IsCTRLDelete = true;
+			this.txtDateTimeDisp.IsDigitOnly = false;
 			this.txtDateTimeDisp.Location = new System.Drawing.Point(176, 80);
 			this.txtDateTimeDisp.Name = "txtDateTimeDisp";
 			this.txtDateTimeDisp.ReadOnly = true;
 			this.txtDateTimeDisp.Size = new System.Drawing.Size(168, 19);
-			this.txtDateTimeDisp.TabIndex = 7;
-			this.txtDateTimeDisp.Text = "";
+			this.txtDateTimeDisp.TabIndex = 12;
+			this.txtDateTimeDisp.TabStop = false;
 			// 
 			// cmbDecimalFormat
 			// 
 			this.cmbDecimalFormat.Items.AddRange(new object[] {
-														   "g\t標準",
-														   "n\tカンマ付き",
-														   "F\t小数点",
-														   "e\t指数"});
+            "g\t標準",
+            "n\tカンマ付き",
+            "F\t小数点",
+            "e\t指数"});
 			this.cmbDecimalFormat.Location = new System.Drawing.Point(360, 48);
 			this.cmbDecimalFormat.Name = "cmbDecimalFormat";
 			this.cmbDecimalFormat.Size = new System.Drawing.Size(272, 20);
@@ -265,14 +271,14 @@ namespace quickDBExplorer
 			// cmbDateFormat
 			// 
 			this.cmbDateFormat.Items.AddRange(new object[] {
-														   "yyyy/MM/dd\t\t2006/01/01",
-														   "yyyy/M/d\t\t\t2006/1/1",
-														   "yyyy年MM月dd日\t\t2006年01月01日",
-														   "yyyy年M月d日\t\t2006年1月1日",
-														   "yyyy/MM/dd HH:mm:ss\t2006/01/01 01:23:05",
-														   "yyyy/M/d HH:mm:ss\t\t2006/1/1 01:23:05",
-														   "yyyy年MM月dd日 HH:mm:ss\t2006年01月01日 01:23:05",
-														   "yyyy年M月d日 HH:mm:ss\t2006年1月1日 01:23:05"});
+            "yyyy/MM/dd\t\t2006/01/01",
+            "yyyy/M/d\t\t\t2006/1/1",
+            "yyyy年MM月dd日\t\t2006年01月01日",
+            "yyyy年M月d日\t\t2006年1月1日",
+            "yyyy/MM/dd HH:mm:ss\t2006/01/01 01:23:05",
+            "yyyy/M/d HH:mm:ss\t\t2006/1/1 01:23:05",
+            "yyyy年MM月dd日 HH:mm:ss\t2006年01月01日 01:23:05",
+            "yyyy年M月d日 HH:mm:ss\t2006年1月1日 01:23:05"});
 			this.cmbDateFormat.Location = new System.Drawing.Point(360, 80);
 			this.cmbDateFormat.Name = "cmbDateFormat";
 			this.cmbDateFormat.Size = new System.Drawing.Size(272, 20);
@@ -285,7 +291,8 @@ namespace quickDBExplorer
 			this.txtFontDisp.Name = "txtFontDisp";
 			this.txtFontDisp.ReadOnly = true;
 			this.txtFontDisp.Size = new System.Drawing.Size(168, 40);
-			this.txtFontDisp.TabIndex = 7;
+			this.txtFontDisp.TabIndex = 12;
+			this.txtFontDisp.TabStop = false;
 			this.txtFontDisp.Text = "文字ABC";
 			// 
 			// GridFormatDialog
@@ -314,6 +321,7 @@ namespace quickDBExplorer
 			this.Text = "データ表示書式指定";
 			this.Load += new System.EventHandler(this.GridFormatDialog_Load);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion

@@ -51,29 +51,18 @@ namespace quickDBExplorer
 			// 
 			// txtInput
 			// 
-			this.txtInput.IsCTRLDelete = true;
-			this.txtInput.Name = "txtInput";
 			this.txtInput.Size = new System.Drawing.Size(444, 256);
-			// 
-			// btnGo
-			// 
-			this.btnGo.Name = "btnGo";
 			// 
 			// btnCancel
 			// 
-			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.TabIndex = 4;
 			// 
 			// chkReturn
 			// 
 			this.chkReturn.Enabled = false;
 			this.chkReturn.Location = new System.Drawing.Point(240, 296);
-			this.chkReturn.Name = "chkReturn";
 			this.chkReturn.Size = new System.Drawing.Size(96, 16);
 			this.chkReturn.Visible = false;
-			// 
-			// btnHistory
-			// 
-			this.btnHistory.Name = "btnHistory";
 			// 
 			// QueryDialogSelect
 			// 
@@ -81,6 +70,7 @@ namespace quickDBExplorer
 			this.ClientSize = new System.Drawing.Size(480, 325);
 			this.Name = "QueryDialogSelect";
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion

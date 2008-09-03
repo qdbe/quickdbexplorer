@@ -53,26 +53,24 @@ namespace quickDBExplorer
 			// 
 			// txtInput
 			// 
-			this.txtInput.IsCTRLDelete = true;
 			this.txtInput.Location = new System.Drawing.Point(16, 50);
-			this.txtInput.Name = "txtInput";
 			this.txtInput.Size = new System.Drawing.Size(444, 206);
 			// 
 			// btnGo
 			// 
-			this.btnGo.Name = "btnGo";
+			this.btnGo.TabIndex = 3;
 			// 
 			// btnCancel
 			// 
-			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.TabIndex = 5;
 			// 
 			// chkReturn
 			// 
-			this.chkReturn.Name = "chkReturn";
+			this.chkReturn.TabIndex = 2;
 			// 
 			// btnHistory
 			// 
-			this.btnHistory.Name = "btnHistory";
+			this.btnHistory.TabIndex = 4;
 			// 
 			// label1
 			// 
@@ -107,6 +105,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion

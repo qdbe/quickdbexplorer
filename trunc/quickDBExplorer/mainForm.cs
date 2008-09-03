@@ -199,7 +199,7 @@ namespace quickDBExplorer
 		/// Table/View リストの選択履歴
 		/// Max10件を想定
 		/// </summary>
-		private ArrayList selectedTables = new ArrayList();
+		private List<string> selectedTables = new List<string>();
 
 
 		/// <summary>
@@ -4883,18 +4883,15 @@ namespace quickDBExplorer
 
 					dr = cm.ExecuteReader();
 
-					ArrayList fldname = new ArrayList();
-					ArrayList strint = new ArrayList();
+					List<string> fldname = new List<string>();
 					int			maxcol;
 	
 					fldname.Clear();
-					strint.Clear();
 
 					maxcol = dr.FieldCount;
 					for( int j=0 ; j < maxcol; j++ )
 					{
 						fldname.Add( dr.GetName(j) );
-						strint.Add( dr.GetFieldType(j) );
 					}
 
 					// 先頭行は列見出し

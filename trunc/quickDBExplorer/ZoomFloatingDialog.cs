@@ -63,16 +63,19 @@ namespace quickDBExplorer
 			// 
 			this.txtZoom.Location = new System.Drawing.Point(14, 24);
 			this.txtZoom.Size = new System.Drawing.Size(520, 198);
+			this.txtZoom.TabIndex = 1;
 			// 
 			// btnOk
 			// 
 			this.btnOk.Location = new System.Drawing.Point(10, 234);
 			this.btnOk.Size = new System.Drawing.Size(80, 26);
+			this.btnOk.TabIndex = 2;
 			// 
 			// btnClose
 			// 
 			this.btnClose.Location = new System.Drawing.Point(462, 234);
 			this.btnClose.Size = new System.Drawing.Size(80, 26);
+			this.btnClose.TabIndex = 4;
 			// 
 			// MsgArea
 			// 
@@ -84,7 +87,7 @@ namespace quickDBExplorer
 			this.chkStayOnTop.Location = new System.Drawing.Point(16, 4);
 			this.chkStayOnTop.Name = "chkStayOnTop";
 			this.chkStayOnTop.Size = new System.Drawing.Size(152, 18);
-			this.chkStayOnTop.TabIndex = 11;
+			this.chkStayOnTop.TabIndex = 0;
 			this.chkStayOnTop.Text = "èÌÇ…TOPÇ…ï\é¶(&T)";
 			this.chkStayOnTop.CheckedChanged += new System.EventHandler(this.chkStayOnTop_CheckedChanged);
 			// 
@@ -94,7 +97,7 @@ namespace quickDBExplorer
 			this.btnApply.Location = new System.Drawing.Point(364, 234);
 			this.btnApply.Name = "btnApply";
 			this.btnApply.Size = new System.Drawing.Size(80, 26);
-			this.btnApply.TabIndex = 12;
+			this.btnApply.TabIndex = 3;
 			this.btnApply.Text = "ìKóp(&A)";
 			this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
 			// 
