@@ -2578,17 +2578,21 @@ namespace quickDBExplorer
 
 		private void Redisp_Click(object sender, System.EventArgs e)
 		{
-			//再描画ボタン押下
-			if( this.chkDispData.CheckState == CheckState.Checked &&
-				this.objectList.SelectedItems.Count == 1 )
+			if (this.dbGrid.Visible == true)
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
-				DispData(this.objectList.GetSelectObject(0));
+				DispData(null, false, true);
 			}
-			else
-			{
-				DispData(null);
-			}
+			////再描画ボタン押下
+			//if( this.chkDispData.CheckState == CheckState.Checked &&
+			//    this.objectList.SelectedItems.Count == 1 )
+			//{
+			//    // 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
+			//    DispData(this.objectList.GetSelectObject(0));
+			//}
+			//else
+			//{
+			//    DispData(null);
+			//}
 		}
 
 		private void btnTmpAllDisp_Click(object sender, System.EventArgs e)
@@ -2598,7 +2602,7 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
-				DispData(this.objectList.GetSelectObject(0),true);
+				DispData(this.objectList.GetSelectObject(0),true,false);
 				this.btnTmpAllDisp.ForeColor = Color.WhiteSmoke;
 				this.btnTmpAllDisp.BackColor = Color.Navy;
 				this.btnTmpAllDisp.Enabled = true;
@@ -3694,6 +3698,7 @@ namespace quickDBExplorer
 					this.dbGrid.AllowSorting = true;
 					this.toolTip3.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
 					this.dbGrid.SetDataBinding(dspdt,dspdt.Tables[0].TableName);
+					this.dbGrid.Tag = Sqldlg.SelectSql;
 					this.dbGrid.Show();
 				}
 			}
@@ -5099,7 +5104,7 @@ namespace quickDBExplorer
 		/// </summary>
 		protected void DispData(DBObjectInfo dboInfo)
 		{
-			DispData(dboInfo,false);
+			DispData(dboInfo,false,false);
 		}
 		
 		/// <summary>
@@ -5109,7 +5114,8 @@ namespace quickDBExplorer
 		/// <param name="isAllDisp">全て表示するか否かの指定
 		/// true: 全て表示する
 		/// false; 全て表示しない</param>
-		protected void DispData(DBObjectInfo dboInfo, bool isAllDisp)
+		/// <param name="usePreSql">前回表示時のクエリの結果をもう一度取得しなおすか否か</param>
+		protected void DispData(DBObjectInfo dboInfo, bool isAllDisp, bool usePreSql)
 		{
 			try
 			{
@@ -5129,56 +5135,77 @@ namespace quickDBExplorer
 				}
 
 				// オブジェクト名が指定されていない場合は何も表示せず、グリッドを隠す
-				if( dboInfo == null )
+				if (( dboInfo == null && usePreSql == false ) ||
+					usePreSql == true && this.dbGrid.Tag == null )
 				{
 					this.dbGrid.Hide();
+					this.dbGrid.Tag = null;
 					this.btnDataUpdate.Enabled = false;
 					this.btnDataEdit.Enabled = false;
 					this.btnGridFormat.Enabled = false;
 					return;
 				}
+				// データの内容を取得し、表示する
+				string stSql;
+				string stSqlDisp;
 
-				ProcCondition procCond = GetProcCondition(dboInfo.FormalName);
+				int maxlines;
+				int maxGetLines;
+
+				ProcCondition procCond = null;
+				if (usePreSql == true)
+				{
+					procCond = GetProcCondition(null);
+				}
+				else
+				{
+					procCond = GetProcCondition(dboInfo.FormalName);
+				}
 				procCond.IsAllDisp = isAllDisp;
 
-				int	maxlines;
-				int	maxGetLines;
 				maxlines = procCond.MaxCount;
 
-				if( procCond.IsAllDisp == true )
+				if (procCond.IsAllDisp == true)
 				{
 					maxlines = 0;
 				}
 
-				// データの内容を取得し、表示する
-				string stSql;
-				string stSqlDisp;
 				stSql = "select ";
 				stSqlDisp = "select ";
 
 				maxGetLines = 0;
-				if( maxlines != 0 )
+				if (maxlines != 0)
 				{
 					maxGetLines = maxlines + 1;
 					stSql += " TOP " + maxGetLines.ToString(System.Globalization.CultureInfo.CurrentCulture);
 					stSqlDisp += " TOP " + maxlines.ToString(System.Globalization.CultureInfo.CurrentCulture);
 				}
 
-				stSql += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}", dboInfo.GetAliasName(procCond.AliasStr));
-				stSqlDisp += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}",dboInfo.GetAliasName(procCond.AliasStr));
-				if( procCond.WhereStr != "" )
+				if (dboInfo != null)
+				{
+					stSql += string.Format(System.Globalization.CultureInfo.CurrentCulture, " * from {0}", dboInfo.GetAliasName(procCond.AliasStr));
+					stSqlDisp += string.Format(System.Globalization.CultureInfo.CurrentCulture, " * from {0}", dboInfo.GetAliasName(procCond.AliasStr));
+				}
+				if (procCond.WhereStr != "")
 				{
 					stSql += " where " + procCond.WhereStr;
 					stSqlDisp += " where " + procCond.WhereStr;
 				}
-				if( procCond.OrderStr != "" )
+				if (procCond.OrderStr != "")
 				{
 					stSql += " order by " + procCond.OrderStr;
 					stSqlDisp += " order by " + procCond.OrderStr;
 				}
-
 				DbDataAdapter da = this.SqlDriver.NewDataAdapter();
-				IDbCommand cm = this.SqlDriver.NewSqlCommand(stSql);
+				IDbCommand cm = null;
+				if (usePreSql == true)
+				{
+					cm = this.SqlDriver.NewSqlCommand((string)this.dbGrid.Tag);
+				}
+				else
+				{
+					cm = this.SqlDriver.NewSqlCommand(stSql);
+				}
 				this.SqlDriver.SetSelectCmd(da,cm);
 
 				dspdt = new DataSet();
@@ -5233,8 +5260,12 @@ namespace quickDBExplorer
 
 
 				this.dbGrid.AllowSorting = true;
-				this.toolTip3.SetToolTip(this.dbGrid,stSqlDisp);
 				this.dbGrid.SetDataBinding(dspdt, dspdt.Tables[0].TableName);
+				if (usePreSql == false)
+				{
+					this.toolTip3.SetToolTip(this.dbGrid, stSqlDisp);
+					this.dbGrid.Tag = stSql;
+				}
 				this.dbGrid.Show();
 				this.btnDataEdit.Text = "データ編集(&T)";
 				if( dspdt.Tables[0].PrimaryKey.Length == 0 )
