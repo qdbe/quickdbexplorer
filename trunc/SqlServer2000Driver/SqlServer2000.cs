@@ -417,9 +417,32 @@ namespace quickDBExplorer
 				throw new ArgumentNullException("dbName");
 			}
 
-			
+			Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\80\Tools\ClientSetup\", false);
+			string profilerPath = string.Empty;
+			if (rkey != null)
+			{
+				bool isPathExists = true;
+				profilerPath = rkey.GetValue("Path").ToString();
+				if (profilerPath == null)
+				{
+					isPathExists = false;
+					profilerPath = rkey.GetValue("SQLPath").ToString();
+				}
+				if (profilerPath != null)
+				{
+					if (profilerPath.EndsWith(@"\") == false)
+					{
+						profilerPath += @"\";
+					}
+					if (isPathExists == false)
+					{
+						profilerPath += @"bin\";
+					}
+				}
+			}
+
 			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = "profiler.exe";
+			isqlProcess.StartInfo.FileName = profilerPath + "profiler.exe";
 			isqlProcess.StartInfo.ErrorDialog = true;
 			string serverstr = "";
 			if( instanceName.Length != 0 )
