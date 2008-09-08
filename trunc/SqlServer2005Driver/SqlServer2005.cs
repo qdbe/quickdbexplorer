@@ -432,11 +432,19 @@ where
 			if (rkey != null)
 			{
 				bool isPathExists = true;
-				profilerPath = rkey.GetValue("Path").ToString();
-				if (profilerPath == null)
+				object robj = rkey.GetValue("Path");
+				if (robj != null)
+				{
+					profilerPath = robj.ToString();
+				}
+				if (profilerPath == string.Empty)
 				{
 					isPathExists = false;
-					profilerPath = rkey.GetValue("SQLPath").ToString();
+					robj = rkey.GetValue("SQLPath");
+					if (robj != null)
+					{
+						profilerPath = robj.ToString();
+					}
 				}
 				if (profilerPath != null)
 				{
@@ -452,7 +460,7 @@ where
 			}
 
 			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = profilerPath + "profiler.exe";
+			isqlProcess.StartInfo.FileName = profilerPath + "profiler90.exe";
 			isqlProcess.StartInfo.ErrorDialog = true;
 			string serverstr = "";
 			if( instanceName.Length != 0 )

@@ -111,11 +111,19 @@ namespace quickDBExplorer
 			if (rkey != null)
 			{
 				bool isPathExists = true;
-				profilerPath = rkey.GetValue("Path").ToString();
-				if (profilerPath == null)
+				object robj = rkey.GetValue("Path");
+				if (robj != null)
+				{
+					profilerPath = robj.ToString();
+				}
+				if (profilerPath == string.Empty)
 				{
 					isPathExists = false;
-					profilerPath = rkey.GetValue("SQLPath").ToString();
+					robj = rkey.GetValue("SQLPath");
+					if (robj != null)
+					{
+						profilerPath = robj.ToString();
+					}
 				}
 				if (profilerPath != null)
 				{
