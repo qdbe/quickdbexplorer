@@ -1,0 +1,56 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorer", "quickDBExplorer\quickDBExplorer.csproj", "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD530F44-EA9F-444D-A9A2-807C2489626E} = {FD530F44-EA9F-444D-A9A2-807C2489626E}
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11} = {629DC552-A57E-4795-B1C3-7A61F08A8E11}
+		{2B92D958-AA17-4D48-BEB0-9CA792A0015B} = {2B92D958-AA17-4D48-BEB0-9CA792A0015B}
+	EndProjectSection
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "quickDBExplorerInstall", "quickDBExplorerInstall\quickDBExplorerInstall.vdproj", "{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0} = {EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2000Driver", "SqlServer2000Driver\SqlServer2000Driver.csproj", "{2B92D958-AA17-4D48-BEB0-9CA792A0015B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2005Driver", "SqlServer2005Driver\SqlServer2005Driver.csproj", "{FD530F44-EA9F-444D-A9A2-807C2489626E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISqlInterface", "ISqlInterface\ISqlInterface.csproj", "{607646D5-0110-4F20-8916-E1C7B75FF090}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2008Driver", "SqlServer2008Driver\SqlServer2008Driver.csproj", "{629DC552-A57E-4795-B1C3-7A61F08A8E11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}.Debug|Any CPU.ActiveCfg = Debug
+		{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}.Release|Any CPU.ActiveCfg = Release
+		{98F66D02-FC76-4D2E-BB04-3C470DC7DA39}.Release|Any CPU.Build.0 = Release
+		{2B92D958-AA17-4D48-BEB0-9CA792A0015B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B92D958-AA17-4D48-BEB0-9CA792A0015B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B92D958-AA17-4D48-BEB0-9CA792A0015B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B92D958-AA17-4D48-BEB0-9CA792A0015B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD530F44-EA9F-444D-A9A2-807C2489626E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD530F44-EA9F-444D-A9A2-807C2489626E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD530F44-EA9F-444D-A9A2-807C2489626E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD530F44-EA9F-444D-A9A2-807C2489626E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{607646D5-0110-4F20-8916-E1C7B75FF090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{607646D5-0110-4F20-8916-E1C7B75FF090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{607646D5-0110-4F20-8916-E1C7B75FF090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{607646D5-0110-4F20-8916-E1C7B75FF090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

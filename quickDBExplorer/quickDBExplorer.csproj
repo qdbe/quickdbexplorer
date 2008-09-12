@@ -1,0 +1,310 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>quickDBExplorer</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>quickDBExplorer</RootNamespace>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>quickDBExplorerDoc.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap">
+      <Name>System.Runtime.Serialization.Formatters.Soap</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\ISqlInterface\ISqlInterface.csproj">
+      <Name>ISqlInterface</Name>
+      <Project>{607646D5-0110-4F20-8916-E1C7B75FF090}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AppIcon.ico" />
+    <Content Include="readme.txt" />
+    <Content Include="TextHistoryDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TextHistoryDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CmdInputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataGridViewBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FieldGetDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FieldListItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GridFormatDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HistoryViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImageViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IndexViewDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainMDI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MakeFieldWhereDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="objectListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="QdbeDataGridTextBoxColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="qdbeListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="qdbeListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="qdbeUtil.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="QueryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QueryDialogSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="quickDBExplorerBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="quickDBExplorerTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="saveClass.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="SearchConditionDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ServerSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SqlVersion.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextHistoryDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TextHistoryDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="WhereDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ZoomDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ZoomFloatingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="CmdInputDialog.resx">
+      <DependentUpon>CmdInputDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataGridViewBase.resx">
+      <DependentUpon>DataGridViewBase.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FieldGetDialog.resx">
+      <DependentUpon>FieldGetDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GridFormatDialog.resx">
+      <DependentUpon>GridFormatDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HistoryViewer.resx">
+      <DependentUpon>HistoryViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageViewer.resx">
+      <DependentUpon>ImageViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IndexViewDialog.resx">
+      <DependentUpon>IndexViewDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginDialog.resx">
+      <DependentUpon>LoginDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mainForm.resx">
+      <DependentUpon>mainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMDI.resx">
+      <DependentUpon>MainMDI.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MakeFieldWhereDlg.resx">
+      <DependentUpon>MakeFieldWhereDlg.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="objectListView.resx">
+      <DependentUpon>objectListView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QdbeDataGridTextBoxColumn.resx">
+      <DependentUpon>QdbeDataGridTextBoxColumn.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="qdbeListBox.resx">
+      <DependentUpon>qdbeListBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryDialog.resx">
+      <DependentUpon>QueryDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QueryDialogSelect.resx">
+      <DependentUpon>QueryDialogSelect.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="quickDBExplorerBaseForm.resx">
+      <DependentUpon>quickDBExplorerBaseForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="quickDBExplorerTextBox.resx">
+      <DependentUpon>quickDBExplorerTextBox.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchConditionDlg.resx">
+      <DependentUpon>SearchConditionDlg.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ServerSelectDialog.resx">
+      <DependentUpon>ServerSelectDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TableSelectDialog.resx">
+      <DependentUpon>TableSelectDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WhereDialog.resx">
+      <DependentUpon>WhereDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZoomDialog.resx">
+      <DependentUpon>ZoomDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ZoomFloatingDialog.resx">
+      <DependentUpon>ZoomFloatingDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="quickDBExplorer.exe.aconf" />
+    <None Include="TextHistoryDataSet.xsx">
+      <DependentUpon>TextHistoryDataSet.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
