@@ -26,6 +26,8 @@ quickDBExplorer は Microsoft 社のSQL SERVER (2008/2005/2000)を利用している開発者
     * 画面解像度 が　1024 x 768 あることを想定して画面デザインしています
     * 対象としているデータベースエンジンは SQL SERVER 2008/2005/2000 
     
+    
+GNU General Public License, version 2 の元に公開しています。
 
 
 Front End tool for Microsoft SQL Server 2000/2005/2008
@@ -43,4 +45,7 @@ this tool can follows
 These results are output to a clipboard or a file.
 
 Run under .NET Framework 2.0 
+
+License is under GNU General Public License, version 2.
+
 
