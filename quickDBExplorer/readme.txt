@@ -53,53 +53,37 @@
 
 4.1		ライセンス等の詳細
 
-「quickDBExplorer」 は、下記条項にご同意いただいた場合にのみご使用いただ
-けます。
-当ソフトウェアを使用された場合は下記条項にご同意いただけたものとさせて
-いただきますので、下記条項を充分お読みの上ご使用ください。
+Copyright (C) 2004-2008　Y.N(godz)
 
-もしも、同意出来ない場合、たとえ試用目的であっても、本ソフトウェアを使用
-することは出来ません。
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
 
-ライセンス同意書
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-・有効期間
-  本ソフトウェアは、無料で使用することが出来ます。
-  使用者はあくまでも一定期間の間本ソフトウェアを利用する権利を得ているに過
-ぎず、その権利が継続することは保障されません。
-  作者が変更しない限りにおいて、本ソフトウェアのバージョンアップについては
-無償としますが、ユーザーがインターネットサイトまたはその他メディア等より
-自身の手で入手する必要があります。また、作者は、いかなる場合であっても
-バージョンアップの義務をユーザーに対して負うものではありません。
-  
-・使用者は、許諾プログラムを第三者に譲渡し、再使用権を設定し、またはその
-　他の方法で使用させてはいけません。
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
-責任の制限
 
-このプログラム、および付随する著作物は、現状有姿での提供となります。商品性
-及び、特定の目的への適合性などについての保証を含む、いかなる保証も、それを
-明記する、しないに関わらず、提供されません。
-この製品の著作者及び、製造、配布に関わるいかなる者も、当ソフトウェアの使
-用、または使用不能によって発生する損害に対する責任は、それが直接的である
-か間接的であるか、必然的であるか偶発的であるかに関わらず、負わないものと
-します。それは、その損害の可能性について、著作者が事前に知らされていた場
-合でも同様です。
-また、いかなる場合であってもバージョンアップの義務をユーザーに対して負うも
-のではありません。
+このプログラムはフリーソフトウェアです。あなたはこれを、フリーソフトウェ
+ア財団によって発行された GNU 一般公衆利用許諾契約書(バージョン2か、希
+望によってはそれ以降のバージョンのうちどれか)の定める条件の下で再頒布
+または改変することができます。
 
-著作権
-
-ソフトウェア製品は、著作権法及び国際著作権条約をはじめ、その他の無体財産権
-に関する法律ならびに条約によって保護されています。ソフトウェア製品は許諾さ
-れるもので、販売されるものではありません。
-本ソフトウェアおよび本ソフトウェアに付属するマニュアルなど 関連書類の著作
-権およびその他の一切の知的財産権は作者に帰属します。
-
-当ソフトウェアに対するリバースエンジニアリング及び、改変は一切禁止します。
-Copyright (C) 2004-2007 Y.N. All rights reserved.
-
+このプログラムは有用であることを願って頒布されますが、*全くの無保証* 
+です。商業可能性の保証や特定の目的への適合性は、言外に示されたものも含
+め全く存在しません。詳しくはGNU 一般公衆利用許諾契約書をご覧ください。
+ 
+あなたはこのプログラムと共に、GNU 一般公衆利用許諾契約書の複製物を一部
+受け取ったはずです。もし受け取っていなければ、フリーソフトウェア財団ま
+で請求してください(宛先は the Free Software Foundation, Inc., 59
+Temple Place, Suite 330, Boston, MA 02111-1307 USA)。
 
 
 

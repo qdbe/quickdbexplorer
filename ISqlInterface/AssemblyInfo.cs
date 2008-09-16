@@ -6,13 +6,13 @@ using System.Runtime.CompilerServices;
 // 属性セットを通して制御されます。アセンブリに関連付けられている 
 // 情報を変更するには、これらの属性値を変更してください。
 //
-[assembly: AssemblyTitle("")]
+[assembly: AssemblyTitle("quickDBExplorer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("-")]
+[assembly: AssemblyProduct("quickDBExplorer!")]
+[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2008 GPLv2")]
+[assembly: AssemblyTrademark("Go Ahead!")]
 [assembly: AssemblyCulture("")]		
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 
@@ -27,7 +27,9 @@ using System.Runtime.CompilerServices;
 // 下にあるように、'*' を使って、すべての値を指定するか、
 // ビルドおよびリビジョン番号を既定値にすることができます。
 
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.9.1.*")]
+[assembly: AssemblyInformationalVersion("1.9.1")]
+[assembly: System.Resources.NeutralResourcesLanguage("ja-JP")]
 
 //
 // アセンブリに署名するには、使用するキーを指定しなければなりません。 
