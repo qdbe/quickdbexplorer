@@ -102,7 +102,8 @@
     <Content Include="TextHistoryDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>TextHistoryDataSet.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </Content>
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -184,6 +185,9 @@
     </Compile>
     <Compile Include="TableSelectDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextHistoryDataSet.cs">
+      <DependentUpon>TextHistoryDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="TextHistoryDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -296,6 +300,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="quickDBExplorer.exe.aconf" />
+    <None Include="TextHistoryDataSet.xsc">
+      <DependentUpon>TextHistoryDataSet.xsd</DependentUpon>
+    </None>
     <None Include="TextHistoryDataSet.xsx">
       <DependentUpon>TextHistoryDataSet.xsd</DependentUpon>
     </None>
