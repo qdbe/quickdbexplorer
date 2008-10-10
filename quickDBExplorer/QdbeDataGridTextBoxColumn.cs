@@ -175,7 +175,8 @@ namespace quickDBExplorer
 		private void GridKeyDownControler(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			// Ctrl+3 で値の編集ダイアログを表示
-			if(	e.KeyCode == Keys.D3 &&
+			if(	( e.KeyCode == Keys.D3 ||
+				e.KeyCode == Keys.W ) &&
 				e.Control == true &&
 				e.Alt != true &&
 				e.Shift != true )

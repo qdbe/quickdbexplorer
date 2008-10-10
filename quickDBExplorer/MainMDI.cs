@@ -372,6 +372,10 @@ namespace quickDBExplorer
 
 		private void menuAbout_Click(object sender, System.EventArgs e)
 		{
+#if true
+			qdbeAboutBox dlg = new qdbeAboutBox();
+			dlg.Show();
+#else
 			object []obj = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute),false);
 			string aboutstr = Application.ProductName + " Version " + Application.ProductVersion;
 			if( obj != null && obj.Length != 0)
@@ -381,6 +385,7 @@ namespace quickDBExplorer
 			MessageBox.Show(
 				aboutstr
 				);
+#endif
 		}
 
 		private void menuVersion_Click(object sender, System.EventArgs e)

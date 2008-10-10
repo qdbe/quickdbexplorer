@@ -124,7 +124,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(ZoomDialog));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ZoomDialog));
 			this.txtZoom = new quickDBExplorer.quickDBExplorerTextBox();
 			this.btnOk = new System.Windows.Forms.Button();
 			this.btnClose = new System.Windows.Forms.Button();
@@ -133,14 +133,13 @@ namespace quickDBExplorer
 			// MsgArea
 			// 
 			this.MsgArea.Location = new System.Drawing.Point(88, 240);
-			this.MsgArea.Name = "MsgArea";
 			this.MsgArea.Size = new System.Drawing.Size(372, 16);
 			// 
 			// txtZoom
 			// 
-			this.txtZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-				| System.Windows.Forms.AnchorStyles.Left) 
-				| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtZoom.IsCTRLDelete = true;
 			this.txtZoom.IsDigitOnly = false;
 			this.txtZoom.Location = new System.Drawing.Point(14, 12);
@@ -149,7 +148,6 @@ namespace quickDBExplorer
 			this.txtZoom.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.txtZoom.Size = new System.Drawing.Size(526, 216);
 			this.txtZoom.TabIndex = 0;
-			this.txtZoom.Text = "";
 			// 
 			// btnOk
 			// 
@@ -190,6 +188,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.txtZoom, 0);
 			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion
