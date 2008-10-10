@@ -51,8 +51,8 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label labelDB;
+		private System.Windows.Forms.Label labelSchema;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
 		private quickDBExplorer.qdbeListBox dbList;
@@ -286,7 +286,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Button btnOrderZoom;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.CheckBox useCheckBox;
-		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.Label labelObject;
 		private System.Windows.Forms.ContextMenu dbGridMenu;
 		private System.Windows.Forms.MenuItem copyDbGridMenu;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
@@ -309,6 +309,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem readTsvDQDbGridMenu;
 		private System.Windows.Forms.MenuItem copySelectedDbGridMenu;
 		private System.Windows.Forms.MenuItem menuFieldMakeWhere;
+		private SplitContainer splitContainer1;
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
 
 		/// <summary>
@@ -328,12 +329,19 @@ namespace quickDBExplorer
 			Sqldlg2.SelectSql = "";
 			cmdDialog.SelectSql = "";
 			this.whereHistory = svdata.WhereHistory;
+			this.txtWhere.PdHistory = this.whereHistory;
+
 			this.sortHistory = svdata.SortHistory;
+			this.txtSort.PdHistory = this.sortHistory;
+
 			this.aliasHistory = svdata.AliasHistory;
+			this.txtAlias.PdHistory = this.aliasHistory;
+
 			this.selectHistory = svdata.SelectHistory;
+
 			this.DMLHistory = svdata.DMLHistory;
 			this.cmdHistory = svdata.CmdHistory;
-			this.searchHistory = svdata.SelectHistory;
+			this.searchHistory = svdata.SearchHistory;
 
 			this.ConnectSqlVersion = sqlVer;
 
@@ -426,8 +434,8 @@ namespace quickDBExplorer
 			this.rdoOutFolder = new System.Windows.Forms.RadioButton();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
+			this.labelDB = new System.Windows.Forms.Label();
+			this.labelSchema = new System.Windows.Forms.Label();
 			this.fieldListbox = new quickDBExplorer.qdbeListBox();
 			this.fldContextMenu = new System.Windows.Forms.ContextMenu();
 			this.fldmenuCopy = new System.Windows.Forms.MenuItem();
@@ -457,12 +465,13 @@ namespace quickDBExplorer
 			this.btnOrderZoom = new System.Windows.Forms.Button();
 			this.label9 = new System.Windows.Forms.Label();
 			this.useCheckBox = new System.Windows.Forms.CheckBox();
-			this.label10 = new System.Windows.Forms.Label();
+			this.labelObject = new System.Windows.Forms.Label();
 			this.cmbHistory = new System.Windows.Forms.ComboBox();
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.label11 = new System.Windows.Forms.Label();
 			this.txtAlias = new quickDBExplorer.quickDBExplorerTextBox();
 			this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -470,12 +479,15 @@ namespace quickDBExplorer
 			this.grpSysUserMode.SuspendLayout();
 			this.grpOutputMode.SuspendLayout();
 			this.grpCharaSet.SuspendLayout();
+			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.Panel2.SuspendLayout();
+			this.splitContainer1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MsgArea
 			// 
-			this.MsgArea.Location = new System.Drawing.Point(240, 624);
-			this.MsgArea.Size = new System.Drawing.Size(660, 16);
+			this.MsgArea.Location = new System.Drawing.Point(240, 647);
+			this.MsgArea.Size = new System.Drawing.Size(750, 16);
 			this.MsgArea.TabIndex = 42;
 			// 
 			// dbList
@@ -493,6 +505,8 @@ namespace quickDBExplorer
 			// 
 			this.objectList.Activation = System.Windows.Forms.ItemActivation.OneClick;
 			this.objectList.AllowDrop = true;
+			this.objectList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.objectList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColTVSType,
             this.ColOwner,
@@ -502,9 +516,9 @@ namespace quickDBExplorer
 			this.objectList.FullRowSelect = true;
 			this.objectList.GridLines = true;
 			this.objectList.HideSelection = false;
-			this.objectList.Location = new System.Drawing.Point(240, 24);
+			this.objectList.Location = new System.Drawing.Point(3, 26);
 			this.objectList.Name = "objectList";
-			this.objectList.Size = new System.Drawing.Size(256, 292);
+			this.objectList.Size = new System.Drawing.Size(302, 297);
 			this.objectList.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.objectList.TabIndex = 22;
 			this.objectList.UseCompatibleStateImageBehavior = false;
@@ -542,7 +556,8 @@ namespace quickDBExplorer
 			// 
 			// btnInsert
 			// 
-			this.btnInsert.Location = new System.Drawing.Point(508, 16);
+			this.btnInsert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnInsert.Location = new System.Drawing.Point(311, 26);
 			this.btnInsert.Name = "btnInsert";
 			this.btnInsert.Size = new System.Drawing.Size(136, 24);
 			this.btnInsert.TabIndex = 23;
@@ -550,7 +565,8 @@ namespace quickDBExplorer
 			// 
 			// btnFieldList
 			// 
-			this.btnFieldList.Location = new System.Drawing.Point(508, 44);
+			this.btnFieldList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnFieldList.Location = new System.Drawing.Point(311, 54);
 			this.btnFieldList.Name = "btnFieldList";
 			this.btnFieldList.Size = new System.Drawing.Size(136, 24);
 			this.btnFieldList.TabIndex = 24;
@@ -558,7 +574,8 @@ namespace quickDBExplorer
 			// 
 			// btnCSV
 			// 
-			this.btnCSV.Location = new System.Drawing.Point(508, 128);
+			this.btnCSV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCSV.Location = new System.Drawing.Point(311, 138);
 			this.btnCSV.Name = "btnCSV";
 			this.btnCSV.Size = new System.Drawing.Size(136, 24);
 			this.btnCSV.TabIndex = 27;
@@ -624,23 +641,31 @@ namespace quickDBExplorer
 			// 
 			this.txtWhere.IsCTRLDelete = true;
 			this.txtWhere.IsDigitOnly = false;
+			this.txtWhere.IsShowZoom = true;
 			this.txtWhere.Location = new System.Drawing.Point(72, 488);
 			this.txtWhere.Name = "txtWhere";
+			this.txtWhere.PdHistory = null;
 			this.txtWhere.Size = new System.Drawing.Size(144, 19);
 			this.txtWhere.TabIndex = 11;
 			this.txtWhere.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtWhere_KeyDown);
+			this.txtWhere.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtWhere_ShowHistory);
 			this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
+			this.txtWhere.ShowZoom += new quickDBExplorer.ShowZoomEventHandler(this.txtWhere_ShowZoom);
 			// 
 			// txtSort
 			// 
 			this.txtSort.IsCTRLDelete = true;
 			this.txtSort.IsDigitOnly = false;
+			this.txtSort.IsShowZoom = true;
 			this.txtSort.Location = new System.Drawing.Point(72, 516);
 			this.txtSort.Name = "txtSort";
+			this.txtSort.PdHistory = null;
 			this.txtSort.Size = new System.Drawing.Size(144, 19);
 			this.txtSort.TabIndex = 14;
 			this.txtSort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSort_KeyDown);
+			this.txtSort.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtSort_ShowHistory);
 			this.txtSort.Leave += new System.EventHandler(this.txtSort_Leave);
+			this.txtSort.ShowZoom += new quickDBExplorer.ShowZoomEventHandler(this.txtSort_ShowZoom);
 			// 
 			// label1
 			// 
@@ -660,7 +685,8 @@ namespace quickDBExplorer
 			// 
 			// btnSelect
 			// 
-			this.btnSelect.Location = new System.Drawing.Point(508, 72);
+			this.btnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSelect.Location = new System.Drawing.Point(311, 82);
 			this.btnSelect.Name = "btnSelect";
 			this.btnSelect.Size = new System.Drawing.Size(136, 24);
 			this.btnSelect.TabIndex = 25;
@@ -681,7 +707,8 @@ namespace quickDBExplorer
 			// 
 			// btnDDL
 			// 
-			this.btnDDL.Location = new System.Drawing.Point(508, 100);
+			this.btnDDL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDDL.Location = new System.Drawing.Point(311, 110);
 			this.btnDDL.Name = "btnDDL";
 			this.btnDDL.Size = new System.Drawing.Size(136, 24);
 			this.btnDDL.TabIndex = 26;
@@ -714,7 +741,7 @@ namespace quickDBExplorer
 			this.dbGrid.RowHeaderWidth = 40;
 			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
 			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
-			this.dbGrid.Size = new System.Drawing.Size(672, 236);
+			this.dbGrid.Size = new System.Drawing.Size(738, 259);
 			this.dbGrid.TabIndex = 41;
 			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
 			// 
@@ -781,10 +808,10 @@ namespace quickDBExplorer
 			// 
 			// chkDispData
 			// 
-			this.chkDispData.Location = new System.Drawing.Point(24, 584);
+			this.chkDispData.Location = new System.Drawing.Point(14, 14);
 			this.chkDispData.Name = "chkDispData";
 			this.chkDispData.Size = new System.Drawing.Size(52, 24);
-			this.chkDispData.TabIndex = 19;
+			this.chkDispData.TabIndex = 2;
 			this.chkDispData.Text = "表示";
 			this.chkDispData.CheckedChanged += new System.EventHandler(this.chkDispData_CheckedChanged);
 			// 
@@ -792,7 +819,8 @@ namespace quickDBExplorer
 			// 
 			this.grpDataDispMode.Controls.Add(this.txtDispCount);
 			this.grpDataDispMode.Controls.Add(this.label3);
-			this.grpDataDispMode.Location = new System.Drawing.Point(8, 568);
+			this.grpDataDispMode.Controls.Add(this.chkDispData);
+			this.grpDataDispMode.Location = new System.Drawing.Point(8, 565);
 			this.grpDataDispMode.Name = "grpDataDispMode";
 			this.grpDataDispMode.Size = new System.Drawing.Size(216, 44);
 			this.grpDataDispMode.TabIndex = 18;
@@ -806,14 +834,16 @@ namespace quickDBExplorer
 			this.txtDispCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
 			this.txtDispCount.IsCTRLDelete = true;
 			this.txtDispCount.IsDigitOnly = true;
+			this.txtDispCount.IsShowZoom = false;
 			this.txtDispCount.Location = new System.Drawing.Point(132, 16);
 			this.txtDispCount.MaxLength = 300;
 			this.txtDispCount.Name = "txtDispCount";
+			this.txtDispCount.PdHistory = null;
 			this.txtDispCount.Size = new System.Drawing.Size(72, 19);
 			this.txtDispCount.TabIndex = 1;
 			this.txtDispCount.Text = "1000";
-			this.txtDispCount.TextChanged += new System.EventHandler(this.txtDispCount_TextChanged);
 			this.txtDispCount.Leave += new System.EventHandler(this.txtDispCount_Leave);
+			this.txtDispCount.TextChanged += new System.EventHandler(this.txtDispCount_TextChanged);
 			// 
 			// label3
 			// 
@@ -882,8 +912,10 @@ namespace quickDBExplorer
 			// 
 			this.txtOutput.IsCTRLDelete = true;
 			this.txtOutput.IsDigitOnly = false;
+			this.txtOutput.IsShowZoom = false;
 			this.txtOutput.Location = new System.Drawing.Point(8, 52);
 			this.txtOutput.Name = "txtOutput";
+			this.txtOutput.PdHistory = null;
 			this.txtOutput.Size = new System.Drawing.Size(160, 19);
 			this.txtOutput.TabIndex = 3;
 			this.txtOutput.TextChanged += new System.EventHandler(this.txtOutput_TextChanged);
@@ -915,22 +947,23 @@ namespace quickDBExplorer
 			this.rdoOutFolder.Text = "複数ファイル";
 			this.rdoOutFolder.CheckedChanged += new System.EventHandler(this.rdoOutFolder_CheckedChanged);
 			// 
-			// label4
+			// labelDB
 			// 
-			this.label4.Location = new System.Drawing.Point(8, 28);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(48, 32);
-			this.label4.TabIndex = 0;
-			this.label4.Text = "DB(&B)";
-			this.label4.DoubleClick += new System.EventHandler(this.label4_DoubleClick);
+			this.labelDB.Location = new System.Drawing.Point(8, 28);
+			this.labelDB.Name = "labelDB";
+			this.labelDB.Size = new System.Drawing.Size(48, 32);
+			this.labelDB.TabIndex = 0;
+			this.labelDB.Text = "DB(&B)";
+			this.labelDB.DoubleClick += new System.EventHandler(this.labelDB_DoubleClick);
 			// 
-			// label5
+			// labelSchema
 			// 
-			this.label5.Location = new System.Drawing.Point(4, 80);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(48, 32);
-			this.label5.TabIndex = 3;
-			this.label5.Text = "owner/Role(&O)";
+			this.labelSchema.Location = new System.Drawing.Point(4, 80);
+			this.labelSchema.Name = "labelSchema";
+			this.labelSchema.Size = new System.Drawing.Size(48, 32);
+			this.labelSchema.TabIndex = 3;
+			this.labelSchema.Text = "owner/Role(&O)";
+			this.labelSchema.DoubleClick += new System.EventHandler(this.labelSchema_DoubleClick);
 			// 
 			// fieldListbox
 			// 
@@ -940,10 +973,10 @@ namespace quickDBExplorer
 			this.fieldListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.fieldListbox.HorizontalScrollbar = true;
 			this.fieldListbox.ItemHeight = 12;
-			this.fieldListbox.Location = new System.Drawing.Point(656, 40);
+			this.fieldListbox.Location = new System.Drawing.Point(1, 26);
 			this.fieldListbox.Name = "fieldListbox";
 			this.fieldListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.fieldListbox.Size = new System.Drawing.Size(240, 268);
+			this.fieldListbox.Size = new System.Drawing.Size(269, 292);
 			this.fieldListbox.TabIndex = 34;
 			this.fieldListbox.CopyData += new quickDBExplorer.CopyDataEventHandler(this.fieldListbox_CopyData);
 			this.fieldListbox.ExtendedCopyData += new quickDBExplorer.ExtendedCopyDataEventHandler(this.fieldListbox_ExtendedCopyData);
@@ -1035,7 +1068,7 @@ namespace quickDBExplorer
 			// 
 			// chkDispFieldAttr
 			// 
-			this.chkDispFieldAttr.Location = new System.Drawing.Point(656, 16);
+			this.chkDispFieldAttr.Location = new System.Drawing.Point(3, 6);
 			this.chkDispFieldAttr.Name = "chkDispFieldAttr";
 			this.chkDispFieldAttr.Size = new System.Drawing.Size(244, 20);
 			this.chkDispFieldAttr.TabIndex = 33;
@@ -1044,7 +1077,8 @@ namespace quickDBExplorer
 			// 
 			// btnQuerySelect
 			// 
-			this.btnQuerySelect.Location = new System.Drawing.Point(508, 212);
+			this.btnQuerySelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnQuerySelect.Location = new System.Drawing.Point(311, 222);
 			this.btnQuerySelect.Name = "btnQuerySelect";
 			this.btnQuerySelect.Size = new System.Drawing.Size(136, 24);
 			this.btnQuerySelect.TabIndex = 30;
@@ -1053,7 +1087,8 @@ namespace quickDBExplorer
 			// 
 			// btnDataUpdate
 			// 
-			this.btnDataUpdate.Location = new System.Drawing.Point(508, 296);
+			this.btnDataUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDataUpdate.Location = new System.Drawing.Point(311, 286);
 			this.btnDataUpdate.Name = "btnDataUpdate";
 			this.btnDataUpdate.Size = new System.Drawing.Size(132, 24);
 			this.btnDataUpdate.TabIndex = 32;
@@ -1062,7 +1097,8 @@ namespace quickDBExplorer
 			// 
 			// btnDataEdit
 			// 
-			this.btnDataEdit.Location = new System.Drawing.Point(508, 268);
+			this.btnDataEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDataEdit.Location = new System.Drawing.Point(311, 258);
 			this.btnDataEdit.Name = "btnDataEdit";
 			this.btnDataEdit.Size = new System.Drawing.Size(132, 24);
 			this.btnDataEdit.TabIndex = 31;
@@ -1079,7 +1115,8 @@ namespace quickDBExplorer
 			// 
 			// btnGridFormat
 			// 
-			this.btnGridFormat.Location = new System.Drawing.Point(752, 336);
+			this.btnGridFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnGridFormat.Location = new System.Drawing.Point(821, 336);
 			this.btnGridFormat.Name = "btnGridFormat";
 			this.btnGridFormat.Size = new System.Drawing.Size(156, 20);
 			this.btnGridFormat.TabIndex = 39;
@@ -1096,7 +1133,8 @@ namespace quickDBExplorer
 			// 
 			// btnIndex
 			// 
-			this.btnIndex.Location = new System.Drawing.Point(508, 156);
+			this.btnIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnIndex.Location = new System.Drawing.Point(311, 166);
 			this.btnIndex.Name = "btnIndex";
 			this.btnIndex.Size = new System.Drawing.Size(136, 23);
 			this.btnIndex.TabIndex = 28;
@@ -1105,7 +1143,8 @@ namespace quickDBExplorer
 			// 
 			// btnRedisp
 			// 
-			this.btnRedisp.Location = new System.Drawing.Point(640, 360);
+			this.btnRedisp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRedisp.Location = new System.Drawing.Point(709, 360);
 			this.btnRedisp.Name = "btnRedisp";
 			this.btnRedisp.Size = new System.Drawing.Size(108, 20);
 			this.btnRedisp.TabIndex = 38;
@@ -1114,7 +1153,8 @@ namespace quickDBExplorer
 			// 
 			// btnTmpAllDisp
 			// 
-			this.btnTmpAllDisp.Location = new System.Drawing.Point(752, 360);
+			this.btnTmpAllDisp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnTmpAllDisp.Location = new System.Drawing.Point(821, 360);
 			this.btnTmpAllDisp.Name = "btnTmpAllDisp";
 			this.btnTmpAllDisp.Size = new System.Drawing.Size(156, 20);
 			this.btnTmpAllDisp.TabIndex = 40;
@@ -1123,7 +1163,8 @@ namespace quickDBExplorer
 			// 
 			// btnEtc
 			// 
-			this.btnEtc.Location = new System.Drawing.Point(508, 184);
+			this.btnEtc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnEtc.Location = new System.Drawing.Point(311, 194);
 			this.btnEtc.Name = "btnEtc";
 			this.btnEtc.Size = new System.Drawing.Size(136, 23);
 			this.btnEtc.TabIndex = 29;
@@ -1162,19 +1203,20 @@ namespace quickDBExplorer
 			this.useCheckBox.Text = "CheckList";
 			this.useCheckBox.Visible = false;
 			// 
-			// label10
+			// labelObject
 			// 
-			this.label10.Location = new System.Drawing.Point(240, 4);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(152, 16);
-			this.label10.TabIndex = 20;
-			this.label10.Text = "オブジェクト(&V)";
+			this.labelObject.Location = new System.Drawing.Point(4, 6);
+			this.labelObject.Name = "labelObject";
+			this.labelObject.Size = new System.Drawing.Size(152, 16);
+			this.labelObject.TabIndex = 20;
+			this.labelObject.Text = "オブジェクト(&V)";
+			this.labelObject.DoubleClick += new System.EventHandler(this.labelObject_DoubleClick);
 			// 
 			// cmbHistory
 			// 
 			this.cmbHistory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbHistory.DropDownWidth = 300;
-			this.cmbHistory.Location = new System.Drawing.Point(320, 0);
+			this.cmbHistory.Location = new System.Drawing.Point(86, 3);
 			this.cmbHistory.MaxDropDownItems = 11;
 			this.cmbHistory.Name = "cmbHistory";
 			this.cmbHistory.Size = new System.Drawing.Size(176, 20);
@@ -1194,60 +1236,81 @@ namespace quickDBExplorer
 			// 
 			this.txtAlias.IsCTRLDelete = true;
 			this.txtAlias.IsDigitOnly = false;
+			this.txtAlias.IsShowZoom = true;
 			this.txtAlias.Location = new System.Drawing.Point(72, 540);
 			this.txtAlias.Name = "txtAlias";
+			this.txtAlias.PdHistory = null;
 			this.txtAlias.Size = new System.Drawing.Size(144, 19);
 			this.txtAlias.TabIndex = 17;
 			this.toolTip4.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
 			this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
+			this.txtAlias.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtAlias_ShowHistory);
 			this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
 			this.txtAlias.Enter += new System.EventHandler(this.txtAlias_Enter);
+			this.txtAlias.ShowZoom += new quickDBExplorer.ShowZoomEventHandler(this.txtAlias_ShowZoom);
+			// 
+			// splitContainer1
+			// 
+			this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.splitContainer1.Location = new System.Drawing.Point(246, 0);
+			this.splitContainer1.Name = "splitContainer1";
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.cmbHistory);
+			this.splitContainer1.Panel1.Controls.Add(this.labelObject);
+			this.splitContainer1.Panel1.Controls.Add(this.objectList);
+			this.splitContainer1.Panel1.Controls.Add(this.btnInsert);
+			this.splitContainer1.Panel1.Controls.Add(this.btnFieldList);
+			this.splitContainer1.Panel1.Controls.Add(this.btnCSV);
+			this.splitContainer1.Panel1.Controls.Add(this.btnEtc);
+			this.splitContainer1.Panel1.Controls.Add(this.btnSelect);
+			this.splitContainer1.Panel1.Controls.Add(this.btnDDL);
+			this.splitContainer1.Panel1.Controls.Add(this.btnQuerySelect);
+			this.splitContainer1.Panel1.Controls.Add(this.btnIndex);
+			this.splitContainer1.Panel1.Controls.Add(this.btnDataUpdate);
+			this.splitContainer1.Panel1.Controls.Add(this.btnDataEdit);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add(this.chkDispFieldAttr);
+			this.splitContainer1.Panel2.Controls.Add(this.fieldListbox);
+			this.splitContainer1.Size = new System.Drawing.Size(732, 325);
+			this.splitContainer1.SplitterDistance = 454;
+			this.splitContainer1.TabIndex = 19;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.AutoScroll = true;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(928, 637);
-			this.Controls.Add(this.cmbHistory);
-			this.Controls.Add(this.label10);
+			this.ClientSize = new System.Drawing.Size(990, 677);
 			this.Controls.Add(this.useCheckBox);
 			this.Controls.Add(this.label9);
+			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.btnWhereZoom);
-			this.Controls.Add(this.btnEtc);
 			this.Controls.Add(this.btnTmpAllDisp);
 			this.Controls.Add(this.btnRedisp);
-			this.Controls.Add(this.btnIndex);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.btnGridFormat);
 			this.Controls.Add(this.label7);
-			this.Controls.Add(this.btnDataEdit);
-			this.Controls.Add(this.btnDataUpdate);
-			this.Controls.Add(this.btnQuerySelect);
-			this.Controls.Add(this.chkDispFieldAttr);
 			this.Controls.Add(this.grpCharaSet);
-			this.Controls.Add(this.fieldListbox);
-			this.Controls.Add(this.label4);
+			this.Controls.Add(this.labelDB);
 			this.Controls.Add(this.grpOutputMode);
-			this.Controls.Add(this.chkDispData);
 			this.Controls.Add(this.dbGrid);
-			this.Controls.Add(this.btnDDL);
 			this.Controls.Add(this.ownerListbox);
-			this.Controls.Add(this.btnSelect);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.txtSort);
 			this.Controls.Add(this.txtWhere);
 			this.Controls.Add(this.grpSortMode);
 			this.Controls.Add(this.grpViewMode);
-			this.Controls.Add(this.btnCSV);
-			this.Controls.Add(this.btnFieldList);
-			this.Controls.Add(this.btnInsert);
-			this.Controls.Add(this.objectList);
 			this.Controls.Add(this.dbList);
-			this.Controls.Add(this.grpDataDispMode);
 			this.Controls.Add(this.grpSysUserMode);
-			this.Controls.Add(this.label5);
+			this.Controls.Add(this.grpDataDispMode);
+			this.Controls.Add(this.labelSchema);
 			this.Controls.Add(this.btnOrderZoom);
 			this.Controls.Add(this.label11);
 			this.Controls.Add(this.txtAlias);
@@ -1262,45 +1325,30 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.txtAlias, 0);
 			this.Controls.SetChildIndex(this.label11, 0);
 			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
-			this.Controls.SetChildIndex(this.label5, 0);
-			this.Controls.SetChildIndex(this.grpSysUserMode, 0);
+			this.Controls.SetChildIndex(this.labelSchema, 0);
 			this.Controls.SetChildIndex(this.grpDataDispMode, 0);
+			this.Controls.SetChildIndex(this.grpSysUserMode, 0);
 			this.Controls.SetChildIndex(this.dbList, 0);
-			this.Controls.SetChildIndex(this.objectList, 0);
-			this.Controls.SetChildIndex(this.btnInsert, 0);
-			this.Controls.SetChildIndex(this.btnFieldList, 0);
-			this.Controls.SetChildIndex(this.btnCSV, 0);
 			this.Controls.SetChildIndex(this.grpViewMode, 0);
 			this.Controls.SetChildIndex(this.grpSortMode, 0);
 			this.Controls.SetChildIndex(this.txtWhere, 0);
 			this.Controls.SetChildIndex(this.txtSort, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
-			this.Controls.SetChildIndex(this.btnSelect, 0);
 			this.Controls.SetChildIndex(this.ownerListbox, 0);
-			this.Controls.SetChildIndex(this.btnDDL, 0);
 			this.Controls.SetChildIndex(this.dbGrid, 0);
-			this.Controls.SetChildIndex(this.chkDispData, 0);
 			this.Controls.SetChildIndex(this.grpOutputMode, 0);
-			this.Controls.SetChildIndex(this.label4, 0);
-			this.Controls.SetChildIndex(this.fieldListbox, 0);
+			this.Controls.SetChildIndex(this.labelDB, 0);
 			this.Controls.SetChildIndex(this.grpCharaSet, 0);
-			this.Controls.SetChildIndex(this.chkDispFieldAttr, 0);
-			this.Controls.SetChildIndex(this.btnQuerySelect, 0);
-			this.Controls.SetChildIndex(this.btnDataUpdate, 0);
-			this.Controls.SetChildIndex(this.btnDataEdit, 0);
 			this.Controls.SetChildIndex(this.label7, 0);
 			this.Controls.SetChildIndex(this.btnGridFormat, 0);
 			this.Controls.SetChildIndex(this.label8, 0);
-			this.Controls.SetChildIndex(this.btnIndex, 0);
 			this.Controls.SetChildIndex(this.btnRedisp, 0);
 			this.Controls.SetChildIndex(this.btnTmpAllDisp, 0);
-			this.Controls.SetChildIndex(this.btnEtc, 0);
 			this.Controls.SetChildIndex(this.btnWhereZoom, 0);
+			this.Controls.SetChildIndex(this.splitContainer1, 0);
 			this.Controls.SetChildIndex(this.label9, 0);
 			this.Controls.SetChildIndex(this.useCheckBox, 0);
-			this.Controls.SetChildIndex(this.label10, 0);
-			this.Controls.SetChildIndex(this.cmbHistory, 0);
 			this.Controls.SetChildIndex(this.MsgArea, 0);
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
@@ -1311,10 +1359,17 @@ namespace quickDBExplorer
 			this.grpOutputMode.ResumeLayout(false);
 			this.grpOutputMode.PerformLayout();
 			this.grpCharaSet.ResumeLayout(false);
+			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel2.ResumeLayout(false);
+			this.splitContainer1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
+
+
+
+
 		#endregion
 
 		#region ボタンメニュー関連処理
@@ -1678,7 +1733,7 @@ namespace quickDBExplorer
 			try
 			{
 				// ラベル・ボタンの設定
-				this.label5.Text = this.SqlDriver.GetOwnerLabel1();
+				this.labelSchema.Text = this.SqlDriver.GetOwnerLabel1();
 				this.rdoSortOwnerTable.Text = this.SqlDriver.GetOwnerLabel2();
 				//this.ColObjName.Text = this.SqlDriver.GetTableListColumnName();
 
@@ -1835,6 +1890,46 @@ namespace quickDBExplorer
 		#endregion
 
 		#region 画面コントロールのイベント処理(処理ロジックは除く)
+
+		private void ResetOwnerList()
+		{
+			// 対象となるオブジェクト一覧の表示
+			DispObjectList();
+			// 対象となる owner/role/schema の表示
+			DispListOwner();
+			if (svdata.Dbopt[svdata.LastDatabase] != null)
+			{
+				if (svdata.Dbopt[svdata.LastDatabase] is ArrayList)
+				{
+
+					ArrayList saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDatabase];
+
+					// 該当DBの最後に選択したユーザーを選択する
+					string[] olist = (string[])saveownerlist.ToArray(typeof(string));
+					for (int i = 0; i < olist.Length; i++)
+					{
+						int idx = this.ownerListbox.FindString(olist[i]);
+						if (idx >= 0)
+						{
+							this.ownerListbox.SetSelected(idx, true);
+						}
+					}
+					this.ownerListbox.Focus();
+				}
+				else
+				{
+					svdata.Dbopt[svdata.LastDatabase] = null;
+				}
+			}
+
+			if (this.ownerListbox.SelectedItems.Count == 0)
+			{
+				// 選択がない場合、一番最初をディフォルトで選択する
+				this.ownerListbox.SetSelected(0, true);
+			}
+		}
+
+
 		/// <summary>
 		/// DB選択が変更になった場合のイベントハンドラ
 		/// </summary>
@@ -1851,41 +1946,10 @@ namespace quickDBExplorer
 			this.cmbHistory.DataSource = null;
 			this.cmbHistory.DataSource = this.selectedTables;
 			this.cmbHistory.Refresh();
-			
 
-			// 対象となるオブジェクト一覧の表示
-			DispObjectList();
-			// 対象となる owner/role/schema の表示
-			DispListOwner();
-			if( svdata.Dbopt[svdata.LastDatabase] != null )
-			{
-				if( svdata.Dbopt[svdata.LastDatabase] is ArrayList )
-				{
+			// Owner のリストを再読み込みし表示する
+			ResetOwnerList();
 
-					ArrayList saveownerlist = (ArrayList)svdata.Dbopt[svdata.LastDatabase];
-
-					// 該当DBの最後に選択したユーザーを選択する
-					string []olist = (string[])saveownerlist.ToArray(typeof(string));
-					for( int i = 0; i < olist.Length; i++ ){
-						int idx = this.ownerListbox.FindString(olist[i]);
-						if( idx >= 0 )
-						{
-							this.ownerListbox.SetSelected(idx, true);
-						}
-					}
-					this.ownerListbox.Focus();
-				}
-				else
-				{
-					svdata.Dbopt[svdata.LastDatabase] = null;
-				}
-			}
-
-			if( this.ownerListbox.SelectedItems.Count == 0 )
-			{
-				// 選択がない場合、一番最初をディフォルトで選択する
-				this.ownerListbox.SetSelected(0,true);
-			}
 			if( svdata.OutDest[svdata.LastDatabase] != null )
 			{
 				// 該当DBの最後の出力先をセットする
@@ -2621,31 +2685,66 @@ namespace quickDBExplorer
 		private void dlgWhereZoom_Click(object sender, System.EventArgs e)
 		{
 			this.txtWhere.Text = ((ZoomDialog)sender).EditText;
+			string tbname = this.objectList.GetSelectObject(0).FormalName;
+			// 履歴に現在の値を記録
+			qdbeUtil.SetNewHistory(tbname, this.txtWhere.Text, this.whereHistory);
 
-			DispData(this.objectList.GetSelectObject(0));
+			if (this.objectList.SelectedItems.Count == 1)
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
+
+				DispData(this.objectList.GetSelectObject(0));
+			}
+			else
+			{
+				tbname = "";
+				DispData(null);
+			}
+//			DispData(this.objectList.GetSelectObject(0));
 		}
 
 		private void btnOrderZoom_Click(object sender, System.EventArgs e)
 		{
-			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
-			dlg.EditText = this.txtSort.Text;
-			dlg.LableName = "order by 指定";
-			dlg.Enter += new System.EventHandler(this.dlgSortZoom_Click);
-			dlg.Show();
-			dlg.BringToFront();
-			dlg.Focus();
+			this.txtSort.DoShowZoom("order by 指定",new System.EventHandler(this.dlgSortZoom_Click));
 		}
+
 		private void dlgSortZoom_Click(object sender, System.EventArgs e)
 		{
 			this.txtSort.Text = ((ZoomDialog)sender).EditText;
-			DispData(this.objectList.GetSelectObject(0));
+			string tbname = this.objectList.GetSelectObject(0).FormalName;
+			// 履歴に現在の値を記録
+			qdbeUtil.SetNewHistory(tbname, this.txtSort.Text, this.sortHistory);
+			if (this.objectList.SelectedItems.Count == 1)
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
+
+				DispData(this.objectList.GetSelectObject(0));
+			}
+			else
+			{
+				tbname = "";
+				DispData(null);
+			}
 		}
 
 		private void dlgAliasZoom_Click(object sender, System.EventArgs e)
 		{
 			this.txtAlias.Text = ((ZoomDialog)sender).EditText;
+			string tbname = this.objectList.GetSelectObject(0).FormalName;
+			// 履歴に現在の値を記録
+			qdbeUtil.SetNewHistory(tbname, this.txtAlias.Text, this.aliasHistory);
 
-			DispData(this.objectList.GetSelectObject(0));
+			if (this.objectList.SelectedItems.Count == 1)
+			{
+				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
+
+				DispData(this.objectList.GetSelectObject(0));
+			}
+			else
+			{
+				tbname = "";
+				DispData(null);
+			}
 		}
 
 		/// <summary>
@@ -2657,6 +2756,7 @@ namespace quickDBExplorer
 		{
 			this.aliasText = this.txtAlias.Text;
 		}
+
 		/// <summary>
 		/// Alias のフォーカスアウト
 		/// </summary>
@@ -2682,49 +2782,18 @@ namespace quickDBExplorer
 			{
 				setWhereDialog(false,false);
 			}
+			this.aliasText = this.txtAlias.Text;
+		}
+
+		void txtAlias_ShowZoom(object sender, EventArgs e)
+		{
+			this.txtAlias.DoShowZoom("Alias 指定", new System.EventHandler(this.dlgAliasZoom_Click));
 		}
 
 		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
-			DBObjectInfo	dboInfo = null;
 			TextBox			senderText = sender as TextBox;
 
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.W )
-			{
-				// 値の拡大表示を行う
-				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
-				dlg.EditText = this.txtAlias.Text;
-				dlg.LableName = "Alias 指定";
-				dlg.Enter += new System.EventHandler(this.dlgAliasZoom_Click);
-				dlg.Show();
-				dlg.BringToFront();
-				dlg.Focus();
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.S )
-			{
-				string targetTable = "";
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.objectList.GetSelectOneObjectFormalName();
-					dboInfo = this.objectList.GetSelectObject(0);
-				}
-				HistoryViewer hv = new HistoryViewer(this.aliasHistory, targetTable);
-				if( DialogResult.OK == hv.ShowDialog() && senderText.Text != hv.RetString)
-				{
-					senderText.Text = hv.RetString;
-					if( this.objectList.SelectedItems.Count == 1 )
-					{
-						qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.aliasHistory);
-					}
-
-					DispData(dboInfo);
-					setWhereDialog(false,false);
-				}
-			}
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
@@ -2737,6 +2806,7 @@ namespace quickDBExplorer
 				{
 					setWhereDialog(false, false);
 				}
+				this.aliasText = this.txtAlias.Text;
 			}
 		}
 
@@ -2766,6 +2836,29 @@ namespace quickDBExplorer
 			}
 		}
 
+		private void txtWhere_ShowHistory(object sender, EventArgs e)
+		{
+			// Ctrl + S
+			// 入力履歴を表示する
+			string targetTable = "";
+			if (this.objectList.SelectedItems.Count == 1)
+			{
+				targetTable = this.objectList.GetSelectOneObjectFormalName();
+			}
+			if (this.txtWhere.DoShowHistory(targetTable))
+			{
+				DispData(this.objectList.GetSelectObject(0));
+				setWhereDialog(false, false);
+			}
+		}
+
+		void txtWhere_ShowZoom(object sender, EventArgs e)
+		{
+			// Ctrl + W
+			// 値の拡大表示を行う
+			setWhereDialog(false, true);
+		}
+
 		/// <summary>
 		/// where 入力テキストボックスでの特殊キー押下ハンドラ
 		/// </summary>
@@ -2774,37 +2867,6 @@ namespace quickDBExplorer
 		private void txtWhere_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			TextBox			senderText = sender as TextBox;
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.W )
-			{
-				// Ctrl + W
-				// 値の拡大表示を行う
-				setWhereDialog(false,true);
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.S )
-			{
-				// Ctrl + S
-				// 入力履歴を表示する
-				string targetTable = "";
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					targetTable = this.objectList.GetSelectOneObjectFormalName();
-				}
-				HistoryViewer hv = new HistoryViewer(this.whereHistory, targetTable);
-				if( DialogResult.OK == hv.ShowDialog() && this.txtWhere.Text != hv.RetString)
-				{
-					this.txtWhere.Text = hv.RetString;
-					if( this.objectList.SelectedItems.Count == 1 )
-					{
-						qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.whereHistory);
-					}
-
-					DispData(this.objectList.GetSelectObject(0));
-				}
-			}
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
@@ -2815,43 +2877,33 @@ namespace quickDBExplorer
 				}
 				DispData(this.objectList.GetSelectObject(0));
 			}
-		
+		}
+
+
+
+		/// <summary>
+		/// order by 指定で Ctrl+Wが押下された場合に値拡大表示を行う
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void txtSort_ShowZoom(object sender, EventArgs e)
+		{
+			this.txtSort.DoShowZoom("order by 指定", new System.EventHandler(this.dlgSortZoom_Click));
+		}
+
+		private void txtSort_ShowHistory(object sender, EventArgs e)
+		{
+			string targetTable = "";
+			targetTable = this.objectList.GetSelectOneObjectFormalName();
+			if (this.txtSort.DoShowHistory(targetTable))
+			{
+				DispData(this.objectList.GetSelectObject(0));
+			}
 		}
 
 		private void txtSort_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			TextBox			senderText = sender as TextBox;
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.W )
-			{
-				// 値の拡大表示を行う
-				ZoomFloatingDialog dlg = new ZoomFloatingDialog();
-				dlg.EditText = this.txtSort.Text;
-				dlg.LableName = "order by 指定";
-				dlg.Enter += new System.EventHandler(this.dlgSortZoom_Click);
-				dlg.Show();
-				dlg.BringToFront();
-				dlg.Focus();
-			}
-			if( e.Alt == false &&
-				e.Control == true &&
-				e.KeyCode == Keys.S )
-			{
-				string targetTable = "";
-				targetTable = this.objectList.GetSelectOneObjectFormalName();
-				HistoryViewer hv = new HistoryViewer(this.sortHistory, targetTable);
-				if( DialogResult.OK == hv.ShowDialog() && this.txtSort.Text != hv.RetString)
-				{
-					this.txtSort.Text = hv.RetString;
-					if( this.objectList.SelectedItems.Count == 1 )
-					{
-						qdbeUtil.SetNewHistory(targetTable,hv.RetString,this.sortHistory);
-					}
-
-					DispData(this.objectList.GetSelectObject(0));
-				}
-			}
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
@@ -2910,7 +2962,7 @@ namespace quickDBExplorer
 			}
 		}
 
-		private void label4_DoubleClick(object sender, System.EventArgs e)
+		private void labelDB_DoubleClick(object sender, System.EventArgs e)
 		{
 			if( this.SqlTimeout == 0 )
 			{
@@ -5990,6 +6042,7 @@ namespace quickDBExplorer
 					}
 					else
 					{
+						drAr.Clear();
 						break;
 					}
 				}
@@ -6509,17 +6562,18 @@ namespace quickDBExplorer
 				{
 					wheredlg.TargetObject = this.objectList.GetSelectObject(0);
 					wheredlg.AliasName = this.txtAlias.Text;
-					wheredlg.ResetTarget();
+//					wheredlg.ResetTarget();
 				}
 				else
 				{
 					wheredlg.TargetObject = null;
-					wheredlg.ResetTarget();
+//					wheredlg.ResetTarget();
 				}
 				if (isShow == true)
 				{
 					wheredlg.EditText = this.txtWhere.Text;
 					wheredlg.Show();
+					wheredlg.BringToFront();
 				}
 			}
 			else
@@ -6553,6 +6607,44 @@ namespace quickDBExplorer
 
 			}
 		}
+
+		private void txtAlias_ShowHistory(object sender, EventArgs e)
+		{
+			DBObjectInfo dboInfo = null;
+			string targetTable = "";
+			if (this.objectList.SelectedItems.Count == 1)
+			{
+				targetTable = this.objectList.GetSelectOneObjectFormalName();
+				dboInfo = this.objectList.GetSelectObject(0);
+			}
+			if (this.txtAlias.DoShowHistory(targetTable))
+			{
+				DispData(dboInfo);
+				setWhereDialog(false, false);
+			}
+		}
+
+		/// <summary>
+		/// owner/Role がダブルクリックされた場合、もう一度 owner/Roleのリストを読み込み直す
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void labelSchema_DoubleClick(object sender, EventArgs e)
+		{
+			ResetOwnerList();
+		}
+
+		/// <summary>
+		/// オブジェクトリストのラベルがダブルクリックされた場合、オブジェクトリストを再読み込みする
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void labelObject_DoubleClick(object sender, EventArgs e)
+		{
+			DispObjectList();
+		}
+
+
 
 	}
 

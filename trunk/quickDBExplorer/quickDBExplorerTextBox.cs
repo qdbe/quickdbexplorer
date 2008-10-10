@@ -6,19 +6,231 @@ using System.Text.RegularExpressions;
 namespace quickDBExplorer
 {
 	/// <summary>
+	/// テキストボックスで Ctrl+Sが押下された場合のイベントハンドラ
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	public delegate void ShowHistoryEventHandler(
+		object sender,
+		System.EventArgs e
+	);
+
+	/// <summary>
+	/// テキストボックスで Ctrl+Wが押下された場合のイベントハンドラ
+	/// </summary>
+	/// <param name="sender"></param>
+	/// <param name="e"></param>
+	public delegate void ShowZoomEventHandler(
+		object sender,
+		System.EventArgs e
+	);
+
+	/// <summary>
 	/// CTRL+Aでの全選択機能、CTRL+Dでの文字削除を追加したテキストボックス
 	/// </summary>
 	[System.Runtime.InteropServices.ComVisible(false)]
 	public class quickDBExplorerTextBox : TextBox
 	{
 		/// <summary>
+		/// テキスト入力エリアでの右クリックメニュー
+		/// </summary>
+		private System.Windows.Forms.ContextMenu contextMenu1;
+		private System.Windows.Forms.MenuItem menuCopy;
+		private System.Windows.Forms.MenuItem menuCut;
+		private System.Windows.Forms.MenuItem menuPaste;
+		private System.Windows.Forms.MenuItem menuAllSelect;
+		private System.Windows.Forms.MenuItem menuAllDelete;
+		private System.Windows.Forms.MenuItem menuShowHistory;
+		private System.Windows.Forms.MenuItem menuShowZoom;
+
+		/// <summary>
+		/// Ctrl+Sが押された場合のイベント
+		/// </summary>
+		public event ShowHistoryEventHandler ShowHistory = null;
+
+		/// <summary>
+		/// Ctrl+Sが押された場合のイベント
+		/// </summary>
+		public event ShowZoomEventHandler ShowZoom = null;
+
+		/// <summary>
+		/// 入力履歴データ
+		/// </summary>
+		private TextHistoryDataSet pdHistory = null;
+
+		/// <summary>
+		/// 入力履歴データ
+		/// </summary>
+		public TextHistoryDataSet PdHistory
+		{
+			get { return pdHistory; }
+			set { 
+				pdHistory = value;
+				if (pdHistory == null)
+				{
+					if (this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
+					{
+						this.contextMenu1.MenuItems.Remove(this.menuShowHistory);
+					}
+				}
+				else
+				{
+					if (!this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
+					{
+						this.menuShowHistory.Index = this.contextMenu1.MenuItems.Count + 1;
+						this.contextMenu1.MenuItems.Add(this.menuShowHistory);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// 値の拡大表示を可能とするか否か
+		/// </summary>
+		private bool pShowZoom = false;
+
+		/// <summary>
+		/// 値の拡大表示を可能とするか否か
+		/// </summary>
+		public bool IsShowZoom
+		{
+			get { return pShowZoom; }
+			set { 
+				pShowZoom = value;
+				if (this.pShowZoom == true)
+				{
+					if (!this.contextMenu1.MenuItems.Contains(this.menuShowZoom))
+					{
+						this.menuShowHistory.Index = this.contextMenu1.MenuItems.Count + 1;
+						this.contextMenu1.MenuItems.Add(this.menuShowZoom);
+					}
+				}
+				else
+				{
+					if (this.contextMenu1.MenuItems.Contains(this.menuShowZoom))
+					{
+						this.contextMenu1.MenuItems.Remove(this.menuShowZoom);
+					}
+				}
+			}
+		}
+
+		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public quickDBExplorerTextBox() : base()
 		{
+			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
+			this.menuCopy = new System.Windows.Forms.MenuItem();
+			this.menuCut = new System.Windows.Forms.MenuItem();
+			this.menuPaste = new System.Windows.Forms.MenuItem();
+			this.menuAllSelect = new System.Windows.Forms.MenuItem();
+			this.menuAllDelete = new System.Windows.Forms.MenuItem();
+			this.menuShowHistory = new System.Windows.Forms.MenuItem();
+			this.menuShowZoom = new System.Windows.Forms.MenuItem();
+
+			// 
+			// contextMenu1
+			// 
+			this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuCopy,
+            this.menuCut,
+            this.menuPaste,
+            this.menuAllSelect,
+            this.menuAllDelete
+			});
+			// 
+			// menuCopy
+			// 
+			this.menuCopy.Index = 0;
+			this.menuCopy.Shortcut = System.Windows.Forms.Shortcut.CtrlC;
+			this.menuCopy.Text = "コピー";
+			this.menuCopy.Click += new System.EventHandler(this.menuCopy_Click);
+			// 
+			// menuCut
+			// 
+			this.menuCut.Index = 1;
+			this.menuCut.Shortcut = System.Windows.Forms.Shortcut.CtrlX;
+			this.menuCut.Text = "切り取り";
+			this.menuCut.Click += new System.EventHandler(this.menuCut_Click);
+			// 
+			// menuPaste
+			// 
+			this.menuPaste.Index = 2;
+			this.menuPaste.Shortcut = System.Windows.Forms.Shortcut.CtrlV;
+			this.menuPaste.Text = "貼り付け";
+			this.menuPaste.Click += new System.EventHandler(this.menuPaste_Click);
+			// 
+			// menuAllSelect
+			// 
+			this.menuAllSelect.Index = 3;
+			this.menuAllSelect.Shortcut = System.Windows.Forms.Shortcut.CtrlA;
+			this.menuAllSelect.Text = "全て選択";
+			this.menuAllSelect.Click += new System.EventHandler(this.menuAllSelect_Click);
+			// 
+			// menuAllSelect
+			// 
+			this.menuAllDelete.Index = 4;
+			this.menuAllDelete.Shortcut = System.Windows.Forms.Shortcut.CtrlD;
+			this.menuAllDelete.Text = "全て削除";
+			this.menuAllDelete.Click += new EventHandler(menuAllDelete_Click);
+
+			// 
+			// menuShowHistory
+			// 
+			this.menuShowHistory.Index = 5;
+			this.menuShowHistory.Shortcut = System.Windows.Forms.Shortcut.CtrlS;
+			this.menuShowHistory.Text = "履歴表示";
+			this.menuShowHistory.Click += new EventHandler(menuShowHistory_Click);
+
+			// 
+			// menuShowHistory
+			// 
+			this.menuShowZoom.Index = 6;
+			this.menuShowZoom.Shortcut = System.Windows.Forms.Shortcut.CtrlW;
+			this.menuShowZoom.Text = "値拡大表示";
+			this.menuShowZoom.Click += new EventHandler(menuShowZoom_Click);
+
+			this.ContextMenu = this.contextMenu1;
+
 			this.KeyDown += new KeyEventHandler(quickDBExplorerTextBox_KeyDown);
 			this.Enter +=new EventHandler(quickDBExplorerTextBox_Enter);
 			this.TextChanged +=new EventHandler(quickDBExplorerTextBox_TextChanged);
+		}
+
+		private void menuAllDelete_Click(object sender, EventArgs e)
+		{
+			this.Text = string.Empty;
+		}
+
+		/// <summary>
+		/// Ctrl+S を押下された場合に値の履歴表示イベントを呼び出し
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void menuShowHistory_Click(object sender, EventArgs e)
+		{
+			// 履歴が登録されていれば履歴選択画面を表示する
+			if (this.pdHistory != null &&
+				this.ShowHistory != null)
+			{
+				this.ShowHistory(this, new EventArgs());
+			}
+		}
+
+		/// <summary>
+		/// Ctrl+W を押下された場合に値の拡大表示イベントを呼び出し
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void menuShowZoom_Click(object sender, EventArgs e)
+		{
+			// 履歴が登録されていれば履歴選択画面を表示する
+			if (this.IsShowZoom == true &&
+				this.ShowZoom != null)
+			{
+				this.ShowZoom(this, new EventArgs());
+			}
 		}
 
 		/// <summary>
@@ -37,6 +249,21 @@ namespace quickDBExplorer
 			set { this.pIsDigitOnly = value; }
 		}
 
+		///// <summary>
+		///// MultiLine に限らず Ctrl + A で全選択させるか否か
+		///// </summary>
+		//private bool forceSelectAll = false;
+
+		///// <summary>
+		///// MultiLine に限らず Ctrl + A で全選択させるか否か
+		///// </summary>
+		//public bool ForceSelectAll
+		//{
+		//    get { return forceSelectAll; }
+		//    set { forceSelectAll = value; }
+		//}
+
+
 		private bool pIsCTRLDelete = true;
 		
 		/// <summary>
@@ -53,6 +280,26 @@ namespace quickDBExplorer
 		// 変更前のテキスト
 		private string orgString;
 
+		private void menuCopy_Click(object sender, System.EventArgs e)
+		{
+			this.Copy();
+		}
+
+		private void menuCut_Click(object sender, System.EventArgs e)
+		{
+			this.Cut();
+		}
+
+		private void menuPaste_Click(object sender, System.EventArgs e)
+		{
+			this.Paste();
+		}
+
+		private void menuAllSelect_Click(object sender, System.EventArgs e)
+		{
+			this.SelectAll();
+		}
+
 		/// <summary>
 		/// キーダウンイベントハンドラ
 		/// CTRL+Aでの全選択処理を追加する
@@ -61,8 +308,9 @@ namespace quickDBExplorer
 		/// <param name="ev"></param>
 		internal virtual void quickDBExplorerTextBox_KeyDown(object sender, KeyEventArgs ev)
 		{
-			if( ((TextBox)sender).Multiline != true &&
-				ev.Alt != true &&
+//			(((TextBox)sender).Multiline != true ||
+//				forceSelectAll == true ) &&
+			if( ev.Alt != true &&
 				ev.Control == true &&
 				ev.Shift != true &&
 				ev.KeyCode == Keys.A )
@@ -71,6 +319,32 @@ namespace quickDBExplorer
 				ev.Handled = true;
 			}
 
+			// Ctrl＋Sで過去入力履歴ダイアログを表示する
+			if (ev.Alt == false &&
+				ev.Control == true &&
+				ev.KeyCode == Keys.S)
+			{
+				if (this.pdHistory != null &&
+					this.ShowHistory != null)
+				{
+					this.ShowHistory(this,new EventArgs());
+				}
+			}
+
+			// Ctrl＋Wで過去入力履歴ダイアログを表示する
+			if (ev.Alt == false &&
+				ev.Control == true &&
+				ev.KeyCode == Keys.W)
+			{
+				// 履歴が登録されていれば履歴選択画面を表示する
+				if (this.IsShowZoom == true &&
+					this.ShowZoom != null)
+				{
+					this.ShowZoom(this, new EventArgs());
+				}
+			}
+
+
 			if( this.pIsCTRLDelete == true &&
 				ev.Alt != true &&
 				ev.Control == true &&
@@ -78,6 +352,58 @@ namespace quickDBExplorer
 				ev.KeyCode == Keys.D )
 			{
 				this.Text = string.Empty;
+			}
+		}
+
+		/// <summary>
+		/// 値拡大ダイアログを表示する
+		/// </summary>
+		/// <param name="labelName">Windowタイトル</param>
+		/// <param name="dlgEnter">ダイアログでOKボタンが押下された時のイベントハンドラ</param>
+		public void DoShowZoom(string labelName, System.EventHandler dlgEnter)
+		{
+			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+			dlg.EditText = this.Text;
+			dlg.LableName = labelName;
+			dlg.Enter += dlgEnter;
+			dlg.Show();
+			dlg.BringToFront();
+			dlg.Focus();
+		}
+
+		/// <summary>
+		/// 履歴選択ダイアログを表示する
+		/// </summary>
+		/// <param name="key">履歴を選択する際のキー情報</param>
+		public bool DoShowHistory(string key)
+		{
+			if (this.pdHistory == null)
+			{
+				return false;
+			}
+			// 入力履歴の選択ダイアログを表示する
+			HistoryViewer hv = new HistoryViewer(this.pdHistory, key);
+			if (key != null)
+			{
+				hv.IsShowTable = true;
+			}
+			else
+			{
+				hv.IsShowTable = false;
+			}
+			if (DialogResult.OK == hv.ShowDialog())
+			{
+				if (this.Text != hv.RetString)
+				{
+					//違う情報であれば、それを表示し、履歴として追加する
+					this.Text = hv.RetString;
+					qdbeUtil.SetNewHistory(key, hv.RetString, this.pdHistory);
+				}
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
 

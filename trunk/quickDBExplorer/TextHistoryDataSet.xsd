@@ -1,22 +1,34 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<xs:schema id="TextHistoryDataSet" targetNamespace="http://tempuri.org/TextHistoryDataSet.xsd"
-	elementFormDefault="qualified" attributeFormDefault="qualified" xmlns="http://tempuri.org/TextHistoryDataSet.xsd"
-	xmlns:mstns="http://tempuri.org/TextHistoryDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" finalDefault="#all">
-	<xs:element name="TextHistoryDataSet" msdata:IsDataSet="true" msdata:CaseSensitive="true">
-		<xs:complexType>
-			<xs:choice maxOccurs="unbounded">
-				<xs:element name="TextHistoryDataSets" msdata:CaseSensitive="true">
-					<xs:complexType>
-						<xs:sequence>
-							<xs:element name="KeyNo" type="xs:int" minOccurs="0" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1"
-								msdata:AutoIncrementStep="1" msdata:ReadOnly="false" />
-							<xs:element name="KeyValue" type="xs:string" minOccurs="0" />
-							<xs:element name="DataValue" type="xs:string" minOccurs="0" />
-						</xs:sequence>
-					</xs:complexType>
-				</xs:element>
-			</xs:choice>
-		</xs:complexType>
-	</xs:element>
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="TextHistoryDataSet" targetNamespace="http://tempuri.org/TextHistoryDataSet.xsd" xmlns:mstns="http://tempuri.org/TextHistoryDataSet.xsd" xmlns="http://tempuri.org/TextHistoryDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+        </Connections>
+        <Tables>
+        </Tables>
+        <Sources>
+        </Sources>
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="TextHistoryDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="TextHistoryDataSet" msprop:Generator_DataSetName="TextHistoryDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="TextHistoryDataSets" msprop:Generator_UserTableName="TextHistoryDataSets" msprop:Generator_RowDeletedName="TextHistoryDataSetsRowDeleted" msprop:Generator_RowChangedName="TextHistoryDataSetsRowChanged" msprop:Generator_RowClassName="TextHistoryDataSetsRow" msprop:Generator_RowChangingName="TextHistoryDataSetsRowChanging" msprop:Generator_RowEvArgName="TextHistoryDataSetsRowChangeEvent" msprop:Generator_RowEvHandlerName="TextHistoryDataSetsRowChangeEventHandler" msprop:Generator_TableClassName="TextHistoryDataSetsDataTable" msprop:Generator_TableVarName="tableTextHistoryDataSets" msprop:Generator_RowDeletingName="TextHistoryDataSetsRowDeleting" msprop:Generator_TablePropName="TextHistoryDataSets">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="KeyNo" msdata:AutoIncrement="true" msprop:Generator_UserColumnName="KeyNo" msprop:Generator_ColumnVarNameInTable="columnKeyNo" msprop:Generator_ColumnPropNameInRow="KeyNo" msprop:Generator_ColumnPropNameInTable="KeyNoColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="KeyValue" msprop:Generator_UserColumnName="KeyValue" msprop:nullValue="" msprop:Generator_ColumnVarNameInTable="columnKeyValue" msprop:Generator_ColumnPropNameInTable="KeyValueColumn" msprop:Generator_ColumnPropNameInRow="KeyValue" type="xs:string" minOccurs="0" />
+              <xs:element name="DataValue" msprop:Generator_UserColumnName="DataValue" msprop:nullValue="" msprop:Generator_ColumnVarNameInTable="columnDataValue" msprop:Generator_ColumnPropNameInTable="DataValueColumn" msprop:Generator_ColumnPropNameInRow="DataValue" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:TextHistoryDataSets" />
+      <xs:field xpath="mstns:KeyNo" />
+    </xs:unique>
+  </xs:element>
 </xs:schema>

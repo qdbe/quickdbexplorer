@@ -53,23 +53,27 @@ namespace quickDBExplorer
 			// 
 			// txtInput
 			// 
-			this.txtInput.Location = new System.Drawing.Point(16, 50);
+			this.txtInput.Location = new System.Drawing.Point(16, 49);
 			this.txtInput.Size = new System.Drawing.Size(444, 206);
 			// 
 			// btnGo
 			// 
+			this.btnGo.Location = new System.Drawing.Point(16, 289);
 			this.btnGo.TabIndex = 3;
 			// 
 			// btnCancel
 			// 
+			this.btnCancel.Location = new System.Drawing.Point(360, 289);
 			this.btnCancel.TabIndex = 5;
 			// 
 			// chkReturn
 			// 
+			this.chkReturn.Location = new System.Drawing.Point(16, 261);
 			this.chkReturn.TabIndex = 2;
 			// 
 			// btnHistory
 			// 
+			this.btnHistory.Location = new System.Drawing.Point(144, 289);
 			this.btnHistory.TabIndex = 4;
 			// 
 			// label1
@@ -97,10 +101,11 @@ namespace quickDBExplorer
 			this.Controls.Add(this.label2);
 			this.Name = "CmdInputDialog";
 			this.Text = "各種クエリ実行(オブジェクト引数)";
+			this.VisibleChanged += new System.EventHandler(this.CmdInputDialog_VisibleChanged);
+			this.Controls.SetChildIndex(this.txtInput, 0);
 			this.Controls.SetChildIndex(this.btnCancel, 0);
 			this.Controls.SetChildIndex(this.chkReturn, 0);
 			this.Controls.SetChildIndex(this.btnHistory, 0);
-			this.Controls.SetChildIndex(this.txtInput, 0);
 			this.Controls.SetChildIndex(this.btnGo, 0);
 			this.Controls.SetChildIndex(this.label2, 0);
 			this.Controls.SetChildIndex(this.label1, 0);
@@ -125,6 +130,11 @@ namespace quickDBExplorer
 			base.btnGo_Click (sender, e);
 			this.DialogResult = DialogResult.OK;
 			this.Close();
+		}
+
+		private void CmdInputDialog_VisibleChanged(object sender, EventArgs e)
+		{
+			this.txtInput.Focus();
 		}
 
 	}

@@ -25,11 +25,14 @@ namespace quickDBExplorer
 		private DataGridView fieldCondition;
 		private Button btnClear;
 		private ComboBox cmbCondition;
+		private int forceCellColumn = -1;
+		private int forceCellRow = -1;
 
 		/// <summary>
 		/// where 句指定の対象オブジェクト
 		/// </summary>
 		private DBObjectInfo pTargetObject;
+		private DBObjectInfo preTartgetObject = null;
 		private DataGridViewTextBoxColumn Fields;
 		private DataGridViewTextBoxColumn fieldtypes;
 		private DataGridViewComboBoxColumn cond;
@@ -40,8 +43,31 @@ namespace quickDBExplorer
 		/// </summary>
 		public DBObjectInfo TargetObject
 		{
-			set { this.pTargetObject = value; }
+			set {
+				this.pTargetObject = value;
+				string preobjname = string.Empty;
+				string newobjname = string.Empty;
+
+				if ( this.pTargetObject != null)
+				{
+					newobjname = pTargetObject.FormalName;
+				}
+				if (this.preTartgetObject != null)
+				{
+					preobjname = this.preTartgetObject.FormalName;
+				}
+				if (preobjname != newobjname)
+				{
+					this.ResetTarget();
+				}
+				this.preTartgetObject = this.pTargetObject;
+			}
 		}
+
+		/// <summary>
+		/// オブジェクトの alias
+		/// </summary>
+		private string preAliasName = "";
 
 		/// <summary>
 		/// オブジェクトの alias
@@ -54,7 +80,14 @@ namespace quickDBExplorer
 		public string AliasName
 		{
 			get { return pAliasName; }
-			set { pAliasName = value; }
+			set { 
+				pAliasName = value;
+				if (pAliasName != this.preAliasName)
+				{
+					this.SetFieldCondResult();
+				}
+				this.preAliasName = pAliasName; 
+			}
 		}
 
 		/// <summary>
@@ -91,18 +124,18 @@ namespace quickDBExplorer
 		private void InitializeComponent()
 		{
 			this.fieldCondition = new System.Windows.Forms.DataGridView();
-			this.btnClear = new System.Windows.Forms.Button();
-			this.cmbCondition = new System.Windows.Forms.ComboBox();
 			this.Fields = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.fieldtypes = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.cond = new System.Windows.Forms.DataGridViewComboBoxColumn();
 			this.datavalues = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.btnClear = new System.Windows.Forms.Button();
+			this.cmbCondition = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.fieldCondition)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// chkStayOnTop
 			// 
-			this.chkStayOnTop.TabIndex = 0;
+			this.chkStayOnTop.TabIndex = 8;
 			// 
 			// btnApply
 			// 
@@ -111,10 +144,10 @@ namespace quickDBExplorer
 			// 
 			// txtZoom
 			// 
+			this.txtZoom.AcceptsReturn = true;
 			this.txtZoom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtZoom.Size = new System.Drawing.Size(624, 114);
-			this.txtZoom.TabIndex = 1;
 			// 
 			// btnOk
 			// 
@@ -154,30 +187,9 @@ namespace quickDBExplorer
 			this.fieldCondition.RowTemplate.Height = 21;
 			this.fieldCondition.Size = new System.Drawing.Size(622, 160);
 			this.fieldCondition.TabIndex = 3;
+			this.fieldCondition.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.fieldCondition_CellLeave);
 			this.fieldCondition.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.fieldCondition_CellEndEdit);
-			// 
-			// btnClear
-			// 
-			this.btnClear.Location = new System.Drawing.Point(14, 335);
-			this.btnClear.Name = "btnClear";
-			this.btnClear.Size = new System.Drawing.Size(181, 23);
-			this.btnClear.TabIndex = 4;
-			this.btnClear.Text = "フィールド条件クリア";
-			this.btnClear.UseVisualStyleBackColor = true;
-			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
-			// 
-			// cmbCondition
-			// 
-			this.cmbCondition.FormattingEnabled = true;
-			this.cmbCondition.Items.AddRange(new object[] {
-            "AND",
-            "OR"});
-			this.cmbCondition.Location = new System.Drawing.Point(14, 144);
-			this.cmbCondition.Name = "cmbCondition";
-			this.cmbCondition.Size = new System.Drawing.Size(154, 20);
-			this.cmbCondition.TabIndex = 2;
-			this.cmbCondition.SelectedIndexChanged += new System.EventHandler(this.cmbCondition_SelectedIndexChanged);
-			this.cmbCondition.TextChanged += new System.EventHandler(this.cmbCondition_TextChanged);
+			this.fieldCondition.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.fieldCondition_CellEnter);
 			// 
 			// Fields
 			// 
@@ -187,7 +199,7 @@ namespace quickDBExplorer
 			this.Fields.Name = "Fields";
 			this.Fields.ReadOnly = true;
 			this.Fields.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.Fields.Width = 67;
+			this.Fields.Width = 42;
 			// 
 			// fieldtypes
 			// 
@@ -213,7 +225,12 @@ namespace quickDBExplorer
             "is null",
             "is null and = \'\'",
             "is not null",
-            "is not null and != \'\'"});
+            "is not null and != \'\'",
+            "<",
+            ">",
+            ">=",
+            "<=",
+			});
 			this.cond.MinimumWidth = 50;
 			this.cond.Name = "cond";
 			this.cond.Width = 53;
@@ -227,6 +244,29 @@ namespace quickDBExplorer
 			this.datavalues.Name = "datavalues";
 			this.datavalues.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
+			// btnClear
+			// 
+			this.btnClear.Location = new System.Drawing.Point(14, 335);
+			this.btnClear.Name = "btnClear";
+			this.btnClear.Size = new System.Drawing.Size(181, 23);
+			this.btnClear.TabIndex = 4;
+			this.btnClear.Text = "フィールド条件クリア";
+			this.btnClear.UseVisualStyleBackColor = true;
+			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+			// 
+			// cmbCondition
+			// 
+			this.cmbCondition.FormattingEnabled = true;
+			this.cmbCondition.Items.AddRange(new object[] {
+            "AND",
+            "OR"});
+			this.cmbCondition.Location = new System.Drawing.Point(14, 144);
+			this.cmbCondition.Name = "cmbCondition";
+			this.cmbCondition.Size = new System.Drawing.Size(154, 20);
+			this.cmbCondition.TabIndex = 2;
+			this.cmbCondition.SelectedIndexChanged += new System.EventHandler(this.cmbCondition_SelectedIndexChanged);
+			this.cmbCondition.TextChanged += new System.EventHandler(this.cmbCondition_TextChanged);
+			// 
 			// WhereDialog
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -237,6 +277,7 @@ namespace quickDBExplorer
 			this.Name = "WhereDialog";
 			this.Text = "Where 句指定";
 			this.Load += new System.EventHandler(this.WhereDialog_Load);
+			this.VisibleChanged += new System.EventHandler(this.WhereDialog_VisibleChanged);
 			this.Controls.SetChildIndex(this.chkStayOnTop, 0);
 			this.Controls.SetChildIndex(this.btnClear, 0);
 			this.Controls.SetChildIndex(this.btnOk, 0);
@@ -303,6 +344,18 @@ namespace quickDBExplorer
 
 		private void fieldCondition_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
+			if (e.ColumnIndex == 3 &&
+				this.fieldCondition[e.ColumnIndex, e.RowIndex].Value != null &&
+				!this.fieldCondition[e.ColumnIndex, e.RowIndex].Value.Equals(string.Empty) &&
+				this.fieldCondition[e.ColumnIndex, e.RowIndex].Value != DBNull.Value)
+			{
+				if( this.fieldCondition[e.ColumnIndex -1,e.RowIndex].Value == null ||
+					this.fieldCondition[e.ColumnIndex -1,e.RowIndex].Value.Equals(string.Empty) ||
+					this.fieldCondition[e.ColumnIndex -1,e.RowIndex].Value == DBNull.Value )
+				{
+					this.fieldCondition[e.ColumnIndex - 1, e.RowIndex].Value = "=";
+				}
+			}
 			SetFieldCondResult();
 		}
 
@@ -372,6 +425,22 @@ namespace quickDBExplorer
 				else if (condstr == "!=")
 				{
 					sb.Append(fieldname).Append(" != ");
+				}
+				else if (condstr == "<")
+				{
+					sb.Append(fieldname).Append(" < ");
+				}
+				else if (condstr == ">")
+				{
+					sb.Append(fieldname).Append(" > ");
+				}
+				else if (condstr == "<=")
+				{
+					sb.Append(fieldname).Append(" <= ");
+				}
+				else if (condstr == ">")
+				{
+					sb.Append(fieldname).Append(" >= ");
 				}
 				else if (condstr == "like")
 				{
@@ -487,6 +556,40 @@ namespace quickDBExplorer
 		{
 			this.Visible = false;
 			e.Cancel = true;
+		}
+
+		private void WhereDialog_VisibleChanged(object sender, EventArgs e)
+		{
+			this.txtZoom.Focus();
+		}
+
+		private void fieldCondition_CellLeave(object sender, DataGridViewCellEventArgs e)
+		{
+		}
+
+		private void fieldCondition_CellEnter(object sender, DataGridViewCellEventArgs e)
+		{
+		}
+
+		private void fieldCondition_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+		{
+			if (this.forceCellRow != -1 ||
+				this.forceCellColumn != -1)
+			{
+				if (e.RowIndex != this.forceCellRow ||
+					e.ColumnIndex != this.forceCellColumn)
+				{
+					this.fieldCondition.CurrentCell = this.fieldCondition[this.forceCellColumn, this.forceCellRow];
+					this.forceCellColumn = -1;
+					this.forceCellRow = -1;
+					this.fieldCondition.BeginEdit(true);
+				}
+				else
+				{
+					this.forceCellColumn = -1;
+					this.forceCellRow = -1;
+				}
+			}
 		}
 	}
 }

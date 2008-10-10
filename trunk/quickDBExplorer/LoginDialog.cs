@@ -25,7 +25,7 @@ namespace quickDBExplorer
 		private ConditionRecorder	initOpt;
 
 		private System.Windows.Forms.CheckBox chkTrust;
-		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label labelSchema;
 		private System.Windows.Forms.CheckBox chkSaveInfo;
 		private System.Windows.Forms.Button btnServerHistory;
 		private System.Windows.Forms.Button btnLogin;
@@ -76,7 +76,7 @@ namespace quickDBExplorer
 		{
 			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(LogOnDialog));
 			this.chkTrust = new System.Windows.Forms.CheckBox();
-			this.label5 = new System.Windows.Forms.Label();
+			this.labelSchema = new System.Windows.Forms.Label();
 			this.chkSaveInfo = new System.Windows.Forms.CheckBox();
 			this.btnServerHistory = new System.Windows.Forms.Button();
 			this.btnLogin = new System.Windows.Forms.Button();
@@ -104,14 +104,14 @@ namespace quickDBExplorer
 			this.chkTrust.Text = "WindowsîFèÿÇóòóp(&T)";
 			this.chkTrust.CheckedChanged += new System.EventHandler(this.chkTrust_CheckedChanged);
 			// 
-			// label5
+			// labelSchema
 			// 
-			this.label5.Font = new System.Drawing.Font("MS UI Gothic", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
-			this.label5.Location = new System.Drawing.Point(8, 249);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(48, 16);
-			this.label5.TabIndex = 20;
-			this.label5.Text = "C Info;";
+			this.labelSchema.Font = new System.Drawing.Font("MS UI Gothic", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((System.Byte)(128)));
+			this.labelSchema.Location = new System.Drawing.Point(8, 249);
+			this.labelSchema.Name = "labelSchema";
+			this.labelSchema.Size = new System.Drawing.Size(48, 16);
+			this.labelSchema.TabIndex = 20;
+			this.labelSchema.Text = "C Info;";
 			// 
 			// chkSaveInfo
 			// 
@@ -219,7 +219,7 @@ namespace quickDBExplorer
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.ClientSize = new System.Drawing.Size(520, 266);
 			this.Controls.Add(this.chkTrust);
-			this.Controls.Add(this.label5);
+			this.Controls.Add(this.labelSchema);
 			this.Controls.Add(this.chkSaveInfo);
 			this.Controls.Add(this.btnServerHistory);
 			this.Controls.Add(this.btnLogin);
@@ -249,7 +249,7 @@ namespace quickDBExplorer
 			this.Controls.SetChildIndex(this.btnLogin, 0);
 			this.Controls.SetChildIndex(this.btnServerHistory, 0);
 			this.Controls.SetChildIndex(this.chkSaveInfo, 0);
-			this.Controls.SetChildIndex(this.label5, 0);
+			this.Controls.SetChildIndex(this.labelSchema, 0);
 			this.Controls.SetChildIndex(this.chkTrust, 0);
 			this.ResumeLayout(false);
 

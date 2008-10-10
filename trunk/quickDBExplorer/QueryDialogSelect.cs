@@ -51,23 +51,30 @@ namespace quickDBExplorer
 			// 
 			// txtInput
 			// 
-			this.txtInput.Size = new System.Drawing.Size(444, 256);
+			this.txtInput.Location = new System.Drawing.Point(16, 12);
+			this.txtInput.Size = new System.Drawing.Size(444, 262);
+			// 
+			// btnGo
+			// 
+			this.btnGo.Location = new System.Drawing.Point(10, 280);
 			// 
 			// btnCancel
 			// 
-			this.btnCancel.TabIndex = 4;
+			this.btnCancel.Location = new System.Drawing.Point(342, 280);
 			// 
 			// chkReturn
 			// 
-			this.chkReturn.Enabled = false;
-			this.chkReturn.Location = new System.Drawing.Point(240, 296);
+			this.chkReturn.Location = new System.Drawing.Point(240, 288);
 			this.chkReturn.Size = new System.Drawing.Size(96, 16);
 			this.chkReturn.Visible = false;
 			// 
+			// btnHistory
+			// 
+			this.btnHistory.Location = new System.Drawing.Point(138, 280);
+			// 
 			// QueryDialogSelect
 			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(480, 325);
+			this.ClientSize = new System.Drawing.Size(480, 317);
 			this.Name = "QueryDialogSelect";
 			this.ResumeLayout(false);
 			this.PerformLayout();

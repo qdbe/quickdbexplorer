@@ -99,12 +99,7 @@
   <ItemGroup>
     <Content Include="AppIcon.ico" />
     <Content Include="readme.txt" />
-    <Content Include="TextHistoryDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>TextHistoryDataSet.Designer.cs</LastGenOutput>
-      <SubType>
-      </SubType>
-    </Content>
+    <None Include="Resources\header.png" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -147,6 +142,17 @@
     <Compile Include="objectListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="qdbeAboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="qdbeAboutBox.Designer.cs">
+      <DependentUpon>qdbeAboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="QdbeDataGridTextBoxColumn.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -185,9 +191,6 @@
     </Compile>
     <Compile Include="TableSelectDialog.cs">
       <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TextHistoryDataSet.cs">
-      <DependentUpon>TextHistoryDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="TextHistoryDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -251,6 +254,15 @@
       <DependentUpon>objectListView.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="qdbeAboutBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>qdbeAboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="QdbeDataGridTextBoxColumn.resx">
       <DependentUpon>QdbeDataGridTextBoxColumn.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -303,7 +315,12 @@
     <None Include="TextHistoryDataSet.xsc">
       <DependentUpon>TextHistoryDataSet.xsd</DependentUpon>
     </None>
-    <None Include="TextHistoryDataSet.xsx">
+    <None Include="TextHistoryDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TextHistoryDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="TextHistoryDataSet.xss">
       <DependentUpon>TextHistoryDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
