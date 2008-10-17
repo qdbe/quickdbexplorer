@@ -277,8 +277,41 @@ namespace quickDBExplorer
 			set { this.pIsCTRLDelete = value; }
 		}
 
-		// 変更前のテキスト
+		/// <summary>
+		/// 変更前のテキスト
+		/// </summary>
 		private string orgString;
+
+		/// <summary>
+		/// Enter時のテキスト
+		/// </summary>
+		private string enterString = string.Empty;
+
+		/// <summary>
+		/// Enter 後、値に変更があったか否かを返す
+		/// Focus がない場合、常にfalseを返す
+		/// </summary>
+		public bool IsTextChanged
+		{
+			get
+			{
+				if (this.Focused == true)
+				{
+					if (this.enterString == this.Text)
+					{
+						return false;
+					}
+					else
+					{
+						return true;
+					}
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
 
 		private void menuCopy_Click(object sender, System.EventArgs e)
 		{
@@ -411,6 +444,7 @@ namespace quickDBExplorer
 		{
 			// 編集開始時点の文字列を記憶
 			this.orgString = this.Text;
+			this.enterString = this.Text;
 		}
 
 		private void quickDBExplorerTextBox_TextChanged(object sender, EventArgs e)

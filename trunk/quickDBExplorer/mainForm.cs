@@ -1443,7 +1443,14 @@ namespace quickDBExplorer
 				menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"クエリアナライザ起動", new EventHandler(this.CallISQLW) ) );
 			}
 			menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"プロファイラ起動", new EventHandler(this.CallProfile) ) );
-			menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"エンタープライズマネージャー起動", new EventHandler(this.CallEPM) ) );
+			if (this.ConnectSqlVersion.IsManagementStudio == true)
+			{
+				menuAr.Add(new qdbeMenuItem(false, false, this.btnEtc.Name, "Management Studio起動", new EventHandler(this.CallEPM)));
+			}
+			else
+			{
+				menuAr.Add(new qdbeMenuItem(false, false, this.btnEtc.Name, "Enterprise Manager起動", new EventHandler(this.CallEPM)));
+			}
 			menuAr.Add(new qdbeMenuItem(true,true,this.btnEtc.Name,"-", null ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"依存関係出力", new EventHandler(this.DependOutPut) ) );
 			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"データ件数出力", new EventHandler(this.RecordCountOutPut) ) );
@@ -2167,7 +2174,11 @@ namespace quickDBExplorer
 
 		private void txtDispCount_Leave(object sender, System.EventArgs e)
 		{
-			if( this.chkDispData.CheckState == CheckState.Checked &&
+			if (((quickDBExplorerTextBox)sender).IsTextChanged == false)
+			{
+				return;
+			}
+			if (this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
@@ -2181,43 +2192,46 @@ namespace quickDBExplorer
 
 		private void txtWhere_Leave(object sender, System.EventArgs e)
 		{
+			if (((quickDBExplorerTextBox)sender).IsTextChanged == false)
+			{
+				return;
+			}
 			string tbname = "";
-			if( this.chkDispData.CheckState == CheckState.Checked &&
-				this.objectList.SelectedItems.Count == 1 )
+			if (this.chkDispData.CheckState == CheckState.Checked &&
+				this.objectList.SelectedItems.Count == 1)
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				tbname = this.objectList.GetSelectObject(0).FormalName;
 				DispData(this.objectList.GetSelectObject(0));
 				// 履歴に現在の値を記録 TODO
-				qdbeUtil.SetNewHistory(tbname,this.txtWhere.Text,this.whereHistory);
+				qdbeUtil.SetNewHistory(tbname, this.txtWhere.Text, this.whereHistory);
 			}
 			else
 			{
-				tbname = "";
 				DispData(null);
 			}
-
-
 		}
 
 		private void txtSort_Leave(object sender, System.EventArgs e)
 		{
+			if (((quickDBExplorerTextBox)sender).IsTextChanged == false)
+			{
+				return;
+			}
 			string tbname = "";
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
-				tbname = this.objectList.GetSelectObject(0).FormalName;
-				DispData(this.objectList.GetSelectObject(0));
-				// 履歴に現在の値を記録 TODO
-				qdbeUtil.SetNewHistory(tbname,this.txtSort.Text,this.sortHistory);
+					// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
+					tbname = this.objectList.GetSelectObject(0).FormalName;
+					DispData(this.objectList.GetSelectObject(0));
+					// 履歴に現在の値を記録 TODO
+					qdbeUtil.SetNewHistory(tbname, this.txtSort.Text, this.sortHistory);
 			}
 			else
 			{
-				tbname = "";
 				DispData(null);
 			}
-
 		}
 
 		private void rdoDispSysUser_CheckedChanged(object sender, System.EventArgs e)
@@ -2772,7 +2786,7 @@ namespace quickDBExplorer
 				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				tbname = this.objectList.GetSelectOneObjectFormalName();
 				// 履歴に現在の値を記録 TODO
-				qdbeUtil.SetNewHistory(tbname,senderText.Text,this.aliasHistory);
+				qdbeUtil.SetNewHistory(tbname, senderText.Text, this.aliasHistory);
 			}
 			else
 			{
