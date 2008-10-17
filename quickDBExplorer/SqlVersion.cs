@@ -67,6 +67,20 @@ namespace quickDBExplorer
 			get { return this.pCanUseQueryAnalyzer; }
 		}
 
+		/// <summary>
+		/// Management Studio と呼ぶか否か
+		/// </summary>
+		private bool pIsManagementStudio = false;
+
+		/// <summary>
+		/// Management Studio と呼ぶか否か
+		/// </summary>
+		public bool IsManagementStudio
+		{
+			get { return pIsManagementStudio; }
+			set { pIsManagementStudio = value; }
+		}
+
 
 		/// <summary>
 		/// SQL Server 2000 を表すインスタンスを生成する
@@ -107,6 +121,7 @@ namespace quickDBExplorer
 				this.pFullVersionString = versionStr;
 				this.pIsSynonym = false;
 				this.pCanUseQueryAnalyzer = true;
+				this.pIsManagementStudio = false;
 			}
 			else if(versionStr.StartsWith("09") )
 			{
@@ -114,6 +129,7 @@ namespace quickDBExplorer
 				this.pFullVersionString = versionStr;
 				this.pIsSynonym = true;
 				this.pCanUseQueryAnalyzer = false;
+				this.pIsManagementStudio = true;
 			}
 			else
 			{
@@ -122,6 +138,7 @@ namespace quickDBExplorer
 				this.pFullVersionString = versionStr;
 				this.pIsSynonym = true;
 				this.pCanUseQueryAnalyzer = false;
+				this.pIsManagementStudio = true;
 			}
 		}
 	}

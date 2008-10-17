@@ -49,7 +49,7 @@ namespace quickDBExplorer
 				(string)dr["tvs"],
 				(string)dr["uname"],
 				(string)dr["tbname"],
-				(string)dr["cretime"].ToString(),
+				(string)((DateTime)dr["cretime"]).ToString("yyyy/MM/dd HH:mm:ss"),
 				(string)dr["synbase"],
 				(string)dr["synType"]
 				);
