@@ -183,25 +183,41 @@ namespace quickDBExplorer
 			{
 				// バイナリの場合、イメージ表示を行ってみる
 				Object obj = GetColumnValueAtRow(this._sorce, this.editrow );
-				if( obj is byte[] )
-				{
-					MemoryStream ms = new MemoryStream(obj as byte[]);
-					try
-					{
-						Image gazo = Image.FromStream(ms);
-						if( gazo != null )
-						{
-							ImageViewer viewdlg = new ImageViewer();
-							viewdlg.ViewImage = gazo;
-							viewdlg.ShowDialog();
-							return;
-						}
-					}
-					catch
-					{
-						return;
-					}
-				}
+                if (obj is byte[])
+                {
+                    //Notice a subtlety in this code that is particular of the Northwind 
+                    //database but has no relevance in general. 
+                    //The original Access database was converted into SQL Server's Northwind database, 
+                    //so the image field called Photo doesn't contain a true GIF file; 
+                    //instead it contains the OLE object that Access builds to wrap any image. 
+                    //As a result, the stream of bytes you read from the field is prefixed with a header 
+                    //you must strip off to get the bits of the image. 
+                    //Such a header is variable-length and also depends on the length of the originally imported file's name. 
+                    //For Northwind, the length of this offset is 78 bytes.
+                    //
+                    int[] offsets = new int[] { 0, 78 };
+                    int maxLen = (obj as byte[]).Length;
+                    for (int i = 0; i < offsets.Length; i++)
+                    {
+                        MemoryStream ms = new MemoryStream(obj as byte[], offsets[i], maxLen - offsets[i]);
+                        try
+                        {
+                            Image gazo = Image.FromStream(ms);
+                            if (gazo != null)
+                            {
+                                ImageViewer viewdlg = new ImageViewer();
+                                viewdlg.ViewImage = gazo;
+                                viewdlg.ShowDialog();
+                                return;
+                            }
+                        }
+                        catch
+                        {
+                            ;
+                        }
+                    }
+                    return;
+                }
 
 
 				// 画像以外の場合、拡大表示ダイアログで値を表示させる
