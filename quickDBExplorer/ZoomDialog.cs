@@ -140,7 +140,7 @@ namespace quickDBExplorer
 			this.txtZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtZoom.IsCTRLDelete = true;
+			this.txtZoom.CanCtrlDelete = true;
 			this.txtZoom.IsDigitOnly = false;
 			this.txtZoom.Location = new System.Drawing.Point(14, 12);
 			this.txtZoom.Multiline = true;

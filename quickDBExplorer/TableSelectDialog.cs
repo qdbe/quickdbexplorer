@@ -101,7 +101,7 @@ namespace quickDBExplorer
 			// 
 			// txtTableSelect
 			// 
-			this.txtTableSelect.IsCTRLDelete = true;
+			this.txtTableSelect.CanCtrlDelete = true;
 			this.txtTableSelect.IsDigitOnly = false;
 			this.txtTableSelect.Location = new System.Drawing.Point(20, 12);
 			this.txtTableSelect.Multiline = true;

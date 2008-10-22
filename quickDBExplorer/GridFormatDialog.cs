@@ -213,7 +213,7 @@ namespace quickDBExplorer
 			// 
 			// txtNumDisp
 			// 
-			this.txtNumDisp.IsCTRLDelete = true;
+			this.txtNumDisp.CanCtrlDelete = true;
 			this.txtNumDisp.IsDigitOnly = false;
 			this.txtNumDisp.Location = new System.Drawing.Point(176, 16);
 			this.txtNumDisp.Name = "txtNumDisp";
@@ -235,7 +235,7 @@ namespace quickDBExplorer
 			// 
 			// txtDecimalDisp
 			// 
-			this.txtDecimalDisp.IsCTRLDelete = true;
+			this.txtDecimalDisp.CanCtrlDelete = true;
 			this.txtDecimalDisp.IsDigitOnly = false;
 			this.txtDecimalDisp.Location = new System.Drawing.Point(176, 48);
 			this.txtDecimalDisp.Name = "txtDecimalDisp";
@@ -246,7 +246,7 @@ namespace quickDBExplorer
 			// 
 			// txtDateTimeDisp
 			// 
-			this.txtDateTimeDisp.IsCTRLDelete = true;
+			this.txtDateTimeDisp.CanCtrlDelete = true;
 			this.txtDateTimeDisp.IsDigitOnly = false;
 			this.txtDateTimeDisp.Location = new System.Drawing.Point(176, 80);
 			this.txtDateTimeDisp.Name = "txtDateTimeDisp";

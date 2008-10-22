@@ -125,7 +125,7 @@ namespace quickDBExplorer
 			// 
 			// txtAliasT1
 			// 
-			this.txtAliasT1.IsCTRLDelete = true;
+			this.txtAliasT1.CanCtrlDelete = true;
 			this.txtAliasT1.IsDigitOnly = false;
 			this.txtAliasT1.Location = new System.Drawing.Point(130, 40);
 			this.txtAliasT1.Name = "txtAliasT1";
@@ -152,7 +152,7 @@ namespace quickDBExplorer
 			// 
 			// txtAliasT2
 			// 
-			this.txtAliasT2.IsCTRLDelete = true;
+			this.txtAliasT2.CanCtrlDelete = true;
 			this.txtAliasT2.IsDigitOnly = false;
 			this.txtAliasT2.Location = new System.Drawing.Point(315, 40);
 			this.txtAliasT2.Name = "txtAliasT2";
@@ -178,7 +178,7 @@ namespace quickDBExplorer
 			this.txtWhereResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtWhereResult.IsCTRLDelete = false;
+			this.txtWhereResult.CanCtrlDelete = false;
 			this.txtWhereResult.IsDigitOnly = false;
 			this.txtWhereResult.Location = new System.Drawing.Point(160, 208);
 			this.txtWhereResult.Multiline = true;
@@ -313,7 +313,7 @@ namespace quickDBExplorer
 			// 
 			// txtAlias
 			// 
-			this.txtAlias.IsCTRLDelete = true;
+			this.txtAlias.CanCtrlDelete = true;
 			this.txtAlias.IsDigitOnly = false;
 			this.txtAlias.Location = new System.Drawing.Point(130, 96);
 			this.txtAlias.Name = "txtAlias";

@@ -74,8 +74,6 @@ namespace quickDBExplorer
 				return;
 			}
 
-			DataRow []drl = tdata.TextHistoryDataSets.Select( string.Format(System.Globalization.CultureInfo.CurrentCulture,"KeyValue = '{0}'", key ) );
-
 			TextHistoryDataSet.TextHistoryDataSetsRow dr = null;
 			int maxKeyNo = 0;
 			for( int i = 0; i < tdata.TextHistoryDataSets.Rows.Count; i++ )

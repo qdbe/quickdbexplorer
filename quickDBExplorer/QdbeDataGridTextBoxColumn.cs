@@ -280,22 +280,22 @@ namespace quickDBExplorer
 		/// <param name="rowNum"></param>
 		/// <param name="bounds"></param>
 		/// <param name="readOnly"></param>
-		/// <param name="instantText"></param>
+		/// <param name="displayText"></param>
 		/// <param name="cellIsVisible"></param>
 		protected override void Edit(CurrencyManager source,
 			int rowNum, Rectangle bounds, bool readOnly,
-			string instantText, bool cellIsVisible)
+			string displayText, bool cellIsVisible)
 		{
 			this._sorce = source;
 			this.editrow = rowNum;
 			if( this.isThisImage == true )
 			{
 				//this.TextBox.Text = "";
-				base.Edit(source, rowNum, bounds, readOnly, instantText, cellIsVisible);
+				base.Edit(source, rowNum, bounds, readOnly, displayText, cellIsVisible);
 			}
 			else
 			{
-				base.Edit(source, rowNum, bounds, readOnly, instantText, cellIsVisible);
+				base.Edit(source, rowNum, bounds, readOnly, displayText, cellIsVisible);
 			}
 		}
 
@@ -343,8 +343,8 @@ namespace quickDBExplorer
 			}
 			else if( cellValue is string && 
 				( 
-				(cellValue as string).IndexOf("\r\n") >= 0 ||
-				(cellValue as string).IndexOf("\n") >= 0 ) )
+				(cellValue as string).IndexOf("\r\n",StringComparison.CurrentCulture) >= 0 ||
+				(cellValue as string).IndexOf("\n", StringComparison.CurrentCulture) >= 0))
 			{
 				// 文字列で複数行にわたる場合、とき色に着色
 				backBrush = new SolidBrush(Color.FromArgb(0xf4,0xb3,0xc2));

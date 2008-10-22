@@ -20,12 +20,30 @@ namespace quickDBExplorer
 		/// <summary>
 		/// コネクション
 		/// </summary>
-		protected System.Data.SqlClient.SqlConnection sqlConnect;
+		private System.Data.SqlClient.SqlConnection pSqlConnect;
+
+		/// <summary>
+		/// コネクション
+		/// </summary>
+		protected System.Data.SqlClient.SqlConnection SqlConnect
+		{
+			get { return pSqlConnect; }
+			set { pSqlConnect = value; }
+		}
 
 		/// <summary>
 		/// SelectCommand 等のタイムアウト値
 		/// </summary>
-		protected int	queryTimeout;
+		private int pQueryTimeout;
+
+		/// <summary>
+		/// SelectCommand 等のタイムアウト値
+		/// </summary>
+		protected int QueryTimeout
+		{
+			get { return pQueryTimeout; }
+			set { pQueryTimeout = value; }
+		}
 
 		/// <summary>
 		/// コンストラクタ
@@ -46,8 +64,8 @@ namespace quickDBExplorer
 		/// <param name="timeout">コマンド実行タイムアウト値</param>
 		public void SetConnection(IDbConnection sqlConnection, int timeout)
 		{
-			this.sqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection;
-			this.queryTimeout = timeout;
+			this.pSqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection;
+			this.QueryTimeout = timeout;
 		}
 
 		/// <summary>
@@ -55,7 +73,7 @@ namespace quickDBExplorer
 		/// </summary>
 		public void CloseConnection()
 		{
-			this.sqlConnect.Close();
+			this.pSqlConnect.Close();
 		}
 
 		/// <summary>
@@ -64,7 +82,7 @@ namespace quickDBExplorer
 		/// <param name="timeout"></param>
 		public void SetTimeout(int timeout)
 		{
-			this.queryTimeout = timeout;
+			this.QueryTimeout = timeout;
 		}
 
 		/// <summary>
@@ -83,8 +101,8 @@ namespace quickDBExplorer
 		public IDbCommand	NewSqlCommand()
 		{
 			SqlCommand	sqlCmd = new SqlCommand();
-			sqlCmd.Connection = this.sqlConnect;
-			sqlCmd.CommandTimeout = this.queryTimeout;
+			sqlCmd.Connection = this.pSqlConnect;
+			sqlCmd.CommandTimeout = this.QueryTimeout;
 			return sqlCmd;
 		}
 
@@ -96,8 +114,8 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public IDbCommand		NewSqlCommand(string stSql)
 		{
-			SqlCommand	sqlCmd = new SqlCommand(stSql,this.sqlConnect);
-			sqlCmd.CommandTimeout = this.queryTimeout;
+			SqlCommand	sqlCmd = new SqlCommand(stSql,this.pSqlConnect);
+			sqlCmd.CommandTimeout = this.QueryTimeout;
 			return sqlCmd;
 		}
 
@@ -128,7 +146,7 @@ namespace quickDBExplorer
 			{
 				throw new ArgumentNullException("cmd");
 			}
-			cmd.Transaction = this.sqlConnect.BeginTransaction();
+			cmd.Transaction = this.pSqlConnect.BeginTransaction();
 			return cmd.Transaction;
 		}
 
@@ -182,7 +200,7 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public void SetDatabase(string dbName)
 		{
-			this.sqlConnect.ChangeDatabase(dbName);
+			this.pSqlConnect.ChangeDatabase(dbName);
 		}
 
 		/// <summary>
@@ -644,8 +662,8 @@ namespace quickDBExplorer
 
 
 				string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_helptext '{0}'", databaseObjectInfo.RealObjName );
-				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
-				da.SelectCommand.CommandTimeout = this.queryTimeout;
+				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.pSqlConnect);
+				da.SelectCommand.CommandTimeout = this.QueryTimeout;
 				da.Fill(dt);
 				// 連続した空白行は抑制するようにする
 				string pretext = "";
@@ -686,7 +704,7 @@ namespace quickDBExplorer
 
 				string stSql = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + databaseObjectInfo.Owner +"' and sysobjects.name = '" + databaseObjectInfo.ObjName + "' order by syscolumns.colorder";
 
-				SqlDataAdapter da = new SqlDataAdapter(stSql, this.sqlConnect);
+				SqlDataAdapter da = new SqlDataAdapter(stSql, this.pSqlConnect);
 				DataSet ds = new DataSet();
 				ds.CaseSensitive = true;
 				ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
@@ -787,8 +805,8 @@ namespace quickDBExplorer
 				dt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
 				string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_helptext '{0}'", databaseObjectInfo.FormalName );
-				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
-				da.SelectCommand.CommandTimeout = this.queryTimeout;
+				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.pSqlConnect);
+				da.SelectCommand.CommandTimeout = this.QueryTimeout;
 				da.Fill(dt);
 				foreach(DataRow dr in dt.Rows)
 				{
@@ -833,9 +851,9 @@ namespace quickDBExplorer
 			}
 			string	strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select * from sysobjects where id = OBJECT_ID('{0}') ",
 				databaseObjectInfo.FormalName );
-			SqlCommand	cm = new SqlCommand(strsql,this.sqlConnect);
+			SqlCommand	cm = new SqlCommand(strsql,this.pSqlConnect);
 
-			SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
+			SqlDataAdapter	da = new SqlDataAdapter(strsql,this.pSqlConnect);
 			DataTable	odt = new DataTable("sysobjects");
 			odt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 			da.Fill(odt);
@@ -932,7 +950,7 @@ namespace quickDBExplorer
 			// FillSchema での情報収集
 			string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select * from {0} where 0=1",
 				databaseObjectInfo.FormalName );
-			SqlDataAdapter da = new SqlDataAdapter(strsql,this.sqlConnect);
+			SqlDataAdapter da = new SqlDataAdapter(strsql,this.pSqlConnect);
 			DataTable []dt = da.FillSchema(ds,SchemaType.Mapped,"schema");
 			databaseObjectInfo.SchemaBaseInfo = dt[0];
 
@@ -980,7 +998,7 @@ and sysobjects.id = OBJECT_ID('{0}')
 order by syscolumns.colorder",
 				databaseObjectInfo.RealObjName
 				),
-				this.sqlConnect );
+				this.pSqlConnect );
 			tableda.Fill(ds,"fieldList");
 
 			DBFieldInfo addInfo;
@@ -1059,7 +1077,7 @@ order by syscolumns.colorder",
 			searchCondition = searchCondition.Replace("'","''");
 			if( isCaseSensitive == false )
 			{
-				searchCondition = searchCondition.ToLower();
+				searchCondition = searchCondition.ToLower(System.Globalization.CultureInfo.CurrentCulture);
 			}
 
 			string schemaFilter = string.Empty;
@@ -1083,13 +1101,13 @@ order by syscolumns.colorder",
 			switch(searchType)
 			{
 				case SearchType.SearchContain:
-					condSql = string.Format(" like '%{0}%' ", searchCondition );
+					condSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, " like '%{0}%' ", searchCondition );
 					break;
 				case SearchType.SearchStartWith:
-					condSql = string.Format(" like '{0}%' ", searchCondition );
+					condSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, " like '{0}%' ", searchCondition);
 					break;
 				case SearchType.SearchExact:
-					condSql = string.Format(" = '{0}' ", searchCondition );
+					condSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, " = '{0}' ", searchCondition);
 					break;
 				default:
 					break;
@@ -1145,7 +1163,7 @@ where
 			searchCondition = searchCondition.Replace("'","''");
 			if( isCaseSensitive == false )
 			{
-				searchCondition = searchCondition.ToLower();
+				searchCondition = searchCondition.ToLower(System.Globalization.CultureInfo.CurrentCulture);
 			}
 
 			string condSql = string.Empty;
@@ -1153,13 +1171,13 @@ where
 			switch(searchType)
 			{
 				case SearchType.SearchContain:
-					condSql = string.Format(" like '%{0}%' ", searchCondition );
+					condSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, " like '%{0}%' ", searchCondition);
 					break;
 				case SearchType.SearchStartWith:
-					condSql = string.Format(" like '{0}%' ", searchCondition );
+					condSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, " like '{0}%' ", searchCondition);
 					break;
 				case SearchType.SearchExact:
-					condSql = string.Format(" = '{0}' ", searchCondition );
+					condSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, " = '{0}' ", searchCondition);
 					break;
 				default:
 					break;
