@@ -639,7 +639,7 @@ namespace quickDBExplorer
 			// 
 			// txtWhere
 			// 
-			this.txtWhere.IsCTRLDelete = true;
+			this.txtWhere.CanCtrlDelete = true;
 			this.txtWhere.IsDigitOnly = false;
 			this.txtWhere.IsShowZoom = true;
 			this.txtWhere.Location = new System.Drawing.Point(72, 488);
@@ -654,7 +654,7 @@ namespace quickDBExplorer
 			// 
 			// txtSort
 			// 
-			this.txtSort.IsCTRLDelete = true;
+			this.txtSort.CanCtrlDelete = true;
 			this.txtSort.IsDigitOnly = false;
 			this.txtSort.IsShowZoom = true;
 			this.txtSort.Location = new System.Drawing.Point(72, 516);
@@ -832,7 +832,7 @@ namespace quickDBExplorer
 			this.txtDispCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtDispCount.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
 			this.txtDispCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
-			this.txtDispCount.IsCTRLDelete = true;
+			this.txtDispCount.CanCtrlDelete = true;
 			this.txtDispCount.IsDigitOnly = true;
 			this.txtDispCount.IsShowZoom = false;
 			this.txtDispCount.Location = new System.Drawing.Point(132, 16);
@@ -910,7 +910,7 @@ namespace quickDBExplorer
 			// 
 			// txtOutput
 			// 
-			this.txtOutput.IsCTRLDelete = true;
+			this.txtOutput.CanCtrlDelete = true;
 			this.txtOutput.IsDigitOnly = false;
 			this.txtOutput.IsShowZoom = false;
 			this.txtOutput.Location = new System.Drawing.Point(8, 52);
@@ -1234,7 +1234,7 @@ namespace quickDBExplorer
 			// 
 			// txtAlias
 			// 
-			this.txtAlias.IsCTRLDelete = true;
+			this.txtAlias.CanCtrlDelete = true;
 			this.txtAlias.IsDigitOnly = false;
 			this.txtAlias.IsShowZoom = true;
 			this.txtAlias.Location = new System.Drawing.Point(72, 540);
@@ -2547,7 +2547,6 @@ namespace quickDBExplorer
 			int headerHeight = this.dbGrid.PreferredRowHeight + 3;
 
 			CurrencyManager cm = (CurrencyManager) this.BindingContext[dbGrid.DataSource, dbGrid.DataMember];
-			int maxCount = this.dbGrid.VisibleRowCount;
 			int dispRow = 0;
 			Rectangle rect = Rectangle.Empty;
 
@@ -2880,7 +2879,6 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void txtWhere_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
-			TextBox			senderText = sender as TextBox;
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
@@ -2917,7 +2915,6 @@ namespace quickDBExplorer
 
 		private void txtSort_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
-			TextBox			senderText = sender as TextBox;
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
@@ -4030,7 +4027,6 @@ namespace quickDBExplorer
 				Clipboard.SetDataObject(sb.ToString(),true );
 				if( dlg.IsShowTableSelect == true )
 				{
-					TableSelectDialog tdlg = new TableSelectDialog();
 					this.tableSelect(sb.ToString());
 				}
 			}
@@ -5618,8 +5614,6 @@ namespace quickDBExplorer
 
 				DataTable dt = null;
 				dt = this.dspdt.Tables[0];
-
-				DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
 
 				if( dt.Columns.Count == 0 )
 				{

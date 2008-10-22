@@ -129,7 +129,7 @@ namespace quickDBExplorer
 			// 
 			// txtAlias
 			// 
-			this.txtAlias.IsCTRLDelete = true;
+			this.txtAlias.CanCtrlDelete = true;
 			this.txtAlias.IsDigitOnly = false;
 			this.txtAlias.Location = new System.Drawing.Point(128, 56);
 			this.txtAlias.Name = "txtAlias";

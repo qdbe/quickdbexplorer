@@ -175,7 +175,7 @@ namespace quickDBExplorer
 			// 
 			// txtInput
 			// 
-			this.txtInput.IsCTRLDelete = true;
+			this.txtInput.CanCtrlDelete = true;
 			this.txtInput.Location = new System.Drawing.Point(16, 38);
 			this.txtInput.Multiline = false;
 			this.txtInput.Name = "txtInput";

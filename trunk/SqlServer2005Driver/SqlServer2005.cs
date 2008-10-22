@@ -20,12 +20,30 @@ namespace quickDBExplorer
 		/// <summary>
 		/// コネクション
 		/// </summary>
-		protected System.Data.SqlClient.SqlConnection sqlConnect;
+		private System.Data.SqlClient.SqlConnection pSqlConnect;
+
+		/// <summary>
+		/// コネクション
+		/// </summary>
+		protected System.Data.SqlClient.SqlConnection SqlConnect
+		{
+			get { return pSqlConnect; }
+			set { pSqlConnect = value; }
+		}
 
 		/// <summary>
 		/// SelectCommand 等のタイムアウト値
 		/// </summary>
-		protected int	queryTimeout;
+		private int pQueryTimeout;
+
+		/// <summary>
+		/// SelectCommand 等のタイムアウト値
+		/// </summary>
+		protected int QueryTimeout
+		{
+			get { return pQueryTimeout; }
+			set { pQueryTimeout = value; }
+		}
 
 		/// <summary>
 		/// コンストラクタ
@@ -45,8 +63,8 @@ namespace quickDBExplorer
 		/// <param name="timeout">コマンド実行タイムアウト値</param>
 		public virtual void SetConnection(IDbConnection sqlConnection, int timeout)
 		{
-			this.sqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection;
-			this.queryTimeout = timeout;
+			this.pSqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection;
+			this.pQueryTimeout = timeout;
 		}
 
 		/// <summary>
@@ -54,7 +72,7 @@ namespace quickDBExplorer
 		/// </summary>
 		public virtual void CloseConnection()
 		{
-			this.sqlConnect.Close();
+			this.pSqlConnect.Close();
 		}
 
 		/// <summary>
@@ -63,7 +81,7 @@ namespace quickDBExplorer
 		/// <param name="timeout"></param>
 		public virtual void SetTimeout(int timeout)
 		{
-			this.queryTimeout = timeout;
+			this.pQueryTimeout = timeout;
 		}
 
 		/// <summary>
@@ -82,8 +100,8 @@ namespace quickDBExplorer
 		public virtual IDbCommand	NewSqlCommand()
 		{
 			SqlCommand	sqlCmd = new SqlCommand();
-			sqlCmd.Connection = this.sqlConnect;
-			sqlCmd.CommandTimeout = this.queryTimeout;
+			sqlCmd.Connection = this.pSqlConnect;
+			sqlCmd.CommandTimeout = this.pQueryTimeout;
 			return sqlCmd;
 		}
 
@@ -113,8 +131,8 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public virtual IDbCommand		NewSqlCommand(string stSql)
 		{
-			SqlCommand	sqlCmd = new SqlCommand(stSql,this.sqlConnect);
-			sqlCmd.CommandTimeout = this.queryTimeout;
+			SqlCommand	sqlCmd = new SqlCommand(stSql,this.pSqlConnect);
+			sqlCmd.CommandTimeout = this.pQueryTimeout;
 			return sqlCmd;
 		}
 
@@ -127,7 +145,7 @@ namespace quickDBExplorer
 			{
 				throw new ArgumentNullException("cmd");
 			}
-			cmd.Transaction = this.sqlConnect.BeginTransaction();
+			cmd.Transaction = this.pSqlConnect.BeginTransaction();
 			return cmd.Transaction;
 		}
 
@@ -181,7 +199,7 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public virtual void SetDatabase(string dbName)
 		{
-			this.sqlConnect.ChangeDatabase(dbName);
+			this.pSqlConnect.ChangeDatabase(dbName);
 		}
 
 		/// <summary>
@@ -654,8 +672,8 @@ where
 
 
 				string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_helptext '{0}'", databaseObjectInfo.RealObjName );
-				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
-				da.SelectCommand.CommandTimeout = this.queryTimeout;
+				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.pSqlConnect);
+				da.SelectCommand.CommandTimeout = this.pQueryTimeout;
 				da.Fill(dt);
 				// 連続した空白行は抑制するようにする
 				string pretext = "";
@@ -713,9 +731,9 @@ where
 			}
 			string	strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select * from sys.all_objects where object_id = OBJECT_ID('{0}') ",
 				databaseObjectInfo.FormalName );
-			SqlCommand	cm = new SqlCommand(strsql,this.sqlConnect);
+			SqlCommand	cm = new SqlCommand(strsql,this.pSqlConnect);
 
-			SqlDataAdapter	da = new SqlDataAdapter(strsql,this.sqlConnect);
+			SqlDataAdapter	da = new SqlDataAdapter(strsql,this.pSqlConnect);
 			DataTable	odt = new DataTable("sysobjects");
 			odt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 			da.Fill(odt);
@@ -807,7 +825,7 @@ where
 			// FillSchema での情報収集
 			string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select * from {0} where 0=1",
 				databaseObjectInfo.FormalName );
-			SqlDataAdapter da = new SqlDataAdapter(strsql,this.sqlConnect);
+			SqlDataAdapter da = new SqlDataAdapter(strsql,this.pSqlConnect);
 			DataTable []dt = da.FillSchema(ds,SchemaType.Mapped,"schema");
 			databaseObjectInfo.SchemaBaseInfo = dt[0];
 
@@ -874,7 +892,7 @@ where
 order by colorder",
 				databaseObjectInfo.RealObjName
 				),
-				this.sqlConnect );
+				this.pSqlConnect );
 			tableda.Fill(ds,"fieldList");
 
 			DBFieldInfo addInfo;

@@ -171,7 +171,7 @@ namespace quickDBExplorer
 						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtInput.ImeMode = System.Windows.Forms.ImeMode.Off;
-			this.txtInput.IsCTRLDelete = true;
+			this.txtInput.CanCtrlDelete = true;
 			this.txtInput.IsDigitOnly = false;
 			this.txtInput.Location = new System.Drawing.Point(16, 12);
 			this.txtInput.Multiline = true;

@@ -264,17 +264,17 @@ namespace quickDBExplorer
 		//}
 
 
-		private bool pIsCTRLDelete = true;
+		private bool pCanCtrlDelete = true;
 		
 		/// <summary>
 		/// CTRL+D‚Å•¶š‚ğíœ‰Â”\‚É‚·‚é‚©”Û‚©
 		/// false: íœ‚Å‚«‚È‚¢
 		/// true: íœ‚Å‚«‚é(Šù’è’l)
 		/// </summary>
-		public bool IsCTRLDelete
+		public bool CanCtrlDelete
 		{
-			get { return this.pIsCTRLDelete; }
-			set { this.pIsCTRLDelete = value; }
+			get { return this.pCanCtrlDelete; }
+			set { this.pCanCtrlDelete = value; }
 		}
 
 		/// <summary>
@@ -378,7 +378,7 @@ namespace quickDBExplorer
 			}
 
 
-			if( this.pIsCTRLDelete == true &&
+			if( this.pCanCtrlDelete == true &&
 				ev.Alt != true &&
 				ev.Control == true &&
 				ev.Shift != true &&
