@@ -27,6 +27,9 @@ namespace quickDBExplorer
 
 		#region アセンブリ属性アクセサ
 
+		/// <summary>
+		/// タイトル属性をすべて取得します
+		/// </summary>
 		public string AssemblyTitle
 		{
 			get
@@ -47,6 +50,9 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// アセンブリバージョンを取得する
+		/// </summary>
 		public string AssemblyVersion
 		{
 			get
@@ -55,6 +61,9 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 説明属性をすべて取得します
+		/// </summary>
 		public string AssemblyDescription
 		{
 			get
@@ -69,6 +78,9 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 説明属性をすべて取得します
+		/// </summary>
 		public string AssemblyProduct
 		{
 			get
@@ -83,6 +95,9 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 著作権属性をすべて取得します
+		/// </summary>
 		public string AssemblyCopyright
 		{
 			get
@@ -97,6 +112,9 @@ namespace quickDBExplorer
 			}
 		}
 
+		/// <summary>
+		/// 会社属性をすべて取得します
+		/// </summary>
 		public string AssemblyCompany
 		{
 			get
@@ -112,11 +130,11 @@ namespace quickDBExplorer
 		}
 		#endregion
 
-		private void textBoxDescription_TextChanged(object sender, EventArgs e)
-		{
-
-		}
-
+		/// <summary>
+		/// OKボタンの押下によりダイアログを閉じる
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void okButton_Click(object sender, EventArgs e)
 		{
 			this.Close();

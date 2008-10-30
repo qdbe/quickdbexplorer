@@ -123,7 +123,6 @@
 			this.textBoxDescription.TabIndex = 23;
 			this.textBoxDescription.TabStop = false;
 			this.textBoxDescription.Text = "説明";
-			this.textBoxDescription.TextChanged += new System.EventHandler(this.textBoxDescription_TextChanged);
 			// 
 			// okButton
 			// 
