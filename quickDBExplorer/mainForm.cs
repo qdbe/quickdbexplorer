@@ -2480,7 +2480,10 @@ namespace quickDBExplorer
 			catch( Exception exp )
 			{
 				this.SetErrorMessage(exp);
-				tran.Rollback();
+				if (tran != null)
+				{
+					tran.Rollback();
+				}
 			}
 
 		}
