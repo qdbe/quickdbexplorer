@@ -199,6 +199,11 @@ namespace quickDBExplorer
                     int maxLen = (obj as byte[]).Length;
                     for (int i = 0; i < offsets.Length; i++)
                     {
+						if (maxLen < offsets[i])
+						{
+							continue;
+						}
+
                         MemoryStream ms = new MemoryStream(obj as byte[], offsets[i], maxLen - offsets[i]);
                         try
                         {
