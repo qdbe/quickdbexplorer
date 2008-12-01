@@ -353,7 +353,26 @@ namespace quickDBExplorer
 					this.fieldCondition[e.ColumnIndex -1,e.RowIndex].Value.Equals(string.Empty) ||
 					this.fieldCondition[e.ColumnIndex -1,e.RowIndex].Value == DBNull.Value )
 				{
-					this.fieldCondition[e.ColumnIndex - 1, e.RowIndex].Value = "=";
+					string inputVal = this.fieldCondition[e.ColumnIndex, e.RowIndex].Value.ToString();
+					string valtype = (string)this.fieldCondition[e.ColumnIndex - 2, e.RowIndex].Value;
+					// ’l
+					if ((valtype == "nvarchar" ||
+						valtype == "nchar" ||
+						valtype == "xml" ||
+						valtype == "sql_variant" ||
+						valtype == "ntext"||
+						valtype == "varchar" ||
+						valtype == "char" ||
+						valtype == "text") &&
+						(inputVal.Contains("%") ||
+						inputVal.Contains("_")))
+					{
+						this.fieldCondition[e.ColumnIndex - 1, e.RowIndex].Value = "like";
+					}
+					else
+					{
+						this.fieldCondition[e.ColumnIndex - 1, e.RowIndex].Value = "=";
+					}
 				}
 			}
 			SetFieldCondResult();
