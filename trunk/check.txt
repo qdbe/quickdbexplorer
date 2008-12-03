@@ -1,0 +1,13 @@
+
+
+CLR型
+	insert文
+	CSV 読み込み ⇒ NG
+		書出し　 ⇒ ToString()
+	DataGrid
+	
+		
+2	binary, image, varbinary, timestamp の型を持つフィールドは、その値に関わらず常にnullとして出力されます。
+
+
+	
