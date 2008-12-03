@@ -445,6 +445,7 @@ namespace quickDBExplorer
 			this.menuFieldAliasCopy = new System.Windows.Forms.MenuItem();
 			this.menuFieldMakeWhere = new System.Windows.Forms.MenuItem();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+			this.label9 = new System.Windows.Forms.Label();
 			this.grpCharaSet = new System.Windows.Forms.GroupBox();
 			this.rdoUtf8 = new System.Windows.Forms.RadioButton();
 			this.rdoSjis = new System.Windows.Forms.RadioButton();
@@ -463,7 +464,6 @@ namespace quickDBExplorer
 			this.btnEtc = new System.Windows.Forms.Button();
 			this.btnWhereZoom = new System.Windows.Forms.Button();
 			this.btnOrderZoom = new System.Windows.Forms.Button();
-			this.label9 = new System.Windows.Forms.Label();
 			this.useCheckBox = new System.Windows.Forms.CheckBox();
 			this.labelObject = new System.Windows.Forms.Label();
 			this.cmbHistory = new System.Windows.Forms.ComboBox();
@@ -830,9 +830,9 @@ namespace quickDBExplorer
 			// txtDispCount
 			// 
 			this.txtDispCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.txtDispCount.CanCtrlDelete = true;
 			this.txtDispCount.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
 			this.txtDispCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
-			this.txtDispCount.CanCtrlDelete = true;
 			this.txtDispCount.IsDigitOnly = true;
 			this.txtDispCount.IsShowZoom = false;
 			this.txtDispCount.Location = new System.Drawing.Point(132, 16);
@@ -1027,6 +1027,15 @@ namespace quickDBExplorer
 			this.menuFieldMakeWhere.Text = "where 句生成";
 			this.menuFieldMakeWhere.Click += new System.EventHandler(this.menuFieldMakeWhere_Click);
 			// 
+			// label9
+			// 
+			this.label9.Location = new System.Drawing.Point(244, 364);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(280, 16);
+			this.label9.TabIndex = 37;
+			this.label9.Text = "複数行にわたる文字列はとき色(ピンク)に着色されます。";
+			this.toolTip1.SetToolTip(this.label9, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
+			// 
 			// grpCharaSet
 			// 
 			this.grpCharaSet.Controls.Add(this.rdoUtf8);
@@ -1112,6 +1121,7 @@ namespace quickDBExplorer
 			this.label7.Size = new System.Drawing.Size(368, 16);
 			this.label7.TabIndex = 35;
 			this.label7.Text = "見出しに★がある列はNULL可です。NULLのセルは水色に着色されます。";
+			this.toolTip1.SetToolTip(this.label7, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
 			// 
 			// btnGridFormat
 			// 
@@ -1130,6 +1140,7 @@ namespace quickDBExplorer
 			this.label8.Size = new System.Drawing.Size(500, 16);
 			this.label8.TabIndex = 36;
 			this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。Ctrl+3で値拡大表示。";
+			this.toolTip1.SetToolTip(this.label8, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
 			// 
 			// btnIndex
 			// 
@@ -1185,14 +1196,6 @@ namespace quickDBExplorer
 			this.btnOrderZoom.Size = new System.Drawing.Size(16, 20);
 			this.btnOrderZoom.TabIndex = 15;
 			this.btnOrderZoom.Click += new System.EventHandler(this.btnOrderZoom_Click);
-			// 
-			// label9
-			// 
-			this.label9.Location = new System.Drawing.Point(244, 364);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(280, 16);
-			this.label9.TabIndex = 37;
-			this.label9.Text = "複数行にわたる文字列はとき色(ピンク)に着色されます。";
 			// 
 			// useCheckBox
 			// 
@@ -6654,9 +6657,6 @@ namespace quickDBExplorer
 		{
 			DispObjectList();
 		}
-
-
-
 	}
 
 	/// <summary>
