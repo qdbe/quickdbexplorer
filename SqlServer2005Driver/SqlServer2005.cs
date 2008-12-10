@@ -924,7 +924,14 @@ order by colorder",
 							(string)fdr["valtype"] );
 				}
 				// –{—ˆ‚ÌŒ^’è‹`
-				addInfo.RealTypeName = (string)fdr["baseValType"];
+				if (DBNull.Value.Equals(fdr["baseValType"]) == true)
+				{
+					addInfo.RealTypeName = addInfo.TypeName;
+				}
+				else
+				{
+					addInfo.RealTypeName = (string)fdr["baseValType"];
+				}
 				if( fdr["is_identity"] != DBNull.Value &&
 					(bool)fdr["is_identity"] == true )
 				{
