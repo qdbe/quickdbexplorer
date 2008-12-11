@@ -4100,7 +4100,7 @@ namespace quickDBExplorer
 				da.Fill(ds, "SearchResult");
 			}
 
-			if( isField == true )
+			if (isTable == true || isView == true || isSynonym == true || isFunction == true || isProcedure == true)
 			{
 				cm.CommandText = this.SqlDriver.GetSearchObjectSql(searchCondition,searchType, isCaseSensitive,limitSchema, isTable,isView,isSynonym,isFunction,isProcedure);
 				da.Fill(ds, "SearchResult");
