@@ -6195,16 +6195,22 @@ namespace quickDBExplorer
 					return string.Format(System.Globalization.CultureInfo.InvariantCulture,"{1}{0}{1}", sodata, addstr );
 				}
 			}
+			// DB データ型と .NET 型のマッピングは
+			// http://msdn.microsoft.com/ja-jp/library/bb675168.aspx を参考にする
 			else if( fldtypename.Equals("datetime") ||
 				fldtypename.Equals("smalldatetime") || 
 				fldtypename.Equals("time") || 
 				fldtypename.Equals("date") || 
-				fldtypename.Equals("datetime2") || 
-				fldtypename.Equals("datetimeoffset") )
+				fldtypename.Equals("datetime2") )
 			{
 				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", dr.GetDateTime(i).ToString(System.Globalization.CultureInfo.CurrentCulture), addstr );
 			}
-			else if( fldtypename.Equals("decimal") 
+			else if (fldtypename.Equals("datetimeoffset"))
+			{
+				return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", 
+					this.SqlDriver.GetDataReaderDateTimeOffSet(dr, i).ToString(System.Globalization.CultureInfo.CurrentCulture), addstr);
+			}
+			else if (fldtypename.Equals("decimal") 
 				|| fldtypename.Equals("numeric"))
 			{
 				return dr.GetDecimal(i).ToString(System.Globalization.CultureInfo.CurrentCulture);

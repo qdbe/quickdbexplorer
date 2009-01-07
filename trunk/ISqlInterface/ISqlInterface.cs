@@ -81,6 +81,14 @@ namespace quickDBExplorer
 		byte[]	GetDataReaderBytes(IDataReader dr, int col);
 
 		/// <summary>
+		/// DataReader‚©‚çDateTimeOffset’l‚ğ“Ç‚İ‚ŞB
+		/// </summary>
+		/// <param name="dr"></param>
+		/// <param name="col"></param>
+		/// <returns></returns>
+		DateTimeOffset GetDataReaderDateTimeOffSet(IDataReader dr, int col);
+
+		/// <summary>
 		/// DB‚Ìˆê——•\¦‚ğæ“¾‚·‚éSQL•¶‚ğ•Ô‚·
 		/// </summary>
 		/// <returns></returns>

@@ -184,6 +184,17 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
+		/// DataReaderからDateTimeOffset値を読み込む。
+		/// </summary>
+		/// <param name="dr"></param>
+		/// <param name="col"></param>
+		/// <returns></returns>
+		public virtual DateTimeOffset GetDataReaderDateTimeOffSet(IDataReader dr, int col)
+		{
+			throw new InvalidOperationException("GetDataReaderDateTimeOffSet は SQL Server 2005 では利用できません");
+		}
+
+		/// <summary>
 		/// DBの一覧表示を取得するSQL文を返す
 		/// </summary>
 		/// <returns></returns>
