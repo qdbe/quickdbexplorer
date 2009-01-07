@@ -187,5 +187,24 @@ namespace quickDBExplorer
 			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
 			isqlProcess.Start();
 		}
+
+		/// <summary>
+		/// DataReaderÇ©ÇÁDateTimeOffsetílÇì«Ç›çûÇﬁÅB
+		/// </summary>
+		/// <param name="dr"></param>
+		/// <param name="col"></param>
+		/// <returns></returns>
+		public virtual DateTimeOffset GetDataReaderDateTimeOffSet(IDataReader dr, int col)
+		{
+			if (dr == null)
+			{
+				throw new ArgumentNullException("dr");
+			}
+			if (col < 0)
+			{
+				throw new ArgumentException("col must greater equal 0");
+			}
+			return ((SqlDataReader)dr).GetDateTimeOffset(col);
+		}
 	}
 }

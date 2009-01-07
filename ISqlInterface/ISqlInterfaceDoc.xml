@@ -4,5 +4,524 @@
         <name>ISqlInterface</name>
     </assembly>
     <members>
+        <member name="T:quickDBExplorer.ISqlInterface">
+            <summary>
+            SQLのバージョンによる実装の違いからくるSQL文などを生成する為のクラス
+            ここでは Interface として定義し、実装は個別に行う
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.SetConnection(System.Data.IDbConnection,System.Int32)">
+            <summary>
+            SQLServerに対するコネクション情報を管理する
+            </summary>
+            <param name="sqlConnection">コネクション情報</param>
+            <param name="timeout">コマンド実行タイムアウト値</param>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.CloseConnection">
+            <summary>
+            SQLSERVERに対するコネクション情報を閉じる
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.SetTimeout(System.Int32)">
+            <summary>
+            タイムアウト値を設定しなおす
+            </summary>
+            <param name="timeout"></param>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.NewDataAdapter">
+            <summary>
+            DataAdapter を取得する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.NewSqlCommand">
+            <summary>
+            IDbCommand を新規に作成する。
+            ただし、コネクション情報とタイムアウト値はすでにセットされている
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.NewSqlCommand(System.String)">
+            <summary>
+            IDbCommand を新規に作成する。
+            ただし、コマンド文字列、コネクション情報とタイムアウト値はすでにセットされている
+            </summary>
+            <param name="stSql">実行するコマンド文字列</param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.SetSelectCmd(System.Data.Common.DbDataAdapter,System.Data.IDbCommand)">
+            <summary>
+            DataAdapter に IDbCommand を SelectCommandとして関連づける
+            </summary>
+            <param name="da"></param>
+            <param name="cmd"></param>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.SetTransaction(System.Data.IDbCommand)">
+            <summary>
+            トランザクション情報を設定する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.SetCommandBuilder(System.Data.Common.DbDataAdapter)">
+            <summary>
+            select コマンドから、update, insert, delete コマンドを生成しなおす
+            </summary>
+            <param name="da"></param>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetDataReaderBytes(System.Data.IDataReader,System.Int32)">
+            <summary>
+            DataReaderからbyte配列を読み込む。
+            指定されたフィールドはもともとバイナリデータであることが前提
+            </summary>
+            <param name="dr"></param>
+            <param name="col"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetDataReaderDateTimeOffSet(System.Data.IDataReader,System.Int32)">
+            <summary>
+            DataReaderからDateTimeOffset値を読み込む。
+            </summary>
+            <param name="dr"></param>
+            <param name="col"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetDBSelect">
+            <summary>
+            DBの一覧表示を取得するSQL文を返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.SetDatabase(System.String)">
+            <summary>
+            指定されたデータベースへと接続を変更する
+            </summary>
+            <param name="dbName">変更先のデータベース名</param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetTableListColumnName">
+            <summary>
+            オブジェクト一覧のカラムヘッダの表示文字を取得する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetOwnerLabel1">
+            <summary>
+            DBオーナーのラベルを返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetOwnerLabel2">
+            <summary>
+            ラジオボタンのラベルを返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetDisplayObjList(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String)">
+            <summary>
+            オブジェクト一覧の表示用SQLの取得
+            </summary>
+            <param name="isDisplayTable">テーブルを表示させるか否か true: 表示する false: 表示させない</param>
+            <param name="isDisplayView">View を表示させるか否か true: 表示する false: 表示させない</param>
+            <param name="isSynonym">シノニムを表示させるか否か true: 表示する false: 表示させない</param>
+            <param name="isDisplayFunction">Functionを表示させるか否か true: 表示する false: 表示させない</param>
+            <param name="isDisplaySP">ストアドプロシージャを表示させるか否か true: 表示する false: 表示させない</param>
+            <param name="ownerList">特定のOwnerのオブジェクトのみ表示する場合は IN句に利用するカンマ区切り文字列を渡す</param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetOwnerList(System.Boolean)">
+            <summary>
+            Owner の一覧を取得するSQLを生成する
+            </summary>
+            <param name="isDisplaySysUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.CallISQL(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            ISQL を起動する。
+            </summary>
+            <param name="serverRealName">サーバー名</param>
+            <param name="instanceName">インスタンス名</param>
+            <param name="isUseTrust">信頼関係接続を利用するか否か</param>
+            <param name="dbName">データベース名</param>
+            <param name="logOnUserId">ログインID</param>
+            <param name="logOnPassword">ログインパスワード</param>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            EnterPriseManagerを起動する
+            </summary>
+            <param name="serverRealName">サーバー名</param>
+            <param name="instanceName">インスタンス名</param>
+            <param name="isUseTrust">信頼関係接続を利用するか否か</param>
+            <param name="dbName">データベース名</param>
+            <param name="logOnUserId">ログインID</param>
+            <param name="logOnPassword">ログインパスワード</param>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.CallProfile(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Profilerを起動する
+            </summary>
+            <param name="serverRealName">サーバー名</param>
+            <param name="instanceName">インスタンス名</param>
+            <param name="isUseTrust">信頼関係接続を利用するか否か</param>
+            <param name="dbName">データベース名</param>
+            <param name="logOnUserId">ログインID</param>
+            <param name="logOnPassword">ログインパスワード</param>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetDdlCreateString(quickDBExplorer.DBObjectInfo,System.Boolean)">
+            <summary>
+            オブジェクトに対する Create 文を生成する
+            </summary>
+            <param name="databaseObjectInfo"></param>
+            <param name="useParentheses"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetDDLDropStr(quickDBExplorer.DBObjectInfo)">
+            <summary>
+            オブジェクトに対するDROP 文を生成する
+            </summary>
+            <param name="databaseObjectInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.InitObjTable(System.Data.DataTable)">
+            <summary>
+            オブジェクト情報をセットするDataTableを初期化する
+            </summary>
+            <param name="objTable"></param>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.AddObjectInfo(quickDBExplorer.DBObjectInfo,System.Data.DataTable)">
+            <summary>
+            オブジェクトの情報を、DataTable に追加する
+            </summary>
+            <param name="databaseObjectInfo">対象となるオブジェクト</param>
+            <param name="dt"></param>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.ObjectDetailSet">
+            <summary>
+            オブジェクトの詳細情報をセットするイベントハンドラを返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String})">
+            <summary>
+            フィールド名を検索する SQL文を生成する
+            </summary>
+            <param name="searchCondition">検索対象の文字</param>
+            <param name="searchType">検索方法</param>
+            <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
+            <param name="limitSchema">スキーマの絞込み対象</param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ISqlInterface.GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String},System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            オブジェクト名を検索する SQL文を生成する
+            </summary>
+            <param name="searchCondition">検索対象の文字</param>
+            <param name="searchType">検索方法</param>
+            <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
+            <param name="limitSchema">スキーマの絞込み対象</param>
+            <param name="isTable">テーブルを検索するか否か</param>
+            <param name="isView">Viewを検索するか否か</param>
+            <param name="isSynonym">シノニムを検索するか否か</param>
+            <param name="isFunction">ファンクションを検索するか否か</param>
+            <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
+            <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.DBFieldInfo">
+            <summary>
+            テーブル等のフィールド項目の情報を管理するクラス
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DBFieldInfo.pAssemblyId">
+            <summary>
+            この型の作成元であるアセンブリの ID です。
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DBFieldInfo.pAssemblyClassName">
+            <summary>
+            この型を定義しているアセンブリ内のクラスの名前です。
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DBFieldInfo.pAssemblyQFN">
+            <summary>
+            アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DBFieldInfo.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Col">
+            <summary>
+            対応するDataColumn
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Name">
+            <summary>
+            フィールド名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.TypeName">
+            <summary>
+            フィールドの型
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.RealTypeName">
+            <summary>
+            システムの型名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Length">
+            <summary>
+            フィールドの最大長(文字列の場合)
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Prec">
+            <summary>
+            小数点の場合の整数値の最大桁数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Xscale">
+            <summary>
+            小数点の場合の小数点値の最大桁数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Colid">
+            <summary>
+            フィールドのカラムIDを管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.ColOrder">
+            <summary>
+            フィールドのカラム順序を管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IsNullable">
+            <summary>
+            NULLを許可するか否かを管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Collation">
+            <summary>
+            文字フィールドの場合の照合順序を管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.PrimaryKeyOrder">
+            <summary>
+            プライマリキーの対象になっている場合のプライマリキー内の順序
+            開始は0
+            -1の場合はプライマリキーの要素でないことを指す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IsIdentity">
+            <summary>
+            Identity 属性を持つか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IncSeed">
+            <summary>
+            Identityフィールドの場合の Seed値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IncStep">
+            <summary>
+            Identity フィールドの場合の Step値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyId">
+            <summary>
+            この型の作成元であるアセンブリの ID です。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyClassName">
+            <summary>
+            この型を定義しているアセンブリ内のクラスの名前です。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyQFN">
+            <summary>
+            アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IsAssembly">
+            <summary>
+            オブジェクトがアセンブリを利用しているか否か
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.SearchType">
+            <summary>
+            オブジェクト等を検索する場合の検索条件
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SearchType.SearchContain">
+            <summary>
+            曖昧検索(含めばよい)
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SearchType.SearchStartWith">
+            <summary>
+            前方一致
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SearchType.SearchExact">
+            <summary>
+            完全一致
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.DataGetEventHandler">
+            <summary>
+            フィールド情報取得時のデータ再取得用イベントハンドラ
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.DBObjectInfo">
+            <summary>
+            リストに表示する DB オブジェクトの情報を管理する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="objectType">オブジェクトの型</param>
+            <param name="owner">オブジェクトの所有者名</param>
+            <param name="name">オブジェクトの名称</param>
+            <param name="createdTime">オブジェクトの作成日時</param>
+            <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
+            <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.ToString">
+            <summary>
+            文字列化する。
+            所有者名+"."+オブジェクト名
+            を返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.GetAliasName(System.String)">
+            <summary>
+            Alias が指定されていた場合に、Alias 付きのオブジェクト正式名称を返す
+            </summary>
+            <param name="alias">オブジェクト修飾子</param>
+            <returns>解析後のオブジェクト名([owner].[tabblname] alias 形式)</returns>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.GetNameAdd(System.String)">
+            <summary>
+            正式名称に指定れた文字列を付加したものにして返す
+            </summary>
+            <param name="suffix">付加する文字列</param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.ReloadInfo">
+            <summary>
+            オブジェクトの情報を取得しなおす
+            </summary>
+        </member>
+        <member name="E:quickDBExplorer.DBObjectInfo.DataGet">
+            <summary>
+            フィールド情報取得時に情報がまだ未取得時に発生するイベント
+            このイベントハンドラにより、データをセットさせる
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.ObjType">
+            <summary>
+            オブジェクトの種類
+            空白: Table
+            V:		View
+            S:		Synonym
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.DisplayObjType">
+            <summary>
+            オブジェクトの種類(表示用)
+            空白: Table
+            V:		View
+            S:		Synonym
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.Owner">
+            <summary>
+            オブジェクトの所有者名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.ObjName">
+            <summary>
+            オブジェクトの名称
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.CreateTime">
+            <summary>
+            オブジェクトが生成された日時
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBase">
+            <summary>
+            オブジェクトがシノニムの場合、その参照先
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBaseType">
+            <summary>
+            オブジェクトがシノニムの場合、その参照先のオブジェクトの種類
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.FormalName">
+            <summary>
+            [] でくくったオブジェクトの正式名称を取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.CanSelect">
+            <summary>
+            select 可能か否かを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsSynonym">
+            <summary>
+            シノニムかどうかを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.CanStatistics">
+            <summary>
+            統計情報の更新が可能などうかを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.RealObjName">
+            <summary>
+            実際のオブジェクト名を取得する
+            シノニムの場合はその参照先のオブジェクト名を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.RealObjNameNoPare">
+            <summary>
+            実際のオブジェクト名を取得する
+            名称には[]はつかない
+            シノニムの場合はその参照先のオブジェクト名を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.RealObjType">
+            <summary>
+            実際のオブジェクトの型を取得する
+            シノニムの場合はその参照先のオブジェクトの型を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.FieldInfo">
+            <summary>
+            オブジェクトのフィールド情報をキャッシュして保持する
+            フィールド情報のコレクションを管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.SchemaBaseInfo">
+            <summary>
+            スキーマ情報を保持している DataTable
+            行は保持していない
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsUseAssemblyType">
+            <summary>
+            フィールドにアセンブリを利用した型があるか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsUseIdentity">
+            <summary>
+            フィールドに Identityを利用したものを持つか否か
+            </summary>
+        </member>
     </members>
 </doc>
