@@ -247,6 +247,22 @@ namespace quickDBExplorer
 		/// <param name="e">--</param>
 		private void MainMdi_Load(object sender, System.EventArgs e)
 		{
+			//動作環境のチェック
+			System.Version clrVer = System.Environment.Version; ;
+			if (clrVer.Major < 2 ||
+				( clrVer.Major == 2 &&
+				  clrVer.Minor == 0 &&
+				  clrVer.Build == 50727 &&
+				  clrVer.MinorRevision < 1433 ) ||
+				(clrVer.Major == 3 &&
+				  clrVer.Minor == 0 &&
+				  clrVer.Build == 4506 &&
+				  clrVer.MinorRevision < 648)
+				)
+			{
+				MessageBox.Show("動作環境が不適切です。.NET Framework 2.0 SP1 以上の環境が必要です。");
+				this.Close();
+			}
 
 			// 設定ファイルの読み込みストリーム
 			FileStream fs = null;
