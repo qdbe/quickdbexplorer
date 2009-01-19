@@ -194,7 +194,7 @@ namespace quickDBExplorer
 		/// <param name="dr"></param>
 		/// <param name="col"></param>
 		/// <returns></returns>
-		public virtual DateTimeOffset GetDataReaderDateTimeOffSet(IDataReader dr, int col)
+		public override DateTimeOffset GetDataReaderDateTimeOffSet(IDataReader dr, int col)
 		{
 			if (dr == null)
 			{
