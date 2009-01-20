@@ -1,9 +1,4 @@
 TODO list 
 
-●where, order by 等の履歴情報の保存
 ●DB選択記録の複数保持
-●グリッドへのCSV、TSVデータ貼り付け
-●テーブル・VIEWの各種情報の表示
-●SQLServer2005対応
-●
 

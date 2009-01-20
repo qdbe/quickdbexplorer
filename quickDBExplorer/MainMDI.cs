@@ -389,18 +389,19 @@ namespace quickDBExplorer
 		private void menuAbout_Click(object sender, System.EventArgs e)
 		{
 #if true
+            // こっちが正しい
 			qdbeAboutBox dlg = new qdbeAboutBox();
 			dlg.Show();
 #else
-			object []obj = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute),false);
-			string aboutstr = Application.ProductName + " Version " + Application.ProductVersion;
-			if( obj != null && obj.Length != 0)
-			{
-				aboutstr += Environment.NewLine + Environment.NewLine + ((AssemblyCopyrightAttribute)obj[0]).Copyright;
-			}
-			MessageBox.Show(
-				aboutstr
-				);
+            //object []obj = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute),false);
+            //string aboutstr = Application.ProductName + " Version " + Application.ProductVersion;
+            //if( obj != null && obj.Length != 0)
+            //{
+            //    aboutstr += Environment.NewLine + Environment.NewLine + ((AssemblyCopyrightAttribute)obj[0]).Copyright;
+            //}
+            //MessageBox.Show(
+            //    aboutstr
+            //    );
 #endif
 		}
 
@@ -421,17 +422,24 @@ namespace quickDBExplorer
 				WebClient cl = new WebClient();
 				sr = new StreamReader(cl.OpenRead("http://qdbe.rgr.jp/latestVersion.txt"));
 				string lastversion = sr.ReadLine();
-				if( lastversion.CompareTo(Application.ProductVersion) > 0 )
-				{
-					MessageBox.Show("最新バージョンが公開されています\r\nhttp://qdbe.rgr.jp/ をチェックしてください");
-				}
+                if (lastversion.CompareTo(Application.ProductVersion) > 0)
+                {
+                    MessageBox.Show("最新バージョンが公開されています\r\nhttp://code.google.com/p/quickdbexplorer/ をチェックしてください");
+                }
+                else
+                {
+                    MessageBox.Show("既に最新バージョンです。更新の必要はありません。");
+                }
 			}
 			catch(Exception ex)
 			{
-				if( catchError == true )
-				{
-					MessageBox.Show( ex.ToString() );
-				}
+                MessageBox.Show("最新かどうかチェックできませんでした。ネットワーク環境を調査して下さい。\r\nhttp://qdbe.rgr.jp/へのアクセスが可能である必要です");
+#if DEBUG
+                if (catchError == true)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+#endif
 			}
 			finally
 			{

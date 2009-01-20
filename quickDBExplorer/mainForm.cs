@@ -4569,7 +4569,7 @@ namespace quickDBExplorer
 							fieldStr.Append(fi.Name);
 							if( fi.IsAssembly == true )
 							{
-								fieldStr.Append(".ToString()");
+								fieldStr.Append(".ToString() as ").Append(fi.Name);
 							}
 							loop++;
 						}
@@ -4933,7 +4933,7 @@ namespace quickDBExplorer
 							fieldStr.Append(fi.Name);
 							if( fi.IsAssembly == true )
 							{
-								fieldStr.Append(".ToString()");
+								fieldStr.Append(".ToString() as ").Append(fi.Name);
 							}
 							loop++;
 						}
@@ -5786,6 +5786,12 @@ namespace quickDBExplorer
 							isSetAll = false;
 							break;
 						}
+                        if (ccol.DataType.IsClass == true)
+                        {
+                            MessageBox.Show("CLR型の列を含むオブジェクトは指定できません:列" + ccol.ColumnName);
+                            isSetAll = false;
+                            break;
+                        }
 					}
 					if( isSetAll == false )
 					{
@@ -6043,7 +6049,12 @@ namespace quickDBExplorer
 								break;
 							}
 						}
-						else 
+                        else if (col.DataType.IsClass == true)
+                        {
+                            // アセンブリである
+
+                        }
+                        else
 						{
 							// 想定外の型の場合、文字列扱いにする
 							// 桁数の制限もなにもわからないので、チェックなし
