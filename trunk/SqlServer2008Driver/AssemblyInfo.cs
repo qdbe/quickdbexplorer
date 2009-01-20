@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("-")]
 [assembly: AssemblyProduct("quickDBExplorer!")]
-[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2008 GPLv2")]
+[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2009 GPLv2")]
 [assembly: AssemblyTrademark("Go Ahead!")]
 [assembly: AssemblyCulture("")]		
 
@@ -26,8 +26,8 @@ using System.Runtime.CompilerServices;
 // 下にあるように、'*' を使って、すべての値を指定するか、
 // ビルドおよびリビジョン番号を既定値にすることができます。
 
-[assembly: AssemblyVersion("1.9.1.*")]
-[assembly: AssemblyInformationalVersion("1.9.1")]
+[assembly: AssemblyVersion("2.0.0.*")]
+[assembly: AssemblyInformationalVersion("2.0.0")]
 [assembly: System.Resources.NeutralResourcesLanguage("ja-JP")]
 
 //

@@ -2,12 +2,27 @@
 
 CLR型
 	insert文
+		⇒ ToString()
 	CSV 読み込み ⇒ NG
 		書出し　 ⇒ ToString()
 	DataGrid
+		⇒ ToString()
 	
 		
-2	binary, image, varbinary, timestamp の型を持つフィールドは、その値に関わらず常にnullとして出力されます。
 
 
 	
+	
+	id,geo
+1,POLYGON ((0 0, 3 0, 3 3, 0 3, 0 0), (2 2, 2 1, 1 1, 1 2, 2 2))
+
+id,geo
+2,"POLYGON ((0 0, 3 0, 3 3, 0 3, 0 0), (2 2, 2 1, 1 1, 1 2, 2 2))"
+
+SET NOCOUNT ON
+GO
+
+insert into [qTest].[Table1]  ( [id],[] )  values ( 2, [sys].[geometry]::Parse(N'POLYGON ((0 0, 3 0, 3 3, 0 3, 0 0), (2 2, 2 1, 1 1, 1 2, 2 2))') ) 
+GO
+
+
