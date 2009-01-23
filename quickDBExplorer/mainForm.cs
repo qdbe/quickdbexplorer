@@ -5495,6 +5495,11 @@ namespace quickDBExplorer
 
 
 				DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
+				if( dboInfo.IsUseAssemblyType == true )
+				{
+					MessageBox.Show("CLR型の列を含むオブジェクトは指定できません");
+					return;
+				}
 
 				// get id 
 				string stSql;
@@ -5628,7 +5633,8 @@ namespace quickDBExplorer
 
 				ArrayList drAr = this.LoadFile2DataTable(dt,wr,isCsv,isUseDQ);
 
-				// データベースへ更新する
+				// グリッドのテーブルへと更新する
+				// 実際のDBへの反映は行わない
 				if( drAr.Count > 0 )
 				{
 					if( MessageBox.Show(drAr.Count.ToString(System.Globalization.CultureInfo.CurrentCulture) + "件のデータを読み込みますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) == DialogResult.Yes )
@@ -5786,12 +5792,12 @@ namespace quickDBExplorer
 							isSetAll = false;
 							break;
 						}
-                        if (ccol.DataType.IsClass == true)
-                        {
-                            MessageBox.Show("CLR型の列を含むオブジェクトは指定できません:列" + ccol.ColumnName);
-                            isSetAll = false;
-                            break;
-                        }
+						//if (ccol.DataType.IsClass == true)
+						//{
+						//    MessageBox.Show("CLR型の列を含むオブジェクトは指定できません:列" + ccol.ColumnName);
+						//    isSetAll = false;
+						//    break;
+						//}
 					}
 					if( isSetAll == false )
 					{
