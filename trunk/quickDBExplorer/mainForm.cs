@@ -2685,10 +2685,21 @@ namespace quickDBExplorer
 				this.objectList.SelectedItems.Count == 1 )
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
-				DispData(this.objectList.GetSelectObject(0),true,false);
-				this.btnTmpAllDisp.ForeColor = Color.WhiteSmoke;
-				this.btnTmpAllDisp.BackColor = Color.Navy;
-				this.btnTmpAllDisp.Enabled = true;
+				if (btnTmpAllDisp.BackColor == Color.Navy)
+				{
+					// 現在全表示なので...
+					DispData(this.objectList.GetSelectObject(0), false, false);
+					this.btnTmpAllDisp.ForeColor = this.ForeColor;
+					this.btnTmpAllDisp.BackColor = this.BackColor;
+					this.btnTmpAllDisp.Enabled = true;
+				}
+				else
+				{
+					DispData(this.objectList.GetSelectObject(0), true, false);
+					this.btnTmpAllDisp.ForeColor = Color.WhiteSmoke;
+					this.btnTmpAllDisp.BackColor = Color.Navy;
+					this.btnTmpAllDisp.Enabled = true;
+				}
 			}
 			else
 			{
@@ -5443,6 +5454,13 @@ namespace quickDBExplorer
 				return;
 			}
 
+			DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
+			if (dboInfo.IsUseAssemblyType == true)
+			{
+				MessageBox.Show("CLR型の列を含むオブジェクトは指定できません");
+				return;
+			}
+
 			DbDataAdapter da = this.SqlDriver.NewDataAdapter();
 			IDbCommand cm = this.SqlDriver.NewSqlCommand();
 			this.SqlDriver.SetSelectCmd(da,cm);
@@ -5493,13 +5511,6 @@ namespace quickDBExplorer
 					wr = new StreamReader(fsw,true);
 				}
 
-
-				DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
-				if( dboInfo.IsUseAssemblyType == true )
-				{
-					MessageBox.Show("CLR型の列を含むオブジェクトは指定できません");
-					return;
-				}
 
 				// get id 
 				string stSql;
@@ -5581,6 +5592,19 @@ namespace quickDBExplorer
 			{
 				return;
 			}
+			#region CLR型対応暫定処置
+			// 現時点では　グリッドへはクエリ実行時には必ず ReadOnly になっているのが前提
+			// であるため、ここへ来るのは テーブル値の表示時のみという想定である
+			// クエリ実行時にも編集可能とする場合には
+			// 当機能も同様に対応しなければならない
+
+			DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
+			if (dboInfo.IsUseAssemblyType == true)
+			{
+				MessageBox.Show("CLR型の列を含むオブジェクトは指定できません");
+				return;
+			}
+			#endregion
 
 			TextReader	wr = null;
 
