@@ -78,9 +78,10 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Resources.ResourceManager resources = new System.Resources.ResourceManager(typeof(MainMdi));
+			this.components = new System.ComponentModel.Container();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMdi));
 			this.statusBar1 = new System.Windows.Forms.StatusBar();
-			this.mainMenu1 = new System.Windows.Forms.MainMenu();
+			this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
 			this.menuConnect = new System.Windows.Forms.MenuItem();
 			this.menuNewConnect = new System.Windows.Forms.MenuItem();
 			this.menuQuit = new System.Windows.Forms.MenuItem();
@@ -88,31 +89,32 @@ namespace quickDBExplorer
 			this.menuHelpMain = new System.Windows.Forms.MenuItem();
 			this.menuViewHelp = new System.Windows.Forms.MenuItem();
 			this.menuAbout = new System.Windows.Forms.MenuItem();
-			this.errorProvider1 = new System.Windows.Forms.ErrorProvider();
 			this.menuVersion = new System.Windows.Forms.MenuItem();
+			this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// statusBar1
 			// 
-			this.statusBar1.Location = new System.Drawing.Point(0, 619);
+			this.statusBar1.Location = new System.Drawing.Point(0, 635);
 			this.statusBar1.Name = "statusBar1";
-			this.statusBar1.Size = new System.Drawing.Size(960, 22);
+			this.statusBar1.Size = new System.Drawing.Size(1033, 22);
 			this.statusBar1.TabIndex = 1;
 			this.statusBar1.DoubleClick += new System.EventHandler(this.statusBar1_DoubleClick);
 			// 
 			// mainMenu1
 			// 
 			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.menuConnect,
-																					  this.menuWindow,
-																					  this.menuHelpMain});
+            this.menuConnect,
+            this.menuWindow,
+            this.menuHelpMain});
 			// 
 			// menuConnect
 			// 
 			this.menuConnect.Index = 0;
 			this.menuConnect.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.menuNewConnect,
-																					  this.menuQuit});
+            this.menuNewConnect,
+            this.menuQuit});
 			this.menuConnect.Text = "接続(&C)";
 			// 
 			// menuNewConnect
@@ -138,9 +140,9 @@ namespace quickDBExplorer
 			// 
 			this.menuHelpMain.Index = 2;
 			this.menuHelpMain.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-																					  this.menuViewHelp,
-																					  this.menuAbout,
-																					  this.menuVersion});
+            this.menuViewHelp,
+            this.menuAbout,
+            this.menuVersion});
 			this.menuHelpMain.Text = "HELP(&H)";
 			// 
 			// menuViewHelp
@@ -155,28 +157,29 @@ namespace quickDBExplorer
 			this.menuAbout.Text = "About";
 			this.menuAbout.Click += new System.EventHandler(this.menuAbout_Click);
 			// 
-			// errorProvider1
-			// 
-			this.errorProvider1.ContainerControl = this;
-			// 
 			// menuVersion
 			// 
 			this.menuVersion.Index = 2;
 			this.menuVersion.Text = "最新バージョンのチェック";
 			this.menuVersion.Click += new System.EventHandler(this.menuVersion_Click);
 			// 
+			// errorProvider1
+			// 
+			this.errorProvider1.ContainerControl = this;
+			// 
 			// MainMdi
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(960, 641);
+			this.ClientSize = new System.Drawing.Size(1033, 657);
 			this.Controls.Add(this.statusBar1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.IsMdiContainer = true;
 			this.Menu = this.mainMenu1;
 			this.Name = "MainMdi";
 			this.Text = "quickDBExplorer";
-			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainMdi_Closing);
 			this.Load += new System.EventHandler(this.MainMdi_Load);
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainMdi_Closing);
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
 			this.ResumeLayout(false);
 
 		}
