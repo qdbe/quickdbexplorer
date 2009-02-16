@@ -309,7 +309,9 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem readTsvDQDbGridMenu;
 		private System.Windows.Forms.MenuItem copySelectedDbGridMenu;
 		private System.Windows.Forms.MenuItem menuFieldMakeWhere;
-		private SplitContainer splitContainer1;
+		private SplitContainer ObjFieldSplitter;
+		private SplitContainer MainSplitter;
+		private SplitContainer UpDownSplitter;
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
 
 		/// <summary>
@@ -446,6 +448,8 @@ namespace quickDBExplorer
 			this.menuFieldMakeWhere = new System.Windows.Forms.MenuItem();
 			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.label9 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label8 = new System.Windows.Forms.Label();
 			this.grpCharaSet = new System.Windows.Forms.GroupBox();
 			this.rdoUtf8 = new System.Windows.Forms.RadioButton();
 			this.rdoSjis = new System.Windows.Forms.RadioButton();
@@ -455,9 +459,7 @@ namespace quickDBExplorer
 			this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
 			this.btnDataUpdate = new System.Windows.Forms.Button();
 			this.btnDataEdit = new System.Windows.Forms.Button();
-			this.label7 = new System.Windows.Forms.Label();
 			this.btnGridFormat = new System.Windows.Forms.Button();
-			this.label8 = new System.Windows.Forms.Label();
 			this.btnIndex = new System.Windows.Forms.Button();
 			this.btnRedisp = new System.Windows.Forms.Button();
 			this.btnTmpAllDisp = new System.Windows.Forms.Button();
@@ -471,7 +473,9 @@ namespace quickDBExplorer
 			this.label11 = new System.Windows.Forms.Label();
 			this.txtAlias = new quickDBExplorer.quickDBExplorerTextBox();
 			this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
-			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.ObjFieldSplitter = new System.Windows.Forms.SplitContainer();
+			this.MainSplitter = new System.Windows.Forms.SplitContainer();
+			this.UpDownSplitter = new System.Windows.Forms.SplitContainer();
 			this.grpViewMode.SuspendLayout();
 			this.grpSortMode.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -479,24 +483,32 @@ namespace quickDBExplorer
 			this.grpSysUserMode.SuspendLayout();
 			this.grpOutputMode.SuspendLayout();
 			this.grpCharaSet.SuspendLayout();
-			this.splitContainer1.Panel1.SuspendLayout();
-			this.splitContainer1.Panel2.SuspendLayout();
-			this.splitContainer1.SuspendLayout();
+			this.ObjFieldSplitter.Panel1.SuspendLayout();
+			this.ObjFieldSplitter.Panel2.SuspendLayout();
+			this.ObjFieldSplitter.SuspendLayout();
+			this.MainSplitter.Panel1.SuspendLayout();
+			this.MainSplitter.Panel2.SuspendLayout();
+			this.MainSplitter.SuspendLayout();
+			this.UpDownSplitter.Panel1.SuspendLayout();
+			this.UpDownSplitter.Panel2.SuspendLayout();
+			this.UpDownSplitter.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MsgArea
 			// 
-			this.MsgArea.Location = new System.Drawing.Point(240, 647);
-			this.MsgArea.Size = new System.Drawing.Size(750, 16);
+			this.MsgArea.Location = new System.Drawing.Point(304, 660);
+			this.MsgArea.Size = new System.Drawing.Size(709, 16);
 			this.MsgArea.TabIndex = 42;
 			// 
 			// dbList
 			// 
+			this.dbList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.dbList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.dbList.ItemHeight = 12;
-			this.dbList.Location = new System.Drawing.Point(60, 16);
+			this.dbList.Location = new System.Drawing.Point(60, 8);
 			this.dbList.Name = "dbList";
-			this.dbList.Size = new System.Drawing.Size(160, 52);
+			this.dbList.Size = new System.Drawing.Size(164, 52);
 			this.dbList.TabIndex = 1;
 			this.dbList.CopyData += new quickDBExplorer.CopyDataEventHandler(this.dbList_CopyData);
 			this.dbList.SelectedIndexChanged += new System.EventHandler(this.dbList_SelectedIndexChanged);
@@ -505,7 +517,8 @@ namespace quickDBExplorer
 			// 
 			this.objectList.Activation = System.Windows.Forms.ItemActivation.OneClick;
 			this.objectList.AllowDrop = true;
-			this.objectList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			this.objectList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.objectList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColTVSType,
@@ -518,7 +531,7 @@ namespace quickDBExplorer
 			this.objectList.HideSelection = false;
 			this.objectList.Location = new System.Drawing.Point(3, 26);
 			this.objectList.Name = "objectList";
-			this.objectList.Size = new System.Drawing.Size(302, 297);
+			this.objectList.Size = new System.Drawing.Size(328, 297);
 			this.objectList.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.objectList.TabIndex = 22;
 			this.objectList.UseCompatibleStateImageBehavior = false;
@@ -541,7 +554,7 @@ namespace quickDBExplorer
 			// ColObjName
 			// 
 			this.ColObjName.Text = "名称";
-			this.ColObjName.Width = 190;
+			this.ColObjName.Width = 226;
 			// 
 			// ColCreateDate
 			// 
@@ -557,7 +570,7 @@ namespace quickDBExplorer
 			// btnInsert
 			// 
 			this.btnInsert.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnInsert.Location = new System.Drawing.Point(311, 26);
+			this.btnInsert.Location = new System.Drawing.Point(337, 26);
 			this.btnInsert.Name = "btnInsert";
 			this.btnInsert.Size = new System.Drawing.Size(136, 24);
 			this.btnInsert.TabIndex = 23;
@@ -566,7 +579,7 @@ namespace quickDBExplorer
 			// btnFieldList
 			// 
 			this.btnFieldList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnFieldList.Location = new System.Drawing.Point(311, 54);
+			this.btnFieldList.Location = new System.Drawing.Point(337, 54);
 			this.btnFieldList.Name = "btnFieldList";
 			this.btnFieldList.Size = new System.Drawing.Size(136, 24);
 			this.btnFieldList.TabIndex = 24;
@@ -575,7 +588,7 @@ namespace quickDBExplorer
 			// btnCSV
 			// 
 			this.btnCSV.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCSV.Location = new System.Drawing.Point(311, 138);
+			this.btnCSV.Location = new System.Drawing.Point(337, 138);
 			this.btnCSV.Name = "btnCSV";
 			this.btnCSV.Size = new System.Drawing.Size(136, 24);
 			this.btnCSV.TabIndex = 27;
@@ -594,7 +607,7 @@ namespace quickDBExplorer
 			// 
 			this.grpViewMode.Controls.Add(this.rdoNotDispView);
 			this.grpViewMode.Controls.Add(this.rdoDispView);
-			this.grpViewMode.Location = new System.Drawing.Point(8, 220);
+			this.grpViewMode.Location = new System.Drawing.Point(8, 212);
 			this.grpViewMode.Name = "grpViewMode";
 			this.grpViewMode.Size = new System.Drawing.Size(216, 40);
 			this.grpViewMode.TabIndex = 6;
@@ -613,7 +626,7 @@ namespace quickDBExplorer
 			// 
 			this.grpSortMode.Controls.Add(this.rdoSortOwnerTable);
 			this.grpSortMode.Controls.Add(this.rdoSortTable);
-			this.grpSortMode.Location = new System.Drawing.Point(8, 264);
+			this.grpSortMode.Location = new System.Drawing.Point(8, 256);
 			this.grpSortMode.Name = "grpSortMode";
 			this.grpSortMode.Size = new System.Drawing.Size(216, 52);
 			this.grpSortMode.TabIndex = 7;
@@ -639,13 +652,15 @@ namespace quickDBExplorer
 			// 
 			// txtWhere
 			// 
+			this.txtWhere.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtWhere.CanCtrlDelete = true;
 			this.txtWhere.IsDigitOnly = false;
 			this.txtWhere.IsShowZoom = true;
-			this.txtWhere.Location = new System.Drawing.Point(72, 488);
+			this.txtWhere.Location = new System.Drawing.Point(72, 480);
 			this.txtWhere.Name = "txtWhere";
 			this.txtWhere.PdHistory = null;
-			this.txtWhere.Size = new System.Drawing.Size(144, 19);
+			this.txtWhere.Size = new System.Drawing.Size(117, 19);
 			this.txtWhere.TabIndex = 11;
 			this.txtWhere.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtWhere_KeyDown);
 			this.txtWhere.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtWhere_ShowHistory);
@@ -654,13 +669,15 @@ namespace quickDBExplorer
 			// 
 			// txtSort
 			// 
+			this.txtSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSort.CanCtrlDelete = true;
 			this.txtSort.IsDigitOnly = false;
 			this.txtSort.IsShowZoom = true;
-			this.txtSort.Location = new System.Drawing.Point(72, 516);
+			this.txtSort.Location = new System.Drawing.Point(72, 508);
 			this.txtSort.Name = "txtSort";
 			this.txtSort.PdHistory = null;
-			this.txtSort.Size = new System.Drawing.Size(144, 19);
+			this.txtSort.Size = new System.Drawing.Size(117, 19);
 			this.txtSort.TabIndex = 14;
 			this.txtSort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSort_KeyDown);
 			this.txtSort.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtSort_ShowHistory);
@@ -669,7 +686,7 @@ namespace quickDBExplorer
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(8, 488);
+			this.label1.Location = new System.Drawing.Point(8, 480);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(52, 16);
 			this.label1.TabIndex = 10;
@@ -677,7 +694,7 @@ namespace quickDBExplorer
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(8, 516);
+			this.label2.Location = new System.Drawing.Point(8, 508);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(64, 16);
 			this.label2.TabIndex = 13;
@@ -686,7 +703,7 @@ namespace quickDBExplorer
 			// btnSelect
 			// 
 			this.btnSelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSelect.Location = new System.Drawing.Point(311, 82);
+			this.btnSelect.Location = new System.Drawing.Point(337, 82);
 			this.btnSelect.Name = "btnSelect";
 			this.btnSelect.Size = new System.Drawing.Size(136, 24);
 			this.btnSelect.TabIndex = 25;
@@ -695,12 +712,14 @@ namespace quickDBExplorer
 			// 
 			// ownerListbox
 			// 
+			this.ownerListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.ownerListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.ownerListbox.ItemHeight = 12;
-			this.ownerListbox.Location = new System.Drawing.Point(60, 80);
+			this.ownerListbox.Location = new System.Drawing.Point(60, 72);
 			this.ownerListbox.Name = "ownerListbox";
 			this.ownerListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.ownerListbox.Size = new System.Drawing.Size(160, 88);
+			this.ownerListbox.Size = new System.Drawing.Size(164, 88);
 			this.ownerListbox.TabIndex = 4;
 			this.ownerListbox.CopyData += new quickDBExplorer.CopyDataEventHandler(this.ownerListbox_CopyData);
 			this.ownerListbox.SelectedIndexChanged += new System.EventHandler(this.ownerListbox_SelectedIndexChanged);
@@ -708,7 +727,7 @@ namespace quickDBExplorer
 			// btnDDL
 			// 
 			this.btnDDL.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDDL.Location = new System.Drawing.Point(311, 110);
+			this.btnDDL.Location = new System.Drawing.Point(337, 110);
 			this.btnDDL.Name = "btnDDL";
 			this.btnDDL.Size = new System.Drawing.Size(136, 24);
 			this.btnDDL.TabIndex = 26;
@@ -734,14 +753,14 @@ namespace quickDBExplorer
 			this.dbGrid.HeaderFont = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.dbGrid.HeaderForeColor = System.Drawing.Color.Black;
 			this.dbGrid.LinkColor = System.Drawing.Color.Maroon;
-			this.dbGrid.Location = new System.Drawing.Point(240, 384);
+			this.dbGrid.Location = new System.Drawing.Point(4, 64);
 			this.dbGrid.Name = "dbGrid";
 			this.dbGrid.ParentRowsBackColor = System.Drawing.Color.Silver;
 			this.dbGrid.ParentRowsForeColor = System.Drawing.Color.Black;
 			this.dbGrid.RowHeaderWidth = 40;
 			this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
 			this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
-			this.dbGrid.Size = new System.Drawing.Size(738, 259);
+			this.dbGrid.Size = new System.Drawing.Size(764, 240);
 			this.dbGrid.TabIndex = 41;
 			this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
 			// 
@@ -820,7 +839,7 @@ namespace quickDBExplorer
 			this.grpDataDispMode.Controls.Add(this.txtDispCount);
 			this.grpDataDispMode.Controls.Add(this.label3);
 			this.grpDataDispMode.Controls.Add(this.chkDispData);
-			this.grpDataDispMode.Location = new System.Drawing.Point(8, 565);
+			this.grpDataDispMode.Location = new System.Drawing.Point(8, 557);
 			this.grpDataDispMode.Name = "grpDataDispMode";
 			this.grpDataDispMode.Size = new System.Drawing.Size(216, 44);
 			this.grpDataDispMode.TabIndex = 18;
@@ -858,7 +877,7 @@ namespace quickDBExplorer
 			// 
 			this.grpSysUserMode.Controls.Add(this.rdoNotDispSysUser);
 			this.grpSysUserMode.Controls.Add(this.rdoDispSysUser);
-			this.grpSysUserMode.Location = new System.Drawing.Point(8, 176);
+			this.grpSysUserMode.Location = new System.Drawing.Point(8, 168);
 			this.grpSysUserMode.Name = "grpSysUserMode";
 			this.grpSysUserMode.Size = new System.Drawing.Size(216, 40);
 			this.grpSysUserMode.TabIndex = 5;
@@ -892,7 +911,7 @@ namespace quickDBExplorer
 			this.grpOutputMode.Controls.Add(this.rdoOutFile);
 			this.grpOutputMode.Controls.Add(this.rdoClipboard);
 			this.grpOutputMode.Controls.Add(this.rdoOutFolder);
-			this.grpOutputMode.Location = new System.Drawing.Point(8, 324);
+			this.grpOutputMode.Location = new System.Drawing.Point(8, 316);
 			this.grpOutputMode.Name = "grpOutputMode";
 			this.grpOutputMode.Size = new System.Drawing.Size(216, 84);
 			this.grpOutputMode.TabIndex = 8;
@@ -901,6 +920,7 @@ namespace quickDBExplorer
 			// 
 			// btnReference
 			// 
+			this.btnReference.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnReference.Location = new System.Drawing.Point(168, 52);
 			this.btnReference.Name = "btnReference";
 			this.btnReference.Size = new System.Drawing.Size(40, 20);
@@ -910,6 +930,8 @@ namespace quickDBExplorer
 			// 
 			// txtOutput
 			// 
+			this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtOutput.CanCtrlDelete = true;
 			this.txtOutput.IsDigitOnly = false;
 			this.txtOutput.IsShowZoom = false;
@@ -949,7 +971,7 @@ namespace quickDBExplorer
 			// 
 			// labelDB
 			// 
-			this.labelDB.Location = new System.Drawing.Point(8, 28);
+			this.labelDB.Location = new System.Drawing.Point(8, 20);
 			this.labelDB.Name = "labelDB";
 			this.labelDB.Size = new System.Drawing.Size(48, 32);
 			this.labelDB.TabIndex = 0;
@@ -958,7 +980,7 @@ namespace quickDBExplorer
 			// 
 			// labelSchema
 			// 
-			this.labelSchema.Location = new System.Drawing.Point(4, 80);
+			this.labelSchema.Location = new System.Drawing.Point(4, 72);
 			this.labelSchema.Name = "labelSchema";
 			this.labelSchema.Size = new System.Drawing.Size(48, 32);
 			this.labelSchema.TabIndex = 3;
@@ -967,7 +989,8 @@ namespace quickDBExplorer
 			// 
 			// fieldListbox
 			// 
-			this.fieldListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			this.fieldListbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.fieldListbox.ContextMenu = this.fldContextMenu;
 			this.fieldListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
@@ -976,7 +999,7 @@ namespace quickDBExplorer
 			this.fieldListbox.Location = new System.Drawing.Point(1, 26);
 			this.fieldListbox.Name = "fieldListbox";
 			this.fieldListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-			this.fieldListbox.Size = new System.Drawing.Size(269, 292);
+			this.fieldListbox.Size = new System.Drawing.Size(292, 292);
 			this.fieldListbox.TabIndex = 34;
 			this.fieldListbox.CopyData += new quickDBExplorer.CopyDataEventHandler(this.fieldListbox_CopyData);
 			this.fieldListbox.ExtendedCopyData += new quickDBExplorer.ExtendedCopyDataEventHandler(this.fieldListbox_ExtendedCopyData);
@@ -1029,19 +1052,37 @@ namespace quickDBExplorer
 			// 
 			// label9
 			// 
-			this.label9.Location = new System.Drawing.Point(244, 364);
+			this.label9.Location = new System.Drawing.Point(8, 44);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(280, 16);
 			this.label9.TabIndex = 37;
 			this.label9.Text = "複数行にわたる文字列はとき色(ピンク)に着色されます。";
 			this.toolTip1.SetToolTip(this.label9, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
 			// 
+			// label7
+			// 
+			this.label7.Location = new System.Drawing.Point(8, 8);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(368, 16);
+			this.label7.TabIndex = 35;
+			this.label7.Text = "見出しに★がある列はNULL可です。NULLのセルは水色に着色されます。";
+			this.toolTip1.SetToolTip(this.label7, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
+			// 
+			// label8
+			// 
+			this.label8.Location = new System.Drawing.Point(8, 24);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(500, 16);
+			this.label8.TabIndex = 36;
+			this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。Ctrl+3で値拡大表示。";
+			this.toolTip1.SetToolTip(this.label8, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
+			// 
 			// grpCharaSet
 			// 
 			this.grpCharaSet.Controls.Add(this.rdoUtf8);
 			this.grpCharaSet.Controls.Add(this.rdoSjis);
 			this.grpCharaSet.Controls.Add(this.rdoUnicode);
-			this.grpCharaSet.Location = new System.Drawing.Point(8, 412);
+			this.grpCharaSet.Location = new System.Drawing.Point(8, 404);
 			this.grpCharaSet.Name = "grpCharaSet";
 			this.grpCharaSet.Size = new System.Drawing.Size(216, 60);
 			this.grpCharaSet.TabIndex = 9;
@@ -1079,7 +1120,7 @@ namespace quickDBExplorer
 			// 
 			this.chkDispFieldAttr.Location = new System.Drawing.Point(3, 6);
 			this.chkDispFieldAttr.Name = "chkDispFieldAttr";
-			this.chkDispFieldAttr.Size = new System.Drawing.Size(244, 20);
+			this.chkDispFieldAttr.Size = new System.Drawing.Size(161, 20);
 			this.chkDispFieldAttr.TabIndex = 33;
 			this.chkDispFieldAttr.Text = "フィールド属性を表示(&Z)";
 			this.chkDispFieldAttr.CheckedChanged += new System.EventHandler(this.chkDispFieldAttr_CheckedChanged);
@@ -1087,7 +1128,7 @@ namespace quickDBExplorer
 			// btnQuerySelect
 			// 
 			this.btnQuerySelect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnQuerySelect.Location = new System.Drawing.Point(311, 222);
+			this.btnQuerySelect.Location = new System.Drawing.Point(337, 222);
 			this.btnQuerySelect.Name = "btnQuerySelect";
 			this.btnQuerySelect.Size = new System.Drawing.Size(136, 24);
 			this.btnQuerySelect.TabIndex = 30;
@@ -1097,7 +1138,7 @@ namespace quickDBExplorer
 			// btnDataUpdate
 			// 
 			this.btnDataUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDataUpdate.Location = new System.Drawing.Point(311, 286);
+			this.btnDataUpdate.Location = new System.Drawing.Point(337, 286);
 			this.btnDataUpdate.Name = "btnDataUpdate";
 			this.btnDataUpdate.Size = new System.Drawing.Size(132, 24);
 			this.btnDataUpdate.TabIndex = 32;
@@ -1107,45 +1148,27 @@ namespace quickDBExplorer
 			// btnDataEdit
 			// 
 			this.btnDataEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDataEdit.Location = new System.Drawing.Point(311, 258);
+			this.btnDataEdit.Location = new System.Drawing.Point(337, 258);
 			this.btnDataEdit.Name = "btnDataEdit";
 			this.btnDataEdit.Size = new System.Drawing.Size(132, 24);
 			this.btnDataEdit.TabIndex = 31;
 			this.btnDataEdit.Text = "データ編集(&T)";
 			this.btnDataEdit.Click += new System.EventHandler(this.btnDataEdit_Click);
 			// 
-			// label7
-			// 
-			this.label7.Location = new System.Drawing.Point(244, 328);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(368, 16);
-			this.label7.TabIndex = 35;
-			this.label7.Text = "見出しに★がある列はNULL可です。NULLのセルは水色に着色されます。";
-			this.toolTip1.SetToolTip(this.label7, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
-			// 
 			// btnGridFormat
 			// 
 			this.btnGridFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnGridFormat.Location = new System.Drawing.Point(821, 336);
+			this.btnGridFormat.Location = new System.Drawing.Point(609, 16);
 			this.btnGridFormat.Name = "btnGridFormat";
 			this.btnGridFormat.Size = new System.Drawing.Size(156, 20);
 			this.btnGridFormat.TabIndex = 39;
 			this.btnGridFormat.Text = "グリッド表示書式指定(&G)";
 			this.btnGridFormat.Click += new System.EventHandler(this.btnGridFormat_Click);
 			// 
-			// label8
-			// 
-			this.label8.Location = new System.Drawing.Point(244, 344);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(500, 16);
-			this.label8.TabIndex = 36;
-			this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。Ctrl+3で値拡大表示。";
-			this.toolTip1.SetToolTip(this.label8, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
-			// 
 			// btnIndex
 			// 
 			this.btnIndex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnIndex.Location = new System.Drawing.Point(311, 166);
+			this.btnIndex.Location = new System.Drawing.Point(337, 166);
 			this.btnIndex.Name = "btnIndex";
 			this.btnIndex.Size = new System.Drawing.Size(136, 23);
 			this.btnIndex.TabIndex = 28;
@@ -1155,7 +1178,7 @@ namespace quickDBExplorer
 			// btnRedisp
 			// 
 			this.btnRedisp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnRedisp.Location = new System.Drawing.Point(709, 360);
+			this.btnRedisp.Location = new System.Drawing.Point(497, 40);
 			this.btnRedisp.Name = "btnRedisp";
 			this.btnRedisp.Size = new System.Drawing.Size(108, 20);
 			this.btnRedisp.TabIndex = 38;
@@ -1165,7 +1188,7 @@ namespace quickDBExplorer
 			// btnTmpAllDisp
 			// 
 			this.btnTmpAllDisp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnTmpAllDisp.Location = new System.Drawing.Point(821, 360);
+			this.btnTmpAllDisp.Location = new System.Drawing.Point(609, 40);
 			this.btnTmpAllDisp.Name = "btnTmpAllDisp";
 			this.btnTmpAllDisp.Size = new System.Drawing.Size(156, 20);
 			this.btnTmpAllDisp.TabIndex = 40;
@@ -1175,7 +1198,7 @@ namespace quickDBExplorer
 			// btnEtc
 			// 
 			this.btnEtc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnEtc.Location = new System.Drawing.Point(311, 194);
+			this.btnEtc.Location = new System.Drawing.Point(337, 194);
 			this.btnEtc.Name = "btnEtc";
 			this.btnEtc.Size = new System.Drawing.Size(136, 23);
 			this.btnEtc.TabIndex = 29;
@@ -1183,7 +1206,8 @@ namespace quickDBExplorer
 			// 
 			// btnWhereZoom
 			// 
-			this.btnWhereZoom.Location = new System.Drawing.Point(220, 492);
+			this.btnWhereZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnWhereZoom.Location = new System.Drawing.Point(189, 480);
 			this.btnWhereZoom.Name = "btnWhereZoom";
 			this.btnWhereZoom.Size = new System.Drawing.Size(16, 20);
 			this.btnWhereZoom.TabIndex = 12;
@@ -1191,7 +1215,8 @@ namespace quickDBExplorer
 			// 
 			// btnOrderZoom
 			// 
-			this.btnOrderZoom.Location = new System.Drawing.Point(220, 516);
+			this.btnOrderZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOrderZoom.Location = new System.Drawing.Point(189, 508);
 			this.btnOrderZoom.Name = "btnOrderZoom";
 			this.btnOrderZoom.Size = new System.Drawing.Size(16, 20);
 			this.btnOrderZoom.TabIndex = 15;
@@ -1199,9 +1224,9 @@ namespace quickDBExplorer
 			// 
 			// useCheckBox
 			// 
-			this.useCheckBox.Location = new System.Drawing.Point(0, 124);
+			this.useCheckBox.Location = new System.Drawing.Point(20, 116);
 			this.useCheckBox.Name = "useCheckBox";
-			this.useCheckBox.Size = new System.Drawing.Size(56, 36);
+			this.useCheckBox.Size = new System.Drawing.Size(36, 36);
 			this.useCheckBox.TabIndex = 2;
 			this.useCheckBox.Text = "CheckList";
 			this.useCheckBox.Visible = false;
@@ -1228,7 +1253,7 @@ namespace quickDBExplorer
 			// 
 			// label11
 			// 
-			this.label11.Location = new System.Drawing.Point(8, 544);
+			this.label11.Location = new System.Drawing.Point(8, 536);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(60, 16);
 			this.label11.TabIndex = 16;
@@ -1237,13 +1262,15 @@ namespace quickDBExplorer
 			// 
 			// txtAlias
 			// 
+			this.txtAlias.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtAlias.CanCtrlDelete = true;
 			this.txtAlias.IsDigitOnly = false;
 			this.txtAlias.IsShowZoom = true;
-			this.txtAlias.Location = new System.Drawing.Point(72, 540);
+			this.txtAlias.Location = new System.Drawing.Point(72, 532);
 			this.txtAlias.Name = "txtAlias";
 			this.txtAlias.PdHistory = null;
-			this.txtAlias.Size = new System.Drawing.Size(144, 19);
+			this.txtAlias.Size = new System.Drawing.Size(137, 19);
 			this.txtAlias.TabIndex = 17;
 			this.toolTip4.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
 			this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
@@ -1252,71 +1279,115 @@ namespace quickDBExplorer
 			this.txtAlias.Enter += new System.EventHandler(this.txtAlias_Enter);
 			this.txtAlias.ShowZoom += new quickDBExplorer.ShowZoomEventHandler(this.txtAlias_ShowZoom);
 			// 
-			// splitContainer1
+			// ObjFieldSplitter
 			// 
-			this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			this.ObjFieldSplitter.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.ObjFieldSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.ObjFieldSplitter.Location = new System.Drawing.Point(0, 0);
+			this.ObjFieldSplitter.Name = "ObjFieldSplitter";
+			// 
+			// ObjFieldSplitter.Panel1
+			// 
+			this.ObjFieldSplitter.Panel1.AutoScroll = true;
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.cmbHistory);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.labelObject);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.objectList);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnInsert);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnFieldList);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnCSV);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnEtc);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnSelect);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnDDL);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnQuerySelect);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnIndex);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnDataUpdate);
+			this.ObjFieldSplitter.Panel1.Controls.Add(this.btnDataEdit);
+			// 
+			// ObjFieldSplitter.Panel2
+			// 
+			this.ObjFieldSplitter.Panel2.AutoScroll = true;
+			this.ObjFieldSplitter.Panel2.Controls.Add(this.chkDispFieldAttr);
+			this.ObjFieldSplitter.Panel2.Controls.Add(this.fieldListbox);
+			this.ObjFieldSplitter.Size = new System.Drawing.Size(779, 340);
+			this.ObjFieldSplitter.SplitterDistance = 480;
+			this.ObjFieldSplitter.SplitterWidth = 2;
+			this.ObjFieldSplitter.TabIndex = 19;
+			// 
+			// MainSplitter
+			// 
+			this.MainSplitter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+						| System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.splitContainer1.Location = new System.Drawing.Point(246, 0);
-			this.splitContainer1.Name = "splitContainer1";
+			this.MainSplitter.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.MainSplitter.Location = new System.Drawing.Point(0, 0);
+			this.MainSplitter.Name = "MainSplitter";
 			// 
-			// splitContainer1.Panel1
+			// MainSplitter.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.cmbHistory);
-			this.splitContainer1.Panel1.Controls.Add(this.labelObject);
-			this.splitContainer1.Panel1.Controls.Add(this.objectList);
-			this.splitContainer1.Panel1.Controls.Add(this.btnInsert);
-			this.splitContainer1.Panel1.Controls.Add(this.btnFieldList);
-			this.splitContainer1.Panel1.Controls.Add(this.btnCSV);
-			this.splitContainer1.Panel1.Controls.Add(this.btnEtc);
-			this.splitContainer1.Panel1.Controls.Add(this.btnSelect);
-			this.splitContainer1.Panel1.Controls.Add(this.btnDDL);
-			this.splitContainer1.Panel1.Controls.Add(this.btnQuerySelect);
-			this.splitContainer1.Panel1.Controls.Add(this.btnIndex);
-			this.splitContainer1.Panel1.Controls.Add(this.btnDataUpdate);
-			this.splitContainer1.Panel1.Controls.Add(this.btnDataEdit);
+			this.MainSplitter.Panel1.AutoScroll = true;
+			this.MainSplitter.Panel1.Controls.Add(this.dbList);
+			this.MainSplitter.Panel1.Controls.Add(this.txtAlias);
+			this.MainSplitter.Panel1.Controls.Add(this.useCheckBox);
+			this.MainSplitter.Panel1.Controls.Add(this.label11);
+			this.MainSplitter.Panel1.Controls.Add(this.btnOrderZoom);
+			this.MainSplitter.Panel1.Controls.Add(this.labelSchema);
+			this.MainSplitter.Panel1.Controls.Add(this.btnWhereZoom);
+			this.MainSplitter.Panel1.Controls.Add(this.grpDataDispMode);
+			this.MainSplitter.Panel1.Controls.Add(this.grpSysUserMode);
+			this.MainSplitter.Panel1.Controls.Add(this.grpViewMode);
+			this.MainSplitter.Panel1.Controls.Add(this.grpSortMode);
+			this.MainSplitter.Panel1.Controls.Add(this.txtWhere);
+			this.MainSplitter.Panel1.Controls.Add(this.txtSort);
+			this.MainSplitter.Panel1.Controls.Add(this.grpCharaSet);
+			this.MainSplitter.Panel1.Controls.Add(this.label1);
+			this.MainSplitter.Panel1.Controls.Add(this.labelDB);
+			this.MainSplitter.Panel1.Controls.Add(this.label2);
+			this.MainSplitter.Panel1.Controls.Add(this.grpOutputMode);
+			this.MainSplitter.Panel1.Controls.Add(this.ownerListbox);
 			// 
-			// splitContainer1.Panel2
+			// MainSplitter.Panel2
 			// 
-			this.splitContainer1.Panel2.Controls.Add(this.chkDispFieldAttr);
-			this.splitContainer1.Panel2.Controls.Add(this.fieldListbox);
-			this.splitContainer1.Size = new System.Drawing.Size(732, 325);
-			this.splitContainer1.SplitterDistance = 454;
-			this.splitContainer1.TabIndex = 19;
+			this.MainSplitter.Panel2.Controls.Add(this.UpDownSplitter);
+			this.MainSplitter.Size = new System.Drawing.Size(1032, 660);
+			this.MainSplitter.SplitterDistance = 251;
+			this.MainSplitter.SplitterWidth = 2;
+			this.MainSplitter.TabIndex = 0;
+			// 
+			// UpDownSplitter
+			// 
+			this.UpDownSplitter.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.UpDownSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.UpDownSplitter.Location = new System.Drawing.Point(0, 0);
+			this.UpDownSplitter.Name = "UpDownSplitter";
+			this.UpDownSplitter.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// UpDownSplitter.Panel1
+			// 
+			this.UpDownSplitter.Panel1.AutoScroll = true;
+			this.UpDownSplitter.Panel1.Controls.Add(this.ObjFieldSplitter);
+			// 
+			// UpDownSplitter.Panel2
+			// 
+			this.UpDownSplitter.Panel2.AutoScroll = true;
+			this.UpDownSplitter.Panel2.Controls.Add(this.dbGrid);
+			this.UpDownSplitter.Panel2.Controls.Add(this.label9);
+			this.UpDownSplitter.Panel2.Controls.Add(this.btnGridFormat);
+			this.UpDownSplitter.Panel2.Controls.Add(this.label8);
+			this.UpDownSplitter.Panel2.Controls.Add(this.btnRedisp);
+			this.UpDownSplitter.Panel2.Controls.Add(this.label7);
+			this.UpDownSplitter.Panel2.Controls.Add(this.btnTmpAllDisp);
+			this.UpDownSplitter.Size = new System.Drawing.Size(779, 660);
+			this.UpDownSplitter.SplitterDistance = 340;
+			this.UpDownSplitter.SplitterWidth = 2;
+			this.UpDownSplitter.TabIndex = 0;
 			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.AutoScroll = true;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(990, 677);
-			this.Controls.Add(this.useCheckBox);
-			this.Controls.Add(this.label9);
-			this.Controls.Add(this.splitContainer1);
-			this.Controls.Add(this.btnWhereZoom);
-			this.Controls.Add(this.btnTmpAllDisp);
-			this.Controls.Add(this.btnRedisp);
-			this.Controls.Add(this.label8);
-			this.Controls.Add(this.btnGridFormat);
-			this.Controls.Add(this.label7);
-			this.Controls.Add(this.grpCharaSet);
-			this.Controls.Add(this.labelDB);
-			this.Controls.Add(this.grpOutputMode);
-			this.Controls.Add(this.dbGrid);
-			this.Controls.Add(this.ownerListbox);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.txtSort);
-			this.Controls.Add(this.txtWhere);
-			this.Controls.Add(this.grpSortMode);
-			this.Controls.Add(this.grpViewMode);
-			this.Controls.Add(this.dbList);
-			this.Controls.Add(this.grpSysUserMode);
-			this.Controls.Add(this.grpDataDispMode);
-			this.Controls.Add(this.labelSchema);
-			this.Controls.Add(this.btnOrderZoom);
-			this.Controls.Add(this.label11);
-			this.Controls.Add(this.txtAlias);
+			this.ClientSize = new System.Drawing.Size(1033, 677);
+			this.Controls.Add(this.MainSplitter);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "MainForm";
 			this.ShowInTaskbar = false;
@@ -1325,34 +1396,8 @@ namespace quickDBExplorer
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
-			this.Controls.SetChildIndex(this.txtAlias, 0);
-			this.Controls.SetChildIndex(this.label11, 0);
-			this.Controls.SetChildIndex(this.btnOrderZoom, 0);
-			this.Controls.SetChildIndex(this.labelSchema, 0);
-			this.Controls.SetChildIndex(this.grpDataDispMode, 0);
-			this.Controls.SetChildIndex(this.grpSysUserMode, 0);
-			this.Controls.SetChildIndex(this.dbList, 0);
-			this.Controls.SetChildIndex(this.grpViewMode, 0);
-			this.Controls.SetChildIndex(this.grpSortMode, 0);
-			this.Controls.SetChildIndex(this.txtWhere, 0);
-			this.Controls.SetChildIndex(this.txtSort, 0);
-			this.Controls.SetChildIndex(this.label1, 0);
-			this.Controls.SetChildIndex(this.label2, 0);
-			this.Controls.SetChildIndex(this.ownerListbox, 0);
-			this.Controls.SetChildIndex(this.dbGrid, 0);
-			this.Controls.SetChildIndex(this.grpOutputMode, 0);
-			this.Controls.SetChildIndex(this.labelDB, 0);
-			this.Controls.SetChildIndex(this.grpCharaSet, 0);
-			this.Controls.SetChildIndex(this.label7, 0);
-			this.Controls.SetChildIndex(this.btnGridFormat, 0);
-			this.Controls.SetChildIndex(this.label8, 0);
-			this.Controls.SetChildIndex(this.btnRedisp, 0);
-			this.Controls.SetChildIndex(this.btnTmpAllDisp, 0);
-			this.Controls.SetChildIndex(this.btnWhereZoom, 0);
-			this.Controls.SetChildIndex(this.splitContainer1, 0);
-			this.Controls.SetChildIndex(this.label9, 0);
-			this.Controls.SetChildIndex(this.useCheckBox, 0);
 			this.Controls.SetChildIndex(this.MsgArea, 0);
+			this.Controls.SetChildIndex(this.MainSplitter, 0);
 			this.grpViewMode.ResumeLayout(false);
 			this.grpSortMode.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dbGrid)).EndInit();
@@ -1362,11 +1407,17 @@ namespace quickDBExplorer
 			this.grpOutputMode.ResumeLayout(false);
 			this.grpOutputMode.PerformLayout();
 			this.grpCharaSet.ResumeLayout(false);
-			this.splitContainer1.Panel1.ResumeLayout(false);
-			this.splitContainer1.Panel2.ResumeLayout(false);
-			this.splitContainer1.ResumeLayout(false);
+			this.ObjFieldSplitter.Panel1.ResumeLayout(false);
+			this.ObjFieldSplitter.Panel2.ResumeLayout(false);
+			this.ObjFieldSplitter.ResumeLayout(false);
+			this.MainSplitter.Panel1.ResumeLayout(false);
+			this.MainSplitter.Panel1.PerformLayout();
+			this.MainSplitter.Panel2.ResumeLayout(false);
+			this.MainSplitter.ResumeLayout(false);
+			this.UpDownSplitter.Panel1.ResumeLayout(false);
+			this.UpDownSplitter.Panel2.ResumeLayout(false);
+			this.UpDownSplitter.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
