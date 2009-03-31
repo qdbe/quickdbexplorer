@@ -2482,46 +2482,46 @@ namespace quickDBExplorer
 			{
 				this.InitErrMessage();
 
-				this.dbGrid.EndEdit(this.dbGrid.TableStyles[0].GridColumnStyles[this.dbGrid.CurrentCell.ColumnNumber],this.dbGrid.CurrentCell.RowNumber,false);
+				this.dbGrid.EndEdit(this.dbGrid.TableStyles[0].GridColumnStyles[this.dbGrid.CurrentCell.ColumnNumber], this.dbGrid.CurrentCell.RowNumber, false);
 
-				if( this.chkDispData.CheckState == CheckState.Checked &&
+				if (this.chkDispData.CheckState == CheckState.Checked &&
 					this.objectList.SelectedItems.Count == 1 &&
 					this.dspdt.GetChanges() != null &&
 					this.dspdt.GetChanges().Tables[0].Rows.Count > 0 &&
-					MessageBox.Show("本当に更新してよろしいですか","",MessageBoxButtons.YesNo) == DialogResult.Yes
+					MessageBox.Show("本当に更新してよろしいですか", "", MessageBoxButtons.YesNo) == DialogResult.Yes
 					)
 				{
 					// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
-					DBObjectInfo	dboInfo = this.objectList.GetSelectObject(0);
+					DBObjectInfo dboInfo = this.objectList.GetSelectObject(0);
 					string stSql;
 					stSql = "select ";
-					int	maxlines;
-					if( this.txtDispCount.Text != "" )
+					int maxlines;
+					if (this.txtDispCount.Text != "")
 					{
-						maxlines = int.Parse(this.txtDispCount.Text,System.Globalization.CultureInfo.CurrentCulture);
+						maxlines = int.Parse(this.txtDispCount.Text, System.Globalization.CultureInfo.CurrentCulture);
 					}
 					else
 					{
 						maxlines = 0;
 					}
-					if( maxlines != 0 )
+					if (maxlines != 0)
 					{
 						stSql += " TOP " + this.txtDispCount.Text;
 					}
 
-					stSql += string.Format(System.Globalization.CultureInfo.CurrentCulture," * from {0}",dboInfo.GetAliasName(this.GetAlias()));
-					if( this.txtWhere.Text.Trim() != "" )
+					stSql += string.Format(System.Globalization.CultureInfo.CurrentCulture, " * from {0}", dboInfo.GetAliasName(this.GetAlias()));
+					if (this.txtWhere.Text.Trim() != "")
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
 					}
-					if( this.txtSort.Text.Trim() != "" )
+					if (this.txtSort.Text.Trim() != "")
 					{
 						stSql += " order by " + this.txtSort.Text.Trim();
 					}
 
 					DbDataAdapter da = this.SqlDriver.NewDataAdapter();
 					IDbCommand cmd = this.SqlDriver.NewSqlCommand(stSql);
-					this.SqlDriver.SetSelectCmd(da,cmd);
+					this.SqlDriver.SetSelectCmd(da, cmd);
 
 					tran = this.SqlDriver.SetTransaction(cmd);
 					this.SqlDriver.SetCommandBuilder(da);
@@ -2531,7 +2531,17 @@ namespace quickDBExplorer
 					this.dbGrid.SetDataBinding(dspdt, dspdt.Tables[0].TableName);
 				}
 			}
-			catch( Exception exp )
+			catch (System.Data.DBConcurrencyException exp)
+			{
+				if (tran != null)
+				{
+					tran.Rollback();
+				}
+				string emsg = string.Format("{0}行のデータが既に他の処理により更新されている可能性があります。\r\n処理を中断しました。\r\n再度データを読み込みしなおして再度編集して下さい",
+					exp.RowCount);
+				MessageBox.Show(emsg);
+			}
+			catch (Exception exp)
 			{
 				this.SetErrorMessage(exp);
 				if (tran != null)
@@ -2646,7 +2656,7 @@ namespace quickDBExplorer
 						break;
           
 					case(System.Windows.Forms.DataGrid.HitTestType.None):
-						firstCheckHeight++;
+						isFound = true;
 						break;
 
 					default:
