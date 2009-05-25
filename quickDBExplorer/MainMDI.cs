@@ -42,18 +42,31 @@ namespace quickDBExplorer
 		/// </summary>
 		private string  errMessage = "";
 
+		/// <summary>
+		/// コマンド引数の内容
+		/// </summary>
+		private Hashtable argHt = new Hashtable();
+
+		/// <summary>
+		/// アプリケーションのメイン エントリ ポイントです。
+		/// </summary>
+		[STAThread]
+		static void Main(string[] args)
+		{
+			Application.Run(new MainMdi(args));
+		}
 
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public MainMdi()
+		public MainMdi(string[]args)
 		{
 			//
 			// Windows フォーム デザイナ サポートに必要です。
 			//
 			InitializeComponent();
-
+			this.ParseArg(args);
 		}
 
 		/// <summary>
@@ -186,15 +199,6 @@ namespace quickDBExplorer
 		#endregion
 
 		/// <summary>
-		/// アプリケーションのメイン エントリ ポイントです。
-		/// </summary>
-		[STAThread]
-		static void Main() 
-		{
-			Application.Run(new MainMdi());
-		}
-
-		/// <summary>
 		/// 接続メニュークリック時イベントハンドら
 		/// </summary>
 		/// <param name="sender">--</param>
@@ -308,7 +312,8 @@ namespace quickDBExplorer
 			//CheckNewVersion(false);
 
 			// 最初は強制的にログインを表示する
-			LogOnDialog logindlg = new LogOnDialog(this.initopt);
+			LogOnDialog logindlg ;
+            logindlg = new LogOnDialog(this.initopt, argHt);
 			logindlg.MdiParent = this;
 			logindlg.Show();
 			logindlg.Focus();
@@ -451,6 +456,75 @@ namespace quickDBExplorer
 					sr.Close();
 				}
 			}
+		}
+
+        /// <summary>
+        /// コマンド引数をパースする
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+		private bool ParseArg(string[] args)
+		{
+			string preParam = string.Empty;
+
+			foreach (string arg in args)
+			{
+				switch (arg)
+				{
+					case "-S":
+					case "-s":
+						// サーバー名指定
+						if (preParam != string.Empty)
+						{
+							return false;
+						}
+						preParam = LogOnDialog.PARAM_SERVER;
+						break;
+					case "-I":
+					case "-i":
+						// インスタンス名指定
+						if (preParam != string.Empty)
+						{
+							return false;
+						}
+						preParam = LogOnDialog.PARAM_INSTANCE;
+						break;
+					case "-U":
+					case "-u":
+						// ユーザー名指定
+						if (preParam != string.Empty)
+						{
+							return false;
+						}
+						preParam = LogOnDialog.PARAM_USER;
+						break;
+					case "-P":
+					case "-p":
+						// パスワード指定
+						if (preParam != string.Empty)
+						{
+							return false;
+						}
+						preParam = LogOnDialog.PARAM_PASSWORD;
+						break;
+					case "-T":
+					case "-t":
+						// Windows 認証指定
+						this.argHt[LogOnDialog.PARAM_TRUST] = true;
+						preParam = string.Empty;
+						break;
+					default:
+						//引数以外の場合は値扱い
+						if (preParam == string.Empty)
+						{
+							return false;
+						}
+						this.argHt[preParam] = arg;
+						preParam = string.Empty;
+						break;
+				}
+			}
+			return true;
 		}
 	}
 }
