@@ -40,6 +40,33 @@ namespace quickDBExplorer
 		private System.ComponentModel.IContainer components = null;
 
 		/// <summary>
+		/// コマンド引数 サーバー指定
+		/// </summary>
+		public static string PARAM_SERVER = "SERVER";
+		/// <summary>
+		/// コマンド引数 インスタンス名
+		/// </summary>
+		public static string PARAM_INSTANCE = "INSTANCE";
+		/// <summary>
+		/// コマンド引数 ユーザー名
+		/// </summary>
+		public static string PARAM_USER = "USER";
+		/// <summary>
+		/// コマンド引数 パスワード
+		/// </summary>
+		public static string PARAM_PASSWORD = "PASSWORD";
+		/// <summary>
+		/// コマンド引数 Window認証
+		/// </summary>
+		public static string PARAM_TRUST = "TRUST";
+
+        /// <summary>
+        /// コマンド引数
+        /// </summary>
+        private Hashtable commnadArgHt = null;
+
+
+		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="initialOption">記憶された設定情報</param>
@@ -51,6 +78,23 @@ namespace quickDBExplorer
 			this.initOpt = initialOption;
 
 		}
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="initialOption">記憶された設定情報</param>
+        public LogOnDialog(ConditionRecorder initialOption, 
+            Hashtable argHt
+            )
+        {
+            // この呼び出しは Windows フォーム デザイナで必要です。
+            InitializeComponent();
+
+            this.initOpt = initialOption;
+
+            this.commnadArgHt = argHt;
+
+        }
 
 		/// <summary>
 		/// 使用されているリソースに後処理を実行します。
@@ -264,6 +308,32 @@ namespace quickDBExplorer
 		private void LogOnDialog_Load(object sender, System.EventArgs e)
 		{
 			// ローカルのファイルから　オプションを読み込む
+
+            if (this.commnadArgHt != null)
+            {
+                // コマンド引数が指定されている
+                this.chkSaveInfo.Checked = true;
+                this.txtServerName.Text = (string)this.commnadArgHt[PARAM_SERVER];
+                this.txtInstance.Text = (string)this.commnadArgHt[PARAM_SERVER];
+                if (this.commnadArgHt[PARAM_TRUST] != null &&
+                    (bool)this.commnadArgHt[PARAM_TRUST] == true)
+                {
+                    this.chkTrust.Checked = true;
+                }
+                this.txtUser.Text = (string)this.commnadArgHt[PARAM_USER];
+                this.txtPassword.Text = (string)this.commnadArgHt[PARAM_PASSWORD];
+
+                if (this.txtServerName.Text.Length > 0 &&
+                    (this.chkTrust.Checked ||
+                     (this.txtUser.Text.Length > 0 &&
+                     this.txtPassword.Text.Length > 0)
+                    )
+                    )
+                {
+                    // 必要最低の情報は指定されているので、ログイン処理を実施する
+                    this.btnLogin.PerformClick();
+                }
+            }
 
 			this.chkSaveInfo.Checked = true;
 			// 最後に表示したサーバーの情報があれば、それを表示する
