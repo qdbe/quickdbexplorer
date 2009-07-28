@@ -524,6 +524,16 @@ namespace quickDBExplorer
 						break;
 				}
 			}
+            if( this.argHt.Count > 0 &&
+                ( !this.argHt.Contains(LogOnDialog.PARAM_SERVER) ||
+                  !( this.argHt.Contains(LogOnDialog.PARAM_TRUST) ||
+                    ( this.argHt.Contains(LogOnDialog.PARAM_USER) &&
+                this.argHt.Contains(LogOnDialog.PARAM_PASSWORD) ))
+                ) )
+            {
+                MessageBox.Show("引数が不正です。ヘルプを参照して下さい");
+                this.Close();
+            }
 			return true;
 		}
 	}

@@ -65,6 +65,8 @@ namespace quickDBExplorer
         /// </summary>
         private Hashtable commnadArgHt = null;
 
+        private bool IsActivateWithArgs = false;
+
 
 		/// <summary>
 		/// コンストラクタ
@@ -83,6 +85,7 @@ namespace quickDBExplorer
         /// コンストラクタ
         /// </summary>
         /// <param name="initialOption">記憶された設定情報</param>
+        /// <param name="argHt">コマンド引数を格納したパラメータ</param>
         public LogOnDialog(ConditionRecorder initialOption, 
             Hashtable argHt
             )
@@ -92,7 +95,11 @@ namespace quickDBExplorer
 
             this.initOpt = initialOption;
 
-            this.commnadArgHt = argHt;
+            if (argHt != null)
+            {
+                this.commnadArgHt = (Hashtable)argHt.Clone();
+                argHt.Clear();
+            }
 
         }
 
@@ -300,25 +307,37 @@ namespace quickDBExplorer
 		}
 		#endregion
 
-		/// <summary>
-		/// 画面初期表示時処理
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void LogOnDialog_Load(object sender, System.EventArgs e)
-		{
-			// ローカルのファイルから　オプションを読み込む
+        /// <summary>
+        /// 初めて表示された場合には、コマンド引数を処理する
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            SetCommandParmeter();
+        }
 
-            if (this.commnadArgHt != null)
+        private bool SetCommandParmeter()
+        {
+            if (this.commnadArgHt != null && this.commnadArgHt.Count > 0)
             {
                 // コマンド引数が指定されている
-                this.chkSaveInfo.Checked = true;
-                this.txtServerName.Text = (string)this.commnadArgHt[PARAM_SERVER];
-                this.txtInstance.Text = (string)this.commnadArgHt[PARAM_SERVER];
-                if (this.commnadArgHt[PARAM_TRUST] != null &&
-                    (bool)this.commnadArgHt[PARAM_TRUST] == true)
+                if (this.commnadArgHt.Count != 0)
                 {
-                    this.chkTrust.Checked = true;
+                    this.chkSaveInfo.Checked = true;
+                }
+                this.txtServerName.Text = (string)this.commnadArgHt[PARAM_SERVER];
+                    this.txtInstance.Text = (string)this.commnadArgHt[PARAM_INSTANCE];
+                if (this.commnadArgHt.Contains(PARAM_TRUST))
+                {
+                    if ((bool)this.commnadArgHt[PARAM_TRUST] == true)
+                    {
+                        this.chkTrust.Checked = true;
+                    }
+                    else
+                    {
+                        this.chkTrust.Checked = false;
+                    }
                 }
                 this.txtUser.Text = (string)this.commnadArgHt[PARAM_USER];
                 this.txtPassword.Text = (string)this.commnadArgHt[PARAM_PASSWORD];
@@ -331,9 +350,23 @@ namespace quickDBExplorer
                     )
                 {
                     // 必要最低の情報は指定されているので、ログイン処理を実施する
-                    this.btnLogin.PerformClick();
+                    this.IsActivateWithArgs = true;
+                    DoLogin();
+                    this.Close();
+                    return true;
                 }
             }
+            return false;
+
+        }
+
+		/// <summary>
+		/// 画面初期表示時処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void LogOnDialog_Load(object sender, System.EventArgs e)
+		{
 
 			this.chkSaveInfo.Checked = true;
 			// 最後に表示したサーバーの情報があれば、それを表示する
@@ -371,123 +404,132 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		private void btnLogin_Click(object sender, System.EventArgs e)
 		{
-			String myConnString;
-			if( this.chkTrust.Checked == false )
-			{
-				// ユーザー名での接続
-				if( this.txtInstance.Text.Length != 0 )
-				{
-					// インスタンス名あり
-					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
-						+"Database=master;User ID="+this.txtUser.Text
-						+";Password="+this.txtPassword.Text;			}
-				else
-				{
-					// インスタンス名なし
-					myConnString = "Server=" + this.txtServerName.Text + ";"
-						+"Database=master;User ID="+this.txtUser.Text
-						+";Password="+this.txtPassword.Text;
-				}
-			}
-			else
-			{
-				// 信頼関係接続
-				if( this.txtInstance.Text.Length != 0 )
-				{
-					// インスタンス名あり
-					myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
-						+"Database=master;Integrated Security=SSPI;";
-				}
-				else
-				{
-					// インスタンス名なし
-					myConnString = "Server=" + this.txtServerName.Text + ";"
-						+"Database=master;Integrated Security=SSPI;";
-				}
-			}
-
-			// エラーメッセージクリア
-			this.InitErrMessage();
-
-			try 
-			{
-				Assembly asm = null;
-				string dllName = "";
-				string className = "";
-
-				// SQL Server とのコネクションを確立する
-				System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection();
-				con.ConnectionString = myConnString;
-				con.Open();
-
-				// 以前のサーバー別情報があれば、それを再作成する
-				ServerData sv = new ServerData();
-				sv.Servername = this.txtServerName.Text;
-				sv.InstanceName = this.txtInstance.Text;
-				if( initOpt.PerServerData[sv.KeyName] == null )
-				{
-					initOpt.PerServerData.Add(sv.KeyName,sv);
-				}
-				else
-				{
-					sv = (ServerData)initOpt.PerServerData[sv.KeyName];
-				}
-
-				if( this.chkSaveInfo.Checked == false )
-				{
-					sv.IsSaveKey = false;
-				}
-				else
-				{
-					sv.IsSaveKey = true;
-				}
-				sv.IsUseTrust = this.chkTrust.Checked;
-				sv.LogOnUser = this.txtUser.Text;
-				// 最後に接続したサーバーを更新
-				initOpt.LastServerKey = sv.KeyName;
-				// SQL 処理クラスの初期化
-				SqlVersion sqlVer = new SqlVersion(con.ServerVersion);
-
-				// メインダイアログを表示
-				MainForm mainForm = new MainForm(sv, sqlVer);
-				mainForm.MdiParent = this.MdiParent;
-				mainForm.ServerName = this.txtServerName.Text;
-				mainForm.ServerRealName = this.txtServerName.Text;
-				mainForm.InstanceName = this.txtInstance.Text;
-				mainForm.LogOnUid = this.txtUser.Text;
-				mainForm.LogOnPassword = this.txtPassword.Text;
-				mainForm.IsUseTruse = this.chkTrust.Checked;
-				if( this.txtInstance.Text.Length != 0 )
-				{
-					mainForm.ServerName = this.txtServerName.Text + "@" + this.txtInstance.Text;
-				}
-				else
-				{
-					mainForm.ServerName = this.txtServerName.Text;
-				}
-
-				// SQL SERVERのバージョンに応じたDLLを読み込む
-				dllName = string.Format(System.Globalization.CultureInfo.CurrentCulture,Application.StartupPath + "\\SqlServer{0}Driver.dll", sqlVer.AdapterNameString );
-				className = string.Format(System.Globalization.CultureInfo.CurrentCulture,"quickDBExplorer.SqlServerDriver{0}", sqlVer.AdapterNameString );
-				asm = Assembly.LoadFrom(dllName);
-				mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className,true);
-
-				mainForm.SqlDriver.SetConnection(con,mainForm.SqlTimeout);
-				mainForm.InitPopupMenu();
-
-				// MDI なので、モードレスでダイアログを表示する
-				mainForm.Show();
-				// メインダイアログを表示すれば、このダイアログは不要
-				this.Close();
-			}
-			catch ( System.Data.SqlClient.SqlException se)
-			{
-				this.SetErrorMessage(se);
-			}
-			//finally {
-			//	mainForm.sqlConnection1.Close();
-			//}
+            DoLogin();
 		}
+
+        private void DoLogin()
+        {
+            String myConnString;
+            if (this.chkTrust.Checked == false)
+            {
+                // ユーザー名での接続
+                if (this.txtInstance.Text.Length != 0)
+                {
+                    // インスタンス名あり
+                    myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
+                        + "Database=master;User ID=" + this.txtUser.Text
+                        + ";Password=" + this.txtPassword.Text;
+                }
+                else
+                {
+                    // インスタンス名なし
+                    myConnString = "Server=" + this.txtServerName.Text + ";"
+                        + "Database=master;User ID=" + this.txtUser.Text
+                        + ";Password=" + this.txtPassword.Text;
+                }
+            }
+            else
+            {
+                // 信頼関係接続
+                if (this.txtInstance.Text.Length != 0)
+                {
+                    // インスタンス名あり
+                    myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
+                        + "Database=master;Integrated Security=SSPI;";
+                }
+                else
+                {
+                    // インスタンス名なし
+                    myConnString = "Server=" + this.txtServerName.Text + ";"
+                        + "Database=master;Integrated Security=SSPI;";
+                }
+            }
+
+            // エラーメッセージクリア
+            this.InitErrMessage();
+
+            try
+            {
+                Assembly asm = null;
+                string dllName = "";
+                string className = "";
+
+                // SQL Server とのコネクションを確立する
+                System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection();
+                con.ConnectionString = myConnString;
+                con.Open();
+
+                // 以前のサーバー別情報があれば、それを再作成する
+                ServerData sv = new ServerData();
+                sv.Servername = this.txtServerName.Text;
+                sv.InstanceName = this.txtInstance.Text;
+                if (initOpt.PerServerData[sv.KeyName] == null)
+                {
+                    initOpt.PerServerData.Add(sv.KeyName, sv);
+                }
+                else
+                {
+                    sv = (ServerData)initOpt.PerServerData[sv.KeyName];
+                }
+
+                if (this.chkSaveInfo.Checked == false)
+                {
+                    sv.IsSaveKey = false;
+                }
+                else
+                {
+                    sv.IsSaveKey = true;
+                }
+                sv.IsUseTrust = this.chkTrust.Checked;
+                sv.LogOnUser = this.txtUser.Text;
+                // 最後に接続したサーバーを更新
+                initOpt.LastServerKey = sv.KeyName;
+                // SQL 処理クラスの初期化
+                SqlVersion sqlVer = new SqlVersion(con.ServerVersion);
+
+                // メインダイアログを表示
+                MainForm mainForm = new MainForm(sv, sqlVer);
+                mainForm.MdiParent = this.MdiParent;
+                mainForm.ServerName = this.txtServerName.Text;
+                mainForm.ServerRealName = this.txtServerName.Text;
+                mainForm.InstanceName = this.txtInstance.Text;
+                mainForm.LogOnUid = this.txtUser.Text;
+                mainForm.LogOnPassword = this.txtPassword.Text;
+                mainForm.IsUseTruse = this.chkTrust.Checked;
+                if (this.txtInstance.Text.Length != 0)
+                {
+                    mainForm.ServerName = this.txtServerName.Text + "@" + this.txtInstance.Text;
+                }
+                else
+                {
+                    mainForm.ServerName = this.txtServerName.Text;
+                }
+
+                // SQL SERVERのバージョンに応じたDLLを読み込む
+                dllName = string.Format(System.Globalization.CultureInfo.CurrentCulture, Application.StartupPath + "\\SqlServer{0}Driver.dll", sqlVer.AdapterNameString);
+                className = string.Format(System.Globalization.CultureInfo.CurrentCulture, "quickDBExplorer.SqlServerDriver{0}", sqlVer.AdapterNameString);
+                asm = Assembly.LoadFrom(dllName);
+                mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className, true);
+
+                mainForm.SqlDriver.SetConnection(con, mainForm.SqlTimeout);
+                mainForm.InitPopupMenu();
+
+                // MDI なので、モードレスでダイアログを表示する
+                mainForm.Show();
+                // メインダイアログを表示すれば、このダイアログは不要
+                if (this.IsActivateWithArgs == false)
+                {
+                    this.Close();
+                }
+            }
+            catch (System.Data.SqlClient.SqlException se)
+            {
+                this.SetErrorMessage(se);
+            }
+            //finally {
+            //	mainForm.sqlConnection1.Close();
+            //}
+        }
 
 		/// <summary>
 		/// 過去のサーバー接続履歴から、選択する
