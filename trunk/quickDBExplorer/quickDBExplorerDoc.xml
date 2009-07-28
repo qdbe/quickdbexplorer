@@ -1955,7 +1955,17 @@
             表示エラーメッセージ
             </summary>
         </member>
-        <member name="M:quickDBExplorer.MainMdi.#ctor">
+        <member name="F:quickDBExplorer.MainMdi.argHt">
+            <summary>
+            コマンド引数の内容
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.MainMdi.Main(System.String[])">
+            <summary>
+            アプリケーションのメイン エントリ ポイントです。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.MainMdi.#ctor(System.String[])">
             <summary>
             コンストラクタ
             </summary>
@@ -1969,11 +1979,6 @@
             <summary>
             デザイナ サポートに必要なメソッドです。このメソッドの内容を
             コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.MainMdi.Main">
-            <summary>
-            アプリケーションのメイン エントリ ポイントです。
             </summary>
         </member>
         <member name="M:quickDBExplorer.MainMdi.menuNewConnect_Click(System.Object,System.EventArgs)">
@@ -2021,6 +2026,13 @@
             </summary>
             <param name="catchError"></param>
         </member>
+        <member name="M:quickDBExplorer.MainMdi.ParseArg(System.String[])">
+            <summary>
+            コマンド引数をパースする
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
         <member name="T:quickDBExplorer.LogOnDialog">
             <summary>
             SQL Serverへのログイン指定ダイアログ
@@ -2031,11 +2043,48 @@
             以前までの接続時記録情報
             </summary>
         </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_SERVER">
+            <summary>
+            コマンド引数 サーバー指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_INSTANCE">
+            <summary>
+            コマンド引数 インスタンス名
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_USER">
+            <summary>
+            コマンド引数 ユーザー名
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_PASSWORD">
+            <summary>
+            コマンド引数 パスワード
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_TRUST">
+            <summary>
+            コマンド引数 Window認証
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.commnadArgHt">
+            <summary>
+            コマンド引数
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorder)">
             <summary>
             コンストラクタ
             </summary>
             <param name="initialOption">記憶された設定情報</param>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorder,System.Collections.Hashtable)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="initialOption">記憶された設定情報</param>
+            <param name="argHt">コマンド引数を格納したパラメータ</param>
         </member>
         <member name="M:quickDBExplorer.LogOnDialog.Dispose(System.Boolean)">
             <summary>
@@ -2047,6 +2096,12 @@
             デザイナ サポートに必要なメソッドです。このメソッドの内容を
             コード エディタで変更しないでください。
             </summary>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.OnShown(System.EventArgs)">
+            <summary>
+            初めて表示された場合には、コマンド引数を処理する
+            </summary>
+            <param name="e"></param>
         </member>
         <member name="M:quickDBExplorer.LogOnDialog.LogOnDialog_Load(System.Object,System.EventArgs)">
             <summary>
