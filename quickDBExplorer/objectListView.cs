@@ -3,6 +3,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Collections;
 using System.Windows.Forms;
+using System.Collections.Generic;
+
 
 namespace quickDBExplorer
 {
@@ -23,6 +25,8 @@ namespace quickDBExplorer
 
 		private tableSorter sorter;
 
+        private List<ListViewItem> currentItems;
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
@@ -35,6 +39,7 @@ namespace quickDBExplorer
 			sorter = new tableSorter();
 
 			this.ListViewItemSorter = this.sorter;
+            this.currentItems = new List<ListViewItem>();
 		}
 
 		/// <summary>
@@ -43,7 +48,7 @@ namespace quickDBExplorer
 		/// <param name="dr">データを参照するDataReader</param>
 		/// <param name="dataSetter">オブジェクトの詳細を設定するメソッド</param>
 		/// <returns></returns>
-		public ListViewItem	CreateItem(IDataRecord dr, DataGetEventHandler dataSetter)
+		private ListViewItem	CreateItem(IDataRecord dr, DataGetEventHandler dataSetter)
 		{
 			DBObjectInfo dboInfo = new DBObjectInfo(
 				(string)dr["tvs"],
@@ -65,6 +70,54 @@ namespace quickDBExplorer
 			it.Tag = dboInfo;
 			return it;
 		}
+
+        /// <summary>
+        /// DataReader から オブジェクトリストの各項目を作成し設定する
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <param name="sqlInterface"></param>
+        public void SetObjectListItem(IDataReader dr, ISqlInterface sqlInterface)
+        {
+            this.BeginUpdate();
+            this.Items.Clear();
+            this.currentItems.Clear();
+            DataGetEventHandler datahandler = sqlInterface.ObjectDetailSet();
+
+            while (dr.Read())
+            {
+                currentItems.Add(this.CreateItem(dr, datahandler));
+            }
+            this.Items.AddRange(currentItems.ToArray());
+            this.EndUpdate();
+        }
+
+        /// <summary>
+        /// リストの内容をフィルタリングして表示する
+        /// </summary>
+        /// <param name="filterText"></param>
+        public void FilterObjectList(string filterText)
+        {
+            this.BeginUpdate();
+            this.Items.Clear();
+            if (filterText == string.Empty)
+            {
+                this.Items.AddRange(currentItems.ToArray());
+                this.EndUpdate();
+                return;
+            }
+            List<ListViewItem> newlist = new List<ListViewItem>();
+            foreach (ListViewItem itm in currentItems)
+            {
+                if (((DBObjectInfo)itm.Tag).ObjName.Contains(filterText))
+                {
+                    newlist.Add(itm);
+                }
+            }
+
+            this.Items.AddRange(newlist.ToArray());
+            this.EndUpdate();
+        }
+
 
 		/// <summary>
 		/// 単一選択されているオブジェクト名を取得する([]なし)

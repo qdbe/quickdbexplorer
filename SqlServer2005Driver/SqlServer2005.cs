@@ -823,7 +823,7 @@ where
 		/// </summary>
 		/// <param name="sender">対象のオブジェクト</param>
 		/// <param name="e">ダミー</param>
-		protected	virtual void	DatabaseObjSet(object sender, System.EventArgs e)
+        protected virtual void DatabaseObjSet(DBObjectInfo sender, System.EventArgs e)
 		{
 			DBObjectInfo	databaseObjectInfo = (DBObjectInfo)sender;
 			DataSet		ds = new DataSet(databaseObjectInfo.ObjName);

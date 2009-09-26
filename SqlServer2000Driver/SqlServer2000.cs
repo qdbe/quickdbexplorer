@@ -947,7 +947,7 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="sender">対象のオブジェクト</param>
 		/// <param name="e">ダミー</param>
-		private	void	DatabaseObjSet(object sender, System.EventArgs e)
+        private void DatabaseObjSet(DBObjectInfo sender, System.EventArgs e)
 		{
 			DBObjectInfo	databaseObjectInfo = (DBObjectInfo)sender;
 			DataSet		ds = new DataSet(databaseObjectInfo.ObjName);
