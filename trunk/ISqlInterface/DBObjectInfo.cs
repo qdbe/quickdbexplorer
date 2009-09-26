@@ -8,7 +8,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// フィールド情報取得時のデータ再取得用イベントハンドラ
 	/// </summary>
-	public delegate void DataGetEventHandler(object sender, System.EventArgs e);
+    public delegate void DataGetEventHandler(DBObjectInfo sender, System.EventArgs e);
 
 	/// <summary>
 	/// リストに表示する DB オブジェクトの情報を管理する
