@@ -26,8 +26,8 @@ using System.Runtime.CompilerServices;
 // 下にあるように、'*' を使って、すべての値を指定するか、
 // ビルドおよびリビジョン番号を既定値にすることができます。
 
-[assembly: AssemblyVersion("2.0.0.*")]
-[assembly: AssemblyInformationalVersion("2.0.0")]
+[assembly: AssemblyVersion("2.0.1.*")]
+[assembly: AssemblyInformationalVersion("2.0.1")]
 [assembly: System.Resources.NeutralResourcesLanguage("ja-JP")]
 
 //
