@@ -1,0 +1,2545 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="1.36" Name="qdbe">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">http://www.gotdotnet.com/team/fxcop//xsl/1.35/FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded" NewOnly="False" />
+   <Report Status="Active" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-US" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>True</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>True</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/ISqlInterface.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/quickDBExplorer.exe" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/SqlServer2000Driver.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/SqlServer2005Driver.dll" Analyze="True" AnalyzeAllChildren="True" />
+  <Target Name="$(ProjectDir)/SqlServer2008Driver/bin/Debug/SqlServer2008Driver.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AbstractTypesShouldNotHaveConstructors" Enabled="True" />
+    <Rule Name="AvoidEmptyInterfaces" Enabled="True" />
+    <Rule Name="AvoidExcessiveParametersOnGenericTypes" Enabled="True" />
+    <Rule Name="AvoidNamespacesWithFewTypes" Enabled="True" />
+    <Rule Name="AvoidOutParameters" Enabled="True" />
+    <Rule Name="CollectionsShouldImplementGenericInterface" Enabled="True" />
+    <Rule Name="ConsiderPassingBaseTypesAsParameters" Enabled="True" />
+    <Rule Name="DeclareEventHandlersCorrectly" Enabled="True" />
+    <Rule Name="DeclareTypesInNamespaces" Enabled="True" />
+    <Rule Name="DefaultParametersShouldNotBeUsed" Enabled="True" />
+    <Rule Name="DefineAccessorsForAttributeArguments" Enabled="True" />
+    <Rule Name="DoNotDeclareProtectedMembersInSealedTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareStaticMembersOnGenericTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareVirtualMembersInSealedTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareVisibleInstanceFields" Enabled="True" />
+    <Rule Name="DoNotExposeGenericLists" Enabled="True" />
+    <Rule Name="DoNotHideBaseClassMethods" Enabled="True" />
+    <Rule Name="DoNotNestGenericTypesInMemberSignatures" Enabled="True" />
+    <Rule Name="DoNotOverloadOperatorEqualsOnReferenceTypes" Enabled="True" />
+    <Rule Name="DoNotPassTypesByReference" Enabled="True" />
+    <Rule Name="EnumeratorsShouldBeStronglyTyped" Enabled="True" />
+    <Rule Name="EnumsShouldHaveZeroValue" Enabled="True" />
+    <Rule Name="EnumStorageShouldBeInt32" Enabled="True" />
+    <Rule Name="ExceptionsShouldBePublic" Enabled="True" />
+    <Rule Name="GenericMethodsShouldProvideTypeParameter" Enabled="True" />
+    <Rule Name="ICollectionImplementationsHaveStronglyTypedMembers" Enabled="True" />
+    <Rule Name="ImplementIDisposableCorrectly" Enabled="True" />
+    <Rule Name="ImplementStandardExceptionConstructors" Enabled="True" />
+    <Rule Name="IndexersShouldNotBeMultidimensional" Enabled="True" />
+    <Rule Name="InterfaceMethodsShouldBeCallableByChildTypes" Enabled="True" />
+    <Rule Name="ListsAreStronglyTyped" Enabled="True" />
+    <Rule Name="MarkAssembliesWithAssemblyVersion" Enabled="True" />
+    <Rule Name="MarkAttributesWithAttributeUsage" Enabled="True" />
+    <Rule Name="MarkEnumsWithFlags" Enabled="True" />
+    <Rule Name="MembersShouldNotExposeCertainConcreteTypes" Enabled="True" />
+    <Rule Name="MovePInvokesToNativeMethodsClass" Enabled="True" />
+    <Rule Name="NestedTypesShouldNotBeVisible" Enabled="True" />
+    <Rule Name="OverloadOperatorEqualsOnOverloadingAddAndSubtract" Enabled="True" />
+    <Rule Name="OverrideMethodsOnComparableTypes" Enabled="True" />
+    <Rule Name="PropertiesShouldNotBeWriteOnly" Enabled="True" />
+    <Rule Name="ProvideObsoleteAttributeMessage" Enabled="True" />
+    <Rule Name="ReplaceRepetitiveArgumentsWithParamsArray" Enabled="True" />
+    <Rule Name="StaticHolderTypesShouldBeSealed" Enabled="True" />
+    <Rule Name="StaticHolderTypesShouldNotHaveConstructors" Enabled="True" />
+    <Rule Name="StringUriOverloadsCallSystemUriOverloads" Enabled="True" />
+    <Rule Name="TypesShouldNotExtendCertainBaseTypes" Enabled="True" />
+    <Rule Name="TypesThatOwnDisposableFieldsShouldBeDisposable" Enabled="True" />
+    <Rule Name="TypesThatOwnNativeResourcesShouldBeDisposable" Enabled="True" />
+    <Rule Name="UriParametersShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UriPropertiesShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UriReturnValuesShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UseEventsWhereAppropriate" Enabled="True" />
+    <Rule Name="UseGenericEventHandlerInstances" Enabled="True" />
+    <Rule Name="UseGenericsWhereAppropriate" Enabled="True" />
+    <Rule Name="UseIntegralOrStringArgumentForIndexers" Enabled="True" />
+    <Rule Name="UsePropertiesWhereAppropriate" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="CompoundWordsShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="DoNotNameEnumValuesReserved" Enabled="True" />
+    <Rule Name="DoNotPrefixEnumValuesWithTypeName" Enabled="True" />
+    <Rule Name="EventsShouldNotHaveBeforeOrAfterPrefix" Enabled="True" />
+    <Rule Name="FlagsEnumsShouldHavePluralNames" Enabled="True" />
+    <Rule Name="IdentifiersShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="IdentifiersShouldDifferByMoreThanCase" Enabled="True" />
+    <Rule Name="IdentifiersShouldHaveCorrectPrefix" Enabled="True" />
+    <Rule Name="IdentifiersShouldHaveCorrectSuffix" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotContainTypeNames" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotContainUnderscores" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotHaveIncorrectPrefix" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotHaveIncorrectSuffix" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotMatchKeywords" Enabled="True" />
+    <Rule Name="OnlyFlagsEnumsShouldHavePluralNames" Enabled="True" />
+    <Rule Name="ParameterNamesShouldMatchBaseDeclaration" Enabled="True" />
+    <Rule Name="ParameterNamesShouldNotMatchMemberNames" Enabled="True" />
+    <Rule Name="PropertyNamesShouldNotMatchGetMethods" Enabled="True" />
+    <Rule Name="ResourceStringCompoundWordsShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="ResourceStringsShouldBeSpelledCorrectly" Enabled="True" />
+    <Rule Name="TypeNamesShouldNotMatchNamespaces" Enabled="True" />
+    <Rule Name="UsePreferredTerms" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AvoidExcessiveLocals" Enabled="True" />
+    <Rule Name="AvoidUncalledPrivateCode" Enabled="True" />
+    <Rule Name="AvoidUninstantiatedInternalClasses" Enabled="True" />
+    <Rule Name="AvoidUnsealedAttributes" Enabled="True" />
+    <Rule Name="AvoidUnusedPrivateFields" Enabled="True" />
+    <Rule Name="DoNotCastUnnecessarily" Enabled="True" />
+    <Rule Name="InitializeReferenceTypeStaticFieldsInline" Enabled="True" />
+    <Rule Name="MarkAssembliesWithNeutralResourcesLanguage" Enabled="True" />
+    <Rule Name="MarkMembersAsStatic" Enabled="True" />
+    <Rule Name="OverrideEqualsAndOperatorEqualsOnValueTypes" Enabled="True" />
+    <Rule Name="PreferJaggedArraysOverMultidimensional" Enabled="True" />
+    <Rule Name="PropertiesShouldNotReturnArrays" Enabled="True" />
+    <Rule Name="RemoveEmptyFinalizers" Enabled="True" />
+    <Rule Name="RemoveUnusedLocals" Enabled="True" />
+    <Rule Name="UseLiteralsWhereAppropriate" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AptcaMethodsShouldOnlyCallAptcaMethods" Enabled="True" />
+    <Rule Name="AptcaTypesShouldOnlyExtendAptcaBaseTypes" Enabled="True" />
+    <Rule Name="ArrayFieldsShouldNotBeReadOnly" Enabled="True" />
+    <Rule Name="CallGCKeepAliveWhenUsingNativeResources" Enabled="True" />
+    <Rule Name="CatchNonClsCompliantExceptionsInGeneralHandlers" Enabled="True" />
+    <Rule Name="DoNotDeclareReadOnlyMutableReferenceTypes" Enabled="True" />
+    <Rule Name="DoNotIndirectlyExposeMethodsWithLinkDemands" Enabled="True" />
+    <Rule Name="MethodSecurityShouldBeASupersetOfType" Enabled="True" />
+    <Rule Name="PointersShouldNotBeVisible" Enabled="True" />
+    <Rule Name="ReviewDeclarativeSecurityOnValueTypes" Enabled="True" />
+    <Rule Name="ReviewDenyAndPermitOnlyUsage" Enabled="True" />
+    <Rule Name="ReviewImperativeSecurity" Enabled="True" />
+    <Rule Name="ReviewSuppressUnmanagedCodeSecurityUsage" Enabled="True" />
+    <Rule Name="ReviewVisibleEventHandlers" Enabled="True" />
+    <Rule Name="SealMethodsThatSatisfyPrivateInterfaces" Enabled="True" />
+    <Rule Name="SecureAsserts" Enabled="True" />
+    <Rule Name="SecuredTypesShouldNotExposeFields" Enabled="True" />
+    <Rule Name="SecureSerializationConstructors" Enabled="True" />
+    <Rule Name="SecurityTransparentAssembliesShouldNotContainSecurityCriticalCode" Enabled="True" />
+    <Rule Name="SecurityTransparentCodeShouldNotAssert" Enabled="True" />
+    <Rule Name="SecurityTransparentCodeShouldNotReferenceNonpublicSecurityCriticalCode" Enabled="True" />
+    <Rule Name="StaticConstructorsShouldBePrivate" Enabled="True" />
+    <Rule Name="TypeLinkDemandsRequireInheritanceDemands" Enabled="True" />
+    <Rule Name="WrapVulnerableFinallyClausesInOuterTry" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AttributeStringLiteralsShouldParseCorrectly" Enabled="True" />
+    <Rule Name="CallBaseClassMethodsOnISerializableTypes" Enabled="True" />
+    <Rule Name="CollectionPropertiesShouldBeReadOnly" Enabled="True" />
+    <Rule Name="DisposableFieldsShouldBeDisposed" Enabled="True" />
+    <Rule Name="DisposableTypesShouldDeclareFinalizer" Enabled="True" />
+    <Rule Name="DoNotCallOverridableMethodsInConstructors" Enabled="True" />
+    <Rule Name="DoNotDecreaseInheritedMemberVisibility" Enabled="True" />
+    <Rule Name="DoNotIgnoreMethodResults" Enabled="True" />
+    <Rule Name="DoNotMarkEnumsWithFlags" Enabled="True" />
+    <Rule Name="DoNotMarkServicedComponentsWithWebMethod" Enabled="True" />
+    <Rule Name="DoNotRaiseExceptionsInExceptionClauses" Enabled="True" />
+    <Rule Name="DoNotRaiseReservedExceptionTypes" Enabled="True" />
+    <Rule Name="DoNotShipUnreleasedResourceFormats" Enabled="True" />
+    <Rule Name="FinalizersShouldBeProtected" Enabled="True" />
+    <Rule Name="FinalizersShouldCallBaseClassFinalizer" Enabled="True" />
+    <Rule Name="ImplementISerializableCorrectly" Enabled="True" />
+    <Rule Name="ImplementSerializationConstructors" Enabled="True" />
+    <Rule Name="ImplementSerializationMethodsCorrectly" Enabled="True" />
+    <Rule Name="InitializeValueTypeStaticFieldsInline" Enabled="True" />
+    <Rule Name="InstantiateArgumentExceptionsCorrectly" Enabled="True" />
+    <Rule Name="MarkAllNonSerializableFields" Enabled="True" />
+    <Rule Name="MarkISerializableTypesWithSerializable" Enabled="True" />
+    <Rule Name="MarkWindowsFormsEntryPointsWithStaThread" Enabled="True" />
+    <Rule Name="MembersShouldDifferByMoreThanReturnType" Enabled="True" />
+    <Rule Name="NonConstantFieldsShouldNotBeVisible" Enabled="True" />
+    <Rule Name="OperationsShouldNotOverflow" Enabled="True" />
+    <Rule Name="OperatorOverloadsHaveNamedAlternates" Enabled="True" />
+    <Rule Name="OperatorsShouldHaveSymmetricalOverloads" Enabled="True" />
+    <Rule Name="OverloadOperatorEqualsOnOverridingValueTypeEquals" Enabled="True" />
+    <Rule Name="OverrideEqualsOnOverloadingOperatorEquals" Enabled="True" />
+    <Rule Name="OverrideGetHashCodeOnOverridingEquals" Enabled="True" />
+    <Rule Name="PassSystemUriObjectsInsteadOfStrings" Enabled="True" />
+    <Rule Name="ProvideDeserializationMethodsForOptionalFields" Enabled="True" />
+    <Rule Name="RethrowToPreserveStackDetails" Enabled="True" />
+    <Rule Name="ReviewUnusedParameters" Enabled="True" />
+    <Rule Name="TestForNaNCorrectly" Enabled="True" />
+    <Rule Name="UseManagedEquivalentsOfWin32Api" Enabled="True" />
+    <Rule Name="UseParamsForVariableArguments" Enabled="True" />
+   </RuleFile>
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="1.36">
+  <Namespaces>
+   <Namespace Name="quickDBExplorer">
+    <Messages>
+     <Message Id="quick" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-09 02:41:38Z">
+      <Issue Name="Namespace">
+       <Item>quick</Item>
+       <Item>quickDBExplorer</Item>
+       <Item>Quick</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/ISqlInterface.dll">
+    <Modules>
+     <Module Name="isqlinterface.dll">
+      <Namespaces>
+       <Namespace Name="quickDBExplorer">
+        <Types>
+         <Type Name="DataGetEventHandler">
+          <Messages>
+           <Message TypeName="UseGenericEventHandlerInstances" Category="Microsoft.Design" CheckId="CA1003" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'DataGetEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="DBFieldInfo">
+          <Members>
+           <Member Name="#.ctor()">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue>
+               <Item>'DBFieldInfo.DBFieldInfo()'</Item>
+               <Item>'DBFieldInfo.colid'</Item>
+               <Item>'int'</Item>
+               <Item>0</Item>
+              </Issue>
+              <Issue>
+               <Item>'DBFieldInfo.DBFieldInfo()'</Item>
+               <Item>'DBFieldInfo.colorder'</Item>
+               <Item>'int'</Item>
+               <Item>0</Item>
+              </Issue>
+              <Issue>
+               <Item>'DBFieldInfo.DBFieldInfo()'</Item>
+               <Item>'DBFieldInfo.length'</Item>
+               <Item>'int'</Item>
+               <Item>0</Item>
+              </Issue>
+              <Issue>
+               <Item>'DBFieldInfo.DBFieldInfo()'</Item>
+               <Item>'DBFieldInfo.prec'</Item>
+               <Item>'int'</Item>
+               <Item>0</Item>
+              </Issue>
+              <Issue>
+               <Item>'DBFieldInfo.DBFieldInfo()'</Item>
+               <Item>'DBFieldInfo.xscale'</Item>
+               <Item>'int'</Item>
+               <Item>0</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#AssemblyQFN">
+            <Messages>
+             <Message Id="QFN" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-10-22 03:20:52Z">
+              <Issue Name="Member">
+               <Item>QFN</Item>
+               <Item>'DBFieldInfo.AssemblyQFN'</Item>
+               <Item>Qfn</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Colid">
+            <Messages>
+             <Message Id="Colid" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue Name="Member">
+               <Item>Colid</Item>
+               <Item>'DBFieldInfo.Colid'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Prec">
+            <Messages>
+             <Message Id="Prec" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue Name="Member">
+               <Item>Prec</Item>
+               <Item>'DBFieldInfo.Prec'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Xscale">
+            <Messages>
+             <Message Id="Xscale" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue Name="Member">
+               <Item>Xscale</Item>
+               <Item>'DBFieldInfo.Xscale'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="DBObjectInfo">
+          <Members>
+           <Member Name="#.ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue>
+               <Item>'DBObjectInfo.DBObjectInfo(string, string, string, string, string, string)'</Item>
+               <Item>'DBObjectInfo.DataGet'</Item>
+               <Item>'DataGetEventHandler'</Item>
+               <Item>null</Item>
+              </Issue>
+              <Issue>
+               <Item>'DBObjectInfo.DBObjectInfo(string, string, string, string, string, string)'</Item>
+               <Item>'DBObjectInfo.fieldInfo'</Item>
+               <Item>'ArrayList'</Item>
+               <Item>null</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#otype" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue Name="Parameter">
+               <Item>DBObjectInfo.DBObjectInfo(String, String, String, String, String, String)</Item>
+               <Item>otype</Item>
+               <Item>otype</Item>
+              </Issue>
+             </Message>
+             <Message Id="3#cretime" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue Name="Parameter">
+               <Item>DBObjectInfo.DBObjectInfo(String, String, String, String, String, String)</Item>
+               <Item>cretime</Item>
+               <Item>cretime</Item>
+              </Issue>
+             </Message>
+             <Message Id="4#synbase" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue Name="Parameter">
+               <Item>DBObjectInfo.DBObjectInfo(String, String, String, String, String, String)</Item>
+               <Item>synbase</Item>
+               <Item>synbase</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#syn" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 16:37:36Z">
+              <Issue Name="Parameter">
+               <Item>DBObjectInfo.DBObjectInfo(String, String, String, String, String, String)</Item>
+               <Item>syn</Item>
+               <Item>synBaseType</Item>
+              </Issue>
+             </Message>
+             <Message Id="5#synbtype" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue Name="Parameter">
+               <Item>DBObjectInfo.DBObjectInfo(String, String, String, String, String, String)</Item>
+               <Item>synbtype</Item>
+               <Item>synbtype</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FieldInfo">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'List&lt;DBFieldInfo&gt;'</Item>
+               <Item>'DBObjectInfo.FieldInfo'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue>
+               <Item>'DBObjectInfo.FieldInfo'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetNameAdd(System.String)">
+            <Messages>
+             <Message Id="0#addstr" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue Name="Parameter">
+               <Item>DBObjectInfo.GetNameAdd(String):String</Item>
+               <Item>addstr</Item>
+               <Item>addstr</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ISqlInterface">
+          <Members>
+           <Member Name="#AddObjectInfo(quickDBExplorer.DBObjectInfo,System.Data.DataTable)">
+            <Messages>
+             <Message Id="0#dbo" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Name="Parameter">
+               <Item>ISqlInterface.AddObjectInfo(DBObjectInfo, DataTable):Void</Item>
+               <Item>dbo</Item>
+               <Item>dboInfo</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <Messages>
+             <Message Id="EPM" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-09 02:41:38Z">
+              <Issue Name="Member">
+               <Item>EPM</Item>
+               <Item>'ISqlInterface.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>Epm</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-08 15:56:33Z">
+              <Issue Name="Member">
+               <Item>ISqlInterface.CallEPM(String, String, Boolean, String, String, String):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CallISQL(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <Messages>
+             <Message Id="ISQL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-09 02:41:38Z">
+              <Issue Name="Member">
+               <Item>ISQL</Item>
+               <Item>'ISqlInterface.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>Isql</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Name="Member">
+               <Item>ISqlInterface.CallISQL(String, String, Boolean, String, String, String):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetDBSelect()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Certainty="50">
+               <Item>'ISqlInterface.GetDBSelect()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetDdlCreateString(quickDBExplorer.DBObjectInfo,System.Boolean)">
+            <Messages>
+             <Message Id="0#dbo" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Name="Parameter">
+               <Item>ISqlInterface.GetDdlCreateString(DBObjectInfo, Boolean):String</Item>
+               <Item>dbo</Item>
+               <Item>dboInfo</Item>
+              </Issue>
+             </Message>
+             <Message Id="Ddl" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Name="Member">
+               <Item>Ddl</Item>
+               <Item>'ISqlInterface.GetDdlCreateString(DBObjectInfo, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetDDLDropStr(quickDBExplorer.DBObjectInfo)">
+            <Messages>
+             <Message Id="DDL" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-09 02:41:38Z">
+              <Issue Name="Member">
+               <Item>DDL</Item>
+               <Item>'ISqlInterface.GetDDLDropStr(DBObjectInfo)'</Item>
+               <Item>Ddl</Item>
+              </Issue>
+             </Message>
+             <Message Id="Member" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Name="Member">
+               <Item>ISqlInterface.GetDDLDropStr(DBObjectInfo):String</Item>
+              </Issue>
+             </Message>
+             <Message Id="0#dbo" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Name="Parameter">
+               <Item>ISqlInterface.GetDDLDropStr(DBObjectInfo):String</Item>
+               <Item>dbo</Item>
+               <Item>dboInfo</Item>
+              </Issue>
+             </Message>
+             <Message Id="Str" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Name="Member">
+               <Item>Str</Item>
+               <Item>'ISqlInterface.GetDDLDropStr(DBObjectInfo)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetOwnerLabel1()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Certainty="50">
+               <Item>'ISqlInterface.GetOwnerLabel1()'</Item>
+              </Issue>
+              <Notes>
+               <User Name="godz">
+                <Note Id="0" />
+               </User>
+              </Notes>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetOwnerLabel2()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-08 15:48:10Z">
+              <Issue Certainty="50">
+               <Item>'ISqlInterface.GetOwnerLabel2()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List`1&lt;System.String&gt;)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'List&lt;string&gt;'</Item>
+               <Item>'ISqlInterface.GetSearchFieldSql(string, SearchType, bool, List&lt;string&gt;)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List`1&lt;System.String&gt;,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'List&lt;string&gt;'</Item>
+               <Item>'ISqlInterface.GetSearchObjectSql(string, SearchType, bool, List&lt;string&gt;, bool, bool, bool, bool, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTableListColumnName()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-08 16:13:21Z">
+              <Issue Certainty="50">
+               <Item>'ISqlInterface.GetTableListColumnName()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/quickDBExplorer.exe">
+    <Modules>
+     <Module Name="quickdbexplorer.exe">
+      <Messages>
+       <Message Id="quick" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-09 03:44:11Z">
+        <Issue Name="Assembly">
+         <Item>quick</Item>
+         <Item>'quickDBExplorer.exe'</Item>
+         <Item>Quick</Item>
+        </Issue>
+       </Message>
+      </Messages>
+      <Namespaces>
+       <Namespace Name="quickDBExplorer">
+        <Types>
+         <Type Name="CmdInputDialog">
+          <Members>
+           <Member Name="#btnGo_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message Id="System.String.IndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'CmdInputDialog.btnGo_Click(object, EventArgs)'</Item>
+               <Item>'string.IndexOf(string)'</Item>
+               <Item>'string.IndexOf(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CopyDataEventHandler">
+          <Messages>
+           <Message TypeName="UseGenericEventHandlerInstances" Category="Microsoft.Design" CheckId="CA1003" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'CopyDataEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="DataGridViewBase">
+          <Members>
+           <Member Name="#btnClipboard">
+            <Messages>
+             <Message Id="btn" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-09 14:21:42Z">
+              <Issue Name="Member">
+               <Item>btn</Item>
+               <Item>'DataGridViewBase.btnClipboard'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnClipboard_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 14:21:42Z">
+              <Issue>
+               <Item>'DataGridViewBase.btnClipboard_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnClose">
+            <Messages>
+             <Message Id="btn" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue Name="Member">
+               <Item>btn</Item>
+               <Item>'DataGridViewBase.btnClose'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ExtendedCopyDataEventHandler">
+          <Messages>
+           <Message TypeName="UseGenericEventHandlerInstances" Category="Microsoft.Design" CheckId="CA1003" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'ExtendedCopyDataEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="FieldGetDialog">
+          <Members>
+           <Member Name="#RetCrlf">
+            <Messages>
+             <Message Id="Crlf" TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704" Status="Excluded" Created="2008-01-09 14:36:47Z">
+              <Issue Name="Member">
+               <Item>Crlf</Item>
+               <Item>'FieldGetDialog.RetCrlf'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FieldListItem">
+          <Members>
+           <Member Name="#.ctor(System.String,System.Object)">
+            <Messages>
+             <Message Id="obj" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2008-10-22 03:20:52Z">
+              <Issue Name="LanguageIndependentMemberParameter">
+               <Item>'FieldListItem.FieldListItem(string, object)'</Item>
+               <Item>Obj</Item>
+               <Item>'refObj'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GridFormatDialog">
+          <Members>
+           <Member Name="#GetFormat(System.String)">
+            <Messages>
+             <Message Id="System.String.IndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'GridFormatDialog.GetFormat(string)'</Item>
+               <Item>'string.IndexOf(string)'</Item>
+               <Item>'string.IndexOf(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MainForm">
+          <Members>
+           <Member Name="#.ctor(quickDBExplorer.ServerData,quickDBExplorer.SqlVersion)">
+            <Messages>
+             <Message TypeName="SetLocaleForDataTypes" Category="Microsoft.Globalization" CheckId="CA1306" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>DataSet</Item>
+               <Item>'MainForm.MainForm(ServerData, SqlVersion)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnDataEdit_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.btnDataEdit_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnDataUpdate_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.btnDataUpdate_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnQueryNonSelect_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.btnQueryNonSelect_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnSelect_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.btnSelect_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CheckFileSpec()">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.CheckFileSpec()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CheckFileSpec()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CheckFileSpec()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CheckFileSpec()'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CheckFileSpec()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ConvData(System.Data.IDataReader,System.Int32,System.String,System.String,System.Boolean,quickDBExplorer.DBFieldInfo)">
+            <Messages>
+             <Message Id="System.String.IndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainForm.ConvData(IDataReader, int, string, string, bool, DBFieldInfo)'</Item>
+               <Item>'string.IndexOf(string)'</Item>
+               <Item>'string.IndexOf(string, StringComparison)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.ConvData(IDataReader, int, string, string, bool, DBFieldInfo)'</Item>
+               <Item>'string.IndexOf(string)'</Item>
+               <Item>'string.IndexOf(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#copyDbGrid(System.Boolean)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainForm.copyDbGrid(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#copyDbGridMenu_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.copyDbGridMenu_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateFldList(System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.CreateFldList(bool, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreateTCsvText(System.Boolean,System.String)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.CreateTCsvText(bool, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CreateTCsvText(bool, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CreateTCsvText(bool, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CreateTCsvText(bool, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreDDL(System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.CreDDL(bool, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CreInsert(System.Boolean,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.CreInsert(bool, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CreInsert(bool, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CreInsert(bool, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.CreInsert(bool, bool, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DependOutPut(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.DependOutPut(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetAlias()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-09 16:09:19Z">
+              <Issue>
+               <Item>'MainForm.GetAlias()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetFormat(System.String)">
+            <Messages>
+             <Message Id="System.String.IndexOf(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainForm.GetFormat(string)'</Item>
+               <Item>'string.IndexOf(string)'</Item>
+               <Item>'string.IndexOf(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-01-09 15:54:50Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'MainForm.GetFormat(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#labelDB_DoubleClick(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainForm.labelDB_DoubleClick(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LoadFile2Data(System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.LoadFile2Data(bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2Data(bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2Data(bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2Data(bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2Data(bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2Data(bool, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LoadFile2DataTable(System.Data.DataTable,System.IO.TextReader,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.EndsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2DataTable(DataTable, TextReader, bool, bool)'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LoadFile2Grid(System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainForm.LoadFile2Grid(bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2Grid(bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2Grid(bool, bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.LoadFile2Grid(bool, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#MainForm_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.MainForm_KeyDown(object, KeyEventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#menuDoQuery_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.menuDoQuery_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#menuRecordCountDisp_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.menuRecordCountDisp_Click(object, EventArgs)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.menuRecordCountDisp_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#menuStasticUpdate_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.menuStasticUpdate_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ObjectSearch(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainForm.ObjectSearch(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RecordCountOutPut(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'MainForm.RecordCountOutPut(object, EventArgs)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.RecordCountOutPut(object, EventArgs)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainForm.RecordCountOutPut(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MainMdi">
+          <Members>
+           <Member Name="#CheckNewVersion(System.Boolean)">
+            <Messages>
+             <Message Id="System.String.CompareTo(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MainMdi.CheckNewVersion(bool)'</Item>
+               <Item>'string.CompareTo(string)'</Item>
+               <Item>'string.Compare(string, string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-01-10 03:18:55Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'MainMdi.CheckNewVersion(bool)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-10 03:18:55Z">
+              <Issue>
+               <Item>'MainMdi.CheckNewVersion(bool)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MainMdi.CheckNewVersion(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#menuAbout_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Status="Excluded" Created="2008-01-10 03:18:55Z">
+              <Issue>
+               <Item>'MainMdi.menuAbout_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MakeFieldWhereDlg">
+          <Messages>
+           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'MakeFieldWhereDlg'</Item>
+             <Item> quickDBExplorer.quickDBExplorerBaseForm</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#FieldList">
+            <Messages>
+             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MakeFieldWhereDlg.FieldList'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#reCreateSql()">
+            <Messages>
+             <Message Id="System.String.EndsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'MakeFieldWhereDlg.reCreateSql()'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MakeFieldWhereDlg.reCreateSql()'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'MakeFieldWhereDlg.reCreateSql()'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ObjectListView">
+          <Members>
+           <Member Name="#CreateItem(System.Data.IDataRecord,quickDBExplorer.DataGetEventHandler)">
+            <Messages>
+             <Message Id="System.DateTime.ToString(System.String)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'DateTime.ToString(string)'</Item>
+               <Item>'ObjectListView.CreateItem(IDataRecord, DataGetEventHandler)'</Item>
+               <Item>'DateTime.ToString(string, IFormatProvider)'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Status="Excluded" Created="2008-01-09 17:06:23Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'ObjectListView.CreateItem(IDataRecord, DataGetEventHandler)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSelectOneObjectFormalName()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2008-03-14 14:11:15Z">
+              <Issue Certainty="50">
+               <Item>'ObjectListView.GetSelectOneObjectFormalName()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSelectOneObjectName()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue Certainty="50">
+               <Item>'ObjectListView.GetSelectOneObjectName()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SortOrder">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'ObjectListView.SortOrder'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ProcCondition">
+          <Members>
+           <Member Name="#Tbname">
+            <Messages>
+             <Message TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227" Status="Excluded" Created="2008-01-10 03:11:41Z">
+              <Issue>
+               <Item>'ProcCondition.Tbname'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="qdbeAboutBox">
+          <Members>
+           <Member Name="#.ctor()">
+            <Messages>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'qdbeAboutBox.qdbeAboutBox()'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'qdbeAboutBox.qdbeAboutBox()'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#AssemblyCompany">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-22 03:20:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'qdbeAboutBox.AssemblyCompany'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+            <Accessors>
+             <Accessor Name="#get_AssemblyCompany()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-10-22 03:20:52Z">
+                <Issue>
+                 <Item>'qdbeAboutBox.AssemblyCompany.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#AssemblyCopyright">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-22 03:20:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'qdbeAboutBox.AssemblyCopyright'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#AssemblyDescription">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-22 03:20:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'qdbeAboutBox.AssemblyDescription'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#AssemblyProduct">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-22 03:20:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'qdbeAboutBox.AssemblyProduct'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#AssemblyTitle">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-22 03:20:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'qdbeAboutBox.AssemblyTitle'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#AssemblyVersion">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-22 03:20:52Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'qdbeAboutBox.AssemblyVersion'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="QdbeDataGridTextBoxColumn">
+          <Members>
+           <Member Name="#.ctor(System.Windows.Forms.DataGrid,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Excluded" Created="2008-01-10 03:23:13Z">
+              <Issue>
+               <Item>'QdbeDataGridTextBoxColumn.QdbeDataGridTextBoxColumn(DataGrid, bool, bool)'</Item>
+               <Item>&#xD;&#xA;&#xD;&#xA;QdbeDataGridTextBoxColumn..ctor(DataGrid, Boolean, Boolean)&#xD;&#xA;DataGridColumnStyle.set_NullText(String):Void</Item>
+              </Issue>
+              <Issue>
+               <Item>'QdbeDataGridTextBoxColumn.QdbeDataGridTextBoxColumn(DataGrid, bool, bool)'</Item>
+               <Item>&#xD;&#xA;&#xD;&#xA;QdbeDataGridTextBoxColumn..ctor(DataGrid, Boolean, Boolean)&#xD;&#xA;DataGridColumnStyle.set_NullText(String):Void&#xD;&#xA;DataGridTextBoxColumn.get_TextBox():TextBox</Item>
+              </Issue>
+              <Issue>
+               <Item>'QdbeDataGridTextBoxColumn.QdbeDataGridTextBoxColumn(DataGrid, bool, bool)'</Item>
+               <Item>&#xD;&#xA;&#xD;&#xA;QdbeDataGridTextBoxColumn..ctor(DataGrid, Boolean, Boolean)&#xD;&#xA;DataGridColumnStyle.set_NullText(String):Void&#xD;&#xA;DataGridTextBoxColumn.get_TextBox():TextBox&#xD;&#xA;QdbeDataGridTextBoxColumn.set_IsThisImage(Boolean):Void&#xD;&#xA;DataGridColumnStyle.set_ReadOnly(Boolean):Void</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(System.Windows.Forms.DataGrid,System.Data.DataColumn)">
+            <Messages>
+             <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Excluded" Created="2008-01-10 03:23:13Z">
+              <Issue>
+               <Item>'QdbeDataGridTextBoxColumn.QdbeDataGridTextBoxColumn(DataGrid, DataColumn)'</Item>
+               <Item>&#xD;&#xA;&#xD;&#xA;QdbeDataGridTextBoxColumn..ctor(DataGrid, DataColumn)&#xD;&#xA;QdbeDataGridTextBoxColumn.set_IsThisImage(Boolean):Void&#xD;&#xA;DataGridColumnStyle.set_ReadOnly(B&#xD;&#xA;DataGridColumnStyle.set_MappingName(String):Void&#xD;&#xA;DataGridColumnStyle.set_HeaderText(String):Void</Item>
+              </Issue>
+              <Issue>
+               <Item>'QdbeDataGridTextBoxColumn.QdbeDataGridTextBoxColumn(DataGrid, DataColumn)'</Item>
+               <Item>&#xD;&#xA;&#xD;&#xA;QdbeDataGridTextBoxColumn..ctor(DataGrid, DataColumn)&#xD;&#xA;QdbeDataGridTextBoxColumn.set_IsThisImage(Boolean):Void&#xD;&#xA;DataGridColumnStyle.set_ReadOnly(Boolean):Void</Item>
+              </Issue>
+              <Issue>
+               <Item>'QdbeDataGridTextBoxColumn.QdbeDataGridTextBoxColumn(DataGrid, DataColumn)'</Item>
+               <Item>&#xD;&#xA;&#xD;&#xA;QdbeDataGridTextBoxColumn..ctor(DataGrid, DataColumn)&#xD;&#xA;QdbeDataGridTextBoxColumn.set_IsThisImage(Boolean):Void&#xD;&#xA;DataGridColumnStyle.set_ReadOnly(Boolean):Void&#xD;&#xA;DataGridTextBoxColumn.get_TextBox():TextBox</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GridKeyDownControler(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Status="Excluded" Created="2008-01-10 03:23:13Z">
+              <Issue Name="Local">
+               <Item>'obj'</Item>
+               <Item>'byte[]'</Item>
+               <Item>'QdbeDataGridTextBoxColumn.GridKeyDownControler(object, KeyEventArgs)'</Item>
+               <Item>isint</Item>
+              </Issue>
+              <Issue Name="Local">
+               <Item>'obj'</Item>
+               <Item>'byte[]'</Item>
+               <Item>'QdbeDataGridTextBoxColumn.GridKeyDownControler(object, KeyEventArgs)'</Item>
+               <Item>isint</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Paint(System.Drawing.Graphics,System.Drawing.Rectangle,System.Windows.Forms.CurrencyManager,System.Int32,System.Drawing.Brush,System.Drawing.Brush,System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800" Status="Excluded" Created="2008-01-10 03:23:13Z">
+              <Issue Name="Local">
+               <Item>'cellValue'</Item>
+               <Item>'string'</Item>
+               <Item>'QdbeDataGridTextBoxColumn.Paint(Graphics, Rectangle, CurrencyManager, int, Brush, Brush, bool)'</Item>
+               <Item>isint</Item>
+              </Issue>
+              <Issue Name="Local">
+               <Item>'cellValue'</Item>
+               <Item>'string'</Item>
+               <Item>'QdbeDataGridTextBoxColumn.Paint(Graphics, Rectangle, CurrencyManager, int, Brush, Brush, bool)'</Item>
+               <Item>isint</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="qdbeListBox">
+          <Messages>
+           <Message Id="qdbe" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 03:31:22Z">
+            <Issue Name="Type">
+             <Item>qdbe</Item>
+             <Item>'qdbeListBox'</Item>
+             <Item>Qdbe</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#ProcessCmdKey(System.Windows.Forms.Message&amp;,System.Windows.Forms.Keys)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'qdbeListBox.ProcessCmdKey(ref Message, Keys)'</Item>
+               <Item>'Control.ProcessCmdKey(ref Message, Keys)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'qdbeListBox.ProcessCmdKey(ref Message, Keys)'&#xD;&#xA;   -&gt;'qdbeListBox.ProcessCmdKey(ref Message, Keys)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="qdbeListView">
+          <Messages>
+           <Message Id="qdbe" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 03:40:05Z">
+            <Issue Name="Type">
+             <Item>qdbe</Item>
+             <Item>'qdbeListView'</Item>
+             <Item>Qdbe</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#ProcessCmdKey(System.Windows.Forms.Message&amp;,System.Windows.Forms.Keys)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'qdbeListView.ProcessCmdKey(ref Message, Keys)'</Item>
+               <Item>'Control.ProcessCmdKey(ref Message, Keys)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'qdbeListView.ProcessCmdKey(ref Message, Keys)'&#xD;&#xA;   -&gt;'qdbeListView.ProcessCmdKey(ref Message, Keys)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="qdbeListView+CopyDataEventHandler">
+          <Messages>
+           <Message TypeName="UseGenericEventHandlerInstances" Category="Microsoft.Design" CheckId="CA1003" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'qdbeListView.CopyDataEventHandler'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:34:16Z">
+            <Issue>
+             <Item>'qdbeListView.CopyDataEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="qdbeListView+ExtendedCopyDataEventHandler">
+          <Messages>
+           <Message TypeName="UseGenericEventHandlerInstances" Category="Microsoft.Design" CheckId="CA1003" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'qdbeListView.ExtendedCopyDataEventHandler'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:42:27Z">
+            <Issue>
+             <Item>'qdbeListView.ExtendedCopyDataEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="qdbeUtil">
+          <Messages>
+           <Message Id="qdbe" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 12:15:42Z">
+            <Issue Name="Type">
+             <Item>qdbe</Item>
+             <Item>'qdbeUtil'</Item>
+             <Item>Qdbe</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="QueryDialog">
+          <Members>
+           <Member Name="#btnCancel">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'QueryDialog.btnCancel'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnGo">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 12:30:53Z">
+              <Issue>
+               <Item>'QueryDialog.btnGo'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnHistory">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'QueryDialog.btnHistory'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#chkReturn">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 12:30:53Z">
+              <Issue>
+               <Item>'QueryDialog.chkReturn'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#txtInput">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 12:30:53Z">
+              <Issue>
+               <Item>'QueryDialog.txtInput'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="quickDBExplorerBaseForm">
+          <Messages>
+           <Message Id="quick" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 12:36:49Z">
+            <Issue Name="Type">
+             <Item>quick</Item>
+             <Item>'quickDBExplorerBaseForm'</Item>
+             <Item>Quick</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#MsgArea">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-02-29 00:43:30Z">
+              <Issue>
+               <Item>'quickDBExplorerBaseForm.MsgArea'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="quickDBExplorerTextBox">
+          <Messages>
+           <Message Id="quick" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 12:45:45Z">
+            <Issue Name="Type">
+             <Item>quick</Item>
+             <Item>'quickDBExplorerTextBox'</Item>
+             <Item>Quick</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#PdHistory">
+            <Messages>
+             <Message Id="Pd" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-10-22 03:20:52Z">
+              <Issue Name="Member">
+               <Item>Pd</Item>
+               <Item>'quickDBExplorerTextBox.PdHistory'</Item>
+               <Item>PD</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SearchConditionDlg">
+          <Messages>
+           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'SearchConditionDlg'</Item>
+             <Item> quickDBExplorer.QueryDialog</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#btnGo_Click(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'SearchConditionDlg.btnGo_Click(object, EventArgs)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SearchConditionDlg.btnGo_Click(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IsSearchFunction">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-22 03:20:52Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'SearchConditionDlg.IsSearchFunction'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#IsSearchProcedure">
+            <Messages>
+             <Message TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822" Created="2008-10-22 03:20:52Z" FixCategory="DependsOnFix">
+              <Issue>
+               <Item>'SearchConditionDlg.IsSearchProcedure'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ServerData">
+          <Members>
+           <Member Name="#.ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <Messages>
+             <Message TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031" Status="Excluded" Created="2008-01-09 03:44:11Z">
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+              <Issue>
+               <Item>'ServerData.ServerData(SerializationInfo, StreamingContext)'</Item>
+               <Item>'object'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DMLHistory">
+            <Messages>
+             <Message Id="DML" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Status="Excluded" Created="2008-01-10 12:57:40Z">
+              <Issue Name="Member">
+               <Item>DML</Item>
+               <Item>'ServerData.DMLHistory'</Item>
+               <Item>Dml</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ShowHistoryEventHandler">
+          <Messages>
+           <Message TypeName="UseGenericEventHandlerInstances" Category="Microsoft.Design" CheckId="CA1003" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'ShowHistoryEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ShowZoomEventHandler">
+          <Messages>
+           <Message TypeName="UseGenericEventHandlerInstances" Category="Microsoft.Design" CheckId="CA1003" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'ShowZoomEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="SqlVersion">
+          <Members>
+           <Member Name="#.ctor(System.String)">
+            <Messages>
+             <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'SqlVersion.SqlVersion(string)'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlVersion.SqlVersion(string)'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#AdapterNameString">
+            <Accessors>
+             <Accessor Name="#get_AdapterNameString()">
+              <Messages>
+               <Message Id="System.Int32.ToString" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-10-22 03:20:52Z">
+                <Issue>
+                 <Item>'int.ToString()'</Item>
+                 <Item>'SqlVersion.AdapterNameString.get()'</Item>
+                 <Item>'int.ToString(IFormatProvider)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#SQLSERVER2000()">
+            <Messages>
+             <Message Id="SQLSERVER" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-10-22 03:20:52Z">
+              <Issue Name="Member">
+               <Item>SQLSERVER</Item>
+               <Item>'SqlVersion.SQLSERVER2000()'</Item>
+               <Item>Sqlserver</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SQLSERVER2005()">
+            <Messages>
+             <Message Id="SQLSERVER" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-10-22 03:20:52Z">
+              <Issue Name="Member">
+               <Item>SQLSERVER</Item>
+               <Item>'SqlVersion.SQLSERVER2005()'</Item>
+               <Item>Sqlserver</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SQLSERVER2008()">
+            <Messages>
+             <Message Id="SQLSERVER" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-10-22 03:20:52Z">
+              <Issue Name="Member">
+               <Item>SQLSERVER</Item>
+               <Item>'SqlVersion.SQLSERVER2008()'</Item>
+               <Item>Sqlserver</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="tableSorter">
+          <Members>
+           <Member Name="#Compare(System.Object,System.Object)">
+            <Messages>
+             <Message Id="System.String.CompareTo(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'tableSorter.Compare(object, object)'</Item>
+               <Item>'string.CompareTo(string)'</Item>
+               <Item>'string.Compare(string, string, StringComparison)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'tableSorter.Compare(object, object)'</Item>
+               <Item>'string.CompareTo(string)'</Item>
+               <Item>'string.Compare(string, string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TextHistoryDataSet">
+          <Messages>
+           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet'</Item>
+             <Item> System.Data.DataSet, System.ComponentModel.MarshalByValueComponent</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <Messages>
+             <Message TypeName="CallBaseClassMethodsOnISerializableTypes" Category="Microsoft.Usage" CheckId="CA2236" Status="Excluded" Created="2008-01-10 13:33:21Z">
+              <Issue>
+               <Item>'TextHistoryDataSet.TextHistoryDataSet(SerializationInfo, StreamingContext)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="TextHistoryDataSet+TextHistoryDataSetsDataTable">
+          <Messages>
+           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable'</Item>
+             <Item> System.Data.DataTable, System.ComponentModel.MarshalByValueComponent</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable'</Item>
+             <Item>Collection</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsDataTable'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TextHistoryDataSet+TextHistoryDataSetsRow">
+          <Messages>
+           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRow'</Item>
+             <Item> System.Data.DataRow</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRow'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TextHistoryDataSet+TextHistoryDataSetsRowChangeEvent">
+          <Messages>
+           <Message TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRowChangeEvent'</Item>
+             <Item>EventArgs</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRowChangeEvent'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TextHistoryDataSet+TextHistoryDataSetsRowChangeEventHandler">
+          <Messages>
+           <Message TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034" Status="Excluded" Created="2008-01-10 13:33:21Z">
+            <Issue>
+             <Item>'TextHistoryDataSet.TextHistoryDataSetsRowChangeEventHandler'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="WhereDialog">
+          <Messages>
+           <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Created="2008-10-22 03:20:52Z">
+            <Issue>
+             <Item>'WhereDialog'</Item>
+             <Item> quickDBExplorer.ZoomFloatingDialog, quickDBExplorer.ZoomDialog, quickDBExplorer.quickDBExplorerBaseForm</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#DispFieldCondition()">
+            <Messages>
+             <Message TypeName="SetLocaleForDataTypes" Category="Microsoft.Globalization" CheckId="CA1306" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>DataSet</Item>
+               <Item>'WhereDialog.DispFieldCondition()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#fieldCondition_CellBeginEdit(System.Object,System.Windows.Forms.DataGridViewCellCancelEventArgs)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'WhereDialog.fieldCondition_CellBeginEdit(object, DataGridViewCellCancelEventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SetFieldCondResult()">
+            <Messages>
+             <Message Id="System.String.EndsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'WhereDialog.SetFieldCondResult()'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.StartsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'WhereDialog.SetFieldCondResult()'</Item>
+               <Item>'string.StartsWith(string)'</Item>
+               <Item>'string.StartsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TargetObject">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044" Created="2008-10-22 03:20:52Z">
+              <Issue Name="AddGetter">
+               <Item>'WhereDialog.TargetObject'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ZoomDialog">
+          <Members>
+           <Member Name="#btnClose">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 13:38:59Z">
+              <Issue>
+               <Item>'ZoomDialog.btnClose'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#btnOk">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 13:38:59Z">
+              <Issue>
+               <Item>'ZoomDialog.btnOk'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#txtZoom">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Status="Excluded" Created="2008-01-10 13:38:59Z">
+              <Issue>
+               <Item>'ZoomDialog.txtZoom'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ZoomFloatingDialog">
+          <Members>
+           <Member Name="#btnApply">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'ZoomFloatingDialog.btnApply'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#chkStayOnTop">
+            <Messages>
+             <Message TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'ZoomFloatingDialog.chkStayOnTop'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/SqlServer2000Driver.dll">
+    <Modules>
+     <Module Name="sqlserver2000driver.dll">
+      <Namespaces>
+       <Namespace Name="quickDBExplorer">
+        <Types>
+         <Type Name="SqlServerDriver2000">
+          <Members>
+           <Member Name="#CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
+              <Issue>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.Start()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.StartInfo.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.FileName.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CallISQL(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
+              <Issue>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.Start()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.StartInfo.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.FileName.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallISQL(string, string, bool, string, string, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CallProfile(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
+              <Issue>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.Start()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.StartInfo.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.FileName.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.EndsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'SqlServerDriver2000.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetDdlCreateString_OLD(quickDBExplorer.DBObjectInfo,System.Boolean)">
+            <Messages>
+             <Message Id="OLD" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2008-10-22 03:20:52Z">
+              <Issue Name="Member">
+               <Item>OLD</Item>
+               <Item>'SqlServerDriver2000.GetDdlCreateString_OLD(DBObjectInfo, bool)'</Item>
+               <Item>Old</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2008-10-22 03:20:52Z">
+              <Issue Name="Member">
+               <Item>'SqlServerDriver2000.GetDdlCreateString_OLD(DBObjectInfo, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List`1&lt;System.String&gt;)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'List&lt;string&gt;'</Item>
+               <Item>'SqlServerDriver2000.GetSearchFieldSql(string, SearchType, bool, List&lt;string&gt;)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List`1&lt;System.String&gt;,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'List&lt;string&gt;'</Item>
+               <Item>'SqlServerDriver2000.GetSearchObjectSql(string, SearchType, bool, List&lt;string&gt;, bool, bool, bool, bool, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/quickDBExplorer/bin/Debug/SqlServer2005Driver.dll">
+    <Modules>
+     <Module Name="sqlserver2005driver.dll">
+      <Namespaces>
+       <Namespace Name="quickDBExplorer">
+        <Types>
+         <Type Name="SqlServerDriver2005">
+          <Members>
+           <Member Name="#CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
+              <Issue>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.Start()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.StartInfo.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.FileName.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CallProfile(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-02-29 00:43:30Z">
+              <Issue>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.Start()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.StartInfo.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.FileName.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.EndsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'SqlServerDriver2005.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#DatabaseObjSet(System.Object,System.EventArgs)">
+            <Messages>
+             <Message TypeName="ReviewVisibleEventHandlers" Category="Microsoft.Security" CheckId="CA2109" Created="2008-03-14 14:16:24Z">
+              <Issue>
+               <Item>'SqlServerDriver2005.DatabaseObjSet(object, EventArgs)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List`1&lt;System.String&gt;)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'List&lt;string&gt;'</Item>
+               <Item>'SqlServerDriver2005.GetSearchFieldSql(string, SearchType, bool, List&lt;string&gt;)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.ToLower" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'string.ToLower()'</Item>
+               <Item>'SqlServerDriver2005.GetSearchFieldSql(string, SearchType, bool, List&lt;string&gt;)'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'SqlServerDriver2005.GetSearchFieldSql(string, SearchType, bool, List&lt;string&gt;)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'SqlServerDriver2005.GetSearchFieldSql(string, SearchType, bool, List&lt;string&gt;)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'SqlServerDriver2005.GetSearchFieldSql(string, SearchType, bool, List&lt;string&gt;)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List`1&lt;System.String&gt;,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <Messages>
+             <Message TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'List&lt;string&gt;'</Item>
+               <Item>'SqlServerDriver2005.GetSearchObjectSql(string, SearchType, bool, List&lt;string&gt;, bool, bool, bool, bool, bool)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.ToLower" TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'string.ToLower()'</Item>
+               <Item>'SqlServerDriver2005.GetSearchObjectSql(string, SearchType, bool, List&lt;string&gt;, bool, bool, bool, bool, bool)'</Item>
+               <Item>'string.ToLower(CultureInfo)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.Format(System.String,System.Object)" TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305" Created="2008-10-22 03:20:52Z">
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'SqlServerDriver2005.GetSearchObjectSql(string, SearchType, bool, List&lt;string&gt;, bool, bool, bool, bool, bool)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'SqlServerDriver2005.GetSearchObjectSql(string, SearchType, bool, List&lt;string&gt;, bool, bool, bool, bool, bool)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+              <Issue>
+               <Item>'string.Format(string, object)'</Item>
+               <Item>'SqlServerDriver2005.GetSearchObjectSql(string, SearchType, bool, List&lt;string&gt;, bool, bool, bool, bool, bool)'</Item>
+               <Item>'string.Format(IFormatProvider, string, params object[])'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+   <Target Name="$(ProjectDir)/SqlServer2008Driver/bin/Debug/SqlServer2008Driver.dll">
+    <Modules>
+     <Module Name="sqlserver2008driver.dll">
+      <Namespaces>
+       <Namespace Name="quickDBExplorer">
+        <Types>
+         <Type Name="SqlServerDriver2008">
+          <Members>
+           <Member Name="#CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-10-22 03:38:57Z">
+              <Issue>
+               <Item>'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.Start()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.StartInfo.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.FileName.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallEPM(string, string, bool, string, string, string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CallProfile(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <Messages>
+             <Message TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122" Created="2008-10-22 03:38:57Z">
+              <Issue>
+               <Item>'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.Start()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'Process.StartInfo.get()'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.Arguments.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.ErrorDialog.set(bool)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.FileName.set(string)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+              <Issue>
+               <Item>'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'ProcessStartInfo.WindowStyle.set(ProcessWindowStyle)'</Item>
+               <Item>&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'&#xD;&#xA;   -&gt;'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="System.String.EndsWith(System.String)" TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307" Created="2008-10-22 03:38:57Z">
+              <Issue>
+               <Item>'SqlServerDriver2008.CallProfile(string, string, bool, string, string, string)'</Item>
+               <Item>'string.EndsWith(string)'</Item>
+               <Item>'string.EndsWith(string, StringComparison)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Notes>
+   <User Name="godz">
+    <Note Id="0" Modified="2008-01-08 16:28:15Z" />
+   </User>
+  </Notes>
+  <Rules>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
+   <Rule TypeName="CallBaseClassMethodsOnISerializableTypes" Category="Microsoft.Usage" CheckId="CA2236">
+    <Resolution Name="Default">Method {0} should be modified to call its base class implementation.</Resolution>
+   </Rule>
+   <Rule TypeName="CollectionPropertiesShouldBeReadOnly" Category="Microsoft.Usage" CheckId="CA2227">
+    <Resolution Name="Default">Change {0} to be read-only by removing the property setter.</Resolution>
+   </Rule>
+   <Rule TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405">
+    <Resolution Name="Default">{0} is marked ComVisible(true) but has the following ComVisible(false) types in its object hierarchy: {1}</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214">
+    <Resolution Name="Default">{0} contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: {1}</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCastUnnecessarily" Category="Microsoft.Performance" CheckId="CA1800">
+    <Resolution Name="Local">{0}, a variable, is cast to type {1} multiple times in method {2}. Cache the result of the 'as' operator or direct cast in order to eliminate the redundant {3} instruction.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotCatchGeneralExceptionTypes" Category="Microsoft.Design" CheckId="CA1031">
+    <Resolution Name="Default" />
+   </Rule>
+   <Rule TypeName="DoNotDeclareVisibleInstanceFields" Category="Microsoft.Design" CheckId="CA1051">
+    <Resolution Name="Default">Because field {0} is visible outside of its declaring type, change its accessibility to private and add a property, with the same accessibility as the field has currently, to provide access to it.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotExposeGenericLists" Category="Microsoft.Design" CheckId="CA1002">
+    <Resolution Name="Default">Change {0} in {1} to use Collection&lt;T&gt;, ReadOnlyCollection&lt;T&gt; or KeyedCollection&lt;K,V&gt;</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotIndirectlyExposeMethodsWithLinkDemands" Category="Microsoft.Security" CheckId="CA2122">
+    <Resolution Name="Default">{0} calls into {1} which has a LinkDemand. By making this call, {1} is indirectly exposed to user code. Review the following call stack that might expose a way to circumvent security protection: {2}</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotInitializeUnnecessarily" Category="Microsoft.Performance" CheckId="CA1805">
+    <Resolution Name="Default" />
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="Assembly">Correct the casing of '{0}' in assembly name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="Type">Correct the casing of '{0}' in type name {1} by changing it to '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeSpelledCorrectly" Category="Microsoft.Naming" CheckId="CA1704">
+    <Resolution Name="Member" />
+    <Resolution Name="Parameter" />
+   </Rule>
+   <Rule TypeName="IdentifiersShouldHaveCorrectSuffix" Category="Microsoft.Naming" CheckId="CA1710">
+    <Resolution Name="Default">Rename {0} to end in '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
+    <Resolution Name="LanguageIndependentMemberParameter">In member {0}, consider replacing the data type identifier '{1}' in parameter name {2} with a more generic term, such as 'value'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+    <Resolution Name="Member">Remove the underscores from member name {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
+    <Resolution Name="Default">Add [Serializable] to {0} as this type implements ISerializable.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkMembersAsStatic" Category="Microsoft.Performance" CheckId="CA1822">
+    <Resolution Name="Default">The 'this' parameter (or 'Me' in Visual Basic) of {0} is never used. Mark the member as static (or Shared in Visual Basic) or use 'this'/'Me' in the method body or at least one property accessor, if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="NestedTypesShouldNotBeVisible" Category="Microsoft.Design" CheckId="CA1034">
+    <Resolution Name="Default">Do not nest type {0}. Alternatively, change its accessibility so that it is not externally visible.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertiesShouldNotBeWriteOnly" Category="Microsoft.Design" CheckId="CA1044">
+    <Resolution Name="AddGetter">Because property {0} is write-only, either add a property getter with an accessibility that is greater than or equal to its setter or convert this property into a method.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
+    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewVisibleEventHandlers" Category="Microsoft.Security" CheckId="CA2109">
+    <Resolution Name="Default">Consider making {0} not externally visible.</Resolution>
+   </Rule>
+   <Rule TypeName="SetLocaleForDataTypes" Category="Microsoft.Globalization" CheckId="CA1306">
+    <Resolution Name="Default">Be sure to set the {0} Locale property wherever {1} creates an instance of that type.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyCultureInfo" Category="Microsoft.Globalization" CheckId="CA1304">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'CultureInfo' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyIFormatProvider" Category="Microsoft.Globalization" CheckId="CA1305">
+    <Resolution Name="Default">Because the behavior of {0} could vary based on the current user's locale settings, replace this call in {1} with a call to {2}. If the result of {2} will be displayed to the user, specify 'CultureInfo.CurrentCulture' as the 'IFormatProvider' parameter. Otherwise, if the result will be stored and accessed by software, such as when it is persisted to disk or to a database, specify 'CultureInfo.InvariantCulture'.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyMessageBoxOptions" Category="Microsoft.Globalization" CheckId="CA1300">
+    <Resolution Name="Default">Change {0} to call the MessageBox.Show overload that specifies MessageBoxOptions, and make sure to set MessageBoxOptions.RightAlign and MessageBoxOptions.RtlReading if RightToLeft is set to RightToLeft.Yes on the parent control.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyStringComparison" Category="Microsoft.Globalization" CheckId="CA1307">
+    <Resolution Name="Default">{0} makes a call to {1} that does not explicitly provide a StringComparison. This should be replaced with a call to {2}.</Resolution>
+   </Rule>
+   <Rule TypeName="UseGenericEventHandlerInstances" Category="Microsoft.Design" CheckId="CA1003">
+    <Resolution Name="Default">Remove {0} and replace its usage with EventHandler&lt;T&gt;</Resolution>
+   </Rule>
+   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
+    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>
