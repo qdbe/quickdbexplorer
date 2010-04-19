@@ -39,6 +39,11 @@ namespace quickDBExplorer
 
 		}
 
+        /// <summary>
+        /// メッセージ変更時の処理
+        /// </summary>
+        public event MessageChangeHandler MessageChange = null;
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
@@ -118,10 +123,8 @@ namespace quickDBExplorer
 		/// </summary>
 		protected void InitErrMessage()
 		{
-			this.MsgArea.Text = "";
-			this.ErrMessage = "";
-			this.errorProvider1.SetIconAlignment(this.MsgArea,ErrorIconAlignment.MiddleLeft);
-			this.errorProvider1.SetError(this.MsgArea,"");
+            SetErrorMessage(string.Empty);
+            this.errorProvider1.SetIconAlignment(this.MsgArea, ErrorIconAlignment.MiddleLeft);
 		}
 
 		/// <summary>
@@ -131,10 +134,27 @@ namespace quickDBExplorer
 		/// このException の Message がエラーメッセージ領域に表示され、ToString()した結果が ダブルクリック時のクリップボード貼り付け対象となる</param>
 		protected void SetErrorMessage(Exception ex)
 		{
-			this.MsgArea.Text = ex.Message;
+            SetErrorMessage(ex.Message);
 			this.ErrMessage = ex.ToString();
-			this.errorProvider1.SetError(this.MsgArea,this.MsgArea.Text);
 		}
+
+        /// <summary>
+        /// メッセージを登録する
+        /// </summary>
+        /// <param name="message"></param>
+        protected void SetErrorMessage(string message)
+        {
+            this.ErrMessage = message;
+            if (MessageChange != null)
+            {
+                MessageChange(message);
+            }
+            else
+            {
+                this.MsgArea.Text = message;
+            }
+            this.errorProvider1.SetError(this.MsgArea, message);
+        }
 
 		/// <summary>
 		/// エラーメッセージの領域に表示する内容をセットする
