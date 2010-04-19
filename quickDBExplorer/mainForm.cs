@@ -275,11 +275,9 @@ namespace quickDBExplorer
 			get { return this.pSqlVersion; }
 			set { this.pSqlVersion = value; }
 		}
+
 		#endregion
 
-		/// <summary>
-		/// DBÚ‘±î•ñ
-		/// </summary>
 		private System.Windows.Forms.Button btnEtc;
 		private System.Windows.Forms.MenuItem menuISQLW;
 		private System.Windows.Forms.Button btnWhereZoom;
