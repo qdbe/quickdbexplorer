@@ -148,7 +148,6 @@
     <Compile Include="ImageViewer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IMainMDI.cs" />
     <Compile Include="IndexViewDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -164,7 +163,6 @@
     <Compile Include="MakeFieldWhereDlg.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MessageHandler.cs" />
     <Compile Include="objectListView.cs">
       <SubType>Component</SubType>
     </Compile>

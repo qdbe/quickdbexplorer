@@ -496,7 +496,6 @@ namespace quickDBExplorer
                 mainForm.LogOnUid = this.txtUser.Text;
                 mainForm.LogOnPassword = this.txtPassword.Text;
                 mainForm.IsUseTruse = this.chkTrust.Checked;
-                mainForm.MessageChange +=new MessageChangeHandler(mainForm_MessageChange);
                 if (this.txtInstance.Text.Length != 0)
                 {
                     mainForm.ServerName = this.txtServerName.Text + "@" + this.txtInstance.Text;
@@ -530,11 +529,6 @@ namespace quickDBExplorer
             //finally {
             //	mainForm.sqlConnection1.Close();
             //}
-        }
-
-        void mainForm_MessageChange(string newMessage)
-        {
-            
         }
 
 		/// <summary>
