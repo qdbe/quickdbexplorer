@@ -18,7 +18,7 @@ namespace quickDBExplorer
 	/// 全ての親画面となるMDIフォーム
 	/// </summary>
 	[System.Runtime.InteropServices.ComVisible(false)]
-    public class MainMdi : System.Windows.Forms.Form, IMainMDI
+	public class MainMdi : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.StatusBar statusBar1;
 		private System.Windows.Forms.MainMenu mainMenu1;
@@ -216,7 +216,10 @@ namespace quickDBExplorer
 		/// </summary>
 		protected void InitErrMessage()
 		{
-            SetErrorMessage(string.Empty);
+			this.statusBar1.Text = "";
+			this.errMessage = "";
+			this.errorProvider1.SetIconAlignment(this.statusBar1,ErrorIconAlignment.MiddleLeft);
+			this.errorProvider1.SetError(this.statusBar1,"");
 		}
 
 		/// <summary>
@@ -225,20 +228,10 @@ namespace quickDBExplorer
 		/// <param name="ex">エラーが発生したException</param>
 		protected void SetErrorMessage(Exception ex)
 		{
-            SetErrorMessage(ex.Message);
+			this.statusBar1.Text = ex.Message;
+			this.errMessage = ex.ToString();
+			this.errorProvider1.SetError(this.statusBar1,this.statusBar1.Text);
 		}
-
-        /// <summary>
-        /// エラーメッセージを表示する
-        /// </summary>
-        /// <param name="errorMessage"></param>
-        public void SetErrorMessage(string errorMessage)
-        {
-            this.statusBar1.Text = errorMessage;
-            this.errMessage = errorMessage;
-            this.errorProvider1.SetIconAlignment(this.statusBar1, ErrorIconAlignment.MiddleLeft);
-            this.errorProvider1.SetError(this.statusBar1, this.statusBar1.Text);
-        }
 
 		/// <summary>
 		/// ステータスバーをダブルクリックすることで、エラーメッセージをクリップボードにコピーする
@@ -543,19 +536,5 @@ namespace quickDBExplorer
             }
 			return true;
 		}
-
-        #region IMainMDI メンバ
-
-        /// <summary>
-        /// メッセージを登録する
-        /// </summary>
-        /// <param name="message"></param>
-        public void SetMessage(string message)
-        {
-            this.SetErrorMessage(message);
-        }
-
-        #endregion
-
-    }
+	}
 }

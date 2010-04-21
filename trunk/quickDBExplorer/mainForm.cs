@@ -275,7 +275,6 @@ namespace quickDBExplorer
 			get { return this.pSqlVersion; }
 			set { this.pSqlVersion = value; }
 		}
-
 		#endregion
 
 		private System.Windows.Forms.Button btnEtc;
