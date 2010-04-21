@@ -255,7 +255,7 @@ namespace quickDBExplorer
 		private void MainMdi_Load(object sender, System.EventArgs e)
 		{
 			//動作環境のチェック
-			System.Version clrVer = System.Environment.Version; ;
+			System.Version clrVer = System.Environment.Version;
 			if (clrVer.Major < 2 ||
 				( clrVer.Major == 2 &&
 				  clrVer.Minor == 0 &&

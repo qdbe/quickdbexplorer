@@ -311,6 +311,9 @@ namespace quickDBExplorer
 		private SplitContainer UpDownSplitter;
         private Label label4;
         private quickDBExplorerTextBox txtObjFilter;
+        private ContextMenuStrip dbMenu;
+        private ToolStripMenuItem menuTimeoutChange;
+        private ToolStripMenuItem DBReloadMenu;
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
 
 		/// <summary>
@@ -477,6 +480,9 @@ namespace quickDBExplorer
             this.txtObjFilter = new quickDBExplorer.quickDBExplorerTextBox();
             this.MainSplitter = new System.Windows.Forms.SplitContainer();
             this.UpDownSplitter = new System.Windows.Forms.SplitContainer();
+            this.dbMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuTimeoutChange = new System.Windows.Forms.ToolStripMenuItem();
+            this.DBReloadMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.grpViewMode.SuspendLayout();
             this.grpSortMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -493,6 +499,7 @@ namespace quickDBExplorer
             this.UpDownSplitter.Panel1.SuspendLayout();
             this.UpDownSplitter.Panel2.SuspendLayout();
             this.UpDownSplitter.SuspendLayout();
+            this.dbMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // MsgArea
@@ -978,6 +985,7 @@ namespace quickDBExplorer
             this.labelDB.TabIndex = 0;
             this.labelDB.Text = "DB(&B)";
             this.labelDB.DoubleClick += new System.EventHandler(this.labelDB_DoubleClick);
+            this.labelDB.MouseClick += new System.Windows.Forms.MouseEventHandler(this.labelDB_MouseClick);
             // 
             // labelSchema
             // 
@@ -1408,6 +1416,28 @@ namespace quickDBExplorer
             this.UpDownSplitter.SplitterWidth = 2;
             this.UpDownSplitter.TabIndex = 0;
             // 
+            // dbMenu
+            // 
+            this.dbMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuTimeoutChange,
+            this.DBReloadMenu});
+            this.dbMenu.Name = "dbMenu";
+            this.dbMenu.Size = new System.Drawing.Size(161, 70);
+            // 
+            // menuTimeoutChange
+            // 
+            this.menuTimeoutChange.Name = "menuTimeoutChange";
+            this.menuTimeoutChange.Size = new System.Drawing.Size(160, 22);
+            this.menuTimeoutChange.Text = "タイムアウト変更(&t)";
+            this.menuTimeoutChange.Click += new System.EventHandler(this.menuTimeoutChange_Click);
+            // 
+            // DBReloadMenu
+            // 
+            this.DBReloadMenu.Name = "DBReloadMenu";
+            this.DBReloadMenu.Size = new System.Drawing.Size(160, 22);
+            this.DBReloadMenu.Text = "DB再読み込み(&R)";
+            this.DBReloadMenu.Click += new System.EventHandler(this.DBReloadMenu_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -1445,6 +1475,7 @@ namespace quickDBExplorer
             this.UpDownSplitter.Panel1.ResumeLayout(false);
             this.UpDownSplitter.Panel2.ResumeLayout(false);
             this.UpDownSplitter.ResumeLayout(false);
+            this.dbMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -1829,86 +1860,96 @@ namespace quickDBExplorer
 				this.Text = pServerName;
 
 				// DB一覧の表示を実行
-				DbDataAdapter da = this.SqlDriver.NewDataAdapter();
-				IDbCommand cmd = this.SqlDriver.NewSqlCommand(this.SqlDriver.GetDBSelect());
-				this.SqlDriver.SetSelectCmd(da,cmd);
-				DataSet ds = new DataSet();
-				ds.CaseSensitive = true;
-				ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
-				da.Fill(ds,"sysdatabases");
-
-				foreach (DataRow row in ds.Tables["sysdatabases"].Rows )
-				{
-					this.dbList.Items.Add(row["name"]);
-				}
+                DBLoad();
 			}
 			catch ( System.Data.SqlClient.SqlException se )
 			{
 				this.SetErrorMessage(se);
 			}
-			if( svdata.IsShowsysuser == 0 )
-			{
-				this.rdoNotDispSysUser.Checked = true;
-				this.rdoDispSysUser.Checked = false;
-			}
-			else
-			{
-				this.rdoNotDispSysUser.Checked = false;
-				this.rdoDispSysUser.Checked = true;
-			}
-			if( svdata.SortKey == 0 )
-			{
-				this.rdoSortTable.Checked = false;
-				this.rdoSortOwnerTable.Checked = true;
-				this.objectList.SortOrder = new ObjectColumnSortOrder[] {
+            LoadInitialSetting();
+		}
+
+        private void LoadInitialSetting()
+        {
+            if (svdata.IsShowsysuser == 0)
+            {
+                this.rdoNotDispSysUser.Checked = true;
+                this.rdoDispSysUser.Checked = false;
+            }
+            else
+            {
+                this.rdoNotDispSysUser.Checked = false;
+                this.rdoDispSysUser.Checked = true;
+            }
+            if (svdata.SortKey == 0)
+            {
+                this.rdoSortTable.Checked = false;
+                this.rdoSortOwnerTable.Checked = true;
+                this.objectList.SortOrder = new ObjectColumnSortOrder[] {
 																		  new ObjectColumnSortOrder(1,true),
 																		  new ObjectColumnSortOrder(2,true)
 																	  };
-																		
-			}
-			else
-			{
-				this.rdoSortTable.Checked = true;
-				this.rdoSortOwnerTable.Checked = false;
-				this.objectList.SortOrder = new ObjectColumnSortOrder[] {
+
+            }
+            else
+            {
+                this.rdoSortTable.Checked = true;
+                this.rdoSortOwnerTable.Checked = false;
+                this.objectList.SortOrder = new ObjectColumnSortOrder[] {
 																		  new ObjectColumnSortOrder(2,true)
 																	  };
-			}
-			if( svdata.ShowView == 0 )
-			{
-				this.rdoDispView.Checked = false;
-				this.rdoNotDispView.Checked = true;
-			}
-			else
-			{
-				this.rdoDispView.Checked = true;
-				this.rdoNotDispView.Checked = false;
-			}
+            }
+            if (svdata.ShowView == 0)
+            {
+                this.rdoDispView.Checked = false;
+                this.rdoNotDispView.Checked = true;
+            }
+            else
+            {
+                this.rdoDispView.Checked = true;
+                this.rdoNotDispView.Checked = false;
+            }
 
-			// 前回の値を元にDB先を変更する
-			if(  svdata.LastDatabase != null && svdata.LastDatabase != "" )
-			{
-				for( int i = 0; i < this.dbList.Items.Count; i++  )
-				{
-					if( (string)this.dbList.Items[i] == svdata.LastDatabase )
-					{
-						this.dbList.SetSelected(i,true);
-						this.dbList.Focus();
-						break;
-					}
-				}
-			}
-			else
-			{
-				this.dbList.SelectedIndex = 0;
-			}
-			gfont = this.dbGrid.Font;
-			gcolor = this.dbGrid.ForeColor;
+            // 前回の値を元にDB先を変更する
+            if (svdata.LastDatabase != null && svdata.LastDatabase != "")
+            {
+                for (int i = 0; i < this.dbList.Items.Count; i++)
+                {
+                    if ((string)this.dbList.Items[i] == svdata.LastDatabase)
+                    {
+                        this.dbList.SetSelected(i, true);
+                        this.dbList.Focus();
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                this.dbList.SelectedIndex = 0;
+            }
+            gfont = this.dbGrid.Font;
+            gcolor = this.dbGrid.ForeColor;
 
-			// ボタンの表示色を記憶しておく
-			this.btnBackColor = this.btnDataEdit.BackColor;
-			this.btnForeColor = this.btnDataEdit.ForeColor;
-		}
+            // ボタンの表示色を記憶しておく
+            this.btnBackColor = this.btnDataEdit.BackColor;
+            this.btnForeColor = this.btnDataEdit.ForeColor;
+        }
+
+        private void DBLoad()
+        {
+            DbDataAdapter da = this.SqlDriver.NewDataAdapter();
+            IDbCommand cmd = this.SqlDriver.NewSqlCommand(this.SqlDriver.GetDBSelect());
+            this.SqlDriver.SetSelectCmd(da, cmd);
+            DataSet ds = new DataSet();
+            ds.CaseSensitive = true;
+            ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
+            da.Fill(ds, "sysdatabases");
+
+            foreach (DataRow row in ds.Tables["sysdatabases"].Rows)
+            {
+                this.dbList.Items.Add(row["name"]);
+            }
+        }
 
 		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
@@ -2948,17 +2989,22 @@ namespace quickDBExplorer
 			}
 			if( e.Control == true && e.Shift == true && e.Alt == true && e.KeyCode == Keys.T )
 			{
-				if( this.SqlTimeout == 0 )
-				{
-					this.SqlTimeout = 300;
-				}
-				else
-				{
-					this.SqlTimeout = 0;
-				}
-				MessageBox.Show("SQL Timeout値を " + this.SqlTimeout.ToString(System.Globalization.CultureInfo.CurrentCulture) + "秒に設定しました" );
+                ChangeTimeout();
 			}
 		}
+
+        private void ChangeTimeout()
+        {
+            if (this.SqlTimeout == 0)
+            {
+                this.SqlTimeout = 300;
+            }
+            else
+            {
+                this.SqlTimeout = 0;
+            }
+            MessageBox.Show("SQL Timeout値を " + this.SqlTimeout.ToString(System.Globalization.CultureInfo.CurrentCulture) + "秒に設定しました");
+        }
 
 		private void txtWhere_ShowHistory(object sender, EventArgs e)
 		{
@@ -3086,15 +3132,7 @@ namespace quickDBExplorer
 
 		private void labelDB_DoubleClick(object sender, System.EventArgs e)
 		{
-			if( this.SqlTimeout == 0 )
-			{
-				this.SqlTimeout = 300;
-			}
-			else
-			{
-				this.SqlTimeout = 0;
-			}
-			MessageBox.Show("SQL Timeout値を " + this.SqlTimeout.ToString(System.Globalization.CultureInfo.CurrentCulture) + "秒に設定しました" );
+            ChangeTimeout();
 		}
 
 
@@ -6801,6 +6839,25 @@ namespace quickDBExplorer
         private void label4_Click(object sender, EventArgs e)
         {
             this.txtObjFilter.Text = string.Empty;
+        }
+
+        private void DBReloadMenu_Click(object sender, EventArgs e)
+        {
+            DBLoad();
+            LoadInitialSetting();
+        }
+
+        private void labelDB_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                this.dbMenu.Show((Control)this.labelDB, new Point(0, 0));
+            }
+        }
+
+        private void menuTimeoutChange_Click(object sender, EventArgs e)
+        {
+            ChangeTimeout();
         }
 	}
 
