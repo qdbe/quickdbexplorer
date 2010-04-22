@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Sql;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -45,6 +46,7 @@ namespace quickDBExplorer
         private void SetServerList(DataTable　serverList)
         {
             this.sqlServerList.SuspendLayout();
+            this.sqlServerList.Items.Clear();
             foreach (DataRow dr in serverList.Rows)
             {
                 ListViewItem item = new ListViewItem(
@@ -83,6 +85,26 @@ namespace quickDBExplorer
         private void sqlServerList_DoubleClick(object sender, EventArgs e)
         {
             DecideServer();
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            ReloadServerList();
+        }
+
+        private void ReloadServerList()
+        {
+            SqlDataSourceEnumerator list = System.Data.Sql.SqlDataSourceEnumerator.Instance;
+            this.Cursor = Cursors.WaitCursor;
+            DataTable serverList = list.GetDataSources();
+            this.Cursor = Cursors.Default;
+            if (serverList.Rows.Count == 0)
+            {
+                MessageBox.Show("選択可能なサーバーはありません");
+                return;
+            }
+
+            SetServerList(serverList);
         }
     }
 }
