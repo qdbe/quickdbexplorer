@@ -36,12 +36,13 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.grpServerList = new System.Windows.Forms.GroupBox();
+            this.btnReload = new System.Windows.Forms.Button();
             this.grpServerList.SuspendLayout();
             this.SuspendLayout();
             // 
             // MsgArea
             // 
-            this.MsgArea.Location = new System.Drawing.Point(94, 367);
+            this.MsgArea.Location = new System.Drawing.Point(94, 452);
             this.MsgArea.Size = new System.Drawing.Size(369, 32);
             // 
             // sqlServerList
@@ -55,10 +56,11 @@
             this.IsClusteredCol,
             this.VersionCol});
             this.sqlServerList.FullRowSelect = true;
-            this.sqlServerList.Location = new System.Drawing.Point(15, 18);
+            this.sqlServerList.IsAutoColumSort = true;
+            this.sqlServerList.Location = new System.Drawing.Point(15, 44);
             this.sqlServerList.MultiSelect = false;
             this.sqlServerList.Name = "sqlServerList";
-            this.sqlServerList.Size = new System.Drawing.Size(511, 318);
+            this.sqlServerList.Size = new System.Drawing.Size(511, 381);
             this.sqlServerList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.sqlServerList.TabIndex = 1;
             this.sqlServerList.UseCompatibleStateImageBehavior = false;
@@ -88,7 +90,7 @@
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOk.Location = new System.Drawing.Point(13, 376);
+            this.btnOk.Location = new System.Drawing.Point(13, 461);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 1;
@@ -100,7 +102,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(469, 375);
+            this.btnCancel.Location = new System.Drawing.Point(469, 460);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 24);
             this.btnCancel.TabIndex = 2;
@@ -111,19 +113,31 @@
             this.grpServerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpServerList.Controls.Add(this.btnReload);
             this.grpServerList.Controls.Add(this.sqlServerList);
-            this.grpServerList.Location = new System.Drawing.Point(13, 12);
+            this.grpServerList.Location = new System.Drawing.Point(13, 8);
             this.grpServerList.Name = "grpServerList";
-            this.grpServerList.Size = new System.Drawing.Size(544, 347);
+            this.grpServerList.Size = new System.Drawing.Size(544, 436);
             this.grpServerList.TabIndex = 0;
             this.grpServerList.TabStop = false;
             this.grpServerList.Text = "SQL SERVER 一覧";
+            // 
+            // btnReload
+            // 
+            this.btnReload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnReload.Location = new System.Drawing.Point(452, 16);
+            this.btnReload.Name = "btnReload";
+            this.btnReload.Size = new System.Drawing.Size(75, 23);
+            this.btnReload.TabIndex = 3;
+            this.btnReload.Text = "再検索(&R)";
+            this.btnReload.UseVisualStyleBackColor = true;
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // SqlServerSelector
             // 
             this.AcceptButton = this.btnOk;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(569, 402);
+            this.ClientSize = new System.Drawing.Size(569, 487);
             this.Controls.Add(this.grpServerList);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -148,5 +162,6 @@
         private System.Windows.Forms.ColumnHeader InstanceNameCol;
         private System.Windows.Forms.ColumnHeader IsClusteredCol;
         private System.Windows.Forms.ColumnHeader VersionCol;
+        private System.Windows.Forms.Button btnReload;
     }
 }

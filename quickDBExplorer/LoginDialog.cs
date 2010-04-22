@@ -1,16 +1,9 @@
 using System;
-using System.Drawing;
 using System.Collections;
-using System.ComponentModel;
-using System.Windows.Forms;
 using System.Data;
 using System.Data.Sql;
-using System.Data.SqlClient;
-using System.Configuration;
-using System.Runtime.Serialization;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Soap;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace quickDBExplorer
 {

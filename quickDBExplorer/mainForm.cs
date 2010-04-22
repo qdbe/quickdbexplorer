@@ -1,18 +1,14 @@
 using System;
-using System.Text;
-using System.Drawing;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Windows.Forms;
-using System.Data.SqlClient;
 using System.Data;
 using System.Data.Common;
+using System.Drawing;
 using System.IO;
-using System.Diagnostics;
+using System.Text;
 using System.Threading;
-using System.Reflection;
+using System.Windows.Forms;
 
 namespace quickDBExplorer
 {
@@ -1885,9 +1881,9 @@ namespace quickDBExplorer
             {
                 this.rdoSortTable.Checked = false;
                 this.rdoSortOwnerTable.Checked = true;
-                this.objectList.SortOrder = new ObjectColumnSortOrder[] {
-																		  new ObjectColumnSortOrder(1,true),
-																		  new ObjectColumnSortOrder(2,true)
+                this.objectList.SortOrder = new ColumnSortOrder[] {
+																		  new ColumnSortOrder(1,true),
+																		  new ColumnSortOrder(2,true)
 																	  };
 
             }
@@ -1895,8 +1891,8 @@ namespace quickDBExplorer
             {
                 this.rdoSortTable.Checked = true;
                 this.rdoSortOwnerTable.Checked = false;
-                this.objectList.SortOrder = new ObjectColumnSortOrder[] {
-																		  new ObjectColumnSortOrder(2,true)
+                this.objectList.SortOrder = new ColumnSortOrder[] {
+																		  new ColumnSortOrder(2,true)
 																	  };
             }
             if (svdata.ShowView == 0)
@@ -2259,15 +2255,15 @@ namespace quickDBExplorer
 		{
 			if( this.rdoSortTable.Checked == true )
 			{
-				this.objectList.SortOrder = new ObjectColumnSortOrder[] {
-																		  new ObjectColumnSortOrder(2,true)
+				this.objectList.SortOrder = new ColumnSortOrder[] {
+																		  new ColumnSortOrder(2,true)
 																	  };
 			}
 			else
 			{
-				this.objectList.SortOrder = new ObjectColumnSortOrder[] {
-																		  new ObjectColumnSortOrder(1,true),
-																		  new ObjectColumnSortOrder(2,true)
+				this.objectList.SortOrder = new ColumnSortOrder[] {
+																		  new ColumnSortOrder(1,true),
+																		  new ColumnSortOrder(2,true)
 																	  };
 			}
 			this.objectList.Sort();
