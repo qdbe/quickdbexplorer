@@ -210,6 +210,12 @@
     <Compile Include="ServerSelectDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="SqlServerSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SqlServerSelector.Designer.cs">
+      <DependentUpon>SqlServerSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="SqlVersion.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -318,6 +324,9 @@
     <EmbeddedResource Include="ServerSelectDialog.resx">
       <DependentUpon>ServerSelectDialog.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SqlServerSelector.resx">
+      <DependentUpon>SqlServerSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TableSelectDialog.resx">
       <DependentUpon>TableSelectDialog.cs</DependentUpon>
