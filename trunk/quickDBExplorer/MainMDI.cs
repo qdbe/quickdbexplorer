@@ -439,16 +439,23 @@ namespace quickDBExplorer
                     MessageBox.Show("既に最新バージョンです。更新の必要はありません。");
                 }
 			}
+#if DEBUG
 			catch(Exception ex)
 			{
                 MessageBox.Show("最新かどうかチェックできませんでした。ネットワーク環境を調査して下さい。\r\nhttp://qdbe.rgr.jp/へのアクセスが可能である必要です");
-#if DEBUG
                 if (catchError == true)
                 {
                     MessageBox.Show(ex.ToString());
+
                 }
-#endif
 			}
+#else
+            catch
+            {
+                MessageBox.Show("最新かどうかチェックできませんでした。ネットワーク環境を調査して下さい。\r\nhttp://qdbe.rgr.jp/へのアクセスが可能である必要です");
+
+			}
+#endif
 			finally
 			{
 				if( sr != null )

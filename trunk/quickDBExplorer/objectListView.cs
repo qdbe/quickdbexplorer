@@ -188,5 +188,26 @@ namespace quickDBExplorer
 			}
 			return -1;
 		}
+
+        /// <summary>
+        /// オブジェクトのみのソート方法にセットする
+        /// </summary>
+        public void SetSortSchemaObject()
+        {
+            this.SortOrder = new ColumnSortOrder[] {
+																		  new ColumnSortOrder(1,true),
+																		  new ColumnSortOrder(2,true)
+																	  };
+        }
+
+        /// <summary>
+        /// スキーマとオブジェクトのソート方法にセットする
+        /// </summary>
+        public void SetSortObjectOnly()
+        {
+            this.SortOrder = new ColumnSortOrder[] {
+																		  new ColumnSortOrder(2,true)
+																	  };
+        }
 	}
 }
