@@ -1881,19 +1881,13 @@ namespace quickDBExplorer
             {
                 this.rdoSortTable.Checked = false;
                 this.rdoSortOwnerTable.Checked = true;
-                this.objectList.SortOrder = new ColumnSortOrder[] {
-																		  new ColumnSortOrder(1,true),
-																		  new ColumnSortOrder(2,true)
-																	  };
-
+                this.objectList.SetSortSchemaObject();
             }
             else
             {
                 this.rdoSortTable.Checked = true;
                 this.rdoSortOwnerTable.Checked = false;
-                this.objectList.SortOrder = new ColumnSortOrder[] {
-																		  new ColumnSortOrder(2,true)
-																	  };
+                this.objectList.SetSortObjectOnly();
             }
             if (svdata.ShowView == 0)
             {
@@ -2255,16 +2249,11 @@ namespace quickDBExplorer
 		{
 			if( this.rdoSortTable.Checked == true )
 			{
-				this.objectList.SortOrder = new ColumnSortOrder[] {
-																		  new ColumnSortOrder(2,true)
-																	  };
+                this.objectList.SetSortObjectOnly();
 			}
 			else
 			{
-				this.objectList.SortOrder = new ColumnSortOrder[] {
-																		  new ColumnSortOrder(1,true),
-																		  new ColumnSortOrder(2,true)
-																	  };
+                this.objectList.SetSortSchemaObject();
 			}
 			this.objectList.Sort();
 				 
