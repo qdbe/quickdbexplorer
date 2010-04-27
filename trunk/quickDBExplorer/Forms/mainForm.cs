@@ -1512,113 +1512,131 @@ namespace quickDBExplorer
 		/// </summary>
 		public	void	InitPopupMenu()
 		{
-			List<qdbeMenuItem> menuAr = new List<qdbeMenuItem>();
-			menuAr.Add(new qdbeMenuItem(false,true,null,"オブジェクト名コピー", new EventHandler(this.menuTableCopy_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,null,"オブジェクト名コピー カンマ付き", new EventHandler(this.menuTableCopyCsv_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,null,"指定オブジェクト選択", new EventHandler(this.menuTableSelect_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,null,"オブジェクト情報再読込", new EventHandler(this.TableInfoUpdate) ) );
-			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成", new EventHandler(this.InsertMake) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(DELETE文付き)", new EventHandler(this.InsertMakeDelete) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(フィールドリストなし)", new EventHandler(this.InsertMakeNoField) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(フィールドリストなし　DELETE文付き)", new EventHandler(this.InsertMakeNoFieldDelete) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(DELETE文付き、退避付き)", new EventHandler(this.menuInsertDeleteTaihi_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnInsert.Name,"INSERT文作成(フィールドなし DELETE文付き 退避付き)", new EventHandler(this.menuInsertNoFldDeleteTaihi_Click) ) );
-			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnFieldList.Name,"フィールドリスト作成", new EventHandler(this.makefldlist) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnFieldList.Name,"フィールドリスト改行作成", new EventHandler(this.makefldListLF) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnFieldList.Name,"フィールドリストカンマなし作成", new EventHandler(this.makefldListNoComma) ) );
-			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnDDL.Name,"簡易定義文生成", new EventHandler(this.makeDDL) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnDDL.Name,"簡易定義文生成 DROP文付き", new EventHandler(this.makeDDLDrop) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnDDL.Name,"簡易定義文生成([]付き)", new EventHandler(this.makeDDLPare) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnDDL.Name,"簡易定義文生成( DROP []付き)", new EventHandler(this.makeDDLDropPare) ) );
-			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
-			menuAr.Add(new qdbeMenuItem(false,true,null,"Select文生成", new EventHandler(this.btnSelect_Click) ) );
-			menuAr.Add(new qdbeMenuItem(true,true,null,"-", null ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnCSV.Name,"CSV作成", new EventHandler(this.makeCSV) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnCSV.Name,"CSV作成(”付き)", new EventHandler(this.makeCSVQuote) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnCSV.Name,"Tab区切出力", new EventHandler(this.menuMakeTab_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnCSV.Name,"Tab区切出力(\"付き)", new EventHandler(this.menuMakeTabDQ_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnCSV.Name,"CSV読込", new EventHandler(this.menuCSVRead_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnCSV.Name,"CSV読込(\"付き)", new EventHandler(this.menuCSVReadDQ_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnCSV.Name,"Tab区切読込", new EventHandler(this.menuTabRead_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnCSV.Name,"Tab区切読込（”付き)", new EventHandler(this.menuTabReadDQ_Click) ) );
-			menuAr.Add(new qdbeMenuItem(true,false,null,"-", null ) );
-			menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"簡易クエリ実行（Select以外）", new EventHandler(this.btnQueryNonSelect_Click) ) );
-			menuAr.Add(new qdbeMenuItem(true,false,this.btnEtc.Name,"-", null ) );
-			if( this.ConnectSqlVersion.CanUseQueryAnalyzer == true )
-			{
-				menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"クエリアナライザ起動", new EventHandler(this.CallISQLW) ) );
-			}
-			menuAr.Add(new qdbeMenuItem(false,false,this.btnEtc.Name,"プロファイラ起動", new EventHandler(this.CallProfile) ) );
-			if (this.ConnectSqlVersion.IsManagementStudio == true)
-			{
-				menuAr.Add(new qdbeMenuItem(false, false, this.btnEtc.Name, "Management Studio起動", new EventHandler(this.CallEPM)));
-			}
-			else
-			{
-				menuAr.Add(new qdbeMenuItem(false, false, this.btnEtc.Name, "Enterprise Manager起動", new EventHandler(this.CallEPM)));
-			}
-			menuAr.Add(new qdbeMenuItem(true,true,this.btnEtc.Name,"-", null ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"依存関係出力", new EventHandler(this.DependOutPut) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"データ件数出力", new EventHandler(this.RecordCountOutPut) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"データ件数表示", new EventHandler(this.menuRecordCountDisp_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"統計情報更新", new EventHandler(this.menuUpdateStaticsMain_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"各種コマンド実行", new EventHandler(this.menuDoQuery_Click) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"オブジェクト情報表示", new EventHandler(this.DispObjectInfo) ) );
-			menuAr.Add(new qdbeMenuItem(false,true,this.btnEtc.Name,"オブジェクト検索", new EventHandler(this.ObjectSearch) ) );
+            List<qdbeMenuItem> menuAr = SetInitPopupMenu();
 
-			ContextMenu objMenu = new System.Windows.Forms.ContextMenu();
-			int		idx = 0;
-			foreach(qdbeMenuItem it in menuAr)
-			{
-				if( it.IsObjTarget == false )
-				{
-					continue;
-				}
-				objMenu.MenuItems.Add(it.CreateMenuItem(idx,0));
-				idx++;
-			}
+
+            ContextMenu objMenu = CreatePopupMenuItem(menuAr);
+
 			this.objectList.ContextMenu = objMenu;
 
-			List<Control> btnAr = new List<Control>();
-			btnAr.Add(this.btnCSV);
-			btnAr.Add(this.btnDDL);
-			btnAr.Add(this.btnEtc);
-			btnAr.Add(this.btnFieldList);
-			btnAr.Add(this.btnInsert);
-
-			foreach( Button btn in btnAr )
-			{
-				ContextMenu btnMenu = new ContextMenu();
-				int		i = 0;
-				int		j = 0;
-
-				foreach(qdbeMenuItem itm in menuAr)
-				{
-					if( itm.CallBtnName == btn.Name )
-					{
-						if( itm.IsSeparater == true )
-						{
-							btnMenu.MenuItems.Add(itm.CreateMenuItem(i,0));
-						}
-						else
-						{
-							btnMenu.MenuItems.Add(itm.CreateMenuItem(i,j+1));
-							j++;
-						}
-						i++;
-					}
-				}
-				if( btnMenu.MenuItems.Count > 0 )
-				{
-					btn.Tag = btnMenu;
-					btn.Click += new EventHandler(btn_Click);
-				}
-			}
-			
+            SetButtonPopup(menuAr);
 		}
+
+        private void SetButtonPopup(List<qdbeMenuItem> menuAr)
+        {
+            List<Control> btnAr = new List<Control>();
+            btnAr.Add(this.btnCSV);
+            btnAr.Add(this.btnDDL);
+            btnAr.Add(this.btnEtc);
+            btnAr.Add(this.btnFieldList);
+            btnAr.Add(this.btnInsert);
+
+            foreach (Button btn in btnAr)
+            {
+                ContextMenu btnMenu = new ContextMenu();
+                int i = 0;
+                int j = 0;
+
+                foreach (qdbeMenuItem itm in menuAr)
+                {
+                    if (itm.CallBtnName == btn.Name)
+                    {
+                        if (itm.IsSeparater == true)
+                        {
+                            btnMenu.MenuItems.Add(itm.CreateMenuItem(i, 0));
+                        }
+                        else
+                        {
+                            btnMenu.MenuItems.Add(itm.CreateMenuItem(i, j + 1));
+                            j++;
+                        }
+                        i++;
+                    }
+                }
+                if (btnMenu.MenuItems.Count > 0)
+                {
+                    btn.Tag = btnMenu;
+                    btn.Click += new EventHandler(btn_Click);
+                }
+            }
+        }
+
+        private ContextMenu CreatePopupMenuItem(List<qdbeMenuItem> menuAr)
+        {
+            ContextMenu objMenu = new System.Windows.Forms.ContextMenu();
+            int idx = 0;
+            foreach (qdbeMenuItem it in menuAr)
+            {
+                if (it.IsObjTarget == false)
+                {
+                    continue;
+                }
+                objMenu.MenuItems.Add(it.CreateMenuItem(idx, 0));
+                idx++;
+            }
+            return objMenu;
+        }
+
+        private List<qdbeMenuItem> SetInitPopupMenu()
+        {
+            List<qdbeMenuItem> menuAr = new List<qdbeMenuItem>();
+            menuAr.Add(new qdbeMenuItem(false, true, null, "オブジェクト名コピー", new EventHandler(this.menuTableCopy_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, null, "オブジェクト名コピー カンマ付き", new EventHandler(this.menuTableCopyCsv_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, null, "指定オブジェクト選択", new EventHandler(this.menuTableSelect_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, null, "オブジェクト情報再読込", new EventHandler(this.TableInfoUpdate)));
+            menuAr.Add(new qdbeMenuItem(true, true, null, "-", null));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnInsert.Name, "INSERT文作成", new EventHandler(this.InsertMake)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnInsert.Name, "INSERT文作成(DELETE文付き)", new EventHandler(this.InsertMakeDelete)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnInsert.Name, "INSERT文作成(フィールドリストなし)", new EventHandler(this.InsertMakeNoField)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnInsert.Name, "INSERT文作成(フィールドリストなし　DELETE文付き)", new EventHandler(this.InsertMakeNoFieldDelete)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnInsert.Name, "INSERT文作成(DELETE文付き、退避付き)", new EventHandler(this.menuInsertDeleteTaihi_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnInsert.Name, "INSERT文作成(フィールドなし DELETE文付き 退避付き)", new EventHandler(this.menuInsertNoFldDeleteTaihi_Click)));
+            menuAr.Add(new qdbeMenuItem(true, true, null, "-", null));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnFieldList.Name, "フィールドリスト作成", new EventHandler(this.makefldlist)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnFieldList.Name, "フィールドリスト改行作成", new EventHandler(this.makefldListLF)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnFieldList.Name, "フィールドリストカンマなし作成", new EventHandler(this.makefldListNoComma)));
+            menuAr.Add(new qdbeMenuItem(true, true, null, "-", null));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnDDL.Name, "簡易定義文生成", new EventHandler(this.makeDDL)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnDDL.Name, "簡易定義文生成 DROP文付き", new EventHandler(this.makeDDLDrop)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnDDL.Name, "簡易定義文生成([]付き)", new EventHandler(this.makeDDLPare)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnDDL.Name, "簡易定義文生成( DROP []付き)", new EventHandler(this.makeDDLDropPare)));
+            menuAr.Add(new qdbeMenuItem(true, true, null, "-", null));
+            menuAr.Add(new qdbeMenuItem(false, true, null, "Select文生成", new EventHandler(this.btnSelect_Click)));
+            menuAr.Add(new qdbeMenuItem(true, true, null, "-", null));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnCSV.Name, "CSV作成", new EventHandler(this.makeCSV)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnCSV.Name, "CSV作成(”付き)", new EventHandler(this.makeCSVQuote)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnCSV.Name, "Tab区切出力", new EventHandler(this.menuMakeTab_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnCSV.Name, "Tab区切出力(\"付き)", new EventHandler(this.menuMakeTabDQ_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnCSV.Name, "CSV読込", new EventHandler(this.menuCSVRead_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnCSV.Name, "CSV読込(\"付き)", new EventHandler(this.menuCSVReadDQ_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnCSV.Name, "Tab区切読込", new EventHandler(this.menuTabRead_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnCSV.Name, "Tab区切読込（”付き)", new EventHandler(this.menuTabReadDQ_Click)));
+            menuAr.Add(new qdbeMenuItem(true, false, null, "-", null));
+            menuAr.Add(new qdbeMenuItem(false, false, this.btnEtc.Name, "簡易クエリ実行（Select以外）", new EventHandler(this.btnQueryNonSelect_Click)));
+            menuAr.Add(new qdbeMenuItem(true, false, this.btnEtc.Name, "-", null));
+            if (this.ConnectSqlVersion.CanUseQueryAnalyzer == true)
+            {
+                menuAr.Add(new qdbeMenuItem(false, false, this.btnEtc.Name, "クエリアナライザ起動", new EventHandler(this.CallISQLW)));
+            }
+            menuAr.Add(new qdbeMenuItem(false, false, this.btnEtc.Name, "プロファイラ起動", new EventHandler(this.CallProfile)));
+            if (this.ConnectSqlVersion.IsManagementStudio == true)
+            {
+                menuAr.Add(new qdbeMenuItem(false, false, this.btnEtc.Name, "Management Studio起動", new EventHandler(this.CallEPM)));
+            }
+            else
+            {
+                menuAr.Add(new qdbeMenuItem(false, false, this.btnEtc.Name, "Enterprise Manager起動", new EventHandler(this.CallEPM)));
+            }
+            menuAr.Add(new qdbeMenuItem(true, true, this.btnEtc.Name, "-", null));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "依存関係出力", new EventHandler(this.DependOutPut)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "データ件数出力", new EventHandler(this.RecordCountOutPut)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "データ件数表示", new EventHandler(this.menuRecordCountDisp_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "統計情報更新", new EventHandler(this.menuUpdateStaticsMain_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "各種コマンド実行", new EventHandler(this.menuDoQuery_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "オブジェクト情報表示", new EventHandler(this.DispObjectInfo)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "オブジェクト検索", new EventHandler(this.ObjectSearch)));
+            return menuAr;
+        }
 
 		private void btn_Click(object sender, EventArgs e)
 		{
@@ -1943,68 +1961,72 @@ namespace quickDBExplorer
 
 		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			if( this.rdoNotDispSysUser.Checked == true )
-			{
-				svdata.IsShowsysuser = 0;
-			}
-			else
-			{
-				svdata.IsShowsysuser = 1;
-			}
-
-			if( this.rdoSortOwnerTable.Checked == true )
-			{
-				svdata.SortKey = 0;
-			}
-			else
-			{
-				svdata.SortKey = 1;
-			}
-			if( this.rdoDispView.Checked == false) 
-			{
-				svdata.ShowView = 0;
-			}
-			else
-			{
-				svdata.ShowView = 1;
-			}
-
-			if( this.rdoClipboard.Checked == true) 
-			{
-				svdata.OutDest[svdata.LastDatabase] = 0;
-			}
-			if( this.rdoOutFile.Checked == true) 
-			{
-				svdata.OutDest[svdata.LastDatabase] = 1;
-			}
-			if( this.rdoOutFolder.Checked == true) 
-			{
-				svdata.OutDest[svdata.LastDatabase] = 2;
-			}
-			svdata.OutFile[svdata.LastDatabase] = this.txtOutput.Text;
-			if( this.chkDispData.CheckState == CheckState.Checked )
-			{
-				svdata.ShowGrid[svdata.LastDatabase] = 1;
-			}
-			else
-			{
-				svdata.ShowGrid[svdata.LastDatabase] = 0;
-			}
-			if( this.rdoUnicode.Checked == true )
-			{
-				svdata.TxtEncode[svdata.LastDatabase] = 0;
-			}
-			if( this.rdoSjis.Checked == true )
-			{
-				svdata.TxtEncode[svdata.LastDatabase] = 1;
-			}
-			if( this.rdoUtf8.Checked == true )
-			{
-				svdata.TxtEncode[svdata.LastDatabase] = 2;
-			}
-			svdata.GridDispCnt[svdata.LastDatabase] = this.txtDispCount.Text;
-
+            SaveSetting();
 		}
+
+        private void SaveSetting()
+        {
+            if (this.rdoNotDispSysUser.Checked == true)
+            {
+                svdata.IsShowsysuser = 0;
+            }
+            else
+            {
+                svdata.IsShowsysuser = 1;
+            }
+
+            if (this.rdoSortOwnerTable.Checked == true)
+            {
+                svdata.SortKey = 0;
+            }
+            else
+            {
+                svdata.SortKey = 1;
+            }
+            if (this.rdoDispView.Checked == false)
+            {
+                svdata.ShowView = 0;
+            }
+            else
+            {
+                svdata.ShowView = 1;
+            }
+
+            if (this.rdoClipboard.Checked == true)
+            {
+                svdata.OutDest[svdata.LastDatabase] = 0;
+            }
+            if (this.rdoOutFile.Checked == true)
+            {
+                svdata.OutDest[svdata.LastDatabase] = 1;
+            }
+            if (this.rdoOutFolder.Checked == true)
+            {
+                svdata.OutDest[svdata.LastDatabase] = 2;
+            }
+            svdata.OutFile[svdata.LastDatabase] = this.txtOutput.Text;
+            if (this.chkDispData.CheckState == CheckState.Checked)
+            {
+                svdata.ShowGrid[svdata.LastDatabase] = 1;
+            }
+            else
+            {
+                svdata.ShowGrid[svdata.LastDatabase] = 0;
+            }
+            if (this.rdoUnicode.Checked == true)
+            {
+                svdata.TxtEncode[svdata.LastDatabase] = 0;
+            }
+            if (this.rdoSjis.Checked == true)
+            {
+                svdata.TxtEncode[svdata.LastDatabase] = 1;
+            }
+            if (this.rdoUtf8.Checked == true)
+            {
+                svdata.TxtEncode[svdata.LastDatabase] = 2;
+            }
+            svdata.GridDispCnt[svdata.LastDatabase] = this.txtDispCount.Text;
+        }
 
 
 		#endregion
@@ -2071,101 +2093,112 @@ namespace quickDBExplorer
 			// Owner のリストを再読み込みし表示する
 			ResetOwnerList();
 
-			if( svdata.OutDest[svdata.LastDatabase] != null )
-			{
-				// 該当DBの最後の出力先をセットする
-				switch( (int)svdata.OutDest[svdata.LastDatabase] )
-				{
-					case	0:
-						//クリップボード
-						this.rdoClipboard.Checked = true;
-						this.rdoOutFile.Checked = false;
-						this.rdoOutFolder.Checked = false;
-						break;
-					case	1:
-						this.rdoClipboard.Checked = false;
-						this.rdoOutFile.Checked = true;
-						this.rdoOutFolder.Checked = false;
-						break;
-					case	2:
-						this.rdoClipboard.Checked = false;
-						this.rdoOutFile.Checked = false;
-						this.rdoOutFolder.Checked = true;
-						break;
-				}
-			}
-			else
-			{
-				//標準はクリップボード
-				this.rdoClipboard.Checked = true;
-				this.rdoOutFile.Checked = false;
-				this.rdoOutFolder.Checked = false;
-			}
+            // 設定値を保存したデータから呼び戻す
+            LoadPreviousSetting();
 
-			if( svdata.OutFile[svdata.LastDatabase] != null )
-			{
-				this.txtOutput.Text = (string)svdata.OutFile[svdata.LastDatabase];
-			}
-			else
-			{
-				this.txtOutput.Text = "";
-			}
-			
 
-			if( svdata.ShowGrid[svdata.LastDatabase] != null )
-			{
-				if( (int)svdata.ShowGrid[svdata.LastDatabase] == 0 )
-				{
-					this.chkDispData.CheckState = CheckState.Unchecked;
-				}
-				else
-				{
-					this.chkDispData.CheckState = CheckState.Checked;
-				}	
-			}
-			else
-			{
-				this.chkDispData.CheckState = CheckState.Checked;
-			}
-
-			if( svdata.GridDispCnt[svdata.LastDatabase] != null )
-			{
-				if( (string)svdata.GridDispCnt[svdata.LastDatabase] != "" )
-				{
-					this.txtDispCount.Text = (string)svdata.GridDispCnt[svdata.LastDatabase];
-				}
-				else
-				{
-					this.txtDispCount.Text = "";
-				}
-			}
-			else
-			{
-				this.txtDispCount.Text = "1000";
-			}
-
-			if( svdata.TxtEncode[svdata.LastDatabase] != null )
-			{
-				if( (int)svdata.TxtEncode[svdata.LastDatabase] == 0 )
-				{
-					this.rdoUnicode.Checked = true;
-				}
-				else if( (int)svdata.TxtEncode[svdata.LastDatabase] == 1 )
-				{
-					this.rdoSjis.Checked = true;
-				}
-				else
-				{
-					this.rdoUtf8.Checked = true;
-				}
-			}
-			else
-			{
-				this.rdoUnicode.Checked = true;
-			}
 			this.Text = pServerName + "@" + (string)this.dbList.SelectedItem;
 			this.dbList.Focus();	//フォーカスを元に戻す
 		}
+
+        /// <summary>
+        /// 設定値を保存したデータから呼び戻す
+        /// </summary>
+        private void LoadPreviousSetting()
+        {
+            if (svdata.OutDest[svdata.LastDatabase] != null)
+            {
+                // 該当DBの最後の出力先をセットする
+                switch ((int)svdata.OutDest[svdata.LastDatabase])
+                {
+                    case 0:
+                        //クリップボード
+                        this.rdoClipboard.Checked = true;
+                        this.rdoOutFile.Checked = false;
+                        this.rdoOutFolder.Checked = false;
+                        break;
+                    case 1:
+                        this.rdoClipboard.Checked = false;
+                        this.rdoOutFile.Checked = true;
+                        this.rdoOutFolder.Checked = false;
+                        break;
+                    case 2:
+                        this.rdoClipboard.Checked = false;
+                        this.rdoOutFile.Checked = false;
+                        this.rdoOutFolder.Checked = true;
+                        break;
+                }
+            }
+            else
+            {
+                //標準はクリップボード
+                this.rdoClipboard.Checked = true;
+                this.rdoOutFile.Checked = false;
+                this.rdoOutFolder.Checked = false;
+            }
+
+            if (svdata.OutFile[svdata.LastDatabase] != null)
+            {
+                this.txtOutput.Text = (string)svdata.OutFile[svdata.LastDatabase];
+            }
+            else
+            {
+                this.txtOutput.Text = "";
+            }
+
+
+            if (svdata.ShowGrid[svdata.LastDatabase] != null)
+            {
+                if ((int)svdata.ShowGrid[svdata.LastDatabase] == 0)
+                {
+                    this.chkDispData.CheckState = CheckState.Unchecked;
+                }
+                else
+                {
+                    this.chkDispData.CheckState = CheckState.Checked;
+                }
+            }
+            else
+            {
+                this.chkDispData.CheckState = CheckState.Checked;
+            }
+
+            if (svdata.GridDispCnt[svdata.LastDatabase] != null)
+            {
+                if ((string)svdata.GridDispCnt[svdata.LastDatabase] != "")
+                {
+                    this.txtDispCount.Text = (string)svdata.GridDispCnt[svdata.LastDatabase];
+                }
+                else
+                {
+                    this.txtDispCount.Text = "";
+                }
+            }
+            else
+            {
+                this.txtDispCount.Text = "1000";
+            }
+
+            if (svdata.TxtEncode[svdata.LastDatabase] != null)
+            {
+                if ((int)svdata.TxtEncode[svdata.LastDatabase] == 0)
+                {
+                    this.rdoUnicode.Checked = true;
+                }
+                else if ((int)svdata.TxtEncode[svdata.LastDatabase] == 1)
+                {
+                    this.rdoSjis.Checked = true;
+                }
+                else
+                {
+                    this.rdoUtf8.Checked = true;
+                }
+            }
+            else
+            {
+                this.rdoUnicode.Checked = true;
+            }
+        }
 
 		private void objectList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
