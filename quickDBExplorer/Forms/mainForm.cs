@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using quickDBExplorer.Forms.Events;
 
 namespace quickDBExplorer
 {
@@ -17,7 +18,7 @@ namespace quickDBExplorer
 	/// DBの選択、オーナーの選択、オブジェクトの選択、処理の選択などのメインとなる処理を全て実装している
 	/// </summary>
 	[System.Runtime.InteropServices.ComVisible(false)]
-	public class MainForm : quickDBExplorerBaseForm
+	internal class MainForm : quickDBExplorerBaseForm
 	{
 		private System.ComponentModel.IContainer components;
 		private System.Windows.Forms.Button btnCSV;
@@ -208,10 +209,15 @@ namespace quickDBExplorer
 		/// </summary>
 		private bool isInCmbEvent = false;
 
+        /// <summary>
+        /// クエリ実行タイムアウト値の規定値
+        /// </summary>
+        public static int DefaultSqlTimeOut = 300;
+
 		/// <summary>
 		/// SQL のクエリ実行タイムアウト値
 		/// </summary>
-		private int pSqlTimeout = 300;
+        private int pSqlTimeout = DefaultSqlTimeOut;
 		/// <summary>
 		/// SQL のクエリ実行タイムアウト値
 		/// </summary>
@@ -315,39 +321,73 @@ namespace quickDBExplorer
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		/// <param name="sv">前回最終処理の記憶値</param>
-		/// <param name="sqlVer">SQL Server のバージョン情報</param>
-		public MainForm(ServerData sv, SqlVersion sqlVer)
+		/// <param name="mdiparent">親MDIフォーム</param>
+		/// <param name="conn">接続情報</param>
+		public MainForm(Form mdiparent, ConnectionInfo conn)
 		{
 			//
 			// Windows フォーム デザイナ サポートに必要です。
 			//
 			InitializeComponent();
 
-			svdata = sv;
-			Sqldlg.SelectSql = "";
-			Sqldlg2.SelectSql = "";
-			cmdDialog.SelectSql = "";
-			this.whereHistory = svdata.WhereHistory;
-			this.txtWhere.PdHistory = this.whereHistory;
+            SetParams(mdiparent, conn);
 
-			this.sortHistory = svdata.SortHistory;
-			this.txtSort.PdHistory = this.sortHistory;
-
-			this.aliasHistory = svdata.AliasHistory;
-			this.txtAlias.PdHistory = this.aliasHistory;
-
-			this.selectHistory = svdata.SelectHistory;
-
-			this.DMLHistory = svdata.DMLHistory;
-			this.cmdHistory = svdata.CmdHistory;
-			this.searchHistory = svdata.SearchHistory;
-
-			this.ConnectSqlVersion = sqlVer;
+            InitSubDialog();
+            InitHistory();
 
 			// 右クリックメニューや、ボタンポップアップメニューを初期化する
-//			InitPopupMenu();
+			InitPopupMenu();
 		}
+
+        private void InitSubDialog()
+        {
+            Sqldlg.SelectSql = "";
+            Sqldlg2.SelectSql = "";
+            cmdDialog.SelectSql = "";
+        }
+
+        private void InitHistory()
+        {
+            this.whereHistory = svdata.WhereHistory;
+            this.txtWhere.PdHistory = this.whereHistory;
+
+            this.sortHistory = svdata.SortHistory;
+            this.txtSort.PdHistory = this.sortHistory;
+
+            this.aliasHistory = svdata.AliasHistory;
+            this.txtAlias.PdHistory = this.aliasHistory;
+
+            this.selectHistory = svdata.SelectHistory;
+
+            this.DMLHistory = svdata.DMLHistory;
+            this.cmdHistory = svdata.CmdHistory;
+            this.searchHistory = svdata.SearchHistory;
+        }
+
+        private void SetParams(Form mdiparent, ConnectionInfo conn)
+        {
+            this.MdiParent = mdiparent;
+            if (conn.InstanceName.Length != 0)
+            {
+                this.ServerName = conn.ServerName + "@" + conn.InstanceName;
+            }
+            else
+            {
+                this.ServerName = conn.ServerName;
+            }
+            this.ServerName = conn.ServerName;
+            this.ServerRealName = conn.ServerRealName;
+            this.InstanceName = conn.InstanceName;
+            this.LogOnUid = conn.LogOnUid;
+            this.LogOnPassword = conn.LogOnPassword;
+            this.IsUseTruse = conn.IsUseTruse;
+
+            this.ServerName = conn.ServerName;
+            this.ServerRealName = conn.ServerRealName;
+            this.SqlDriver = conn.SqlDriver;
+            this.ConnectSqlVersion = conn.SqlVersionInfo;
+            this.svdata = conn.ServerDataInfo;
+        }
 
 		/// <summary>
 		/// 使用されているリソースに後処理を実行します。
