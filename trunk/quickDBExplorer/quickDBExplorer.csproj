@@ -141,6 +141,8 @@
     <Compile Include="Controls\quickDBExplorerTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Forms\BookmarkInfo.cs" />
+    <Compile Include="Forms\ConnectionInfo.cs" />
     <Compile Include="Forms\DataGridViewBase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +206,7 @@
     <Compile Include="Forms\Dialog\ZoomFloatingDialog.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Events\FormEvents.cs" />
     <Compile Include="Forms\mainForm.cs">
       <SubType>Form</SubType>
     </Compile>

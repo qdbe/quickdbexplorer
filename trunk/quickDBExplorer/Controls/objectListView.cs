@@ -153,6 +153,24 @@ namespace quickDBExplorer
 			}
 			return (DBObjectInfo)this.SelectedItems[i].Tag;
 		}
+        
+        /// <summary>
+        /// 選択された項目のうち、指定されたオブジェクト名の情報を取得する
+        /// </summary>
+        /// <returns></returns>
+        public List<DBObjectInfo> GetSelectObjects()
+        {
+            if (this.SelectedItems.Count == 0)
+            {
+                return null;
+            }
+            List<DBObjectInfo> selectList = new List<DBObjectInfo>();
+            foreach(ListViewItem each in this.SelectedItems)
+            {
+                selectList.Add((DBObjectInfo)each.Tag);
+            }
+            return selectList;
+        }
 
 		/// <summary>
 		/// 一覧で選択されているオブジェクトの情報を再取得しなおす

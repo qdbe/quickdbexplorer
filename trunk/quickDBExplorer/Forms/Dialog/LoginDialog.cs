@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Sql;
 using System.Reflection;
 using System.Windows.Forms;
+using quickDBExplorer.Forms.Events;
 
 namespace quickDBExplorer
 {
@@ -61,6 +62,8 @@ namespace quickDBExplorer
         private Button btnSelectServer;
 
         private bool IsActivateWithArgs = false;
+
+        internal event LoginConnectedHandler LoginConnected;
 
 
 		/// <summary>
@@ -414,6 +417,89 @@ namespace quickDBExplorer
 
         private void DoLogin()
         {
+            // エラーメッセージクリア
+            this.InitErrMessage();
+
+            try
+            {
+                // SQL Server とのコネクションを確立する
+                System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection();
+                con.ConnectionString = CreateConnectionString();
+                con.Open();
+
+
+                // 以前のサーバー別情報があれば、それを再作成する
+                ServerData sv = CreateServerData();
+
+                // SQL 処理クラスの初期化
+                SqlVersion sqlVer = new SqlVersion(con.ServerVersion);
+
+                // SQL SERVERのバージョンに応じたDLLを読み込む
+                ISqlInterface driver = CreateSqlDriver(con, sqlVer);
+                 
+
+                ConnectionInfo connectInfo = new ConnectionInfo(
+                    this.txtServerName.Text,
+                    this.txtServerName.Text,
+                    this.txtInstance.Text,
+                    this.txtUser.Text,
+                    this.txtPassword.Text,
+                    this.chkTrust.Checked,
+                    driver,
+                    sqlVer,
+                    sv );
+
+                if( LoginConnected != null )
+                {
+                    LoginConnected(connectInfo);
+                }
+
+                // メインダイアログを表示すれば、このダイアログは不要
+                if (this.IsActivateWithArgs == false)
+                {
+                    this.Close();
+                }
+            }
+            catch (System.Data.SqlClient.SqlException se)
+            {
+                this.SetErrorMessage(se);
+            }
+            //finally {
+            //	mainForm.sqlConnection1.Close();
+            //}
+        }
+
+        private ServerData CreateServerData()
+        {
+            ServerData sv = new ServerData();
+            sv.Servername = this.txtServerName.Text;
+            sv.InstanceName = this.txtInstance.Text;
+            if (initOpt.PerServerData[sv.KeyName] == null)
+            {
+                initOpt.PerServerData.Add(sv.KeyName, sv);
+            }
+            else
+            {
+                sv = (ServerData)initOpt.PerServerData[sv.KeyName];
+            }
+
+            if (this.chkSaveInfo.Checked == false)
+            {
+                sv.IsSaveKey = false;
+            }
+            else
+            {
+                sv.IsSaveKey = true;
+            }
+            sv.IsUseTrust = this.chkTrust.Checked;
+            sv.LogOnUser = this.txtUser.Text;
+            // 最後に接続したサーバーを更新
+            initOpt.LastServerKey = sv.KeyName;
+            return sv;
+        }
+
+        private String CreateConnectionString()
+        {
             String myConnString;
             if (this.chkTrust.Checked == false)
             {
@@ -449,91 +535,20 @@ namespace quickDBExplorer
                         + "Database=master;Integrated Security=SSPI;";
                 }
             }
+            return myConnString;
+        }
 
-            // エラーメッセージクリア
-            this.InitErrMessage();
-
-            try
-            {
-                Assembly asm = null;
-                string dllName = "";
-                string className = "";
-
-                // SQL Server とのコネクションを確立する
-                System.Data.SqlClient.SqlConnection con = new System.Data.SqlClient.SqlConnection();
-                con.ConnectionString = myConnString;
-                con.Open();
-
-                // 以前のサーバー別情報があれば、それを再作成する
-                ServerData sv = new ServerData();
-                sv.Servername = this.txtServerName.Text;
-                sv.InstanceName = this.txtInstance.Text;
-                if (initOpt.PerServerData[sv.KeyName] == null)
-                {
-                    initOpt.PerServerData.Add(sv.KeyName, sv);
-                }
-                else
-                {
-                    sv = (ServerData)initOpt.PerServerData[sv.KeyName];
-                }
-
-                if (this.chkSaveInfo.Checked == false)
-                {
-                    sv.IsSaveKey = false;
-                }
-                else
-                {
-                    sv.IsSaveKey = true;
-                }
-                sv.IsUseTrust = this.chkTrust.Checked;
-                sv.LogOnUser = this.txtUser.Text;
-                // 最後に接続したサーバーを更新
-                initOpt.LastServerKey = sv.KeyName;
-                // SQL 処理クラスの初期化
-                SqlVersion sqlVer = new SqlVersion(con.ServerVersion);
-
-                // メインダイアログを表示
-                MainForm mainForm = new MainForm(sv, sqlVer);
-                mainForm.MdiParent = this.MdiParent;
-                mainForm.ServerName = this.txtServerName.Text;
-                mainForm.ServerRealName = this.txtServerName.Text;
-                mainForm.InstanceName = this.txtInstance.Text;
-                mainForm.LogOnUid = this.txtUser.Text;
-                mainForm.LogOnPassword = this.txtPassword.Text;
-                mainForm.IsUseTruse = this.chkTrust.Checked;
-                if (this.txtInstance.Text.Length != 0)
-                {
-                    mainForm.ServerName = this.txtServerName.Text + "@" + this.txtInstance.Text;
-                }
-                else
-                {
-                    mainForm.ServerName = this.txtServerName.Text;
-                }
-
-                // SQL SERVERのバージョンに応じたDLLを読み込む
-                dllName = string.Format(System.Globalization.CultureInfo.CurrentCulture, Application.StartupPath + "\\SqlServer{0}Driver.dll", sqlVer.AdapterNameString);
-                className = string.Format(System.Globalization.CultureInfo.CurrentCulture, "quickDBExplorer.SqlServerDriver{0}", sqlVer.AdapterNameString);
-                asm = Assembly.LoadFrom(dllName);
-                mainForm.SqlDriver = (ISqlInterface)asm.CreateInstance(className, true);
-
-                mainForm.SqlDriver.SetConnection(con, mainForm.SqlTimeout);
-                mainForm.InitPopupMenu();
-
-                // MDI なので、モードレスでダイアログを表示する
-                mainForm.Show();
-                // メインダイアログを表示すれば、このダイアログは不要
-                if (this.IsActivateWithArgs == false)
-                {
-                    this.Close();
-                }
-            }
-            catch (System.Data.SqlClient.SqlException se)
-            {
-                this.SetErrorMessage(se);
-            }
-            //finally {
-            //	mainForm.sqlConnection1.Close();
-            //}
+        private ISqlInterface CreateSqlDriver(System.Data.SqlClient.SqlConnection con, SqlVersion sqlVer)
+        {
+            Assembly asm = null;
+            string dllName = "";
+            string className = "";
+            dllName = string.Format(System.Globalization.CultureInfo.CurrentCulture, Application.StartupPath + "\\SqlServer{0}Driver.dll", sqlVer.AdapterNameString);
+            className = string.Format(System.Globalization.CultureInfo.CurrentCulture, "quickDBExplorer.SqlServerDriver{0}", sqlVer.AdapterNameString);
+            asm = Assembly.LoadFrom(dllName);
+            ISqlInterface driver = (ISqlInterface)asm.CreateInstance(className, true);
+            driver.SetConnection(con, MainForm.DefaultSqlTimeOut);
+            return driver;
         }
 
 		/// <summary>
