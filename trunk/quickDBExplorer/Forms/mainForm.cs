@@ -9,6 +9,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using quickDBExplorer.Forms;
 using quickDBExplorer.Forms.Events;
 
 namespace quickDBExplorer
@@ -2088,14 +2089,7 @@ namespace quickDBExplorer
 
 					// 該当DBの最後に選択したユーザーを選択する
 					string[] olist = (string[])saveownerlist.ToArray(typeof(string));
-					for (int i = 0; i < olist.Length; i++)
-					{
-						int idx = this.ownerListbox.FindString(olist[i]);
-						if (idx >= 0)
-						{
-							this.ownerListbox.SetSelected(idx, true);
-						}
-					}
+                    ownerListbox.SetSelectedItems(olist);
 					this.ownerListbox.Focus();
 				}
 				else
@@ -6916,6 +6910,26 @@ namespace quickDBExplorer
         private void menuTimeoutChange_Click(object sender, EventArgs e)
         {
             ChangeTimeout();
+        }
+
+        public BookmarkInfo GetCurrentBookmarkInfo()
+        {
+            return new BookmarkInfo(this.dbList.SelectedItem.ToString(),
+                this.ownerListbox.GetSelectedItemAsStringArray(),
+                this.objectList.GetSelectObjects()
+                );
+        }
+
+        public void LoadBookmark(BookmarkInfo bookmark)
+        {
+            int idx = this.dbList.FindString(bookmark.DBName);
+            if (idx >= 0)
+            {
+                this.dbList.SelectedIndex = idx;
+            }
+
+            this.ownerListbox.SetSelectedItems(bookmark.Schema);
+            this.objectList.SetSelectedObjects(bookmark.Objects);
         }
 	}
 

@@ -51,6 +51,8 @@ namespace quickDBExplorer
         /// </summary>
         private Hashtable argHt = new Hashtable();
         private MenuItem menuBookamrk;
+        private MenuItem menuAddBookMark;
+        private MenuItem menuEditBookmark;
 
         /// <summary>
         /// サーバー別ブックマーク
@@ -109,12 +111,14 @@ namespace quickDBExplorer
             this.menuNewConnect = new System.Windows.Forms.MenuItem();
             this.menuQuit = new System.Windows.Forms.MenuItem();
             this.menuWindow = new System.Windows.Forms.MenuItem();
+            this.menuBookamrk = new System.Windows.Forms.MenuItem();
             this.menuHelpMain = new System.Windows.Forms.MenuItem();
             this.menuViewHelp = new System.Windows.Forms.MenuItem();
             this.menuAbout = new System.Windows.Forms.MenuItem();
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.menuBookamrk = new System.Windows.Forms.MenuItem();
+            this.menuAddBookMark = new System.Windows.Forms.MenuItem();
+            this.menuEditBookmark = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,6 +165,15 @@ namespace quickDBExplorer
             this.menuWindow.MdiList = true;
             this.menuWindow.Text = "ウィンドウ(&W)";
             // 
+            // menuBookamrk
+            // 
+            this.menuBookamrk.Index = 2;
+            this.menuBookamrk.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuAddBookMark,
+            this.menuEditBookmark});
+            this.menuBookamrk.Text = "Bookmark(&C)";
+            this.menuBookamrk.Popup += new System.EventHandler(this.menuBookamrk_Popup);
+            // 
             // menuHelpMain
             // 
             this.menuHelpMain.Index = 3;
@@ -192,11 +205,17 @@ namespace quickDBExplorer
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // menuBookamrk
+            // menuAddBookMark
             // 
-            this.menuBookamrk.Index = 2;
-            this.menuBookamrk.Text = "Bookmark";
-            this.menuBookamrk.Popup += new System.EventHandler(this.menuBookamrk_Popup);
+            this.menuAddBookMark.Index = 0;
+            this.menuAddBookMark.Text = "追加(&H)";
+            this.menuAddBookMark.Click += new System.EventHandler(this.menuAddBookMark_Click);
+            // 
+            // menuEditBookmark
+            // 
+            this.menuEditBookmark.Index = 1;
+            this.menuEditBookmark.Text = "管理(&R)";
+            this.menuEditBookmark.Click += new System.EventHandler(this.menuEditBookmark_Click);
             // 
             // MainMdi
             // 
@@ -588,12 +607,12 @@ namespace quickDBExplorer
         private void menuBookamrk_Popup(object sender, EventArgs e)
         {
             this.menuBookamrk.MenuItems.Clear();
-            foreach (Form each in this.MdiChildren)
+            this.menuBookamrk.MenuItems.Add(menuEditBookmark);
+            if( this.ActiveMdiChild != null &&
+                this.ActiveMdiChild is MainForm )
             {
-                if (each.Focused)
-                {
-                    SetBookmarkPopupList((MainForm)each);
-                }
+                this.menuBookamrk.MenuItems.Add(menuAddBookMark);
+                SetBookmarkPopupList((MainForm)this.ActiveMdiChild);
             }
         }
 
@@ -605,8 +624,45 @@ namespace quickDBExplorer
             }
             foreach (BookmarkInfo each in bookMarks[mainForm.ServerName])
             {
-                this.menuBookamrk.MenuItems.Add(each.Name);
+                MenuItem itm = new MenuItem(each.Name);
+                itm.Click += new EventHandler(BookmarkItemClick);
+                itm.Tag = each;
+                this.menuBookamrk.MenuItems.Add(itm);
             }
+        }
+
+        void BookmarkItemClick(object sender, EventArgs e)
+        {
+            MenuItem itm = (MenuItem)sender;
+            if (itm.Tag == null || !(itm.Tag is BookmarkInfo))
+            {
+                return;
+            }
+
+            MainForm form = (MainForm)this.ActiveMdiChild;
+            form.LoadBookmark((BookmarkInfo)itm.Tag);
+        }
+
+        private void menuAddBookMark_Click(object sender, EventArgs e)
+        {
+            MainForm form = ((MainForm)this.ActiveMdiChild);
+            BookmarkInfo addinfo = form.GetCurrentBookmarkInfo();
+            List<BookmarkInfo> list;
+            if (this.bookMarks.ContainsKey(form.ServerName) == false)
+            {
+                list = new List<BookmarkInfo>();
+                this.bookMarks.Add(form.ServerName, list);
+            }
+            else
+            {
+                list = this.bookMarks[form.ServerName];
+            }
+            list.Add(addinfo);
+        }
+
+        private void menuEditBookmark_Click(object sender, EventArgs e)
+        {
+
         }
     }
     

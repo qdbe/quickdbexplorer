@@ -4,48 +4,448 @@
         <name>quickDBExplorer</name>
     </assembly>
     <members>
-        <member name="T:quickDBExplorer.Properties.Resources">
+        <member name="T:quickDBExplorer.ServerSelectDialog">
             <summary>
-              ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
+            ServerSelectDialog の概要の説明です。
             </summary>
         </member>
-        <member name="P:quickDBExplorer.Properties.Resources.ResourceManager">
+        <member name="F:quickDBExplorer.ServerSelectDialog.components">
             <summary>
-              このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
+            必要なデザイナ変数です。
             </summary>
         </member>
-        <member name="P:quickDBExplorer.Properties.Resources.Culture">
+        <member name="F:quickDBExplorer.ServerSelectDialog.pSelectedServer">
             <summary>
-              厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
-              現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
+            選択されたサーバー名
             </summary>
         </member>
-        <member name="T:quickDBExplorer.FieldListItem">
+        <member name="F:quickDBExplorer.ServerSelectDialog.pSelectedInstance">
             <summary>
-            FieldListに表示する項目の詳細
+            選択されたインスタンス名
             </summary>
         </member>
-        <member name="M:quickDBExplorer.FieldListItem.#ctor(System.String,System.Object)">
+        <member name="M:quickDBExplorer.ServerSelectDialog.#ctor(quickDBExplorer.ConditionRecorder)">
             <summary>
             コンストラクタ
             </summary>
-            <param name="text"></param>
-            <param name="refObj"></param>
+            <param name="cl">過去の接続サーバー履歴情報</param>
         </member>
-        <member name="M:quickDBExplorer.FieldListItem.ToString">
+        <member name="M:quickDBExplorer.ServerSelectDialog.Dispose(System.Boolean)">
             <summary>
-            通常は表示文字のみを返す
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:quickDBExplorer.FieldListItem.BackObj">
-            <summary>
-            関連オブジェクトを返す
+            使用されているリソースに後処理を実行します。
             </summary>
         </member>
-        <member name="T:quickDBExplorer.ObjectListView">
+        <member name="M:quickDBExplorer.ServerSelectDialog.InitializeComponent">
             <summary>
-            Table等DBオブジェクトの一覧表示専用クラス
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerSelectDialog.SelectedServer">
+            <summary>
+            選択されたサーバー名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerSelectDialog.SelectedInstance">
+            <summary>
+            選択されたインスタンス名
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.TableSelectDialog">
+            <summary>
+            オブジェクト指定ダイアログ
+            オブジェクト一覧から特定のオブジェクトを選択する 入力用ダイアログ
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.quickDBExplorerBaseForm">
+            <summary>
+            エラー情報表示エリアを持つ、base となるダイアログクラス。
+            継承して利用することを想定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.quickDBExplorerBaseForm.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.quickDBExplorerBaseForm.MsgArea">
+            <summary>
+            メッセージ表示エリア
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.quickDBExplorerBaseForm.pErrMessage">
+            <summary>
+            表示するエラーメッセージ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.InitErrMessage">
+            <summary>
+            エラーメッセージを初期化し、クリアする
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.SetErrorMessage(System.Exception)">
+            <summary>
+            Exception の内容からエラーメッセージを表示する
+            </summary>
+            <param name="ex">発生したException
+            このException の Message がエラーメッセージ領域に表示され、ToString()した結果が ダブルクリック時のクリップボード貼り付け対象となる</param>
+        </member>
+        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.SetMessageArea(System.Object)">
+            <summary>
+            エラーメッセージの領域に表示する内容をセットする
+            </summary>
+            <param name="dspdata"></param>
+        </member>
+        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.msgArea_DoubleClick(System.Object,System.EventArgs)">
+            <summary>
+            エラーメッセージ領域をダブルクリックした場合、エラーメッセージの詳細な内容をクリップボードにコピーする
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.quickDBExplorerBaseForm.ErrMessage">
+            <summary>
+            表示するエラーメッセージ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.TableSelectDialog.pResultStr">
+            <summary>
+            当ダイアログでの入力結果
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.TableSelectDialog.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.TableSelectDialog.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.TableSelectDialog.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.TableSelectDialog.ResultStr">
+            <summary>
+            当ダイアログでの入力結果
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.DataGridViewBase">
+            <summary>
+            DataTable を表示するためのダイアログ
+            各種情報を一覧表示する場合に、このダイアログをベースに派生する。
+            もしくは、直接利用する
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DataGridViewBase.btnClipboard">
+            <summary>
+             クリップボードコピーボタン
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DataGridViewBase.dataViewGrid">
+            <summary>
+            データ表示エリア
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DataGridViewBase.btnClose">
+            <summary>
+            閉じるボタン
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DataGridViewBase.viewData">
+            <summary>
+            表示するデータ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DataGridViewBase.#ctor(System.Data.DataTable,System.String)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="dt">表示するデータ</param>
+            <param name="tableName">表示タイトル</param>
+        </member>
+        <member name="M:quickDBExplorer.DataGridViewBase.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DataGridViewBase.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DataGridViewBase.btnClipboard_Click(System.Object,System.EventArgs)">
+            <summary>
+            データの内容をTAB区切でクリップボードにコピーする
+            </summary>
+            <param name="sender">--</param>
+            <param name="e">--</param>
+        </member>
+        <member name="M:quickDBExplorer.DataGridViewBase.DataGridViewBase_Load(System.Object,System.EventArgs)">
+            <summary>
+            画面初期表示時処理
+            </summary>
+            <param name="sender">--</param>
+            <param name="e">--</param>
+        </member>
+        <member name="M:quickDBExplorer.DataGridViewBase.btnClose_Click(System.Object,System.EventArgs)">
+            <summary>
+            閉じるボタン押下時処理
+            </summary>
+            <param name="sender">--</param>
+            <param name="e">--</param>
+        </member>
+        <member name="T:quickDBExplorer.Forms.Events.LoginConnectedHandler">
+            <summary>
+            ログイン実行時のイベント
+            </summary>
+            <param name="conInfo"></param>
+        </member>
+        <member name="T:quickDBExplorer.Forms.Events.SaveBookMarkHandler">
+            <summary>
+            変換
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.SqlServerSelector">
+            <summary>
+            SQL Server の一覧を選択するダイアログ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SqlServerSelector.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlServerSelector.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
+        </member>
+        <member name="M:quickDBExplorer.SqlServerSelector.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlServerSelector.#ctor(System.Data.DataTable)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="serverList">SqlDataSourceEnumerator.GetDataSourcesの結果を渡す</param>
+        </member>
+        <member name="P:quickDBExplorer.SqlServerSelector.SelectedServerName">
+            <summary>
+            選択されたサーバー名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlServerSelector.SelectedInstanceName">
+            <summary>
+            選択されたインスタンス名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlServerSelector.SelectedIsClustered">
+            <summary>
+            選択されたサーバーのクラスタ状態
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlServerSelector.SelectedVersion">
+            <summary>
+            選択されたサーバーのバージョン
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.SearchConditionDlg">
+            <summary>
+            検索条件を入力するダイアログクラス
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.QueryDialog">
+            <summary>
+            クエリ等を入力する為のダイアログ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.QueryDialog.pSelectSql">
+            <summary>
+            入力された文字列
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.QueryDialog.pHasReturn">
+            <summary>
+            結果に戻り値があるかどうか
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.QueryDialog.txtInput">
+            <summary>
+            テキスト入力エリア
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.QueryDialog.btnGo">
+            <summary>
+            OKボタン
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.QueryDialog.btnCancel">
+            <summary>
+            キャンセル（閉じる）ボタン
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.QueryDialog.chkReturn">
+            <summary>
+            戻り値あり チェックボックス
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.QueryDialog.btnHistory">
+            <summary>
+            履歴表示ボタン
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.QueryDialog.pdHistory">
+            <summary>
+            入力履歴データ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.QueryDialog.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QueryDialog.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QueryDialog.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QueryDialog.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QueryDialog.btnGo_Click(System.Object,System.EventArgs)">
+            <summary>
+            OKボタン押下時イベントハンドラ
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.QueryDialog.btnHistory_Click(System.Object,System.EventArgs)">
+            <summary>
+            履歴引用ボタンの押下
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.QueryDialog.SelectSql">
+            <summary>
+            入力された文字列
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.QueryDialog.HasReturn">
+            <summary>
+            結果に戻り値があるかどうか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.QueryDialog.DHistory">
+            <summary>
+            入力履歴情報
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SearchConditionDlg.#ctor(quickDBExplorer.SqlVersion)">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SearchConditionDlg.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SearchConditionDlg.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SearchConditionDlg.SearchCondition_Load(System.Object,System.EventArgs)">
+            <summary>
+            画面の初期設定
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchField">
+            <summary>
+            フィールド名を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchTable">
+            <summary>
+            テーブル名を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchView">
+            <summary>
+            View名を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchSynonym">
+            <summary>
+            Synonym名を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchProcedure">
+            <summary>
+            ストアドプロシージャーを検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchFunction">
+            <summary>
+            関数を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsShowTableSelect">
+            <summary>
+            検索結果を元にオブジェクトを選択するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsCaseSensitive">
+            <summary>
+            大文字・小文字を区別するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsSchemaOnly">
+            <summary>
+            現在表示中のスキーマのみ対象とするか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.SearchType">
+            <summary>
+            検索方法を取得する
             </summary>
         </member>
         <member name="T:quickDBExplorer.qdbeListView">
@@ -126,223 +526,6 @@
             Ctrl + F 押下時のデリゲート
             </summary>
         </member>
-        <member name="M:quickDBExplorer.ObjectListView.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.CreateItem(System.Data.IDataRecord,quickDBExplorer.DataGetEventHandler)">
-            <summary>
-            一覧に追加するアイテムを作成作成する
-            </summary>
-            <param name="dr">データを参照するDataReader</param>
-            <param name="dataSetter">オブジェクトの詳細を設定するメソッド</param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.SetObjectListItem(System.Data.IDataReader,quickDBExplorer.ISqlInterface)">
-            <summary>
-            DataReader から オブジェクトリストの各項目を作成し設定する
-            </summary>
-            <param name="dr"></param>
-            <param name="sqlInterface"></param>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.FilterObjectList(System.String)">
-            <summary>
-            リストの内容をフィルタリングして表示する
-            </summary>
-            <param name="filterText"></param>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.GetSelectOneObjectName">
-            <summary>
-            単一選択されているオブジェクト名を取得する([]なし)
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.GetSelectOneObjectFormalName">
-            <summary>
-            単一選択されているオブジェクト名を取得する([]あり)
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.GetSelectObjectName(System.Int32)">
-            <summary>
-            選択された項目のうち、指定されたオブジェクト名を取得する
-            </summary>
-            <param name="i"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.GetSelectObject(System.Int32)">
-            <summary>
-            選択された項目のうち、指定されたオブジェクト名の情報を取得する
-            </summary>
-            <param name="i"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.ReloadSelectObjectInfo">
-            <summary>
-            一覧で選択されているオブジェクトの情報を再取得しなおす
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.FindStringExact(System.String)">
-            <summary>
-            指定した値と全く同じものを持つキーを検索する
-            .NET 標準と違い、大文字・小文字を区別する
-            </summary>
-            <param name="itemkey"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.SetSortSchemaObject">
-            <summary>
-            オブジェクトのみのソート方法にセットする
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ObjectListView.SetSortObjectOnly">
-            <summary>
-            スキーマとオブジェクトのソート方法にセットする
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.QdbeDataGridTextBoxColumn">
-            <summary>
-            データグリッドの表示形式を管理する
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.CancelEdit">
-            <summary>
-            編集処理を中断する
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Boolean)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="pa">親となるグリッド</param>
-            <param name="canset">空白文字列の設定が可能か否か</param>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Data.DataColumn)">
-            <summary>
-            コンストラクタ
-            データカラムに応じ、自動的に、
-            空白文字列の設定が可能か否か
-            管理するデータがイメージか否か
-            を設定する
-            </summary>
-            <param name="pa">親となるグリッド</param>
-            <param name="col">結合させるデータカラム</param>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Data.DataColumn,System.String,System.String,System.String)">
-            <summary>
-            コンストラクタ
-            データカラムに応じ、自動的に、
-            空白文字列の設定が可能か否か
-            管理するデータがイメージか否か
-            を設定する
-            また、データカラムに応じ、自動的に書式を設定する
-            </summary>
-            <param name="pa">親となるグリッド</param>
-            <param name="col">結合させるデータカラム</param>
-            <param name="numberFormat">整数表示の場合の書式</param>
-            <param name="floatFormat">小数点表示の場合の書式</param>
-            <param name="dateFormat">日付表示の場合の書式</param>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Boolean,System.Boolean)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="pa">親となるグリッド</param>
-            <param name="canset">空白文字列の設定が可能か否か</param>
-            <param name="isImage">管理するデータがイメージか否か</param>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.GridTextControler(System.Object,System.EventArgs)">
-            <summary>
-            TextBoxへのイベントハンドラ
-            </summary>
-            <param name="sender">--</param>
-            <param name="e">--</param>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.GridKeyDownControler(System.Object,System.Windows.Forms.KeyEventArgs)">
-            <summary>
-            グリッド上でのキーダウンイベント処理
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.Edit(System.Windows.Forms.CurrencyManager,System.Int32,System.Drawing.Rectangle,System.Boolean,System.String,System.Boolean)">
-            <summary>
-            編集開始時処理のオーバーライド
-            </summary>
-            <param name="source"></param>
-            <param name="rowNum"></param>
-            <param name="bounds"></param>
-            <param name="readOnly"></param>
-            <param name="displayText"></param>
-            <param name="cellIsVisible"></param>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.EnterNullValue">
-            <summary>
-            NULL値入力処理のオーバーライド
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.Paint(System.Drawing.Graphics,System.Drawing.Rectangle,System.Windows.Forms.CurrencyManager,System.Int32,System.Drawing.Brush,System.Drawing.Brush,System.Boolean)">
-            <summary>
-            Paintメソッドをオーバーライドする
-            </summary>
-            <param name="g"></param>
-            <param name="bounds"></param>
-            <param name="source"></param>
-            <param name="rowNum"></param>
-            <param name="backBrush"></param>
-            <param name="foreBrush"></param>
-            <param name="alignToRight"></param>
-        </member>
-        <member name="P:quickDBExplorer.QdbeDataGridTextBoxColumn.IsThisImage">
-            <summary>
-            管理するデータがイメージか否かを取得・設定する
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.CopyDataEventHandler">
-            <summary>
-            Ctrl+C 押下時の デリゲート
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.ExtendedCopyDataEventHandler">
-            <summary>
-            Ctrl + F 押下時のデリゲート
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.qdbeListBox">
-            <summary>
-            リストボックスの拡張機能版
-            キー押下時の特殊処理(delegateでのイベントハンドラ呼び出し処理)が組み込んである
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.qdbeListBox.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.qdbeListBox.ProcessCmdKey(System.Windows.Forms.Message@,System.Windows.Forms.Keys)">
-            <summary>
-            特殊キー押下時イベントハンドラ
-            </summary>
-            <param name="msg"></param>
-            <param name="keyData"></param>
-            <returns></returns>
-        </member>
-        <member name="E:quickDBExplorer.qdbeListBox.CopyData">
-            <summary>
-            Ctrl+Cが押された場合のイベント
-            </summary>
-        </member>
-        <member name="E:quickDBExplorer.qdbeListBox.ExtendedCopyData">
-            <summary>
-            Ctrl+F 押下時のイベント
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.qdbeListBox.IsAllSelecting">
-            <summary>
-            全ての項目が選択されているか否か
-            </summary>
-        </member>
         <member name="T:quickDBExplorer.ColumnSortOrder">
             <summary>
             オブジェクトのソート順を管理する為のクラス
@@ -389,267 +572,21 @@
             ソート順を取得・設定する
             </summary>
         </member>
-        <member name="T:quickDBExplorer.ShowHistoryEventHandler">
+        <member name="T:quickDBExplorer.Properties.Resources">
             <summary>
-            テキストボックスで Ctrl+Sが押下された場合のイベントハンドラ
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="T:quickDBExplorer.ShowZoomEventHandler">
-            <summary>
-            テキストボックスで Ctrl+Wが押下された場合のイベントハンドラ
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="T:quickDBExplorer.quickDBExplorerTextBox">
-            <summary>
-            CTRL+Aでの全選択機能、CTRL+Dでの文字削除を追加したテキストボックス
+              ローカライズされた文字列などを検索するための、厳密に型指定されたリソース クラスです。
             </summary>
         </member>
-        <member name="F:quickDBExplorer.quickDBExplorerTextBox.contextMenu1">
+        <member name="P:quickDBExplorer.Properties.Resources.ResourceManager">
             <summary>
-            テキスト入力エリアでの右クリックメニュー
+              このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
             </summary>
         </member>
-        <member name="F:quickDBExplorer.quickDBExplorerTextBox.pdHistory">
+        <member name="P:quickDBExplorer.Properties.Resources.Culture">
             <summary>
-            入力履歴データ
+              厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
+              現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
             </summary>
-        </member>
-        <member name="F:quickDBExplorer.quickDBExplorerTextBox.pShowZoom">
-            <summary>
-            値の拡大表示を可能とするか否か
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerTextBox.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerTextBox.menuShowHistory_Click(System.Object,System.EventArgs)">
-            <summary>
-            Ctrl+S を押下された場合に値の履歴表示イベントを呼び出し
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerTextBox.menuShowZoom_Click(System.Object,System.EventArgs)">
-            <summary>
-            Ctrl+W を押下された場合に値の拡大表示イベントを呼び出し
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="F:quickDBExplorer.quickDBExplorerTextBox.pIsDigitOnly">
-            <summary>
-            数値のみ入力可能にするか否か
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.quickDBExplorerTextBox.orgString">
-            <summary>
-            変更前のテキスト
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.quickDBExplorerTextBox.enterString">
-            <summary>
-            Enter時のテキスト
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerTextBox.quickDBExplorerTextBox_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
-            <summary>
-            キーダウンイベントハンドラ
-            CTRL+Aでの全選択処理を追加する
-            </summary>
-            <param name="sender"></param>
-            <param name="ev"></param>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerTextBox.DoShowZoom(System.String,System.EventHandler)">
-            <summary>
-            値拡大ダイアログを表示する
-            </summary>
-            <param name="labelName">Windowタイトル</param>
-            <param name="dlgEnter">ダイアログでOKボタンが押下された時のイベントハンドラ</param>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerTextBox.DoShowHistory(System.String)">
-            <summary>
-            履歴選択ダイアログを表示する
-            </summary>
-            <param name="key">履歴を選択する際のキー情報</param>
-        </member>
-        <member name="E:quickDBExplorer.quickDBExplorerTextBox.ShowHistory">
-            <summary>
-            Ctrl+Sが押された場合のイベント
-            </summary>
-        </member>
-        <member name="E:quickDBExplorer.quickDBExplorerTextBox.ShowZoom">
-            <summary>
-            Ctrl+Sが押された場合のイベント
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.quickDBExplorerTextBox.PdHistory">
-            <summary>
-            入力履歴データ
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.quickDBExplorerTextBox.IsShowZoom">
-            <summary>
-            値の拡大表示を可能とするか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.quickDBExplorerTextBox.IsDigitOnly">
-            <summary>
-            数値のみ入力可能にするか否か
-            false: 数値以外も入力可能
-            true: 数値のみ可能
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.quickDBExplorerTextBox.CanCtrlDelete">
-            <summary>
-            CTRL+Dで文字を削除可能にするか否か
-            false: 削除できない
-            true: 削除できる(既定値)
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.quickDBExplorerTextBox.IsTextChanged">
-            <summary>
-            Enter 後、値に変更があったか否かを返す
-            Focus がない場合、常にfalseを返す
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.DataGridViewBase">
-            <summary>
-            DataTable を表示するためのダイアログ
-            各種情報を一覧表示する場合に、このダイアログをベースに派生する。
-            もしくは、直接利用する
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.quickDBExplorerBaseForm">
-            <summary>
-            エラー情報表示エリアを持つ、base となるダイアログクラス。
-            継承して利用することを想定
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.quickDBExplorerBaseForm.components">
-            <summary>
-            必要なデザイナ変数です。
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.quickDBExplorerBaseForm.MsgArea">
-            <summary>
-            メッセージ表示エリア
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.quickDBExplorerBaseForm.pErrMessage">
-            <summary>
-            表示するエラーメッセージ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.InitErrMessage">
-            <summary>
-            エラーメッセージを初期化し、クリアする
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.SetErrorMessage(System.Exception)">
-            <summary>
-            Exception の内容からエラーメッセージを表示する
-            </summary>
-            <param name="ex">発生したException
-            このException の Message がエラーメッセージ領域に表示され、ToString()した結果が ダブルクリック時のクリップボード貼り付け対象となる</param>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.SetMessageArea(System.Object)">
-            <summary>
-            エラーメッセージの領域に表示する内容をセットする
-            </summary>
-            <param name="dspdata"></param>
-        </member>
-        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.msgArea_DoubleClick(System.Object,System.EventArgs)">
-            <summary>
-            エラーメッセージ領域をダブルクリックした場合、エラーメッセージの詳細な内容をクリップボードにコピーする
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="P:quickDBExplorer.quickDBExplorerBaseForm.ErrMessage">
-            <summary>
-            表示するエラーメッセージ
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.DataGridViewBase.btnClipboard">
-            <summary>
-             クリップボードコピーボタン
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.DataGridViewBase.dataViewGrid">
-            <summary>
-            データ表示エリア
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.DataGridViewBase.btnClose">
-            <summary>
-            閉じるボタン
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.DataGridViewBase.viewData">
-            <summary>
-            表示するデータ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DataGridViewBase.#ctor(System.Data.DataTable,System.String)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="dt">表示するデータ</param>
-            <param name="tableName">表示タイトル</param>
-        </member>
-        <member name="M:quickDBExplorer.DataGridViewBase.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DataGridViewBase.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DataGridViewBase.btnClipboard_Click(System.Object,System.EventArgs)">
-            <summary>
-            データの内容をTAB区切でクリップボードにコピーする
-            </summary>
-            <param name="sender">--</param>
-            <param name="e">--</param>
-        </member>
-        <member name="M:quickDBExplorer.DataGridViewBase.DataGridViewBase_Load(System.Object,System.EventArgs)">
-            <summary>
-            画面初期表示時処理
-            </summary>
-            <param name="sender">--</param>
-            <param name="e">--</param>
-        </member>
-        <member name="M:quickDBExplorer.DataGridViewBase.btnClose_Click(System.Object,System.EventArgs)">
-            <summary>
-            閉じるボタン押下時処理
-            </summary>
-            <param name="sender">--</param>
-            <param name="e">--</param>
         </member>
         <member name="T:quickDBExplorer.MainForm">
             <summary>
@@ -709,6 +646,11 @@
              コンボボックスのイベント処理中か否か
             </summary>
         </member>
+        <member name="F:quickDBExplorer.MainForm.DefaultSqlTimeOut">
+            <summary>
+            クエリ実行タイムアウト値の規定値
+            </summary>
+        </member>
         <member name="F:quickDBExplorer.MainForm.pSqlTimeout">
             <summary>
             SQL のクエリ実行タイムアウト値
@@ -759,12 +701,12 @@
             コマンド入力ダイアログ
             </summary>
         </member>
-        <member name="M:quickDBExplorer.MainForm.#ctor(quickDBExplorer.ServerData,quickDBExplorer.SqlVersion)">
+        <member name="M:quickDBExplorer.MainForm.#ctor(System.Windows.Forms.Form,quickDBExplorer.ConnectionInfo)">
             <summary>
             コンストラクタ
             </summary>
-            <param name="sv">前回最終処理の記憶値</param>
-            <param name="sqlVer">SQL Server のバージョン情報</param>
+            <param name="mdiparent">親MDIフォーム</param>
+            <param name="conn">接続情報</param>
         </member>
         <member name="M:quickDBExplorer.MainForm.Dispose(System.Boolean)">
             <summary>
@@ -1322,6 +1264,89 @@
             ボタンからの呼び出しがある場合、そのボタンのコントロール名称
             </summary>
         </member>
+        <member name="T:quickDBExplorer.SqlVersion">
+            <summary>
+            SqlVersion の概要の説明です。
+            </summary>
+            
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.pFullVersionString">
+            <summary>
+            バージョン番号をあらわす文字列
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.pPublicVersion">
+            <summary>
+            2000,2005,2008 等
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.pIsSynonym">
+            <summary>
+            該当バーージョンで Synonym を利用できるか
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.pCanUseQueryAnalyzer">
+            <summary>
+            クエリアナライザーを利用可能か否か
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.pIsManagementStudio">
+            <summary>
+            Management Studio と呼ぶか否か
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2000">
+            <summary>
+            SQL Server 2000 を表すインスタンスを生成する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2005">
+            <summary>
+            SQL Server 2005 を表すインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2008">
+            <summary>
+            SQL Server 2008 を表すインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.#ctor(System.String)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="versionStr">Connection.ServerVersion の結果を渡す</param>
+        </member>
+        <member name="P:quickDBExplorer.SqlVersion.FullVersionString">
+            <summary>
+            バージョン番号をあらわす文字列
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlVersion.PublicVersionNo">
+            <summary>
+            製品名につくバージョン（2000,2005,2008等)
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlVersion.AdapterNameString">
+            <summary>
+            接続用DLLにつく名称
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlVersion.CanUseSynonym">
+            <summary>
+            該当バーージョンで Synonym を利用できるか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlVersion.CanUseQueryAnalyzer">
+            <summary>
+            クエリアナライザーを利用可能か否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlVersion.IsManagementStudio">
+            <summary>
+            Management Studio と呼ぶか否か
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.MainMdi">
             <summary>
             全ての親画面となるMDIフォーム
@@ -1340,6 +1365,11 @@
         <member name="F:quickDBExplorer.MainMdi.argHt">
             <summary>
             コマンド引数の内容
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.MainMdi.bookMarks">
+            <summary>
+            サーバー別ブックマーク
             </summary>
         </member>
         <member name="M:quickDBExplorer.MainMdi.Main(System.String[])">
@@ -1414,296 +1444,6 @@
             </summary>
             <param name="args"></param>
             <returns></returns>
-        </member>
-        <member name="T:quickDBExplorer.CmdInputDialog">
-            <summary>
-            オブジェクトに対する各種コマンド実行 のコマンド入力用ダイアログ
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.QueryDialog">
-            <summary>
-            クエリ等を入力する為のダイアログ
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.QueryDialog.pSelectSql">
-            <summary>
-            入力された文字列
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.QueryDialog.pHasReturn">
-            <summary>
-            結果に戻り値があるかどうか
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.QueryDialog.txtInput">
-            <summary>
-            テキスト入力エリア
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.QueryDialog.btnGo">
-            <summary>
-            OKボタン
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.QueryDialog.btnCancel">
-            <summary>
-            キャンセル（閉じる）ボタン
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.QueryDialog.chkReturn">
-            <summary>
-            戻り値あり チェックボックス
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.QueryDialog.btnHistory">
-            <summary>
-            履歴表示ボタン
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.QueryDialog.pdHistory">
-            <summary>
-            入力履歴データ
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.QueryDialog.components">
-            <summary>
-            必要なデザイナ変数です。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QueryDialog.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QueryDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QueryDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QueryDialog.btnGo_Click(System.Object,System.EventArgs)">
-            <summary>
-            OKボタン押下時イベントハンドラ
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.QueryDialog.btnHistory_Click(System.Object,System.EventArgs)">
-            <summary>
-            履歴引用ボタンの押下
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="P:quickDBExplorer.QueryDialog.SelectSql">
-            <summary>
-            入力された文字列
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.QueryDialog.HasReturn">
-            <summary>
-            結果に戻り値があるかどうか
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.QueryDialog.DHistory">
-            <summary>
-            入力履歴情報
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.CmdInputDialog.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.CmdInputDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.CmdInputDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.CmdInputDialog.btnGo_Click(System.Object,System.EventArgs)">
-            <summary>
-            OKボタン押下時処理
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="T:quickDBExplorer.FieldGetDialog">
-            <summary>
-            フィールド情報の取得条件指定ダイアログ
-            フィールド情報をコピーする条件を指定する
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.FieldGetDialog.pBaseTableName">
-            <summary>
-            オブジェクト名
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.FieldGetDialog.pRetTableAccessor">
-            <summary>
-            オブジェクトの修飾子(alias) 戻り値
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.FieldGetDialog.pRetCrlf">
-            <summary>
-            改行をつけるかつけないかの指定(戻り値)
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.FieldGetDialog.pRetComma">
-            <summary>
-            カンマをつけるかつけないか(戻り値)
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.FieldGetDialog.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.FieldGetDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.FieldGetDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.FieldGetDialog.FieldGetDialog_Load(System.Object,System.EventArgs)">
-            <summary>
-            画面初期表示時処理
-            </summary>
-            <param name="sender">--</param>
-            <param name="e">--</param>
-        </member>
-        <member name="M:quickDBExplorer.FieldGetDialog.cmbPattern_SelectedIndexChanged(System.Object,System.EventArgs)">
-            <summary>
-            コンボボックス選択時ハンドラ
-            選択された項目に応じて、各項目の内容をセットする
-            </summary>
-            <param name="sender">--</param>
-            <param name="e">--</param>
-        </member>
-        <member name="M:quickDBExplorer.FieldGetDialog.btnOK_Click(System.Object,System.EventArgs)">
-            <summary>
-            OKボタン押下時ハンドラ
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="P:quickDBExplorer.FieldGetDialog.BaseTableName">
-            <summary>
-            オブジェクト名
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.FieldGetDialog.RetTableAccessor">
-            <summary>
-            オブジェクトの修飾子(alias) 戻り値
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.FieldGetDialog.RetCrlf">
-            <summary>
-            改行をつけるかつけないかの指定(戻り値)
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.FieldGetDialog.RetComma">
-            <summary>
-            カンマをつけるかつけないか(戻り値)
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.GridFormatDialog">
-            <summary>
-            データグリッドの表示書式を指定する
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.components">
-            <summary>
-            必要なデザイナ変数です。
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.gridFont">
-            <summary>
-            表示フォントの指定
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.gridColor">
-            <summary>
-            フォント表示色の指定
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.numberFormat">
-            <summary>
-            数値変換書式の指定
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.gridFloatFormat">
-            <summary>
-            小数点書式の指定
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.gridDateFormat">
-            <summary>
-            日付変換書式の指定
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.GridFormatDialog.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.GridFormatDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.GridFormatDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.GridFormatDialog.GetFormat(System.String)">
-            <summary>
-            フォーマット文字列を取得する
-            </summary>
-            <param name="fstr">基の表示書式</param>
-            <returns>表示書式文字列</returns>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.Gfont">
-            <summary>
-            表示フォントの指定
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.Gcolor">
-            <summary>
-            フォント表示色の指定
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.NumFormat">
-            <summary>
-            数値変換書式の指定
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.FloatFormat">
-            <summary>
-            小数点書式の指定
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.DateFormat">
-            <summary>
-            日付変換書式の指定
-            </summary>
         </member>
         <member name="T:quickDBExplorer.HistoryViewer">
             <summary>
@@ -1805,921 +1545,134 @@
             オブジェクト名称を表示するか否かの指定
             </summary>
         </member>
-        <member name="T:quickDBExplorer.ImageViewer">
+        <member name="T:quickDBExplorer.ShowHistoryEventHandler">
             <summary>
-            イメージの表示ダイアログ
+            テキストボックスで Ctrl+Sが押下された場合のイベントハンドラ
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:quickDBExplorer.ShowZoomEventHandler">
+            <summary>
+            テキストボックスで Ctrl+Wが押下された場合のイベントハンドラ
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:quickDBExplorer.quickDBExplorerTextBox">
+            <summary>
+            CTRL+Aでの全選択機能、CTRL+Dでの文字削除を追加したテキストボックス
             </summary>
         </member>
-        <member name="F:quickDBExplorer.ImageViewer.pViewImage">
+        <member name="F:quickDBExplorer.quickDBExplorerTextBox.contextMenu1">
             <summary>
-            表示するイメージ情報
+            テキスト入力エリアでの右クリックメニュー
             </summary>
         </member>
-        <member name="M:quickDBExplorer.ImageViewer.#ctor">
+        <member name="F:quickDBExplorer.quickDBExplorerTextBox.pdHistory">
+            <summary>
+            入力履歴データ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.quickDBExplorerTextBox.pShowZoom">
+            <summary>
+            値の拡大表示を可能とするか否か
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.quickDBExplorerTextBox.#ctor">
             <summary>
             コンストラクタ
             </summary>
         </member>
-        <member name="M:quickDBExplorer.ImageViewer.Dispose(System.Boolean)">
+        <member name="M:quickDBExplorer.quickDBExplorerTextBox.menuShowHistory_Click(System.Object,System.EventArgs)">
             <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ImageViewer.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ImageViewer.ImageViewer_Load(System.Object,System.EventArgs)">
-            <summary>
-            画面初期表示時処理
+            Ctrl+S を押下された場合に値の履歴表示イベントを呼び出し
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="M:quickDBExplorer.ImageViewer.btnClose_Click(System.Object,System.EventArgs)">
+        <member name="M:quickDBExplorer.quickDBExplorerTextBox.menuShowZoom_Click(System.Object,System.EventArgs)">
             <summary>
-            閉じるボタン押下時処理
+            Ctrl+W を押下された場合に値の拡大表示イベントを呼び出し
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="P:quickDBExplorer.ImageViewer.ViewImage">
+        <member name="F:quickDBExplorer.quickDBExplorerTextBox.pIsDigitOnly">
             <summary>
-            表示するイメージ情報の取得・設定
+            数値のみ入力可能にするか否か
             </summary>
         </member>
-        <member name="T:quickDBExplorer.IndexViewDialog">
+        <member name="F:quickDBExplorer.quickDBExplorerTextBox.orgString">
             <summary>
-            指定されたオブジェクトのINDEX情報の表示ダイアログ
+            変更前のテキスト
             </summary>
         </member>
-        <member name="F:quickDBExplorer.IndexViewDialog.components">
+        <member name="F:quickDBExplorer.quickDBExplorerTextBox.enterString">
             <summary>
-            必要なデザイナ変数です。
+            Enter時のテキスト
             </summary>
         </member>
-        <member name="F:quickDBExplorer.IndexViewDialog.pDisplayObj">
+        <member name="M:quickDBExplorer.quickDBExplorerTextBox.quickDBExplorerTextBox_KeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
             <summary>
-            表示するオブジェクト名称
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.IndexViewDialog.pSqlDriver">
-            <summary>
-            SQLドライバ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.IndexViewDialog.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.IndexViewDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.IndexViewDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.IndexViewDialog.SetDisplayTable(quickDBExplorer.DBObjectInfo)">
-            <summary>
-            INDEX情報を表示するオブジェクトを切り替える
-            </summary>
-            <param name="dboInfo">新規に表示するオブジェクト情報</param>
-        </member>
-        <member name="M:quickDBExplorer.IndexViewDialog.chkTopStay_CheckedChanged(System.Object,System.EventArgs)">
-            <summary>
-            常にTOPに表示 チェックボックス変更時ハンドラ
+            キーダウンイベントハンドラ
+            CTRL+Aでの全選択処理を追加する
             </summary>
             <param name="sender"></param>
-            <param name="e"></param>
+            <param name="ev"></param>
         </member>
-        <member name="M:quickDBExplorer.IndexViewDialog.IndexViewDialog_Load(System.Object,System.EventArgs)">
+        <member name="M:quickDBExplorer.quickDBExplorerTextBox.DoShowZoom(System.String,System.EventHandler)">
             <summary>
-            画面初期表示時処理
+            値拡大ダイアログを表示する
             </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
+            <param name="labelName">Windowタイトル</param>
+            <param name="dlgEnter">ダイアログでOKボタンが押下された時のイベントハンドラ</param>
         </member>
-        <member name="M:quickDBExplorer.IndexViewDialog.btnCancel_Click(System.Object,System.EventArgs)">
+        <member name="M:quickDBExplorer.quickDBExplorerTextBox.DoShowHistory(System.String)">
             <summary>
-            戻るボタン押下時処理
-            ここでは、ダイアログを実際に閉じるのではなく
-            非表示にするのみとする
-            これは、以前の表示幅を記憶して、その幅で表示するようにする為
+            履歴選択ダイアログを表示する
             </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
+            <param name="key">履歴を選択する際のキー情報</param>
         </member>
-        <member name="M:quickDBExplorer.IndexViewDialog.IndexViewDialog_Closing(System.Object,System.ComponentModel.CancelEventArgs)">
+        <member name="E:quickDBExplorer.quickDBExplorerTextBox.ShowHistory">
             <summary>
-            「X」ボタンや、ALT+F4 等によるダイアログの閉じる処理への対応
+            Ctrl+Sが押された場合のイベント
             </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
         </member>
-        <member name="P:quickDBExplorer.IndexViewDialog.DisplayObj">
+        <member name="E:quickDBExplorer.quickDBExplorerTextBox.ShowZoom">
             <summary>
-            表示するオブジェクト名称
+            Ctrl+Sが押された場合のイベント
             </summary>
         </member>
-        <member name="P:quickDBExplorer.IndexViewDialog.SqlDriver">
+        <member name="P:quickDBExplorer.quickDBExplorerTextBox.PdHistory">
             <summary>
-            SQL文を処理するクラス
+            入力履歴データ
             </summary>
         </member>
-        <member name="T:quickDBExplorer.LogOnDialog">
+        <member name="P:quickDBExplorer.quickDBExplorerTextBox.IsShowZoom">
             <summary>
-            SQL Serverへのログイン指定ダイアログ
+            値の拡大表示を可能とするか否か
             </summary>
         </member>
-        <member name="F:quickDBExplorer.LogOnDialog.initOpt">
+        <member name="P:quickDBExplorer.quickDBExplorerTextBox.IsDigitOnly">
             <summary>
-            以前までの接続時記録情報
+            数値のみ入力可能にするか否か
+            false: 数値以外も入力可能
+            true: 数値のみ可能
             </summary>
         </member>
-        <member name="F:quickDBExplorer.LogOnDialog.PARAM_SERVER">
+        <member name="P:quickDBExplorer.quickDBExplorerTextBox.CanCtrlDelete">
             <summary>
-            コマンド引数 サーバー指定
+            CTRL+Dで文字を削除可能にするか否か
+            false: 削除できない
+            true: 削除できる(既定値)
             </summary>
         </member>
-        <member name="F:quickDBExplorer.LogOnDialog.PARAM_INSTANCE">
+        <member name="P:quickDBExplorer.quickDBExplorerTextBox.IsTextChanged">
             <summary>
-            コマンド引数 インスタンス名
+            Enter 後、値に変更があったか否かを返す
+            Focus がない場合、常にfalseを返す
             </summary>
-        </member>
-        <member name="F:quickDBExplorer.LogOnDialog.PARAM_USER">
-            <summary>
-            コマンド引数 ユーザー名
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.LogOnDialog.PARAM_PASSWORD">
-            <summary>
-            コマンド引数 パスワード
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.LogOnDialog.PARAM_TRUST">
-            <summary>
-            コマンド引数 Window認証
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.LogOnDialog.commnadArgHt">
-            <summary>
-            コマンド引数
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorder)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="initialOption">記憶された設定情報</param>
-        </member>
-        <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorder,System.Collections.Hashtable)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="initialOption">記憶された設定情報</param>
-            <param name="argHt">コマンド引数を格納したパラメータ</param>
-        </member>
-        <member name="M:quickDBExplorer.LogOnDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.LogOnDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.LogOnDialog.OnShown(System.EventArgs)">
-            <summary>
-            初めて表示された場合には、コマンド引数を処理する
-            </summary>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.LogOnDialog.LogOnDialog_Load(System.Object,System.EventArgs)">
-            <summary>
-            画面初期表示時処理
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.LogOnDialog.btnLogin_Click(System.Object,System.EventArgs)">
-            <summary>
-            ログインボタン押下時処理
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.LogOnDialog.btnServerHistory_Click(System.Object,System.EventArgs)">
-            <summary>
-            過去のサーバー接続履歴から、選択する
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="T:quickDBExplorer.MakeFieldWhereDlg">
-            <summary>
-            テーブルのフィールドを利用した条件句の生成指定を行う
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.MakeFieldWhereDlg.pFieldList">
-            <summary>
-            処理対象にするフィールドのリスト
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.MakeFieldWhereDlg.pObjectInfo">
-            <summary>
-            処理対象オブジェクト
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.reCreateSql">
-            <summary>
-            画面条件などからwhere句を生成しなおす
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.SetRdoCondition">
-            <summary>
-            ラジオボタンの状況により、enble 値を変更させる
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.txtAliasT1_TextChanged(System.Object,System.EventArgs)">
-            <summary>
-            Alias 設定の変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.txtAliasT2_TextChanged(System.Object,System.EventArgs)">
-            <summary>
-            Alias 設定の変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbANDOR_SelectedIndexChanged(System.Object,System.EventArgs)">
-            <summary>
-            AND/OR 設定の変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnOK_Click(System.Object,System.EventArgs)">
-            <summary>
-            クリップボードへのコピー
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnCancel_Click(System.Object,System.EventArgs)">
-            <summary>
-            閉じるボタン押下イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnRef1_Click(System.Object,System.EventArgs)">
-            <summary>
-            選択テーブルを反映する
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnRef2_Click(System.Object,System.EventArgs)">
-            <summary>
-            選択テーブルを反映する
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnRef3_Click(System.Object,System.EventArgs)">
-            <summary>
-            選択テーブルを反映する
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.rdoTable_CheckedChanged(System.Object,System.EventArgs)">
-            <summary>
-            ラジオボタン変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.MakeFieldWhereDlg_Load(System.Object,System.EventArgs)">
-            <summary>
-            画面起動時処理
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.txtAlias_TextChanged(System.Object,System.EventArgs)">
-            <summary>
-            画面条件設定変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbCondition_SelectedIndexChanged(System.Object,System.EventArgs)">
-            <summary>
-            画面条件設定変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbCondition_TextChanged(System.Object,System.EventArgs)">
-            <summary>
-            画面条件設定変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbANDOR_TextChanged(System.Object,System.EventArgs)">
-            <summary>
-            画面条件設定変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.chkPlace_CheckedChanged(System.Object,System.EventArgs)">
-            <summary>
-            画面条件設定変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbJoinCond_SelectedIndexChanged(System.Object,System.EventArgs)">
-            <summary>
-            画面条件設定変更イベント
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="P:quickDBExplorer.MakeFieldWhereDlg.FieldList">
-            <summary>
-            処理対象にするフィールドのリスト
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.MakeFieldWhereDlg.ObjectInfo">
-            <summary>
-            処理対象オブジェクト
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.qdbeAboutBox.okButton_Click(System.Object,System.EventArgs)">
-            <summary>
-            OKボタンの押下によりダイアログを閉じる
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="F:quickDBExplorer.qdbeAboutBox.components">
-            <summary>
-            必要なデザイナ変数です。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.qdbeAboutBox.Dispose(System.Boolean)">
-            <summary>
-            使用中のリソースをすべてクリーンアップします。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.qdbeAboutBox.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyTitle">
-            <summary>
-            タイトル属性をすべて取得します
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyVersion">
-            <summary>
-            アセンブリバージョンを取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyDescription">
-            <summary>
-            説明属性をすべて取得します
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyProduct">
-            <summary>
-            説明属性をすべて取得します
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyCopyright">
-            <summary>
-            著作権属性をすべて取得します
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyCompany">
-            <summary>
-            会社属性をすべて取得します
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.QueryDialogSelect">
-            <summary>
-            select 文を入力する為のダイアログ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QueryDialogSelect.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QueryDialogSelect.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.QueryDialogSelect.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.SearchConditionDlg">
-            <summary>
-            検索条件を入力するダイアログクラス
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.SearchConditionDlg.#ctor(quickDBExplorer.SqlVersion)">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.SearchConditionDlg.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.SearchConditionDlg.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.SearchConditionDlg.SearchCondition_Load(System.Object,System.EventArgs)">
-            <summary>
-            画面の初期設定
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchField">
-            <summary>
-            フィールド名を検索するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchTable">
-            <summary>
-            テーブル名を検索するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchView">
-            <summary>
-            View名を検索するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchSynonym">
-            <summary>
-            Synonym名を検索するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchProcedure">
-            <summary>
-            ストアドプロシージャーを検索するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchFunction">
-            <summary>
-            関数を検索するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsShowTableSelect">
-            <summary>
-            検索結果を元にオブジェクトを選択するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsCaseSensitive">
-            <summary>
-            大文字・小文字を区別するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSchemaOnly">
-            <summary>
-            現在表示中のスキーマのみ対象とするか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.SearchType">
-            <summary>
-            検索方法を取得する
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.ServerSelectDialog">
-            <summary>
-            ServerSelectDialog の概要の説明です。
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ServerSelectDialog.components">
-            <summary>
-            必要なデザイナ変数です。
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ServerSelectDialog.pSelectedServer">
-            <summary>
-            選択されたサーバー名
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ServerSelectDialog.pSelectedInstance">
-            <summary>
-            選択されたインスタンス名
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ServerSelectDialog.#ctor(quickDBExplorer.ConditionRecorder)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="cl">過去の接続サーバー履歴情報</param>
-        </member>
-        <member name="M:quickDBExplorer.ServerSelectDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ServerSelectDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.ServerSelectDialog.SelectedServer">
-            <summary>
-            選択されたサーバー名
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.ServerSelectDialog.SelectedInstance">
-            <summary>
-            選択されたインスタンス名
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.SqlServerSelector">
-            <summary>
-            SQL Server の一覧を選択するダイアログ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.SqlServerSelector.#ctor(System.Data.DataTable)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="serverList">SqlDataSourceEnumerator.GetDataSourcesの結果を渡す</param>
-        </member>
-        <member name="F:quickDBExplorer.SqlServerSelector.components">
-            <summary>
-            必要なデザイナ変数です。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.SqlServerSelector.Dispose(System.Boolean)">
-            <summary>
-            使用中のリソースをすべてクリーンアップします。
-            </summary>
-            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
-        </member>
-        <member name="M:quickDBExplorer.SqlServerSelector.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SqlServerSelector.SelectedServerName">
-            <summary>
-            選択されたサーバー名
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SqlServerSelector.SelectedInstanceName">
-            <summary>
-            選択されたインスタンス名
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SqlServerSelector.SelectedIsClustered">
-            <summary>
-            選択されたサーバーのクラスタ状態
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SqlServerSelector.SelectedVersion">
-            <summary>
-            選択されたサーバーのバージョン
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.TableSelectDialog">
-            <summary>
-            オブジェクト指定ダイアログ
-            オブジェクト一覧から特定のオブジェクトを選択する 入力用ダイアログ
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.TableSelectDialog.pResultStr">
-            <summary>
-            当ダイアログでの入力結果
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.TableSelectDialog.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.TableSelectDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.TableSelectDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.TableSelectDialog.ResultStr">
-            <summary>
-            当ダイアログでの入力結果
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.WhereDialog">
-            <summary>
-            where 句を指定するためのダイアログ
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.ZoomFloatingDialog">
-            <summary>
-            値拡大表示ダイアログで、常に前面に表示する機能を追加したもの
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.ZoomDialog">
-            <summary>
-            値の拡大表示用ダイアログ
-            where, order 等のテキストボックスの値を、全体が見えるようにするダイアログ
-            ここで値の編集が可能
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ZoomDialog.txtZoom">
-            <summary>
-            表示テキストエリア
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ZoomDialog.btnOk">
-            <summary>
-            OKボタン
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ZoomDialog.btnClose">
-            <summary>
-            閉じるボタン
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ZoomDialog.components">
-            <summary>
-            必要なデザイナ変数です。
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ZoomDialog.pEditText">
-            <summary>
-            表示するテキストの編集値
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ZoomDialog.pLabelName">
-            <summary>
-            タイトル名称
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ZoomDialog.pIsDisplayOnly">
-            <summary>
-            表示のみか否か
-            true ： 表示のみ
-            false : 編集可能
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ZoomDialog.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ZoomDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ZoomDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ZoomDialog.ZoomDialog_Load(System.Object,System.EventArgs)">
-            <summary>
-            画面初期表示時処理
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="P:quickDBExplorer.ZoomDialog.EditText">
-            <summary>
-            表示するテキストの編集値
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.ZoomDialog.LableName">
-            <summary>
-            タイトル名称
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.ZoomDialog.IsDispOnly">
-            <summary>
-            表示のみか否か
-            true ： 表示のみ
-            false : 編集可能
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ZoomFloatingDialog.chkStayOnTop">
-            <summary>
-            常にTOPに表示
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ZoomFloatingDialog.btnApply">
-            <summary>
-            適用ボタン
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ZoomFloatingDialog.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ZoomFloatingDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.ZoomFloatingDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.WhereDialog.pTargetObject">
-            <summary>
-            where 句指定の対象オブジェクト
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.WhereDialog.preAliasName">
-            <summary>
-            オブジェクトの alias
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.WhereDialog.pAliasName">
-            <summary>
-            オブジェクトの alias
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.Dispose(System.Boolean)">
-            <summary>
-            使用されているリソースに後処理を実行します。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.WhereDialog_Load(System.Object,System.EventArgs)">
-            <summary>
-            画面起動時処理
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.DispFieldCondition">
-            <summary>
-            フィールド一覧の設定を行う
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.SetFieldCondResult">
-            <summary>
-            画面条件からwhere句を生成する
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.btnClear_Click(System.Object,System.EventArgs)">
-            <summary>
-            条件をクリアする
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.ResetTarget">
-            <summary>
-            フィールド等の表示内容を設定しなおす
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.cmbCondition_TextChanged(System.Object,System.EventArgs)">
-            <summary>
-            AND/OR の条件変更があった
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.btnClose_Click(System.Object,System.EventArgs)">
-            <summary>
-            閉じる処理
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.WhereDialog.OnClosing(System.ComponentModel.CancelEventArgs)">
-            <summary>
-            画面を閉じる場合でも、非表示にし、実体を Dispose しない
-            </summary>
-            <param name="e"></param>
-        </member>
-        <member name="P:quickDBExplorer.WhereDialog.TargetObject">
-            <summary>
-            where 句指定の対象オブジェクト
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.WhereDialog.AliasName">
-            <summary>
-            オブジェクトの alias
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.qdbeUtil">
-            <summary>
-            各種ユーティリティ関数
-            Static メソッドのみ保持している
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.qdbeUtil.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.qdbeUtil.SplitTbname(System.String)">
-            <summary>
-            オブジェクト名を解析し、[owner]、[tablename]に分割する
-            基の名前は[]が付いていないことが前提
-            </summary>
-            <param name="tbname">オブジェクト名(owner.tablename形式)</param>
-            <returns>[owner]と[tablename]に分割された文字配列</returns>
-        </member>
-        <member name="M:quickDBExplorer.qdbeUtil.GetTbname(System.String)">
-            <summary>
-            オブジェクト名を解析し、[owner].[tablename]形式に変更する
-            基の名前は[]が付いていないことが前提
-            </summary>
-            <param name="tbname">オブジェクト名(owner.tablename形式)</param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.qdbeUtil.GetTbnameAdd(System.String,System.String)">
-            <summary>
-            オブジェクト名を解析し、[owner].[tablename]形式に変更する。
-            その際、指定された文字列をオブジェクト名称に付加した結果を返す
-            基の名前は[]が付いていないことが前提
-            </summary>
-            <param name="tbname">オブジェクト名(owner.tablename形式)</param>
-            <param name="addstr">オブジェクト名に付加する文字列</param>
-            <returns>解析後のオブジェクト名([owner].[tabblname]形式)</returns>
-        </member>
-        <member name="M:quickDBExplorer.qdbeUtil.SetNewHistory(System.String,System.String,quickDBExplorer.TextHistoryDataSet)">
-            <summary>
-            各種履歴情報への項目の追加を行う
-            </summary>
-            <param name="key">オブジェクト名称</param>
-            <param name="hvalue">追加する履歴項目</param>
-            <param name="tdata">追加する先の履歴情報</param>
         </member>
         <member name="T:quickDBExplorer.ServerData">
             <summary>
@@ -3034,88 +1987,384 @@
             最後に接続したサーバーのHashkey
             </summary>
         </member>
-        <member name="T:quickDBExplorer.SqlVersion">
+        <member name="T:quickDBExplorer.WhereDialog">
             <summary>
-            SqlVersion の概要の説明です。
-            </summary>
-            
-        </member>
-        <member name="F:quickDBExplorer.SqlVersion.pFullVersionString">
-            <summary>
-            バージョン番号をあらわす文字列
+            where 句を指定するためのダイアログ
             </summary>
         </member>
-        <member name="F:quickDBExplorer.SqlVersion.pPublicVersion">
+        <member name="T:quickDBExplorer.ZoomFloatingDialog">
             <summary>
-            2000,2005,2008 等
+            値拡大表示ダイアログで、常に前面に表示する機能を追加したもの
             </summary>
         </member>
-        <member name="F:quickDBExplorer.SqlVersion.pIsSynonym">
+        <member name="T:quickDBExplorer.ZoomDialog">
             <summary>
-            該当バーージョンで Synonym を利用できるか
+            値の拡大表示用ダイアログ
+            where, order 等のテキストボックスの値を、全体が見えるようにするダイアログ
+            ここで値の編集が可能
             </summary>
         </member>
-        <member name="F:quickDBExplorer.SqlVersion.pCanUseQueryAnalyzer">
+        <member name="F:quickDBExplorer.ZoomDialog.txtZoom">
             <summary>
-            クエリアナライザーを利用可能か否か
+            表示テキストエリア
             </summary>
         </member>
-        <member name="F:quickDBExplorer.SqlVersion.pIsManagementStudio">
+        <member name="F:quickDBExplorer.ZoomDialog.btnOk">
             <summary>
-            Management Studio と呼ぶか否か
+            OKボタン
             </summary>
         </member>
-        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2000">
+        <member name="F:quickDBExplorer.ZoomDialog.btnClose">
             <summary>
-            SQL Server 2000 を表すインスタンスを生成する
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2005">
-            <summary>
-            SQL Server 2005 を表すインスタンスを生成する
+            閉じるボタン
             </summary>
         </member>
-        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2008">
+        <member name="F:quickDBExplorer.ZoomDialog.components">
             <summary>
-            SQL Server 2008 を表すインスタンスを生成する
+            必要なデザイナ変数です。
             </summary>
         </member>
-        <member name="M:quickDBExplorer.SqlVersion.#ctor(System.String)">
+        <member name="F:quickDBExplorer.ZoomDialog.pEditText">
+            <summary>
+            表示するテキストの編集値
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ZoomDialog.pLabelName">
+            <summary>
+            タイトル名称
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ZoomDialog.pIsDisplayOnly">
+            <summary>
+            表示のみか否か
+            true ： 表示のみ
+            false : 編集可能
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ZoomDialog.#ctor">
             <summary>
             コンストラクタ
             </summary>
-            <param name="versionStr">Connection.ServerVersion の結果を渡す</param>
         </member>
-        <member name="P:quickDBExplorer.SqlVersion.FullVersionString">
+        <member name="M:quickDBExplorer.ZoomDialog.Dispose(System.Boolean)">
             <summary>
-            バージョン番号をあらわす文字列
+            使用されているリソースに後処理を実行します。
             </summary>
         </member>
-        <member name="P:quickDBExplorer.SqlVersion.PublicVersionNo">
+        <member name="M:quickDBExplorer.ZoomDialog.InitializeComponent">
             <summary>
-            製品名につくバージョン（2000,2005,2008等)
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
             </summary>
         </member>
-        <member name="P:quickDBExplorer.SqlVersion.AdapterNameString">
+        <member name="M:quickDBExplorer.ZoomDialog.ZoomDialog_Load(System.Object,System.EventArgs)">
             <summary>
-            接続用DLLにつく名称
+            画面初期表示時処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.ZoomDialog.EditText">
+            <summary>
+            表示するテキストの編集値
             </summary>
         </member>
-        <member name="P:quickDBExplorer.SqlVersion.CanUseSynonym">
+        <member name="P:quickDBExplorer.ZoomDialog.LableName">
             <summary>
-            該当バーージョンで Synonym を利用できるか
+            タイトル名称
             </summary>
         </member>
-        <member name="P:quickDBExplorer.SqlVersion.CanUseQueryAnalyzer">
+        <member name="P:quickDBExplorer.ZoomDialog.IsDispOnly">
             <summary>
-            クエリアナライザーを利用可能か否か
+            表示のみか否か
+            true ： 表示のみ
+            false : 編集可能
             </summary>
         </member>
-        <member name="P:quickDBExplorer.SqlVersion.IsManagementStudio">
+        <member name="F:quickDBExplorer.ZoomFloatingDialog.chkStayOnTop">
             <summary>
-            Management Studio と呼ぶか否か
+            常にTOPに表示
             </summary>
+        </member>
+        <member name="F:quickDBExplorer.ZoomFloatingDialog.btnApply">
+            <summary>
+            適用ボタン
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ZoomFloatingDialog.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ZoomFloatingDialog.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ZoomFloatingDialog.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.WhereDialog.pTargetObject">
+            <summary>
+            where 句指定の対象オブジェクト
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.WhereDialog.preAliasName">
+            <summary>
+            オブジェクトの alias
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.WhereDialog.pAliasName">
+            <summary>
+            オブジェクトの alias
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.WhereDialog_Load(System.Object,System.EventArgs)">
+            <summary>
+            画面起動時処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.DispFieldCondition">
+            <summary>
+            フィールド一覧の設定を行う
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.SetFieldCondResult">
+            <summary>
+            画面条件からwhere句を生成する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.btnClear_Click(System.Object,System.EventArgs)">
+            <summary>
+            条件をクリアする
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.ResetTarget">
+            <summary>
+            フィールド等の表示内容を設定しなおす
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.cmbCondition_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            AND/OR の条件変更があった
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.btnClose_Click(System.Object,System.EventArgs)">
+            <summary>
+            閉じる処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.OnClosing(System.ComponentModel.CancelEventArgs)">
+            <summary>
+            画面を閉じる場合でも、非表示にし、実体を Dispose しない
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.WhereDialog.TargetObject">
+            <summary>
+            where 句指定の対象オブジェクト
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.WhereDialog.AliasName">
+            <summary>
+            オブジェクトの alias
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.LogOnDialog">
+            <summary>
+            SQL Serverへのログイン指定ダイアログ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.initOpt">
+            <summary>
+            以前までの接続時記録情報
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_SERVER">
+            <summary>
+            コマンド引数 サーバー指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_INSTANCE">
+            <summary>
+            コマンド引数 インスタンス名
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_USER">
+            <summary>
+            コマンド引数 ユーザー名
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_PASSWORD">
+            <summary>
+            コマンド引数 パスワード
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_TRUST">
+            <summary>
+            コマンド引数 Window認証
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.commnadArgHt">
+            <summary>
+            コマンド引数
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorder)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="initialOption">記憶された設定情報</param>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorder,System.Collections.Hashtable)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="initialOption">記憶された設定情報</param>
+            <param name="argHt">コマンド引数を格納したパラメータ</param>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.OnShown(System.EventArgs)">
+            <summary>
+            初めて表示された場合には、コマンド引数を処理する
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.LogOnDialog_Load(System.Object,System.EventArgs)">
+            <summary>
+            画面初期表示時処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.btnLogin_Click(System.Object,System.EventArgs)">
+            <summary>
+            ログインボタン押下時処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.LogOnDialog.btnServerHistory_Click(System.Object,System.EventArgs)">
+            <summary>
+            過去のサーバー接続履歴から、選択する
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:quickDBExplorer.CopyDataEventHandler">
+            <summary>
+            Ctrl+C 押下時の デリゲート
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.ExtendedCopyDataEventHandler">
+            <summary>
+            Ctrl + F 押下時のデリゲート
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.qdbeListBox">
+            <summary>
+            リストボックスの拡張機能版
+            キー押下時の特殊処理(delegateでのイベントハンドラ呼び出し処理)が組み込んである
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.qdbeListBox.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.qdbeListBox.ProcessCmdKey(System.Windows.Forms.Message@,System.Windows.Forms.Keys)">
+            <summary>
+            特殊キー押下時イベントハンドラ
+            </summary>
+            <param name="msg"></param>
+            <param name="keyData"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.qdbeListBox.GetSelectedItemAsStringArray">
+            <summary>
+            選択されたアイテムの一覧を返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="E:quickDBExplorer.qdbeListBox.CopyData">
+            <summary>
+            Ctrl+Cが押された場合のイベント
+            </summary>
+        </member>
+        <member name="E:quickDBExplorer.qdbeListBox.ExtendedCopyData">
+            <summary>
+            Ctrl+F 押下時のイベント
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.qdbeListBox.IsAllSelecting">
+            <summary>
+            全ての項目が選択されているか否か
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.CmdInputDialog">
+            <summary>
+            オブジェクトに対する各種コマンド実行 のコマンド入力用ダイアログ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.CmdInputDialog.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.CmdInputDialog.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.CmdInputDialog.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.CmdInputDialog.btnGo_Click(System.Object,System.EventArgs)">
+            <summary>
+            OKボタン押下時処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="T:quickDBExplorer.TextHistoryDataSet">
              <summary>
@@ -3135,6 +2384,790 @@
         <member name="T:quickDBExplorer.TextHistoryDataSet.TextHistoryDataSetsRowChangeEvent">
              <summary>
             Row event argument class
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.IndexViewDialog">
+            <summary>
+            指定されたオブジェクトのINDEX情報の表示ダイアログ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.IndexViewDialog.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.IndexViewDialog.pDisplayObj">
+            <summary>
+            表示するオブジェクト名称
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.IndexViewDialog.pSqlDriver">
+            <summary>
+            SQLドライバ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.IndexViewDialog.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.IndexViewDialog.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.IndexViewDialog.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.IndexViewDialog.SetDisplayTable(quickDBExplorer.DBObjectInfo)">
+            <summary>
+            INDEX情報を表示するオブジェクトを切り替える
+            </summary>
+            <param name="dboInfo">新規に表示するオブジェクト情報</param>
+        </member>
+        <member name="M:quickDBExplorer.IndexViewDialog.chkTopStay_CheckedChanged(System.Object,System.EventArgs)">
+            <summary>
+            常にTOPに表示 チェックボックス変更時ハンドラ
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.IndexViewDialog.IndexViewDialog_Load(System.Object,System.EventArgs)">
+            <summary>
+            画面初期表示時処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.IndexViewDialog.btnCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            戻るボタン押下時処理
+            ここでは、ダイアログを実際に閉じるのではなく
+            非表示にするのみとする
+            これは、以前の表示幅を記憶して、その幅で表示するようにする為
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.IndexViewDialog.IndexViewDialog_Closing(System.Object,System.ComponentModel.CancelEventArgs)">
+            <summary>
+            「X」ボタンや、ALT+F4 等によるダイアログの閉じる処理への対応
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.IndexViewDialog.DisplayObj">
+            <summary>
+            表示するオブジェクト名称
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.IndexViewDialog.SqlDriver">
+            <summary>
+            SQL文を処理するクラス
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.ImageViewer">
+            <summary>
+            イメージの表示ダイアログ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ImageViewer.pViewImage">
+            <summary>
+            表示するイメージ情報
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ImageViewer.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ImageViewer.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ImageViewer.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ImageViewer.ImageViewer_Load(System.Object,System.EventArgs)">
+            <summary>
+            画面初期表示時処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.ImageViewer.btnClose_Click(System.Object,System.EventArgs)">
+            <summary>
+            閉じるボタン押下時処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.ImageViewer.ViewImage">
+            <summary>
+            表示するイメージ情報の取得・設定
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.FieldGetDialog">
+            <summary>
+            フィールド情報の取得条件指定ダイアログ
+            フィールド情報をコピーする条件を指定する
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.FieldGetDialog.pBaseTableName">
+            <summary>
+            オブジェクト名
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.FieldGetDialog.pRetTableAccessor">
+            <summary>
+            オブジェクトの修飾子(alias) 戻り値
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.FieldGetDialog.pRetCrlf">
+            <summary>
+            改行をつけるかつけないかの指定(戻り値)
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.FieldGetDialog.pRetComma">
+            <summary>
+            カンマをつけるかつけないか(戻り値)
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.FieldGetDialog.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.FieldGetDialog.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.FieldGetDialog.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.FieldGetDialog.FieldGetDialog_Load(System.Object,System.EventArgs)">
+            <summary>
+            画面初期表示時処理
+            </summary>
+            <param name="sender">--</param>
+            <param name="e">--</param>
+        </member>
+        <member name="M:quickDBExplorer.FieldGetDialog.cmbPattern_SelectedIndexChanged(System.Object,System.EventArgs)">
+            <summary>
+            コンボボックス選択時ハンドラ
+            選択された項目に応じて、各項目の内容をセットする
+            </summary>
+            <param name="sender">--</param>
+            <param name="e">--</param>
+        </member>
+        <member name="M:quickDBExplorer.FieldGetDialog.btnOK_Click(System.Object,System.EventArgs)">
+            <summary>
+            OKボタン押下時ハンドラ
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.FieldGetDialog.BaseTableName">
+            <summary>
+            オブジェクト名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.FieldGetDialog.RetTableAccessor">
+            <summary>
+            オブジェクトの修飾子(alias) 戻り値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.FieldGetDialog.RetCrlf">
+            <summary>
+            改行をつけるかつけないかの指定(戻り値)
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.FieldGetDialog.RetComma">
+            <summary>
+            カンマをつけるかつけないか(戻り値)
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.FieldListItem">
+            <summary>
+            FieldListに表示する項目の詳細
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.FieldListItem.#ctor(System.String,System.Object)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="text"></param>
+            <param name="refObj"></param>
+        </member>
+        <member name="M:quickDBExplorer.FieldListItem.ToString">
+            <summary>
+            通常は表示文字のみを返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:quickDBExplorer.FieldListItem.BackObj">
+            <summary>
+            関連オブジェクトを返す
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.qdbeAboutBox.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.qdbeAboutBox.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.qdbeAboutBox.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.qdbeAboutBox.okButton_Click(System.Object,System.EventArgs)">
+            <summary>
+            OKボタンの押下によりダイアログを閉じる
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyTitle">
+            <summary>
+            タイトル属性をすべて取得します
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyVersion">
+            <summary>
+            アセンブリバージョンを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyDescription">
+            <summary>
+            説明属性をすべて取得します
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyProduct">
+            <summary>
+            説明属性をすべて取得します
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyCopyright">
+            <summary>
+            著作権属性をすべて取得します
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.qdbeAboutBox.AssemblyCompany">
+            <summary>
+            会社属性をすべて取得します
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.QdbeDataGridTextBoxColumn">
+            <summary>
+            データグリッドの表示形式を管理する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.CancelEdit">
+            <summary>
+            編集処理を中断する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Boolean)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="pa">親となるグリッド</param>
+            <param name="canset">空白文字列の設定が可能か否か</param>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Data.DataColumn)">
+            <summary>
+            コンストラクタ
+            データカラムに応じ、自動的に、
+            空白文字列の設定が可能か否か
+            管理するデータがイメージか否か
+            を設定する
+            </summary>
+            <param name="pa">親となるグリッド</param>
+            <param name="col">結合させるデータカラム</param>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Data.DataColumn,System.String,System.String,System.String)">
+            <summary>
+            コンストラクタ
+            データカラムに応じ、自動的に、
+            空白文字列の設定が可能か否か
+            管理するデータがイメージか否か
+            を設定する
+            また、データカラムに応じ、自動的に書式を設定する
+            </summary>
+            <param name="pa">親となるグリッド</param>
+            <param name="col">結合させるデータカラム</param>
+            <param name="numberFormat">整数表示の場合の書式</param>
+            <param name="floatFormat">小数点表示の場合の書式</param>
+            <param name="dateFormat">日付表示の場合の書式</param>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Boolean,System.Boolean)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="pa">親となるグリッド</param>
+            <param name="canset">空白文字列の設定が可能か否か</param>
+            <param name="isImage">管理するデータがイメージか否か</param>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.GridTextControler(System.Object,System.EventArgs)">
+            <summary>
+            TextBoxへのイベントハンドラ
+            </summary>
+            <param name="sender">--</param>
+            <param name="e">--</param>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.GridKeyDownControler(System.Object,System.Windows.Forms.KeyEventArgs)">
+            <summary>
+            グリッド上でのキーダウンイベント処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.Edit(System.Windows.Forms.CurrencyManager,System.Int32,System.Drawing.Rectangle,System.Boolean,System.String,System.Boolean)">
+            <summary>
+            編集開始時処理のオーバーライド
+            </summary>
+            <param name="source"></param>
+            <param name="rowNum"></param>
+            <param name="bounds"></param>
+            <param name="readOnly"></param>
+            <param name="displayText"></param>
+            <param name="cellIsVisible"></param>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.EnterNullValue">
+            <summary>
+            NULL値入力処理のオーバーライド
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.Paint(System.Drawing.Graphics,System.Drawing.Rectangle,System.Windows.Forms.CurrencyManager,System.Int32,System.Drawing.Brush,System.Drawing.Brush,System.Boolean)">
+            <summary>
+            Paintメソッドをオーバーライドする
+            </summary>
+            <param name="g"></param>
+            <param name="bounds"></param>
+            <param name="source"></param>
+            <param name="rowNum"></param>
+            <param name="backBrush"></param>
+            <param name="foreBrush"></param>
+            <param name="alignToRight"></param>
+        </member>
+        <member name="P:quickDBExplorer.QdbeDataGridTextBoxColumn.IsThisImage">
+            <summary>
+            管理するデータがイメージか否かを取得・設定する
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.ObjectListView">
+            <summary>
+            Table等DBオブジェクトの一覧表示専用クラス
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.CreateItem(System.Data.IDataRecord,quickDBExplorer.DataGetEventHandler)">
+            <summary>
+            一覧に追加するアイテムを作成作成する
+            </summary>
+            <param name="dr">データを参照するDataReader</param>
+            <param name="dataSetter">オブジェクトの詳細を設定するメソッド</param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.SetObjectListItem(System.Data.IDataReader,quickDBExplorer.ISqlInterface)">
+            <summary>
+            DataReader から オブジェクトリストの各項目を作成し設定する
+            </summary>
+            <param name="dr"></param>
+            <param name="sqlInterface"></param>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.FilterObjectList(System.String)">
+            <summary>
+            リストの内容をフィルタリングして表示する
+            </summary>
+            <param name="filterText"></param>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.GetSelectOneObjectName">
+            <summary>
+            単一選択されているオブジェクト名を取得する([]なし)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.GetSelectOneObjectFormalName">
+            <summary>
+            単一選択されているオブジェクト名を取得する([]あり)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.GetSelectObjectName(System.Int32)">
+            <summary>
+            選択された項目のうち、指定されたオブジェクト名を取得する
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.GetSelectObject(System.Int32)">
+            <summary>
+            選択された項目のうち、指定されたオブジェクト名の情報を取得する
+            </summary>
+            <param name="i"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.GetSelectObjects">
+            <summary>
+            選択された項目のうち、指定されたオブジェクト名の情報を取得する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.ReloadSelectObjectInfo">
+            <summary>
+            一覧で選択されているオブジェクトの情報を再取得しなおす
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.FindStringExact(System.String)">
+            <summary>
+            指定した値と全く同じものを持つキーを検索する
+            .NET 標準と違い、大文字・小文字を区別する
+            </summary>
+            <param name="itemkey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.SetSortSchemaObject">
+            <summary>
+            オブジェクトのみのソート方法にセットする
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.SetSortObjectOnly">
+            <summary>
+            スキーマとオブジェクトのソート方法にセットする
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.qdbeUtil">
+            <summary>
+            各種ユーティリティ関数
+            Static メソッドのみ保持している
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.qdbeUtil.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.qdbeUtil.SplitTbname(System.String)">
+            <summary>
+            オブジェクト名を解析し、[owner]、[tablename]に分割する
+            基の名前は[]が付いていないことが前提
+            </summary>
+            <param name="tbname">オブジェクト名(owner.tablename形式)</param>
+            <returns>[owner]と[tablename]に分割された文字配列</returns>
+        </member>
+        <member name="M:quickDBExplorer.qdbeUtil.GetTbname(System.String)">
+            <summary>
+            オブジェクト名を解析し、[owner].[tablename]形式に変更する
+            基の名前は[]が付いていないことが前提
+            </summary>
+            <param name="tbname">オブジェクト名(owner.tablename形式)</param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.qdbeUtil.GetTbnameAdd(System.String,System.String)">
+            <summary>
+            オブジェクト名を解析し、[owner].[tablename]形式に変更する。
+            その際、指定された文字列をオブジェクト名称に付加した結果を返す
+            基の名前は[]が付いていないことが前提
+            </summary>
+            <param name="tbname">オブジェクト名(owner.tablename形式)</param>
+            <param name="addstr">オブジェクト名に付加する文字列</param>
+            <returns>解析後のオブジェクト名([owner].[tabblname]形式)</returns>
+        </member>
+        <member name="M:quickDBExplorer.qdbeUtil.SetNewHistory(System.String,System.String,quickDBExplorer.TextHistoryDataSet)">
+            <summary>
+            各種履歴情報への項目の追加を行う
+            </summary>
+            <param name="key">オブジェクト名称</param>
+            <param name="hvalue">追加する履歴項目</param>
+            <param name="tdata">追加する先の履歴情報</param>
+        </member>
+        <member name="T:quickDBExplorer.QueryDialogSelect">
+            <summary>
+            select 文を入力する為のダイアログ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QueryDialogSelect.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QueryDialogSelect.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QueryDialogSelect.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.MakeFieldWhereDlg">
+            <summary>
+            テーブルのフィールドを利用した条件句の生成指定を行う
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.MakeFieldWhereDlg.pFieldList">
+            <summary>
+            処理対象にするフィールドのリスト
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.MakeFieldWhereDlg.pObjectInfo">
+            <summary>
+            処理対象オブジェクト
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.reCreateSql">
+            <summary>
+            画面条件などからwhere句を生成しなおす
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.SetRdoCondition">
+            <summary>
+            ラジオボタンの状況により、enble 値を変更させる
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.txtAliasT1_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            Alias 設定の変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.txtAliasT2_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            Alias 設定の変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbANDOR_SelectedIndexChanged(System.Object,System.EventArgs)">
+            <summary>
+            AND/OR 設定の変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnOK_Click(System.Object,System.EventArgs)">
+            <summary>
+            クリップボードへのコピー
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            閉じるボタン押下イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnRef1_Click(System.Object,System.EventArgs)">
+            <summary>
+            選択テーブルを反映する
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnRef2_Click(System.Object,System.EventArgs)">
+            <summary>
+            選択テーブルを反映する
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.btnRef3_Click(System.Object,System.EventArgs)">
+            <summary>
+            選択テーブルを反映する
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.rdoTable_CheckedChanged(System.Object,System.EventArgs)">
+            <summary>
+            ラジオボタン変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.MakeFieldWhereDlg_Load(System.Object,System.EventArgs)">
+            <summary>
+            画面起動時処理
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.txtAlias_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            画面条件設定変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbCondition_SelectedIndexChanged(System.Object,System.EventArgs)">
+            <summary>
+            画面条件設定変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbCondition_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            画面条件設定変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbANDOR_TextChanged(System.Object,System.EventArgs)">
+            <summary>
+            画面条件設定変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.chkPlace_CheckedChanged(System.Object,System.EventArgs)">
+            <summary>
+            画面条件設定変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.MakeFieldWhereDlg.cmbJoinCond_SelectedIndexChanged(System.Object,System.EventArgs)">
+            <summary>
+            画面条件設定変更イベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:quickDBExplorer.MakeFieldWhereDlg.FieldList">
+            <summary>
+            処理対象にするフィールドのリスト
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.MakeFieldWhereDlg.ObjectInfo">
+            <summary>
+            処理対象オブジェクト
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.GridFormatDialog">
+            <summary>
+            データグリッドの表示書式を指定する
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatDialog.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatDialog.gridFont">
+            <summary>
+            表示フォントの指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatDialog.gridColor">
+            <summary>
+            フォント表示色の指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatDialog.numberFormat">
+            <summary>
+            数値変換書式の指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatDialog.gridFloatFormat">
+            <summary>
+            小数点書式の指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatDialog.gridDateFormat">
+            <summary>
+            日付変換書式の指定
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.GridFormatDialog.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.GridFormatDialog.Dispose(System.Boolean)">
+            <summary>
+            使用されているリソースに後処理を実行します。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.GridFormatDialog.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.GridFormatDialog.GetFormat(System.String)">
+            <summary>
+            フォーマット文字列を取得する
+            </summary>
+            <param name="fstr">基の表示書式</param>
+            <returns>表示書式文字列</returns>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatDialog.Gfont">
+            <summary>
+            表示フォントの指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatDialog.Gcolor">
+            <summary>
+            フォント表示色の指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatDialog.NumFormat">
+            <summary>
+            数値変換書式の指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatDialog.FloatFormat">
+            <summary>
+            小数点書式の指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatDialog.DateFormat">
+            <summary>
+            日付変換書式の指定
             </summary>
         </member>
     </members>

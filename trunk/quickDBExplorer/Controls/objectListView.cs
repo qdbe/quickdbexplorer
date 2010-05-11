@@ -172,6 +172,29 @@ namespace quickDBExplorer
             return selectList;
         }
 
+        public void SetSelectedObjects(List<DBObjectInfo> list)
+        {
+            if( list == null || list.Count == 0 || this.Items.Count == 0 )
+            {
+                return;
+            }
+            this.BeginUpdate();
+            this.ClearSelected();
+            int idx;
+            for (idx = this.Items.Count; idx > 0; idx--)
+            {
+                ListViewItem each = this.Items[idx-1];
+                if (list.Contains((DBObjectInfo)each.Tag))
+                {
+                    each.Selected = true;
+                }
+            }
+
+            this.EnsureVisible(idx);
+            
+            this.EndUpdate();
+        }
+
 		/// <summary>
 		/// 一覧で選択されているオブジェクトの情報を再取得しなおす
 		/// </summary>
