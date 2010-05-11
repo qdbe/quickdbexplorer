@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Windows.Forms;
 
 namespace quickDBExplorer
@@ -106,6 +107,30 @@ namespace quickDBExplorer
 			return base.ProcessCmdKey (ref msg, keyData);
 		}
 
+        /// <summary>
+        /// 選択されたアイテムの一覧を返す
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetSelectedItemAsStringArray()
+        {
+            ArrayList ar = new ArrayList();
+            foreach(object each in this.SelectedItems)
+            {
+                ar.Add(each.ToString());
+            }
+            return (string[])ar.ToArray(typeof(string));
+        }
 
+        public void SetSelectedItems(string[] itemlist)
+        {
+            for (int i = 0; i < itemlist.Length; i++)
+            {
+                int idx = this.FindString(itemlist[i]);
+                if (idx >= 0)
+                {
+                    this.SetSelected(idx, true);
+                }
+            }
+        }
 	}
 }
