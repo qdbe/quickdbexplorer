@@ -2323,6 +2323,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:quickDBExplorer.qdbeListBox.SetSelectedItems(System.String[])">
+            <summary>
+            指定したアイテムを選択状態にする
+            </summary>
+            <param name="itemlist"></param>
+        </member>
         <member name="E:quickDBExplorer.qdbeListBox.CopyData">
             <summary>
             Ctrl+Cが押された場合のイベント
@@ -2831,9 +2837,15 @@
         </member>
         <member name="M:quickDBExplorer.ObjectListView.GetSelectObjects">
             <summary>
-            選択された項目のうち、指定されたオブジェクト名の情報を取得する
+            選択された項目のうち、選択されたオブジェクトの情報を取得する
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.SetSelectedObjects(System.Collections.Generic.List{quickDBExplorer.DBObjectInfo})">
+            <summary>
+            指定されたオブジェクトを選択状態にする
+            </summary>
+            <param name="list"></param>
         </member>
         <member name="M:quickDBExplorer.ObjectListView.ReloadSelectObjectInfo">
             <summary>
@@ -3169,6 +3181,13 @@
             <summary>
             日付変換書式の指定
             </summary>
+        </member>
+        <member name="M:quickDBExplorer.manager.BookmarkManager.Convert2DataSet(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{quickDBExplorer.Forms.BookmarkInfo}})">
+            <summary>
+            ブックマークの情報をDataSetに変換する
+            </summary>
+            <param name="bookmark"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>
