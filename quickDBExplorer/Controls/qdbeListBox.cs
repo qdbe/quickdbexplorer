@@ -121,6 +121,10 @@ namespace quickDBExplorer
             return (string[])ar.ToArray(typeof(string));
         }
 
+        /// <summary>
+        /// 指定したアイテムを選択状態にする
+        /// </summary>
+        /// <param name="itemlist"></param>
         public void SetSelectedItems(string[] itemlist)
         {
             for (int i = 0; i < itemlist.Length; i++)

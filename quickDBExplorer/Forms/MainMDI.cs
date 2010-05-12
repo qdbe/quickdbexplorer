@@ -631,7 +631,7 @@ namespace quickDBExplorer
             }
         }
 
-        void BookmarkItemClick(object sender, EventArgs e)
+        private void BookmarkItemClick(object sender, EventArgs e)
         {
             MenuItem itm = (MenuItem)sender;
             if (itm.Tag == null || !(itm.Tag is BookmarkInfo))

@@ -155,7 +155,7 @@ namespace quickDBExplorer
 		}
         
         /// <summary>
-        /// 選択された項目のうち、指定されたオブジェクト名の情報を取得する
+        /// 選択された項目のうち、選択されたオブジェクトの情報を取得する
         /// </summary>
         /// <returns></returns>
         public List<DBObjectInfo> GetSelectObjects()
@@ -172,6 +172,10 @@ namespace quickDBExplorer
             return selectList;
         }
 
+        /// <summary>
+        /// 指定されたオブジェクトを選択状態にする
+        /// </summary>
+        /// <param name="list"></param>
         public void SetSelectedObjects(List<DBObjectInfo> list)
         {
             if( list == null || list.Count == 0 || this.Items.Count == 0 )
@@ -180,17 +184,20 @@ namespace quickDBExplorer
             }
             this.BeginUpdate();
             this.ClearSelected();
-            int idx;
-            for (idx = this.Items.Count; idx > 0; idx--)
+            int idx = 0;
+            foreach (DBObjectInfo each in list)
             {
-                ListViewItem each = this.Items[idx-1];
-                if (list.Contains((DBObjectInfo)each.Tag))
+                idx = this.FindStringExact(each.FormalName);
+                if (idx >= 0)
                 {
-                    each.Selected = true;
+                    this.Items[idx].Selected = true;
                 }
             }
 
-            this.EnsureVisible(idx);
+            if (idx >= 0)
+            {
+                this.EnsureVisible(idx);
+            }
             
             this.EndUpdate();
         }

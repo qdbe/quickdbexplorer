@@ -6,10 +6,10 @@ namespace quickDBExplorer.Forms
 {
     class BookmarkInfo
     {
-        public string Name { get; private set; }
-        public string DBName { get; private set; }
-        public string []Schema { get; private set; }
-        public List<DBObjectInfo> Objects { get; private set; }
+        public string Name { get; set; }
+        public string DBName { get; set; }
+        public string []Schema { get; set; }
+        public List<DBObjectInfo> Objects { get; set; }
 
         public BookmarkInfo(string dbname, string[] schema, List<DBObjectInfo> objects)
         {
@@ -43,7 +43,5 @@ namespace quickDBExplorer.Forms
             }
             return sb.ToString();
         }
-
-
     }
 }

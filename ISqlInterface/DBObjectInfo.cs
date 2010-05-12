@@ -13,6 +13,7 @@ namespace quickDBExplorer
 	/// <summary>
 	/// リストに表示する DB オブジェクトの情報を管理する
 	/// </summary>
+    [Serializable()]
 	public class	DBObjectInfo
 	{
 
@@ -22,18 +23,13 @@ namespace quickDBExplorer
 		/// </summary>
 		public event DataGetEventHandler DataGet = null;
 
-		private		string objType;
 		/// <summary>
 		/// オブジェクトの種類
 		/// 空白: Table
 		/// V:		View
 		/// S:		Synonym
 		/// </summary>
-		public		string	ObjType
-		{
-			get { return this.objType; }
-			set { this.objType = value; }
-		}
+        public string ObjType{ get; set; }
 
 
 		/// <summary>
@@ -46,67 +42,42 @@ namespace quickDBExplorer
 		{
 			get 
 			{
-				switch(this.objType)
+				switch(this.ObjType)
 				{
 					case	"U":
 						return " ";
 					case	"SN":
 						return "S";
 					default:
-						return this.objType;
+                        return this.ObjType;
 				}
 			}
 		}
 
-		private		string	owner;
 		/// <summary>
 		/// オブジェクトの所有者名
 		/// </summary>
-		public	string	Owner
-		{
-			get { return this.owner; }
-			set { this.owner = value; }
-		}
+        public string Owner{ get; set; }
 
-		private		string	objname;
 		/// <summary>
 		/// オブジェクトの名称
 		/// </summary>
-		public	string ObjName
-		{
-			get { return this.objname; }
-			set { this.objname = value; }
-		}
+        public string ObjName { get; set; }
 
-		private string createTime;
 		/// <summary>
 		/// オブジェクトが生成された日時
 		/// </summary>
-		public string CreateTime
-		{
-			get { return this.createTime; }
-			set { this.createTime = value; }
-		}
+		public string CreateTime{ get; set; }
 
-		private string synonymBase;
 		/// <summary>
 		/// オブジェクトがシノニムの場合、その参照先
 		/// </summary>
-		public string SynonymBase
-		{
-			get { return this.synonymBase; }
-			set { this.synonymBase = value; }
-		}
-		private string synonymBaseType;
+		public string SynonymBase{ get; set; }
 
 		/// <summary>
 		/// オブジェクトがシノニムの場合、その参照先のオブジェクトの種類
 		/// </summary>
-		public string SynonymBaseType
-		{
-			get { return this.synonymBaseType; }
-			set { this.synonymBaseType = value; }
-		}
+		public string SynonymBaseType{ get; set; }
 
 		/// <summary>
 		/// [] でくくったオブジェクトの正式名称を取得する
@@ -115,7 +86,7 @@ namespace quickDBExplorer
 		{
 			get 
 			{
-				return "[" + this.owner + "].[" + this.objname + "]";
+				return "[" + this.Owner + "].[" + this.ObjName + "]";
 			}
 		}
 
@@ -126,15 +97,15 @@ namespace quickDBExplorer
 		{
 			get 
 			{
-				switch( this.objType )
+				switch( this.ObjType )
 				{
 					case	"U":
 					case	"V":
 						return true;
 					case	"SN":	
 						// Synonymの場合、ベースオブジェクトの型を見る必要がある
-						if( this.synonymBaseType == "U" ||
-							this.synonymBaseType == "V" )
+						if( this.SynonymBaseType == "U" ||
+                            this.SynonymBaseType == "V")
 						{
 							return true;
 						}
@@ -153,7 +124,7 @@ namespace quickDBExplorer
 		{
 			get 
 			{
-				if( this.objType == "SN" )
+				if( this.ObjType == "SN" )
 				{
 					return true;
 				}
@@ -171,12 +142,12 @@ namespace quickDBExplorer
 		{
 			get 
 			{
-				if( this.objType == "U" )
+				if( this.ObjType == "U" )
 				{
 					return true;
 				}
-				if( this.objType == "SN" &&
-					this.synonymBaseType == "U" )
+				if( this.ObjType == "SN" &&
+					this.SynonymBaseType == "U" )
 				{
 					return true;
 				}
@@ -192,9 +163,9 @@ namespace quickDBExplorer
 		{
 			get 
 			{
-				if( this.objType == "SN" )
+				if( this.ObjType == "SN" )
 				{
-					return this.synonymBase;
+					return this.SynonymBase;
 				}
 				return this.FormalName;
 			}
@@ -209,11 +180,11 @@ namespace quickDBExplorer
 		{
 			get
 			{
-				if( this.objType == "SN" )
+				if( this.ObjType == "SN" )
 				{
-					return this.synonymBase;
+					return this.SynonymBase;
 				}
-				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}.{1}", this.owner, this.objname );
+				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}.{1}", this.Owner, this.ObjName );
 			}
 		}
 
@@ -225,13 +196,13 @@ namespace quickDBExplorer
 		{
 			get 
 			{
-				if( this.objType == "SN" )
+				if( this.ObjType == "SN" )
 				{
-					return this.synonymBaseType;
+					return this.SynonymBaseType;
 				}
 				else
 				{
-					return this.objType;
+                    return this.ObjType;
 				}
 			}
 		}
@@ -297,12 +268,12 @@ namespace quickDBExplorer
 				throw new ArgumentNullException("synonymBaseType");
 			}
 
-			this.objType = objectType.TrimEnd(null);
-			this.owner = owner;
-			this.objname = name;
-			this.createTime = createdTime;
-			this.synonymBase = synonymBase;
-			this.synonymBaseType = synonymBaseType.TrimEnd(null);
+            this.ObjType = objectType.TrimEnd(null);
+			this.Owner = owner;
+			this.ObjName = name;
+			this.CreateTime = createdTime;
+			this.SynonymBase = synonymBase;
+			this.SynonymBaseType = synonymBaseType.TrimEnd(null);
 			this.pSchemaBaseInfo = null;
 		}
 
@@ -314,7 +285,7 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public override string ToString()
 		{
-			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}.{1}", this.owner, this.objname );
+			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}.{1}", this.Owner, this.ObjName );
 		}
 
 		/// <summary>
@@ -340,7 +311,7 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public string	GetNameAdd(string suffix)
 		{
-			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"[{0}].[{1}_{2}]",this.owner, this.objname, suffix);
+			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"[{0}].[{1}_{2}]",this.Owner, this.ObjName, suffix);
 		}
 
 		/// <summary>
