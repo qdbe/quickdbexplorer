@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Net;
 using quickDBExplorer.Forms;
 using quickDBExplorer.Forms.Events;
+using quickDBExplorer.manager;
 
 namespace quickDBExplorer
 {
@@ -57,16 +58,10 @@ namespace quickDBExplorer
         /// <summary>
         /// サーバー別ブックマーク
         /// </summary>
-        private Dictionary<string, List<Forms.BookmarkInfo>> bookMarks = new Dictionary<string, List<Forms.BookmarkInfo>>();
+        private Dictionary<string, List<Forms.BookmarkInfo>> bookMarks;
 
-        /// <summary>
-        /// アプリケーションのメイン エントリ ポイントです。
-        /// </summary>
-        [STAThread]
-        static void Main(string[] args)
-        {
-            Application.Run(new MainMdi(args));
-        }
+        private BookmarkManager bmManager;
+
 
 
         /// <summary>
@@ -375,8 +370,17 @@ namespace quickDBExplorer
             // 自動的にやってしまうと問題なので、ここではやらない
             //CheckNewVersion(false);
 
+            // Bookmark処理
+            InitBookMark();
+
             // 最初は強制的にログインを表示する
             OpenLogOnDlg(argHt);
+        }
+
+        private void InitBookMark()
+        {
+            bmManager = new BookmarkManager();
+            this.bookMarks = bmManager.Load();
         }
 
         /// <summary>
@@ -419,6 +423,11 @@ namespace quickDBExplorer
                         initopt.PerServerData.Add(sv.KeyName, sv);
                     }
                     sf.Serialize(fs, (object)initopt);
+                }
+
+                if (this.bmManager != null)
+                {
+                    this.bmManager.Save(this.bookMarks);
                 }
             }
             catch (System.IO.FileNotFoundException)

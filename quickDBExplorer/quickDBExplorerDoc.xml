@@ -1065,6 +1065,11 @@
              接続先のサーバー名。表示用にのみ利用
             </summary>
         </member>
+        <member name="P:quickDBExplorer.MainForm.ServerInstanceName">
+            <summary>
+             接続先のサーバー名。表示用にのみ利用
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.MainForm.ServerRealName">
             <summary>
             接続先サーバーの本当の名前。インスタンス名を含まない
@@ -1370,11 +1375,6 @@
         <member name="F:quickDBExplorer.MainMdi.bookMarks">
             <summary>
             サーバー別ブックマーク
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.MainMdi.Main(System.String[])">
-            <summary>
-            アプリケーションのメイン エントリ ポイントです。
             </summary>
         </member>
         <member name="M:quickDBExplorer.MainMdi.#ctor(System.String[])">
@@ -2627,6 +2627,13 @@
             関連オブジェクトを返す
             </summary>
         </member>
+        <member name="M:quickDBExplorer.manager.BookmarkManager.Convert2DataSet(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{quickDBExplorer.Forms.BookmarkInfo}})">
+            <summary>
+            ブックマークの情報をDataSetに変換する
+            </summary>
+            <param name="bookmark"></param>
+            <returns></returns>
+        </member>
         <member name="F:quickDBExplorer.qdbeAboutBox.components">
             <summary>
             必要なデザイナ変数です。
@@ -3182,12 +3189,10 @@
             日付変換書式の指定
             </summary>
         </member>
-        <member name="M:quickDBExplorer.manager.BookmarkManager.Convert2DataSet(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{quickDBExplorer.Forms.BookmarkInfo}})">
+        <member name="M:quickDBExplorer.Program.Main(System.String[])">
             <summary>
-            ブックマークの情報をDataSetに変換する
+            アプリケーションのメイン エントリ ポイントです。
             </summary>
-            <param name="bookmark"></param>
-            <returns></returns>
         </member>
     </members>
 </doc>
