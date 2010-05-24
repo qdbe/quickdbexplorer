@@ -127,6 +127,7 @@ namespace quickDBExplorer
         /// <param name="itemlist"></param>
         public void SetSelectedItems(string[] itemlist)
         {
+            this.ClearSelected();
             for (int i = 0; i < itemlist.Length; i++)
             {
                 int idx = this.FindString(itemlist[i]);

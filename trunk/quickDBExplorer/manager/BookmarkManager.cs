@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -22,11 +23,19 @@ namespace quickDBExplorer.manager
 
         public Dictionary<string, List<BookmarkInfo>> Load()
         {
-
             DataSet ds = new DataSet();
-            ds.ReadXml("Bookmark.xml");
+            Dictionary<string, List<BookmarkInfo>> bookmark;
+            try
+            {
+                ds.ReadXml("Bookmark.xml");
+                bookmark = Convert2Bookmark(ds);
+            }
+            catch (Exception exp)
+            {
+                exp.ToString();
+                bookmark = new Dictionary<string, List<BookmarkInfo>>();
+            }
 
-            Dictionary<string, List<BookmarkInfo>> bookmark = new Dictionary<string, List<BookmarkInfo>>();
 
             return bookmark;
         }
@@ -34,6 +43,8 @@ namespace quickDBExplorer.manager
         private DataSet GetSchemaDataSet()
         {
             DataSet ds = new DataSet();
+            DataTable keyTable = new DataTable("KEY");
+            keyTable.Columns.Add("SERVERNAME");
             DataTable baseTable = new DataTable("BASE");
             baseTable.Columns.Add("SERVERNAME");
             baseTable.Columns.Add("NAME");
@@ -53,11 +64,75 @@ namespace quickDBExplorer.manager
             objectTable.Columns.Add("SynonymBase");
             objectTable.Columns.Add("SynonymBaseType");
 
+            ds.Tables.Add(keyTable);
             ds.Tables.Add(baseTable);
             ds.Tables.Add(schemaTable);
             ds.Tables.Add(objectTable);
 
             return ds;
+        }
+
+        private Dictionary<string, List<BookmarkInfo>> Convert2Bookmark(DataSet ds)
+        {
+            Dictionary<string, List<BookmarkInfo>> result = new Dictionary<string, List<BookmarkInfo>>();
+
+            if( ds.Tables.Count != 4 )  return result;
+
+            DataTable keyTable = ds.Tables["KEY"];
+            if (keyTable == null || keyTable.Rows.Count == 0) return result;
+
+            DataTable baseTable = ds.Tables["BASE"];
+            if (baseTable == null) return result;
+            baseTable.DefaultView.Sort = "SERVERNAME";
+            
+            DataTable schemaTable = ds.Tables["SCHEMA"];
+            if (schemaTable == null) return result;
+            schemaTable.DefaultView.Sort = "SERVERNAME,NAME";
+
+            DataTable objectTable = ds.Tables["OBJECTS"];
+            if (objectTable == null) return result;
+            objectTable.DefaultView.Sort = "SERVERNAME,NAME";
+
+
+            string preKey = string.Empty;
+
+            foreach (DataRow keyDr in keyTable.Rows)
+            {
+                string key = (string)keyDr["SERVERNAME"];
+                List<BookmarkInfo> addInfo = new List<BookmarkInfo>();
+
+                foreach (DataRowView baseDr in baseTable.DefaultView.FindRows(key))
+                {
+                    string name = (string)baseDr["NAME"];
+                    string dbname = (string)baseDr["DBNAME"];
+
+                    ArrayList schemaAr = new ArrayList();
+                    foreach (DataRowView schemaDr in schemaTable.DefaultView.FindRows(new object[] { key, name }))
+                    {
+                        schemaAr.Add((string)schemaDr["SCHEMANAME"]);
+                    }
+                    
+                    List<DBObjectInfo> objs = new List<DBObjectInfo>();
+                    foreach (DataRowView objDr in objectTable.DefaultView.FindRows(new object[] { key, name }))
+                    {
+                        DBObjectInfo newInfo = new DBObjectInfo(
+                            (string)objDr["ObjType"],
+                            (string)objDr["Owner"],
+                            (string)objDr["ObjectName"],
+                            (string)objDr["CreateTime"],
+                            (string)objDr["SynonymBase"],
+                            (string)objDr["SynonymBaseType"]
+                            );
+                        objs.Add(newInfo);
+                    }
+                    BookmarkInfo bookmark = new BookmarkInfo(dbname, (string[])schemaAr.ToArray(typeof(string)), objs);
+
+                    addInfo.Add(bookmark);
+                }
+                result.Add(key, addInfo);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -70,6 +145,8 @@ namespace quickDBExplorer.manager
             DataSet result = this.GetSchemaDataSet();
             foreach (string key in bookmark.Keys)
             {
+                DataTable keyTable = result.Tables["KEY"];
+                keyTable.Rows.Add(new object[] { key });
                 List<BookmarkInfo> eachList = bookmark[key];
                 foreach (BookmarkInfo each in eachList)
                 {

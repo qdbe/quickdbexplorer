@@ -122,6 +122,24 @@ namespace quickDBExplorer
 			set { this.pServerName = value; }
 		}
 
+
+        /// <summary>
+        ///  接続先のサーバー名。表示用にのみ利用
+        /// </summary>
+        public string ServerInstanceName
+        {
+            get {
+                if (this.InstanceName == null || this.InstanceName.Length == 0)
+                {
+                    return this.pServerName;
+                }
+                else
+                {
+                    return this.pServerName + @"\" + this.InstanceName;
+                }
+            }
+        }
+
 		/// <summary>
 		/// 接続先サーバーの本当の名前。インスタンス名を含まない
 		/// </summary>
@@ -376,15 +394,12 @@ namespace quickDBExplorer
             {
                 this.ServerName = conn.ServerName;
             }
-            this.ServerName = conn.ServerName;
             this.ServerRealName = conn.ServerRealName;
             this.InstanceName = conn.InstanceName;
             this.LogOnUid = conn.LogOnUid;
             this.LogOnPassword = conn.LogOnPassword;
             this.IsUseTruse = conn.IsUseTruse;
 
-            this.ServerName = conn.ServerName;
-            this.ServerRealName = conn.ServerRealName;
             this.SqlDriver = conn.SqlDriver;
             this.ConnectSqlVersion = conn.SqlVersionInfo;
             this.svdata = conn.ServerDataInfo;
