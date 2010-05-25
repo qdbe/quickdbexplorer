@@ -146,6 +146,12 @@
     <Compile Include="Forms\DataGridViewBase.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Dialog\BookMarkEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialog\BookMarkEditForm.Designer.cs">
+      <DependentUpon>BookMarkEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Dialog\CmdInputDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,6 +247,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DataGridViewBase.resx">
       <DependentUpon>DataGridViewBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dialog\BookMarkEditForm.resx">
+      <DependentUpon>BookMarkEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\CmdInputDialog.resx">
       <DependentUpon>CmdInputDialog.cs</DependentUpon>

@@ -2627,6 +2627,18 @@
             関連オブジェクトを返す
             </summary>
         </member>
+        <member name="M:quickDBExplorer.manager.BookmarkManager.Save(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{quickDBExplorer.Forms.BookmarkInfo}})">
+            <summary>
+            ブックマークを保存する
+            </summary>
+            <param name="bookmark"></param>
+        </member>
+        <member name="M:quickDBExplorer.manager.BookmarkManager.Load">
+            <summary>
+            ブックマークをディスクから読み込む
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:quickDBExplorer.manager.BookmarkManager.Convert2DataSet(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{quickDBExplorer.Forms.BookmarkInfo}})">
             <summary>
             ブックマークの情報をDataSetに変換する
@@ -2922,6 +2934,11 @@
             <param name="hvalue">追加する履歴項目</param>
             <param name="tdata">追加する先の履歴情報</param>
         </member>
+        <member name="M:quickDBExplorer.Program.Main(System.String[])">
+            <summary>
+            アプリケーションのメイン エントリ ポイントです。
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.QueryDialogSelect">
             <summary>
             select 文を入力する為のダイアログ
@@ -3189,9 +3206,31 @@
             日付変換書式の指定
             </summary>
         </member>
-        <member name="M:quickDBExplorer.Program.Main(System.String[])">
+        <member name="T:quickDBExplorer.Forms.Dialog.BookMarkEditForm">
             <summary>
-            アプリケーションのメイン エントリ ポイントです。
+            ブックマークの管理を行うフォーム    
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BookMarkEditForm.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.Dialog.BookMarkEditForm.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BookMarkEditForm.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BookMarkEditForm.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
             </summary>
         </member>
     </members>
