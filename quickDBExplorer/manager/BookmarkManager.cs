@@ -15,12 +15,20 @@ namespace quickDBExplorer.manager
         {
         }
 
+        /// <summary>
+        /// ブックマークを保存する
+        /// </summary>
+        /// <param name="bookmark"></param>
         public void Save(Dictionary<string,List<BookmarkInfo>> bookmark)
         {
             DataSet ds = this.Convert2DataSet(bookmark);
             ds.WriteXml("Bookmark.xml");
         }
 
+        /// <summary>
+        /// ブックマークをディスクから読み込む
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<string, List<BookmarkInfo>> Load()
         {
             DataSet ds = new DataSet();

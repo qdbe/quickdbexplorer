@@ -666,12 +666,22 @@ namespace quickDBExplorer
             {
                 list = this.bookMarks[form.ServerName];
             }
+            // check Name Duplicate
+            foreach (BookmarkInfo each in list)
+            {
+                if (each.Name == addinfo.Name)
+                {
+                    MessageBox.Show("既に同じ名前のブックマークが登録されています");
+                    return;
+                }
+            }
             list.Add(addinfo);
         }
 
         private void menuEditBookmark_Click(object sender, EventArgs e)
         {
-
+            Forms.Dialog.BookMarkEditForm bookmark = new quickDBExplorer.Forms.Dialog.BookMarkEditForm();
+            bookmark.ShowDialog(this);
         }
     }
     
