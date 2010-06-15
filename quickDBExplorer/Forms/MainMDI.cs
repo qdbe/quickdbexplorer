@@ -680,8 +680,20 @@ namespace quickDBExplorer
 
         private void menuEditBookmark_Click(object sender, EventArgs e)
         {
-            Forms.Dialog.BookMarkEditForm bookmark = new quickDBExplorer.Forms.Dialog.BookMarkEditForm();
-            bookmark.ShowDialog(this);
+            MainForm form = ((MainForm)this.ActiveMdiChild);
+            if (this.bookMarks.ContainsKey(form.ServerName) == false)
+            {
+                MessageBox.Show("対象サーバーのブックマークはありません");
+                return;
+            }
+            List<BookmarkInfo> bookmarklist = this.bookMarks[form.ServerName];
+            if (bookmarklist.Count == 0)
+            {
+                MessageBox.Show("対象サーバーのブックマークはありません");
+                return;
+            }
+            Forms.Dialog.BookMarkEditForm bookmarkEditor = new quickDBExplorer.Forms.Dialog.BookMarkEditForm(bookmarklist);
+            bookmarkEditor.ShowDialog(this);
         }
     }
     
