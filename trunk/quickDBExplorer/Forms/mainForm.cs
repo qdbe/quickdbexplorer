@@ -2009,6 +2009,7 @@ namespace quickDBExplorer
             ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
             da.Fill(ds, "sysdatabases");
 
+            this.dbList.Items.Clear();
             foreach (DataRow row in ds.Tables["sysdatabases"].Rows)
             {
                 this.dbList.Items.Add(row["name"]);
