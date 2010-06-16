@@ -680,6 +680,12 @@ namespace quickDBExplorer
 
         private void menuEditBookmark_Click(object sender, EventArgs e)
         {
+            if (this.ActiveMdiChild == null ||
+                !(this.ActiveMdiChild is MainForm))
+            {
+                // ÉçÉOÉCÉìå„
+                return;
+            }
             MainForm form = ((MainForm)this.ActiveMdiChild);
             if (this.bookMarks.ContainsKey(form.ServerName) == false)
             {
