@@ -162,7 +162,7 @@ namespace quickDBExplorer
         {
             if (this.SelectedItems.Count == 0)
             {
-                return null;
+                return new List<DBObjectInfo>();
             }
             List<DBObjectInfo> selectList = new List<DBObjectInfo>();
             foreach(ListViewItem each in this.SelectedItems)

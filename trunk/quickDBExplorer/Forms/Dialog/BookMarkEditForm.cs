@@ -22,8 +22,9 @@ namespace quickDBExplorer.Forms.Dialog
         /// </summary>
         internal BookMarkEditForm(List<BookmarkInfo> bookmark)
         {
-            this.ResultBookmark = new List<BookmarkInfo>();
-            this.ResultBookmark.AddRange(bookmark);
+            //this.ResultBookmark = new List<BookmarkInfo>();
+            //this.ResultBookmark.AddRange(bookmark);
+            this.ResultBookmark = bookmark;
             InitializeComponent();
         }
 
@@ -169,6 +170,32 @@ namespace quickDBExplorer.Forms.Dialog
             {
                 this.ListObject.Items.Remove(delEach);
             }
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DeleteBookmark();
+        }
+
+        private void DeleteBookmark()
+        {
+            if (this.bookmarkList.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            if (MessageBox.Show("指定されたブックマークを削除してもよろしいですか？", "確認", MessageBoxButtons.OKCancel) != DialogResult.OK)
+            {
+                return;
+            }
+            this.SuspendLayout();
+            ListViewItem[] delList = new ListViewItem[this.bookmarkList.SelectedItems.Count];
+            this.bookmarkList.SelectedItems.CopyTo(delList,0);
+            foreach (ListViewItem each in delList)
+            {
+                this.bookmarkList.Items.Remove(each);
+                this.ResultBookmark.Remove((BookmarkInfo)each.Tag);
+            }
+            this.ResumeLayout();
         }
     }
 }

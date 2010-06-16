@@ -100,10 +100,11 @@
             this.ObjectList});
             this.bookmarkList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.bookmarkList.FullRowSelect = true;
-            this.bookmarkList.IsAutoColumSort = false;
+            this.bookmarkList.IsAutoColumSort = true;
             this.bookmarkList.Location = new System.Drawing.Point(0, 0);
             this.bookmarkList.Name = "bookmarkList";
             this.bookmarkList.Size = new System.Drawing.Size(349, 447);
+            this.bookmarkList.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.bookmarkList.TabIndex = 0;
             this.bookmarkList.UseCompatibleStateImageBehavior = false;
             this.bookmarkList.View = System.Windows.Forms.View.Details;
@@ -155,6 +156,7 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "削除";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Visible = false;
             // 
             // btnDelSchema
             // 
@@ -164,6 +166,7 @@
             this.btnDelSchema.TabIndex = 4;
             this.btnDelSchema.Text = "削除";
             this.btnDelSchema.UseVisualStyleBackColor = true;
+            this.btnDelSchema.Visible = false;
             this.btnDelSchema.Click += new System.EventHandler(this.btnDelSchema_Click);
             // 
             // btnAddSchema
@@ -174,6 +177,7 @@
             this.btnAddSchema.TabIndex = 4;
             this.btnAddSchema.Text = "追加";
             this.btnAddSchema.UseVisualStyleBackColor = true;
+            this.btnAddSchema.Visible = false;
             this.btnAddSchema.Click += new System.EventHandler(this.btnAddSchema_Click);
             // 
             // ListObject
@@ -185,7 +189,7 @@
             this.ListObject.ItemHeight = 12;
             this.ListObject.Location = new System.Drawing.Point(102, 187);
             this.ListObject.Name = "ListObject";
-            this.ListObject.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.ListObject.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.ListObject.Size = new System.Drawing.Size(280, 244);
             this.ListObject.TabIndex = 3;
             // 
@@ -197,7 +201,7 @@
             this.SchemaList.ItemHeight = 12;
             this.SchemaList.Location = new System.Drawing.Point(102, 75);
             this.SchemaList.Name = "SchemaList";
-            this.SchemaList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.SchemaList.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.SchemaList.Size = new System.Drawing.Size(280, 100);
             this.SchemaList.TabIndex = 2;
             // 
@@ -277,17 +281,19 @@
             this.btnOK.TabIndex = 1;
             this.btnOK.Text = "決定(&O)";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Visible = false;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // btnDelete
             // 
             this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDelete.Location = new System.Drawing.Point(183, 474);
+            this.btnDelete.Location = new System.Drawing.Point(12, 474);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(75, 23);
             this.btnDelete.TabIndex = 2;
             this.btnDelete.Text = "削除(&D)";
             this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // BookMarkEditForm
             // 
