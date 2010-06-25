@@ -249,6 +249,7 @@
             this.txtBookmarkName.Name = "txtBookmarkName";
             this.txtBookmarkName.Size = new System.Drawing.Size(280, 19);
             this.txtBookmarkName.TabIndex = 0;
+            this.txtBookmarkName.TextChanged += new System.EventHandler(this.txtBookmarkName_TextChanged);
             // 
             // txtDBname
             // 

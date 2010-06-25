@@ -197,5 +197,15 @@ namespace quickDBExplorer.Forms.Dialog
             }
             this.ResumeLayout();
         }
+
+        private void txtBookmarkName_TextChanged(object sender, EventArgs e)
+        {
+            if (this.bookmarkList.SelectedItems.Count == 0)
+            {
+                return;
+            }
+            this.bookmarkList.SelectedItems[0].Text = this.txtBookmarkName.Text;
+            ((BookmarkInfo)this.bookmarkList.SelectedItems[0].Tag).Name = this.txtBookmarkName.Text;
+        }
     }
 }
