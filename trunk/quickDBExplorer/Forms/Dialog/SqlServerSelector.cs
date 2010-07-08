@@ -31,6 +31,8 @@ namespace quickDBExplorer
         /// </summary>
         public string SelectedVersion { get; private set; }
 
+        private DataTable displayList;
+
 
         /// <summary>
         /// コンストラクタ
@@ -40,15 +42,27 @@ namespace quickDBExplorer
         {
             InitializeComponent();
 
-            SetServerList(serverList);
+
+            SetServerList(serverList, string.Empty);
         }
 
-        private void SetServerList(DataTable　serverList)
+        private void SetServerList(DataTable　serverList, string filterString)
         {
+            displayList = serverList;
+            this.sqlServerList.BeginUpdate();
             this.sqlServerList.SuspendLayout();
             this.sqlServerList.Items.Clear();
+            string cmpstr = filterString.ToLower();
             foreach (DataRow dr in serverList.Rows)
             {
+                if (filterString != string.Empty)
+                {
+                    if (!dr["ServerName"].ToString().ToLower().Contains(cmpstr) &&
+                        !dr["InstanceName"].ToString().ToLower().Contains(cmpstr))
+                    {
+                        continue;
+                    }
+                }
                 ListViewItem item = new ListViewItem(
                     new string[] {
                     dr["ServerName"].ToString(),
@@ -60,6 +74,7 @@ namespace quickDBExplorer
                 this.sqlServerList.Items.Add(item);
             }
             this.sqlServerList.ResumeLayout();
+            this.sqlServerList.EndUpdate();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -104,7 +119,14 @@ namespace quickDBExplorer
                 return;
             }
 
-            SetServerList(serverList);
+            this.txtFilter.Text = string.Empty;
+            SetServerList(serverList, string.Empty);
+        }
+
+        private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            string filterText = this.txtFilter.Text;
+            SetServerList(displayList, filterText);
         }
     }
 }
