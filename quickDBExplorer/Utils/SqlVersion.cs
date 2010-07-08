@@ -24,12 +24,12 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 2000,2005,2008 等
 		/// </summary>
-		private int pPublicVersion;
+		private string pPublicVersion;
 
 		/// <summary>
 		/// 製品名につくバージョン（2000,2005,2008等)
 		/// </summary>
-		public int PublicVersionNo
+		public string PublicVersionNo
 		{
 			get { return this.pPublicVersion; }
 		}
@@ -104,8 +104,16 @@ namespace quickDBExplorer
 		/// </summary>
 		public static SqlVersion SQLSERVER2008()
 		{
-			return new SqlVersion("10.");
+			return new SqlVersion("10.00");
 		}
+
+        /// <summary>
+        /// SQL Server 2008 を表すインスタンスを生成する
+        /// </summary>
+        public static SqlVersion SQLSERVER2008R2()
+        {
+            return new SqlVersion("10.50");
+        }
 
 		/// <summary>
 		/// コンストラクタ
@@ -117,7 +125,7 @@ namespace quickDBExplorer
 			if(versionStr.StartsWith("08") )
 			{
 				// SQL Server 2000
-				this.pPublicVersion = 2000;
+				this.pPublicVersion = "2000";
 				this.pFullVersionString = versionStr;
 				this.pIsSynonym = false;
 				this.pCanUseQueryAnalyzer = true;
@@ -125,21 +133,30 @@ namespace quickDBExplorer
 			}
 			else if(versionStr.StartsWith("09") )
 			{
-				this.pPublicVersion = 2005;
+				this.pPublicVersion = "2005";
 				this.pFullVersionString = versionStr;
 				this.pIsSynonym = true;
 				this.pCanUseQueryAnalyzer = false;
 				this.pIsManagementStudio = true;
 			}
-			else
+            else if (versionStr.StartsWith("10.0"))
 			{
 				// それ以外は2008と同等としてみなそう
-				this.pPublicVersion = 2008;
+				this.pPublicVersion = "2008";
 				this.pFullVersionString = versionStr;
 				this.pIsSynonym = true;
 				this.pCanUseQueryAnalyzer = false;
 				this.pIsManagementStudio = true;
 			}
-		}
+            else if (versionStr.StartsWith("10.5"))
+            {
+                // それ以外は2008と同等としてみなそう
+                this.pPublicVersion = "2008R2";
+                this.pFullVersionString = versionStr;
+                this.pIsSynonym = true;
+                this.pCanUseQueryAnalyzer = false;
+                this.pIsManagementStudio = true;
+            }
+        }
 	}
 }
