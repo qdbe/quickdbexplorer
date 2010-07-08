@@ -36,6 +36,8 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.grpServerList = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtFilter = new System.Windows.Forms.TextBox();
             this.btnReload = new System.Windows.Forms.Button();
             this.grpServerList.SuspendLayout();
             this.SuspendLayout();
@@ -44,6 +46,7 @@
             // 
             this.MsgArea.Location = new System.Drawing.Point(94, 452);
             this.MsgArea.Size = new System.Drawing.Size(369, 32);
+            this.MsgArea.TabIndex = 2;
             // 
             // sqlServerList
             // 
@@ -62,7 +65,7 @@
             this.sqlServerList.Name = "sqlServerList";
             this.sqlServerList.Size = new System.Drawing.Size(511, 381);
             this.sqlServerList.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.sqlServerList.TabIndex = 1;
+            this.sqlServerList.TabIndex = 2;
             this.sqlServerList.UseCompatibleStateImageBehavior = false;
             this.sqlServerList.View = System.Windows.Forms.View.Details;
             this.sqlServerList.DoubleClick += new System.EventHandler(this.sqlServerList_DoubleClick);
@@ -105,7 +108,7 @@
             this.btnCancel.Location = new System.Drawing.Point(469, 460);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 24);
-            this.btnCancel.TabIndex = 2;
+            this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "キャンセル(&X)";
             // 
             // grpServerList
@@ -113,6 +116,8 @@
             this.grpServerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpServerList.Controls.Add(this.label1);
+            this.grpServerList.Controls.Add(this.txtFilter);
             this.grpServerList.Controls.Add(this.btnReload);
             this.grpServerList.Controls.Add(this.sqlServerList);
             this.grpServerList.Location = new System.Drawing.Point(13, 8);
@@ -121,6 +126,23 @@
             this.grpServerList.TabIndex = 0;
             this.grpServerList.TabStop = false;
             this.grpServerList.Text = "SQL SERVER 一覧";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(116, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "フィルタ(&F)";
+            // 
+            // txtFilter
+            // 
+            this.txtFilter.Location = new System.Drawing.Point(185, 18);
+            this.txtFilter.Name = "txtFilter";
+            this.txtFilter.Size = new System.Drawing.Size(191, 19);
+            this.txtFilter.TabIndex = 1;
+            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
             // 
             // btnReload
             // 
@@ -148,6 +170,7 @@
             this.Controls.SetChildIndex(this.btnCancel, 0);
             this.Controls.SetChildIndex(this.grpServerList, 0);
             this.grpServerList.ResumeLayout(false);
+            this.grpServerList.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -163,5 +186,7 @@
         private System.Windows.Forms.ColumnHeader IsClusteredCol;
         private System.Windows.Forms.ColumnHeader VersionCol;
         private System.Windows.Forms.Button btnReload;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtFilter;
     }
 }
