@@ -77,9 +77,7 @@ namespace quickDBExplorer
 		private quickDBExplorerTextBox txtDispCount;
 		private quickDBExplorerTextBox txtOutput;
 		private quickDBExplorerTextBox txtSort;
-		private quickDBExplorerTextBox txtWhere;
-		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.ToolTip toolTip3;
+        private quickDBExplorerTextBox txtWhere;
 
 		private QueryDialog Sqldlg2 = new QueryDialog();
 		private QueryDialogSelect Sqldlg = new QueryDialogSelect();
@@ -309,8 +307,7 @@ namespace quickDBExplorer
 		private System.Windows.Forms.MenuItem copyDbGridMenu;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.Label label11;
-		private quickDBExplorer.quickDBExplorerTextBox txtAlias;
-		private System.Windows.Forms.ToolTip toolTip4;
+        private quickDBExplorer.quickDBExplorerTextBox txtAlias;
 		private System.Windows.Forms.MenuItem menuFieldAliasCopy;
 		/// <summary>
 		/// コマンド入力ダイアログ
@@ -330,11 +327,12 @@ namespace quickDBExplorer
 		private SplitContainer ObjFieldSplitter;
 		private SplitContainer MainSplitter;
 		private SplitContainer UpDownSplitter;
-        private Label label4;
+        private Label labelFilter;
         private quickDBExplorerTextBox txtObjFilter;
         private ContextMenuStrip dbMenu;
         private ToolStripMenuItem menuTimeoutChange;
         private ToolStripMenuItem DBReloadMenu;
+        private ToolTip commTooltip;
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
 
 		/// <summary>
@@ -500,7 +498,6 @@ namespace quickDBExplorer
             this.fldmenuCopyNoCRLFNoComma = new System.Windows.Forms.MenuItem();
             this.menuFieldAliasCopy = new System.Windows.Forms.MenuItem();
             this.menuFieldMakeWhere = new System.Windows.Forms.MenuItem();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -510,7 +507,6 @@ namespace quickDBExplorer
             this.rdoUnicode = new System.Windows.Forms.RadioButton();
             this.chkDispFieldAttr = new System.Windows.Forms.CheckBox();
             this.btnQuerySelect = new System.Windows.Forms.Button();
-            this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
             this.btnDataUpdate = new System.Windows.Forms.Button();
             this.btnDataEdit = new System.Windows.Forms.Button();
             this.btnGridFormat = new System.Windows.Forms.Button();
@@ -526,15 +522,15 @@ namespace quickDBExplorer
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.label11 = new System.Windows.Forms.Label();
             this.txtAlias = new quickDBExplorer.quickDBExplorerTextBox();
-            this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
             this.ObjFieldSplitter = new System.Windows.Forms.SplitContainer();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelFilter = new System.Windows.Forms.Label();
             this.txtObjFilter = new quickDBExplorer.quickDBExplorerTextBox();
             this.MainSplitter = new System.Windows.Forms.SplitContainer();
             this.UpDownSplitter = new System.Windows.Forms.SplitContainer();
             this.dbMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuTimeoutChange = new System.Windows.Forms.ToolStripMenuItem();
             this.DBReloadMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.commTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.grpViewMode.SuspendLayout();
             this.grpSortMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -565,6 +561,7 @@ namespace quickDBExplorer
             this.dbList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dbList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.dbList.HorizontalScrollbar = true;
             this.dbList.ItemHeight = 12;
             this.dbList.Location = new System.Drawing.Point(60, 8);
             this.dbList.Name = "dbList";
@@ -589,6 +586,7 @@ namespace quickDBExplorer
             this.objectList.FullRowSelect = true;
             this.objectList.GridLines = true;
             this.objectList.HideSelection = false;
+            this.objectList.IsAutoColumSort = true;
             this.objectList.Location = new System.Drawing.Point(3, 26);
             this.objectList.Name = "objectList";
             this.objectList.Size = new System.Drawing.Size(328, 297);
@@ -775,6 +773,7 @@ namespace quickDBExplorer
             this.ownerListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.ownerListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.ownerListbox.HorizontalScrollbar = true;
             this.ownerListbox.ItemHeight = 12;
             this.ownerListbox.Location = new System.Drawing.Point(60, 72);
             this.ownerListbox.Name = "ownerListbox";
@@ -1118,7 +1117,7 @@ namespace quickDBExplorer
             this.label9.Size = new System.Drawing.Size(280, 16);
             this.label9.TabIndex = 37;
             this.label9.Text = "複数行にわたる文字列はとき色(ピンク)に着色されます。";
-            this.toolTip1.SetToolTip(this.label9, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
+            this.commTooltip.SetToolTip(this.label9, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
             // 
             // label7
             // 
@@ -1127,7 +1126,7 @@ namespace quickDBExplorer
             this.label7.Size = new System.Drawing.Size(368, 16);
             this.label7.TabIndex = 35;
             this.label7.Text = "見出しに★がある列はNULL可です。NULLのセルは水色に着色されます。";
-            this.toolTip1.SetToolTip(this.label7, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
+            this.commTooltip.SetToolTip(this.label7, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
             // 
             // label8
             // 
@@ -1136,7 +1135,7 @@ namespace quickDBExplorer
             this.label8.Size = new System.Drawing.Size(500, 16);
             this.label8.TabIndex = 36;
             this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。Ctrl+3で値拡大表示。";
-            this.toolTip1.SetToolTip(this.label8, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
+            this.commTooltip.SetToolTip(this.label8, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
             // 
             // grpCharaSet
             // 
@@ -1294,10 +1293,10 @@ namespace quickDBExplorer
             // 
             // labelObject
             // 
-            this.labelObject.Location = new System.Drawing.Point(4, 6);
+            this.labelObject.Location = new System.Drawing.Point(3, 6);
             this.labelObject.Name = "labelObject";
             this.labelObject.Size = new System.Drawing.Size(152, 16);
-            this.labelObject.TabIndex = 20;
+            this.labelObject.TabIndex = 1;
             this.labelObject.Text = "オブジェクト(&V)";
             this.labelObject.DoubleClick += new System.EventHandler(this.labelObject_DoubleClick);
             // 
@@ -1305,11 +1304,11 @@ namespace quickDBExplorer
             // 
             this.cmbHistory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbHistory.DropDownWidth = 300;
-            this.cmbHistory.Location = new System.Drawing.Point(86, 3);
+            this.cmbHistory.Location = new System.Drawing.Point(80, 3);
             this.cmbHistory.MaxDropDownItems = 11;
             this.cmbHistory.Name = "cmbHistory";
             this.cmbHistory.Size = new System.Drawing.Size(176, 20);
-            this.cmbHistory.TabIndex = 21;
+            this.cmbHistory.TabIndex = 2;
             this.cmbHistory.SelectionChangeCommitted += new System.EventHandler(this.cmbHistory_SelectionChangeCommitted);
             // 
             // label11
@@ -1333,7 +1332,7 @@ namespace quickDBExplorer
             this.txtAlias.PdHistory = null;
             this.txtAlias.Size = new System.Drawing.Size(137, 19);
             this.txtAlias.TabIndex = 17;
-            this.toolTip4.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
+            this.commTooltip.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
             this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
             this.txtAlias.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtAlias_ShowHistory);
             this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
@@ -1350,7 +1349,7 @@ namespace quickDBExplorer
             // ObjFieldSplitter.Panel1
             // 
             this.ObjFieldSplitter.Panel1.AutoScroll = true;
-            this.ObjFieldSplitter.Panel1.Controls.Add(this.label4);
+            this.ObjFieldSplitter.Panel1.Controls.Add(this.labelFilter);
             this.ObjFieldSplitter.Panel1.Controls.Add(this.cmbHistory);
             this.ObjFieldSplitter.Panel1.Controls.Add(this.txtObjFilter);
             this.ObjFieldSplitter.Panel1.Controls.Add(this.labelObject);
@@ -1376,15 +1375,15 @@ namespace quickDBExplorer
             this.ObjFieldSplitter.SplitterWidth = 2;
             this.ObjFieldSplitter.TabIndex = 19;
             // 
-            // label4
+            // labelFilter
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(272, 8);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 12);
-            this.label4.TabIndex = 33;
-            this.label4.Text = "フィルタ";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.labelFilter.AutoSize = true;
+            this.labelFilter.Location = new System.Drawing.Point(262, 9);
+            this.labelFilter.Name = "labelFilter";
+            this.labelFilter.Size = new System.Drawing.Size(54, 12);
+            this.labelFilter.TabIndex = 3;
+            this.labelFilter.Text = "フィルタ(&A)";
+            this.labelFilter.Click += new System.EventHandler(this.label4_Click);
             // 
             // txtObjFilter
             // 
@@ -1393,10 +1392,10 @@ namespace quickDBExplorer
             this.txtObjFilter.CanCtrlDelete = true;
             this.txtObjFilter.IsDigitOnly = false;
             this.txtObjFilter.IsShowZoom = false;
-            this.txtObjFilter.Location = new System.Drawing.Point(312, 3);
+            this.txtObjFilter.Location = new System.Drawing.Point(319, 3);
             this.txtObjFilter.Name = "txtObjFilter";
             this.txtObjFilter.PdHistory = null;
-            this.txtObjFilter.Size = new System.Drawing.Size(160, 19);
+            this.txtObjFilter.Size = new System.Drawing.Size(153, 19);
             this.txtObjFilter.TabIndex = 22;
             this.txtObjFilter.TextChanged += new System.EventHandler(this.txtObjFilter_TextChanged);
             // 
@@ -1474,7 +1473,7 @@ namespace quickDBExplorer
             this.menuTimeoutChange,
             this.DBReloadMenu});
             this.dbMenu.Name = "dbMenu";
-            this.dbMenu.Size = new System.Drawing.Size(161, 70);
+            this.dbMenu.Size = new System.Drawing.Size(161, 48);
             // 
             // menuTimeoutChange
             // 
@@ -2146,6 +2145,7 @@ namespace quickDBExplorer
             // 設定値を保存したデータから呼び戻す
             LoadPreviousSetting();
 
+            this.commTooltip.SetToolTip(this.dbList, (string)this.dbList.SelectedItem);
 
 			this.Text = pServerName + "@" + (string)this.dbList.SelectedItem;
 			this.dbList.Focus();	//フォーカスを元に戻す
@@ -2471,6 +2471,10 @@ namespace quickDBExplorer
 			this.cmbHistory.DataSource = null;
 			this.cmbHistory.DataSource = this.selectedTables;
 			this.cmbHistory.Refresh();
+            if( ownerListbox.SelectedItems.Count == 1 )
+            {
+                this.commTooltip.SetToolTip(this.ownerListbox, ownerListbox.SelectedItem.ToString());
+            }
 			
 
 			DispObjectList();
@@ -2595,7 +2599,7 @@ namespace quickDBExplorer
 
 		private void txtOutput_TextChanged(object sender, System.EventArgs e)
 		{
-			this.toolTip1.SetToolTip(this.txtOutput,this.txtOutput.Text);
+			this.commTooltip.SetToolTip(this.txtOutput,this.txtOutput.Text);
 			svdata.OutFile[svdata.LastDatabase] = this.txtOutput.Text;
 		}
 
@@ -3976,7 +3980,7 @@ namespace quickDBExplorer
 					this.btnGridFormat.Enabled = true;
 					this.chkDispData.Checked = true;
 					this.dbGrid.AllowSorting = true;
-					this.toolTip3.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
+					this.commTooltip.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
 					this.dbGrid.SetDataBinding(dspdt,dspdt.Tables[0].TableName);
 					this.dbGrid.Tag = Sqldlg.SelectSql;
 					this.dbGrid.Show();
@@ -5536,7 +5540,7 @@ namespace quickDBExplorer
 				this.dbGrid.SetDataBinding(dspdt, dspdt.Tables[0].TableName);
 				if (usePreSql == false)
 				{
-					this.toolTip3.SetToolTip(this.dbGrid, stSqlDisp);
+					this.commTooltip.SetToolTip(this.dbGrid, stSqlDisp);
 					this.dbGrid.Tag = stSql;
 				}
 				this.dbGrid.Show();
