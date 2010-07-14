@@ -448,6 +448,33 @@
             検索方法を取得する
             </summary>
         </member>
+        <member name="T:quickDBExplorer.Forms.Dialog.BookMarkEditForm">
+            <summary>
+            ブックマークの管理を行うフォーム    
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BookMarkEditForm.#ctor(System.Collections.Generic.List{quickDBExplorer.Forms.BookmarkInfo})">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.Dialog.BookMarkEditForm.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BookMarkEditForm.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BookMarkEditForm.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.qdbeListView">
             <summary>
             qdbeListView の概要の説明です。
@@ -1312,6 +1339,11 @@
             </summary>
         </member>
         <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2008">
+            <summary>
+            SQL Server 2008 を表すインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2008R2">
             <summary>
             SQL Server 2008 を表すインスタンスを生成する
             </summary>
@@ -3206,32 +3238,37 @@
             日付変換書式の指定
             </summary>
         </member>
-        <member name="T:quickDBExplorer.Forms.Dialog.BookMarkEditForm">
+        <member name="T:quickDBExplorer.Forms.ToolInfo">
             <summary>
-            ブックマークの管理を行うフォーム    
+            ツール情報
             </summary>
         </member>
-        <member name="M:quickDBExplorer.Forms.Dialog.BookMarkEditForm.#ctor">
+        <member name="M:quickDBExplorer.Forms.ToolInfo.#ctor(System.String)">
             <summary>
             コンストラクタ
             </summary>
+            <param name="name"></param>
         </member>
-        <member name="F:quickDBExplorer.Forms.Dialog.BookMarkEditForm.components">
+        <member name="P:quickDBExplorer.Forms.ToolInfo.Name">
             <summary>
-            必要なデザイナ変数です。
+            名称
             </summary>
         </member>
-        <member name="M:quickDBExplorer.Forms.Dialog.BookMarkEditForm.Dispose(System.Boolean)">
+        <member name="P:quickDBExplorer.Forms.ToolInfo.Command">
             <summary>
-            使用中のリソースをすべてクリーンアップします。
+            コマンド文字列
             </summary>
-            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
         </member>
-        <member name="M:quickDBExplorer.Forms.Dialog.BookMarkEditForm.InitializeComponent">
+        <member name="M:quickDBExplorer.manager.ToolManager.Save(System.Collections.Generic.List{quickDBExplorer.Forms.ToolInfo})">
             <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
+            ツール情報を保存する
             </summary>
+        </member>
+        <member name="M:quickDBExplorer.manager.ToolManager.Load">
+            <summary>
+            ツール情報をロードする
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>
