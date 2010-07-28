@@ -26,6 +26,12 @@ namespace quickDBExplorer.Forms
         {
             this.Name = name;
         }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="command"></param>
         public ToolInfo(string name, string command)
         {
             this.Name = name;

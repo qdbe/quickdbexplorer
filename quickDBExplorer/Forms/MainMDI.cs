@@ -61,7 +61,6 @@ namespace quickDBExplorer
         private Dictionary<string, List<Forms.BookmarkInfo>> bookMarks;
         private MenuItem menuBookMarkSeparator;
         private MenuItem menuTools;
-        private MenuItem menuToolAdd;
         private MenuItem menuToolEdit;
         private MenuItem menuToolSeparator;
 
@@ -123,7 +122,6 @@ namespace quickDBExplorer
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.menuTools = new System.Windows.Forms.MenuItem();
-            this.menuToolAdd = new System.Windows.Forms.MenuItem();
             this.menuToolEdit = new System.Windows.Forms.MenuItem();
             this.menuToolSeparator = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
@@ -237,17 +235,10 @@ namespace quickDBExplorer
             // 
             this.menuTools.Index = 3;
             this.menuTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuToolAdd,
             this.menuToolEdit,
             this.menuToolSeparator});
             this.menuTools.Text = "äOïîÉcÅ[Éã(&N)";
             this.menuTools.Popup += new System.EventHandler(this.menuTools_Popup);
-            // 
-            // menuToolAdd
-            // 
-            this.menuToolAdd.Index = 0;
-            this.menuToolAdd.Text = "í«â¡";
-            this.menuToolAdd.Click += new System.EventHandler(this.menuToolAdd_Click);
             // 
             // menuToolEdit
             // 
@@ -767,11 +758,6 @@ namespace quickDBExplorer
             bookmarkEditor.ShowDialog(this);
         }
 
-        private void menuToolAdd_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void menuToolEdit_Click(object sender, EventArgs e)
         {
 
@@ -780,11 +766,6 @@ namespace quickDBExplorer
         private void menuTools_Popup(object sender, EventArgs e)
         {
             this.menuTools.MenuItems.Clear();
-            if (this.ActiveMdiChild != null &&
-                this.ActiveMdiChild is MainForm)
-            {
-                this.menuTools.MenuItems.Add(menuToolAdd);
-            }
             this.menuTools.MenuItems.Add(menuToolEdit);
             SetToolPopupList((MainForm)this.ActiveMdiChild);
         }
@@ -802,7 +783,7 @@ namespace quickDBExplorer
 
         void toolItemClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            outerToolManager.DoAction(((MenuItem)sender).Tag);
         }
     }
     

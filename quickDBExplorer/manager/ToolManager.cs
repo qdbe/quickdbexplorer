@@ -73,5 +73,15 @@ namespace quickDBExplorer.manager
             return ds;
         }
 
+
+        internal void DoAction(object p)
+        {
+            if (!(p is ToolInfo) )
+            {
+                return;
+            }
+
+
+        }
     }
 }

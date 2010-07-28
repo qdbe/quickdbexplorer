@@ -95,6 +95,7 @@ namespace quickDBExplorer
 		private	string	DateFormat;
 		private string aliasText;
 
+
 		#region åˆäJÉÅÉìÉo
 		private ISqlInterface	pSqlDriver = null;
 		/// <summary>
@@ -294,7 +295,10 @@ namespace quickDBExplorer
 			get { return this.pSqlVersion; }
 			set { this.pSqlVersion = value; }
 		}
-		#endregion
+
+        public ConnectionInfo ConnectionArg { get; private set; }
+
+        #endregion
 
 		private System.Windows.Forms.Button btnEtc;
 		private System.Windows.Forms.MenuItem menuISQLW;
@@ -401,6 +405,7 @@ namespace quickDBExplorer
             this.SqlDriver = conn.SqlDriver;
             this.ConnectSqlVersion = conn.SqlVersionInfo;
             this.svdata = conn.ServerDataInfo;
+            this.ConnectionArg = conn;
         }
 
 		/// <summary>
@@ -6951,6 +6956,22 @@ namespace quickDBExplorer
             this.ownerListbox.SetSelectedItems(bookmark.Schema);
             this.objectList.SetSelectedObjects(bookmark.Objects);
         }
+
+        public manager.MacroArgInfo CreateMacroArg()
+        {
+            if (this.ownerListbox.SelectedItems.Count == 1)
+            {
+                return new manager.MacroArgInfo(this.ConnectionArg,
+                    this.dbList.SelectedItem.ToString(),
+                    this.ownerListbox.SelectedItem.ToString());
+            }
+            else
+            {
+                return new manager.MacroArgInfo(this.ConnectionArg, this.dbList.SelectedItem.ToString(),
+                    string.Empty);
+            }
+        }
+
 	}
 
 	/// <summary>
