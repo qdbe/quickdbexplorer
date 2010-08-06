@@ -242,13 +242,13 @@ namespace quickDBExplorer
             // 
             // menuToolEdit
             // 
-            this.menuToolEdit.Index = 1;
+            this.menuToolEdit.Index = 0;
             this.menuToolEdit.Text = "ä«óù";
             this.menuToolEdit.Click += new System.EventHandler(this.menuToolEdit_Click);
             // 
             // menuToolSeparator
             // 
-            this.menuToolSeparator.Index = 2;
+            this.menuToolSeparator.Index = 1;
             this.menuToolSeparator.Text = "-";
             // 
             // MainMdi
@@ -760,17 +760,21 @@ namespace quickDBExplorer
 
         private void menuToolEdit_Click(object sender, EventArgs e)
         {
-
+            Forms.Dialog.OuterToolEditForm dlg = new quickDBExplorer.Forms.Dialog.OuterToolEditForm(outerTools);
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                this.outerTools = dlg.ResultToolList;
+            }
         }
 
         private void menuTools_Popup(object sender, EventArgs e)
         {
             this.menuTools.MenuItems.Clear();
             this.menuTools.MenuItems.Add(menuToolEdit);
-            SetToolPopupList((MainForm)this.ActiveMdiChild);
+            SetToolPopupList();
         }
 
-        private void SetToolPopupList(MainForm mainForm)
+        private void SetToolPopupList()
         {
             foreach (ToolInfo each in outerTools)
             {

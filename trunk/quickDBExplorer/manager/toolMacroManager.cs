@@ -122,20 +122,36 @@ namespace quickDBExplorer.manager
             }
             return commandString.Replace(param, this.Converter(arg));
         }
+
+        public string BuildSample(ConnectionInfo conn, MainForm forms)
+        {
+            string result = string.Empty;
+            MacroArgInfo arg;
+            if (forms != null)
+            {
+                arg = forms.CreateMacroArg();
+            }
+            else
+            {
+                arg = new MacroArgInfo(conn, string.Empty, string.Empty);
+            }
+            return this.ReplaceParam(this.GetMacroParam(), arg);
+        }
+    
     }
 
 
     /// <summary>
     /// ツール情報管理クラス
     /// </summary>
-    public class toolMacroManager
+    public class ToolMacroManager
     {
         private List<MacroInfo> macroList;
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public toolMacroManager()
+        public ToolMacroManager()
         {
             InitializeMacro();
         }
@@ -155,6 +171,11 @@ namespace quickDBExplorer.manager
             macroList.Add(new MacroInfo("DATABASENAME", "データベース名", x => x.DbName ));
             macroList.Add(new MacroInfo("SCHEMANAME", "スキーマ名", x => x.SchemaName ));
             macroList.Add(new MacroInfo("APPPATH", "アプリケーション起動パス", x => Application.ExecutablePath ));
+        }
+
+        public IEnumerator<MacroInfo> GetEnumrator()
+        {
+            return macroList.GetEnumerator();
         }
 
         /// <summary>
@@ -182,5 +203,6 @@ namespace quickDBExplorer.manager
             }
             return result;
         }
+
     }
 }
