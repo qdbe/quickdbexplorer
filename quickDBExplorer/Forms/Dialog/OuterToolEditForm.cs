@@ -14,7 +14,11 @@ namespace quickDBExplorer.Forms.Dialog
     public partial class OuterToolEditForm : quickDBExplorer.quickDBExplorerBaseForm
     {
 
-        private List<ToolInfo> ResultToolList { get; set; }
+        /// <summary>
+        /// 編集結果
+        /// </summary>
+        public List<ToolInfo> ResultToolList { get; set; }
+
         private manager.ToolMacroManager toolManager;
 
         /// <summary>

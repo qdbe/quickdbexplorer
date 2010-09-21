@@ -68,6 +68,7 @@ namespace quickDBExplorer
 
         private List<ToolInfo> outerTools;
         private ToolManager outerToolManager;
+        private ToolMacroManager toolMacroManager;
 
 
         /// <summary>
@@ -421,6 +422,7 @@ namespace quickDBExplorer
         private void InitTools()
         {
             this.outerToolManager = new ToolManager();
+            this.toolMacroManager = new ToolMacroManager();
             this.outerTools = this.outerToolManager.Load();
         }
 
@@ -760,7 +762,7 @@ namespace quickDBExplorer
 
         private void menuToolEdit_Click(object sender, EventArgs e)
         {
-            Forms.Dialog.OuterToolEditForm dlg = new quickDBExplorer.Forms.Dialog.OuterToolEditForm(outerTools);
+            Forms.Dialog.OuterToolEditForm dlg = new quickDBExplorer.Forms.Dialog.OuterToolEditForm(outerTools, toolMacroManager);
             if (dlg.ShowDialog() == DialogResult.OK)
             {
                 this.outerTools = dlg.ResultToolList;
