@@ -123,7 +123,7 @@ namespace quickDBExplorer.manager
             return commandString.Replace(param, this.Converter(arg));
         }
 
-        public string BuildSample(ConnectionInfo conn, MainForm forms)
+        internal string BuildSample(ConnectionInfo conn, MainForm forms)
         {
             string result = string.Empty;
             MacroArgInfo arg;
@@ -173,6 +173,10 @@ namespace quickDBExplorer.manager
             macroList.Add(new MacroInfo("APPPATH", "アプリケーション起動パス", x => Application.ExecutablePath ));
         }
 
+        /// <summary>
+        /// Enumratorを取得する
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<MacroInfo> GetEnumrator()
         {
             return macroList.GetEnumerator();
