@@ -40,7 +40,7 @@ namespace quickDBExplorer.Forms.Dialog
         private void InitMacro()
         {
             this.macroList.SuspendLayout();
-            foreach (manager.MacroInfo each in toolManager.GetEnumrator())
+            foreach (manager.MacroInfo each in toolManager.GetEnumrable())
             {
                 ListViewItem item = new ListViewItem();
                 item.SubItems.Add(each.GetMacroParam());
