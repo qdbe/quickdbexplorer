@@ -177,9 +177,9 @@ namespace quickDBExplorer.manager
         /// Enumratorを取得する
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<MacroInfo> GetEnumrator()
+        public IEnumerable<MacroInfo> GetEnumrable()
         {
-            return macroList.GetEnumerator();
+            return macroList;
         }
 
         /// <summary>
