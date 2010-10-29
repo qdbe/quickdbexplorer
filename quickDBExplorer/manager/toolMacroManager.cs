@@ -123,20 +123,17 @@ namespace quickDBExplorer.manager
             return commandString.Replace(param, this.Converter(arg));
         }
 
-        internal string BuildSample(ConnectionInfo conn, MainForm forms)
+        internal string BuildSample(MacroArgInfo arg)
         {
-            string result = string.Empty;
-            MacroArgInfo arg;
-            if (forms != null)
-            {
-                arg = forms.CreateMacroArg();
-            }
-            else
-            {
-                arg = new MacroArgInfo(conn, string.Empty, string.Empty);
-            }
             return this.ReplaceParam(this.GetMacroParam(), arg);
         }
+
+        internal void SetSampleString(MacroArgInfo arg)
+        {
+            this.SampleStr = BuildSample(arg);
+        }
+
+        
     
     }
 
@@ -147,6 +144,8 @@ namespace quickDBExplorer.manager
     public class ToolMacroManager
     {
         private List<MacroInfo> macroList;
+
+        private MacroArgInfo macroArg;
 
         /// <summary>
         /// コンストラクタ
@@ -173,6 +172,15 @@ namespace quickDBExplorer.manager
             macroList.Add(new MacroInfo("APPPATH", "アプリケーション起動パス", x => Application.ExecutablePath ));
         }
 
+        public void SetMacroArg(MacroArgInfo arg)
+        {
+            macroArg = arg;
+            foreach (MacroInfo each in macroList)
+            {
+                each.SetSampleString(arg);
+            }
+        }
+
         /// <summary>
         /// Enumratorを取得する
         /// </summary>
@@ -181,6 +189,7 @@ namespace quickDBExplorer.manager
         {
             return macroList;
         }
+
 
         /// <summary>
         /// コマンドを実際の文字に変換する

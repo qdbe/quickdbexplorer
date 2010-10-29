@@ -762,6 +762,19 @@ namespace quickDBExplorer
 
         private void menuToolEdit_Click(object sender, EventArgs e)
         {
+            MacroArgInfo arg;
+            if (this.ActiveMdiChild == null ||
+                !(this.ActiveMdiChild is MainForm))
+            {
+                ConnectionInfo dummySetting = ConnectionInfo.CreateDummyConnection();
+                arg = new MacroArgInfo(dummySetting, string.Empty, string.Empty);
+            }
+            else
+            {
+                arg = ((MainForm)this.ActiveMdiChild).CreateMacroArg();
+            }
+            toolMacroManager.SetMacroArg(arg);
+
             Forms.Dialog.OuterToolEditForm dlg = new quickDBExplorer.Forms.Dialog.OuterToolEditForm(outerTools, toolMacroManager);
             if (dlg.ShowDialog() == DialogResult.OK)
             {

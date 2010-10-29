@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{607646D5-0110-4F20-8916-E1C7B75FF090}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -94,6 +94,7 @@
     <Compile Include="DBObjectInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EmptySqlInterface.cs" />
     <Compile Include="ISqlInterface.cs">
       <SubType>Code</SubType>
     </Compile>

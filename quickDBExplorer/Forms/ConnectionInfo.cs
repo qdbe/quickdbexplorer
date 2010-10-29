@@ -80,5 +80,24 @@ namespace quickDBExplorer
             this.SqlVersionInfo = sqlVersion;
             this.ServerDataInfo = serverdata;
         }
+
+        /// <summary>
+        /// ダミーのコネクション情報を生成する
+        /// </summary>
+        /// <returns></returns>
+        public static ConnectionInfo CreateDummyConnection()
+        {
+            return new ConnectionInfo(
+                "DummyServerName",
+                "DummyServerName",
+                "SQLSERVER",
+                "sa",
+                "saPassword",
+                false,
+                new EmptySqlInterface(),
+                SqlVersion.SQLSERVER2000(),
+                new ServerData()
+                );
+        }
     }
 }
