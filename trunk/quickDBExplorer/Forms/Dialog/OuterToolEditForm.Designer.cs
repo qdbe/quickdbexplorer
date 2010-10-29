@@ -36,9 +36,10 @@
             this.NameColumn = new System.Windows.Forms.ColumnHeader();
             this.commandColumn = new System.Windows.Forms.ColumnHeader();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.infoPanel = new System.Windows.Forms.Panel();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
+            this.infoPanel = new System.Windows.Forms.Panel();
             this.btnInsertMacro = new System.Windows.Forms.Button();
             this.macroList = new quickDBExplorer.qdbeListView();
             this.macroName = new System.Windows.Forms.ColumnHeader();
@@ -48,7 +49,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnDelete = new System.Windows.Forms.Button();
             this.EditPanelContainer.Panel1.SuspendLayout();
             this.EditPanelContainer.Panel2.SuspendLayout();
             this.EditPanelContainer.SuspendLayout();
@@ -151,6 +151,7 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.btnDelete);
             this.splitContainer1.Panel1.Controls.Add(this.btnUpdate);
+            this.splitContainer1.Panel1.Controls.Add(this.btnNew);
             // 
             // splitContainer1.Panel2
             // 
@@ -159,12 +160,39 @@
             this.splitContainer1.SplitterDistance = 72;
             this.splitContainer1.TabIndex = 1;
             // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(5, 216);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(60, 23);
+            this.btnDelete.TabIndex = 7;
+            this.btnDelete.Text = "削除";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(5, 162);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(60, 23);
+            this.btnUpdate.TabIndex = 7;
+            this.btnUpdate.Text = "登録";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            // 
+            // btnNew
+            // 
+            this.btnNew.Location = new System.Drawing.Point(5, 108);
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(60, 23);
+            this.btnNew.TabIndex = 7;
+            this.btnNew.Text = "新規";
+            this.btnNew.UseVisualStyleBackColor = true;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            // 
             // infoPanel
             // 
             this.infoPanel.AutoScroll = true;
             this.infoPanel.Controls.Add(this.btnInsertMacro);
             this.infoPanel.Controls.Add(this.macroList);
-            this.infoPanel.Controls.Add(this.btnNew);
             this.infoPanel.Controls.Add(this.txtName);
             this.infoPanel.Controls.Add(this.txtCommand);
             this.infoPanel.Controls.Add(this.label3);
@@ -175,25 +203,6 @@
             this.infoPanel.Name = "infoPanel";
             this.infoPanel.Size = new System.Drawing.Size(384, 455);
             this.infoPanel.TabIndex = 1;
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Location = new System.Drawing.Point(3, 172);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(60, 23);
-            this.btnUpdate.TabIndex = 7;
-            this.btnUpdate.Text = "更新";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            // 
-            // btnNew
-            // 
-            this.btnNew.Location = new System.Drawing.Point(61, 20);
-            this.btnNew.Name = "btnNew";
-            this.btnNew.Size = new System.Drawing.Size(60, 23);
-            this.btnNew.TabIndex = 7;
-            this.btnNew.Text = "新規";
-            this.btnNew.UseVisualStyleBackColor = true;
-            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // btnInsertMacro
             // 
@@ -206,13 +215,15 @@
             // 
             // macroList
             // 
+            this.macroList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.macroList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.macroName,
             this.macroValue});
             this.macroList.IsAutoColumSort = true;
             this.macroList.Location = new System.Drawing.Point(61, 228);
             this.macroList.Name = "macroList";
-            this.macroList.Size = new System.Drawing.Size(279, 215);
+            this.macroList.Size = new System.Drawing.Size(302, 215);
             this.macroList.TabIndex = 6;
             this.macroList.UseCompatibleStateImageBehavior = false;
             this.macroList.View = System.Windows.Forms.View.Details;
@@ -229,17 +240,21 @@
             // 
             // txtName
             // 
+            this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.CanCtrlDelete = true;
             this.txtName.IsDigitOnly = false;
             this.txtName.IsShowZoom = false;
             this.txtName.Location = new System.Drawing.Point(61, 49);
             this.txtName.Name = "txtName";
             this.txtName.PdHistory = null;
-            this.txtName.Size = new System.Drawing.Size(279, 19);
+            this.txtName.Size = new System.Drawing.Size(302, 19);
             this.txtName.TabIndex = 1;
             // 
             // txtCommand
             // 
+            this.txtCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtCommand.CanCtrlDelete = true;
             this.txtCommand.IsDigitOnly = false;
             this.txtCommand.IsShowZoom = false;
@@ -247,7 +262,7 @@
             this.txtCommand.Multiline = true;
             this.txtCommand.Name = "txtCommand";
             this.txtCommand.PdHistory = null;
-            this.txtCommand.Size = new System.Drawing.Size(279, 121);
+            this.txtCommand.Size = new System.Drawing.Size(302, 121);
             this.txtCommand.TabIndex = 3;
             // 
             // label3
@@ -276,15 +291,6 @@
             this.label2.Size = new System.Drawing.Size(40, 12);
             this.label2.TabIndex = 2;
             this.label2.Text = "コマンド";
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(3, 228);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(60, 23);
-            this.btnDelete.TabIndex = 7;
-            this.btnDelete.Text = "削除";
-            this.btnDelete.UseVisualStyleBackColor = true;
             // 
             // OuterToolEditForm
             // 

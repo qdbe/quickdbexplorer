@@ -19,7 +19,7 @@ namespace quickDBExplorer.Forms.Dialog
         /// </summary>
         public List<ToolInfo> ResultToolList { get; set; }
 
-        private manager.ToolMacroManager toolManager;
+        private manager.ToolMacroManager macroManager;
 
         /// <summary>
         /// コンストラクタ
@@ -27,7 +27,7 @@ namespace quickDBExplorer.Forms.Dialog
         public OuterToolEditForm(List<ToolInfo> toolList, manager.ToolMacroManager manager)
         {
             ResultToolList = toolList;
-            toolManager = manager;
+            macroManager = manager;
             InitializeComponent();
         }
 
@@ -40,10 +40,10 @@ namespace quickDBExplorer.Forms.Dialog
         private void InitMacro()
         {
             this.macroList.SuspendLayout();
-            foreach (manager.MacroInfo each in toolManager.GetEnumrable())
+            foreach (manager.MacroInfo each in macroManager.GetEnumrable())
             {
                 ListViewItem item = new ListViewItem();
-                item.SubItems.Add(each.GetMacroParam());
+                item.SubItems[0].Text = each.GetMacroParam();
                 item.SubItems.Add(each.SampleStr);
                 item.Tag = each;
                 this.macroList.Items.Add(item);

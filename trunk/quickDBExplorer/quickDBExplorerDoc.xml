@@ -150,6 +150,17 @@
             当ダイアログでの入力結果
             </summary>
         </member>
+        <member name="M:quickDBExplorer.manager.ToolManager.Save(System.Collections.Generic.List{quickDBExplorer.Forms.ToolInfo})">
+            <summary>
+            ツール情報を保存する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.manager.ToolManager.Load">
+            <summary>
+            ツール情報をロードする
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:quickDBExplorer.DataGridViewBase">
             <summary>
             DataTable を表示するためのダイアログ
@@ -473,6 +484,76 @@
             <summary>
             デザイナ サポートに必要なメソッドです。このメソッドの内容を
             コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.ConnectionInfo">
+            <summary>
+            DB接続情報
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ConnectionInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.Boolean,quickDBExplorer.ISqlInterface,quickDBExplorer.SqlVersion,quickDBExplorer.ServerData)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="serverName"></param>
+            <param name="serverRealName"></param>
+            <param name="instanceName"></param>
+            <param name="logonUid"></param>
+            <param name="logonPassword"></param>
+            <param name="isUseTruse"></param>
+            <param name="sqlDriver"></param>
+            <param name="sqlVersion"></param>
+            <param name="serverdata"></param>
+        </member>
+        <member name="M:quickDBExplorer.ConnectionInfo.CreateDummyConnection">
+            <summary>
+            ダミーのコネクション情報を生成する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.ServerName">
+            <summary>
+            サーバー名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.ServerRealName">
+            <summary>
+            実サーバー名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.InstanceName">
+            <summary>
+            インスタンス名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.LogOnUid">
+            <summary>
+            ログインID
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.LogOnPassword">
+            <summary>
+            ログインパスワード
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.IsUseTruse">
+            <summary>
+            信頼関係接続
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.SqlDriver">
+            <summary>
+            SQLドライバー情報
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.ServerDataInfo">
+            <summary>
+            前回終了値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.SqlVersionInfo">
+            <summary>
+            DBサーバーバージョン情報
             </summary>
         </member>
         <member name="T:quickDBExplorer.qdbeListView">
@@ -2678,6 +2759,34 @@
             <param name="bookmark"></param>
             <returns></returns>
         </member>
+        <member name="T:quickDBExplorer.Forms.ToolInfo">
+            <summary>
+            ツール情報
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.ToolInfo.#ctor(System.String)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.ToolInfo.#ctor(System.String,System.String)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="name"></param>
+            <param name="command"></param>
+        </member>
+        <member name="P:quickDBExplorer.Forms.ToolInfo.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.ToolInfo.Command">
+            <summary>
+            コマンド文字列
+            </summary>
+        </member>
         <member name="F:quickDBExplorer.qdbeAboutBox.components">
             <summary>
             必要なデザイナ変数です。
@@ -2971,6 +3080,155 @@
             アプリケーションのメイン エントリ ポイントです。
             </summary>
         </member>
+        <member name="T:quickDBExplorer.manager.MacroArgInfo">
+            <summary>
+            マクロへの引数情報
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.manager.MacroArgInfo.#ctor(quickDBExplorer.ConnectionInfo,System.String,System.String)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="conn"></param>
+            <param name="dbname"></param>
+            <param name="schema"></param>
+        </member>
+        <member name="P:quickDBExplorer.manager.MacroArgInfo.Connection">
+            <summary>
+            DBコネクション情報
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.manager.MacroArgInfo.DbName">
+            <summary>
+            DB名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.manager.MacroArgInfo.SchemaName">
+            <summary>
+            スキーマ名
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.manager.StrConverter">
+            <summary>
+            コンバート関数
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.manager.MacroInfo">
+            <summary>
+            マクロ定義項目情報
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.manager.MacroInfo.#ctor(System.String,System.String,System.String,quickDBExplorer.manager.StrConverter)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="name"></param>
+            <param name="comment"></param>
+            <param name="sample"></param>
+            <param name="func"></param>
+        </member>
+        <member name="M:quickDBExplorer.manager.MacroInfo.#ctor(System.String,System.String,quickDBExplorer.manager.StrConverter)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="name"></param>
+            <param name="comment"></param>
+            <param name="func"></param>
+        </member>
+        <member name="M:quickDBExplorer.manager.MacroInfo.GetMacroParam">
+            <summary>
+            マクロのパラメータ文字列を返す
+            このパラメータ文字列をコマンド文字列に埋め込むことで、置換が行われる。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.manager.MacroInfo.ReplaceParam(System.String,quickDBExplorer.manager.MacroArgInfo)">
+            <summary>
+            パラメータを置換する
+            </summary>
+            <param name="commandString"></param>
+            <param name="arg"></param>
+            <returns></returns>
+        </member>
+        <member name="P:quickDBExplorer.manager.MacroInfo.MacroName">
+            <summary>
+            マクロ名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.manager.MacroInfo.Comment">
+            <summary>
+            コメント
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.manager.MacroInfo.SampleStr">
+            <summary>
+            サンプル文字列
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.manager.MacroInfo.Converter">
+            <summary>
+            文字変換関数
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.manager.ToolMacroManager">
+            <summary>
+            ツール情報管理クラス
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.manager.ToolMacroManager.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.manager.ToolMacroManager.GetEnumrable">
+            <summary>
+            Enumratorを取得する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.manager.ToolMacroManager.BuildCommand(System.String,quickDBExplorer.ConnectionInfo,quickDBExplorer.MainForm)">
+            <summary>
+            コマンドを実際の文字に変換する
+            </summary>
+            <param name="commandString">コマンド文字列</param>
+            <param name="conn">接続情報</param>
+            <param name="forms">カレントダイアログ</param>
+            <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.Forms.Dialog.OuterToolEditForm">
+            <summary>
+            外部ツール情報の編集ダイアログ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.Dialog.OuterToolEditForm.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.OuterToolEditForm.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.OuterToolEditForm.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.OuterToolEditForm.#ctor(System.Collections.Generic.List{quickDBExplorer.Forms.ToolInfo},quickDBExplorer.manager.ToolMacroManager)">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.OuterToolEditForm.ResultToolList">
+            <summary>
+            編集結果
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.QueryDialogSelect">
             <summary>
             select 文を入力する為のダイアログ
@@ -3237,38 +3495,6 @@
             <summary>
             日付変換書式の指定
             </summary>
-        </member>
-        <member name="T:quickDBExplorer.Forms.ToolInfo">
-            <summary>
-            ツール情報
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.Forms.ToolInfo.#ctor(System.String)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="name"></param>
-        </member>
-        <member name="P:quickDBExplorer.Forms.ToolInfo.Name">
-            <summary>
-            名称
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.Forms.ToolInfo.Command">
-            <summary>
-            コマンド文字列
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.manager.ToolManager.Save(System.Collections.Generic.List{quickDBExplorer.Forms.ToolInfo})">
-            <summary>
-            ツール情報を保存する
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.manager.ToolManager.Load">
-            <summary>
-            ツール情報をロードする
-            </summary>
-            <returns></returns>
         </member>
     </members>
 </doc>
