@@ -35,12 +35,9 @@
             this.toolList = new quickDBExplorer.qdbeListView();
             this.NameColumn = new System.Windows.Forms.ColumnHeader();
             this.commandColumn = new System.Windows.Forms.ColumnHeader();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.btnDelete = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.btnNew = new System.Windows.Forms.Button();
-            this.infoPanel = new System.Windows.Forms.Panel();
             this.btnInsertMacro = new System.Windows.Forms.Button();
+            this.btnNew = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
             this.macroList = new quickDBExplorer.qdbeListView();
             this.macroName = new System.Windows.Forms.ColumnHeader();
             this.macroValue = new System.Windows.Forms.ColumnHeader();
@@ -49,20 +46,17 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.EditPanelContainer.Panel1.SuspendLayout();
             this.EditPanelContainer.Panel2.SuspendLayout();
             this.EditPanelContainer.SuspendLayout();
             this.ListPanel.SuspendLayout();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this.infoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // MsgArea
             // 
-            this.MsgArea.Location = new System.Drawing.Point(109, 478);
-            this.MsgArea.Size = new System.Drawing.Size(621, 20);
+            this.MsgArea.Location = new System.Drawing.Point(163, 478);
+            this.MsgArea.Size = new System.Drawing.Size(567, 20);
             // 
             // btnCancel
             // 
@@ -73,6 +67,7 @@
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "閉じる(&X)";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnOK
             // 
@@ -100,7 +95,15 @@
             // 
             // EditPanelContainer.Panel2
             // 
-            this.EditPanelContainer.Panel2.Controls.Add(this.splitContainer1);
+            this.EditPanelContainer.Panel2.Controls.Add(this.btnInsertMacro);
+            this.EditPanelContainer.Panel2.Controls.Add(this.btnNew);
+            this.EditPanelContainer.Panel2.Controls.Add(this.btnUpdate);
+            this.EditPanelContainer.Panel2.Controls.Add(this.macroList);
+            this.EditPanelContainer.Panel2.Controls.Add(this.txtName);
+            this.EditPanelContainer.Panel2.Controls.Add(this.txtCommand);
+            this.EditPanelContainer.Panel2.Controls.Add(this.label3);
+            this.EditPanelContainer.Panel2.Controls.Add(this.label1);
+            this.EditPanelContainer.Panel2.Controls.Add(this.label2);
             this.EditPanelContainer.Size = new System.Drawing.Size(827, 459);
             this.EditPanelContainer.SplitterDistance = 359;
             this.EditPanelContainer.TabIndex = 0;
@@ -129,6 +132,7 @@
             this.toolList.TabIndex = 0;
             this.toolList.UseCompatibleStateImageBehavior = false;
             this.toolList.View = System.Windows.Forms.View.Details;
+            this.toolList.SelectedIndexChanged += new System.EventHandler(this.toolList_SelectedIndexChanged);
             // 
             // NameColumn
             // 
@@ -140,78 +144,35 @@
             this.commandColumn.Text = "コマンド";
             this.commandColumn.Width = 178;
             // 
-            // splitContainer1
+            // btnInsertMacro
             // 
-            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.btnDelete);
-            this.splitContainer1.Panel1.Controls.Add(this.btnUpdate);
-            this.splitContainer1.Panel1.Controls.Add(this.btnNew);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.infoPanel);
-            this.splitContainer1.Size = new System.Drawing.Size(464, 459);
-            this.splitContainer1.SplitterDistance = 72;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // btnDelete
-            // 
-            this.btnDelete.Location = new System.Drawing.Point(5, 216);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(60, 23);
-            this.btnDelete.TabIndex = 7;
-            this.btnDelete.Text = "削除";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            // 
-            // btnUpdate
-            // 
-            this.btnUpdate.Location = new System.Drawing.Point(5, 162);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(60, 23);
-            this.btnUpdate.TabIndex = 7;
-            this.btnUpdate.Text = "登録";
-            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnInsertMacro.Location = new System.Drawing.Point(62, 190);
+            this.btnInsertMacro.Name = "btnInsertMacro";
+            this.btnInsertMacro.Size = new System.Drawing.Size(92, 23);
+            this.btnInsertMacro.TabIndex = 12;
+            this.btnInsertMacro.Text = "マクロを挿入(&I)";
+            this.btnInsertMacro.UseVisualStyleBackColor = true;
+            this.btnInsertMacro.Click += new System.EventHandler(this.btnInsertMacro_Click);
             // 
             // btnNew
             // 
-            this.btnNew.Location = new System.Drawing.Point(5, 108);
+            this.btnNew.Location = new System.Drawing.Point(62, 11);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(60, 23);
-            this.btnNew.TabIndex = 7;
-            this.btnNew.Text = "新規";
+            this.btnNew.TabIndex = 16;
+            this.btnNew.Text = "新規(&N)";
             this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
-            // infoPanel
+            // btnUpdate
             // 
-            this.infoPanel.AutoScroll = true;
-            this.infoPanel.Controls.Add(this.btnInsertMacro);
-            this.infoPanel.Controls.Add(this.macroList);
-            this.infoPanel.Controls.Add(this.txtName);
-            this.infoPanel.Controls.Add(this.txtCommand);
-            this.infoPanel.Controls.Add(this.label3);
-            this.infoPanel.Controls.Add(this.label1);
-            this.infoPanel.Controls.Add(this.label2);
-            this.infoPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.infoPanel.Location = new System.Drawing.Point(0, 0);
-            this.infoPanel.Name = "infoPanel";
-            this.infoPanel.Size = new System.Drawing.Size(384, 455);
-            this.infoPanel.TabIndex = 1;
-            // 
-            // btnInsertMacro
-            // 
-            this.btnInsertMacro.Location = new System.Drawing.Point(61, 199);
-            this.btnInsertMacro.Name = "btnInsertMacro";
-            this.btnInsertMacro.Size = new System.Drawing.Size(92, 23);
-            this.btnInsertMacro.TabIndex = 4;
-            this.btnInsertMacro.Text = "マクロを挿入(&I)";
-            this.btnInsertMacro.UseVisualStyleBackColor = true;
+            this.btnUpdate.Location = new System.Drawing.Point(139, 11);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(60, 23);
+            this.btnUpdate.TabIndex = 15;
+            this.btnUpdate.Text = "登録(&W)";
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
             // 
             // macroList
             // 
@@ -221,12 +182,13 @@
             this.macroName,
             this.macroValue});
             this.macroList.IsAutoColumSort = true;
-            this.macroList.Location = new System.Drawing.Point(61, 228);
+            this.macroList.Location = new System.Drawing.Point(62, 219);
             this.macroList.Name = "macroList";
-            this.macroList.Size = new System.Drawing.Size(302, 215);
-            this.macroList.TabIndex = 6;
+            this.macroList.Size = new System.Drawing.Size(382, 215);
+            this.macroList.TabIndex = 14;
             this.macroList.UseCompatibleStateImageBehavior = false;
             this.macroList.View = System.Windows.Forms.View.Details;
+            this.macroList.DoubleClick += new System.EventHandler(this.macroList_DoubleClick);
             // 
             // macroName
             // 
@@ -245,11 +207,11 @@
             this.txtName.CanCtrlDelete = true;
             this.txtName.IsDigitOnly = false;
             this.txtName.IsShowZoom = false;
-            this.txtName.Location = new System.Drawing.Point(61, 49);
+            this.txtName.Location = new System.Drawing.Point(62, 40);
             this.txtName.Name = "txtName";
             this.txtName.PdHistory = null;
-            this.txtName.Size = new System.Drawing.Size(302, 19);
-            this.txtName.TabIndex = 1;
+            this.txtName.Size = new System.Drawing.Size(382, 19);
+            this.txtName.TabIndex = 9;
             // 
             // txtCommand
             // 
@@ -258,61 +220,68 @@
             this.txtCommand.CanCtrlDelete = true;
             this.txtCommand.IsDigitOnly = false;
             this.txtCommand.IsShowZoom = false;
-            this.txtCommand.Location = new System.Drawing.Point(61, 74);
+            this.txtCommand.Location = new System.Drawing.Point(62, 65);
             this.txtCommand.Multiline = true;
             this.txtCommand.Name = "txtCommand";
             this.txtCommand.PdHistory = null;
-            this.txtCommand.Size = new System.Drawing.Size(302, 121);
-            this.txtCommand.TabIndex = 3;
+            this.txtCommand.Size = new System.Drawing.Size(382, 121);
+            this.txtCommand.TabIndex = 11;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 52);
+            this.label3.Location = new System.Drawing.Point(13, 43);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 12);
-            this.label3.TabIndex = 0;
+            this.label3.TabIndex = 8;
             this.label3.Text = "名称";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 228);
+            this.label1.Location = new System.Drawing.Point(13, 219);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(31, 12);
-            this.label1.TabIndex = 5;
+            this.label1.TabIndex = 13;
             this.label1.Text = "マクロ";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 74);
+            this.label2.Location = new System.Drawing.Point(13, 65);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 12);
-            this.label2.TabIndex = 2;
+            this.label2.TabIndex = 10;
             this.label2.Text = "コマンド";
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(90, 478);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(60, 23);
+            this.btnDelete.TabIndex = 7;
+            this.btnDelete.Text = "削除(&D)";
+            this.btnDelete.UseVisualStyleBackColor = true;
             // 
             // OuterToolEditForm
             // 
             this.ClientSize = new System.Drawing.Size(851, 507);
             this.Controls.Add(this.EditPanelContainer);
             this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnCancel);
             this.Name = "OuterToolEditForm";
             this.Load += new System.EventHandler(this.OuterToolEditForm_Load);
             this.Controls.SetChildIndex(this.btnCancel, 0);
+            this.Controls.SetChildIndex(this.btnDelete, 0);
             this.Controls.SetChildIndex(this.btnOK, 0);
             this.Controls.SetChildIndex(this.EditPanelContainer, 0);
             this.Controls.SetChildIndex(this.MsgArea, 0);
             this.EditPanelContainer.Panel1.ResumeLayout(false);
             this.EditPanelContainer.Panel2.ResumeLayout(false);
+            this.EditPanelContainer.Panel2.PerformLayout();
             this.EditPanelContainer.ResumeLayout(false);
             this.ListPanel.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.ResumeLayout(false);
-            this.infoPanel.ResumeLayout(false);
-            this.infoPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -326,11 +295,10 @@
         private qdbeListView toolList;
         private System.Windows.Forms.ColumnHeader NameColumn;
         private System.Windows.Forms.ColumnHeader commandColumn;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button btnUpdate;
-        private System.Windows.Forms.Button btnNew;
-        private System.Windows.Forms.Panel infoPanel;
+        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnInsertMacro;
+        private System.Windows.Forms.Button btnNew;
+        private System.Windows.Forms.Button btnUpdate;
         private qdbeListView macroList;
         private System.Windows.Forms.ColumnHeader macroName;
         private System.Windows.Forms.ColumnHeader macroValue;
@@ -339,6 +307,5 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button btnDelete;
     }
 }

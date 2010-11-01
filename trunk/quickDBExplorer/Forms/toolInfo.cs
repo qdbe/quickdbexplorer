@@ -37,5 +37,14 @@ namespace quickDBExplorer.Forms
             this.Name = name;
             this.Command = command;
         }
+
+        /// <summary>
+        /// 文字列化
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return this.Name;
+        }
     }
 }

@@ -169,9 +169,14 @@ namespace quickDBExplorer.manager
             macroList.Add(new MacroInfo("SQLPUBLICVERSION", "SQLSERVERバージョン名", x => x.Connection.SqlVersionInfo.PublicVersionNo ));
             macroList.Add(new MacroInfo("DATABASENAME", "データベース名", x => x.DbName ));
             macroList.Add(new MacroInfo("SCHEMANAME", "スキーマ名", x => x.SchemaName ));
-            macroList.Add(new MacroInfo("APPPATH", "アプリケーション起動パス", x => Application.ExecutablePath ));
+            macroList.Add(new MacroInfo("APPPATH", "アプリケーションパス", x => Application.ExecutablePath));
+            macroList.Add(new MacroInfo("APPPATHDIR", "アプリケーション起動パス", x => Application.StartupPath));
         }
 
+        /// <summary>
+        /// マクロの為の情報を設定する
+        /// </summary>
+        /// <param name="arg"></param>
         public void SetMacroArg(MacroArgInfo arg)
         {
             macroArg = arg;
