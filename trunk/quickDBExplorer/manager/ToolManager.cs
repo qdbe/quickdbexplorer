@@ -8,14 +8,15 @@ namespace quickDBExplorer.manager
 {
     class ToolManager
     {
+        private const string SettingPath = "outerTools.xml";
+        private const string TOOLTABLENAME = "TOOLS";
         /// <summary>
         /// ツール情報を保存する
         /// </summary>
         public void Save(List<ToolInfo> saveList)
         {
             DataSet ds = this.Convert2DataSet(saveList);
-            ds.WriteXml("outerTools.xml");
-
+            ds.WriteXml(SettingPath);
         }
 
         private DataSet Convert2DataSet(List<ToolInfo> saveList)
@@ -24,7 +25,7 @@ namespace quickDBExplorer.manager
 
             foreach (ToolInfo each in saveList)
             {
-                ds.Tables["TOOL"].Rows.Add(new object[] { each.Name, each.Command });
+                ds.Tables[TOOLTABLENAME].Rows.Add(new object[] { each.Name, each.Command });
             }
             return ds;
         }
@@ -38,7 +39,7 @@ namespace quickDBExplorer.manager
             DataSet ds = new DataSet();
             try
             {
-                ds.ReadXml("outerTools.xml");
+                ds.ReadXml(SettingPath);
                 return Convert2Tools(ds);
             }
             catch (Exception exp)
@@ -50,11 +51,11 @@ namespace quickDBExplorer.manager
 
         private List<ToolInfo> Convert2Tools(DataSet ds)
         {
-            if (!ds.Tables.Contains("TOOLS"))
+            if (!ds.Tables.Contains(TOOLTABLENAME))
             {
                 return new List<ToolInfo>();
             }
-            DataTable dt = ds.Tables["TOOL"];
+            DataTable dt = ds.Tables[TOOLTABLENAME];
             List<ToolInfo> result = new List<ToolInfo>();
             foreach (DataRow dr in dt.Rows)
             {
@@ -66,9 +67,10 @@ namespace quickDBExplorer.manager
         private DataSet GetSchemaDataSet()
         {
             DataSet ds = new DataSet();
-            DataTable keyTable = new DataTable("TOOL");
+            DataTable keyTable = new DataTable(TOOLTABLENAME);
             keyTable.Columns.Add("NAME");
             keyTable.Columns.Add("COMMAND");
+            ds.Tables.Add(keyTable);
 
             return ds;
         }
@@ -80,8 +82,9 @@ namespace quickDBExplorer.manager
             {
                 return;
             }
+            ToolInfo info = (ToolInfo)p;
 
-
+            
         }
     }
 }

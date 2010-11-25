@@ -15,6 +15,7 @@ using System.Net;
 using quickDBExplorer.Forms;
 using quickDBExplorer.Forms.Events;
 using quickDBExplorer.manager;
+using System.Diagnostics;
 
 namespace quickDBExplorer
 {
@@ -762,6 +763,18 @@ namespace quickDBExplorer
 
         private void menuToolEdit_Click(object sender, EventArgs e)
         {
+            MacroArgInfo arg = GetMacroArg();
+            toolMacroManager.SetMacroArg(arg);
+
+            Forms.Dialog.OuterToolEditForm dlg = new quickDBExplorer.Forms.Dialog.OuterToolEditForm(outerTools, toolMacroManager);
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                this.outerTools = dlg.ResultToolList;
+            }
+        }
+
+        private MacroArgInfo GetMacroArg()
+        {
             MacroArgInfo arg;
             if (this.ActiveMdiChild == null ||
                 !(this.ActiveMdiChild is MainForm))
@@ -773,13 +786,7 @@ namespace quickDBExplorer
             {
                 arg = ((MainForm)this.ActiveMdiChild).CreateMacroArg();
             }
-            toolMacroManager.SetMacroArg(arg);
-
-            Forms.Dialog.OuterToolEditForm dlg = new quickDBExplorer.Forms.Dialog.OuterToolEditForm(outerTools, toolMacroManager);
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                this.outerTools = dlg.ResultToolList;
-            }
+            return arg;
         }
 
         private void menuTools_Popup(object sender, EventArgs e)
@@ -802,8 +809,26 @@ namespace quickDBExplorer
 
         void toolItemClick(object sender, EventArgs e)
         {
-            outerToolManager.DoAction(((MenuItem)sender).Tag);
+            ToolInfo info = (ToolInfo)((MenuItem)sender).Tag;
+            string commandstr = CreateCommandStr(info);
+
+            StartProcess(commandstr);
+        }
+
+        private string CreateCommandStr(ToolInfo info)
+        {
+            MacroArgInfo arg = GetMacroArg();
+            return this.toolMacroManager.BuildCommand(info.Command, arg);
+        }
+
+        private void StartProcess(string commandstr)
+        {
+            ProcessStartInfo startinfo = new ProcessStartInfo();
+            startinfo.ErrorDialog = true;
+            startinfo.ErrorDialogParentHandle = this.Handle;
+            startinfo.FileName = commandstr;
+            startinfo.UseShellExecute = true;
+            Process.Start(commandstr);
         }
     }
-    
 }

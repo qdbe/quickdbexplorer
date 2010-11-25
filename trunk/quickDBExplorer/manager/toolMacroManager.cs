@@ -203,17 +203,8 @@ namespace quickDBExplorer.manager
         /// <param name="conn">接続情報</param>
         /// <param name="forms">カレントダイアログ</param>
         /// <returns></returns>
-        internal string BuildCommand(string commandString, ConnectionInfo conn, MainForm forms)
+        internal string BuildCommand(string commandString, MacroArgInfo arg)
         {
-            MacroArgInfo arg;
-            if( forms != null )
-            {
-                arg = forms.CreateMacroArg();
-            }
-            else{
-                arg = new MacroArgInfo(conn, string.Empty, string.Empty);
-            }
-
             string result = commandString;
             foreach (MacroInfo each in macroList)
             {
