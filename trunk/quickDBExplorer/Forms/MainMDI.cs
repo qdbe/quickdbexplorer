@@ -810,25 +810,23 @@ namespace quickDBExplorer
         void toolItemClick(object sender, EventArgs e)
         {
             ToolInfo info = (ToolInfo)((MenuItem)sender).Tag;
-            string commandstr = CreateCommandStr(info);
-
-            StartProcess(commandstr);
-        }
-
-        private string CreateCommandStr(ToolInfo info)
-        {
             MacroArgInfo arg = GetMacroArg();
-            return this.toolMacroManager.BuildCommand(info.Command, arg);
+            string commandstr = this.toolMacroManager.BuildCommand(info.Command, arg);
+            string argstr = this.toolMacroManager.BuildCommand(info.Args, arg);
+
+            StartProcess(commandstr,argstr);
         }
 
-        private void StartProcess(string commandstr)
+
+        private void StartProcess(string commandstr,string arg)
         {
             ProcessStartInfo startinfo = new ProcessStartInfo();
             startinfo.ErrorDialog = true;
             startinfo.ErrorDialogParentHandle = this.Handle;
             startinfo.FileName = commandstr;
-            startinfo.UseShellExecute = true;
-            Process.Start(commandstr);
+            startinfo.Arguments = arg;
+            startinfo.UseShellExecute = false;
+            Process.Start(startinfo);
         }
     }
 }

@@ -35,13 +35,18 @@
             this.toolList = new quickDBExplorer.qdbeListView();
             this.NameColumn = new System.Windows.Forms.ColumnHeader();
             this.commandColumn = new System.Windows.Forms.ColumnHeader();
-            this.btnInsertMacro = new System.Windows.Forms.Button();
+            this.argColumn = new System.Windows.Forms.ColumnHeader();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnInsertArgMacro = new System.Windows.Forms.Button();
+            this.btnInsertCommandMacro = new System.Windows.Forms.Button();
             this.btnNew = new System.Windows.Forms.Button();
+            this.btnCommandRef = new System.Windows.Forms.Button();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.macroList = new quickDBExplorer.qdbeListView();
             this.macroName = new System.Windows.Forms.ColumnHeader();
             this.macroValue = new System.Windows.Forms.ColumnHeader();
             this.txtName = new quickDBExplorer.quickDBExplorerTextBox();
+            this.txtArgs = new quickDBExplorer.quickDBExplorerTextBox();
             this.txtCommand = new quickDBExplorer.quickDBExplorerTextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -95,11 +100,15 @@
             // 
             // EditPanelContainer.Panel2
             // 
-            this.EditPanelContainer.Panel2.Controls.Add(this.btnInsertMacro);
+            this.EditPanelContainer.Panel2.Controls.Add(this.label4);
+            this.EditPanelContainer.Panel2.Controls.Add(this.btnInsertArgMacro);
+            this.EditPanelContainer.Panel2.Controls.Add(this.btnInsertCommandMacro);
             this.EditPanelContainer.Panel2.Controls.Add(this.btnNew);
+            this.EditPanelContainer.Panel2.Controls.Add(this.btnCommandRef);
             this.EditPanelContainer.Panel2.Controls.Add(this.btnUpdate);
             this.EditPanelContainer.Panel2.Controls.Add(this.macroList);
             this.EditPanelContainer.Panel2.Controls.Add(this.txtName);
+            this.EditPanelContainer.Panel2.Controls.Add(this.txtArgs);
             this.EditPanelContainer.Panel2.Controls.Add(this.txtCommand);
             this.EditPanelContainer.Panel2.Controls.Add(this.label3);
             this.EditPanelContainer.Panel2.Controls.Add(this.label1);
@@ -121,7 +130,8 @@
             // 
             this.toolList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.NameColumn,
-            this.commandColumn});
+            this.commandColumn,
+            this.argColumn});
             this.toolList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolList.FullRowSelect = true;
             this.toolList.IsAutoColumSort = true;
@@ -142,17 +152,41 @@
             // commandColumn
             // 
             this.commandColumn.Text = "コマンド";
-            this.commandColumn.Width = 178;
+            this.commandColumn.Width = 100;
             // 
-            // btnInsertMacro
+            // argColumn
             // 
-            this.btnInsertMacro.Location = new System.Drawing.Point(62, 190);
-            this.btnInsertMacro.Name = "btnInsertMacro";
-            this.btnInsertMacro.Size = new System.Drawing.Size(92, 23);
-            this.btnInsertMacro.TabIndex = 12;
-            this.btnInsertMacro.Text = "マクロを挿入(&I)";
-            this.btnInsertMacro.UseVisualStyleBackColor = true;
-            this.btnInsertMacro.Click += new System.EventHandler(this.btnInsertMacro_Click);
+            this.argColumn.Text = "引数";
+            this.argColumn.Width = 115;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(29, 12);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "引数";
+            // 
+            // btnInsertArgMacro
+            // 
+            this.btnInsertArgMacro.Location = new System.Drawing.Point(172, 190);
+            this.btnInsertArgMacro.Name = "btnInsertArgMacro";
+            this.btnInsertArgMacro.Size = new System.Drawing.Size(92, 23);
+            this.btnInsertArgMacro.TabIndex = 12;
+            this.btnInsertArgMacro.Text = "引数に挿入(&K)";
+            this.btnInsertArgMacro.UseVisualStyleBackColor = true;
+            this.btnInsertArgMacro.Click += new System.EventHandler(this.btnInsertArgMacro_Click);
+            // 
+            // btnInsertCommandMacro
+            // 
+            this.btnInsertCommandMacro.Location = new System.Drawing.Point(62, 190);
+            this.btnInsertCommandMacro.Name = "btnInsertCommandMacro";
+            this.btnInsertCommandMacro.Size = new System.Drawing.Size(104, 23);
+            this.btnInsertCommandMacro.TabIndex = 12;
+            this.btnInsertCommandMacro.Text = "コマンドに挿入(&I)";
+            this.btnInsertCommandMacro.UseVisualStyleBackColor = true;
+            this.btnInsertCommandMacro.Click += new System.EventHandler(this.btnInsertMacro_Click);
             // 
             // btnNew
             // 
@@ -163,6 +197,16 @@
             this.btnNew.Text = "新規(&N)";
             this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+            // 
+            // btnCommandRef
+            // 
+            this.btnCommandRef.Location = new System.Drawing.Point(383, 63);
+            this.btnCommandRef.Name = "btnCommandRef";
+            this.btnCommandRef.Size = new System.Drawing.Size(60, 23);
+            this.btnCommandRef.TabIndex = 15;
+            this.btnCommandRef.Text = "参照(&R)";
+            this.btnCommandRef.UseVisualStyleBackColor = true;
+            this.btnCommandRef.Click += new System.EventHandler(this.btnCommandRef_Click);
             // 
             // btnUpdate
             // 
@@ -213,6 +257,20 @@
             this.txtName.Size = new System.Drawing.Size(382, 19);
             this.txtName.TabIndex = 9;
             // 
+            // txtArgs
+            // 
+            this.txtArgs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtArgs.CanCtrlDelete = true;
+            this.txtArgs.IsDigitOnly = false;
+            this.txtArgs.IsShowZoom = false;
+            this.txtArgs.Location = new System.Drawing.Point(62, 93);
+            this.txtArgs.Multiline = true;
+            this.txtArgs.Name = "txtArgs";
+            this.txtArgs.PdHistory = null;
+            this.txtArgs.Size = new System.Drawing.Size(381, 91);
+            this.txtArgs.TabIndex = 11;
+            // 
             // txtCommand
             // 
             this.txtCommand.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -221,10 +279,9 @@
             this.txtCommand.IsDigitOnly = false;
             this.txtCommand.IsShowZoom = false;
             this.txtCommand.Location = new System.Drawing.Point(62, 65);
-            this.txtCommand.Multiline = true;
             this.txtCommand.Name = "txtCommand";
             this.txtCommand.PdHistory = null;
-            this.txtCommand.Size = new System.Drawing.Size(382, 121);
+            this.txtCommand.Size = new System.Drawing.Size(315, 19);
             this.txtCommand.TabIndex = 11;
             // 
             // label3
@@ -296,7 +353,7 @@
         private System.Windows.Forms.ColumnHeader NameColumn;
         private System.Windows.Forms.ColumnHeader commandColumn;
         private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.Button btnInsertMacro;
+        private System.Windows.Forms.Button btnInsertCommandMacro;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.Button btnUpdate;
         private qdbeListView macroList;
@@ -307,5 +364,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnCommandRef;
+        private quickDBExplorerTextBox txtArgs;
+        private System.Windows.Forms.ColumnHeader argColumn;
+        private System.Windows.Forms.Button btnInsertArgMacro;
     }
 }

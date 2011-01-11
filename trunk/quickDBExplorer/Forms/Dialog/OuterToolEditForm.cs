@@ -66,6 +66,7 @@ namespace quickDBExplorer.Forms.Dialog
             ListViewItem item = new ListViewItem();
             item.SubItems[0].Text = info.Name;
             item.SubItems.Add(info.Command);
+            item.SubItems.Add(info.Args);
             item.Tag = info;
             this.toolList.Items.Add(item);
         }
@@ -85,12 +86,14 @@ namespace quickDBExplorer.Forms.Dialog
         {
             this.txtName.Text = viewInfo.Name;
             this.txtCommand.Text = viewInfo.Command;
+            this.txtArgs.Text = viewInfo.Args;
         }
 
         private void ClearDetail()
         {
             this.txtName.Text = string.Empty;
             this.txtCommand.Text = string.Empty;
+            this.txtArgs.Text = string.Empty;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -105,16 +108,26 @@ namespace quickDBExplorer.Forms.Dialog
 
         private void InsertMacroString()
         {
-            if( this.macroList.SelectedItems.Count != 1 )
+            InsertMacroString(this.txtCommand);
+        }
+        
+        private void InsertMacroArgString()
+        {
+            InsertMacroString(this.txtArgs);
+        }
+
+        private void InsertMacroString(TextBox target)
+        {
+            if (this.macroList.SelectedItems.Count != 1)
             {
                 return;
             }
-            this.txtCommand.Paste(((manager.MacroInfo)this.macroList.SelectedItems[0].Tag).GetMacroParam());
+            target.Paste(((manager.MacroInfo)this.macroList.SelectedItems[0].Tag).GetMacroParam());
         }
 
         private void macroList_DoubleClick(object sender, EventArgs e)
         {
-            InsertMacroString();
+            InsertMacroArgString();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -131,7 +144,8 @@ namespace quickDBExplorer.Forms.Dialog
         private bool checkNewMacro()
         {
             if (this.txtName.Text != string.Empty ||
-                this.txtCommand.Text != string.Empty)
+                this.txtCommand.Text != string.Empty||
+                this.txtArgs.Text != string.Empty)
             {
                 if (MessageBox.Show("クリアしてもよろしいですか？","", MessageBoxButtons.YesNo) != DialogResult.Yes)
                 {
@@ -154,11 +168,13 @@ namespace quickDBExplorer.Forms.Dialog
             if (samename >= 0)
             {
                 ((ToolInfo)this.toolList.Items[samename].Tag).Command = this.txtCommand.Text;
+                ((ToolInfo)this.toolList.Items[samename].Tag).Args = this.txtArgs.Text;
                 this.toolList.Items[samename].SubItems[1].Text = this.txtCommand.Text;
+                this.toolList.Items[samename].SubItems[2].Text = this.txtArgs.Text;
             }
             else
             {
-                ToolInfo addinfo = new ToolInfo(this.txtName.Text, this.txtCommand.Text);
+                ToolInfo addinfo = new ToolInfo(this.txtName.Text, this.txtCommand.Text, this.txtArgs.Text);
                 this.AddToolListItem(addinfo);
                 this.ResultToolList.Add(addinfo);
             }
@@ -182,5 +198,26 @@ namespace quickDBExplorer.Forms.Dialog
             }
             return true;
         }
+
+        private void btnInsertArgMacro_Click(object sender, EventArgs e)
+        {
+            InsertMacroArgString();
+        }
+
+        private void btnCommandRef_Click(object sender, EventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog openDlg = new OpenFileDialog();
+            openDlg.CheckFileExists = true;
+            openDlg.CheckPathExists = true;
+            openDlg.Filter = "exe|*.exe|com|*.com|bat|*.bat|全て|*.*";
+            openDlg.Multiselect = false;
+            openDlg.RestoreDirectory = true;
+            if (openDlg.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+            this.txtCommand.Text = openDlg.FileName;
+        }
+
     }
 }

@@ -200,8 +200,7 @@ namespace quickDBExplorer.manager
         /// コマンドを実際の文字に変換する
         /// </summary>
         /// <param name="commandString">コマンド文字列</param>
-        /// <param name="conn">接続情報</param>
-        /// <param name="forms">カレントダイアログ</param>
+        /// <param name="arg"></param>
         /// <returns></returns>
         internal string BuildCommand(string commandString, MacroArgInfo arg)
         {
