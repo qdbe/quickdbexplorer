@@ -25,7 +25,7 @@ namespace quickDBExplorer.manager
 
             foreach (ToolInfo each in saveList)
             {
-                ds.Tables[TOOLTABLENAME].Rows.Add(new object[] { each.Name, each.Command });
+                ds.Tables[TOOLTABLENAME].Rows.Add(new object[] { each.Name, each.Command, each.Args });
             }
             return ds;
         }
@@ -59,7 +59,7 @@ namespace quickDBExplorer.manager
             List<ToolInfo> result = new List<ToolInfo>();
             foreach (DataRow dr in dt.Rows)
             {
-                result.Add(new ToolInfo((string)dr["NAME"], (string)dr["COMMAND"]));
+                result.Add(new ToolInfo((string)dr["NAME"], (string)dr["COMMAND"], (string)dr["ARGS"]));
             }
             return result;
         }
@@ -70,21 +70,10 @@ namespace quickDBExplorer.manager
             DataTable keyTable = new DataTable(TOOLTABLENAME);
             keyTable.Columns.Add("NAME");
             keyTable.Columns.Add("COMMAND");
+            keyTable.Columns.Add("ARGS");
             ds.Tables.Add(keyTable);
 
             return ds;
-        }
-
-
-        internal void DoAction(object p)
-        {
-            if (!(p is ToolInfo) )
-            {
-                return;
-            }
-            ToolInfo info = (ToolInfo)p;
-
-            
         }
     }
 }

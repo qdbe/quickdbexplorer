@@ -19,6 +19,11 @@ namespace quickDBExplorer.Forms
         public string Command { get; set; }
 
         /// <summary>
+        /// コマンド引数
+        /// </summary>
+        public string Args { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="name"></param>
@@ -32,10 +37,12 @@ namespace quickDBExplorer.Forms
         /// </summary>
         /// <param name="name"></param>
         /// <param name="command"></param>
-        public ToolInfo(string name, string command)
+        /// <param name="args"></param>
+        public ToolInfo(string name, string command, string args)
         {
             this.Name = name;
             this.Command = command;
+            this.Args = args;
         }
 
         /// <summary>
