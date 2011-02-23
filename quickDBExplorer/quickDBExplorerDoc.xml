@@ -2770,12 +2770,19 @@
             </summary>
             <param name="name"></param>
         </member>
-        <member name="M:quickDBExplorer.Forms.ToolInfo.#ctor(System.String,System.String)">
+        <member name="M:quickDBExplorer.Forms.ToolInfo.#ctor(System.String,System.String,System.String)">
             <summary>
             コンストラクタ
             </summary>
             <param name="name"></param>
             <param name="command"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.ToolInfo.ToString">
+            <summary>
+            文字列化
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:quickDBExplorer.Forms.ToolInfo.Name">
             <summary>
@@ -2785,6 +2792,11 @@
         <member name="P:quickDBExplorer.Forms.ToolInfo.Command">
             <summary>
             コマンド文字列
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.ToolInfo.Args">
+            <summary>
+            コマンド引数
             </summary>
         </member>
         <member name="F:quickDBExplorer.qdbeAboutBox.components">
@@ -3182,19 +3194,24 @@
             コンストラクタ
             </summary>
         </member>
+        <member name="M:quickDBExplorer.manager.ToolMacroManager.SetMacroArg(quickDBExplorer.manager.MacroArgInfo)">
+            <summary>
+            マクロの為の情報を設定する
+            </summary>
+            <param name="arg"></param>
+        </member>
         <member name="M:quickDBExplorer.manager.ToolMacroManager.GetEnumrable">
             <summary>
             Enumratorを取得する
             </summary>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.manager.ToolMacroManager.BuildCommand(System.String,quickDBExplorer.ConnectionInfo,quickDBExplorer.MainForm)">
+        <member name="M:quickDBExplorer.manager.ToolMacroManager.BuildCommand(System.String,quickDBExplorer.manager.MacroArgInfo)">
             <summary>
             コマンドを実際の文字に変換する
             </summary>
             <param name="commandString">コマンド文字列</param>
-            <param name="conn">接続情報</param>
-            <param name="forms">カレントダイアログ</param>
+            <param name="arg"></param>
             <returns></returns>
         </member>
         <member name="T:quickDBExplorer.Forms.Dialog.OuterToolEditForm">
