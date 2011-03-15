@@ -118,14 +118,14 @@ namespace quickDBExplorer
             this.menuAddBookMark = new System.Windows.Forms.MenuItem();
             this.menuEditBookmark = new System.Windows.Forms.MenuItem();
             this.menuBookMarkSeparator = new System.Windows.Forms.MenuItem();
+            this.menuTools = new System.Windows.Forms.MenuItem();
+            this.menuToolEdit = new System.Windows.Forms.MenuItem();
+            this.menuToolSeparator = new System.Windows.Forms.MenuItem();
             this.menuHelpMain = new System.Windows.Forms.MenuItem();
             this.menuViewHelp = new System.Windows.Forms.MenuItem();
             this.menuAbout = new System.Windows.Forms.MenuItem();
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.menuTools = new System.Windows.Forms.MenuItem();
-            this.menuToolEdit = new System.Windows.Forms.MenuItem();
-            this.menuToolSeparator = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -180,7 +180,7 @@ namespace quickDBExplorer
             this.menuAddBookMark,
             this.menuEditBookmark,
             this.menuBookMarkSeparator});
-            this.menuBookamrk.Text = "Bookmark(&M)";
+            this.menuBookamrk.Text = "Bookmark(&Q)";
             this.menuBookamrk.Popup += new System.EventHandler(this.menuBookamrk_Popup);
             // 
             // menuAddBookMark
@@ -201,6 +201,26 @@ namespace quickDBExplorer
             // 
             this.menuBookMarkSeparator.Index = 2;
             this.menuBookMarkSeparator.Text = "-";
+            // 
+            // menuTools
+            // 
+            this.menuTools.Index = 3;
+            this.menuTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuToolEdit,
+            this.menuToolSeparator});
+            this.menuTools.Text = "外部ツール(&R)";
+            this.menuTools.Popup += new System.EventHandler(this.menuTools_Popup);
+            // 
+            // menuToolEdit
+            // 
+            this.menuToolEdit.Index = 0;
+            this.menuToolEdit.Text = "管理";
+            this.menuToolEdit.Click += new System.EventHandler(this.menuToolEdit_Click);
+            // 
+            // menuToolSeparator
+            // 
+            this.menuToolSeparator.Index = 1;
+            this.menuToolSeparator.Text = "-";
             // 
             // menuHelpMain
             // 
@@ -232,26 +252,6 @@ namespace quickDBExplorer
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // menuTools
-            // 
-            this.menuTools.Index = 3;
-            this.menuTools.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuToolEdit,
-            this.menuToolSeparator});
-            this.menuTools.Text = "外部ツール(&N)";
-            this.menuTools.Popup += new System.EventHandler(this.menuTools_Popup);
-            // 
-            // menuToolEdit
-            // 
-            this.menuToolEdit.Index = 0;
-            this.menuToolEdit.Text = "管理";
-            this.menuToolEdit.Click += new System.EventHandler(this.menuToolEdit_Click);
-            // 
-            // menuToolSeparator
-            // 
-            this.menuToolSeparator.Index = 1;
-            this.menuToolSeparator.Text = "-";
             // 
             // MainMdi
             // 

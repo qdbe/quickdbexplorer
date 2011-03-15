@@ -173,7 +173,7 @@
             this.btnInsertArgMacro.Location = new System.Drawing.Point(172, 190);
             this.btnInsertArgMacro.Name = "btnInsertArgMacro";
             this.btnInsertArgMacro.Size = new System.Drawing.Size(92, 23);
-            this.btnInsertArgMacro.TabIndex = 12;
+            this.btnInsertArgMacro.TabIndex = 15;
             this.btnInsertArgMacro.Text = "引数に挿入(&K)";
             this.btnInsertArgMacro.UseVisualStyleBackColor = true;
             this.btnInsertArgMacro.Click += new System.EventHandler(this.btnInsertArgMacro_Click);
@@ -183,7 +183,7 @@
             this.btnInsertCommandMacro.Location = new System.Drawing.Point(62, 190);
             this.btnInsertCommandMacro.Name = "btnInsertCommandMacro";
             this.btnInsertCommandMacro.Size = new System.Drawing.Size(104, 23);
-            this.btnInsertCommandMacro.TabIndex = 12;
+            this.btnInsertCommandMacro.TabIndex = 14;
             this.btnInsertCommandMacro.Text = "コマンドに挿入(&I)";
             this.btnInsertCommandMacro.UseVisualStyleBackColor = true;
             this.btnInsertCommandMacro.Click += new System.EventHandler(this.btnInsertMacro_Click);
@@ -193,7 +193,7 @@
             this.btnNew.Location = new System.Drawing.Point(62, 11);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(60, 23);
-            this.btnNew.TabIndex = 16;
+            this.btnNew.TabIndex = 0;
             this.btnNew.Text = "新規(&N)";
             this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
@@ -203,7 +203,7 @@
             this.btnCommandRef.Location = new System.Drawing.Point(383, 63);
             this.btnCommandRef.Name = "btnCommandRef";
             this.btnCommandRef.Size = new System.Drawing.Size(60, 23);
-            this.btnCommandRef.TabIndex = 15;
+            this.btnCommandRef.TabIndex = 12;
             this.btnCommandRef.Text = "参照(&R)";
             this.btnCommandRef.UseVisualStyleBackColor = true;
             this.btnCommandRef.Click += new System.EventHandler(this.btnCommandRef_Click);
@@ -213,7 +213,7 @@
             this.btnUpdate.Location = new System.Drawing.Point(139, 11);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(60, 23);
-            this.btnUpdate.TabIndex = 15;
+            this.btnUpdate.TabIndex = 17;
             this.btnUpdate.Text = "登録(&W)";
             this.btnUpdate.UseVisualStyleBackColor = true;
             this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
@@ -229,7 +229,7 @@
             this.macroList.Location = new System.Drawing.Point(62, 219);
             this.macroList.Name = "macroList";
             this.macroList.Size = new System.Drawing.Size(382, 215);
-            this.macroList.TabIndex = 14;
+            this.macroList.TabIndex = 16;
             this.macroList.UseCompatibleStateImageBehavior = false;
             this.macroList.View = System.Windows.Forms.View.Details;
             this.macroList.DoubleClick += new System.EventHandler(this.macroList_DoubleClick);
@@ -269,7 +269,7 @@
             this.txtArgs.Name = "txtArgs";
             this.txtArgs.PdHistory = null;
             this.txtArgs.Size = new System.Drawing.Size(381, 91);
-            this.txtArgs.TabIndex = 11;
+            this.txtArgs.TabIndex = 13;
             // 
             // txtCommand
             // 

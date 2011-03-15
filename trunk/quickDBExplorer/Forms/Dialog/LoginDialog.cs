@@ -169,7 +169,7 @@ namespace quickDBExplorer
             this.chkSaveInfo.Name = "chkSaveInfo";
             this.chkSaveInfo.Size = new System.Drawing.Size(144, 16);
             this.chkSaveInfo.TabIndex = 13;
-            this.chkSaveInfo.Text = "Ú‘±æ‚ğ•Û‘¶‚·‚é(&R)";
+            this.chkSaveInfo.Text = "Ú‘±æ‚ğ•Û‘¶‚·‚é(&V)";
             // 
             // btnServerHistory
             // 
