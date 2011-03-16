@@ -164,7 +164,8 @@ namespace quickDBExplorer.manager
             macroList.Add(new MacroInfo("UID", "ログインID", x => x.Connection.LogOnUid ));
             macroList.Add(new MacroInfo("PASS", "ログインパスワード", x => x.Connection.LogOnPassword));
             macroList.Add(new MacroInfo("TRUSTPARAM", "Windows認証(-t パラメータ)", x => x.Connection.IsUseTruse ? "-t" : string.Empty));
-            macroList.Add(new MacroInfo("TRUSTSTRING", "Windows認証(Bool)", x => x.Connection.IsUseTruse.ToString() ));
+            macroList.Add(new MacroInfo("TRUSTPARAM_E", "Windows認証(-E パラメータ)", x => x.Connection.IsUseTruse ? "-E" : string.Empty));
+            macroList.Add(new MacroInfo("TRUSTSTRING", "Windows認証(Bool)", x => x.Connection.IsUseTruse.ToString()));
             macroList.Add(new MacroInfo("SQLFULLVERSION", "SQLSERVERバージョン文字列", x => x.Connection.SqlVersionInfo.FullVersionString));
             macroList.Add(new MacroInfo("SQLPUBLICVERSION", "SQLSERVERバージョン名", x => x.Connection.SqlVersionInfo.PublicVersionNo ));
             macroList.Add(new MacroInfo("DATABASENAME", "データベース名", x => x.DbName ));

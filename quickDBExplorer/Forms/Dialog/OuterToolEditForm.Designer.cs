@@ -200,6 +200,7 @@
             // 
             // btnCommandRef
             // 
+            this.btnCommandRef.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCommandRef.Location = new System.Drawing.Point(383, 63);
             this.btnCommandRef.Name = "btnCommandRef";
             this.btnCommandRef.Size = new System.Drawing.Size(60, 23);
@@ -328,6 +329,7 @@
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnCancel);
             this.Name = "OuterToolEditForm";
+            this.Text = "外部ツール管理";
             this.Load += new System.EventHandler(this.OuterToolEditForm_Load);
             this.Controls.SetChildIndex(this.btnCancel, 0);
             this.Controls.SetChildIndex(this.btnDelete, 0);
