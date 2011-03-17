@@ -139,6 +139,7 @@ namespace quickDBExplorer.Forms.Dialog
         {
             if (!checkNewMacro()) return;
             this.ClearDetail();
+            this.txtName.Focus();
         }
 
         private bool checkNewMacro()
@@ -217,6 +218,53 @@ namespace quickDBExplorer.Forms.Dialog
                 return;
             }
             this.txtCommand.Text = openDlg.FileName;
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (CheckForDelete() == false) return;
+
+            RemoveResultList();
+            ClearDetail();
+            ClearToolList();
+            LoadToolList();
+        }
+
+        private void ClearToolList()
+        {
+            this.toolList.Items.Clear();
+        }
+
+        private void RemoveResultList()
+        {
+            foreach (ListViewItem each in this.toolList.SelectedItems)
+            {
+                this.ResultToolList.Remove((ToolInfo)each.Tag);
+            }
+        }
+
+        private bool CheckForDelete()
+        {
+            if (this.toolList.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("削除する対象を選択してから操作して下さい");
+                return false;
+            }
+            if (this.toolList.SelectedItems.Count > 1)
+            {
+                if (MessageBox.Show("複数の設定を一括で削除しますがよろしいですか？", "", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                if (MessageBox.Show("選択された設定を削除します。よろしいですか？", "", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
     }

@@ -791,13 +791,17 @@ namespace quickDBExplorer
 
         private void menuTools_Popup(object sender, EventArgs e)
         {
-            this.menuTools.MenuItems.Clear();
-            this.menuTools.MenuItems.Add(menuToolEdit);
             SetToolPopupList();
         }
 
         private void SetToolPopupList()
         {
+            this.menuTools.MenuItems.Clear();
+            this.menuTools.MenuItems.Add(menuToolEdit);
+            if (outerTools.Count > 0)
+            {
+                this.menuTools.MenuItems.Add(new MenuItem("-"));
+            }
             foreach (ToolInfo each in outerTools)
             {
                 MenuItem itm = new MenuItem(each.Name);
@@ -820,13 +824,19 @@ namespace quickDBExplorer
 
         private void StartProcess(string commandstr,string arg)
         {
-            ProcessStartInfo startinfo = new ProcessStartInfo();
-            startinfo.ErrorDialog = true;
-            startinfo.ErrorDialogParentHandle = this.Handle;
-            startinfo.FileName = commandstr;
-            startinfo.Arguments = arg;
-            startinfo.UseShellExecute = false;
-            Process.Start(startinfo);
+            try
+            {
+                ProcessStartInfo startinfo = new ProcessStartInfo();
+                startinfo.ErrorDialog = true;
+                startinfo.ErrorDialogParentHandle = this.Handle;
+                startinfo.FileName = commandstr;
+                startinfo.Arguments = arg;
+                startinfo.UseShellExecute = true;
+                Process.Start(startinfo);
+            }
+            catch 
+            {
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-Copyright (C) 2004-2009Å@Y.N(godz)
+Copyright (C) 2004-2011Å@Y.N(godz)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

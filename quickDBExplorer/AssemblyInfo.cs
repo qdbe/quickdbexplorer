@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("-")]
 [assembly: AssemblyProduct("quickDBExplorer!")]
-[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2010 under GPLv2")]
+[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2011 under GPLv2")]
 [assembly: AssemblyTrademark("Go Ahead!")]
 [assembly: AssemblyCulture("")]		
 
@@ -27,8 +27,8 @@ using System.Runtime.InteropServices;
 // 下にあるように、'*' を使って、すべての値を指定するか、
 // ビルドおよびリビジョン番号を既定値にすることができます。
 
-[assembly: AssemblyVersion("2.0.1.*")]
-[assembly: AssemblyInformationalVersion("2.0.1")]
+[assembly: AssemblyVersion("2.1.0.*")]
+[assembly: AssemblyInformationalVersion("2.1.0")]
 [assembly: System.Resources.NeutralResourcesLanguage("ja-JP")]
 
 //
