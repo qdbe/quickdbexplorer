@@ -1,4 +1,3 @@
-#labels Featured
 =2.0Releaseから2.0.1Releaseへの変更点一覧=
 
  * CSV/TSV読み込みができない不具合を修正
