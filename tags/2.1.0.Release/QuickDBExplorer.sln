@@ -1,0 +1,61 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorer", "quickDBExplorer\quickDBExplorer.csproj", "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2000Driver", "SqlServer2000Driver\SqlServer2000Driver.csproj", "{2B92D958-AA17-4D48-BEB0-9CA792A0015B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0} = {EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2005Driver", "SqlServer2005Driver\SqlServer2005Driver.csproj", "{FD530F44-EA9F-444D-A9A2-807C2489626E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0} = {EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISqlInterface", "ISqlInterface\ISqlInterface.csproj", "{607646D5-0110-4F20-8916-E1C7B75FF090}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2008Driver", "SqlServer2008Driver\SqlServer2008Driver.csproj", "{629DC552-A57E-4795-B1C3-7A61F08A8E11}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0} = {EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2008R2Driver", "SqlServer2008R2Driver\SqlServer2008R2Driver.csproj", "{5384D94C-DFAC-48E9-AFA3-1F8B236DE917}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0} = {EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B92D958-AA17-4D48-BEB0-9CA792A0015B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B92D958-AA17-4D48-BEB0-9CA792A0015B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B92D958-AA17-4D48-BEB0-9CA792A0015B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B92D958-AA17-4D48-BEB0-9CA792A0015B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD530F44-EA9F-444D-A9A2-807C2489626E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD530F44-EA9F-444D-A9A2-807C2489626E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD530F44-EA9F-444D-A9A2-807C2489626E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD530F44-EA9F-444D-A9A2-807C2489626E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{607646D5-0110-4F20-8916-E1C7B75FF090}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{607646D5-0110-4F20-8916-E1C7B75FF090}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{607646D5-0110-4F20-8916-E1C7B75FF090}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{607646D5-0110-4F20-8916-E1C7B75FF090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{629DC552-A57E-4795-B1C3-7A61F08A8E11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5384D94C-DFAC-48E9-AFA3-1F8B236DE917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5384D94C-DFAC-48E9-AFA3-1F8B236DE917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5384D94C-DFAC-48E9-AFA3-1F8B236DE917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5384D94C-DFAC-48E9-AFA3-1F8B236DE917}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
