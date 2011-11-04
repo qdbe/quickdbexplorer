@@ -587,7 +587,7 @@ where
 
 			if( databaseObjectInfo.RealObjType == "U" )
 			{
-				int		maxRow = databaseObjectInfo.FieldInfo.Count;
+				//int		maxRow = databaseObjectInfo.FieldInfo.Count;
 				if( useParentheses )
 				{
 					wr.Write("Create table {0} ", databaseObjectInfo.RealObjName);
@@ -598,8 +598,9 @@ where
 				}
 				wr.Write(" ( {0}",wr.NewLine);
 				string	valtype;
-				for( int i = 0; i < maxRow ; i++ )
-				{
+                int i = 0;
+                foreach(DBFieldInfo each in databaseObjectInfo.FieldInfo)
+                {
 					if( i != 0 )
 					{
 						wr.Write(",{0}",wr.NewLine);
@@ -607,15 +608,15 @@ where
 					//フィールド名
 					if( useParentheses )
 					{
-						wr.Write("\t[{0}]", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Name);
+						wr.Write("\t[{0}]", each.Name);
 					}
 					else
 					{
-						wr.Write("\t{0}", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Name);
+						wr.Write("\t{0}", each.Name);
 					}
 					wr.Write("\t");
 					// 型
-					valtype = ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).TypeName;
+					valtype = each.TypeName;
 
 					wr.Write("\t");
 
@@ -634,37 +635,37 @@ where
 						valtype == "nchar" ||
 						valtype == "binary" )
 					{
-						if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Length == -1 )
+						if( each.Length == -1 )
 						{
 							wr.Write(" (max)");
 						}
 						else
 						{
-							wr.Write(" ({0})", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Length);
+							wr.Write(" ({0})", each.Length);
 						}
 					}
 					else if( valtype == "numeric" ||
 						valtype == "decimal" )
 					{
-						wr.Write(" ({0},{1})", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Prec,
-							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Xscale);
+						wr.Write(" ({0},{1})", each.Prec,
+                            each.Xscale);
 					}
 					wr.Write("\t");
-						
-					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Collation.Length != 0)
+
+                    if (each.Collation.Length != 0)
 					{
-						wr.Write("COLLATE {0}",((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Collation);
+                        wr.Write("COLLATE {0}", each.Collation);
 						wr.Write("\t");
 					}
 
-					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed != 0)
+                    if (each.IncSeed != 0)
 					{
 						wr.Write("\tIDENTITY({0},{1})",
-							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed,
-							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncStep );
+                            each.IncSeed,
+                            each.IncStep);
 					}
-						
-					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IsNullable == false )
+
+                    if (each.IsNullable == false)
 					{
 						wr.Write("\tNOT NULL");
 					}
@@ -672,6 +673,7 @@ where
 					{
 						wr.Write("\tNULL");
 					}
+                    i++;
 				}
 				wr.Write("{0}){0}Go{0}",wr.NewLine);
 			}
@@ -838,7 +840,7 @@ where
 				databaseObjectInfo.FormalName );
 			SqlDataAdapter da = new SqlDataAdapter(strsql,this.pSqlConnect);
 			DataTable []dt = da.FillSchema(ds,SchemaType.Mapped,"schema");
-			databaseObjectInfo.SchemaBaseInfo = dt[0];
+            databaseObjectInfo.SetSchemaInfo(dt[0]);
 
 			// 実際の細かい情報を直接取得する
 			SqlDataAdapter tableda = new SqlDataAdapter(
@@ -907,84 +909,90 @@ order by colorder",
 			tableda.Fill(ds,"fieldList");
 
 			DBFieldInfo addInfo;
-			List<DBFieldInfo> ar = new List<DBFieldInfo>();
+            databaseObjectInfo.ClearField();
 			foreach(DataRow fdr in ds.Tables["fieldList"].Rows )
 			{
 				// フィールドの情報でぐるぐるまわって、セットしていく
-				addInfo = new DBFieldInfo();
-				addInfo.Col = ds.Tables["schema"].Columns[fdr["colname"].ToString()];
-				addInfo.Colid = (int)fdr["colid"];
-				if( fdr["collation"] != DBNull.Value )
-				{
-					addInfo.Collation = (string)fdr["collation"];
-				}
-				addInfo.ColOrder = (int)fdr["colorder"];
-				addInfo.Length = (int)fdr["length"];
-				addInfo.Prec = (int)fdr["prec"];
-				addInfo.Xscale = (int)fdr["xscale"];
-				if( (int)fdr["isUserType"] == 0 )
-				{
-					// システムの定義
-					addInfo.TypeName = (string)fdr["valtype"];
-				}
-				else
-				{
-					// ユーザー定義型
-					addInfo.TypeName = string.Format(System.Globalization.CultureInfo.CurrentCulture,"[{0}].[{1}]",
-							(string)fdr["typeSchema"] ,
-							(string)fdr["valtype"] );
-				}
-				// 本来の型定義
-				if (DBNull.Value.Equals(fdr["baseValType"]) == true)
-				{
-					addInfo.RealTypeName = addInfo.TypeName;
-				}
-				else
-				{
-					addInfo.RealTypeName = (string)fdr["baseValType"];
-				}
-				if( fdr["is_identity"] != DBNull.Value &&
-					(bool)fdr["is_identity"] == true )
-				{
-					addInfo.IsIdentity = true;
-				}
-				else
-				{
-					addInfo.IsIdentity = false;
-				}
-				if( fdr["seed"] != DBNull.Value )
-				{
-					addInfo.IncSeed = (decimal)fdr["seed"];
-				}
-				if( fdr["incr"] != DBNull.Value )
-				{
-					addInfo.IncStep = (decimal)fdr["incr"];
-				}
-				// プライマリキーかどうかをチェック
-				for(int i = 0; i < ds.Tables["schema"].PrimaryKey.Length; i++ )
-				{
-					if( addInfo.Col.ColumnName == ds.Tables["schema"].PrimaryKey[i].ColumnName )
-					{
-						addInfo.PrimaryKeyOrder = i;
-						break;
-					}
-				}
-				if( fdr["assembly_id"] != DBNull.Value )
-				{
-					addInfo.AssemblyId = (int)fdr["assembly_id"];
-				}
-				if( fdr["assembly_class"] != DBNull.Value )
-				{
-					addInfo.AssemblyClassName = (string)fdr["assembly_class"];
-				}
-				if( fdr["assembly_qualified_name"] != DBNull.Value )
-				{
-					addInfo.AssemblyQFN = (string)fdr["assembly_qualified_name"];
-				}
-				ar.Add(addInfo);
+                addInfo = GetDBFieldInfo(ds, fdr);
+                databaseObjectInfo.AddField(addInfo);
 			}
-			databaseObjectInfo.FieldInfo = ar;
 		}
+
+        private DBFieldInfo GetDBFieldInfo(DataSet ds, DataRow fdr)
+        {
+            DBFieldInfo addInfo;
+            addInfo = new DBFieldInfo();
+            addInfo.Col = ds.Tables["schema"].Columns[fdr["colname"].ToString()];
+            addInfo.Colid = (int)fdr["colid"];
+            if (fdr["collation"] != DBNull.Value)
+            {
+                addInfo.Collation = (string)fdr["collation"];
+            }
+            addInfo.ColOrder = (int)fdr["colorder"];
+            addInfo.Length = (int)fdr["length"];
+            addInfo.Prec = (int)fdr["prec"];
+            addInfo.Xscale = (int)fdr["xscale"];
+            if ((int)fdr["isUserType"] == 0)
+            {
+                // システムの定義
+                addInfo.TypeName = (string)fdr["valtype"];
+            }
+            else
+            {
+                // ユーザー定義型
+                addInfo.TypeName = string.Format(System.Globalization.CultureInfo.CurrentCulture, "[{0}].[{1}]",
+                        (string)fdr["typeSchema"],
+                        (string)fdr["valtype"]);
+            }
+            // 本来の型定義
+            if (DBNull.Value.Equals(fdr["baseValType"]) == true)
+            {
+                addInfo.RealTypeName = addInfo.TypeName;
+            }
+            else
+            {
+                addInfo.RealTypeName = (string)fdr["baseValType"];
+            }
+            if (fdr["is_identity"] != DBNull.Value &&
+                (bool)fdr["is_identity"] == true)
+            {
+                addInfo.IsIdentity = true;
+            }
+            else
+            {
+                addInfo.IsIdentity = false;
+            }
+            if (fdr["seed"] != DBNull.Value)
+            {
+                addInfo.IncSeed = (decimal)fdr["seed"];
+            }
+            if (fdr["incr"] != DBNull.Value)
+            {
+                addInfo.IncStep = (decimal)fdr["incr"];
+            }
+            // プライマリキーかどうかをチェック
+            for (int i = 0; i < ds.Tables["schema"].PrimaryKey.Length; i++)
+            {
+                if (addInfo.Col.ColumnName == ds.Tables["schema"].PrimaryKey[i].ColumnName)
+                {
+                    addInfo.PrimaryKeyOrder = i;
+                    break;
+                }
+            }
+            if (fdr["assembly_id"] != DBNull.Value)
+            {
+                addInfo.AssemblyId = (int)fdr["assembly_id"];
+            }
+            if (fdr["assembly_class"] != DBNull.Value)
+            {
+                addInfo.AssemblyClassName = (string)fdr["assembly_class"];
+            }
+            if (fdr["assembly_qualified_name"] != DBNull.Value)
+            {
+                addInfo.AssemblyQFN = (string)fdr["assembly_qualified_name"];
+            }
+            return addInfo;
+        }
 
 		/// <summary>
 		/// フィールド名を検索する SQL文を生成する
