@@ -3268,9 +3268,9 @@ namespace quickDBExplorer
 					// get id 
 
 					wr.Write("select {0}",wr.NewLine);
-					int		maxcol = dboInfo.FieldInfo.Count;
-					for( int i = 0; i < maxcol ; i++ )
-					{
+                    int i = 0;
+                    foreach(DBFieldInfo each in dboInfo.FieldInfo)
+                    {
 						if( i != 0 )
 						{
 							wr.Write(",{0}", wr.NewLine);
@@ -3283,8 +3283,9 @@ namespace quickDBExplorer
 						}
 
 
-						wr.Write("{0}", ((DBFieldInfo)dboInfo.FieldInfo[i]).Name);
-					
+						wr.Write("{0}", each.Name);
+
+                        i++;
 					}
 					wr.Write(wr.NewLine);
 					wr.Write(" from {0}{1}", dboInfo.GetAliasName(this.GetAlias()),wr.NewLine);
@@ -4885,13 +4886,15 @@ namespace quickDBExplorer
 						rowcount ++;
 						wr.Write("insert into {0} {1} values ( ", dboInfo.FormalName, flds );
 
-						for( int i = 0 ; i < maxcol; i++ )
-						{
+                        int i = 0 ;
+                        foreach(DBFieldInfo each in dboInfo.FieldInfo)
+                        {
 							if( i != 0 )
 							{
 								wr.Write( ", " );
 							}
-							wr.Write(ConvData(dr, i, "'","N",true,(DBFieldInfo)dboInfo.FieldInfo[i]));
+							wr.Write(ConvData(dr, i, "'","N",true,each));
+                            i++;
 						}
 						wr.Write( " ) {0}",wr.NewLine );
 					}
@@ -5012,9 +5015,9 @@ namespace quickDBExplorer
 					// get id 
 					wr.Write(dboInfo.FormalName);
 					wr.Write(":");
-					int		maxcol = dboInfo.FieldInfo.Count;
 					string	alias = this.GetAlias();
-					for( int i = 0; i < maxcol ; i++ )
+                    int i = 0;
+                    foreach( DBFieldInfo each in dboInfo.FieldInfo)
 					{
 						if( i != 0 && iscomma )
 						{
@@ -5029,7 +5032,8 @@ namespace quickDBExplorer
 						{
 							wr.Write(alias + "." );
 						}
-						wr.Write(((DBFieldInfo)dboInfo.FieldInfo[i]).Name);
+						wr.Write(each.Name);
+                        i++;
 					}
 					wr.Write(wr.NewLine);
 
@@ -5197,19 +5201,20 @@ namespace quickDBExplorer
 					{
 						rowcount++;
 						trow++;
-						for( int i = 0 ; i < maxcol; i++ )
-						{
+                        int i = 0;
+                        foreach(DBFieldInfo each in dboInfo.FieldInfo)
+                        {
 							if( i != 0 )
 							{
 								wr.Write( separater );
 							}
 							if ( isdquote == false )
 							{
-								wr.Write(ConvData(dr, i, "","",false,(DBFieldInfo)dboInfo.FieldInfo[i]));
+								wr.Write(ConvData(dr, i, "","",false,each));
 							}
 							else
 							{
-								wr.Write(ConvData(dr, i, "\"","",false,(DBFieldInfo)dboInfo.FieldInfo[i]));
+								wr.Write(ConvData(dr, i, "\"","",false,each));
 							}
 						}
 						wr.Write( wr.NewLine );

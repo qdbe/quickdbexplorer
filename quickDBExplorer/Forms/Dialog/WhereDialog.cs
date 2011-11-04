@@ -326,11 +326,10 @@ namespace quickDBExplorer
 			fieldDs.Tables[BASETABLE].Columns.Add(CONDCMB);
 			fieldDs.Tables[BASETABLE].Columns.Add(VALUES);
 			// フィールド情報のセット
-			for( int i = 0; i < this.pTargetObject.FieldInfo.Count; i++ )
-			{
+            foreach(DBFieldInfo each in this.pTargetObject.FieldInfo){
 				DataRow dr = fieldDs.Tables[BASETABLE].NewRow();
-				dr[FIELDNAME] = ((DBFieldInfo)this.pTargetObject.FieldInfo[i]).Name;
-				dr[FIELDTYPE] = ((DBFieldInfo)this.pTargetObject.FieldInfo[i]).RealTypeName;
+                dr[FIELDNAME] = ((DBFieldInfo)each).Name;
+                dr[FIELDTYPE] = ((DBFieldInfo)each).RealTypeName;
 				dr[CONDCMB] = "";
 				dr[VALUES] = "";
 				this.fieldDs.Tables[BASETABLE].Rows.Add(dr);

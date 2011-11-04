@@ -29,7 +29,7 @@ namespace quickDBExplorer
 		/// V:		View
 		/// S:		Synonym
 		/// </summary>
-        public string ObjType{ get; set; }
+        public string ObjType{ get; private set; }
 
 
 		/// <summary>
@@ -57,27 +57,27 @@ namespace quickDBExplorer
 		/// <summary>
 		/// オブジェクトの所有者名
 		/// </summary>
-        public string Owner{ get; set; }
+        public string Owner { get; private set; }
 
 		/// <summary>
 		/// オブジェクトの名称
 		/// </summary>
-        public string ObjName { get; set; }
+        public string ObjName { get; private set; }
 
 		/// <summary>
 		/// オブジェクトが生成された日時
 		/// </summary>
-		public string CreateTime{ get; set; }
+        public string CreateTime { get; private set; }
 
 		/// <summary>
 		/// オブジェクトがシノニムの場合、その参照先
 		/// </summary>
-		public string SynonymBase{ get; set; }
+        public string SynonymBase { get; private set; }
 
 		/// <summary>
 		/// オブジェクトがシノニムの場合、その参照先のオブジェクトの種類
 		/// </summary>
-		public string SynonymBaseType{ get; set; }
+        public string SynonymBaseType { get; private set; }
 
 		/// <summary>
 		/// [] でくくったオブジェクトの正式名称を取得する
@@ -213,7 +213,7 @@ namespace quickDBExplorer
 		/// オブジェクトのフィールド情報をキャッシュして保持する
 		/// フィールド情報のコレクションを管理する
 		/// </summary>
-		public List<DBFieldInfo> FieldInfo
+        public IEnumerable<DBFieldInfo> FieldInfo
 		{
 			get 
 			{
@@ -223,10 +223,6 @@ namespace quickDBExplorer
 					this.DataGet(this, new EventArgs());
 				}
 				return this.pFieldInfo; 
-			}
-			set 
-			{
-				this.pFieldInfo = value;
 			}
 		}
 
@@ -245,7 +241,7 @@ namespace quickDBExplorer
 				}
 				return this.pSchemaBaseInfo; 
 			}
-			set { this.pSchemaBaseInfo = value; }
+            private set { this.pSchemaBaseInfo = value; }
 		}
 
 		/// <summary>
@@ -287,6 +283,16 @@ namespace quickDBExplorer
 		{
 			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}.{1}", this.Owner, this.ObjName );
 		}
+
+        public void ClearField()
+        {
+            this.pFieldInfo = new List<DBFieldInfo>();
+        }
+
+        public void AddField(DBFieldInfo add)
+        {
+            this.pFieldInfo.Add(add);
+        }
 
 		/// <summary>
 		/// Alias が指定されていた場合に、Alias 付きのオブジェクト正式名称を返す
@@ -357,6 +363,11 @@ namespace quickDBExplorer
 				return false;
 			}
 		}
+
+        public void SetSchemaInfo(DataTable dt)
+        {
+            this.pSchemaBaseInfo = dt;
+        }
 
 	}
 }

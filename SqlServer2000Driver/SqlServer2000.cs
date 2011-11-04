@@ -576,7 +576,6 @@ namespace quickDBExplorer
 
 			if( databaseObjectInfo.RealObjType == "U" )
 			{
-				int		maxRow = databaseObjectInfo.FieldInfo.Count;
 				if( useParentheses )
 				{
 					wr.Write("Create table {0} ", databaseObjectInfo.RealObjName);
@@ -587,8 +586,9 @@ namespace quickDBExplorer
 				}
 				wr.Write(" ( {0}",wr.NewLine);
 				string	valtype;
-				for( int i = 0; i < maxRow ; i++ )
-				{
+                int i = 0;
+                foreach(DBFieldInfo each in databaseObjectInfo.FieldInfo)
+                {
 					if( i != 0 )
 					{
 						wr.Write(",{0}",wr.NewLine);
@@ -596,15 +596,15 @@ namespace quickDBExplorer
 					//フィールド名
 					if( useParentheses )
 					{
-						wr.Write("\t[{0}]", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Name);
+						wr.Write("\t[{0}]", each.Name);
 					}
 					else
 					{
-						wr.Write("\t{0}", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Name);
+						wr.Write("\t{0}", each.Name);
 					}
 					wr.Write("\t");
 					// 型
-					valtype = ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).TypeName;
+					valtype = each.TypeName;
 
 					wr.Write("\t");
 
@@ -623,37 +623,37 @@ namespace quickDBExplorer
 						valtype == "nchar" ||
 						valtype == "binary" )
 					{
-						if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Length == -1 )
+						if( each.Length == -1 )
 						{
 							wr.Write(" (max)");
 						}
 						else
 						{
-							wr.Write(" ({0})", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Length);
+							wr.Write(" ({0})", each.Length);
 						}
 					}
 					else if( valtype == "numeric" ||
 						valtype == "decimal" )
 					{
-						wr.Write(" ({0},{1})", ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Prec,
-							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Xscale);
+						wr.Write(" ({0},{1})", each.Prec,
+							each.Xscale);
 					}
 					wr.Write("\t");
 						
-					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Collation.Length != 0)
+					if( each.Collation.Length != 0)
 					{
-						wr.Write("COLLATE {0}",((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).Collation);
+						wr.Write("COLLATE {0}",each.Collation);
 						wr.Write("\t");
 					}
 
-					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed != 0)
+					if( each.IncSeed != 0)
 					{
 						wr.Write("\tIDENTITY({0},{1})",
-							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed,
-							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncStep );
+							each.IncSeed,
+							each.IncStep );
 					}
 						
-					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IsNullable == false )
+					if( each.IsNullable == false )
 					{
 						wr.Write("\tNOT NULL");
 					}
@@ -690,139 +690,6 @@ namespace quickDBExplorer
 					wr.WriteLine(dr["Text"].ToString().Trim());
 				}
 				wr.WriteLine("Go");
-			}
-			return strline.ToString();
-		}
-
-		/// <summary>
-		/// オブジェクトに対する Create 文を生成する
-		/// </summary>
-		/// <param name="databaseObjectInfo"></param>
-		/// <param name="useParentheses"></param>
-		/// <returns></returns>
-		public string	GetDdlCreateString_OLD(DBObjectInfo databaseObjectInfo, bool useParentheses)
-		{
-			if( databaseObjectInfo == null )
-			{
-				throw new ArgumentNullException("databaseObjectInfo");
-			}
-			StringBuilder strline =  new StringBuilder();
-			TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
-
-			if( databaseObjectInfo.ObjType == "U" )
-			{
-
-				string stSql = "select syscolumns.name colname, systypes.name valtype, syscolumns.length, syscolumns.prec, syscolumns.xscale, syscolumns.colid, syscolumns.colorder, syscolumns.isnullable, syscolumns.collation  from sysobjects, syscolumns, sysusers, systypes where sysobjects.id = syscolumns.id and sysobjects.uid= sysusers.uid and syscolumns.xusertype=systypes.xusertype and sysusers.name = '" + databaseObjectInfo.Owner +"' and sysobjects.name = '" + databaseObjectInfo.ObjName + "' order by syscolumns.colorder";
-
-				SqlDataAdapter da = new SqlDataAdapter(stSql, this.pSqlConnect);
-				DataSet ds = new DataSet();
-				ds.CaseSensitive = true;
-				ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
-				da.Fill(ds,databaseObjectInfo.ToString());
-
-				int		maxRow = ds.Tables[databaseObjectInfo.ToString()].Rows.Count;
-				if( useParentheses )
-				{
-					wr.Write("Create table {0} ", databaseObjectInfo.FormalName);
-				}
-				else
-				{
-					wr.Write("Create table {0} ", databaseObjectInfo.ToString());
-				}
-				wr.Write(" ( {0}",wr.NewLine);
-				string	valtype;
-				for( int i = 0; i < maxRow ; i++ )
-				{
-					if( i != 0 )
-					{
-						wr.Write(",{0}",wr.NewLine);
-					}
-					//フィールド名
-					if( useParentheses )
-					{
-						wr.Write("\t[{0}]", ds.Tables[databaseObjectInfo.ToString()].Rows[i][0]);
-					}
-					else
-					{
-						wr.Write("\t{0}", ds.Tables[databaseObjectInfo.ToString()].Rows[i][0]);
-					}
-					wr.Write("\t");
-					// 型
-					valtype = (string)ds.Tables[databaseObjectInfo.ToString()].Rows[i][1];
-
-					wr.Write("\t");
-
-					if( useParentheses )
-					{
-						wr.Write("[{0}]",valtype);
-					}
-					else
-					{
-						wr.Write(valtype);
-					}
-					if( valtype == "varchar" ||
-						valtype == "varbinary" ||
-						valtype == "nvarchar" ||
-						valtype == "char" ||
-						valtype == "nchar" ||
-						valtype == "binary" )
-					{
-						if( (Int16)ds.Tables[databaseObjectInfo.ToString()].Rows[i][3] == -1 )
-						{
-							wr.Write(" (max)");
-						}
-						else
-						{
-							wr.Write(" ({0})", ds.Tables[databaseObjectInfo.ToString()].Rows[i][3]);
-						}
-					}
-					else if( valtype == "numeric" ||
-						valtype == "decimal" )
-					{
-						wr.Write(" ({0},", ds.Tables[databaseObjectInfo.ToString()].Rows[i][3]);
-						wr.Write("{0})", ds.Tables[databaseObjectInfo.ToString()].Rows[i][4]);
-					}
-					wr.Write("\t");
-						
-					if( !ds.Tables[databaseObjectInfo.ToString()].Rows[i].IsNull("collation"))
-					{
-						wr.Write("COLLATE {0}",ds.Tables[databaseObjectInfo.ToString()].Rows[i]["collation"]);
-						wr.Write("\t");
-					}
-
-					if( ((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed != 0)
-					{
-						wr.Write("\tIDENTITY({0},{1})",
-							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncSeed,
-							((DBFieldInfo)databaseObjectInfo.FieldInfo[i]).IncStep );
-					}
-						
-					if( (int)ds.Tables[databaseObjectInfo.ToString()].Rows[i]["isnullable"] == 0 )
-					{
-						wr.Write("\tNOT NULL");
-					}
-					else
-					{
-						wr.Write("\tNULL");
-					}
-				}
-				wr.Write("{0}){0}Go{0}",wr.NewLine);
-			}
-			else
-			{
-				DataTable dt = new DataTable();
-				dt.CaseSensitive = true;
-				dt.Locale = System.Globalization.CultureInfo.CurrentCulture;
-
-				string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_helptext '{0}'", databaseObjectInfo.FormalName );
-				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.pSqlConnect);
-				da.SelectCommand.CommandTimeout = this.QueryTimeout;
-				da.Fill(dt);
-				foreach(DataRow dr in dt.Rows)
-				{
-					wr.Write(dr["Text"].ToString());
-				}
-				wr.Write("{0}){0}Go{0}",wr.NewLine);
 			}
 			return strline.ToString();
 		}
@@ -962,7 +829,7 @@ namespace quickDBExplorer
 				databaseObjectInfo.FormalName );
 			SqlDataAdapter da = new SqlDataAdapter(strsql,this.pSqlConnect);
 			DataTable []dt = da.FillSchema(ds,SchemaType.Mapped,"schema");
-			databaseObjectInfo.SchemaBaseInfo = dt[0];
+            databaseObjectInfo.SetSchemaInfo(dt[0]);
 
 			// 実際の細かい情報を直接取得する
 			SqlDataAdapter tableda = new SqlDataAdapter(
@@ -1065,9 +932,8 @@ order by syscolumns.colorder",
 						break;
 					}
 				}
-				ar.Add(addInfo);
+                databaseObjectInfo.AddField(addInfo);
 			}
-			databaseObjectInfo.FieldInfo = ar;
 		}
 
 		/// <summary>
