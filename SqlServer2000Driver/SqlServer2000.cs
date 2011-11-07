@@ -661,6 +661,7 @@ namespace quickDBExplorer
 					{
 						wr.Write("\tNULL");
 					}
+                    i++;
 				}
 				wr.Write("{0}){0}Go{0}",wr.NewLine);
 			}

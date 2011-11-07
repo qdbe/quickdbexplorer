@@ -225,6 +225,162 @@
             <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
             <returns></returns>
         </member>
+        <member name="T:quickDBExplorer.DataGetEventHandler">
+            <summary>
+            フィールド情報取得時のデータ再取得用イベントハンドラ
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.DBObjectInfo">
+            <summary>
+            リストに表示する DB オブジェクトの情報を管理する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="objectType">オブジェクトの型</param>
+            <param name="owner">オブジェクトの所有者名</param>
+            <param name="name">オブジェクトの名称</param>
+            <param name="createdTime">オブジェクトの作成日時</param>
+            <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
+            <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.ToString">
+            <summary>
+            文字列化する。
+            所有者名+"."+オブジェクト名
+            を返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.GetAliasName(System.String)">
+            <summary>
+            Alias が指定されていた場合に、Alias 付きのオブジェクト正式名称を返す
+            </summary>
+            <param name="alias">オブジェクト修飾子</param>
+            <returns>解析後のオブジェクト名([owner].[tabblname] alias 形式)</returns>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.GetNameAdd(System.String)">
+            <summary>
+            正式名称に指定れた文字列を付加したものにして返す
+            </summary>
+            <param name="suffix">付加する文字列</param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.ReloadInfo">
+            <summary>
+            オブジェクトの情報を取得しなおす
+            </summary>
+        </member>
+        <member name="E:quickDBExplorer.DBObjectInfo.DataGet">
+            <summary>
+            フィールド情報取得時に情報がまだ未取得時に発生するイベント
+            このイベントハンドラにより、データをセットさせる
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.ObjType">
+            <summary>
+            オブジェクトの種類
+            空白: Table
+            V:		View
+            S:		Synonym
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.DisplayObjType">
+            <summary>
+            オブジェクトの種類(表示用)
+            空白: Table
+            V:		View
+            S:		Synonym
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.Owner">
+            <summary>
+            オブジェクトの所有者名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.ObjName">
+            <summary>
+            オブジェクトの名称
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.CreateTime">
+            <summary>
+            オブジェクトが生成された日時
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBase">
+            <summary>
+            オブジェクトがシノニムの場合、その参照先
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBaseType">
+            <summary>
+            オブジェクトがシノニムの場合、その参照先のオブジェクトの種類
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.FormalName">
+            <summary>
+            [] でくくったオブジェクトの正式名称を取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.CanSelect">
+            <summary>
+            select 可能か否かを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsSynonym">
+            <summary>
+            シノニムかどうかを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.CanStatistics">
+            <summary>
+            統計情報の更新が可能などうかを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.RealObjName">
+            <summary>
+            実際のオブジェクト名を取得する
+            シノニムの場合はその参照先のオブジェクト名を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.RealObjNameNoPare">
+            <summary>
+            実際のオブジェクト名を取得する
+            名称には[]はつかない
+            シノニムの場合はその参照先のオブジェクト名を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.RealObjType">
+            <summary>
+            実際のオブジェクトの型を取得する
+            シノニムの場合はその参照先のオブジェクトの型を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.FieldInfo">
+            <summary>
+            オブジェクトのフィールド情報をキャッシュして保持する
+            フィールド情報のコレクションを管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.SchemaBaseInfo">
+            <summary>
+            スキーマ情報を保持している DataTable
+            行は保持していない
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsUseAssemblyType">
+            <summary>
+            フィールドにアセンブリを利用した型があるか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsUseIdentity">
+            <summary>
+            フィールドに Identityを利用したものを持つか否か
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.DBFieldInfo">
             <summary>
             テーブル等のフィールド項目の情報を管理するクラス
@@ -585,162 +741,6 @@
             <param name="isFunction"></param>
             <param name="isProcedure"></param>
             <returns></returns>
-        </member>
-        <member name="T:quickDBExplorer.DataGetEventHandler">
-            <summary>
-            フィールド情報取得時のデータ再取得用イベントハンドラ
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.DBObjectInfo">
-            <summary>
-            リストに表示する DB オブジェクトの情報を管理する
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="objectType">オブジェクトの型</param>
-            <param name="owner">オブジェクトの所有者名</param>
-            <param name="name">オブジェクトの名称</param>
-            <param name="createdTime">オブジェクトの作成日時</param>
-            <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
-            <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.ToString">
-            <summary>
-            文字列化する。
-            所有者名+"."+オブジェクト名
-            を返す
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.GetAliasName(System.String)">
-            <summary>
-            Alias が指定されていた場合に、Alias 付きのオブジェクト正式名称を返す
-            </summary>
-            <param name="alias">オブジェクト修飾子</param>
-            <returns>解析後のオブジェクト名([owner].[tabblname] alias 形式)</returns>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.GetNameAdd(System.String)">
-            <summary>
-            正式名称に指定れた文字列を付加したものにして返す
-            </summary>
-            <param name="suffix">付加する文字列</param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.ReloadInfo">
-            <summary>
-            オブジェクトの情報を取得しなおす
-            </summary>
-        </member>
-        <member name="E:quickDBExplorer.DBObjectInfo.DataGet">
-            <summary>
-            フィールド情報取得時に情報がまだ未取得時に発生するイベント
-            このイベントハンドラにより、データをセットさせる
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.ObjType">
-            <summary>
-            オブジェクトの種類
-            空白: Table
-            V:		View
-            S:		Synonym
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.DisplayObjType">
-            <summary>
-            オブジェクトの種類(表示用)
-            空白: Table
-            V:		View
-            S:		Synonym
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.Owner">
-            <summary>
-            オブジェクトの所有者名
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.ObjName">
-            <summary>
-            オブジェクトの名称
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.CreateTime">
-            <summary>
-            オブジェクトが生成された日時
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBase">
-            <summary>
-            オブジェクトがシノニムの場合、その参照先
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBaseType">
-            <summary>
-            オブジェクトがシノニムの場合、その参照先のオブジェクトの種類
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.FormalName">
-            <summary>
-            [] でくくったオブジェクトの正式名称を取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.CanSelect">
-            <summary>
-            select 可能か否かを取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.IsSynonym">
-            <summary>
-            シノニムかどうかを取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.CanStatistics">
-            <summary>
-            統計情報の更新が可能などうかを取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.RealObjName">
-            <summary>
-            実際のオブジェクト名を取得する
-            シノニムの場合はその参照先のオブジェクト名を返す
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.RealObjNameNoPare">
-            <summary>
-            実際のオブジェクト名を取得する
-            名称には[]はつかない
-            シノニムの場合はその参照先のオブジェクト名を返す
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.RealObjType">
-            <summary>
-            実際のオブジェクトの型を取得する
-            シノニムの場合はその参照先のオブジェクトの型を返す
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.FieldInfo">
-            <summary>
-            オブジェクトのフィールド情報をキャッシュして保持する
-            フィールド情報のコレクションを管理する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.SchemaBaseInfo">
-            <summary>
-            スキーマ情報を保持している DataTable
-            行は保持していない
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.IsUseAssemblyType">
-            <summary>
-            フィールドにアセンブリを利用した型があるか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.IsUseIdentity">
-            <summary>
-            フィールドに Identityを利用したものを持つか否か
-            </summary>
         </member>
     </members>
 </doc>

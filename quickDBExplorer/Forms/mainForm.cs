@@ -5216,6 +5216,7 @@ namespace quickDBExplorer
 							{
 								wr.Write(ConvData(dr, i, "\"","",false,each));
 							}
+                            i++;
 						}
 						wr.Write( wr.NewLine );
 					}
