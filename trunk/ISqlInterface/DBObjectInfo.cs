@@ -208,6 +208,7 @@ namespace quickDBExplorer
 		}
 
 		private	List<DBFieldInfo>	pFieldInfo = null;
+        private Dictionary<string, DBFieldInfo> fieldDictionary = new Dictionary<string,DBFieldInfo>();
 
 		/// <summary>
 		/// オブジェクトのフィールド情報をキャッシュして保持する
@@ -221,10 +222,47 @@ namespace quickDBExplorer
 				if( this.pFieldInfo == null )
 				{
 					this.DataGet(this, new EventArgs());
+                    SetFieldDictionary();
 				}
 				return this.pFieldInfo; 
 			}
 		}
+
+        /// <summary>
+        /// フィールドの項目数を取得する
+        /// </summary>
+        public int FieldCount
+        {
+            get
+            {
+                if (this.pFieldInfo == null)
+                {
+                    this.DataGet(this, new EventArgs());
+                    SetFieldDictionary();
+                }
+                return this.pFieldInfo.Count;
+            }
+        }
+
+        /// <summary>
+        /// フィールドの情報を返す
+        /// </summary>
+        /// <param name="filedName">フィールド名</param>
+        /// <returns></returns>
+        public DBFieldInfo this[string filedName]{
+            get { return this.fieldDictionary[filedName]; }
+        }
+
+        /// <summary>
+        /// フィールドの情報を返す
+        /// </summary>
+        /// <param name="fieldorder">フィールドの順番(0オリジン)</param>
+        /// <returns></returns>
+        public DBFieldInfo this[int fieldorder]
+        {
+            get{ return this.pFieldInfo[fieldorder]; }
+        }
+
 
 		private DataTable	pSchemaBaseInfo;
 		/// <summary>
@@ -238,7 +276,8 @@ namespace quickDBExplorer
 				if( this.pFieldInfo == null )
 				{
 					this.DataGet(this, new EventArgs());
-				}
+                    SetFieldDictionary();
+                }
 				return this.pSchemaBaseInfo; 
 			}
             private set { this.pSchemaBaseInfo = value; }
@@ -367,6 +406,16 @@ namespace quickDBExplorer
         public void SetSchemaInfo(DataTable dt)
         {
             this.pSchemaBaseInfo = dt;
+        }
+
+
+        private void SetFieldDictionary()
+        {
+            this.fieldDictionary.Clear();
+            foreach (DBFieldInfo each in this.pFieldInfo)
+            {
+                this.fieldDictionary[each.Name] = each;
+            }
         }
 
 	}
