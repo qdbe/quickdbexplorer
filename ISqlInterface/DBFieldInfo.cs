@@ -1,5 +1,6 @@
 using	System;
 using	System.Data;
+using quickDBExplorer.DataType;
 
 namespace quickDBExplorer
 {
@@ -45,8 +46,13 @@ namespace quickDBExplorer
 		public string RealTypeName
 		{
 			get { return pRealTypeName; }
-			set { pRealTypeName = value; }
+			set { 
+                pRealTypeName = value;
+                dataType = TypeFactory.Create(value);
+            }
 		}
+
+        private IDataType dataType;
 
 		private	int		length = 0;
 		/// <summary>

@@ -18,7 +18,7 @@
     <DefaultTargetSchema>IE50</DefaultTargetSchema>
     <DelaySign>false</DelaySign>
     <OutputType>Library</OutputType>
-    <RootNamespace>ISqlInterface</RootNamespace>
+    <RootNamespace>quickDBExplorer</RootNamespace>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <StartupObject>
     </StartupObject>
@@ -89,6 +89,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommandArg.cs" />
+    <Compile Include="DataType\baseType.cs" />
+    <Compile Include="DataType\IDataType.cs" />
+    <Compile Include="DataType\nvarcharType.cs" />
+    <Compile Include="DataType\stringBaseType.cs" />
+    <Compile Include="DataType\TypeFactory.cs" />
     <Compile Include="DBFieldInfo.cs">
       <SubType>Code</SubType>
     </Compile>
