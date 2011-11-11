@@ -1082,12 +1082,13 @@
             <param name="isUseDQ">文字列にダブルクォートをつけているか
             true: 付加されている false: 付加されていない</param>
         </member>
-        <member name="M:quickDBExplorer.MainForm.LoadFile2DataTable(System.Data.DataTable,System.IO.TextReader,System.Boolean,System.Boolean)">
+        <member name="M:quickDBExplorer.MainForm.LoadFile2DataTable(System.Data.DataTable,quickDBExplorer.DBObjectInfo,System.IO.TextReader,System.Boolean,System.Boolean)">
             <summary>
             ファイルからデータを読み込み
             CSV,TSVの指定、また ”の利用を指定可能
             </summary>
-            <param name="dt">読込先のDataTable</param>
+            <param name="targetDt">読込先のDataTable</param>
+            <param name="dbobj">データオブジェクトの情報</param>
             <param name="wr">読み込むテキストのストリーム</param>
             <param name="isCsv">true: CSVでの読み込み false : TSV での読み込み</param>
             <param name="isUseDQ">文字列にダブルクォートをつけているか

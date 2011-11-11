@@ -230,5 +230,42 @@ namespace quickDBExplorer
 		public DBFieldInfo()
 		{
 		}
+
+
+        /// <summary>
+        /// 出力用にデータを加工する
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <param name="col"></param>
+        /// <param name="addstr"></param>
+        /// <param name="unichar"></param>
+        /// <param name="outNull"></param>
+        /// <returns></returns>
+        public string ConvData(IDataReader dr, int col, string addstr, string unichar, bool outNull)
+        {
+            if (dr.IsDBNull(col))
+            {
+                if (outNull)
+                {
+                    return "null";
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            else if (this.IsAssembly == true)
+            {
+                if (outNull == true)
+                {
+                    return this.TypeName + "::Parse(N'" + dr.GetString(col) + "')";
+                }
+                else
+                {
+                    return dr.GetString(col);
+                }
+            }
+            return this.dataType.Convert(dr, col, addstr, unichar, outNull, this);
+        }
 	}
 }

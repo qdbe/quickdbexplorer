@@ -3,42 +3,39 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using quickDBExplorer;
+using System.Data;
+
 
 namespace quickDBExplorer.DataType
 {
-    abstract class stringBaseType : baseType
+    internal abstract class ncharBaseType : IDataType
     {
-        private stringBaseType()
+        internal ncharBaseType()
         {
-            this.TypeName = "stringBase";
         }
 
-        public override static IDataType Create()
+        public string Convert(IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
         {
-            throw new NotImplementedException();
-        }
-
-        public virtual string Convert(string data, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
-        {
-            if (data.Equals("") || data.Equals("\0"))
+            string targetData = (string)dr.GetString(col);
+            if (targetData.Equals("") || targetData.Equals("\0"))
             {
                 return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{0}", addstr, unichar);
             }
             else
             {
-                if (data.IndexOf("'") >= 0)
+                if (targetData.IndexOf("'") >= 0)
                 {
                     // ' が文字列に入っている場合は '' に強制的に変換する
-                    return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{2}{1}{0}{1}", data.Replace("'", "''").Replace("\0", ""), addstr, unichar);
+                    return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{2}{1}{0}{1}", targetData.Replace("'", "''").Replace("\0", ""), addstr, unichar);
                 }
                 else
                 {
-                    return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{2}{1}{0}{1}", data.Replace("\0", ""), addstr, unichar);
+                    return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{2}{1}{0}{1}", targetData.Replace("\0", ""), addstr, unichar);
                 }
             }
         }
 
-        public virtual string CheckForInput(string data, DBFieldInfo fieldInfo)
+        public string CheckForInput(string data, DBFieldInfo fieldInfo)
         {
             if (fieldInfo.Length < data.Length)
             {
