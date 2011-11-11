@@ -4893,7 +4893,7 @@ namespace quickDBExplorer
 							{
 								wr.Write( ", " );
 							}
-							wr.Write(ConvData(dr, i, "'","N",true,each));
+							wr.Write(each.ConvData(dr, i, "'","N",true));
                             i++;
 						}
 						wr.Write( " ) {0}",wr.NewLine );
@@ -5210,11 +5210,11 @@ namespace quickDBExplorer
 							}
 							if ( isdquote == false )
 							{
-								wr.Write(ConvData(dr, i, "","",false,each));
+								wr.Write(each.ConvData(dr, i, "","",false));
 							}
 							else
 							{
-								wr.Write(ConvData(dr, i, "\"","",false,each));
+								wr.Write(each.ConvData(dr, i, "\"","",false));
 							}
                             i++;
 						}
@@ -6408,180 +6408,6 @@ namespace quickDBExplorer
 			return true;
 		}
 
-		private string ConvData(IDataReader dr, int i, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
-		{
-			string fldtypename = dr.GetDataTypeName(i);
-			if( dr.IsDBNull(i) )
-			{
-				if( outNull )
-				{
-					return "null";
-				}
-				else
-				{
-					return "";
-				}
-			}
-			else if( fieldInfo.IsAssembly == true )
-			{
-				if( outNull == true )
-				{
-					return fieldInfo.TypeName + "::Parse(N'" + dr.GetString(i) + "')";
-				}
-				else
-				{
-					return dr.GetString(i);
-				}
-			}
-			else if( fldtypename.Equals("bigint") )
-			{
-				return dr.GetInt64(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
-			}
-			else if( fldtypename.Equals("image") ||
-				fldtypename.Equals("varbinary") ||
-				fldtypename.Equals("binary"))
-			{
-				if( outNull )
-				{	
-					return string.Format(System.Globalization.CultureInfo.CurrentCulture,"null" );
-				}
-				else
-				{
-					// バイナリはヘキサ文字列で出しておく
-					byte []odata = this.SqlDriver.GetDataReaderBytes(dr, i);
-					string sodata ="0x";
-					for(int k = 0; k < odata.Length; k++ )
-					{
-						sodata += odata[k].ToString("X2",System.Globalization.CultureInfo.InvariantCulture);
-					}
-					return string.Format(System.Globalization.CultureInfo.InvariantCulture,"{1}{0}{1}", sodata, addstr );
-				}
-			}
-			// DB データ型と .NET 型のマッピングは
-			// http://msdn.microsoft.com/ja-jp/library/bb675168.aspx を参考にする
-			else if( fldtypename.Equals("datetime") ||
-				fldtypename.Equals("smalldatetime") || 
-				fldtypename.Equals("time") || 
-				fldtypename.Equals("date") || 
-				fldtypename.Equals("datetime2") )
-			{
-				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", dr.GetDateTime(i).ToString(System.Globalization.CultureInfo.CurrentCulture), addstr );
-			}
-			else if (fldtypename.Equals("datetimeoffset"))
-			{
-				return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", 
-					this.SqlDriver.GetDataReaderDateTimeOffSet(dr, i).ToString(System.Globalization.CultureInfo.CurrentCulture), addstr);
-			}
-			else if (fldtypename.Equals("decimal") 
-				|| fldtypename.Equals("numeric"))
-			{
-				return dr.GetDecimal(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
-			}
-			else if( fldtypename.Equals("float")||
-				fldtypename.Equals("double") )
-			{
-				return dr.GetDouble(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
-			}
-			else if( fldtypename.Equals("int") )
-			{
-				return dr.GetInt32(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
-			}
-			else if( fldtypename.Equals("smallint") )
-			{
-				return dr.GetInt16(i).ToString(System.Globalization.CultureInfo.CurrentCulture);
-			}
-			else if( fldtypename.Equals("tinyint") )
-			{
-				return dr.GetValue(i).ToString();
-			}
-			else if( fldtypename.Equals("money") 
-				|| fldtypename.Equals("smallmoney"))
-			{
-				return dr.GetValue(i).ToString();
-			}
-			else if( fldtypename.Equals("real"))
-			{
-				return dr.GetValue(i).ToString();
-			}
-				//							else if( fldtypename.Equals("money") )
-				//							{
-				//								wr.Write( dr.GetDouble(i).ToString() );
-				//							}
-			else if( fldtypename == "varchar" ||
-				fldtypename == "char" ||
-				fldtypename == "text" )
-			{
-				// 文字列
-				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
-				{
-					return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0}{0}", addstr );
-				}
-				else
-				{
-					if( dr.GetString(i).IndexOf("'") >= 0 )
-					{
-						// ' が文字列に入っている場合は '' に強制的に変換する
-						return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""),addstr);
-					}
-					else
-					{
-						return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr );
-					}
-				}
-			}
-			else if( fldtypename == "nvarchar" ||
-				fldtypename == "nchar" ||
-				fldtypename == "xml" ||
-				fldtypename == "sql_variant" ||
-				fldtypename == "ntext")
-			{
-				// 文字列
-				if( dr.GetString(i).Equals("") || dr.GetString(i).Equals("\0"))
-				{
-					return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{0}", addstr, unichar );
-				}
-				else
-				{
-					if( dr.GetString(i).IndexOf("'") >= 0 )
-					{
-						// ' が文字列に入っている場合は '' に強制的に変換する
-						return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{2}{1}{0}{1}", dr.GetString(i).Replace("'","''").Replace("\0",""), addstr, unichar);
-					}
-					else
-					{
-						return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{2}{1}{0}{1}", dr.GetString(i).Replace("\0",""), addstr, unichar );
-					}
-				}
-			}
-			else if( fldtypename == "uniqueidentifier" )
-			{
-				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
-			}
-			else if( fldtypename == "timestamp" )
-			{
-				// timestamp は自動更新されるのでnullでよい
-				if( outNull )
-				{	
-					return string.Format(System.Globalization.CultureInfo.CurrentCulture,"null" );
-				}
-				else
-				{
-					// バイナリはヘキサ文字列で出しておく
-					byte []odata = this.SqlDriver.GetDataReaderBytes(dr, i);
-					string sodata ="0x";
-					for(int k = 0; k < odata.Length; k++ )
-					{
-						sodata += odata[k].ToString("X2",System.Globalization.CultureInfo.CurrentCulture);
-					}
-					return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", sodata, addstr );
-				}
-			}
-			else
-			{
-				// sql_variant は型の決めようがないので文字列扱いにしておく
-				return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{1}{0}{1}", dr.GetValue(i).ToString(), addstr );
-			}
-		}
 
 		private System.Text.Encoding GetEncode()
 		{

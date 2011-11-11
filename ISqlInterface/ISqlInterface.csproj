@@ -89,11 +89,45 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommandArg.cs" />
-    <Compile Include="DataType\baseType.cs" />
+    <Compile Include="DataType\bigintType.cs" />
+    <Compile Include="DataType\binaryBaseType.cs" />
+    <Compile Include="DataType\binaryType.cs" />
+    <Compile Include="DataType\charBaseType.cs" />
+    <Compile Include="DataType\charType.cs" />
+    <Compile Include="DataType\datetime2Type.cs" />
+    <Compile Include="DataType\datetimeoffsetType.cs" />
+    <Compile Include="DataType\datetimeType.cs" />
+    <Compile Include="DataType\dateType.cs" />
+    <Compile Include="DataType\decimalpointBaseType.cs" />
+    <Compile Include="DataType\decimalType.cs" />
+    <Compile Include="DataType\doubleType.cs" />
+    <Compile Include="DataType\floatType.cs" />
     <Compile Include="DataType\IDataType.cs" />
+    <Compile Include="DataType\imageType.cs" />
+    <Compile Include="DataType\intType.cs" />
+    <Compile Include="DataType\moneyBaseType.cs" />
+    <Compile Include="DataType\moneyType.cs" />
+    <Compile Include="DataType\ncharType.cs" />
+    <Compile Include="DataType\ntextType.cs" />
+    <Compile Include="DataType\numBaseType.cs" />
+    <Compile Include="DataType\numericType.cs" />
     <Compile Include="DataType\nvarcharType.cs" />
-    <Compile Include="DataType\stringBaseType.cs" />
+    <Compile Include="DataType\realType.cs" />
+    <Compile Include="DataType\smalldatetimeType.cs" />
+    <Compile Include="DataType\smallintType.cs" />
+    <Compile Include="DataType\smallmoneyType.cs" />
+    <Compile Include="DataType\sql_variantType.cs" />
+    <Compile Include="DataType\ncharBaseType.cs" />
+    <Compile Include="DataType\textType.cs" />
+    <Compile Include="DataType\datetimeBaseType.cs" />
+    <Compile Include="DataType\timestampType.cs" />
+    <Compile Include="DataType\timeType.cs" />
+    <Compile Include="DataType\tinyintType.cs" />
     <Compile Include="DataType\TypeFactory.cs" />
+    <Compile Include="DataType\uniqueidentifierType.cs" />
+    <Compile Include="DataType\varbinaryType.cs" />
+    <Compile Include="DataType\varcharType.cs" />
+    <Compile Include="DataType\xmlType.cs" />
     <Compile Include="DBFieldInfo.cs">
       <SubType>Code</SubType>
     </Compile>

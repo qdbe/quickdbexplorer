@@ -323,11 +323,18 @@ namespace quickDBExplorer
 			return string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}.{1}", this.Owner, this.ObjName );
 		}
 
+        /// <summary>
+        /// フィールド情報をクリアする
+        /// </summary>
         public void ClearField()
         {
             this.pFieldInfo = new List<DBFieldInfo>();
         }
 
+        /// <summary>
+        /// フィールド情報を追加する
+        /// </summary>
+        /// <param name="add"></param>
         public void AddField(DBFieldInfo add)
         {
             this.pFieldInfo.Add(add);
@@ -403,6 +410,10 @@ namespace quickDBExplorer
 			}
 		}
 
+        /// <summary>
+        /// スキーマ情報のテーブルをセットする
+        /// </summary>
+        /// <param name="dt"></param>
         public void SetSchemaInfo(DataTable dt)
         {
             this.pSchemaBaseInfo = dt;
