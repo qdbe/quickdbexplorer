@@ -6,11 +6,11 @@ using System.Data.SqlClient;
 
 namespace quickDBExplorer.DataType
 {
-    internal class timestampType : IDataType
+    internal class timestampType : baseType
     {
         #region IDataType メンバ
 
-        public string Convert(IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
+        public override string Convert(IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
         {
             // timestamp は自動更新されるのでnullでよい
             if (outNull)
@@ -31,7 +31,7 @@ namespace quickDBExplorer.DataType
             
         }
 
-        public string CheckForInput(string data, DBFieldInfo fieldInfo)
+        public override string CheckForInput(string data, DBFieldInfo fieldInfo)
         {
             throw new NotImplementedException();
         }

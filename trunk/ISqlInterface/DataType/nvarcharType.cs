@@ -10,6 +10,7 @@ namespace quickDBExplorer.DataType
     {
         public nvarcharType()
         {
+            this.TypeHasSize = true;
         }
     }
 }

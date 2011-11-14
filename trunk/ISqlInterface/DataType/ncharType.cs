@@ -6,5 +6,9 @@ namespace quickDBExplorer.DataType
 {
     class ncharType : ncharBaseType
     {
+        public ncharType()
+        {
+            this.TypeHasSize = true;
+        }
     }
 }

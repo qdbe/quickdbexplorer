@@ -8,13 +8,13 @@ using System.Data;
 
 namespace quickDBExplorer.DataType
 {
-    internal abstract class ncharBaseType : IDataType
+    internal abstract class ncharBaseType : baseType
     {
         internal ncharBaseType()
         {
         }
 
-        public string Convert(IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
+        public override string Convert(IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
         {
             string targetData = (string)dr.GetString(col);
             if (targetData.Equals("") || targetData.Equals("\0"))
@@ -35,7 +35,7 @@ namespace quickDBExplorer.DataType
             }
         }
 
-        public string CheckForInput(string data, DBFieldInfo fieldInfo)
+        public override string CheckForInput(string data, DBFieldInfo fieldInfo)
         {
             if (fieldInfo.Length < data.Length)
             {
@@ -43,5 +43,23 @@ namespace quickDBExplorer.DataType
             }
             return null;
         }
+
+        public override string GetFieldTypeString(string typename, int length, int prec, int xscale)
+        {
+            if (this.TypeHasSize == false) return base.GetFieldTypeString(typename, length, prec, xscale);
+
+            if (length == -1)
+            {
+                return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0}(max)",
+                    typename);
+            }
+            else
+            {
+                return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0}({1})",
+                    typename,
+                    length);
+            }
+        }
+
     }
 }

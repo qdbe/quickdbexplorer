@@ -7,5 +7,9 @@ namespace quickDBExplorer.DataType
 {
     internal class charType : charBaseType
     {
+        public charType()
+        {
+            this.TypeHasSize = true;
+        }
     }
 }

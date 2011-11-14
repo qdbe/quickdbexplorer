@@ -92,6 +92,7 @@
     <Compile Include="DataType\bigintType.cs" />
     <Compile Include="DataType\binaryBaseType.cs" />
     <Compile Include="DataType\binaryType.cs" />
+    <Compile Include="DataType\bitType.cs" />
     <Compile Include="DataType\charBaseType.cs" />
     <Compile Include="DataType\charType.cs" />
     <Compile Include="DataType\datetime2Type.cs" />
@@ -100,8 +101,10 @@
     <Compile Include="DataType\dateType.cs" />
     <Compile Include="DataType\decimalpointBaseType.cs" />
     <Compile Include="DataType\decimalType.cs" />
+    <Compile Include="DataType\defaultType.cs" />
     <Compile Include="DataType\doubleType.cs" />
     <Compile Include="DataType\floatType.cs" />
+    <Compile Include="DataType\baseType.cs" />
     <Compile Include="DataType\IDataType.cs" />
     <Compile Include="DataType\imageType.cs" />
     <Compile Include="DataType\intType.cs" />

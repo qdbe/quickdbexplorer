@@ -4,11 +4,11 @@ using System.Text;
 
 namespace quickDBExplorer.DataType
 {
-    internal class charBaseType : IDataType
+    internal class charBaseType : baseType
     {
         #region IDataType メンバ
 
-        public string Convert(System.Data.IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
+        public override string Convert(System.Data.IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
         {
             if (dr.GetString(col).Equals("") || dr.GetString(col).Equals("\0"))
             {
@@ -29,9 +29,27 @@ namespace quickDBExplorer.DataType
 
         }
 
-        public string CheckForInput(string data, DBFieldInfo fieldInfo)
+        public override string CheckForInput(string data, DBFieldInfo fieldInfo)
         {
             throw new NotImplementedException();
+        }
+
+        public override string GetFieldTypeString(string typename, int length, int prec, int xscale)
+        {
+            if (this.TypeHasSize == false) return base.GetFieldTypeString(typename, length, prec, xscale);
+
+
+            if (length == -1)
+            {
+                return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0}(max)",
+                    typename);
+            }
+            else
+            {
+                return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0}({1})",
+                    typename,
+                    length);
+            }
         }
 
         #endregion

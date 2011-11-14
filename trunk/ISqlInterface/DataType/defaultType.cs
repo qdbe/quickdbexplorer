@@ -4,11 +4,11 @@ using System.Text;
 
 namespace quickDBExplorer.DataType
 {
-    internal class bigintType : baseType
+    internal class defaultType : baseType
     {
         public override string Convert(System.Data.IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
         {
-            return dr.GetInt64(col).ToString(System.Globalization.CultureInfo.CurrentCulture);
+            throw new NotImplementedException();
         }
 
         public override string CheckForInput(string data, DBFieldInfo fieldInfo)
