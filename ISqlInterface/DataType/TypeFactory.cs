@@ -11,14 +11,14 @@ namespace quickDBExplorer.DataType
     public class TypeFactory
     {
 
-        static private Dictionary<string, IDataType> typeDic = new Dictionary<string, IDataType>();
+        static private Dictionary<string, baseType> typeDic = new Dictionary<string, baseType>();
 
         /// <summary>
         /// SQLデータタイプを生成する
         /// </summary>
         /// <param name="typeString">SQLデータタイプの型名(例：nvarchar, int)</param>
         /// <returns></returns>
-        public static IDataType Create(string typeString)
+        public static baseType Create(string typeString)
         {
             string lowerTypeName = typeString.ToLower();
             if (typeDic.ContainsKey(lowerTypeName))
@@ -27,7 +27,11 @@ namespace quickDBExplorer.DataType
             }
 
             Type ctype = Type.GetType("quickDBExplorer.DataType." + typeString.ToLower() + "Type");
-            IDataType result = (IDataType)Activator.CreateInstance(ctype);
+            if (ctype == null)
+            {
+                ctype = Type.GetType("quickDBExplorer.DataType.defaultType");
+            }
+            baseType result = (baseType)Activator.CreateInstance(ctype);
             typeDic[lowerTypeName] = result;
             return result;
         }

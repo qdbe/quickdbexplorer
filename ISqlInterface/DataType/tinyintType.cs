@@ -4,16 +4,16 @@ using System.Text;
 
 namespace quickDBExplorer.DataType
 {
-    internal class tinyintType : IDataType
+    internal class tinyintType : baseType
     {
         #region IDataType メンバ
 
-        public string Convert(System.Data.IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
+        public override string Convert(System.Data.IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
         {
             return dr.GetValue(col).ToString();
         }
 
-        public string CheckForInput(string data, DBFieldInfo fieldInfo)
+        public override string CheckForInput(string data, DBFieldInfo fieldInfo)
         {
             throw new NotImplementedException();
         }

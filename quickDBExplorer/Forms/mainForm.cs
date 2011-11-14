@@ -4488,8 +4488,7 @@ namespace quickDBExplorer
 					dodsp = false;
 				}
 
-				string	valtype;
-				string	istr = "";
+				string	istr;
 
 				foreach(DBFieldInfo fi in dboInfo.FieldInfo)
 				{
@@ -4499,65 +4498,7 @@ namespace quickDBExplorer
 					}
 					else
 					{
-						valtype = fi.TypeName;
-						if( valtype == "varchar" ||
-							valtype == "varbinary" ||
-							valtype == "nvarchar" ||
-							valtype == "char" ||
-							valtype == "nchar" ||
-							valtype == "binary" )
-						{
-							if( fi.Length == -1 )
-							{
-								istr = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}  {1}(max) ",
-									fi.Name,
-									fi.TypeName);
-							}
-							else
-							{
-								istr = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}  {1}({2}) ",
-									fi.Name,
-									fi.TypeName,
-									fi.Length);
-							}
-										 
-						}
-						else if( valtype == "numeric" ||
-							valtype == "decimal" )
-						{
-							istr = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}  {1}({2},{3}) ",
-								fi.Name,
-								fi.TypeName,
-								fi.Prec,
-								fi.Xscale);
-
-						}
-						else
-						{
-							istr = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}  {1} ",
-								fi.Name,
-								fi.TypeName);
-						}
-
-						if( fi.IncSeed != 0)
-						{
-							istr += string.Format(System.Globalization.CultureInfo.CurrentCulture," IDENTITY({0},{1})",
-								fi.IncSeed,
-								fi.IncStep );
-						}
-
-						if( fi.IsNullable == false )
-						{
-							istr +=" NOT NULL";
-						}
-						else
-						{
-							istr +=" NULL";
-						}
-						if( fi.PrimaryKeyOrder >= 0 )
-						{
-							istr +=" PRIMARY KEY";
-						}
+                        istr = fi.Name + fi.GetFieldTypeString();
 					}
 					this.fieldListbox.Items.Add(new FieldListItem(istr,fi));
 				}

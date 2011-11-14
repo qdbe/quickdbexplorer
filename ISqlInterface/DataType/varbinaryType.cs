@@ -8,5 +8,9 @@ namespace quickDBExplorer.DataType
 {
     internal class varbinaryType : binaryBaseType
     {
+        public varbinaryType()
+        {
+            this.TypeHasSize = true;
+        }
     }
 }

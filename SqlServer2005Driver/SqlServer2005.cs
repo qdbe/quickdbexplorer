@@ -597,7 +597,7 @@ where
 					wr.Write("Create table {0} ", databaseObjectInfo.RealObjNameNoPare);
 				}
 				wr.Write(" ( {0}",wr.NewLine);
-				string	valtype;
+
                 int i = 0;
                 foreach(DBFieldInfo each in databaseObjectInfo.FieldInfo)
                 {
@@ -605,74 +605,20 @@ where
 					{
 						wr.Write(",{0}",wr.NewLine);
 					}
-					//フィールド名
+                    wr.Write("\t");
+                    //フィールド名
 					if( useParentheses )
 					{
-						wr.Write("\t[{0}]", each.Name);
+						wr.Write(each.FormalName);
 					}
 					else
 					{
-						wr.Write("\t{0}", each.Name);
+						wr.Write(each.Name);
 					}
 					wr.Write("\t");
 					// 型
-					valtype = each.TypeName;
+                    wr.Write(each.GetDDLTypeString(useParentheses));
 
-					wr.Write("\t");
-
-					if( useParentheses )
-					{
-						wr.Write("[{0}]",valtype);
-					}
-					else
-					{
-						wr.Write(valtype);
-					}
-					if( valtype == "varchar" ||
-						valtype == "varbinary" ||
-						valtype == "nvarchar" ||
-						valtype == "char" ||
-						valtype == "nchar" ||
-						valtype == "binary" )
-					{
-						if( each.Length == -1 )
-						{
-							wr.Write(" (max)");
-						}
-						else
-						{
-							wr.Write(" ({0})", each.Length);
-						}
-					}
-					else if( valtype == "numeric" ||
-						valtype == "decimal" )
-					{
-						wr.Write(" ({0},{1})", each.Prec,
-                            each.Xscale);
-					}
-					wr.Write("\t");
-
-                    if (each.Collation.Length != 0)
-					{
-                        wr.Write("COLLATE {0}", each.Collation);
-						wr.Write("\t");
-					}
-
-                    if (each.IncSeed != 0)
-					{
-						wr.Write("\tIDENTITY({0},{1})",
-                            each.IncSeed,
-                            each.IncStep);
-					}
-
-                    if (each.IsNullable == false)
-					{
-						wr.Write("\tNOT NULL");
-					}
-					else
-					{
-						wr.Write("\tNULL");
-					}
                     i++;
 				}
 				wr.Write("{0}){0}Go{0}",wr.NewLine);

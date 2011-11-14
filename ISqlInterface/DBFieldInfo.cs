@@ -1,6 +1,7 @@
 using	System;
 using	System.Data;
 using quickDBExplorer.DataType;
+using System.Text;
 
 namespace quickDBExplorer
 {
@@ -28,6 +29,18 @@ namespace quickDBExplorer
 			get { return this.col.ColumnName; }
 		}
 
+
+        /// <summary>
+        /// []付のフィールド名称を取得する
+        /// </summary>
+        public string FormalName
+        {
+            get
+            {
+                return string.Format("[{0}]", this.Name);
+            }
+        }
+
 		private	string	typeName = "";
 		/// <summary>
 		/// フィールドの型
@@ -37,6 +50,17 @@ namespace quickDBExplorer
 			get { return this.typeName; }
 			set { this.typeName = value; }
 		}
+
+        /// <summary>
+        /// []付の型名称を取得する
+        /// </summary>
+        public string FormalTypeName
+        {
+            get
+            {
+                return string.Format("[{0}]", this.TypeName);
+            }
+        }
 
 		private string pRealTypeName = "";
 
@@ -48,11 +72,14 @@ namespace quickDBExplorer
 			get { return pRealTypeName; }
 			set { 
                 pRealTypeName = value;
-                dataType = TypeFactory.Create(value);
+                if (!this.IsAssembly)
+                {
+                    dataType = TypeFactory.Create(value);
+                }
             }
 		}
 
-        private IDataType dataType;
+        private baseType dataType;
 
 		private	int		length = 0;
 		/// <summary>
@@ -266,6 +293,83 @@ namespace quickDBExplorer
                 }
             }
             return this.dataType.Convert(dr, col, addstr, unichar, outNull, this);
+        }
+
+        /// <summary>
+        /// フィールドの表示形式を取得する
+        /// </summary>
+        /// <returns></returns>
+        public string GetFieldTypeString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("  ").Append(this.dataType.GetFieldTypeString(this.TypeName, this.length, this.Prec, this.Xscale)).Append(" ");
+
+            if( this.IncSeed != 0)
+			{
+				sb.AppendFormat(System.Globalization.CultureInfo.CurrentCulture," IDENTITY({0},{1})",
+					this.IncSeed,
+					this.IncStep );
+			}
+
+            if (this.IsNullable == false)
+            {
+                sb.Append(" NOT NULL");
+            }
+            else
+            {
+                sb.Append(" NULL");
+            }
+            if (this.PrimaryKeyOrder >= 0)
+            {
+                sb.Append(" PRIMARY KEY");
+            }
+
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// DDL用の型定義文字列を取得する
+        /// </summary>
+        /// <param name="useParentheses"></param>
+        /// <returns></returns>
+        public string GetDDLTypeString(bool useParentheses)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("  ");
+            if (useParentheses)
+            {
+                sb.Append(this.dataType.GetFieldTypeString(this.FormalTypeName, this.length, this.Prec, this.Xscale));
+            }
+            else
+            {
+                sb.Append(this.dataType.GetFieldTypeString(this.TypeName, this.length, this.Prec, this.Xscale));
+            }
+
+            if (this.Collation.Length != 0)
+            {
+                sb.Append("\t");
+                sb.AppendFormat("COLLATE {0}", this.Collation);
+            }
+
+            if (this.IncSeed != 0)
+            {
+                sb.Append("\t");
+                sb.AppendFormat("IDENTITY({0},{1})",
+                    this.IncSeed,
+                    this.IncStep);
+            }
+
+            sb.Append("\t");
+            if (this.IsNullable == false)
+            {
+                sb.Append("NOT NULL");
+            }
+            else
+            {
+                sb.Append("NULL");
+            }
+
+            return sb.ToString();
         }
 	}
 }

@@ -6,16 +6,16 @@ using System.Data;
 
 namespace quickDBExplorer.DataType
 {
-    internal class smallintType : IDataType
+    internal class smallintType : baseType
     {
         #region IDataType メンバ
 
-        public string Convert(IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
+        public override string Convert(IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
         {
             return dr.GetInt16(col).ToString(System.Globalization.CultureInfo.CurrentCulture);
         }
 
-        public string CheckForInput(string data, DBFieldInfo fieldInfo)
+        public override string CheckForInput(string data, DBFieldInfo fieldInfo)
         {
             throw new NotImplementedException();
         }
