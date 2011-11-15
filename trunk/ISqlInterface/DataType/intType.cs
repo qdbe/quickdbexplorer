@@ -13,9 +13,34 @@ namespace quickDBExplorer.DataType
             return dr.GetInt32(col).ToString(System.Globalization.CultureInfo.CurrentCulture);
         }
 
-        public override string CheckForInput(string data, DBFieldInfo fieldInfo)
+        public override string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
         {
-            throw new NotImplementedException();
+            string errmsg = null;
+            try
+            {
+                if (data == "")
+                {
+                    result = DBNull.Value;
+                }
+                else
+                {
+                    Int32 localresult;
+                    if (Int32.TryParse(data, out localresult) == true)
+                    {
+                        result = localresult;
+                    }
+                    else
+                    {
+                        errmsg = "Int32 の整数を指定してください。";
+                    }
+                }
+            }
+            catch
+            {
+                errmsg = "Int32 の整数を指定してください。";
+            }
+            return errmsg;
+
         }
 
         #endregion

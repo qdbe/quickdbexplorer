@@ -371,5 +371,25 @@ namespace quickDBExplorer
 
             return sb.ToString();
         }
+
+        /// <summary>
+        /// 文字列をパースしてオブジェクトに変換する
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="fieldInfo"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
+        public string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
+        {
+            if (this.IsNullable == false && data == string.Empty)
+            {
+                return "値の指定が必要です。";
+            }
+            if (this.IsIdentity == true && data != string.Empty)
+            {
+                return "自動採番されるので値は指定できません。";
+            }
+            return this.dataType.TryParse(data, fieldInfo, ref result);
+        }
 	}
 }

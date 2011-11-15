@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
+using System.Reflection;
 
 namespace quickDBExplorer.DataType
 {
@@ -61,7 +62,41 @@ namespace quickDBExplorer.DataType
         /// </summary>
         /// <param name="data"></param>
         /// <param name="fieldInfo"></param>
+        /// <param name="result"></param>
         /// <returns></returns>
-        public abstract string CheckForInput(string data, DBFieldInfo fieldInfo);
+        public abstract string TryParse(string data, DBFieldInfo fieldInfo, ref object result);
+
+        protected string TryParse(string data, string typeName, string errmsg, ref object result)
+        {
+            string msgresult = null;
+            try
+            {
+                if (data == "")
+                {
+                    result = DBNull.Value;
+                }
+                else
+                {
+                    Type t = Type.GetType(typeName);
+                    object localresult = null;
+                    if ((bool)t.InvokeMember("TryParse", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public, 
+                        null, 
+                        null,
+                        new object[] { data, localresult } ) == true )
+                    {
+                        result = localresult;
+                    }
+                    else
+                    {
+                        msgresult = errmsg;
+                    }
+                }
+            }
+            catch
+            {
+                msgresult = errmsg;
+            }
+            return msgresult;
+        }
     }
 }
