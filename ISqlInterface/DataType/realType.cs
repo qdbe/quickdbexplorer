@@ -15,7 +15,7 @@ namespace quickDBExplorer.DataType
             return dr.GetValue(col).ToString();
         }
 
-        public override string CheckForInput(string data, DBFieldInfo fieldInfo)
+        public override string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
         {
             throw new NotImplementedException();
         }

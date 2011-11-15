@@ -13,7 +13,7 @@ namespace quickDBExplorer.DataType
             return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", dr.GetBoolean(col).ToString(), addstr);
         }
 
-        public override string CheckForInput(string data, DBFieldInfo fieldInfo)
+        public override string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
         {
             throw new NotImplementedException();
         }
