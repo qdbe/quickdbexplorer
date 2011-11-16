@@ -11,9 +11,9 @@ namespace quickDBExplorer.DataType
             return dr.GetInt64(col).ToString(System.Globalization.CultureInfo.CurrentCulture);
         }
 
-        public override string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            return this.TryParse(data, typeof(System.Int64), "Int64の整数を指定してください。", ref result, ref errmsg);
         }
     }
 }

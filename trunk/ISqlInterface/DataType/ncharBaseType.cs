@@ -35,13 +35,16 @@ namespace quickDBExplorer.DataType
             }
         }
 
-        public override string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
+            errmsg = null;
             if (fieldInfo.Length < data.Length)
             {
-                return "項目 " + fieldInfo.Name + "には " + fieldInfo.Length + "桁以上の値は指定できません。";
+                errmsg = fieldInfo.Length.ToString() + "桁以上の値は指定できません。";
+                return false;
             }
-            return null;
+            result = data;
+            return true;
         }
 
         public override string GetFieldTypeString(string typename, int length, int prec, int xscale)

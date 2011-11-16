@@ -13,9 +13,20 @@ namespace quickDBExplorer.DataType
             return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", dr.GetBoolean(col).ToString(), addstr);
         }
 
-        public override string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            errmsg = null;
+            bool localresult;
+            if (bool.TryParse(data, out localresult))
+            {
+                result = localresult;
+                return true;
+            }
+            else
+            {
+                errmsg = "Boolean値を指定してください。";
+                return false;
+            }
         }
 
         #endregion

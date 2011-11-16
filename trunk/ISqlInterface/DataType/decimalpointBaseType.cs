@@ -13,9 +13,9 @@ namespace quickDBExplorer.DataType
             return dr.GetDouble(col).ToString(System.Globalization.CultureInfo.CurrentCulture);
         }
 
-        public override string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            return TryParse(data, typeof(double), "Double値を指定してください。", ref result, ref errmsg);
         }
 
         #endregion

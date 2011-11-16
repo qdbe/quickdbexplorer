@@ -63,40 +63,53 @@ namespace quickDBExplorer.DataType
         /// <param name="data"></param>
         /// <param name="fieldInfo"></param>
         /// <param name="result"></param>
+        /// <param name="errmsg"></param>
         /// <returns></returns>
-        public abstract string TryParse(string data, DBFieldInfo fieldInfo, ref object result);
+        public abstract bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg);
 
-        protected string TryParse(string data, string typeName, string errmsg, ref object result)
+        /// <summary>
+        /// 文字列をパースする
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="t"></param>
+        /// <param name="defaultErrorMessage"></param>
+        /// <param name="result"></param>
+        /// <param name="errmsg"></param>
+        /// <returns></returns>
+        protected bool TryParse(string data, Type t, string defaultErrorMessage, ref object result, ref string errmsg)
         {
-            string msgresult = null;
+            errmsg = null;
             try
             {
-                if (data == "")
+                if (string.IsNullOrEmpty(data.Trim()))
                 {
                     result = DBNull.Value;
+                    return true;
                 }
                 else
                 {
-                    Type t = Type.GetType(typeName);
                     object localresult = null;
-                    if ((bool)t.InvokeMember("TryParse", BindingFlags.InvokeMethod | BindingFlags.Instance | BindingFlags.Public, 
+                    localresult = t.InvokeMember("Parse", BindingFlags.InvokeMethod, 
                         null, 
                         null,
-                        new object[] { data, localresult } ) == true )
+                        new object[] { data } );
+                    if( localresult != null )
                     {
                         result = localresult;
+                        return true;
                     }
                     else
                     {
-                        msgresult = errmsg;
+                        errmsg = defaultErrorMessage;
+                        return false;
                     }
                 }
             }
             catch
             {
-                msgresult = errmsg;
+                errmsg = defaultErrorMessage;
             }
-            return msgresult;
+            return false;
         }
     }
 }

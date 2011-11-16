@@ -11,9 +11,9 @@ namespace quickDBExplorer.DataType
             return dr.GetValue(col).ToString();
         }
 
-        public override string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            return TryParse(data, typeof(decimal), "Decimal値を指定してください。", ref result, ref errmsg);
         }
     }
 }
