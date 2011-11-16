@@ -31,7 +31,7 @@ namespace quickDBExplorer.DataType
             
         }
 
-        public override string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
             throw new NotImplementedException();
         }

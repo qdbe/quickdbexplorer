@@ -378,18 +378,21 @@ namespace quickDBExplorer
         /// <param name="data"></param>
         /// <param name="fieldInfo"></param>
         /// <param name="result"></param>
+        /// <param name="errmsg"></param>
         /// <returns></returns>
-        public string TryParse(string data, DBFieldInfo fieldInfo, ref object result)
+        public bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
             if (this.IsNullable == false && data == string.Empty)
             {
-                return "値の指定が必要です。";
+                errmsg = "値の指定が必要です。";
+                return false;
             }
             if (this.IsIdentity == true && data != string.Empty)
             {
-                return "自動採番されるので値は指定できません。";
+                errmsg = "自動採番されるので値は指定できません。";
+                return false;
             }
-            return this.dataType.TryParse(data, fieldInfo, ref result);
+            return this.dataType.TryParse(data, fieldInfo, ref result, ref errmsg);
         }
 	}
 }
