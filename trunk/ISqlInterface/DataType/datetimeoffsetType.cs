@@ -17,7 +17,7 @@ namespace quickDBExplorer.DataType
 
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            return TryParse(data, typeof(DateTimeOffset), "DateTimeOffset を表す値を指定してください。", ref result, ref errmsg);
         }
 
         #endregion

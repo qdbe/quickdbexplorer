@@ -13,7 +13,17 @@ namespace quickDBExplorer.DataType
 
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            if (fieldInfo.IsAssembly)
+            {
+                // 何もしない
+            }
+            else
+            {
+                // 想定外の型の場合、文字列扱いにする
+                // 桁数の制限もなにもわからないので、チェックなし
+                result = data;
+            }
+            return true;
         }
     }
 }

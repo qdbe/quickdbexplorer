@@ -33,7 +33,8 @@ namespace quickDBExplorer.DataType
 
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            errmsg = "バイナリデータがあるオブジェクトは指定できません。";
+            return false;
         }
 
         public override string GetFieldTypeString(string typename, int length, int prec, int xscale)

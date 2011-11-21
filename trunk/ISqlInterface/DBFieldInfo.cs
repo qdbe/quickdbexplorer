@@ -75,6 +75,9 @@ namespace quickDBExplorer
                 if (!this.IsAssembly)
                 {
                     dataType = TypeFactory.Create(value);
+                    object retobj = null;
+                    string errmsg = "";
+                    dataType.TryParse("1", this, ref retobj, ref errmsg);
                 }
             }
 		}
