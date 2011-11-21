@@ -15,7 +15,8 @@ namespace quickDBExplorer.DataType
 
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            result = data;
+            return true;
         }
 
         #endregion

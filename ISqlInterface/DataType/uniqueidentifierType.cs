@@ -16,7 +16,16 @@ namespace quickDBExplorer.DataType
 
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            try
+            {
+                result = data;
+                return true;
+            }
+            catch
+            {
+                errmsg = "Guidを表す文字列を指定してください。";
+                return false;
+            }
         }
 
         #endregion
