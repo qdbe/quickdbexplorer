@@ -33,6 +33,12 @@ namespace quickDBExplorer.DataType
         }
 
         /// <summary>
+        /// 文字データを読み込むことができるか否か
+        /// </summary>
+        /// <returns></returns>
+        public abstract bool CanLoadData();
+
+        /// <summary>
         /// フィールドのデータを出力用に変換する
         /// </summary>
         /// <param name="dr">データリーダー</param>

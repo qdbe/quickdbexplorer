@@ -26,6 +26,11 @@ namespace quickDBExplorer.DataType
                 xscale);
         }
 
+        public override bool CanLoadData()
+        {
+            return true;
+        }
+
         #endregion
     }
 }

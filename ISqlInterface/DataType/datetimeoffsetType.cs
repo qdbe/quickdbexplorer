@@ -20,6 +20,11 @@ namespace quickDBExplorer.DataType
             return TryParse(data, typeof(DateTimeOffset), "DateTimeOffset を表す値を指定してください。", ref result, ref errmsg);
         }
 
+        public override bool CanLoadData()
+        {
+            return true;
+        }
+
         #endregion
     }
 }

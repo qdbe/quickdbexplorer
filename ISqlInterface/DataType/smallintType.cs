@@ -20,6 +20,12 @@ namespace quickDBExplorer.DataType
             return TryParse(data, typeof(System.Int16), "Int16 の整数を指定してください。", ref result, ref errmsg);
         }
 
+        public override bool CanLoadData()
+        {
+            return true;
+        }
+
+
         #endregion
     }
 }

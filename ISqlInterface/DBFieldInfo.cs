@@ -11,22 +11,17 @@ namespace quickDBExplorer
 	public class DBFieldInfo
 	{
 
-		private	DataColumn	col;
 		/// <summary>
 		/// 対応するDataColumn
 		/// </summary>
-		public	DataColumn	Col
-		{
-			get	{ return this.col; }
-			set { this.col = value; }
-		}
+        public DataColumn Col { get; set; }
 
 		/// <summary>
 		/// フィールド名
 		/// </summary>
 		public string	Name
 		{
-			get { return this.col.ColumnName; }
+			get { return this.Col.ColumnName; }
 		}
 
 
@@ -41,15 +36,10 @@ namespace quickDBExplorer
             }
         }
 
-		private	string	typeName = "";
 		/// <summary>
 		/// フィールドの型
 		/// </summary>
-		public  string	TypeName
-		{
-			get { return this.typeName; }
-			set { this.typeName = value; }
-		}
+        public string TypeName { get; set; }
 
         /// <summary>
         /// []付の型名称を取得する
@@ -84,157 +74,80 @@ namespace quickDBExplorer
 
         private baseType dataType;
 
-		private	int		length = 0;
 		/// <summary>
 		/// フィールドの最大長(文字列の場合)
 		/// </summary>
-		public	int		Length
-		{
-			get { return this.length; }
-			set { this.length = value; }
-		}
+        public int Length { get; set; }
 
-		private	int		prec = 0;
 		/// <summary>
 		/// 小数点の場合の整数値の最大桁数
 		/// </summary>
-		public	int		Prec
-		{
-			get { return this.prec; }
-			set { this.prec = value; }
-		}
+        public int Prec { get; set; }
 
-		private	int		xscale = 0;
 		/// <summary>
 		/// 小数点の場合の小数点値の最大桁数
 		/// </summary>
-		public	int		Xscale
-		{
-			get { return this.xscale; }
-			set { this.xscale = value; }
-		}
+        public int Xscale { get; set; }
 
-		private	int		colid = 0;
 		/// <summary>
 		/// フィールドのカラムIDを管理する
 		/// </summary>
-		public int		Colid
-		{
-			get { return this.colid; }
-			set { this.colid = value; }
-		}
+        public int Colid { get; set; }
 
-		private	int		colorder = 0;
 		/// <summary>
 		/// フィールドのカラム順序を管理する
 		/// </summary>
-		public	int		ColOrder
-		{
-			get { return this.colorder; }
-			set { this.colorder = value; }
-		}
+        public int ColOrder { get; set; }
 
 		/// <summary>
 		/// NULLを許可するか否かを管理する
 		/// </summary>
 		public	bool		IsNullable
 		{
-			get { return this.col.AllowDBNull; }
+			get { return this.Col.AllowDBNull; }
 		}
 
-		private	string	collation = string.Empty;
 		/// <summary>
 		/// 文字フィールドの場合の照合順序を管理する
 		/// </summary>
-		public	string	Collation
-		{
-			get { return this.collation; }
-			set { this.collation = value; }
-		}
+        public string Collation { get; set; }
 
-		private	int	primaryKeyOrder = -1;
 		/// <summary>
 		/// プライマリキーの対象になっている場合のプライマリキー内の順序
 		/// 開始は0
 		/// -1の場合はプライマリキーの要素でないことを指す
 		/// </summary>
-		public	int	PrimaryKeyOrder
-		{
-			get { return this.primaryKeyOrder; }
-			set { this.primaryKeyOrder = value; }
-		}
+        public int PrimaryKeyOrder { get; set; }
 
-		private bool pIsIdentity = false;
 		/// <summary>
 		/// Identity 属性を持つか否か
 		/// </summary>
-		public bool IsIdentity
-		{
-			get { return this.pIsIdentity; }
-			set { this.pIsIdentity = value; }
-		}
+        public bool IsIdentity { get; set; }
 
-		private decimal	incSeed = 0;
 		/// <summary>
 		/// Identityフィールドの場合の Seed値
 		/// </summary>
-		public  decimal	IncSeed	
-		{
-			get { return this.incSeed; }
-			set { this.incSeed = value; }
-		}
+        public decimal IncSeed { get; set; }
 
-		private decimal incStep = 0;
 		/// <summary>
 		/// Identity フィールドの場合の Step値
 		/// </summary>
-		public decimal IncStep 
-		{
-			get { return this.incStep; }
-			set { this.incStep = value; }
-		}
+		public decimal IncStep { get; set; }
 
 		/// <summary>
 		/// この型の作成元であるアセンブリの ID です。
 		/// </summary>
-		private int pAssemblyId = -1;
-
-		/// <summary>
-		/// この型の作成元であるアセンブリの ID です。
-		/// </summary>
-		public int AssemblyId
-		{
-			get { return this.pAssemblyId; }
-			set { this.pAssemblyId = value; }
-		}
+        public int AssemblyId { get; set; }
 
 		/// <summary>
 		/// この型を定義しているアセンブリ内のクラスの名前です。
 		/// </summary>
-		private string pAssemblyClassName = string.Empty;
-
-		/// <summary>
-		/// この型を定義しているアセンブリ内のクラスの名前です。
-		/// </summary>
-		public string AssemblyClassName
-		{
-			get { return this.pAssemblyClassName; }
-			set { this.pAssemblyClassName = value; }
-		}
+        public string AssemblyClassName { get; set; }
 
 		/// <summary>
 		/// アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
 		/// </summary>
-		private string pAssemblyQFN = string.Empty;
-
-		/// <summary>
-		/// アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
-		/// </summary>
-		public string AssemblyQFN
-		{
-			get { return this.pAssemblyQFN; }
-			set { this.pAssemblyQFN = value; }
-		}
+        public string AssemblyQFN { get; set; }
 
 		/// <summary>
 		/// オブジェクトがアセンブリを利用しているか否か
@@ -243,7 +156,7 @@ namespace quickDBExplorer
 		{
 			get 
 			{ 
-				if( this.pAssemblyQFN != string.Empty )
+				if( this.AssemblyQFN != string.Empty )
 				{
 					return true;
 				}
@@ -254,11 +167,36 @@ namespace quickDBExplorer
 			}
 		}
 
+        /// <summary>
+        /// 文字データを読み込むことができるか否か
+        /// </summary>
+        public bool CanLoadData
+        {
+            get
+            {
+                return this.dataType.CanLoadData();
+            }
+        }
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
 		public DBFieldInfo()
 		{
+            AssemblyQFN = string.Empty;
+            AssemblyClassName = string.Empty;
+            AssemblyId = -1;
+            IncStep = 0;
+            IncSeed = 0;
+            IsIdentity = false;
+            PrimaryKeyOrder = -1;
+            Collation = string.Empty;
+            ColOrder = 0;
+            Colid = 0;
+            TypeName = string.Empty;
+            Length = 0;
+            Prec = 0;
+            Xscale = 0;
 		}
 
 
@@ -305,7 +243,7 @@ namespace quickDBExplorer
         public string GetFieldTypeString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("  ").Append(this.dataType.GetFieldTypeString(this.TypeName, this.length, this.Prec, this.Xscale)).Append(" ");
+            sb.Append("  ").Append(this.dataType.GetFieldTypeString(this.TypeName, this.Length, this.Prec, this.Xscale)).Append(" ");
 
             if( this.IncSeed != 0)
 			{
@@ -341,11 +279,11 @@ namespace quickDBExplorer
             sb.Append("  ");
             if (useParentheses)
             {
-                sb.Append(this.dataType.GetFieldTypeString(this.FormalTypeName, this.length, this.Prec, this.Xscale));
+                sb.Append(this.dataType.GetFieldTypeString(this.FormalTypeName, this.Length, this.Prec, this.Xscale));
             }
             else
             {
-                sb.Append(this.dataType.GetFieldTypeString(this.TypeName, this.length, this.Prec, this.Xscale));
+                sb.Append(this.dataType.GetFieldTypeString(this.TypeName, this.Length, this.Prec, this.Xscale));
             }
 
             if (this.Collation.Length != 0)
