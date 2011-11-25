@@ -18,6 +18,10 @@ namespace quickDBExplorer.DataType
             return TryParse(data, typeof(Byte), "Byte値を指定してください。", ref result, ref errmsg);
         }
 
+        public override bool CanLoadData()
+        {
+            return true;
+        }
         #endregion
     }
 }

@@ -18,6 +18,11 @@ namespace quickDBExplorer.DataType
             return TryParse(data, typeof(System.Int32), "Int32 の整数を指定してください。", ref result, ref errmsg);
         }
 
+        public override bool CanLoadData()
+        {
+            return true;
+        }
+
         #endregion
     }
 }

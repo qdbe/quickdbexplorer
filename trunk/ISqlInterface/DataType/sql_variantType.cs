@@ -19,6 +19,11 @@ namespace quickDBExplorer.DataType
             return true;
         }
 
+        public override bool CanLoadData()
+        {
+            return true;
+        }
+
         #endregion
     }
 }

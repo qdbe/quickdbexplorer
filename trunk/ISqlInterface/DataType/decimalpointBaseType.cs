@@ -18,6 +18,11 @@ namespace quickDBExplorer.DataType
             return TryParse(data, typeof(double), "Double値を指定してください。", ref result, ref errmsg);
         }
 
+        public override bool CanLoadData()
+        {
+            return true;
+        }
+
         #endregion
     }
 }

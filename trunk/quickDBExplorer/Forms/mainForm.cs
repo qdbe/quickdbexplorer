@@ -5857,420 +5857,165 @@ namespace quickDBExplorer
 			ArrayList drAr = new ArrayList();
 			bool isSkipFirstLine = false;
 
-			try
-			{
-				// ファイルのチェックを実施する
+            try
+            {
+                // ファイルのチェックを実施する
 
-				string readstr = "";
-				string Separator = "";
-				if( isCsv == true )
-				{
-					Separator = ",";
-				}
-				else
-				{
-					Separator = "\t";
-				}
+                string readstr = "";
+                string Separator = "";
+                if (isCsv == true)
+                {
+                    Separator = ",";
+                }
+                else
+                {
+                    Separator = "\t";
+                }
 
                 List<string> readData = new List<string>();
                 //ArrayList readData = new ArrayList();
 
-				if( MessageBox.Show("先頭行は見出しですか?","確認",System.Windows.Forms.MessageBoxButtons.YesNo) ==
-					DialogResult.Yes)
-				{
-					// 一行読み飛ばし
-					isSkipFirstLine = true;
-				}
+                if (MessageBox.Show("先頭行は見出しですか?", "確認", System.Windows.Forms.MessageBoxButtons.YesNo) ==
+                    DialogResult.Yes)
+                {
+                    // 一行読み飛ばし
+                    isSkipFirstLine = true;
+                }
 
-				for(;;)
-				{
-					readstr = wr.ReadLine();
-					if( readstr == null )
-					{
-						break;
-					}
-					linecount++;
-					string []firstsplit = readstr.Split(Separator.ToCharArray());
-					readData.Clear();
-					if( !isUseDQ )
-					{
-						if( linecount == 1 && isSkipFirstLine == true )
-						{
-							// 先頭行は読み飛ばし
-							continue;
-						}
-						readData.AddRange(firstsplit);
-					}
-					else
-					{
-						if( linecount == 1 && isSkipFirstLine == true )
-						{
-							// 先頭行は読み飛ばし
-							continue;
-						}
-						// ダブルクォートが指定されている為、文字の途中で切れている可能性がある
-						string addstr = "";
-						for( int j = 0; j < firstsplit.Length; j++ )
-						{
-							if( firstsplit[j].StartsWith("\"") == true &&
-								firstsplit[j].EndsWith("\"") == true 
-								)
-							{
-								// 前後の " を排除した値を配置
-								readData.Add(firstsplit[j].Substring(1,firstsplit[j].Length-2));
-							}
-							else if( firstsplit[j].StartsWith("\"") == true )
-							{
-								// 最初の文字がダブルクォートで始まっているので、順次ダブルクォートが出てくるまでを検索する
-								int k = j;
-								for( ; k < firstsplit.Length; k ++ )
-								{
-									if( firstsplit[k].EndsWith("\"") == true )
-									{
-										addstr += firstsplit[k].Substring(0,firstsplit[k].Length-1);
-										break;
-									}
-									else
-									{
-										if( j == k )
-										{
-											addstr += firstsplit[k].Substring(1);
-										}
-										else
-										{
-											addstr += firstsplit[k];
-										}
-									}
-								}
-								readData.Add(addstr);
-								j = k;
-							}
-							else
-							{
-								readData.Add(firstsplit[j]);
-							}
-						}
-					}
+                for (; ; )
+                {
+                    readstr = wr.ReadLine();
+                    if (readstr == null)
+                    {
+                        break;
+                    }
+                    linecount++;
+                    if (linecount == 1 && isSkipFirstLine == true)
+                    {
+                        // 先頭行は読み飛ばし
+                        continue;
+                    }
 
-					// 一行のデータが ar に配置されたので、dt と比較する
+                    string[] firstsplit = readstr.Split(Separator.ToCharArray());
+                    readData.Clear();
+                    if (!isUseDQ)
+                    {
+                        readData.AddRange(firstsplit);
+                    }
+                    else
+                    {
+                        // ダブルクォートが指定されている為、文字の途中で切れている可能性がある
+                        GetOneQuotedLine(readData, firstsplit);
+                    }
 
-					if( readData.Count != targetDt.Columns.Count )
-					{
-						MessageBox.Show("項目数が違います 行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture) );
-						isSetAll = false;
-						break;
-					}
+                    // 一行のデータが ar に配置されたので、dt と比較する
+
+                    if (readData.Count != targetDt.Columns.Count)
+                    {
+                        MessageBox.Show("項目数が違います 行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
+                        isSetAll = false;
+                        break;
+                    }
 
                     if (targetDt.Columns.Count != dbobj.FieldCount)
                     {
                         MessageBox.Show("フィールド情報が古い可能性があります。オブジェクト情報再読込を行って下さい");
-						isSetAll = false;
-						break;
+                        isSetAll = false;
+                        break;
                     }
 
-					foreach(DBFieldInfo each in dbobj.FieldInfo )
-					{
-						if( each.RealTypeName == "timestamp" )
-						{
-                            MessageBox.Show("バイナリデータがあるオブジェクトは指定できません:列" + each.Name);
-							isSetAll = false;
-							break;
-						}
-					}
-					if( isSetAll == false )
-					{
-						break;
-					}
-
-					DataRow dr = targetDt.NewRow();
-					foreach(DBFieldInfo eachField in dbobj.FieldInfo)
-					{
-						if( eachField.IsNullable == false &&
-							(string)readData[eachField.Colid] == string.Empty )
-						{
-							MessageBox.Show("項目 " + eachField.Name + "には値の指定が必要です。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-							isSetAll = false;
-							break;
-						}
-						if( eachField.IsIdentity == true && (string)readData[eachField.Colid] != string.Empty)
-						{
-							MessageBox.Show("項目 " + eachField.Name + "は自動採番されるので値は指定できません。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-							isSetAll = false;
-							break;
-						}
-						// {"System.Int16"}
-						if( targetDt.Columns[eachField.Name].DataType == typeof(System.Int16) )
-						{
-							try
-							{
-								if( readData[eachField.Colid].ToString() == "" )
-								{
-									dr[eachField.Name] = DBNull.Value;
-								}
-								else
-								{
-									dr[eachField.Name] = Int16.Parse(readData[eachField.Colid].ToString(),System.Globalization.CultureInfo.CurrentCulture);
-								}
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には Int16 の整数を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-						// {"System.Int32"}
-                        else if (targetDt.Columns[eachField.Name].DataType == typeof(System.Int32))
-						{
-							try
-							{
-								if( readData[eachField.Colid].ToString() == "" )
-								{
-									dr[eachField.Name] = DBNull.Value;
-								}
-								else
-								{
-									dr[eachField.Name] = Int32.Parse(readData[eachField.Colid].ToString(),System.Globalization.CultureInfo.CurrentCulture);
-								}
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には Int32の整数を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-						// {"System.Int64"}
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.Int64) )
-						{
-							try
-							{
-								if( readData[eachField.Colid].ToString() == "" )
-								{
-									dr[eachField.Name] = DBNull.Value;
-								}
-								else
-								{
-									dr[eachField.Name] = Int64.Parse(readData[eachField.Colid].ToString(),System.Globalization.CultureInfo.CurrentCulture);
-								}
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には Int64の整数を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-						// {"System.String"}
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.String) )
-						{
-							if( eachField.Length < readData[eachField.Colid].ToString().Length )
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には " + eachField.Length + "桁以上の値は指定できません。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-							dr[eachField.Name] = readData[eachField.Colid];
-						}
-						// {"System.Boolean"}
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.Boolean) )
-						{
-							try
-							{
-								dr[eachField.Name] = Boolean.Parse(readData[eachField.Colid].ToString());
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には Boolean値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-						// {"System.DateTime"}
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.DateTime) )
-						{
-							try
-							{
-								if( readData[eachField.Colid].ToString() == "" )
-								{
-									dr[eachField.Name] = DBNull.Value;
-								}
-								else
-								{
-									dr[eachField.Name] = DateTime.Parse(readData[eachField.Colid].ToString(),System.Globalization.CultureInfo.CurrentCulture);
-								}
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には DateTimeを表す値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-						// SQL SERVER 2008 の time 型の場合、ここにくるはず
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.TimeSpan) )
-						{
-							try
-							{
-								if( readData[eachField.Colid].ToString() == "" )
-								{
-									dr[eachField.Name] = DBNull.Value;
-								}
-								else
-								{
-									dr[eachField.Name] = TimeSpan.Parse(readData[eachField.Colid].ToString());
-								}
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には DateTimeを表す値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-							// {"System.Decimal"}
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.Decimal) )
-						{
-							try
-							{
-								if( readData[eachField.Colid].ToString() == "" )
-								{
-									dr[eachField.Name] = DBNull.Value;
-								}
-								else
-								{
-									dr[eachField.Name] = Decimal.Parse(readData[eachField.Colid].ToString(),System.Globalization.CultureInfo.CurrentCulture);
-								}
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には Decimal値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-						// {"System.Double"}
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.Double) )
-						{
-							try
-							{
-								if( readData[eachField.Colid].ToString() == "" )
-								{
-									dr[eachField.Name] = DBNull.Value;
-								}
-								else
-								{
-									dr[eachField.Name] = Double.Parse(readData[eachField.Colid].ToString(),System.Globalization.CultureInfo.CurrentCulture);
-								}
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には Double値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-						// {"System.Single"}
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.Single) )
-						{
-							try
-							{
-								if( readData[eachField.Colid].ToString() == "" )
-								{
-									dr[eachField.Name] = DBNull.Value;
-								}
-								else
-								{
-									dr[eachField.Name] = Single.Parse(readData[eachField.Colid].ToString(),System.Globalization.CultureInfo.CurrentCulture);
-								}
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には Single値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-						//{"System.Object"}
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.Object) )
-						{
-							try
-							{
-								dr[eachField.Name] = readData[eachField.Colid].ToString();
-							}
-							catch ( Exception e )
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には 指定された値は指定できません。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture) + "\r\n" + e.ToString());
-								isSetAll = false;
-								break;
-							}
-						}
-						//{"System.Byte"}	
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.Byte) )
-						{
-							try
-							{
-                                if (eachField.RealTypeName == "timestamp")
-                                {
-                                    // タイムスタンプの場合はスキップする
-                                }
-                                else
-                                {
-                                    // Base64でdecodeする？
-                                    dr[eachField.Name] = Byte.Parse(readData[eachField.Colid].ToString(), System.Globalization.CultureInfo.CurrentCulture);
-                                }
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には Byte値を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-						//{"System.Guid"}
-						else if( targetDt.Columns[eachField.Name].DataType == typeof(System.Guid) )
-						{
-							try
-							{
-								dr[eachField.Name] = readData[eachField.Colid].ToString();
-							}
-							catch
-							{
-								MessageBox.Show("項目 " + eachField.Name + "には Guidを表す文字列を指定してください。行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-								isSetAll = false;
-								break;
-							}
-						}
-                        else if (targetDt.Columns[eachField.Name].DataType.IsClass == true)
+                    foreach (DBFieldInfo each in dbobj.FieldInfo)
+                    {
+                        if (each.CanLoadData)
                         {
-                            // アセンブリである
-
+                            MessageBox.Show("読み込みに指定できません:列" + each.Name);
+                            isSetAll = false;
+                            break;
                         }
-                        else
-						{
-							// 想定外の型の場合、文字列扱いにする
-							// 桁数の制限もなにもわからないので、チェックなし
-							dr[eachField.Name] = readData[eachField.Colid];
-						}
-					}
-					if( isSetAll == true )
-					{
-						drAr.Add(dr);
-					}
-					else
-					{
-						drAr.Clear();
-						break;
-					}
-				}
-			}
-			catch( Exception exp )
-			{
-				this.SetErrorMessage(exp);
-				linecount = -1;
-			}
+                    }
+                    if (isSetAll == false)
+                    {
+                        break;
+                    }
+
+                    DataRow dr = targetDt.NewRow();
+                    foreach (DBFieldInfo eachField in dbobj.FieldInfo)
+                    {
+                        object parseResult = null;
+                        string errmsg = string.Empty;
+                        if (eachField.TryParse((string)readData[eachField.Colid], eachField, ref parseResult, ref errmsg) == false)
+                        {
+                            MessageBox.Show("項目 " + eachField.Name + ":"+ errmsg + "行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
+                            isSetAll = false;
+                            break;
+                        }
+
+                        dr[eachField.Name] = parseResult;
+
+                    }
+                    if (isSetAll == true)
+                    {
+                        drAr.Add(dr);
+                    }
+                    else
+                    {
+                        drAr.Clear();
+                        break;
+                    }
+                }
+            }
+            catch (Exception exp)
+            {
+                this.SetErrorMessage(exp);
+                linecount = -1;
+            }
 			return drAr;
 		}
+
+        private void GetOneQuotedLine(List<string> readData, string[] firstsplit)
+        {
+            string addstr = "";
+            for (int j = 0; j < firstsplit.Length; j++)
+            {
+                if (firstsplit[j].StartsWith("\"") == true &&
+                    firstsplit[j].EndsWith("\"") == true
+                    )
+                {
+                    // 前後の " を排除した値を配置
+                    readData.Add(firstsplit[j].Substring(1, firstsplit[j].Length - 2));
+                }
+                else if (firstsplit[j].StartsWith("\"") == true)
+                {
+                    // 最初の文字がダブルクォートで始まっているので、順次ダブルクォートが出てくるまでを検索する
+                    int k = j;
+                    for (; k < firstsplit.Length; k++)
+                    {
+                        if (firstsplit[k].EndsWith("\"") == true)
+                        {
+                            addstr += firstsplit[k].Substring(0, firstsplit[k].Length - 1);
+                            break;
+                        }
+                        else
+                        {
+                            if (j == k)
+                            {
+                                addstr += firstsplit[k].Substring(1);
+                            }
+                            else
+                            {
+                                addstr += firstsplit[k];
+                            }
+                        }
+                    }
+                    readData.Add(addstr);
+                    j = k;
+                }
+                else
+                {
+                    readData.Add(firstsplit[j]);
+                }
+            }
+        }
 
 		#endregion
 

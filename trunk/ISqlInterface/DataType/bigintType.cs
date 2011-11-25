@@ -15,5 +15,10 @@ namespace quickDBExplorer.DataType
         {
             return this.TryParse(data, typeof(System.Int64), "Int64の整数を指定してください。", ref result, ref errmsg);
         }
+
+        public override bool CanLoadData()
+        {
+            return true;
+        }
     }
 }

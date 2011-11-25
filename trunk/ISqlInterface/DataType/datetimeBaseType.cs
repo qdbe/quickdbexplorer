@@ -18,6 +18,11 @@ namespace quickDBExplorer.DataType
             throw new NotImplementedException();
         }
 
+        public override bool CanLoadData()
+        {
+            return true;
+        }
+
         #endregion
     }
 }

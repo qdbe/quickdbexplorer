@@ -54,6 +54,11 @@ namespace quickDBExplorer.DataType
             }
         }
 
+        public override bool CanLoadData()
+        {
+            return false;
+        }
+
 
         #endregion
     }

@@ -15,5 +15,10 @@ namespace quickDBExplorer.DataType
         {
             return TryParse(data, typeof(decimal), "Decimal値を指定してください。", ref result, ref errmsg);
         }
+
+        public override bool CanLoadData()
+        {
+            return true;
+        }
     }
 }
