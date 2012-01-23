@@ -33,8 +33,35 @@ namespace quickDBExplorer.DataType
 
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            errmsg = "バイナリデータがあるオブジェクトは指定できません。";
-            return false;
+            // ヘキサ文字列を読み込む
+            if (!data.StartsWith("0x"))
+            {
+                errmsg = "バイナリデータにはヘキサ文字列のみが指定できます。";
+                return false;
+            }
+
+            List<byte> ret = new List<byte>();
+
+            string hexstr = data.Substring(2);
+            if( hexstr.Length % 2 == 1 )
+            {
+                errmsg = "ヘキサ文字列の形式が不正です";
+                return false;
+            }
+            int maxlen = hexstr.Length / 2;
+
+            byte each;
+            for (int i = 0; i < maxlen; i++)
+            {
+                if (byte.TryParse(hexstr.Substring(i * 2, 2), System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out each) == false)
+                {
+                    errmsg = "ヘキサ文字列の形式が不正です";
+                    return false;
+                }
+                ret.Add(each);
+            }
+            result = ret.ToArray();
+            return true;
         }
 
         public override string GetFieldTypeString(string typename, int length, int prec, int xscale)
@@ -56,7 +83,7 @@ namespace quickDBExplorer.DataType
 
         public override bool CanLoadData()
         {
-            return false;
+            return true;
         }
 
 
