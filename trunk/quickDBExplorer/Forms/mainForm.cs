@@ -5926,7 +5926,7 @@ namespace quickDBExplorer
 
                     foreach (DBFieldInfo each in dbobj.FieldInfo)
                     {
-                        if (each.CanLoadData)
+                        if (!each.CanLoadData)
                         {
                             MessageBox.Show("ì«Ç›çûÇ›Ç…éwíËÇ≈Ç´Ç‹ÇπÇÒ:óÒ" + each.Name);
                             isSetAll = false;
@@ -5943,7 +5943,7 @@ namespace quickDBExplorer
                     {
                         object parseResult = null;
                         string errmsg = string.Empty;
-                        if (eachField.TryParse((string)readData[eachField.Colid], eachField, ref parseResult, ref errmsg) == false)
+                        if (eachField.TryParse((string)readData[eachField.Colid-1], eachField, ref parseResult, ref errmsg) == false)
                         {
                             MessageBox.Show("çÄñ⁄ " + eachField.Name + ":"+ errmsg + "çs:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
                             isSetAll = false;

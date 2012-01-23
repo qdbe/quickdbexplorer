@@ -826,62 +826,69 @@ order by syscolumns.colorder",
 			tableda.Fill(ds,"fieldList");
 
 			DBFieldInfo addInfo;
-			List<DBFieldInfo> ar = new List<DBFieldInfo>();
-			foreach(DataRow fdr in ds.Tables["fieldList"].Rows )
+            databaseObjectInfo.ClearField();
+            foreach (DataRow fdr in ds.Tables["fieldList"].Rows)
 			{
-				// フィールドの情報でぐるぐるまわって、セットしていく
-				addInfo = new DBFieldInfo();
-				addInfo.Col = ds.Tables["schema"].Columns[fdr["colname"].ToString()];
-				addInfo.Colid = (int)fdr["colid"];
-				if( fdr["collation"] != DBNull.Value )
-				{
-					addInfo.Collation = (string)fdr["collation"];
-				}
-				addInfo.ColOrder = (int)fdr["colorder"];
-				if( addInfo.Col.MaxLength < 0 &&
-					(int)fdr["length"] > 0 )
-				{
-					addInfo.Length = (int)fdr["length"];
-				}
-				else
-				{
-					addInfo.Length = addInfo.Col.MaxLength;
-				}
-				addInfo.Prec = (int)fdr["prec"];
-				addInfo.Xscale = (int)fdr["xscale"];
-				addInfo.TypeName = (string)fdr["valtype"];
-				addInfo.RealTypeName = (string)fdr["baseValType"];
-
-				if( fdr["is_identity"] != DBNull.Value &&
-					(int)fdr["is_identity"] == 1 )
-				{
-					addInfo.IsIdentity = true;
-				}
-				else
-				{
-					addInfo.IsIdentity = false;
-				}
-				if( fdr["seed"] != DBNull.Value )
-				{
-					addInfo.IncSeed = (decimal)fdr["seed"];
-				}
-				if( fdr["incr"] != DBNull.Value )
-				{
-					addInfo.IncStep = (decimal)fdr["incr"];
-				}
-
-				// プライマリキーかどうかをチェック
-				for(int i = 0; i < ds.Tables["schema"].PrimaryKey.Length; i++ )
-				{
-					if( addInfo.Col.ColumnName == ds.Tables["schema"].PrimaryKey[i].ColumnName )
-					{
-						addInfo.PrimaryKeyOrder = i;
-						break;
-					}
-				}
+                addInfo = GetDBFieldInfo(ds, fdr);
                 databaseObjectInfo.AddField(addInfo);
 			}
 		}
+
+        private DBFieldInfo GetDBFieldInfo(DataSet ds, DataRow fdr)
+        {
+            DBFieldInfo addInfo;
+
+            addInfo = new DBFieldInfo();
+            addInfo.Col = ds.Tables["schema"].Columns[fdr["colname"].ToString()];
+            addInfo.Colid = (int)fdr["colid"];
+            if (fdr["collation"] != DBNull.Value)
+            {
+                addInfo.Collation = (string)fdr["collation"];
+            }
+            addInfo.ColOrder = (int)fdr["colorder"];
+            if (addInfo.Col.MaxLength < 0 &&
+                (int)fdr["length"] > 0)
+            {
+                addInfo.Length = (int)fdr["length"];
+            }
+            else
+            {
+                addInfo.Length = addInfo.Col.MaxLength;
+            }
+            addInfo.Prec = (int)fdr["prec"];
+            addInfo.Xscale = (int)fdr["xscale"];
+            addInfo.TypeName = (string)fdr["valtype"];
+            addInfo.RealTypeName = (string)fdr["baseValType"];
+
+            if (fdr["is_identity"] != DBNull.Value &&
+                (int)fdr["is_identity"] == 1)
+            {
+                addInfo.IsIdentity = true;
+            }
+            else
+            {
+                addInfo.IsIdentity = false;
+            }
+            if (fdr["seed"] != DBNull.Value)
+            {
+                addInfo.IncSeed = (decimal)fdr["seed"];
+            }
+            if (fdr["incr"] != DBNull.Value)
+            {
+                addInfo.IncStep = (decimal)fdr["incr"];
+            }
+
+            // プライマリキーかどうかをチェック
+            for (int i = 0; i < ds.Tables["schema"].PrimaryKey.Length; i++)
+            {
+                if (addInfo.Col.ColumnName == ds.Tables["schema"].PrimaryKey[i].ColumnName)
+                {
+                    addInfo.PrimaryKeyOrder = i;
+                    break;
+                }
+            }
+            return addInfo;
+        }
 
 		/// <summary>
 		/// フィールド名を検索する SQL文を生成する

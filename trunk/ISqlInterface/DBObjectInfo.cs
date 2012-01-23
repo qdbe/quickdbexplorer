@@ -210,6 +210,16 @@ namespace quickDBExplorer
 		private	List<DBFieldInfo>	pFieldInfo = null;
         private Dictionary<string, DBFieldInfo> fieldDictionary = new Dictionary<string,DBFieldInfo>();
 
+        private List<DBFieldInfo> FieldInfoList
+        {
+            get
+            {
+                // まだ読み込んでいない場合は、読み込みを自動的に実施する
+                SetFieldInfo(); 
+                return this.pFieldInfo;
+            }
+        }
+
 		/// <summary>
 		/// オブジェクトのフィールド情報をキャッシュして保持する
 		/// フィールド情報のコレクションを管理する
@@ -218,13 +228,7 @@ namespace quickDBExplorer
 		{
 			get 
 			{
-				// まだ読み込んでいない場合は、読み込みを自動的に実施する
-				if( this.pFieldInfo == null )
-				{
-					this.DataGet(this, new EventArgs());
-                    SetFieldDictionary();
-				}
-				return this.pFieldInfo; 
+                return this.FieldInfoList;
 			}
 		}
 
@@ -235,12 +239,7 @@ namespace quickDBExplorer
         {
             get
             {
-                if (this.pFieldInfo == null)
-                {
-                    this.DataGet(this, new EventArgs());
-                    SetFieldDictionary();
-                }
-                return this.pFieldInfo.Count;
+                return this.FieldInfoList.Count;
             }
         }
 
@@ -260,7 +259,7 @@ namespace quickDBExplorer
         /// <returns></returns>
         public DBFieldInfo this[int fieldorder]
         {
-            get{ return this.pFieldInfo[fieldorder]; }
+            get { return this.FieldInfoList[fieldorder]; }
         }
 
 
@@ -273,15 +272,20 @@ namespace quickDBExplorer
 		{
 			get { 
 				// まだ読み込んでいない場合は、読み込みを自動的に実施する
-				if( this.pFieldInfo == null )
-				{
-					this.DataGet(this, new EventArgs());
-                    SetFieldDictionary();
-                }
+                SetFieldInfo();
 				return this.pSchemaBaseInfo; 
 			}
             private set { this.pSchemaBaseInfo = value; }
 		}
+
+        private void SetFieldInfo()
+        {
+            if (this.pFieldInfo == null)
+            {
+                this.DataGet(this, new EventArgs());
+                SetFieldDictionary();
+            }
+        }
 
 		/// <summary>
 		/// コンストラクタ
@@ -337,6 +341,7 @@ namespace quickDBExplorer
         /// <param name="add"></param>
         public void AddField(DBFieldInfo add)
         {
+            SetFieldInfo();
             this.pFieldInfo.Add(add);
         }
 
@@ -423,7 +428,7 @@ namespace quickDBExplorer
         private void SetFieldDictionary()
         {
             this.fieldDictionary.Clear();
-            foreach (DBFieldInfo each in this.pFieldInfo)
+            foreach (DBFieldInfo each in this.FieldInfoList)
             {
                 this.fieldDictionary[each.Name] = each;
             }
