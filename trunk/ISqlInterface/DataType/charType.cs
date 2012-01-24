@@ -10,6 +10,7 @@ namespace quickDBExplorer.DataType
         public charType()
         {
             this.TypeHasSize = true;
+            this.IsSingleByte = true;
         }
     }
 }

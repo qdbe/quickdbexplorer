@@ -22,6 +22,18 @@ namespace quickDBExplorer.DataType
                 result = localresult;
                 return true;
             }
+            else if( data == "0" )
+            {
+                // 0/1 も可能にする
+                result = false;
+                return true;
+            }
+            else if (data == "1")
+            {
+                // 0/1 も可能にする
+                result = true;
+                return true;
+            }
             else
             {
                 errmsg = "Boolean値を指定してください。";

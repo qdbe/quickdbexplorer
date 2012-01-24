@@ -49,6 +49,14 @@ namespace quickDBExplorer.DataType
                 return false;
             }
             int maxlen = hexstr.Length / 2;
+            if (this.TypeHasSize == true)
+            {
+                if (fieldInfo.Length < maxlen)
+                {
+                    errmsg = "データサイズを超えています";
+                    return false;
+                }
+            }
 
             byte each;
             for (int i = 0; i < maxlen; i++)

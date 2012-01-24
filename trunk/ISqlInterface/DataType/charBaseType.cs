@@ -32,10 +32,21 @@ namespace quickDBExplorer.DataType
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
             errmsg = null;
-            if (fieldInfo.Length < data.Length)
+            if (IsSingleByte == true)
             {
-                errmsg = fieldInfo.Length.ToString() + "桁以上の値は指定できません。";
-                return false;
+                if (fieldInfo.Length < Encoding.GetEncoding("Shift_JIS").GetByteCount(data))
+                {
+                    errmsg = fieldInfo.Length.ToString() + "桁以上の値は指定できません。";
+                    return false;
+                }
+            }
+            else
+            {
+                if (fieldInfo.Length < data.Length)
+                {
+                    errmsg = fieldInfo.Length.ToString() + "桁以上の値は指定できません。";
+                    return false;
+                }
             }
             result = data;
             return true;
@@ -65,5 +76,12 @@ namespace quickDBExplorer.DataType
         }
 
         #endregion
+
+        protected bool IsSingleByte {get;set;}
+
+        public charBaseType()
+        {
+            IsSingleByte = true;
+        }
     }
 }
