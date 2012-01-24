@@ -62,11 +62,15 @@ namespace quickDBExplorer
 			get { return pRealTypeName; }
 			set { 
                 pRealTypeName = value;
+
+                // 引数にもらった型がサポート対象かどうかを調べる
                 if (!this.IsAssembly)
                 {
+                    // アセンブリ型以外は対応しているはず
                     dataType = TypeFactory.Create(value);
                     object retobj = null;
                     string errmsg = "";
+                    // 引数の型が対応していない場合、DefaultTypeになりエラーとなるはず
                     dataType.TryParse("1", this, ref retobj, ref errmsg);
                 }
             }
@@ -75,7 +79,7 @@ namespace quickDBExplorer
         private baseType dataType;
 
 		/// <summary>
-		/// フィールドの最大長(文字列の場合)
+		/// フィールドの最大長
 		/// </summary>
         public int Length { get; set; }
 
