@@ -327,7 +327,7 @@ namespace quickDBExplorer
         /// <returns></returns>
         public bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            if (this.IsNullable == false && data == string.Empty)
+            if (this.IsNullable == false && string.IsNullOrEmpty(data))
             {
                 errmsg = "値の指定が必要です。";
                 return false;

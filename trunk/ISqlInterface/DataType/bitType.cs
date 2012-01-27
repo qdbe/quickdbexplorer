@@ -17,6 +17,11 @@ namespace quickDBExplorer.DataType
         {
             errmsg = null;
             bool localresult;
+            if (string.IsNullOrEmpty(data.Trim()))
+            {
+                result = DBNull.Value;
+                return true;
+            }
             if (bool.TryParse(data, out localresult))
             {
                 result = localresult;
