@@ -33,6 +33,11 @@ namespace quickDBExplorer.DataType
 
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
+            if (string.IsNullOrEmpty(data.Trim()))
+            {
+                result = DBNull.Value;
+                return true;
+            }
             // ヘキサ文字列を読み込む
             if (!data.StartsWith("0x"))
             {

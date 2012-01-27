@@ -5945,7 +5945,7 @@ namespace quickDBExplorer
                         string errmsg = string.Empty;
                         if (eachField.TryParse((string)readData[eachField.Colid-1], eachField, ref parseResult, ref errmsg) == false)
                         {
-                            MessageBox.Show("çÄñ⁄ " + eachField.Name + ":"+ errmsg + "çs:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
+                            MessageBox.Show("çÄñ⁄ " + eachField.Name + ": "+ errmsg + "çs:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
                             isSetAll = false;
                             break;
                         }
