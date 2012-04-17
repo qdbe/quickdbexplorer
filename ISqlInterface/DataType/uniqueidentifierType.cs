@@ -18,6 +18,11 @@ namespace quickDBExplorer.DataType
         {
             try
             {
+                if (string.IsNullOrEmpty(data.Trim()))
+                {
+                    result = DBNull.Value;
+                    return true;
+                }
                 result = data;
                 return true;
             }
