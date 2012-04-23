@@ -34,7 +34,7 @@ namespace quickDBExplorer.DataType
             errmsg = null;
             if (IsSingleByte == true)
             {
-                if (fieldInfo.Length < Encoding.GetEncoding("Shift_JIS").GetByteCount(data))
+                if (fieldInfo.Length >= 0 && fieldInfo.Length < Encoding.GetEncoding("Shift_JIS").GetByteCount(data))
                 {
                     errmsg = fieldInfo.Length.ToString() + "桁以上の値は指定できません。";
                     return false;
@@ -42,7 +42,7 @@ namespace quickDBExplorer.DataType
             }
             else
             {
-                if (fieldInfo.Length < data.Length)
+                if (fieldInfo.Length >= 0 && fieldInfo.Length < data.Length)
                 {
                     errmsg = fieldInfo.Length.ToString() + "桁以上の値は指定できません。";
                     return false;

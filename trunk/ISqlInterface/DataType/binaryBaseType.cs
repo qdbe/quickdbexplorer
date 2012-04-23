@@ -56,7 +56,7 @@ namespace quickDBExplorer.DataType
             int maxlen = hexstr.Length / 2;
             if (this.TypeHasSize == true)
             {
-                if (fieldInfo.Length < maxlen)
+                if (fieldInfo.Length >= 0 && fieldInfo.Length < maxlen)
                 {
                     errmsg = "データサイズを超えています";
                     return false;
