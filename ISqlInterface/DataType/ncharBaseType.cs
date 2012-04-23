@@ -38,7 +38,7 @@ namespace quickDBExplorer.DataType
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
             errmsg = null;
-            if (fieldInfo.Length < data.Length)
+            if (fieldInfo.Length >= 0 && fieldInfo.Length < data.Length)
             {
                 errmsg = fieldInfo.Length.ToString() + "桁以上の値は指定できません。";
                 return false;

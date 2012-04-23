@@ -6,5 +6,9 @@ namespace quickDBExplorer.DataType
 {
     internal class xmlType : ncharBaseType
     {
+        public xmlType()
+        {
+            TypeHasSize = false;
+        }
     }
 }
