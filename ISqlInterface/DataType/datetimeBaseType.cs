@@ -23,6 +23,11 @@ namespace quickDBExplorer.DataType
             return true;
         }
 
+        public datetimeBaseType()
+        {
+            this.DefalutParseString = "2012/2/1";
+        }
+
         #endregion
     }
 }

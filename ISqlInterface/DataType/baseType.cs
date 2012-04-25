@@ -16,6 +16,11 @@ namespace quickDBExplorer.DataType
         // を参考に
 
         /// <summary>
+        /// 型が存在するか否かをチェックする場合の文字列
+        /// </summary>
+        public string DefalutParseString { get; protected set; }
+
+        /// <summary>
         /// 型の表現に長さを含むか否か
         /// </summary>
         protected bool TypeHasSize
@@ -30,6 +35,7 @@ namespace quickDBExplorer.DataType
         public baseType()
         {
             this.TypeHasSize = false;
+            this.DefalutParseString = "1";
         }
 
         /// <summary>

@@ -10,5 +10,10 @@ namespace quickDBExplorer.DataType
         {
             return TryParse(data, typeof(System.TimeSpan), "TimeSpanを表す値を指定してください。", ref result, ref errmsg);
         }
+
+        public timeType()
+        {
+            this.DefalutParseString = "12:00";
+        }
     }
 }

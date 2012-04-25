@@ -25,6 +25,11 @@ namespace quickDBExplorer.DataType
             return true;
         }
 
+
+        public datetimeoffsetType()
+        {
+            this.DefalutParseString = "2012/01/21 +09:00";
+        }
         #endregion
     }
 }
