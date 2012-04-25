@@ -48,6 +48,11 @@ namespace quickDBExplorer
         {
             get
             {
+                if (this.TypeName.StartsWith("[") &&
+                    this.TypeName.EndsWith("]"))
+                {
+                    return this.TypeName;
+                }
                 return string.Format("[{0}]", this.TypeName);
             }
         }
@@ -71,7 +76,7 @@ namespace quickDBExplorer
                     object retobj = null;
                     string errmsg = "";
                     // ˆø”‚ÌŒ^‚ª‘Î‰‚µ‚Ä‚¢‚È‚¢ê‡ADefaultType‚É‚È‚èƒGƒ‰[‚Æ‚È‚é‚Í‚¸
-                    dataType.TryParse("1", this, ref retobj, ref errmsg);
+                    dataType.TryParse(dataType.DefalutParseString, this, ref retobj, ref errmsg);
                 }
             }
 		}
