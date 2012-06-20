@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // 情報を変更するには、これらの属性値を変更してください。
 //
 [assembly: AssemblyTitle("quickDBExplorer")]
-[assembly: AssemblyDescription("Front End tool for Microsoft SQL Server 2000/2005/2008/2008R2\r\nSQL SERVER (2008R2/2008/2005/2000)を利用している開発者向けの補助ツール")]
+[assembly: AssemblyDescription("Front End tool for Microsoft SQL Server 2000/2005/2008/2008R2/2012\r\nSQL SERVER (2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツール")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("-")]
 [assembly: AssemblyProduct("quickDBExplorer!")]

@@ -436,7 +436,6 @@ namespace quickDBExplorer
 
                 // SQL SERVER‚Ìƒo[ƒWƒ‡ƒ“‚É‰‚¶‚½DLL‚ğ“Ç‚İ‚Ş
                 ISqlInterface driver = CreateSqlDriver(con, sqlVer);
-                 
 
                 ConnectionInfo connectInfo = new ConnectionInfo(
                     this.txtServerName.Text,
