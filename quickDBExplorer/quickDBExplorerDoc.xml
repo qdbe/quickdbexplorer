@@ -1430,6 +1430,11 @@
             SQL Server 2008 を表すインスタンスを生成する
             </summary>
         </member>
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2012">
+            <summary>
+            SQL Server 2008 を表すインスタンスを生成する
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.SqlVersion.#ctor(System.String)">
             <summary>
             コンストラクタ

@@ -115,6 +115,15 @@ namespace quickDBExplorer
             return new SqlVersion("10.50");
         }
 
+
+        /// <summary>
+        /// SQL Server 2008 を表すインスタンスを生成する
+        /// </summary>
+        public static SqlVersion SQLSERVER2012()
+        {
+            return new SqlVersion("11.0");
+        }
+
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
@@ -152,6 +161,15 @@ namespace quickDBExplorer
             {
                 // それ以外は2008と同等としてみなそう
                 this.pPublicVersion = "2008R2";
+                this.pFullVersionString = versionStr;
+                this.pIsSynonym = true;
+                this.pCanUseQueryAnalyzer = false;
+                this.pIsManagementStudio = true;
+            }
+            else if (versionStr.StartsWith("11.0"))
+            {
+                // それ以外は2008と同等としてみなそう
+                this.pPublicVersion = "2012";
                 this.pFullVersionString = versionStr;
                 this.pIsSynonym = true;
                 this.pCanUseQueryAnalyzer = false;
