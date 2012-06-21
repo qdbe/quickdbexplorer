@@ -221,11 +221,15 @@ namespace quickDBExplorer
                             ;
                         }
                     }
+
+                    // 画像以外
+                    // バイナリ表示ダイアログを出す
+                    // 表示は
                     return;
                 }
 
 
-				// 画像以外の場合、拡大表示ダイアログで値を表示させる
+				// 画像・バイナリ以外の場合、拡大表示ダイアログで値を表示させる
 				ZoomDialog dlg  = new ZoomDialog();
 				dlg.EditText = this.TextBox.Text;
 				if( this.TextBox.ReadOnly == true )

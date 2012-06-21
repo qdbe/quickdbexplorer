@@ -227,6 +227,8 @@
     <Compile Include="Forms\MainMDI.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\ProcCondition.cs" />
+    <Compile Include="Forms\qdbeMenuItem.cs" />
     <Compile Include="Forms\quickDBExplorerBaseForm.cs">
       <SubType>Form</SubType>
     </Compile>

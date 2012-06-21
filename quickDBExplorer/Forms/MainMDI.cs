@@ -17,7 +17,7 @@ using quickDBExplorer.Forms.Events;
 using quickDBExplorer.manager;
 using System.Diagnostics;
 
-namespace quickDBExplorer
+namespace quickDBExplorer.Forms
 {
     
 	/// <summary>
