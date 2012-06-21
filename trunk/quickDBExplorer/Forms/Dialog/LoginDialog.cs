@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Sql;
 using System.Reflection;
 using System.Windows.Forms;
+using quickDBExplorer.Forms;
 using quickDBExplorer.Forms.Events;
 
 namespace quickDBExplorer
