@@ -38,9 +38,9 @@ namespace quickDBExplorer
 				this.isThisImage  = value; 
 				if( this.isThisImage == true )
 				{
-					this.ReadOnly = true;
+                    this.ReadOnly = true;
 					this.TextBox.Text = "";
-					this.TextBox.ReadOnly = true;
+                    this.TextBox.ReadOnly = true;
 				}
 			}
 		}
@@ -210,9 +210,12 @@ namespace quickDBExplorer
                             Image gazo = Image.FromStream(ms);
                             if (gazo != null)
                             {
-                                ImageViewer viewdlg = new ImageViewer();
+                                ImageViewer viewdlg = new ImageViewer(this.parentdg.ReadOnly);
                                 viewdlg.ViewImage = gazo;
-                                viewdlg.ShowDialog();
+                                if (viewdlg.ShowDialog() == DialogResult.OK)
+                                {
+                                    this.SetColumnValueAtRow(this._sorce, this.editrow,viewdlg.GetBytes());
+                                }
                                 return;
                             }
                         }
