@@ -213,6 +213,7 @@ namespace quickDBExplorer
             this.btnLoadClipboard.TabIndex = 18;
             this.btnLoadClipboard.Text = "クリップボードから";
             this.btnLoadClipboard.UseVisualStyleBackColor = true;
+            this.btnLoadClipboard.Click += new System.EventHandler(this.btnLoadClipboard_Click);
             // 
             // groupBox1
             // 
@@ -257,6 +258,7 @@ namespace quickDBExplorer
             this.btnSaveClipboard.TabIndex = 21;
             this.btnSaveClipboard.Text = "クリップボードへ";
             this.btnSaveClipboard.UseVisualStyleBackColor = true;
+            this.btnSaveClipboard.Click += new System.EventHandler(this.btnSaveClipboard_Click);
             // 
             // btnSaveFile
             // 
@@ -358,44 +360,63 @@ namespace quickDBExplorer
         {
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.OverwritePrompt = true;
-            dlg.Filter = "Bmp|*.bmp|Gif|*.gif|Icon|*.ico|jpeg|*.jpeg|Png|*.png|Tiff|*.tiff|Wmf|*.wmf|Emf|*.emf|全て|*.*";
+            dlg.Filter = "Bmp|*.bmp|Gif|*.gif|Icon|*.ico|jpeg|*.jpeg|Png|*.png|全て|*.*";
 
             if (dlg.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
+            this.currentImage.Save(dlg.FileName, GetFileFormatFromFileName(dlg.FileName));
+        }
+
+        private System.Drawing.Imaging.ImageFormat GetFileFormatFromFileName(string fname)
+        {
             System.Drawing.Imaging.ImageFormat format = System.Drawing.Imaging.ImageFormat.Png;
-            switch (Path.GetExtension(dlg.FileName).ToLower())
+            switch (Path.GetExtension(fname).ToLower())
             {
-                case "bmp":
+                case ".bmp":
                     format = System.Drawing.Imaging.ImageFormat.Bmp;
                     break;
-                case "gif":
+                case ".gif":
                     format = System.Drawing.Imaging.ImageFormat.Gif;
                     break;
-                case "ico":
+                case ".ico":
                     format = System.Drawing.Imaging.ImageFormat.Icon;
                     break;
-                case "jpg":
-                case "jpeg":
+                case ".jpg":
+                case ".jpeg":
                     format = System.Drawing.Imaging.ImageFormat.Jpeg;
                     break;
-                case "png":
+                case ".png":
                     format = System.Drawing.Imaging.ImageFormat.Png;
                     break;
-                case "tiff":
+                case ".tiff":
                     format = System.Drawing.Imaging.ImageFormat.Tiff;
                     break;
-                case "wmf":
+                case ".wmf":
                     format = System.Drawing.Imaging.ImageFormat.Wmf;
                     break;
-                case "emf":
+                case ".emf":
                     format = System.Drawing.Imaging.ImageFormat.Emf;
                     break;
                 default:
                     break;
             }
-            this.currentImage.Save(dlg.FileName, format);
+            return format;
+        }
+
+        private void btnSaveClipboard_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetDataObject(this.currentImage, true);
+        }
+
+        private void btnLoadClipboard_Click(object sender, EventArgs e)
+        {
+            if (Clipboard.ContainsImage())
+            {
+                this.currentImage = Clipboard.GetImage();
+                ResetImageSize();
+            }
         }
 	}
 }
