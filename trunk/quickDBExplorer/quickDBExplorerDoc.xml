@@ -2580,7 +2580,7 @@
             表示するイメージ情報
             </summary>
         </member>
-        <member name="M:quickDBExplorer.ImageViewer.#ctor">
+        <member name="M:quickDBExplorer.ImageViewer.#ctor(System.Boolean)">
             <summary>
             コンストラクタ
             </summary>

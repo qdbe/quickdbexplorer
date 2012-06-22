@@ -24,16 +24,17 @@ namespace quickDBExplorer
 		private System.Windows.Forms.Button btnClose;
         private Button btnLoadFile;
         private Button btnLoadClipboard;
-        private GroupBox groupBox1;
+        private GroupBox grpImport;
         private Button btnDefaultImage;
 
 		/// <summary>
 		/// 表示するイメージ情報
 		/// </summary>
 		private Image pOriginalImage;
-        private GroupBox groupBox2;
+        private GroupBox grpExport;
         private Button btnSaveClipboard;
         private Button btnSaveFile;
+        private Button btnOK;
 
         /// <summary>
         /// 表示するイメージ情報
@@ -53,15 +54,17 @@ namespace quickDBExplorer
             }
 		}
 
+        public bool IsReadOnly { get; private set; }
+
 
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-		public ImageViewer()
+		public ImageViewer(bool isReadOnly)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
-
+            this.IsReadOnly = isReadOnly;
 		}
 
 		/// <summary>
@@ -96,14 +99,15 @@ namespace quickDBExplorer
             this.btnClose = new System.Windows.Forms.Button();
             this.btnLoadFile = new System.Windows.Forms.Button();
             this.btnLoadClipboard = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpImport = new System.Windows.Forms.GroupBox();
             this.btnDefaultImage = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpExport = new System.Windows.Forms.GroupBox();
             this.btnSaveClipboard = new System.Windows.Forms.Button();
             this.btnSaveFile = new System.Windows.Forms.Button();
+            this.btnOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.grpImport.SuspendLayout();
+            this.grpExport.SuspendLayout();
             this.SuspendLayout();
             // 
             // MsgArea
@@ -204,6 +208,7 @@ namespace quickDBExplorer
             this.btnLoadFile.TabIndex = 17;
             this.btnLoadFile.Text = "ファイルから";
             this.btnLoadFile.UseVisualStyleBackColor = true;
+            this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click);
             // 
             // btnLoadClipboard
             // 
@@ -215,18 +220,18 @@ namespace quickDBExplorer
             this.btnLoadClipboard.UseVisualStyleBackColor = true;
             this.btnLoadClipboard.Click += new System.EventHandler(this.btnLoadClipboard_Click);
             // 
-            // groupBox1
+            // grpImport
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.btnDefaultImage);
-            this.groupBox1.Controls.Add(this.btnLoadFile);
-            this.groupBox1.Controls.Add(this.btnLoadClipboard);
-            this.groupBox1.Location = new System.Drawing.Point(190, 79);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 107);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "イメージのインポート";
+            this.grpImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpImport.Controls.Add(this.btnDefaultImage);
+            this.grpImport.Controls.Add(this.btnLoadFile);
+            this.grpImport.Controls.Add(this.btnLoadClipboard);
+            this.grpImport.Location = new System.Drawing.Point(190, 79);
+            this.grpImport.Name = "grpImport";
+            this.grpImport.Size = new System.Drawing.Size(200, 107);
+            this.grpImport.TabIndex = 15;
+            this.grpImport.TabStop = false;
+            this.grpImport.Text = "イメージのインポート";
             // 
             // btnDefaultImage
             // 
@@ -238,17 +243,17 @@ namespace quickDBExplorer
             this.btnDefaultImage.UseVisualStyleBackColor = true;
             this.btnDefaultImage.Click += new System.EventHandler(this.btnDefaultImage_Click);
             // 
-            // groupBox2
+            // grpExport
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.btnSaveClipboard);
-            this.groupBox2.Controls.Add(this.btnSaveFile);
-            this.groupBox2.Location = new System.Drawing.Point(190, 193);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 83);
-            this.groupBox2.TabIndex = 17;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "イメージのエクスポート";
+            this.grpExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpExport.Controls.Add(this.btnSaveClipboard);
+            this.grpExport.Controls.Add(this.btnSaveFile);
+            this.grpExport.Location = new System.Drawing.Point(190, 193);
+            this.grpExport.Name = "grpExport";
+            this.grpExport.Size = new System.Drawing.Size(200, 83);
+            this.grpExport.TabIndex = 17;
+            this.grpExport.TabStop = false;
+            this.grpExport.Text = "イメージのエクスポート";
             // 
             // btnSaveClipboard
             // 
@@ -270,14 +275,26 @@ namespace quickDBExplorer
             this.btnSaveFile.UseVisualStyleBackColor = true;
             this.btnSaveFile.Click += new System.EventHandler(this.btnSaveFile_Click);
             // 
+            // btnOK
+            // 
+            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOK.Location = new System.Drawing.Point(214, 284);
+            this.btnOK.Name = "btnOK";
+            this.btnOK.Size = new System.Drawing.Size(88, 24);
+            this.btnOK.TabIndex = 18;
+            this.btnOK.Text = "決定(&O)";
+            // 
             // ImageViewer
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
             this.AutoScroll = true;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(408, 314);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.grpExport);
+            this.Controls.Add(this.grpImport);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.PixcelHeight);
@@ -301,11 +318,12 @@ namespace quickDBExplorer
             this.Controls.SetChildIndex(this.label3, 0);
             this.Controls.SetChildIndex(this.MsgArea, 0);
             this.Controls.SetChildIndex(this.btnClose, 0);
-            this.Controls.SetChildIndex(this.groupBox1, 0);
-            this.Controls.SetChildIndex(this.groupBox2, 0);
+            this.Controls.SetChildIndex(this.grpImport, 0);
+            this.Controls.SetChildIndex(this.grpExport, 0);
+            this.Controls.SetChildIndex(this.btnOK, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
+            this.grpImport.ResumeLayout(false);
+            this.grpExport.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -320,7 +338,20 @@ namespace quickDBExplorer
 		private void ImageViewer_Load(object sender, System.EventArgs e)
 		{
             ResetImageSize();
+            if (this.IsReadOnly == true)
+            {
+                this.grpImport.Enabled = false;
+            }
 		}
+
+        public byte[] GetBytes()
+        {
+            System.Drawing.ImageConverter conv = new ImageConverter();
+            return (byte[])conv.ConvertTo(this.currentImage,typeof(byte[]));
+            //MemoryStream ms = new MemoryStream();
+            //this.currentImage.Save(ms,System.Drawing.Imaging.ImageCodecInfo.GetImageEncoders(this.currentImage.en  this.currentImage.RawFormat);
+            //return ms.GetBuffer();
+        }
 
         private void ResetImageSize()
         {
@@ -414,9 +445,33 @@ namespace quickDBExplorer
         {
             if (Clipboard.ContainsImage())
             {
-                this.currentImage = Clipboard.GetImage();
+                Image tmp = Clipboard.GetImage();
+                if (tmp == null) return;
+                this.currentImage = tmp;
                 ResetImageSize();
             }
+        }
+
+        private void btnLoadFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "Bmp|*.bmp|Gif|*.gif|Icon|*.ico|jpeg|*.jpeg|Png|*.png|全て|*.*";
+            if (dlg.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            Image tmp = null;
+            try
+            {
+                tmp = Image.FromFile(dlg.FileName);
+            }
+            catch
+            {
+                MessageBox.Show("正しいイメージ形式ではありません");
+                return;
+            }
+            this.currentImage = tmp;
+            ResetImageSize();
         }
 	}
 }
