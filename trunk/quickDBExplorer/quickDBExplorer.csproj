@@ -148,6 +148,12 @@
     <Compile Include="Forms\DataGridViewBase.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\Dialog\BinaryEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialog\BinaryEditor.Designer.cs">
+      <DependentUpon>BinaryEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Dialog\BookMarkEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -260,6 +266,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DataGridViewBase.resx">
       <DependentUpon>DataGridViewBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dialog\BinaryEditor.resx">
+      <DependentUpon>BinaryEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\BookMarkEditForm.resx">
       <DependentUpon>BookMarkEditForm.cs</DependentUpon>
