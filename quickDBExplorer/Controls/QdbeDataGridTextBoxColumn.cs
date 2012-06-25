@@ -227,7 +227,12 @@ namespace quickDBExplorer
 
                     // 画像以外
                     // バイナリ表示ダイアログを出す
-                    // 表示は
+                    // 表示は...
+                    quickDBExplorer.Forms.Dialog.BinaryEditor bdlg = new quickDBExplorer.Forms.Dialog.BinaryEditor(obj as byte[], 0, this.parentdg.ReadOnly);
+                    if (bdlg.ShowDialog() == DialogResult.OK)
+                    {
+                        this.SetColumnValueAtRow(this._sorce, this.editrow, bdlg.CurrentData);
+                    }
                     return;
                 }
 

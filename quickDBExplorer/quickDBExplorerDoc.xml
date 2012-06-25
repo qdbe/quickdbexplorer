@@ -3495,5 +3495,22 @@
             日付変換書式の指定
             </summary>
         </member>
+        <member name="F:quickDBExplorer.Forms.Dialog.BinaryEditor.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
     </members>
 </doc>
