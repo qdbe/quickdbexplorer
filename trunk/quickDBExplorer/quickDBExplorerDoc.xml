@@ -2862,7 +2862,7 @@
             <param name="pa">親となるグリッド</param>
             <param name="col">結合させるデータカラム</param>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Data.DataColumn,System.String,System.String,System.String)">
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Data.DataColumn,System.String,System.String,System.String,quickDBExplorer.DBFieldInfo)">
             <summary>
             コンストラクタ
             データカラムに応じ、自動的に、
@@ -3495,6 +3495,19 @@
             日付変換書式の指定
             </summary>
         </member>
+        <member name="T:quickDBExplorer.Forms.Dialog.BinaryEditor">
+            <summary>
+            バイナリデータ参照・編集ダイアログ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.#ctor(System.Byte[],System.Int32,System.Boolean)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="data"></param>
+            <param name="maxlen"></param>
+            <param name="isReadOnly"></param>
+        </member>
         <member name="F:quickDBExplorer.Forms.Dialog.BinaryEditor.components">
             <summary>
             必要なデザイナ変数です。
@@ -3510,6 +3523,21 @@
             <summary>
             デザイナ サポートに必要なメソッドです。このメソッドの内容を
             コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.BinaryEditor.CurrentData">
+            <summary>
+            現在の値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.BinaryEditor.IsReadOnly">
+            <summary>
+            参照のみか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.BinaryEditor.MaxLength">
+            <summary>
+            最大バイト長
             </summary>
         </member>
     </members>

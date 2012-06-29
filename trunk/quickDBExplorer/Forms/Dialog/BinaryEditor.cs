@@ -5,28 +5,43 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace quickDBExplorer.Forms.Dialog
 {
+    /// <summary>
+    /// バイナリデータ参照・編集ダイアログ
+    /// </summary>
     public partial class BinaryEditor : quickDBExplorer.quickDBExplorerBaseForm
     {
         private byte[] originalData;
+        /// <summary>
+        /// 現在の値
+        /// </summary>
         public byte[] CurrentData { get; private set; }
+        /// <summary>
+        /// 参照のみか否か
+        /// </summary>
         public bool IsReadOnly { get; private set; }
+
+        /// <summary>
+        /// 最大バイト長
+        /// </summary>
         public int MaxLength { get; private set; }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="maxlen"></param>
+        /// <param name="isReadOnly"></param>
         public BinaryEditor(byte[] data, int maxlen, bool isReadOnly)
         {
             InitializeComponent();
             this.originalData = data;
             this.CurrentData = data;
             this.MaxLength = maxlen;
-            this.IsReadOnly = IsReadOnly;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
+            this.IsReadOnly = isReadOnly;
         }
 
         private void btnLoadClipboard_Click(object sender, EventArgs e)
@@ -41,6 +56,12 @@ namespace quickDBExplorer.Forms.Dialog
         private void BinaryEditor_Load(object sender, EventArgs e)
         {
             ResetBinaryData();
+            if (this.IsReadOnly)
+            {
+                this.grpImport.Enabled = false;
+                this.btnOk.Enabled = false;
+            }
+
         }
 
         private void ResetBinaryData()
@@ -135,6 +156,106 @@ namespace quickDBExplorer.Forms.Dialog
             }
             result = ret.ToArray();
             return true;
+        }
+
+
+        private void btnSaveFile_Click(object sender, EventArgs e)
+        {
+            exportfile();
+        }
+
+        private void exportfile()
+        {
+            try
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.OverwritePrompt = true;
+                dlg.Filter = "全て|*.*";
+
+                if (dlg.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+                BinaryWriter bw = new BinaryWriter(File.Open(dlg.FileName, FileMode.OpenOrCreate));
+                try
+                {
+                    bw.Write(this.CurrentData);
+                }
+                finally
+                {
+                    bw.Close();
+                }
+            }
+            catch (Exception exp)
+            {
+                this.MsgArea.Text = exp.ToString();
+            }
+        }
+
+        private void btnLoadFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.Filter = "全て|*.*";
+            if (dlg.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            try
+            {
+                BinaryReader br = new BinaryReader(File.OpenRead(dlg.FileName));
+                try
+                {
+                    List<byte> result = new List<byte>();
+                    for (; ; )
+                    {
+                        byte[] loadData = br.ReadBytes(512);
+                        if (loadData == null || loadData.Length == 0)
+                        {
+                            break;
+                        }
+                        result.AddRange(loadData);
+                    }
+                    if (this.MaxLength != 0 &&
+                        result.Count > this.MaxLength)
+                    {
+                        MessageBox.Show("制限されたデータ長を超えていますので読み込みできません");
+                        return;
+                    }
+                    this.CurrentData = result.ToArray();
+                    ResetBinaryData();
+                }
+                finally
+                {
+                    br.Close();
+                }
+            }
+            catch(Exception exp)
+            {
+                this.MsgArea.Text = exp.ToString();
+                return;
+            }
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            if (this.IsReadOnly == false)
+            {
+                if (this.originalData != this.CurrentData)
+                {
+                    if (MessageBox.Show("値が変更されていますが、キャンセルしますか？", "", MessageBoxButtons.YesNo) != DialogResult.Yes)
+                    {
+                        return;
+                    }
+                }
+            }
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

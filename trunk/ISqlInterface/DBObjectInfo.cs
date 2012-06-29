@@ -208,7 +208,15 @@ namespace quickDBExplorer
 		}
 
 		private	List<DBFieldInfo>	pFieldInfo = null;
-        private Dictionary<string, DBFieldInfo> fieldDictionary = new Dictionary<string,DBFieldInfo>();
+        private Dictionary<string, DBFieldInfo> fieldDictionary = new Dictionary<string, DBFieldInfo>();
+        private Dictionary<string, DBFieldInfo> FieldDictionary
+        {
+            get
+            {
+                SetFieldInfo();
+                return this.fieldDictionary;
+            }
+        }
 
         private List<DBFieldInfo> FieldInfoList
         {
@@ -228,6 +236,7 @@ namespace quickDBExplorer
 		{
 			get 
 			{
+                SetFieldInfo();
                 return this.FieldInfoList;
 			}
 		}
@@ -239,6 +248,7 @@ namespace quickDBExplorer
         {
             get
             {
+                SetFieldInfo();
                 return this.FieldInfoList.Count;
             }
         }
@@ -249,7 +259,9 @@ namespace quickDBExplorer
         /// <param name="filedName">フィールド名</param>
         /// <returns></returns>
         public DBFieldInfo this[string filedName]{
-            get { return this.fieldDictionary[filedName]; }
+            get {
+                return this.FieldDictionary[filedName]; 
+            }
         }
 
         /// <summary>
@@ -259,7 +271,10 @@ namespace quickDBExplorer
         /// <returns></returns>
         public DBFieldInfo this[int fieldorder]
         {
-            get { return this.FieldInfoList[fieldorder]; }
+            get {
+                SetFieldInfo();
+                return this.FieldInfoList[fieldorder]; 
+            }
         }
 
 

@@ -13,11 +13,12 @@ namespace quickDBExplorer
 	[System.Runtime.InteropServices.ComVisible(false)]
 	public class QdbeDataGridTextBoxColumn : DataGridTextBoxColumn
 	{
-		private CurrencyManager _sorce;
+		private CurrencyManager _source;
 		private int				editrow;
 		private bool	canSetEmptyString;
 		private bool	isThisImage;
 		private DataGrid parentdg = new DataGrid();
+        private int maxlength = 0;
 
 		/// <summary>
 		/// 編集処理を中断する
@@ -52,6 +53,7 @@ namespace quickDBExplorer
 		/// <param name="canset">空白文字列の設定が可能か否か</param>
 		public QdbeDataGridTextBoxColumn(DataGrid pa, bool canset) : this(pa,canset,false)
 		{
+            this.maxlength = 0;
 		}
 
 		/// <summary>
@@ -110,7 +112,8 @@ namespace quickDBExplorer
 			DataColumn col,
 			string numberFormat,
 			string floatFormat,
-			string dateFormat
+			string dateFormat,
+            DBFieldInfo finfo
 			) : this(pa,col)
 		{
 			if( col.DataType.FullName == "System.Int32" ||
@@ -132,6 +135,14 @@ namespace quickDBExplorer
 			{
 				this.Format = dateFormat;
 			}
+            if (finfo != null)
+            {
+                this.maxlength = finfo.Length;
+                if (this.maxlength < 0)
+                {
+                    this.maxlength = 0;
+                }
+            }
 		}
 
 
@@ -182,7 +193,7 @@ namespace quickDBExplorer
 				e.Shift != true )
 			{
 				// バイナリの場合、イメージ表示を行ってみる
-				Object obj = GetColumnValueAtRow(this._sorce, this.editrow );
+				Object obj = GetColumnValueAtRow(this._source, this.editrow );
                 if (obj is byte[])
                 {
                     //Notice a subtlety in this code that is particular of the Northwind 
@@ -214,7 +225,7 @@ namespace quickDBExplorer
                                 viewdlg.ViewImage = gazo;
                                 if (viewdlg.ShowDialog() == DialogResult.OK)
                                 {
-                                    this.SetColumnValueAtRow(this._sorce, this.editrow,viewdlg.GetBytes());
+                                    this.SetColumnValueAtRow(this._source, this.editrow,viewdlg.GetBytes());
                                 }
                                 return;
                             }
@@ -228,10 +239,11 @@ namespace quickDBExplorer
                     // 画像以外
                     // バイナリ表示ダイアログを出す
                     // 表示は...
-                    quickDBExplorer.Forms.Dialog.BinaryEditor bdlg = new quickDBExplorer.Forms.Dialog.BinaryEditor(obj as byte[], 0, this.parentdg.ReadOnly);
+
+                    quickDBExplorer.Forms.Dialog.BinaryEditor bdlg = new quickDBExplorer.Forms.Dialog.BinaryEditor(obj as byte[], this.maxlength, this.parentdg.ReadOnly);
                     if (bdlg.ShowDialog() == DialogResult.OK)
                     {
-                        this.SetColumnValueAtRow(this._sorce, this.editrow, bdlg.CurrentData);
+                        this.SetColumnValueAtRow(this._source, this.editrow, bdlg.CurrentData);
                     }
                     return;
                 }
@@ -253,7 +265,7 @@ namespace quickDBExplorer
 						dlg.EditText.Length != 0 )
 					{
 						this.TextBox.Text = dlg.EditText;
-						SetColumnValueAtRow(this._sorce, this.editrow, dlg.EditText);
+						SetColumnValueAtRow(this._source, this.editrow, dlg.EditText);
 					}
 				}
 			}
@@ -286,7 +298,7 @@ namespace quickDBExplorer
 				e.Shift != true )
 			{
 				this.TextBox.Text = this.NullText;
-				SetColumnValueAtRow(this._sorce, this.editrow, "");
+				SetColumnValueAtRow(this._source, this.editrow, "");
 			}
 		}
 
@@ -303,7 +315,7 @@ namespace quickDBExplorer
 			int rowNum, Rectangle bounds, bool readOnly,
 			string displayText, bool cellIsVisible)
 		{
-			this._sorce = source;
+			this._source = source;
 			this.editrow = rowNum;
 			if( this.isThisImage == true )
 			{
@@ -322,7 +334,7 @@ namespace quickDBExplorer
 		protected override void EnterNullValue()
 		{
 			this.TextBox.Text = this.NullText;
-			SetColumnValueAtRow(this._sorce, this.editrow, DBNull.Value);
+			SetColumnValueAtRow(this._source, this.editrow, DBNull.Value);
 		}
 
 		/// <summary>

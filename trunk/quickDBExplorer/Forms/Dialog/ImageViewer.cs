@@ -304,6 +304,7 @@ namespace quickDBExplorer
             this.Controls.Add(this.PixcelWidth);
             this.Controls.Add(this.label4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MinimumSize = new System.Drawing.Size(414, 339);
             this.Name = "ImageViewer";
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
