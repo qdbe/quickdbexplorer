@@ -3964,7 +3964,8 @@ namespace quickDBExplorer.Forms
 						cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col, 
 							GetFormat(this.NumFormat),
 							GetFormat(this.FloatFormat),
-							GetFormat(this.DateFormat)
+							GetFormat(this.DateFormat),
+                            null
 							);
 
 						//DataGridTableStyle‚É’Ç‰Á‚·‚é
@@ -5475,7 +5476,8 @@ namespace quickDBExplorer.Forms
 					cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col, 
 						GetFormat(this.NumFormat),
 						GetFormat(this.FloatFormat),
-						GetFormat(this.DateFormat)
+						GetFormat(this.DateFormat),
+                        dboInfo[col.ColumnName]
 						);
 					
 					//DataGridTableStyle‚É’Ç‰Á‚·‚é
