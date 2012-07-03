@@ -15,5 +15,9 @@ namespace quickDBExplorer
 	/// </summary>
 	public class SqlServerDriver2012 : SqlServerDriver2008R2
 	{
-	}
+        public SqlServerDriver2012()
+        {
+            this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\110\Tools\ClientSetup\";
+        }
+    }
 }

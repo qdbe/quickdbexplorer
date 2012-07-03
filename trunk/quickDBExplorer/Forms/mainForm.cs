@@ -298,6 +298,8 @@ namespace quickDBExplorer.Forms
 
         public ConnectionInfo ConnectionArg { get; private set; }
 
+        private DBObjectInfo lastDispdata { get; set; }
+
         #endregion
 
 		private System.Windows.Forms.Button btnEtc;
@@ -2875,7 +2877,7 @@ namespace quickDBExplorer.Forms
 		{
 			if (this.dbGrid.Visible == true)
 			{
-				DispData(null, false, true);
+				DispData(lastDispdata, false, true);
 			}
 			////再描画ボタン押下
 			//if( this.chkDispData.CheckState == CheckState.Checked &&
@@ -3957,6 +3959,8 @@ namespace quickDBExplorer.Forms
 					//マップ名を指定する
 					ts.MappingName = "aaaa";
 
+                    this.lastDispdata = null;
+
 					QdbeDataGridTextBoxColumn cs;
 					foreach( DataColumn col in dspdt.Tables[0].Columns )
 					{
@@ -3982,8 +3986,8 @@ namespace quickDBExplorer.Forms
 					this.btnTmpAllDisp.BackColor = this.btnBackColor;
 					this.btnTmpAllDisp.ForeColor = this.btnForeColor;
 					this.btnDataEdit.Text = "データ編集(&T)";
-					this.btnDataUpdate.Enabled = true;
-					this.btnDataEdit.Enabled = true;
+					this.btnDataUpdate.Enabled = false;
+					this.btnDataEdit.Enabled = false;
 					this.btnGridFormat.Enabled = true;
 					this.chkDispData.Checked = true;
 					this.dbGrid.AllowSorting = true;
@@ -5349,6 +5353,8 @@ namespace quickDBExplorer.Forms
 		{
 			try
 			{
+                lastDispdata = dboInfo;
+
 				this.InitErrMessage();
 
 				// 編集中の可能性があるので、これをキャンセルする
@@ -5472,12 +5478,13 @@ namespace quickDBExplorer.Forms
 				QdbeDataGridTextBoxColumn cs;
 				foreach( DataColumn col in dspdt.Tables[0].Columns )
 				{
+                    
 					//列スタイルにQdbeDataGridTextBoxColumnを使う
 					cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col, 
 						GetFormat(this.NumFormat),
 						GetFormat(this.FloatFormat),
 						GetFormat(this.DateFormat),
-                        dboInfo[col.ColumnName]
+                        dboInfo == null ? null : dboInfo[col.ColumnName]
 						);
 					
 					//DataGridTableStyleに追加する
@@ -5499,7 +5506,7 @@ namespace quickDBExplorer.Forms
 				}
 				this.dbGrid.Show();
 				this.btnDataEdit.Text = "データ編集(&T)";
-				if( dspdt.Tables[0].PrimaryKey.Length == 0 )
+                if (lastDispdata == null || dspdt.Tables[0].PrimaryKey.Length == 0)
 				{
 					// Primary Key の設定がないと編集できない
 					this.btnDataUpdate.Enabled = false;
