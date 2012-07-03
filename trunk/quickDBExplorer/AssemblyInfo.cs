@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("-")]
 [assembly: AssemblyProduct("quickDBExplorer!")]
-[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2011 under GPLv2")]
+[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2012 under GPLv2")]
 [assembly: AssemblyTrademark("Go Ahead!")]
 [assembly: AssemblyCulture("")]		
 

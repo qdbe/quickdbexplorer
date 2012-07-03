@@ -110,6 +110,12 @@ namespace quickDBExplorer.Forms.Dialog
             return sb.ToString();
         }
 
+        /// <summary>
+        /// 16進数データをパースする
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         public bool TryParse(string data, ref object result)
         {
             if (string.IsNullOrEmpty(data.Trim()))
