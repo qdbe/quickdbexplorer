@@ -15,6 +15,8 @@ namespace quickDBExplorer
 	/// </summary>
 	public class SqlServerDriver2008 : SqlServerDriver2005
 	{
+        protected string regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\100\Tools\ClientSetup\";
+
 		/// <summary>
 		/// EnterPriseManager‚ð‹N“®‚·‚é
 		/// </summary>
@@ -106,7 +108,7 @@ namespace quickDBExplorer
 				throw new ArgumentNullException("dbName");
 			}
 
-			Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\100\Tools\ClientSetup\", false);
+            Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(regkey, false);
 			string profilerPath = string.Empty;
 			if (rkey != null)
 			{
@@ -140,7 +142,7 @@ namespace quickDBExplorer
 
 			Process isqlProcess = new Process();
 			isqlProcess.StartInfo.FileName = profilerPath + "profiler.exe";
-			isqlProcess.StartInfo.ErrorDialog = true;
+			isqlProcess.StartInfo.ErrorDialog = false;
 			string serverstr = "";
 			if( instanceName.Length != 0 )
 			{
@@ -185,7 +187,16 @@ namespace quickDBExplorer
 				}
 			}
 			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-			isqlProcess.Start();
+            try
+            {
+                isqlProcess.Start();
+            }
+            catch
+            {
+                isqlProcess.StartInfo.FileName = "profiler.exe";
+                isqlProcess.StartInfo.ErrorDialog = true;
+                isqlProcess.Start();
+            }
 		}
 
 		/// <summary>
