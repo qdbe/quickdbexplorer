@@ -54,6 +54,9 @@ namespace quickDBExplorer
             }
 		}
 
+        /// <summary>
+        /// 参照モードか否か
+        /// </summary>
         public bool IsReadOnly { get; private set; }
 
 
@@ -345,6 +348,10 @@ namespace quickDBExplorer
             }
 		}
 
+        /// <summary>
+        /// イメージからバイト配列を取得する
+        /// </summary>
+        /// <returns></returns>
         public byte[] GetBytes()
         {
             System.Drawing.ImageConverter conv = new ImageConverter();

@@ -2375,6 +2375,59 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="T:quickDBExplorer.Forms.Dialog.BinaryEditor">
+            <summary>
+            バイナリデータ参照・編集ダイアログ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.#ctor(System.Byte[],System.Int32,System.Boolean)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="data"></param>
+            <param name="maxlen"></param>
+            <param name="isReadOnly"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.TryParse(System.String,System.Object@)">
+            <summary>
+            16進数データをパースする
+            </summary>
+            <param name="data"></param>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
+        <member name="F:quickDBExplorer.Forms.Dialog.BinaryEditor.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.BinaryEditor.CurrentData">
+            <summary>
+            現在の値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.BinaryEditor.IsReadOnly">
+            <summary>
+            参照のみか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.BinaryEditor.MaxLength">
+            <summary>
+            最大バイト長
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.TextHistoryDataSet">
              <summary>
             Represents a strongly typed in-memory cache of data.
@@ -2603,6 +2656,12 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="M:quickDBExplorer.ImageViewer.GetBytes">
+            <summary>
+            イメージからバイト配列を取得する
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:quickDBExplorer.ImageViewer.btnClose_Click(System.Object,System.EventArgs)">
             <summary>
             閉じるボタン押下時処理
@@ -2613,6 +2672,11 @@
         <member name="P:quickDBExplorer.ImageViewer.ViewImage">
             <summary>
             表示するイメージ情報の取得・設定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ImageViewer.IsReadOnly">
+            <summary>
+            参照モードか否か
             </summary>
         </member>
         <member name="T:quickDBExplorer.FieldGetDialog">
@@ -2876,6 +2940,7 @@
             <param name="numberFormat">整数表示の場合の書式</param>
             <param name="floatFormat">小数点表示の場合の書式</param>
             <param name="dateFormat">日付表示の場合の書式</param>
+            <param name="finfo">フィールド情報</param>
         </member>
         <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Boolean,System.Boolean)">
             <summary>
@@ -3493,51 +3558,6 @@
         <member name="P:quickDBExplorer.GridFormatDialog.DateFormat">
             <summary>
             日付変換書式の指定
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.Forms.Dialog.BinaryEditor">
-            <summary>
-            バイナリデータ参照・編集ダイアログ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.#ctor(System.Byte[],System.Int32,System.Boolean)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="data"></param>
-            <param name="maxlen"></param>
-            <param name="isReadOnly"></param>
-        </member>
-        <member name="F:quickDBExplorer.Forms.Dialog.BinaryEditor.components">
-            <summary>
-            必要なデザイナ変数です。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.Dispose(System.Boolean)">
-            <summary>
-            使用中のリソースをすべてクリーンアップします。
-            </summary>
-            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
-        </member>
-        <member name="M:quickDBExplorer.Forms.Dialog.BinaryEditor.InitializeComponent">
-            <summary>
-            デザイナ サポートに必要なメソッドです。このメソッドの内容を
-            コード エディタで変更しないでください。
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.Forms.Dialog.BinaryEditor.CurrentData">
-            <summary>
-            現在の値
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.Forms.Dialog.BinaryEditor.IsReadOnly">
-            <summary>
-            参照のみか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.Forms.Dialog.BinaryEditor.MaxLength">
-            <summary>
-            最大バイト長
             </summary>
         </member>
     </members>

@@ -107,6 +107,7 @@ namespace quickDBExplorer
 		/// <param name="numberFormat">整数表示の場合の書式</param>
 		/// <param name="floatFormat">小数点表示の場合の書式</param>
 		/// <param name="dateFormat">日付表示の場合の書式</param>
+        /// <param name="finfo">フィールド情報</param>
 		public QdbeDataGridTextBoxColumn(
 			DataGrid pa, 
 			DataColumn col,
