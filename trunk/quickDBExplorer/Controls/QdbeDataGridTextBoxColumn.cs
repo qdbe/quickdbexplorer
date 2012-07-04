@@ -19,6 +19,7 @@ namespace quickDBExplorer
 		private bool	isThisImage;
 		private DataGrid parentdg = new DataGrid();
         private int maxlength = 0;
+        private DBFieldInfo FiledInfo{get;set;}
 
 		/// <summary>
 		/// 編集処理を中断する
@@ -144,6 +145,7 @@ namespace quickDBExplorer
                     this.maxlength = 0;
                 }
             }
+            FiledInfo = finfo;
 		}
 
 
@@ -195,46 +197,53 @@ namespace quickDBExplorer
 			{
 				// バイナリの場合、イメージ表示を行ってみる
 				Object obj = GetColumnValueAtRow(this._source, this.editrow );
-                if (obj is byte[])
+                if (obj is byte[] || ( this.FiledInfo != null && this.FiledInfo.IsBinary))
                 {
-                    //Notice a subtlety in this code that is particular of the Northwind 
-                    //database but has no relevance in general. 
-                    //The original Access database was converted into SQL Server's Northwind database, 
-                    //so the image field called Photo doesn't contain a true GIF file; 
-                    //instead it contains the OLE object that Access builds to wrap any image. 
-                    //As a result, the stream of bytes you read from the field is prefixed with a header 
-                    //you must strip off to get the bits of the image. 
-                    //Such a header is variable-length and also depends on the length of the originally imported file's name. 
-                    //For Northwind, the length of this offset is 78 bytes.
-                    //
-                    int[] offsets = new int[] { 0, 78 };
-                    int maxLen = (obj as byte[]).Length;
-                    for (int i = 0; i < offsets.Length; i++)
+                    try
                     {
-						if (maxLen < offsets[i])
-						{
-							continue;
-						}
-
-                        MemoryStream ms = new MemoryStream(obj as byte[], offsets[i], maxLen - offsets[i]);
-                        try
+                        //Notice a subtlety in this code that is particular of the Northwind 
+                        //database but has no relevance in general. 
+                        //The original Access database was converted into SQL Server's Northwind database, 
+                        //so the image field called Photo doesn't contain a true GIF file; 
+                        //instead it contains the OLE object that Access builds to wrap any image. 
+                        //As a result, the stream of bytes you read from the field is prefixed with a header 
+                        //you must strip off to get the bits of the image. 
+                        //Such a header is variable-length and also depends on the length of the originally imported file's name. 
+                        //For Northwind, the length of this offset is 78 bytes.
+                        //
+                        int[] offsets = new int[] { 0, 78 };
+                        int maxLen = (obj as byte[]).Length;
+                        for (int i = 0; i < offsets.Length; i++)
                         {
-                            Image gazo = Image.FromStream(ms);
-                            if (gazo != null)
+                            if (maxLen < offsets[i])
                             {
-                                ImageViewer viewdlg = new ImageViewer(this.parentdg.ReadOnly);
-                                viewdlg.ViewImage = gazo;
-                                if (viewdlg.ShowDialog() == DialogResult.OK)
+                                continue;
+                            }
+
+                            MemoryStream ms = new MemoryStream(obj as byte[], offsets[i], maxLen - offsets[i]);
+                            try
+                            {
+                                Image gazo = Image.FromStream(ms);
+                                if (gazo != null)
                                 {
-                                    this.SetColumnValueAtRow(this._source, this.editrow,viewdlg.GetBytes());
+                                    ImageViewer viewdlg = new ImageViewer(this.parentdg.ReadOnly);
+                                    viewdlg.ViewImage = gazo;
+                                    if (viewdlg.ShowDialog() == DialogResult.OK)
+                                    {
+                                        this.SetColumnValueAtRow(this._source, this.editrow, viewdlg.GetBytes());
+                                    }
+                                    return;
                                 }
-                                return;
+                            }
+                            catch
+                            {
+                                ;
                             }
                         }
-                        catch
-                        {
-                            ;
-                        }
+                    }
+                    catch
+                    {
+                        ;
                     }
 
                     // 画像以外

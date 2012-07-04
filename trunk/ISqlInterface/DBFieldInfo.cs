@@ -133,6 +133,13 @@ namespace quickDBExplorer
 		/// </summary>
         public bool IsIdentity { get; set; }
 
+        public bool IsBinary
+        {
+            get {
+                return this.dataType.IsBinary; 
+            }
+        }
+
 		/// <summary>
 		/// Identityフィールドの場合の Seed値
 		/// </summary>
