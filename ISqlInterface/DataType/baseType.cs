@@ -38,6 +38,11 @@ namespace quickDBExplorer.DataType
             this.DefalutParseString = "1";
         }
 
+        public virtual bool IsBinary
+        {
+            get { return false; }
+        }
+
         /// <summary>
         /// 文字データを読み込むことができるか否か
         /// </summary>

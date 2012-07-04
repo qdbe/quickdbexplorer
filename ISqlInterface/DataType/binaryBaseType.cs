@@ -99,6 +99,14 @@ namespace quickDBExplorer.DataType
             return true;
         }
 
+        public override bool IsBinary
+        {
+            get
+            {
+                return true;
+            }
+        }
+
 
         #endregion
     }
