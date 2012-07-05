@@ -344,11 +344,6 @@ namespace quickDBExplorer
                 errmsg = "値の指定が必要です。";
                 return false;
             }
-            if (this.IsIdentity == true && data != string.Empty)
-            {
-                errmsg = "自動採番されるので値は指定できません。";
-                return false;
-            }
             return this.dataType.TryParse(data, fieldInfo, ref result, ref errmsg);
         }
 	}

@@ -53,7 +53,7 @@
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 24);
             this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "キャンセル(&X)";
+            this.btnCancel.Text = "戻る(&X)";
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnOk

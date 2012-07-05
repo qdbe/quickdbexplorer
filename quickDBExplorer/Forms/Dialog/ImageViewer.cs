@@ -200,7 +200,7 @@ namespace quickDBExplorer
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(88, 24);
             this.btnClose.TabIndex = 16;
-            this.btnClose.Text = "•Â‚¶‚é(&X)";
+            this.btnClose.Text = "–ß‚é(&X)";
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnLoadFile
