@@ -1,0 +1,155 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{607646D5-0110-4F20-8916-E1C7B75FF090}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>ISqlInterface</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <RootNamespace>quickDBExplorer</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>ISqlInterfaceDoc.xml</DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CommandArg.cs" />
+    <Compile Include="DataType\bigintType.cs" />
+    <Compile Include="DataType\binaryBaseType.cs" />
+    <Compile Include="DataType\binaryType.cs" />
+    <Compile Include="DataType\bitType.cs" />
+    <Compile Include="DataType\charBaseType.cs" />
+    <Compile Include="DataType\charType.cs" />
+    <Compile Include="DataType\datetime2Type.cs" />
+    <Compile Include="DataType\datetimeoffsetType.cs" />
+    <Compile Include="DataType\datetimeType.cs" />
+    <Compile Include="DataType\dateType.cs" />
+    <Compile Include="DataType\decimalpointBaseType.cs" />
+    <Compile Include="DataType\decimalType.cs" />
+    <Compile Include="DataType\defaultType.cs" />
+    <Compile Include="DataType\doubleType.cs" />
+    <Compile Include="DataType\floatType.cs" />
+    <Compile Include="DataType\baseType.cs" />
+    <Compile Include="DataType\IDataType.cs" />
+    <Compile Include="DataType\imageType.cs" />
+    <Compile Include="DataType\intType.cs" />
+    <Compile Include="DataType\moneyBaseType.cs" />
+    <Compile Include="DataType\moneyType.cs" />
+    <Compile Include="DataType\ncharType.cs" />
+    <Compile Include="DataType\ntextType.cs" />
+    <Compile Include="DataType\numBaseType.cs" />
+    <Compile Include="DataType\numericType.cs" />
+    <Compile Include="DataType\nvarcharType.cs" />
+    <Compile Include="DataType\realType.cs" />
+    <Compile Include="DataType\smalldatetimeType.cs" />
+    <Compile Include="DataType\smallintType.cs" />
+    <Compile Include="DataType\smallmoneyType.cs" />
+    <Compile Include="DataType\sql_variantType.cs" />
+    <Compile Include="DataType\ncharBaseType.cs" />
+    <Compile Include="DataType\textType.cs" />
+    <Compile Include="DataType\datetimeBaseType.cs" />
+    <Compile Include="DataType\timestampType.cs" />
+    <Compile Include="DataType\timeType.cs" />
+    <Compile Include="DataType\tinyintType.cs" />
+    <Compile Include="DataType\TypeFactory.cs" />
+    <Compile Include="DataType\uniqueidentifierType.cs" />
+    <Compile Include="DataType\varbinaryType.cs" />
+    <Compile Include="DataType\varcharType.cs" />
+    <Compile Include="DataType\xmlType.cs" />
+    <Compile Include="DBFieldInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DBObjectInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EmptySqlInterface.cs" />
+    <Compile Include="ISqlInterface.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="sqlEnum.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
