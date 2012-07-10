@@ -431,6 +431,22 @@ namespace quickDBExplorer
 		}
 
         /// <summary>
+        /// Viewか否か
+        /// </summary>
+        public bool IsView
+        {
+            get
+            {
+
+                if (this.ObjType == "V")
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        /// <summary>
         /// スキーマ情報のテーブルをセットする
         /// </summary>
         /// <param name="dt"></param>
