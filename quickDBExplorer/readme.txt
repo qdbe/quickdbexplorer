@@ -45,8 +45,8 @@
 
 3.1.		インストール方法
 	以前のバージョンを利用している場合には、コントロールパネル-プログラムの追加と削除 からquickDBExplorerを選択し、一旦アンインストールするか、展開後のファイルで上書きしてください。
-	quickDBExplorer.2.1.0.zip を任意の場所に解凍して下さい。
-	Ver 2.0 からはレジストリなどは利用していません。
+	quickDBExplorer.2.2.0.zip を任意の場所に解凍して下さい。
+	Ver 2.0 以降はレジストリなどは利用していません。
 
 3.2.		アンインストール方法
 	インストール時に展開したファイル、およびquickDBExplorer.xml(存在する場合のみ)を削除していただくだけで結構です。
@@ -57,7 +57,7 @@
 
 4.1		ライセンス等の詳細
 
-Copyright (C) 2004-2011　Y.N(godz)
+Copyright (C) 2004-2012　Y.N(godz)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
