@@ -1,4 +1,3 @@
-#labels Featured
 =2.0.1Releaseから2.1Releaseへの変更点一覧=
 
  * db,schema,objectの選択状態を!BookMarkとして登録・呼び出し可能にした
