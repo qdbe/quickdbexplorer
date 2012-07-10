@@ -2637,6 +2637,20 @@ namespace quickDBExplorer.Forms
 
 				this.dbGrid.EndEdit(this.dbGrid.TableStyles[0].GridColumnStyles[this.dbGrid.CurrentCell.ColumnNumber], this.dbGrid.CurrentCell.RowNumber, false);
 
+                if (this.dspdt.EnforceConstraints == false)
+                {
+                    try
+                    {
+                        this.dspdt.EnforceConstraints = true;
+                    }
+                    catch (System.Data.ConstraintException conexp)
+                    {
+                        this.dspdt.EnforceConstraints = false;
+                        this.SetErrorMessage(conexp);
+                        return;
+                    }
+                }
+
 				if (this.chkDispData.CheckState == CheckState.Checked &&
 					this.objectList.SelectedItems.Count == 1 &&
 					this.dspdt.GetChanges() != null &&
@@ -3952,6 +3966,7 @@ namespace quickDBExplorer.Forms
 					dspdt.CaseSensitive = true;
 					dspdt.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
+                    dspdt.EnforceConstraints = true;
 					da.Fill(dspdt,"aaaa");
 
 					//êVÇµÇ¢DataGridTableStyleÇÃçÏê¨
@@ -5447,8 +5462,20 @@ namespace quickDBExplorer.Forms
 				dspdt = new DataSet();
 				dspdt.CaseSensitive = true;
 				dspdt.Locale = System.Globalization.CultureInfo.CurrentCulture;
-				da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
-				da.Fill(dspdt, "aaaa");
+                if (dboInfo == null || dboInfo.IsView)
+                {
+                    dspdt.EnforceConstraints = false;
+                }
+                try
+                {
+                    da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
+                    da.Fill(dspdt, "aaaa");
+                }
+                catch (System.Data.ConstraintException conexp)
+                {
+                    dspdt.EnforceConstraints = false;
+                    da.Fill(dspdt, "aaaa");
+                }
 
 				if( maxlines != 0 )
 				{
