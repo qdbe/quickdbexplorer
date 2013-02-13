@@ -20,5 +20,15 @@ namespace quickDBExplorer.DataType
         {
             return true;
         }
+
+        public override string GetCSharpTypeString()
+        {
+            return "decimal";
+        }
+
+        public override Type Type
+        {
+            get { return typeof(decimal); }
+        }
     }
 }

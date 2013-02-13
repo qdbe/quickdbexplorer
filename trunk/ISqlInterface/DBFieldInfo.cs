@@ -111,10 +111,29 @@ namespace quickDBExplorer
 		/// <summary>
 		/// NULLを許可するか否かを管理する
 		/// </summary>
-		public	bool		IsNullable
+		public	bool		IsAllowNull
 		{
 			get { return this.Col.AllowDBNull; }
 		}
+
+        /// <summary>
+        /// Nullableか否かを返す
+        /// </summary>
+        public bool IsNullable
+        {
+            get
+            {
+                try
+                {
+                    //object testobj = System.Nullable<dataType.Type>();
+                    return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+        }
 
 		/// <summary>
 		/// 文字フィールドの場合の照合順序を管理する
@@ -133,6 +152,9 @@ namespace quickDBExplorer
 		/// </summary>
         public bool IsIdentity { get; set; }
 
+        /// <summary>
+        /// バイナリか否か
+        /// </summary>
         public bool IsBinary
         {
             get {
@@ -191,6 +213,17 @@ namespace quickDBExplorer
             get
             {
                 return this.dataType.CanLoadData();
+            }
+        }
+
+        /// <summary>
+        /// C# の型名を返す
+        /// </summary>
+        public string CSharpTypeString
+        {
+            get
+            {
+                return this.dataType.GetCSharpTypeString();
             }
         }
 
@@ -268,7 +301,7 @@ namespace quickDBExplorer
 					this.IncStep );
 			}
 
-            if (this.IsNullable == false)
+            if (this.IsAllowNull == false)
             {
                 sb.Append(" NOT NULL");
             }
@@ -317,7 +350,7 @@ namespace quickDBExplorer
             }
 
             sb.Append("\t");
-            if (this.IsNullable == false)
+            if (this.IsAllowNull == false)
             {
                 sb.Append("NOT NULL");
             }
@@ -339,7 +372,7 @@ namespace quickDBExplorer
         /// <returns></returns>
         public bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
         {
-            if (this.IsNullable == false && string.IsNullOrEmpty(data))
+            if (this.IsAllowNull == false && string.IsNullOrEmpty(data))
             {
                 errmsg = "値の指定が必要です。";
                 return false;

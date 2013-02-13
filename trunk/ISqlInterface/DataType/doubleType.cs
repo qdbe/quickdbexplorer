@@ -6,5 +6,17 @@ namespace quickDBExplorer.DataType
 {
     internal class doubleType : decimalpointBaseType
     {
+        public override string GetCSharpTypeString()
+        {
+            return "double";
+        }
+
+        public override Type Type
+        {
+            get
+            {
+                return typeof(double);
+            }
+        }
     }
 }

@@ -156,7 +156,6 @@ namespace quickDBExplorer
             this.PixcelHeight.IsShowZoom = false;
             this.PixcelHeight.Location = new System.Drawing.Point(224, 20);
             this.PixcelHeight.Name = "PixcelHeight";
-            this.PixcelHeight.PdHistory = null;
             this.PixcelHeight.ReadOnly = true;
             this.PixcelHeight.Size = new System.Drawing.Size(100, 19);
             this.PixcelHeight.TabIndex = 13;
@@ -178,7 +177,6 @@ namespace quickDBExplorer
             this.PixcelWidth.IsShowZoom = false;
             this.PixcelWidth.Location = new System.Drawing.Point(224, 54);
             this.PixcelWidth.Name = "PixcelWidth";
-            this.PixcelWidth.PdHistory = null;
             this.PixcelWidth.ReadOnly = true;
             this.PixcelWidth.Size = new System.Drawing.Size(100, 19);
             this.PixcelWidth.TabIndex = 13;

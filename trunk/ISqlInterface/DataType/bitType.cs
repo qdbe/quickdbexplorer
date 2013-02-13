@@ -27,7 +27,7 @@ namespace quickDBExplorer.DataType
                 result = localresult;
                 return true;
             }
-            else if( data == "0" )
+            else if (data == "0")
             {
                 // 0/1 も可能にする
                 result = false;
@@ -52,5 +52,16 @@ namespace quickDBExplorer.DataType
         }
 
         #endregion
+
+        public override string GetCSharpTypeString()
+        {
+            return "bool";
+        }
+
+
+        public override Type Type
+        {
+            get { return typeof(bool); }
+        }
     }
 }
