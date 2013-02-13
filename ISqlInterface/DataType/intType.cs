@@ -24,5 +24,15 @@ namespace quickDBExplorer.DataType
         }
 
         #endregion
+
+        public override string GetCSharpTypeString()
+        {
+            return "int";
+        }
+
+        public override Type Type
+        {
+            get { return typeof(int); }
+        }
     }
 }

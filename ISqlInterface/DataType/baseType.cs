@@ -21,6 +21,11 @@ namespace quickDBExplorer.DataType
         public string DefalutParseString { get; protected set; }
 
         /// <summary>
+        /// C# の型を返す
+        /// </summary>
+        public abstract Type Type{ get; }
+
+        /// <summary>
         /// 型の表現に長さを含むか否か
         /// </summary>
         protected bool TypeHasSize
@@ -38,6 +43,9 @@ namespace quickDBExplorer.DataType
             this.DefalutParseString = "1";
         }
 
+        /// <summary>
+        /// バイナリか否か
+        /// </summary>
         public virtual bool IsBinary
         {
             get { return false; }
@@ -73,6 +81,18 @@ namespace quickDBExplorer.DataType
         {
             return typename;
         }
+
+        /// <summary>
+        /// C# の型名を返す
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetCSharpTypeString()
+        {
+            return this.Type.Name;
+        }
+
+        //public abstract bool CanBeNullable();
+
 
         /// <summary>
         /// データ受け入れ用のチェック

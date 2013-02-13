@@ -29,5 +29,15 @@ namespace quickDBExplorer.DataType
         }
 
         #endregion
+
+        public override string GetCSharpTypeString()
+        {
+            return "DateTime";
+        }
+
+        public override Type Type
+        {
+            get { return typeof(DateTime); }
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace quickDBExplorer.DataType
         string GetFieldTypeString(string fieldname, int length, int prec, int xscale);
         bool CanLoadData();
         bool IsBinary { get; }
+        string GetCSharpTypeString();
     }
 }

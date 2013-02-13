@@ -31,5 +31,15 @@ namespace quickDBExplorer.DataType
             this.DefalutParseString = "2012/01/21 +09:00";
         }
         #endregion
+
+        public override string GetCSharpTypeString()
+        {
+            return "DateTimeOffset";
+        }
+
+        public override Type Type
+        {
+            get { return typeof(DateTimeOffset); }
+        }
     }
 }

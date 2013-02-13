@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows;
 using System.Text.RegularExpressions;
@@ -53,35 +54,65 @@ namespace quickDBExplorer
 		/// </summary>
 		public event ShowZoomEventHandler ShowZoom = null;
 
-		/// <summary>
-		/// 入力履歴データ
-		/// </summary>
-		private TextHistoryDataSet pdHistory = null;
+        /// <summary>
+        /// 入力履歴辞書
+        /// </summary>
+        public Dictionary<string, TextHistoryDataSet> Histories { get; set; }
 
-		/// <summary>
-		/// 入力履歴データ
-		/// </summary>
-		public TextHistoryDataSet PdHistory
+        /// <summary>
+        /// 履歴キー
+        /// </summary>
+        private string pHistoryKey { get; set; }
+
+        /// <summary>
+        /// 履歴キー
+        /// </summary>
+        public string HistoryKey
+        {
+            get {
+                if (pHistoryKey == null)
+                {
+                    pHistoryKey = this.Name;
+                }
+                return pHistoryKey; 
+            }
+            set
+            {
+                pHistoryKey = value;
+                if (Histories == null)
+                {
+                    if (this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
+                    {
+                        this.contextMenu1.MenuItems.Remove(this.menuShowHistory);
+                    }
+                }
+                else
+                {
+                    if (!this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
+                    {
+                        this.menuShowHistory.Index = this.contextMenu1.MenuItems.Count + 1;
+                        this.contextMenu1.MenuItems.Add(this.menuShowHistory);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 履歴情報
+        /// </summary>
+		public TextHistoryDataSet History
 		{
-			get { return pdHistory; }
-			set { 
-				pdHistory = value;
-				if (pdHistory == null)
-				{
-					if (this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
-					{
-						this.contextMenu1.MenuItems.Remove(this.menuShowHistory);
-					}
-				}
-				else
-				{
-					if (!this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
-					{
-						this.menuShowHistory.Index = this.contextMenu1.MenuItems.Count + 1;
-						this.contextMenu1.MenuItems.Add(this.menuShowHistory);
-					}
-				}
-			}
+			get {
+                if (this.Histories == null)
+                {
+                    return null;
+                }
+                if (!Histories.ContainsKey(HistoryKey))
+                {
+                    Histories.Add(pHistoryKey, new TextHistoryDataSet());
+                }
+                return Histories[HistoryKey];
+            }
 		}
 
 		/// <summary>
@@ -211,7 +242,7 @@ namespace quickDBExplorer
 		private void menuShowHistory_Click(object sender, EventArgs e)
 		{
 			// 履歴が登録されていれば履歴選択画面を表示する
-			if (this.pdHistory != null &&
+			if (this.History != null &&
 				this.ShowHistory != null)
 			{
 				this.ShowHistory(this, new EventArgs());
@@ -357,7 +388,7 @@ namespace quickDBExplorer
 				ev.Control == true &&
 				ev.KeyCode == Keys.S)
 			{
-				if (this.pdHistory != null &&
+				if (this.History != null &&
 					this.ShowHistory != null)
 				{
 					this.ShowHistory(this,new EventArgs());
@@ -410,12 +441,12 @@ namespace quickDBExplorer
 		/// <param name="key">履歴を選択する際のキー情報</param>
 		public bool DoShowHistory(string key)
 		{
-			if (this.pdHistory == null)
+			if (this.History == null)
 			{
 				return false;
 			}
 			// 入力履歴の選択ダイアログを表示する
-			HistoryViewer hv = new HistoryViewer(this.pdHistory, key);
+			HistoryViewer hv = new HistoryViewer(this.History, key);
 			if (key != null)
 			{
 				hv.IsShowTable = true;
@@ -430,7 +461,7 @@ namespace quickDBExplorer
 				{
 					//違う情報であれば、それを表示し、履歴として追加する
 					this.Text = hv.RetString;
-					qdbeUtil.SetNewHistory(key, hv.RetString, this.pdHistory);
+					qdbeUtil.SetNewHistory(key, hv.RetString, this.History);
 				}
 				return true;
 			}
@@ -469,5 +500,14 @@ namespace quickDBExplorer
 				this.orgString = this.Text;
 			}
 		}
+
+        /// <summary>
+        /// 履歴を保存する
+        /// </summary>
+        /// <param name="key"></param>
+        public void SaveHistory(string key)
+        {
+            qdbeUtil.SetNewHistory(key,this.Text,this.History);
+        }
 	}
 }

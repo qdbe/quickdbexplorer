@@ -83,5 +83,15 @@ namespace quickDBExplorer.DataType
         {
             IsSingleByte = true;
         }
+
+        public override string GetCSharpTypeString()
+        {
+            return "string";
+        }
+
+        public override Type Type
+        {
+            get { return typeof(string); }
+        }
     }
 }

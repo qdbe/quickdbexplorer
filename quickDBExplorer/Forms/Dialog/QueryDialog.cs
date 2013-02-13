@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -61,9 +62,32 @@ namespace quickDBExplorer
 		protected System.Windows.Forms.Button btnHistory;
 
 		/// <summary>
-		/// 入力履歴データ
+		/// 入力履歴辞書データ
 		/// </summary>
-		private TextHistoryDataSet  pdHistory = new TextHistoryDataSet();
+        public Dictionary<string, TextHistoryDataSet> Histories { get; set; }
+
+        private string pHistoryKey;
+        /// <summary>
+        /// 履歴に利用するキー値
+        /// </summary>
+        public string HistoryKey
+        {
+            get { return pHistoryKey; }
+            set
+            {
+                pHistoryKey = value;
+                this.txtInput.Histories = this.Histories;
+                this.txtInput.HistoryKey = value;
+            }
+        }
+
+        /// <summary>
+        /// 入力履歴
+        /// </summary>
+        public TextHistoryDataSet History
+        {
+            get { return this.Histories[this.HistoryKey]; }
+        }
 
 		/// <summary>
 		/// 必要なデザイナ変数です。
@@ -80,18 +104,6 @@ namespace quickDBExplorer
 			//
 			InitializeComponent();
 
-		}
-
-		/// <summary>
-		/// 入力履歴情報
-		/// </summary>
-		public TextHistoryDataSet DHistory
-		{
-			get { return this.pdHistory; }
-			set { 
-				this.pdHistory = value;
-				this.txtInput.PdHistory = this.pdHistory;
-			}
 		}
 
 		/// <summary>
@@ -176,7 +188,6 @@ namespace quickDBExplorer
 			this.txtInput.Location = new System.Drawing.Point(16, 12);
 			this.txtInput.Multiline = true;
 			this.txtInput.Name = "txtInput";
-			this.txtInput.PdHistory = null;
 			this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.txtInput.Size = new System.Drawing.Size(444, 191);
 			this.txtInput.TabIndex = 0;
@@ -224,7 +235,7 @@ namespace quickDBExplorer
 				this.pHasReturn = false;
 			}
 			//this.DialogResult = DialogResult.OK;
-			qdbeUtil.SetNewHistory("",this.txtInput.Text,this.pdHistory);
+            this.txtInput.SaveHistory("");
 		}
 
 		private void QueryDialog_Load(object sender, System.EventArgs e)

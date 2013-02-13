@@ -20,5 +20,18 @@ namespace quickDBExplorer.DataType
         {
             this.DefalutParseString = "12:00";
         }
+
+        public override string GetCSharpTypeString()
+        {
+            return "TimeSpan";
+        }
+
+        public override Type Type
+        {
+            get
+            {
+                return typeof(TimeSpan);
+            }
+        }
     }
 }

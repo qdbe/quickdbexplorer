@@ -109,5 +109,15 @@ namespace quickDBExplorer.DataType
 
 
         #endregion
+
+        public override Type Type
+        {
+            get { return typeof(byte[]); }
+        }
+
+        public override string GetCSharpTypeString()
+        {
+            return "byte[]";
+        }
     }
 }

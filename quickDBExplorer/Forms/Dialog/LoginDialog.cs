@@ -207,7 +207,6 @@ namespace quickDBExplorer
             this.txtPassword.Location = new System.Drawing.Point(144, 201);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.PdHistory = null;
             this.txtPassword.Size = new System.Drawing.Size(208, 19);
             this.txtPassword.TabIndex = 23;
             // 
@@ -218,7 +217,6 @@ namespace quickDBExplorer
             this.txtUser.IsShowZoom = false;
             this.txtUser.Location = new System.Drawing.Point(144, 161);
             this.txtUser.Name = "txtUser";
-            this.txtUser.PdHistory = null;
             this.txtUser.Size = new System.Drawing.Size(208, 19);
             this.txtUser.TabIndex = 21;
             this.txtUser.Text = "sa";
@@ -230,7 +228,6 @@ namespace quickDBExplorer
             this.txtInstance.IsShowZoom = false;
             this.txtInstance.Location = new System.Drawing.Point(144, 89);
             this.txtInstance.Name = "txtInstance";
-            this.txtInstance.PdHistory = null;
             this.txtInstance.Size = new System.Drawing.Size(208, 19);
             this.txtInstance.TabIndex = 17;
             // 
@@ -241,7 +238,6 @@ namespace quickDBExplorer
             this.txtServerName.IsShowZoom = false;
             this.txtServerName.Location = new System.Drawing.Point(144, 49);
             this.txtServerName.Name = "txtServerName";
-            this.txtServerName.PdHistory = null;
             this.txtServerName.Size = new System.Drawing.Size(208, 19);
             this.txtServerName.TabIndex = 15;
             this.txtServerName.Text = "(local)";

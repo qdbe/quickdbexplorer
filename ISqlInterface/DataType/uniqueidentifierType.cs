@@ -48,5 +48,15 @@ namespace quickDBExplorer.DataType
 
         #endregion
 
+
+        public override string GetCSharpTypeString()
+        {
+            return "Guid";
+        }
+
+        public override Type Type
+        {
+            get { return typeof(Guid); }
+        }
     }
 }

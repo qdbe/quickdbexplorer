@@ -34,5 +34,18 @@ namespace quickDBExplorer.DataType
                 return false;
             }
         }
+
+        public override string GetCSharpTypeString()
+        {
+            return "XmlDocument";
+        }
+
+        public override Type Type
+        {
+            get
+            {
+                return typeof(XmlDocument);
+            }
+        }
     }
 }

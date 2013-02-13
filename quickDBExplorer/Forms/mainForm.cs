@@ -248,40 +248,7 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
-		/// <summary>
-		/// where 句の入力履歴情報
-		/// </summary>
-		private TextHistoryDataSet  whereHistory = new TextHistoryDataSet();
-
-		/// <summary>
-		/// order by 句の入力履歴情報
-		/// </summary>
-		private TextHistoryDataSet  sortHistory = new TextHistoryDataSet();
-
-		/// <summary>
-		/// alias 句の入力履歴情報
-		/// </summary>
-		private TextHistoryDataSet  aliasHistory = new TextHistoryDataSet();
-
-		/// <summary>
-		/// select 実行履歴情報
-		/// </summary>
-		private TextHistoryDataSet  selectHistory = new TextHistoryDataSet();
-
-		/// <summary>
-		/// select 以外のクエリ実行履歴
-		/// </summary>
-		private TextHistoryDataSet  DMLHistory = new TextHistoryDataSet();
-
-		/// <summary>
-		/// 各種コマンドの実行履歴
-		/// </summary>
-		private TextHistoryDataSet  cmdHistory = new TextHistoryDataSet();
-
-		/// <summary>
-		/// 検索の実行履歴
-		/// </summary>
-		private TextHistoryDataSet  searchHistory = new TextHistoryDataSet();
+        private Dictionary<string, TextHistoryDataSet> Histories = new Dictionary<string, TextHistoryDataSet>();
 
 		/// <summary>
 		/// 接続した先のSQL Serverのバージョン
@@ -339,6 +306,8 @@ namespace quickDBExplorer.Forms
         private ToolStripMenuItem menuTimeoutChange;
         private ToolStripMenuItem DBReloadMenu;
         private ToolTip commTooltip;
+        private MenuItem fldmenuMakePoco;
+        private MenuItem fldmenuMakePocoNoClass;
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
 
 		/// <summary>
@@ -371,20 +340,14 @@ namespace quickDBExplorer.Forms
 
         private void InitHistory()
         {
-            this.whereHistory = svdata.WhereHistory;
-            this.txtWhere.PdHistory = this.whereHistory;
+            this.Histories = svdata.InputHistories;
+            this.txtWhere.Histories = this.Histories;
 
-            this.sortHistory = svdata.SortHistory;
-            this.txtSort.PdHistory = this.sortHistory;
+            this.txtSort.Histories = this.Histories;
 
-            this.aliasHistory = svdata.AliasHistory;
-            this.txtAlias.PdHistory = this.aliasHistory;
+            this.txtAlias.Histories = this.Histories;
 
-            this.selectHistory = svdata.SelectHistory;
-
-            this.DMLHistory = svdata.DMLHistory;
-            this.cmdHistory = svdata.CmdHistory;
-            this.searchHistory = svdata.SearchHistory;
+            this.txtObjFilter.Histories = this.Histories;
         }
 
         private void SetParams(Form mdiparent, ConnectionInfo conn)
@@ -505,6 +468,8 @@ namespace quickDBExplorer.Forms
             this.fldmenuCopyNoCRLFNoComma = new System.Windows.Forms.MenuItem();
             this.menuFieldAliasCopy = new System.Windows.Forms.MenuItem();
             this.menuFieldMakeWhere = new System.Windows.Forms.MenuItem();
+            this.fldmenuMakePoco = new System.Windows.Forms.MenuItem();
+            this.fldmenuMakePocoNoClass = new System.Windows.Forms.MenuItem();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -720,11 +685,12 @@ namespace quickDBExplorer.Forms
             this.txtWhere.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtWhere.CanCtrlDelete = true;
+            this.txtWhere.Histories = null;
+            this.txtWhere.HistoryKey = "txtWhere";
             this.txtWhere.IsDigitOnly = false;
             this.txtWhere.IsShowZoom = true;
             this.txtWhere.Location = new System.Drawing.Point(72, 480);
             this.txtWhere.Name = "txtWhere";
-            this.txtWhere.PdHistory = null;
             this.txtWhere.Size = new System.Drawing.Size(117, 19);
             this.txtWhere.TabIndex = 11;
             this.txtWhere.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtWhere_KeyDown);
@@ -737,11 +703,12 @@ namespace quickDBExplorer.Forms
             this.txtSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSort.CanCtrlDelete = true;
+            this.txtSort.Histories = null;
+            this.txtSort.HistoryKey = "txtSort";
             this.txtSort.IsDigitOnly = false;
             this.txtSort.IsShowZoom = true;
             this.txtSort.Location = new System.Drawing.Point(72, 508);
             this.txtSort.Name = "txtSort";
-            this.txtSort.PdHistory = null;
             this.txtSort.Size = new System.Drawing.Size(117, 19);
             this.txtSort.TabIndex = 14;
             this.txtSort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSort_KeyDown);
@@ -917,13 +884,14 @@ namespace quickDBExplorer.Forms
             this.txtDispCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.txtDispCount.CanCtrlDelete = true;
             this.txtDispCount.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
+            this.txtDispCount.Histories = null;
+            this.txtDispCount.HistoryKey = "txtDispCount";
             this.txtDispCount.ImeMode = System.Windows.Forms.ImeMode.Disable;
             this.txtDispCount.IsDigitOnly = true;
             this.txtDispCount.IsShowZoom = false;
             this.txtDispCount.Location = new System.Drawing.Point(132, 16);
             this.txtDispCount.MaxLength = 300;
             this.txtDispCount.Name = "txtDispCount";
-            this.txtDispCount.PdHistory = null;
             this.txtDispCount.Size = new System.Drawing.Size(72, 19);
             this.txtDispCount.TabIndex = 1;
             this.txtDispCount.Text = "1000";
@@ -999,11 +967,12 @@ namespace quickDBExplorer.Forms
             this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOutput.CanCtrlDelete = true;
+            this.txtOutput.Histories = null;
+            this.txtOutput.HistoryKey = "txtOutput";
             this.txtOutput.IsDigitOnly = false;
             this.txtOutput.IsShowZoom = false;
             this.txtOutput.Location = new System.Drawing.Point(8, 52);
             this.txtOutput.Name = "txtOutput";
-            this.txtOutput.PdHistory = null;
             this.txtOutput.Size = new System.Drawing.Size(160, 19);
             this.txtOutput.TabIndex = 3;
             this.txtOutput.TextChanged += new System.EventHandler(this.txtOutput_TextChanged);
@@ -1079,7 +1048,9 @@ namespace quickDBExplorer.Forms
             this.fldmenuCopyNoComma,
             this.fldmenuCopyNoCRLFNoComma,
             this.menuFieldAliasCopy,
-            this.menuFieldMakeWhere});
+            this.menuFieldMakeWhere,
+            this.fldmenuMakePoco,
+            this.fldmenuMakePocoNoClass});
             // 
             // fldmenuCopy
             // 
@@ -1116,6 +1087,18 @@ namespace quickDBExplorer.Forms
             this.menuFieldMakeWhere.Index = 5;
             this.menuFieldMakeWhere.Text = "where 句生成";
             this.menuFieldMakeWhere.Click += new System.EventHandler(this.menuFieldMakeWhere_Click);
+            // 
+            // fldmenuMakePoco
+            // 
+            this.fldmenuMakePoco.Index = 6;
+            this.fldmenuMakePoco.Text = "Pocoクラス生成";
+            this.fldmenuMakePoco.Click += new System.EventHandler(this.fldmenuMakePoco_Click);
+            // 
+            // fldmenuMakePocoNoClass
+            // 
+            this.fldmenuMakePocoNoClass.Index = 7;
+            this.fldmenuMakePocoNoClass.Text = "Pocoクラス生成(クラス無し)";
+            this.fldmenuMakePocoNoClass.Click += new System.EventHandler(this.fldmenuMakePocoNoClass_Click);
             // 
             // label9
             // 
@@ -1332,11 +1315,12 @@ namespace quickDBExplorer.Forms
             this.txtAlias.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAlias.CanCtrlDelete = true;
+            this.txtAlias.Histories = null;
+            this.txtAlias.HistoryKey = "txtAlias";
             this.txtAlias.IsDigitOnly = false;
             this.txtAlias.IsShowZoom = true;
             this.txtAlias.Location = new System.Drawing.Point(72, 532);
             this.txtAlias.Name = "txtAlias";
-            this.txtAlias.PdHistory = null;
             this.txtAlias.Size = new System.Drawing.Size(137, 19);
             this.txtAlias.TabIndex = 17;
             this.commTooltip.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
@@ -1397,13 +1381,16 @@ namespace quickDBExplorer.Forms
             this.txtObjFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.txtObjFilter.CanCtrlDelete = true;
+            this.txtObjFilter.Histories = null;
+            this.txtObjFilter.HistoryKey = "txtObjFilter";
             this.txtObjFilter.IsDigitOnly = false;
             this.txtObjFilter.IsShowZoom = false;
             this.txtObjFilter.Location = new System.Drawing.Point(319, 3);
             this.txtObjFilter.Name = "txtObjFilter";
-            this.txtObjFilter.PdHistory = null;
             this.txtObjFilter.Size = new System.Drawing.Size(153, 19);
             this.txtObjFilter.TabIndex = 22;
+            this.txtObjFilter.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtObjFilter_ShowHistory);
+            this.txtObjFilter.Leave += new System.EventHandler(this.txtObjFilter_Leave);
             this.txtObjFilter.TextChanged += new System.EventHandler(this.txtObjFilter_TextChanged);
             // 
             // MainSplitter
@@ -1480,19 +1467,19 @@ namespace quickDBExplorer.Forms
             this.menuTimeoutChange,
             this.DBReloadMenu});
             this.dbMenu.Name = "dbMenu";
-            this.dbMenu.Size = new System.Drawing.Size(161, 48);
+            this.dbMenu.Size = new System.Drawing.Size(168, 48);
             // 
             // menuTimeoutChange
             // 
             this.menuTimeoutChange.Name = "menuTimeoutChange";
-            this.menuTimeoutChange.Size = new System.Drawing.Size(160, 22);
+            this.menuTimeoutChange.Size = new System.Drawing.Size(167, 22);
             this.menuTimeoutChange.Text = "タイムアウト変更(&t)";
             this.menuTimeoutChange.Click += new System.EventHandler(this.menuTimeoutChange_Click);
             // 
             // DBReloadMenu
             // 
             this.DBReloadMenu.Name = "DBReloadMenu";
-            this.DBReloadMenu.Size = new System.Drawing.Size(160, 22);
+            this.DBReloadMenu.Size = new System.Drawing.Size(167, 22);
             this.DBReloadMenu.Text = "DB再読み込み(&R)";
             this.DBReloadMenu.Click += new System.EventHandler(this.DBReloadMenu_Click);
             // 
@@ -1827,6 +1814,31 @@ namespace quickDBExplorer.Forms
 		{
 			CopyFldList(false,false);
 		}
+
+        private void fldmenuMakePoco_Click(object sender, EventArgs e)
+        {
+            MakePoco(true,false);
+        }
+
+        private void fldmenuMakePocoNoClass_Click(object sender, EventArgs e)
+        {
+            MakePoco(false, false);
+        }
+
+        private void fldmenuMakePocoNul_Click(object sender, EventArgs e)
+        {
+            MakePoco(true,true);
+
+        }
+
+        private void fldmenuMakePocoNoClassNul_Click(object sender, EventArgs e)
+        {
+            MakePoco(false,true);
+
+        }
+
+
+
 
 		private void rdoUnicode_CheckedChanged(object sender, System.EventArgs e)
 		{
@@ -2288,9 +2300,10 @@ namespace quickDBExplorer.Forms
 				}
 
 
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtWhere.Text,this.whereHistory);
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtSort.Text,this.sortHistory);
-				qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtAlias.Text,this.aliasHistory);
+
+                this.txtWhere.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
+                this.txtSort.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
+                this.txtAlias.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
 				// データ表示部に、該当オブジェクトのデータを表示する
 				DispData(this.objectList.GetSelectObject(0));
 			}
@@ -2404,7 +2417,7 @@ namespace quickDBExplorer.Forms
 				tbname = this.objectList.GetSelectObject(0).FormalName;
 				DispData(this.objectList.GetSelectObject(0));
 				// 履歴に現在の値を記録 TODO
-				qdbeUtil.SetNewHistory(tbname, this.txtWhere.Text, this.whereHistory);
+                this.txtWhere.SaveHistory(tbname);
 			}
 			else
 			{
@@ -2426,7 +2439,7 @@ namespace quickDBExplorer.Forms
 					tbname = this.objectList.GetSelectObject(0).FormalName;
 					DispData(this.objectList.GetSelectObject(0));
 					// 履歴に現在の値を記録 TODO
-					qdbeUtil.SetNewHistory(tbname, this.txtSort.Text, this.sortHistory);
+                    this.txtSort.SaveHistory(tbname);
 			}
 			else
 			{
@@ -2945,7 +2958,7 @@ namespace quickDBExplorer.Forms
 			this.txtWhere.Text = ((ZoomDialog)sender).EditText;
 			string tbname = this.objectList.GetSelectObject(0).FormalName;
 			// 履歴に現在の値を記録
-			qdbeUtil.SetNewHistory(tbname, this.txtWhere.Text, this.whereHistory);
+            this.txtWhere.SaveHistory(tbname);
 
 			if (this.objectList.SelectedItems.Count == 1)
 			{
@@ -2971,7 +2984,7 @@ namespace quickDBExplorer.Forms
 			this.txtSort.Text = ((ZoomDialog)sender).EditText;
 			string tbname = this.objectList.GetSelectObject(0).FormalName;
 			// 履歴に現在の値を記録
-			qdbeUtil.SetNewHistory(tbname, this.txtSort.Text, this.sortHistory);
+            this.txtSort.SaveHistory(tbname);
 			if (this.objectList.SelectedItems.Count == 1)
 			{
 				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
@@ -2990,7 +3003,7 @@ namespace quickDBExplorer.Forms
 			this.txtAlias.Text = ((ZoomDialog)sender).EditText;
 			string tbname = this.objectList.GetSelectObject(0).FormalName;
 			// 履歴に現在の値を記録
-			qdbeUtil.SetNewHistory(tbname, this.txtAlias.Text, this.aliasHistory);
+            this.txtAlias.SaveHistory(tbname);
 
 			if (this.objectList.SelectedItems.Count == 1)
 			{
@@ -3022,7 +3035,7 @@ namespace quickDBExplorer.Forms
 		/// <param name="e"></param>
 		private void txtAlias_Leave(object sender, System.EventArgs e)
 		{
-			TextBox			senderText = sender as TextBox;
+            quickDBExplorerTextBox senderText = sender as quickDBExplorerTextBox;
 			string tbname = "";
 			if( this.chkDispData.CheckState == CheckState.Checked &&
 				this.objectList.SelectedItems.Count == 1 )
@@ -3030,7 +3043,7 @@ namespace quickDBExplorer.Forms
 				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 				tbname = this.objectList.GetSelectOneObjectFormalName();
 				// 履歴に現在の値を記録 TODO
-				qdbeUtil.SetNewHistory(tbname, senderText.Text, this.aliasHistory);
+                senderText.SaveHistory(tbname);
 			}
 			else
 			{
@@ -3050,14 +3063,14 @@ namespace quickDBExplorer.Forms
 
 		private void txtAlias_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
-			TextBox			senderText = sender as TextBox;
+            quickDBExplorerTextBox senderText = sender as quickDBExplorerTextBox;
 
 			if( e.KeyCode == Keys.Return ||
 				e.KeyCode == Keys.Enter )
 			{
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),senderText.Text,this.aliasHistory);
+                    senderText.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
 				}
 				DispData(this.objectList.GetSelectObject(0));
 				if (this.txtAlias.Text != this.aliasText)
@@ -3135,7 +3148,7 @@ namespace quickDBExplorer.Forms
 				// Enter(Return) では、入力を確定させて、グリッド表示に反映させる
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtWhere.Text,this.whereHistory);
+                    this.txtWhere.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
 				}
 				DispData(this.objectList.GetSelectObject(0));
 			}
@@ -3170,7 +3183,7 @@ namespace quickDBExplorer.Forms
 			{
 				if( this.objectList.SelectedItems.Count == 1 )
 				{
-					qdbeUtil.SetNewHistory(this.objectList.GetSelectOneObjectFormalName(),this.txtSort.Text,this.sortHistory);
+                    this.txtSort.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
 				}
 				DispData(this.objectList.GetSelectObject(0));
 			}
@@ -3953,7 +3966,8 @@ namespace quickDBExplorer.Forms
 			{
 				this.InitErrMessage();
 
-				Sqldlg.DHistory = this.selectHistory;
+                Sqldlg.Histories = this.Histories;
+                Sqldlg.HistoryKey = "selectHistory";
 
 				if( Sqldlg.ShowDialog() == DialogResult.OK )
 				{
@@ -4025,7 +4039,8 @@ namespace quickDBExplorer.Forms
 			{
 				this.InitErrMessage();
 
-				Sqldlg2.DHistory = this.DMLHistory;
+                Sqldlg2.Histories = this.Histories;
+                Sqldlg2.HistoryKey = "DMLHistory";
 
 				if( Sqldlg2.ShowDialog() == DialogResult.OK )
 				{
@@ -4132,7 +4147,8 @@ namespace quickDBExplorer.Forms
 				this.InitErrMessage();
 
 				this.cmdDialog.SelectSql = " {0} ";
-				this.cmdDialog.DHistory = this.cmdHistory;
+                this.cmdDialog.Histories = this.Histories;
+                this.cmdDialog.HistoryKey = "cmdHistory";
 
 				if( cmdDialog.ShowDialog() == DialogResult.OK )
 				{
@@ -4231,8 +4247,10 @@ namespace quickDBExplorer.Forms
 			this.InitErrMessage();
 
 			SearchConditionDlg dlg = new SearchConditionDlg(this.ConnectSqlVersion);
-			dlg.DHistory = this.searchHistory;
-			if( dlg.ShowDialog() == DialogResult.OK )
+            dlg.Histories = this.Histories;
+            dlg.HistoryKey = "searchHistory";
+
+            if( dlg.ShowDialog() == DialogResult.OK )
 			{
 				//ここまでは条件が入力されただけ
 
@@ -6535,6 +6553,65 @@ namespace quickDBExplorer.Forms
                 return new manager.MacroArgInfo(this.ConnectionArg, this.dbList.SelectedItem.ToString(),
                     string.Empty);
             }
+        }
+
+        private void txtObjFilter_ShowHistory(object sender, EventArgs e)
+        {
+            // Ctrl + S
+            // 入力履歴を表示する
+            this.txtObjFilter.DoShowHistory("");
+        }
+
+        private void txtObjFilter_Leave(object sender, EventArgs e)
+        {
+            txtObjFilter.SaveHistory("");
+        }
+
+        private void MakePoco(bool addClassDeclare, bool nullable)
+        {
+            if (this.objectList.SelectedItems.Count != 1)
+            {
+                return;
+            }
+            if (this.fieldListbox.SelectedIndices.Count == 0)
+            {
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            DBObjectInfo objInfo = this.objectList.GetSelectObject(0);
+            if (addClassDeclare == true)
+            {
+                sb.AppendFormat("public class {0} ", objInfo.ObjName);
+                sb.AppendLine();
+                sb.AppendLine("{");
+            }
+
+            for (int i = 0; i < this.fieldListbox.SelectedItems.Count; i++)
+            {
+                DBFieldInfo fi = (DBFieldInfo)((FieldListItem)this.fieldListbox.SelectedItems[i]).BackObj;
+                sb.Append("\tpublic\t");
+                sb.AppendFormat("{0}", fi.CSharpTypeString);
+                if (nullable && fi.CSharpTypeString != "string")
+                {
+                    if (fi.IsAllowNull)
+                    {
+                        sb.Append("?");
+                    }
+                }
+                sb.Append("\t");
+                sb.AppendFormat("{0}", fi.Name);
+                sb.AppendLine(" { get; set; }");
+            }
+
+            if (addClassDeclare == true)
+            {
+                sb.AppendLine("}");
+            }
+
+            Clipboard.SetDataObject(sb.ToString(), true);
+
         }
 
 	}

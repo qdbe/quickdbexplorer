@@ -385,7 +385,7 @@ namespace quickDBExplorer
 			}
 			this.HasReturn = false;
 			this.DialogResult = DialogResult.OK;
-			qdbeUtil.SetNewHistory("",this.txtInput.Text,this.DHistory);
+            this.txtInput.SaveHistory("");
 		}
 
 		/// <summary>

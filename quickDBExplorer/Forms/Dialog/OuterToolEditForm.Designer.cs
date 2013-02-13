@@ -254,7 +254,6 @@
             this.txtName.IsShowZoom = false;
             this.txtName.Location = new System.Drawing.Point(62, 40);
             this.txtName.Name = "txtName";
-            this.txtName.PdHistory = null;
             this.txtName.Size = new System.Drawing.Size(382, 19);
             this.txtName.TabIndex = 9;
             // 
@@ -268,7 +267,6 @@
             this.txtArgs.Location = new System.Drawing.Point(62, 93);
             this.txtArgs.Multiline = true;
             this.txtArgs.Name = "txtArgs";
-            this.txtArgs.PdHistory = null;
             this.txtArgs.Size = new System.Drawing.Size(381, 91);
             this.txtArgs.TabIndex = 13;
             // 
@@ -281,7 +279,6 @@
             this.txtCommand.IsShowZoom = false;
             this.txtCommand.Location = new System.Drawing.Point(62, 65);
             this.txtCommand.Name = "txtCommand";
-            this.txtCommand.PdHistory = null;
             this.txtCommand.Size = new System.Drawing.Size(315, 19);
             this.txtCommand.TabIndex = 11;
             // 

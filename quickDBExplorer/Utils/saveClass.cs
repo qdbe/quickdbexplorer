@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
 using System.Data;
 using System.IO;
@@ -193,96 +194,12 @@ namespace quickDBExplorer
 			get { return this.pLogOnUser; }
 			set { this.pLogOnUser = value; }
 		}
-		/// <summary>
-		/// where 句の入力履歴情報
-		/// </summary>
-		private TextHistoryDataSet  whereHistory;
-		/// <summary>
-		/// where 句の入力履歴情報
-		/// </summary>
-		public TextHistoryDataSet  WhereHistory
-		{
-			get { return this.whereHistory; }
-			set { this.whereHistory = value; }
-		}
 
-		/// <summary>
-		/// order by 句の入力履歴情報
-		/// </summary>
-		private TextHistoryDataSet  sortHistory;
-		/// <summary>
-		/// order by 句の入力履歴情報
-		/// </summary>
-		public TextHistoryDataSet  SortHistory
-		{
-			get { return this.sortHistory; }
-			set { this.sortHistory = value; }
-		}
+        /// <summary>
+        /// 各種入力履歴
+        /// </summary>
+        public Dictionary<string, TextHistoryDataSet> InputHistories { get; set; }
 
-		/// <summary>
-		/// order by 句の入力履歴情報
-		/// </summary>
-		private TextHistoryDataSet  aliasHistory;
-		/// <summary>
-		/// order by 句の入力履歴情報
-		/// </summary>
-		public TextHistoryDataSet  AliasHistory
-		{
-			get { return this.aliasHistory; }
-			set { this.aliasHistory = value; }
-		}
-
-		/// <summary>
-		/// select 実行履歴情報
-		/// </summary>
-		private TextHistoryDataSet  selectHistory;
-		/// <summary>
-		/// select 実行履歴情報
-		/// </summary>
-		public TextHistoryDataSet  SelectHistory
-		{
-			get { return this.selectHistory; }
-			set { this.selectHistory = value; }
-		}
-
-		/// <summary>
-		/// クエリ発行時の入力履歴
-		/// </summary>
-		private TextHistoryDataSet  dmlHistory;
-		/// <summary>
-		/// クエリ発行時の入力履歴
-		/// </summary>
-		public TextHistoryDataSet  DMLHistory
-		{
-			get { return this.dmlHistory; }
-			set { this.dmlHistory = value; }
-		}
-
-		/// <summary>
-		/// 各種コマンド入力履歴
-		/// </summary>
-		private TextHistoryDataSet  cmdHistory;
-		/// <summary>
-		/// 各種コマンド入力履歴
-		/// </summary>
-		public TextHistoryDataSet  CmdHistory
-		{
-			get { return this.cmdHistory; }
-			set { this.cmdHistory = value; }
-		}
-
-		/// <summary>
-		/// 検索入力履歴
-		/// </summary>
-		private TextHistoryDataSet  pSearchHistory;
-		/// <summary>
-		/// 検索入力履歴
-		/// </summary>
-		public TextHistoryDataSet  SearchHistory
-		{
-			get { return this.pSearchHistory; }
-			set { this.pSearchHistory = value; }
-		}
 
 		/// <summary>
 		/// コンストラクタ
@@ -299,13 +216,14 @@ namespace quickDBExplorer
 			showgrid =  new Hashtable();
 			griddspcnt =  new Hashtable();
 			txtencode = new Hashtable();
-			whereHistory = new TextHistoryDataSet();
-			sortHistory = new TextHistoryDataSet();
-			aliasHistory = new TextHistoryDataSet();
-			selectHistory = new TextHistoryDataSet();
-			DMLHistory = new TextHistoryDataSet();
-			cmdHistory = new TextHistoryDataSet();
-			pSearchHistory = new TextHistoryDataSet();
+            InputHistories = new Dictionary<string, TextHistoryDataSet>();
+            //whereHistory = new TextHistoryDataSet();
+            //sortHistory = new TextHistoryDataSet();
+            //aliasHistory = new TextHistoryDataSet();
+            //selectHistory = new TextHistoryDataSet();
+            //DMLHistory = new TextHistoryDataSet();
+            //cmdHistory = new TextHistoryDataSet();
+            //pSearchHistory = new TextHistoryDataSet();
 		}
 
 		/// <summary>
@@ -316,14 +234,7 @@ namespace quickDBExplorer
 		{
 			if (disposing)
 			{
-				// dispose managed resources
-				whereHistory.Dispose();
-				sortHistory.Dispose();
-				aliasHistory.Dispose();
-				selectHistory.Dispose();
-				DMLHistory.Dispose();
-				cmdHistory.Dispose();
-				pSearchHistory.Dispose();
+                InputHistories.Clear();
 			}
 			// free native resources
 		}
@@ -359,13 +270,7 @@ namespace quickDBExplorer
 			showgrid =  new Hashtable();
 			griddspcnt =  new Hashtable();
 			txtencode = new Hashtable();
-			whereHistory = new TextHistoryDataSet();
-			sortHistory = new TextHistoryDataSet();
-			aliasHistory = new TextHistoryDataSet();
-			selectHistory = new TextHistoryDataSet();
-			DMLHistory = new TextHistoryDataSet();
-			cmdHistory = new TextHistoryDataSet();
-			pSearchHistory = new TextHistoryDataSet();
+            InputHistories = new Dictionary<string, TextHistoryDataSet>();
 
 			try
 			{
@@ -462,49 +367,51 @@ namespace quickDBExplorer
 
 			try
 			{
-				this.whereHistory = (TextHistoryDataSet)info.GetValue("whereHistory",typeof(TextHistoryDataSet));
+                InputHistories.Add("txtWhere", (TextHistoryDataSet)info.GetValue("whereHistory",typeof(TextHistoryDataSet)));
 			}
 			catch{}
 			try
 			{
-				this.sortHistory = (TextHistoryDataSet)info.GetValue("sortHistory",typeof(TextHistoryDataSet));
+                InputHistories.Add("txtSort", (TextHistoryDataSet)info.GetValue("sortHistory",typeof(TextHistoryDataSet)));
 			}
 			catch{}
 			try
 			{
-				this.aliasHistory = (TextHistoryDataSet)info.GetValue("aliasHistory",typeof(TextHistoryDataSet));
+                InputHistories.Add("txtAlias", (TextHistoryDataSet)info.GetValue("aliasHistory",typeof(TextHistoryDataSet)));
 			}
 			catch{}
 			try
 			{
-				this.selectHistory = (TextHistoryDataSet)info.GetValue("selectHistory",typeof(TextHistoryDataSet));
+                InputHistories.Add("selectHistory",(TextHistoryDataSet)info.GetValue("selectHistory",typeof(TextHistoryDataSet)));
 			}
 			catch{}
 			try
 			{
-				this.DMLHistory = (TextHistoryDataSet)info.GetValue("DMLHistory",typeof(TextHistoryDataSet));
+                InputHistories.Add("DMLHistory", (TextHistoryDataSet)info.GetValue("DMLHistory",typeof(TextHistoryDataSet)));
 			}
 			catch{}
 			try
 			{
-				this.cmdHistory = (TextHistoryDataSet)info.GetValue("cmdHistory",typeof(TextHistoryDataSet));
+                InputHistories.Add("cmdHistory", (TextHistoryDataSet)info.GetValue("cmdHistory",typeof(TextHistoryDataSet)));
 			}
 			catch{}
 			try
 			{
-				this.pSearchHistory = (TextHistoryDataSet)info.GetValue("SearchHistory",typeof(TextHistoryDataSet));
+                InputHistories.Add("SearchHistory", (TextHistoryDataSet)info.GetValue("SearchHistory",typeof(TextHistoryDataSet)));
 			}
 			catch{}
 
-			if( whereHistory == null ) whereHistory = new TextHistoryDataSet();
-			if( sortHistory == null ) sortHistory = new TextHistoryDataSet();
-			if( aliasHistory == null ) aliasHistory = new TextHistoryDataSet();
-			if( selectHistory == null ) selectHistory = new TextHistoryDataSet();
-			if( DMLHistory == null ) DMLHistory = new TextHistoryDataSet();
-			if( cmdHistory == null ) cmdHistory = new TextHistoryDataSet();
-			if( pSearchHistory == null ) pSearchHistory = new TextHistoryDataSet();
-
-		}
+            try
+            {
+                ArrayList keys = (ArrayList)info.GetValue("InputHistoryKey", typeof(ArrayList));
+                ArrayList values = (ArrayList)info.GetValue("InputHistoryValue", typeof(ArrayList));
+                for (int i = 0; i < keys.Count; i++)
+                {
+                    InputHistories.Add((string)keys[i], (TextHistoryDataSet)values[i]);
+                }
+            }
+            catch { }
+        }
 
 		/// <summary>
 		/// シリアライズ処理用
@@ -530,14 +437,16 @@ namespace quickDBExplorer
 			info.AddValue("txtencode", txtencode );
 			info.AddValue("isSaveKey", isSaveKey );
 			info.AddValue("pLogOnUser", pLogOnUser );
-			info.AddValue("whereHistory", whereHistory );
-			info.AddValue("sortHistory", sortHistory );
-			info.AddValue("aliasHistory", aliasHistory );
-			info.AddValue("selectHistory", selectHistory );
-			info.AddValue("DMLHistory", DMLHistory );
-			info.AddValue("cmdHistory", cmdHistory );
-			info.AddValue("SearchHistory", pSearchHistory );
-		}
+            ArrayList keys = new ArrayList();
+            ArrayList values = new ArrayList();
+            foreach (string each in InputHistories.Keys)
+            {
+                keys.Add(each);
+                values.Add(InputHistories[each]);
+            }
+            info.AddValue("InputHistoryKey", keys);
+            info.AddValue("InputHistoryValue", values);
+        }
 
 		/// <summary>
 		/// 接続先サーバー名

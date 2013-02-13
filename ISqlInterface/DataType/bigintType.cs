@@ -20,5 +20,10 @@ namespace quickDBExplorer.DataType
         {
             return true;
         }
+
+        public override Type Type
+        {
+            get { return typeof(Int64); }
+        }
     }
 }
