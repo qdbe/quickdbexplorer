@@ -389,7 +389,10 @@ namespace quickDBExplorer
 			{
 				// 記憶されたサーバー別の記憶情報
 				ServerData sv = (ServerData)initOpt.PerServerData[initOpt.LastServerKey];
-                SetServer(sv.Servername, sv.InstanceName);
+                if (sv != null)
+                {
+                    SetServer(sv.Servername, sv.InstanceName);
+                }
 				// パスワードは記憶していないので戻す必要なし
 			}
 			if( this.initOpt.PerServerData.Count > 0 )
