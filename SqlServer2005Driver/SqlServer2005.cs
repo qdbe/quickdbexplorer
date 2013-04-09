@@ -791,7 +791,7 @@ where
 			// ÀÛ‚Ì×‚©‚¢î•ñ‚ğ’¼Úæ“¾‚·‚é
 			SqlDataAdapter tableda = new SqlDataAdapter(
 				string.Format(System.Globalization.CultureInfo.CurrentCulture,
-				@"select 
+                @"select 
 	t1.name colname, 
 	case 
 	when t1.user_type_id != t1.system_type_id then 1
@@ -805,6 +805,8 @@ where
 	CASE 
 	WHEN t1.user_type_id = t1.system_type_id and  t2.name IN (N'nchar', N'nvarchar') and t1.max_length != -1 THEN t1.max_length/2 
 	WHEN t1.user_type_id != t1.system_type_id and  t4.name IN (N'nchar', N'nvarchar') and t1.max_length != -1 THEN t1.max_length/2 
+	WHEN t1.user_type_id = t1.system_type_id and  t2.name IN (N'image') THEN -1
+	WHEN t1.user_type_id != t1.system_type_id and  t4.name IN (N'image') THEN -1
 	ELSE t1.max_length	
 	end) as length, 
 	convert(int,

@@ -14,21 +14,14 @@ namespace quickDBExplorer.DataType
 
         public override string Convert(IDataReader dr, int col, string addstr, string unichar, bool outNull, DBFieldInfo fieldInfo)
         {
-            if (outNull)
+            // バイナリはヘキサ文字列で出しておく
+            byte[] odata = ((SqlDataReader)dr).GetSqlBinary(col).Value;
+            string sodata = "0x";
+            for (int k = 0; k < odata.Length; k++)
             {
-                return string.Format(System.Globalization.CultureInfo.CurrentCulture, "null");
+                sodata += odata[k].ToString("X2", System.Globalization.CultureInfo.InvariantCulture);
             }
-            else
-            {
-                // バイナリはヘキサ文字列で出しておく
-                byte[] odata = ((SqlDataReader)dr).GetSqlBinary(col).Value;
-                string sodata = "0x";
-                for (int k = 0; k < odata.Length; k++)
-                {
-                    sodata += odata[k].ToString("X2", System.Globalization.CultureInfo.InvariantCulture);
-                }
-                return string.Format(System.Globalization.CultureInfo.InvariantCulture, "{1}{0}{1}", sodata, addstr);
-            }
+            return sodata;
         }
 
         public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
