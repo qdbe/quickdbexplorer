@@ -5491,6 +5491,7 @@ namespace quickDBExplorer.Forms
                 }
                 catch (System.Data.ConstraintException conexp)
                 {
+                    System.Diagnostics.Trace.WriteLine("DispData():ConstraintException:" + conexp.ToString());
                     dspdt.EnforceConstraints = false;
                     da.Fill(dspdt, "aaaa");
                 }
@@ -5710,9 +5711,21 @@ namespace quickDBExplorer.Forms
 					{
 						return;
 					}
-					Stream fsw = this.openFileDialog1.OpenFile();
-			
-					wr = new StreamReader(fsw,true);
+                    Stream fsw = this.openFileDialog1.OpenFile();
+
+                    if (HasBom(fsw))
+                    {
+                        wr = new StreamReader(fsw, true);
+                    }
+                    else
+                    {
+                        quickDBExplorer.Forms.Dialog.EncodeSelector endlg = new quickDBExplorer.Forms.Dialog.EncodeSelector();
+                        if (endlg.ShowDialog() != DialogResult.OK)
+                        {
+                            return;
+                        }
+                        wr = new StreamReader(fsw, endlg.SelectedEncoding, true);
+                    }
 				}
 
 
@@ -5774,6 +5787,31 @@ namespace quickDBExplorer.Forms
 				}
 			}
 		}
+
+        private bool HasBom(Stream fsw)
+        {
+            byte[] bom = new byte[10];
+            int bomlen = fsw.Read(bom, 0, 4);
+            if (bomlen < 2) return false;
+
+            if ( bomlen  == 2 )
+            {
+                if (bom[0] == 0xFE && bom[1] == 0xFF) return true;      // UTF-16 BE
+                if (bom[0] == 0xFF && bom[1] == 0xFE) return true;      // UTF-16 LE
+            }
+            if (bomlen >= 3)
+            {
+                if (bom[0] == 0xEF && bom[1] == 0xBB && bom[2] == 0xBF) return true;      // UTF-8
+            }
+            if (bomlen >= 4)
+            {
+                if (bom[0] == 0x00 && bom[1] == 0x00 && bom[2] == 0xFE && bom[3] == 0xFF) return true;      // UTF-32 BE
+                if (bom[0] == 0xFF && bom[1] == 0xFE && bom[2] == 0x00 && bom[3] == 0x00) return true;      // UTF-32 LE
+                if (bom[0] == 0x2B && bom[1] == 0x2F && bom[2] == 0x76 ) return true;      // UTF-7
+            }
+
+            return false;
+        }
 
 		/// <summary>
 		/// ファイルからデータを読み込みDBへ登録する
