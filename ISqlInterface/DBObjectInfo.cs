@@ -64,7 +64,13 @@ namespace quickDBExplorer
 		/// </summary>
         public string ObjName { get; private set; }
 
-		/// <summary>
+
+        /// <summary>
+        /// オブジェクトのID
+        /// </summary>
+        public int ObjId { get; private set; }
+
+        /// <summary>
 		/// オブジェクトが生成された日時
 		/// </summary>
         public string CreateTime { get; private set; }
@@ -311,7 +317,7 @@ namespace quickDBExplorer
 		/// <param name="createdTime">オブジェクトの作成日時</param>
 		/// <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
 		/// <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
-		public DBObjectInfo( string objectType, string owner, string name, string createdTime, string synonymBase, string synonymBaseType )
+		public DBObjectInfo( int objectid, string objectType, string owner, string name, string createdTime, string synonymBase, string synonymBaseType )
 		{
 			if( objectType == null )
 			{
@@ -322,6 +328,7 @@ namespace quickDBExplorer
 				throw new ArgumentNullException("synonymBaseType");
 			}
 
+            this.ObjId = objectid;
             this.ObjType = objectType.TrimEnd(null);
 			this.Owner = owner;
 			this.ObjName = name;

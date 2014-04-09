@@ -306,7 +306,8 @@ namespace quickDBExplorer
 					xtype as tvs,
 					sysobjects.crdate as cretime,
 					'' as synbase,
-					'' as synType
+					'' as synType,
+                    id as objectid
 					from sysobjects, sysusers 
 					where xtype in ( {0} ) and sysobjects.uid = sysusers.uid ",
 				destObj );

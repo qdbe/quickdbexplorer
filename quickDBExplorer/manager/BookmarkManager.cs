@@ -124,6 +124,7 @@ namespace quickDBExplorer.manager
                     foreach (DataRowView objDr in objectTable.DefaultView.FindRows(new object[] { key, name }))
                     {
                         DBObjectInfo newInfo = new DBObjectInfo(
+                            (int)objDr["objectid"],
                             (string)objDr["ObjType"],
                             (string)objDr["Owner"],
                             (string)objDr["ObjectName"],

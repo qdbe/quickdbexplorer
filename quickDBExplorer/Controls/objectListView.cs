@@ -32,6 +32,7 @@ namespace quickDBExplorer
 		private ListViewItem	CreateItem(IDataRecord dr, DataGetEventHandler dataSetter)
 		{
 			DBObjectInfo dboInfo = new DBObjectInfo(
+                (int)dr["objectid"],
 				(string)dr["tvs"],
 				(string)dr["uname"],
 				(string)dr["tbname"],
