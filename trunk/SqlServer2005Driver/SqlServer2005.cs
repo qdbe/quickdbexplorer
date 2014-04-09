@@ -20,7 +20,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// コネクション
 		/// </summary>
-		private System.Data.SqlClient.SqlConnection pSqlConnect;
+		protected System.Data.SqlClient.SqlConnection pSqlConnect;
 
 		/// <summary>
 		/// コネクション
@@ -34,7 +34,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// SelectCommand 等のタイムアウト値
 		/// </summary>
-		private int pQueryTimeout;
+		protected int pQueryTimeout;
 
 		/// <summary>
 		/// SelectCommand 等のタイムアウト値
@@ -306,7 +306,8 @@ namespace quickDBExplorer
 	t1.type as tvs,
 	t1.create_date as cretime,
 	isnull(t3.base_object_name,'') as synbase,
-	isnull(t4.type, ' ') as synType
+	isnull(t4.type, ' ') as synType,
+    t1.object_id  as objectid
 from 
 	sys.all_objects t1
 	inner join 	sys.schemas t2 on 
@@ -849,12 +850,13 @@ from
 	left outer join sys.assembly_types t6 on
 		t6.user_type_id = t1.user_type_id
 where 
-	t1.object_id = OBJECT_ID('{0}')
+	t1.object_id = @objid
 order by colorder",
 				databaseObjectInfo.RealObjName
 				),
 				this.pSqlConnect );
-			tableda.Fill(ds,"fieldList");
+            tableda.SelectCommand.Parameters.Add(new SqlParameter("@objid", databaseObjectInfo.ObjId));
+            tableda.Fill(ds, "fieldList");
 
 			DBFieldInfo addInfo;
             databaseObjectInfo.ClearField();
@@ -866,7 +868,7 @@ order by colorder",
 			}
 		}
 
-        private DBFieldInfo GetDBFieldInfo(DataSet ds, DataRow fdr)
+        protected virtual DBFieldInfo GetDBFieldInfo(DataSet ds, DataRow fdr)
         {
             DBFieldInfo addInfo;
             addInfo = new DBFieldInfo();

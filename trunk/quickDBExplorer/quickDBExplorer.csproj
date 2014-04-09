@@ -49,7 +49,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -73,6 +74,7 @@
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -125,6 +127,7 @@
   <ItemGroup>
     <Content Include="AppIcon.ico" />
     <Content Include="readme.txt" />
+    <None Include="app.config" />
     <None Include="Resources\header.png" />
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
