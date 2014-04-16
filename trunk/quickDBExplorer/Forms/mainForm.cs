@@ -3683,8 +3683,15 @@ namespace quickDBExplorer.Forms
 		/// <param name="e"></param>
 		private void CallProfile(object sender, System.EventArgs e)
 		{
-			this.SqlDriver.CallProfile(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnUid, this.pLogOnPassword );
-		}
+            try
+            {
+                this.SqlDriver.CallProfile(this.pServerRealName, this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem, this.pLogOnUid, this.pLogOnPassword);
+            }
+            catch (Exception exp)
+            {
+                this.MsgArea.Text = exp.ToString();
+            }
+        }
 
 		/// <summary>
 		/// エンタープライズマネージャーを起動する
@@ -3693,7 +3700,14 @@ namespace quickDBExplorer.Forms
 		/// <param name="e"></param>
 		private void CallEPM(object sender, System.EventArgs e)
 		{
-			this.SqlDriver.CallEPM(this.pServerRealName,this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem,this.pLogOnUid, this.pLogOnPassword );
+            try
+            {
+                this.SqlDriver.CallEPM(this.pServerRealName, this.pInstanceName, this.pIsUseTrust, (string)this.dbList.SelectedItem, this.pLogOnUid, this.pLogOnPassword);
+            }
+            catch (Exception exp)
+            {
+                this.MsgArea.Text = exp.ToString();
+            }
 		}
 
 		private void menuRecordCountDisp_Click(object sender, System.EventArgs e)

@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyProduct("quickDBExplorer!")]
-[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2012 under GPLv2")]
+[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2014 under GPLv2")]
 [assembly: AssemblyTrademark("Go Ahead!")]
 
 // ComVisible を false に設定すると、その型はこのアセンブリ内で COM コンポーネントから 
@@ -31,6 +31,6 @@ using System.Runtime.InteropServices;
 // すべての値を指定するか、下のように '*' を使ってビルドおよびリビジョン番号を 
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.2.0.*")]
-[assembly: AssemblyInformationalVersion("2.2.0")]
+[assembly: AssemblyVersion("2.3.0.*")]
+[assembly: AssemblyInformationalVersion("2.3.0")]
 [assembly: System.Resources.NeutralResourcesLanguage("ja-JP")]

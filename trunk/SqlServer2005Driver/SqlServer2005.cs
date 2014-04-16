@@ -868,6 +868,12 @@ order by colorder",
 			}
 		}
 
+        /// <summary>
+        /// DBのフィールド情報をDataSetから取得する
+        /// </summary>
+        /// <param name="ds"></param>
+        /// <param name="fdr"></param>
+        /// <returns></returns>
         protected virtual DBFieldInfo GetDBFieldInfo(DataSet ds, DataRow fdr)
         {
             DBFieldInfo addInfo;

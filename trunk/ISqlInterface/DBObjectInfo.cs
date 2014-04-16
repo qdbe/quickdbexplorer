@@ -311,6 +311,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
+        /// <param name="objectid">オブジェクトID</param>
 		/// <param name="objectType">オブジェクトの型</param>
 		/// <param name="owner">オブジェクトの所有者名</param>
 		/// <param name="name">オブジェクトの名称</param>
