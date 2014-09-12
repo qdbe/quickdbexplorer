@@ -67,6 +67,7 @@
             this.cmbEncoding.Name = "cmbEncoding";
             this.cmbEncoding.Size = new System.Drawing.Size(198, 20);
             this.cmbEncoding.TabIndex = 5;
+            this.cmbEncoding.SelectedIndexChanged += new System.EventHandler(this.cmbEncoding_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -79,10 +80,8 @@
             // 
             // EncodeSelector
             // 
-            this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(405, 86);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmbEncoding);

@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -47,18 +48,22 @@
     <ProjectReference Include="..\SqlServer2005Driver\SqlServer2005Driver.csproj">
       <Project>{fd530f44-ea9f-444d-a9a2-807c2489626e}</Project>
       <Name>SqlServer2005Driver</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\SqlServer2008Driver\SqlServer2008Driver.csproj">
       <Project>{629dc552-a57e-4795-b1c3-7a61f08a8e11}</Project>
       <Name>SqlServer2008Driver</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\SqlServer2008R2Driver\SqlServer2008R2Driver.csproj">
       <Project>{5384d94c-dfac-48e9-afa3-1f8b236de917}</Project>
       <Name>SqlServer2008R2Driver</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\SqlServer2012Driver\SqlServer2012Driver.csproj">
       <Project>{1db514c0-3cda-4daf-a3ae-a0983afbb73d}</Project>
       <Name>SqlServer2012Driver</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
