@@ -36,8 +36,10 @@ namespace quickDBExplorer
 			{
 				throw new ArgumentNullException("dbName");
 			}
-			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = "Ssms";
+            string binPath = GetBinPath();
+            
+            Process iProcess = new Process();
+            iProcess.StartInfo.FileName = binPath + "Ssms";
 			string serverstr = "";
 			if( instanceName.Length != 0 )
 			{
@@ -51,14 +53,14 @@ namespace quickDBExplorer
 			{
 				if( dbName.Length != 0 )
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -d {1} -E -nosplash",
+					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -d {1} -E -nosplash",
 						serverstr,
 						dbName
 						);
 				}
 				else
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -E -nosplash",
+					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -E -nosplash",
 						serverstr
 						);
 				}
@@ -67,7 +69,7 @@ namespace quickDBExplorer
 			{
 				if( dbName.Length != 0 )
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -d {1} -U {2} -P {3} -nosplash",
+					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -d {1} -U {2} -P {3} -nosplash",
 						serverstr,
 						dbName,
 						logOnUserId,
@@ -75,17 +77,31 @@ namespace quickDBExplorer
 				}
 				else
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -U {1} -P {2} -nosplash",
+					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -U {1} -P {2} -nosplash",
 						serverstr,
 						logOnUserId,
 						logOnPassword );
 				}
 			}
-			
-			isqlProcess.StartInfo.ErrorDialog = true;
 
-			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-			isqlProcess.Start();
+            try
+            {
+                iProcess.Start();
+            }
+            catch
+            {
+                try
+                {
+                    iProcess.StartInfo.FileName = iProcess.StartInfo.FileName.Replace("Program Files", "Program Files (x86)");
+                    iProcess.Start();
+                }
+                catch
+                {
+                    iProcess.StartInfo.FileName = "Ssms.exe";
+                    iProcess.StartInfo.ErrorDialog = true;
+                    iProcess.Start();
+                }
+            }
 		}
 
 		/// <summary>
@@ -108,41 +124,11 @@ namespace quickDBExplorer
 				throw new ArgumentNullException("dbName");
 			}
 
-            Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(regkey, false);
-			string profilerPath = string.Empty;
-			if (rkey != null)
-			{
-				bool isPathExists = true;
-				object robj = rkey.GetValue("Path");
-				if (robj != null)
-				{
-					profilerPath = robj.ToString();
-				}
-				if (profilerPath == string.Empty)
-				{
-					isPathExists = false;
-					robj = rkey.GetValue("SQLPath");
-					if (robj != null)
-					{
-						profilerPath = robj.ToString();
-					}
-				}
-				if (profilerPath != null)
-				{
-					if (profilerPath.EndsWith(@"\") == false)
-					{
-						profilerPath += @"\";
-					}
-					if (isPathExists == false)
-					{
-						profilerPath += @"bin\";
-					}
-				}
-			}
+            string binPath = GetBinPath();
 
-			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = profilerPath + "profiler.exe";
-			isqlProcess.StartInfo.ErrorDialog = false;
+			Process iProcess = new Process();
+			iProcess.StartInfo.FileName = binPath + "profiler.exe";
+			iProcess.StartInfo.ErrorDialog = false;
 			string serverstr = "";
 			if( instanceName.Length != 0 )
 			{
@@ -156,14 +142,14 @@ namespace quickDBExplorer
 			{
 				if( dbName.Length != 0 )
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture,"/S{0} /D{1} /E ",
+					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture,"/S{0} /D{1} /E ",
 						serverstr,
 						dbName
 						);
 				}
 				else
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture,"/S{0} /E ",
+					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture,"/S{0} /E ",
 						serverstr
 						);
 				}
@@ -172,7 +158,7 @@ namespace quickDBExplorer
 			{
 				if( dbName.Length != 0 )
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} /D{1} /U{2} /P{3} ",
+					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} /D{1} /U{2} /P{3} ",
 						serverstr,
 						dbName,
 						logOnUserId,
@@ -180,24 +166,79 @@ namespace quickDBExplorer
 				}
 				else
 				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} /U{1} /P{2} ",
+					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} /U{1} /P{2} ",
 						serverstr,
 						logOnUserId,
 						logOnPassword );
 				}
 			}
-			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
+			iProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
             try
             {
-                isqlProcess.Start();
+                iProcess.Start();
             }
             catch
             {
-                isqlProcess.StartInfo.FileName = "profiler.exe";
-                isqlProcess.StartInfo.ErrorDialog = true;
-                isqlProcess.Start();
+                try
+                {
+                    iProcess.StartInfo.FileName = iProcess.StartInfo.FileName.Replace("Program Files", "Program Files (x86)");
+                    iProcess.Start();
+                }
+                catch
+                {
+                    iProcess.StartInfo.FileName = "profiler.exe";
+                    iProcess.StartInfo.ErrorDialog = true;
+                    iProcess.Start();
+                }
             }
 		}
+
+        /// <summary>
+        /// ツールパスを取得する
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetBinPath()
+        {
+            Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(this.regkey, false);
+            string binPath = string.Empty;
+            if (rkey != null)
+            {
+                bool isPathExists = true;
+                object robj = rkey.GetValue("Path");
+                if (robj != null)
+                {
+                    binPath = robj.ToString();
+                }
+                if (binPath == string.Empty)
+                {
+                    isPathExists = false;
+                    robj = rkey.GetValue("SQLPath");
+                    if (robj != null)
+                    {
+                        binPath = robj.ToString();
+                    }
+                }
+                if (binPath != null)
+                {
+                    if (binPath.EndsWith(@"\") == false)
+                    {
+                        binPath += @"\";
+                    }
+                    if (isPathExists == false)
+                    {
+                        binPath += @"bin\";
+                    }
+                }
+            }
+            if (binPath != string.Empty)
+            {
+                if (!Directory.Exists(binPath))
+                {
+                    binPath = string.Empty;
+                }
+            }
+            return binPath;
+        }
 
 		/// <summary>
 		/// DataReaderからDateTimeOffset値を読み込む。
