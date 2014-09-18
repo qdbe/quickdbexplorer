@@ -191,7 +191,7 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		public virtual DateTimeOffset GetDataReaderDateTimeOffSet(IDataReader dr, int col)
 		{
-			throw new InvalidOperationException("GetDataReaderDateTimeOffSet は SQL Server 2005 では利用できません");
+			throw new InvalidOperationException("GetDataReaderDateTimeOffSet は SQL Server 2000 では利用できません");
 		}
 
 		/// <summary>
@@ -419,7 +419,7 @@ namespace quickDBExplorer
 		public void	CallEPM(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
 		{
 			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = "SQL Server Enterprise Manager.MSC";
+			isqlProcess.StartInfo.FileName = this.sqlVersion.ManagementExe;
 			isqlProcess.StartInfo.ErrorDialog = true;
 
 			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
@@ -446,7 +446,7 @@ namespace quickDBExplorer
 				throw new ArgumentNullException("dbName");
 			}
 
-			Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\80\Tools\ClientSetup\", false);
+			Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(this.sqlVersion.regkey, false);
 			string profilerPath = string.Empty;
 			if (rkey != null)
 			{
@@ -473,13 +473,13 @@ namespace quickDBExplorer
 					}
 					if (isPathExists == false)
 					{
-						profilerPath += @"binn\";
+						profilerPath += this.sqlVersion.BinDir;
 					}
 				}
 			}
 
 			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = profilerPath + "profiler.exe";
+			isqlProcess.StartInfo.FileName = profilerPath + this.sqlVersion.ProfilerExe;
 			isqlProcess.StartInfo.ErrorDialog = true;
 			string serverstr = "";
 			if( instanceName.Length != 0 )
@@ -1090,5 +1090,19 @@ where
 				);		
 		}
 		#endregion
-	}
+
+        /// <summary>
+        /// SQL Version情報
+        /// </summary>
+        protected SqlVersion sqlVersion { get; set; }
+
+        /// <summary>
+        /// SQL Version情報をセットする
+        /// </summary>
+        /// <param name="version"></param>
+        public void SetupVersion(SqlVersion version)
+        {
+            this.sqlVersion = version;
+        }
+    }
 }
