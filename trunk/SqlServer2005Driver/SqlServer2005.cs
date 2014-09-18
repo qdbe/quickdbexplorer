@@ -50,9 +50,6 @@ namespace quickDBExplorer
 		/// </summary>
 		public SqlServerDriver2005()
 		{
-			// 
-			// TODO: コンストラクタ ロジックをここに追加してください。
-			//
 		}
 		#region ISqlInterface メンバ
 
@@ -386,7 +383,7 @@ where
 				throw new ArgumentNullException("dbName");
 			}
 			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = "SqlWb";
+            isqlProcess.StartInfo.FileName = this.sqlVersion.ManagementExe;
 			string serverstr = "";
 			if( instanceName.Length != 0 )
 			{
@@ -457,7 +454,7 @@ where
 				throw new ArgumentNullException("dbName");
 			}
 
-			Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\90\Tools\ClientSetup\", false);
+            Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(this.sqlVersion.regkey, false);
 			string profilerPath = string.Empty;
 			if (rkey != null)
 			{
@@ -484,13 +481,13 @@ where
 					}
 					if (isPathExists == false)
 					{
-						profilerPath += @"bin\";
+						profilerPath += this.sqlVersion.BinDir;
 					}
 				}
 			}
 
 			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = profilerPath + "profiler90.exe";
+            isqlProcess.StartInfo.FileName = profilerPath + this.sqlVersion.ProfilerExe;
 			isqlProcess.StartInfo.ErrorDialog = true;
 			string serverstr = "";
 			if( instanceName.Length != 0 )
@@ -1155,6 +1152,20 @@ where
 		}
 
 		#endregion
+
+        /// <summary>
+        /// SQL Version情報
+        /// </summary>
+        protected SqlVersion sqlVersion { get; set; }
+
+        /// <summary>
+        /// SQL Version情報をセットする
+        /// </summary>
+        /// <param name="version"></param>
+        public void SetupVersion(SqlVersion version)
+        {
+            this.sqlVersion = version;
+        }
 
 	}
 }

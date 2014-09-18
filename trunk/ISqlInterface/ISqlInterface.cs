@@ -232,5 +232,13 @@ namespace quickDBExplorer
 		/// <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
 		/// <returns></returns>
 		string GetSearchObjectSql(string searchCondition, quickDBExplorer.SearchType searchType, bool isCaseSensitive, List<string> limitSchema, bool isTable, bool isView, bool isSynonym, bool isFunction, bool isProcedure);
+
+
+
+        /// <summary>
+        /// バージョン情報を設定する
+        /// </summary>
+        /// <param name="version"></param>
+        void SetupVersion(SqlVersion version);
 	}
 }

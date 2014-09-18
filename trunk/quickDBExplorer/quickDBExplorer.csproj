@@ -261,7 +261,6 @@
     </Compile>
     <Compile Include="Utils\qdbeUtil.cs" />
     <Compile Include="Utils\saveClass.cs" />
-    <Compile Include="Utils\SqlVersion.cs" />
     <Compile Include="Utils\TextHistoryDataSet.Designer.cs" />
     <EmbeddedResource Include="Controls\objectListView.resx">
       <DependentUpon>objectListView.cs</DependentUpon>

@@ -310,5 +310,19 @@ namespace quickDBExplorer
         }
 
         #endregion
+
+        /// <summary>
+        /// SQL Version情報
+        /// </summary>
+        protected SqlVersion sqlVersion { get; set; }
+
+        /// <summary>
+        /// SQL Version情報をセットする
+        /// </summary>
+        /// <param name="version"></param>
+        public void SetupVersion(SqlVersion version)
+        {
+            this.sqlVersion = version;
+        }
     }
 }

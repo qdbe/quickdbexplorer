@@ -15,7 +15,9 @@ namespace quickDBExplorer
 	/// </summary>
 	public class SqlServerDriver2008 : SqlServerDriver2005
 	{
-        protected string regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\100\Tools\ClientSetup\";
+        public SqlServerDriver2008()
+        {
+        }
 
 		/// <summary>
 		/// EnterPriseManagerを起動する
@@ -36,53 +38,11 @@ namespace quickDBExplorer
 			{
 				throw new ArgumentNullException("dbName");
 			}
-            string binPath = GetBinPath();
+            string binPath = GetManagementStudioPath();
             
             Process iProcess = new Process();
-            iProcess.StartInfo.FileName = binPath + "Ssms";
-			string serverstr = "";
-			if( instanceName.Length != 0 )
-			{
-				serverstr = serverRealName + "\\" + instanceName;
-			}
-			else
-			{
-				serverstr = serverRealName;
-			}
-			if( isUseTrust == true )
-			{
-				if( dbName.Length != 0 )
-				{
-					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -d {1} -E -nosplash",
-						serverstr,
-						dbName
-						);
-				}
-				else
-				{
-					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -E -nosplash",
-						serverstr
-						);
-				}
-			}
-			else
-			{
-				if( dbName.Length != 0 )
-				{
-					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -d {1} -U {2} -P {3} -nosplash",
-						serverstr,
-						dbName,
-						logOnUserId,
-						logOnPassword );
-				}
-				else
-				{
-					iProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," -S {0} -U {1} -P {2} -nosplash",
-						serverstr,
-						logOnUserId,
-						logOnPassword );
-				}
-			}
+            iProcess.StartInfo.FileName = binPath + this.sqlVersion.ManagementExe;
+            iProcess.StartInfo.Arguments = GetManagementStudioParam(serverRealName, instanceName, isUseTrust, dbName, logOnUserId, logOnPassword);
 
             try
             {
@@ -97,12 +57,81 @@ namespace quickDBExplorer
                 }
                 catch
                 {
-                    iProcess.StartInfo.FileName = "Ssms.exe";
+                    iProcess.StartInfo.FileName = this.sqlVersion.ManagementExe;
                     iProcess.StartInfo.ErrorDialog = true;
                     iProcess.Start();
                 }
             }
 		}
+
+        protected virtual string GetManagementStudioParam(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
+        {
+            string result = string.Empty;
+            string serverstr = "";
+            if (instanceName.Length != 0)
+            {
+                serverstr = serverRealName + "\\" + instanceName;
+            }
+            else
+            {
+                serverstr = serverRealName;
+            }
+            if (isUseTrust == true)
+            {
+                if (dbName.Length != 0)
+                {
+                    result = string.Format(System.Globalization.CultureInfo.CurrentCulture, " -S {0} -d {1} -E -nosplash",
+                        serverstr,
+                        dbName
+                        );
+                }
+                else
+                {
+                    result = string.Format(System.Globalization.CultureInfo.CurrentCulture, " -S {0} -E -nosplash",
+                        serverstr
+                        );
+                }
+            }
+            else
+            {
+                if (dbName.Length != 0)
+                {
+                    result = string.Format(System.Globalization.CultureInfo.CurrentCulture, " -S {0} -d {1} -U {2} -P {3} -nosplash",
+                        serverstr,
+                        dbName,
+                        logOnUserId,
+                        logOnPassword);
+                }
+                else
+                {
+                    result = string.Format(System.Globalization.CultureInfo.CurrentCulture, " -S {0} -U {1} -P {2} -nosplash",
+                        serverstr,
+                        logOnUserId,
+                        logOnPassword);
+                }
+            }
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// マネージメントスタジオのパスを取得する
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetManagementStudioPath()
+        {
+            string binPath = GetBinPath();
+            if (binPath != string.Empty)
+            {
+                string msdir = binPath + @"ManagementStudio\";
+                if (Directory.Exists(msdir))
+                {
+                    binPath = msdir;
+                }
+            }
+            return binPath;
+        }
 
 		/// <summary>
 		/// Profilerを起動する
@@ -124,10 +153,10 @@ namespace quickDBExplorer
 				throw new ArgumentNullException("dbName");
 			}
 
-            string binPath = GetBinPath();
+            string binPath = GetProfilerPath();
 
 			Process iProcess = new Process();
-			iProcess.StartInfo.FileName = binPath + "profiler.exe";
+            iProcess.StartInfo.FileName = binPath + this.sqlVersion.ProfilerExe;
 			iProcess.StartInfo.ErrorDialog = false;
 			string serverstr = "";
 			if( instanceName.Length != 0 )
@@ -186,7 +215,7 @@ namespace quickDBExplorer
                 }
                 catch
                 {
-                    iProcess.StartInfo.FileName = "profiler.exe";
+                    iProcess.StartInfo.FileName = this.sqlVersion.ProfilerExe;
                     iProcess.StartInfo.ErrorDialog = true;
                     iProcess.Start();
                 }
@@ -194,12 +223,21 @@ namespace quickDBExplorer
 		}
 
         /// <summary>
+        /// プロファイラーのパスを取得する
+        /// </summary>
+        /// <returns></returns>
+        protected virtual string GetProfilerPath()
+        {
+            return GetBinPath();
+        }
+
+        /// <summary>
         /// ツールパスを取得する
         /// </summary>
         /// <returns></returns>
         protected virtual string GetBinPath()
         {
-            Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(this.regkey, false);
+            Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(this.sqlVersion.regkey, false);
             string binPath = string.Empty;
             if (rkey != null)
             {

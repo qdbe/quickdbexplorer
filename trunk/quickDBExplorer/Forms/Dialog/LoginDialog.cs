@@ -547,6 +547,7 @@ namespace quickDBExplorer
             asm = Assembly.LoadFrom(dllName);
             ISqlInterface driver = (ISqlInterface)asm.CreateInstance(className, true);
             driver.SetConnection(con, MainForm.DefaultSqlTimeOut);
+            driver.SetupVersion(sqlVer);
             return driver;
         }
 
