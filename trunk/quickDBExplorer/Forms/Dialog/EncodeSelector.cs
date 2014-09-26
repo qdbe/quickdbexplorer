@@ -28,7 +28,12 @@ namespace quickDBExplorer.Forms.Dialog
         public EncodeSelector()
         {
             InitializeComponent();
+            this.cmbEncoding.Items.Clear();
+            this.cmbEncoding.Items.Add(new EncodingSet("Shift-JIS", Encoding.GetEncoding("Shift_JIS")));
+            this.cmbEncoding.Items.Add(new EncodingSet("UTF-8", Encoding.UTF8));
+            this.cmbEncoding.Items.Add(new EncodingSet("UNICODE", Encoding.Unicode));
             this.SelectedEncoding = Encoding.GetEncoding("Shift_JIS");
+            this.cmbEncoding.SelectedIndex = 0;
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -46,10 +51,8 @@ namespace quickDBExplorer.Forms.Dialog
 
         private void cmbEncoding_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.cmbEncoding.Items.Clear();
-            this.cmbEncoding.Items.Add(new EncodingSet("Shift-JIS", Encoding.GetEncoding("Shift_JIS")));
-            this.cmbEncoding.Items.Add(new EncodingSet("UTF-8", Encoding.UTF8));
-            this.cmbEncoding.Items.Add(new EncodingSet("UTF-16", Encoding.Unicode));
+            EncodingSet selected = (EncodingSet)this.cmbEncoding.SelectedItem;
+            this.SelectedEncoding = selected.Encode;
         }
 
         class EncodingSet
