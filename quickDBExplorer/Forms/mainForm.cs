@@ -5995,12 +5995,13 @@ namespace quickDBExplorer.Forms
                     {
                         break;
                     }
-                    linecount++;
-                    if (linecount == 1 && isSkipFirstLine == true)
+                    if (linecount == 0 && isSkipFirstLine == true)
                     {
                         // 先頭行は読み飛ばし
                         continue;
                     }
+                    isSetAll = true;
+                    linecount++;
 
                     string[] firstsplit = readstr.Split(Separator.ToCharArray());
                     readData.Clear();
@@ -6059,21 +6060,25 @@ namespace quickDBExplorer.Forms
                         dr[eachField.Name] = parseResult;
 
                     }
-                    if (isSetAll == true)
-                    {
-                        drAr.Add(dr);
-                    }
-                    else
-                    {
-                        drAr.Clear();
+                    if (isSetAll == false){
                         break;
                     }
+                    drAr.Add(dr);
+                }
+                if (linecount == 0)
+                {
+                    MessageBox.Show("読み込みすべき行がありませんでした。");
+                    isSetAll = false;
+                }
+                // エラー発生時は何も返さない
+                if (isSetAll == false)
+                {
+                    drAr.Clear();
                 }
             }
             catch (Exception exp)
             {
                 this.SetErrorMessage(exp);
-                linecount = -1;
             }
 			return drAr;
 		}
