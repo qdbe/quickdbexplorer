@@ -27,7 +27,7 @@
 上記以外にもManagement Studio等の起動が可能です。
 
 1.2.	動作環境
-・	.NET Framework 2.0(Service Pack 1) がインストールされているWindowsマシン
+・	.NET Framework 3.5(Service Pack 1) がインストールされているWindowsマシン
 ・	画面解像度 が　1024 x 768 あることを想定して画面デザインしています
 ・	対象としているデータベースエンジンは SQL SERVER 2014/2012/2008R2/2008/2005/2000 
 
