@@ -54,10 +54,19 @@ namespace quickDBExplorer
 		/// </summary>
 		public event ShowZoomEventHandler ShowZoom = null;
 
+
+        private Dictionary<string, TextHistoryDataSet> pHistories;
         /// <summary>
         /// ì¸óÕóöóé´èë
         /// </summary>
-        public Dictionary<string, TextHistoryDataSet> Histories { get; set; }
+        public Dictionary<string, TextHistoryDataSet> Histories {
+            get { return this.pHistories; }
+            set
+            {
+                this.pHistories = value;
+                ResetHistoryMemuItem();
+            }
+        }
 
         /// <summary>
         /// óöóÉLÅ[
@@ -79,20 +88,25 @@ namespace quickDBExplorer
             set
             {
                 pHistoryKey = value;
-                if (Histories == null)
+                ResetHistoryMemuItem();
+            }
+        }
+
+        private void ResetHistoryMemuItem()
+        {
+            if (Histories == null)
+            {
+                if (this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
                 {
-                    if (this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
-                    {
-                        this.contextMenu1.MenuItems.Remove(this.menuShowHistory);
-                    }
+                    this.contextMenu1.MenuItems.Remove(this.menuShowHistory);
                 }
-                else
+            }
+            else
+            {
+                if (!this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
                 {
-                    if (!this.contextMenu1.MenuItems.Contains(this.menuShowHistory))
-                    {
-                        this.menuShowHistory.Index = this.contextMenu1.MenuItems.Count + 1;
-                        this.contextMenu1.MenuItems.Add(this.menuShowHistory);
-                    }
+                    this.menuShowHistory.Index = this.contextMenu1.MenuItems.Count + 1;
+                    this.contextMenu1.MenuItems.Add(this.menuShowHistory);
                 }
             }
         }
