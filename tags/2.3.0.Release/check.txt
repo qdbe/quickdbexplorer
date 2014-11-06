@@ -1,0 +1,28 @@
+
+
+CLRå^
+	insertï∂
+		ÅÀ ToString()
+	CSV ì«Ç›çûÇ› ÅÀ NG
+		èëèoÇµÅ@ ÅÀ ToString()
+	DataGrid
+		ÅÀ ToString()
+	
+		
+
+
+	
+	
+	id,geo
+1,POLYGON ((0 0, 3 0, 3 3, 0 3, 0 0), (2 2, 2 1, 1 1, 1 2, 2 2))
+
+id,geo
+2,"POLYGON ((0 0, 3 0, 3 3, 0 3, 0 0), (2 2, 2 1, 1 1, 1 2, 2 2))"
+
+SET NOCOUNT ON
+GO
+
+insert into [qTest].[Table1]  ( [id],[] )  values ( 2, [sys].[geometry]::Parse(N'POLYGON ((0 0, 3 0, 3 3, 0 3, 0 0), (2 2, 2 1, 1 1, 1 2, 2 2))') ) 
+GO
+
+
