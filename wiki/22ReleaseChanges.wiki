@@ -1,4 +1,3 @@
-#labels Featured
 =2.1Releaseから2.2Releaseへの変更点一覧=
 
  * SQL SERVER 2012 への対応
