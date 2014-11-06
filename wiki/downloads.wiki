@@ -1,4 +1,4 @@
-  https://quickdbexplorer.googlecode.com/svn/downloads/quickDBExplorer.2.3.0.zip <br/>
+  [https://quickdbexplorer.googlecode.com/svn/downloads/quickDBExplorer.2.3.0.zip quickDBExplorer.2.3.0.zip] <br/>
   https://quickdbexplorer.googlecode.com/svn/downloads/quickDBExplorer.2.2.0.zip <br/>
   https://quickdbexplorer.googlecode.com/svn/downloads/quickDBExplorer.2.1.0.zip <br/>
   https://quickdbexplorer.googlecode.com/svn/downloads/quickDBExplorer.2.0.1.zip <br/>
