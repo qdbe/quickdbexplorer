@@ -19,52 +19,87 @@
     </section>
 
     <section class="main-content">
-      <p>1.1.    quickDBExplorer とは
-.NET Framework 3.5.1上で動作する、データベース(SQL SERVER 2014/2012/2008R2/2008/2005/2000)アプリケーションの開発者向けのMDI形式の補助ツールです。エンタープライズマネージャー/SQL Server Management Studioやクエリアナライザでは用意されていない機能を実現したり、使いにくい機能を補助する目的に作成されました(完全な置き換えは目標としていません)。
-特にテーブルに対する処理に特化しています。
-テーブルを指定した
-・ insert文の生成(insert文によるデータエクスポート機能)
-・ フィールドのリストの生成
-・ Select 文の生成
-・ 簡易的なCreate 文の生成
-・ CSV,TAB区切り形式でのデータ抽出&amp;読込
-・ INDEX情報の表示
-・ データの表示＆編集
-・ フィールド一覧の表示
-・ データ件数の取得
-・ データ依存関係の取得
-・ フィールド情報を元にしたwhere句の生成
-等が可能です。
+      <h1>
+<a id="whats-quickdbexplorer" class="anchor" href="#whats-quickdbexplorer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What's quickDBExplorer?</h1>
+
+<h2>
+<a id="quickdbexplorer" class="anchor" href="#quickdbexplorer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>quickDBExplorer</h2>
+
+<p>は Microsoft 社のSQL SERVER (2014/2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツールです
+.NET Framework 3.5上で動作する、データベースアプリケーションの開発者向けのMDI形式の補助ツールです。エンタープライズマネージャーやクエリアナライザでは用意されていない機能を実現したり、使いにくい機能を補助する目的に作成されました(完全な置き換えは目標としていません)。 特にテーブルに対する処理に特化しています。
+テーブル/View/Synonymを指定した</p>
+
+<ul>
+<li>    insert文の生成(insert文によるデータエクスポート機能)</li>
+<li>    フィールドのリストの生成</li>
+<li>    Select 文の生成</li>
+<li>    簡易的なCreate 文の生成</li>
+<li>    CSV,TAB区切り形式でのデータ抽出＆読込</li>
+<li>    INDEX情報の表示</li>
+<li>    データの表示＆編集</li>
+<li>    フィールド一覧の表示</li>
+<li>    データ件数の取得</li>
+<li>    データ依存関係の取得</li>
+<li>    フィールド情報を元にしたwhere句の生成 </li>
+</ul>
+
+<p>等が可能です。
 結果は、クリップボードもしくはファイルへ書き出されます
-上記以外にもManagement Studio等の起動が可能です。</p>
+上記以外にもクエリアナライザ等の起動が可能です。</p>
 
-<p>1.2.    動作環境
-・ .NET Framework 3.5(Service Pack 1) がインストールされているWindowsマシン
-・ 画面解像度 が　1024 x 768 あることを想定して画面デザインしています
-・ 対象としているデータベースエンジンは SQL SERVER 2014/2012/2008R2/2008/2005/2000 </p>
+<h2>
+<a id="動作環境" class="anchor" href="#%E5%8B%95%E4%BD%9C%E7%92%B0%E5%A2%83" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>動作環境</h2>
 
-<ol>
-<li> 利用方法</li>
-</ol>
+<pre><code>.NET Framework 3.5 SP1 がインストールされているWindowsマシン
+画面解像度 が　1024 x 768 あることを想定して画面デザインしています
+対象としているデータベースエンジンは SQL SERVER 2014/2012/2008R2/2008/2005/2000 
+</code></pre>
 
-<p>2.1.    起動方法
-・ quickDBExplorer を起動します。
-・ 起動後には下記のようなウィンドウが表示されます。このウィンドウを閉じた場合、コントロールキー＋Nキーを押下するか、メニューから「接続」―「新規接続」を選択することで同じ画面を表示することが可能です。</p>
+<h2>
+<a id="announce" class="anchor" href="#announce" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Announce!</h2>
 
-<p>ヘルプについては、インストール後の quickDBExplorerHelp.htm を参照してください。</p>
+<pre><code>2.3.0 Release版のダウンロードが可能になりました。 最新の更新情報・変更情報はこちら 
+</code></pre>
 
-<ol>
-<li> インストール・アンインストール</li>
-</ol>
+<h2>
+<a id="documents" class="anchor" href="#documents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Documents</h2>
 
-<p>3.1.        インストール方法
-    以前のバージョンを利用している場合には、コントロールパネル-プログラムの追加と削除 からquickDBExplorerを選択し、一旦アンインストールするか、展開後のファイルで上書きしてください。
-    quickDBExplorer.2.3.0.zip を任意の場所に解凍して下さい。
-    Ver 2.0 以降はレジストリなどは利用していません。</p>
+<h2>
+<a id="開発環境" class="anchor" href="#%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>開発環境</h2>
 
-<p>3.2.        アンインストール方法
-    インストール時に展開したファイル、およびquickDBExplorer.xml(存在する場合のみ)を削除していただくだけで結構です。
-    レジストリは利用していません。</p>
+<pre><code>Release 2.3.0 用ヘルプファイル
+Release 2.2.0 用ヘルプファイル
+Release 2.1.0 用ヘルプファイル
+Release 2.0.1 用ヘルプファイル
+Release 2.0.0 用ヘルプファイル
+Release 1.5.0 用ヘルプファイル 
+</code></pre>
+
+<h2>
+<a id="screenshot" class="anchor" href="#screenshot" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ScreenShot</h2>
+
+<h2>
+<a id="その他公開場所" class="anchor" href="#%E3%81%9D%E3%81%AE%E4%BB%96%E5%85%AC%E9%96%8B%E5%A0%B4%E6%89%80" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>その他公開場所</h2>
+
+<p>ここでも公開しています Vector</p>
+
+<h2>
+<a id="english" class="anchor" href="#english" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>English</h2>
+
+<p>Front End tool for Microsoft SQL Server 2014/2012/2008R2/2008/2000/2005
+this tool can follows</p>
+
+<pre><code>make insert script from data
+make csv/tsv files from data
+load data to table from file or Clipboard
+make field list
+view &amp; edit table data quickly
+view index information
+etc... 
+</code></pre>
+
+<p>These results are output to a clipboard or a file.
+Run under .NET Framework 3.5 SP1 </p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/qdbe/quickdbexplorer">Quickdbexplorer</a> is maintained by <a href="https://github.com/qdbe">qdbe</a>.</span>
