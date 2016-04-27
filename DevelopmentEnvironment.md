@@ -1,0 +1,4 @@
+開発環境
+
+  * Microsoft Visual Studio 2013
+  * Microsoft SQL SERVER 2000/2005/2008/2008R2/2012/2014

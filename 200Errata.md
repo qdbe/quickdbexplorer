@@ -1,0 +1,5 @@
+Release 2.0.0 において 現在、以下の不具合が確認されています
+
+  * CSV/TSV読み込みにおいて 「CLR型の列を含むオブジェクトは指定できません」とエラーメッセージが出て、読み込みできない [Issues #8](http://code.google.com/p/quickdbexplorer/issues/detail?id=8)
+
+これらは次のバージョンである 2.0.1 において修正予定です
