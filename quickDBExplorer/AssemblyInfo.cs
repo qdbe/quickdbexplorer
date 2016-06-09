@@ -8,11 +8,11 @@ using System.Runtime.InteropServices;
 // 情報を変更するには、これらの属性値を変更してください。
 //
 [assembly: AssemblyTitle("quickDBExplorer")]
-[assembly: AssemblyDescription("Front End tool for Microsoft SQL Server 2000/2005/2008/2008R2/2012/2014\r\nSQL SERVER (2014/2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツール")]
+[assembly: AssemblyDescription("Front End tool for Microsoft SQL Server 2016/2014/2012/2008R2/2008/2005/2000 \r\nSQL SERVER (2016/2014/2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツール")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("-")]
 [assembly: AssemblyProduct("quickDBExplorer!")]
-[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2014 under GPLv2")]
+[assembly: AssemblyCopyright("CopyRight; Y.N 2004-2016 under GPLv2")]
 [assembly: AssemblyTrademark("Go Ahead!")]
 [assembly: AssemblyCulture("")]		
 
@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 // 下にあるように、'*' を使って、すべての値を指定するか、
 // ビルドおよびリビジョン番号を既定値にすることができます。
 
-[assembly: AssemblyVersion("2.3.0.*")]
+[assembly: AssemblyVersion("2.4.0.*")]
 [assembly: AssemblyInformationalVersion("2.3.0")]
 [assembly: System.Resources.NeutralResourcesLanguage("ja-JP")]
 
