@@ -4,6 +4,827 @@
         <name>ISqlInterface</name>
     </assembly>
     <members>
+        <member name="T:quickDBExplorer.ICommand.CommandArg">
+            <summary>
+            プラグイン用引数(画面条件)
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.DataBaseName">
+            <summary>
+            データベース名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.Schema">
+            <summary>
+            選択状態のスキーマ
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.ShowSystemUser">
+            <summary>
+            システムユーザーを表示するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.ShowView">
+            <summary>
+            Viewを表示するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.SortOrder">
+            <summary>
+            オブジェクトの表示順
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.Target">
+            <summary>
+            出力先
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.OutputTargetFileInfo">
+            <summary>
+            出力先ファイル情報
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.Encode">
+            <summary>
+            出力文字エンコード
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.Where">
+            <summary>
+            where 条件
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.OrderBy">
+            <summary>
+            ソート順
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.Alias">
+            <summary>
+            テーブルAlias
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.ShowGrid">
+            <summary>
+            データを表示するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.MaxDataCount">
+            <summary>
+            データ表示の最大件数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.SelectedObjects">
+            <summary>
+            選択状態にあるオブジェクト
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ICommand.CommandArg.ShowFieldAttribute">
+            <summary>
+            属性を表示するか否か
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.ICommand.OutputTarget">
+            <summary>
+            出力先
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ICommand.OutputTarget.OUTPUT_CLIPBOARD">
+            <summary>
+            クリップボード
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ICommand.OutputTarget.OUTPUT_SINGLEFILE">
+            <summary>
+            単一ファイル
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ICommand.OutputTarget.OUTPUT_MULTIFILE">
+            <summary>
+            複数ファイル
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.ICommand.OutputEncode">
+            <summary>
+            文字エンコーディング種類
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ICommand.OutputEncode.ENCODE_SJIS">
+            <summary>
+            SHIFTJIS
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ICommand.OutputEncode.ENCODE_UNICODE">
+            <summary>
+            UNICODE(UTF-16LE)
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ICommand.OutputEncode.ENCODE_UTF8">
+            <summary>
+            UTF-8(LE)
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.DataType.baseType">
+            <summary>
+            SQLデータタイプ
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DataType.baseType.DefalutParseString">
+            <summary>
+            型が存在するか否かをチェックする場合の文字列
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DataType.baseType.Type">
+            <summary>
+            C# の型を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DataType.baseType.TypeHasSize">
+            <summary>
+            型の表現に長さを含むか否か
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DataType.baseType.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DataType.baseType.IsBinary">
+            <summary>
+            バイナリか否か
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DataType.baseType.CanLoadData">
+            <summary>
+            文字データを読み込むことができるか否か
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DataType.baseType.Convert(System.Data.IDataReader,System.Int32,System.String,System.String,System.Boolean,quickDBExplorer.DBFieldInfo)">
+            <summary>
+            フィールドのデータを出力用に変換する
+            </summary>
+            <param name="dr">データリーダー</param>
+            <param name="col">カラム</param>
+            <param name="addstr"></param>
+            <param name="unichar"></param>
+            <param name="outNull"></param>
+            <param name="fieldInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DataType.baseType.GetFieldTypeString(System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            フィールドリストに表示するための文字列を取得する
+            </summary>
+            <param name="typename"></param>
+            <param name="length"></param>
+            <param name="prec"></param>
+            <param name="xscale"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DataType.baseType.GetCSharpTypeString">
+            <summary>
+            C# の型名を返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DataType.baseType.TryParse(System.String,quickDBExplorer.DBFieldInfo,System.Object@,System.String@)">
+            <summary>
+            データ受け入れ用のチェック
+            </summary>
+            <param name="data"></param>
+            <param name="fieldInfo"></param>
+            <param name="result"></param>
+            <param name="errmsg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DataType.baseType.TryParse(System.String,System.Type,System.String,System.Object@,System.String@)">
+            <summary>
+            文字列をパースする
+            </summary>
+            <param name="data"></param>
+            <param name="t"></param>
+            <param name="defaultErrorMessage"></param>
+            <param name="result"></param>
+            <param name="errmsg"></param>
+            <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.DataType.TypeFactory">
+            <summary>
+            SQLデータタイプのファクトリ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DataType.TypeFactory.Create(System.String)">
+            <summary>
+            SQLデータタイプを生成する
+            </summary>
+            <param name="typeString">SQLデータタイプの型名(例：nvarchar, int)</param>
+            <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.DBFieldInfo">
+            <summary>
+            テーブル等のフィールド項目の情報を管理するクラス
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Col">
+            <summary>
+            対応するDataColumn
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Name">
+            <summary>
+            フィールド名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.FormalName">
+            <summary>
+            []付のフィールド名称を取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.TypeName">
+            <summary>
+            フィールドの型
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.FormalTypeName">
+            <summary>
+            []付の型名称を取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.RealTypeName">
+            <summary>
+            システムの型名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Length">
+            <summary>
+            フィールドの最大長
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Prec">
+            <summary>
+            小数点の場合の整数値の最大桁数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Xscale">
+            <summary>
+            小数点の場合の小数点値の最大桁数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Colid">
+            <summary>
+            フィールドのカラムIDを管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.ColOrder">
+            <summary>
+            フィールドのカラム順序を管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IsAllowNull">
+            <summary>
+            NULLを許可するか否かを管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IsNullable">
+            <summary>
+            Nullableか否かを返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.Collation">
+            <summary>
+            文字フィールドの場合の照合順序を管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.PrimaryKeyOrder">
+            <summary>
+            プライマリキーの対象になっている場合のプライマリキー内の順序
+            開始は0
+            -1の場合はプライマリキーの要素でないことを指す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IsIdentity">
+            <summary>
+            Identity 属性を持つか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IsBinary">
+            <summary>
+            バイナリか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IncSeed">
+            <summary>
+            Identityフィールドの場合の Seed値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IncStep">
+            <summary>
+            Identity フィールドの場合の Step値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyId">
+            <summary>
+            この型の作成元であるアセンブリの ID です。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyClassName">
+            <summary>
+            この型を定義しているアセンブリ内のクラスの名前です。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyQFN">
+            <summary>
+            アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.IsAssembly">
+            <summary>
+            オブジェクトがアセンブリを利用しているか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.CanLoadData">
+            <summary>
+            文字データを読み込むことができるか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBFieldInfo.CSharpTypeString">
+            <summary>
+            C# の型名を返す
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DBFieldInfo.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DBFieldInfo.ConvData(System.Data.IDataReader,System.Int32,System.String,System.String,System.Boolean)">
+            <summary>
+            出力用にデータを加工する
+            </summary>
+            <param name="dr"></param>
+            <param name="col"></param>
+            <param name="addstr"></param>
+            <param name="unichar"></param>
+            <param name="outNull"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBFieldInfo.GetFieldTypeString">
+            <summary>
+            フィールドの表示形式を取得する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBFieldInfo.GetDDLTypeString(System.Boolean)">
+            <summary>
+            DDL用の型定義文字列を取得する
+            </summary>
+            <param name="useParentheses"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBFieldInfo.TryParse(System.String,quickDBExplorer.DBFieldInfo,System.Object@,System.String@)">
+            <summary>
+            文字列をパースしてオブジェクトに変換する
+            </summary>
+            <param name="data"></param>
+            <param name="fieldInfo"></param>
+            <param name="result"></param>
+            <param name="errmsg"></param>
+            <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.DataGetEventHandler">
+            <summary>
+            フィールド情報取得時のデータ再取得用イベントハンドラ
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.DBObjectInfo">
+            <summary>
+            リストに表示する DB オブジェクトの情報を管理する
+            </summary>
+        </member>
+        <member name="E:quickDBExplorer.DBObjectInfo.DataGet">
+            <summary>
+            フィールド情報取得時に情報がまだ未取得時に発生するイベント
+            このイベントハンドラにより、データをセットさせる
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.ObjType">
+            <summary>
+            オブジェクトの種類
+            空白: Table
+            V:		View
+            S:		Synonym
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.DisplayObjType">
+            <summary>
+            オブジェクトの種類(表示用)
+            空白: Table
+            V:		View
+            S:		Synonym
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.Owner">
+            <summary>
+            オブジェクトの所有者名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.ObjName">
+            <summary>
+            オブジェクトの名称
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.ObjId">
+            <summary>
+            オブジェクトのID
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.CreateTime">
+            <summary>
+            オブジェクトが生成された日時
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBase">
+            <summary>
+            オブジェクトがシノニムの場合、その参照先
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBaseType">
+            <summary>
+            オブジェクトがシノニムの場合、その参照先のオブジェクトの種類
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.FormalName">
+            <summary>
+            [] でくくったオブジェクトの正式名称を取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.CanSelect">
+            <summary>
+            select 可能か否かを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsSynonym">
+            <summary>
+            シノニムかどうかを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.CanStatistics">
+            <summary>
+            統計情報の更新が可能などうかを取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.RealObjName">
+            <summary>
+            実際のオブジェクト名を取得する
+            シノニムの場合はその参照先のオブジェクト名を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.RealObjNameNoPare">
+            <summary>
+            実際のオブジェクト名を取得する
+            名称には[]はつかない
+            シノニムの場合はその参照先のオブジェクト名を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.RealObjType">
+            <summary>
+            実際のオブジェクトの型を取得する
+            シノニムの場合はその参照先のオブジェクトの型を返す
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.FieldInfo">
+            <summary>
+            オブジェクトのフィールド情報をキャッシュして保持する
+            フィールド情報のコレクションを管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.FieldCount">
+            <summary>
+            フィールドの項目数を取得する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.Item(System.String)">
+            <summary>
+            フィールドの情報を返す
+            </summary>
+            <param name="filedName">フィールド名</param>
+            <returns></returns>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.Item(System.Int32)">
+            <summary>
+            フィールドの情報を返す
+            </summary>
+            <param name="fieldorder">フィールドの順番(0オリジン)</param>
+            <returns></returns>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.SchemaBaseInfo">
+            <summary>
+            スキーマ情報を保持している DataTable
+            行は保持していない
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.#ctor(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="objectid">オブジェクトID</param>
+            <param name="objectType">オブジェクトの型</param>
+            <param name="owner">オブジェクトの所有者名</param>
+            <param name="name">オブジェクトの名称</param>
+            <param name="createdTime">オブジェクトの作成日時</param>
+            <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
+            <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.ToString">
+            <summary>
+            文字列化する。
+            所有者名+"."+オブジェクト名
+            を返す
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.ClearField">
+            <summary>
+            フィールド情報をクリアする
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.AddField(quickDBExplorer.DBFieldInfo)">
+            <summary>
+            フィールド情報を追加する
+            </summary>
+            <param name="add"></param>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.GetAliasName(System.String)">
+            <summary>
+            Alias が指定されていた場合に、Alias 付きのオブジェクト正式名称を返す
+            </summary>
+            <param name="alias">オブジェクト修飾子</param>
+            <returns>解析後のオブジェクト名([owner].[tabblname] alias 形式)</returns>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.GetNameAdd(System.String)">
+            <summary>
+            正式名称に指定れた文字列を付加したものにして返す
+            </summary>
+            <param name="suffix">付加する文字列</param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.ReloadInfo">
+            <summary>
+            オブジェクトの情報を取得しなおす
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsUseAssemblyType">
+            <summary>
+            フィールドにアセンブリを利用した型があるか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsUseIdentity">
+            <summary>
+            フィールドに Identityを利用したものを持つか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.IsView">
+            <summary>
+            Viewか否か
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.SetSchemaInfo(System.Data.DataTable)">
+            <summary>
+            スキーマ情報のテーブルをセットする
+            </summary>
+            <param name="dt"></param>
+        </member>
+        <member name="T:quickDBExplorer.EmptySqlInterface">
+            <summary>
+            空の ISqlInterface を返す
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.SetConnection(System.Data.IDbConnection,System.Int32)">
+            <summary>
+            空処理
+            </summary>
+            <param name="sqlConnection"></param>
+            <param name="timeout"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.CloseConnection">
+            <summary>
+            空処理
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.SetTimeout(System.Int32)">
+            <summary>
+            空処理
+            </summary>
+            <param name="timeout"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.NewDataAdapter">
+            <summary>
+            空処理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.NewSqlCommand">
+            <summary>
+            空処理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.NewSqlCommand(System.String)">
+            <summary>
+            空処理
+            </summary>
+            <param name="stSql"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.SetSelectCmd(System.Data.Common.DbDataAdapter,System.Data.IDbCommand)">
+            <summary>
+            空処理
+            </summary>
+            <param name="da"></param>
+            <param name="cmd"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.SetTransaction(System.Data.IDbCommand)">
+            <summary>
+            空処理
+            </summary>
+            <param name="cmd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.SetCommandBuilder(System.Data.Common.DbDataAdapter)">
+            <summary>
+            空処理
+            </summary>
+            <param name="da"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetDataReaderBytes(System.Data.IDataReader,System.Int32)">
+            <summary>
+            空処理
+            </summary>
+            <param name="dr"></param>
+            <param name="col"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetDataReaderDateTimeOffSet(System.Data.IDataReader,System.Int32)">
+            <summary>
+            空処理
+            </summary>
+            <param name="dr"></param>
+            <param name="col"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetDBSelect">
+            <summary>
+            空処理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.SetDatabase(System.String)">
+            <summary>
+            空処理
+            </summary>
+            <param name="dbName"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetTableListColumnName">
+            <summary>
+            空処理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetOwnerLabel1">
+            <summary>
+            空処理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetOwnerLabel2">
+            <summary>
+            空処理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetDisplayObjList(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String)">
+            <summary>
+            空処理
+            </summary>
+            <param name="isDisplayTable"></param>
+            <param name="isDisplayView"></param>
+            <param name="isSynonym"></param>
+            <param name="isDisplayFunction"></param>
+            <param name="isDisplaySP"></param>
+            <param name="ownerList"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetOwnerList(System.Boolean)">
+            <summary>
+            空処理
+            </summary>
+            <param name="isDisplaySysUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.CallISQL(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            空処理
+            </summary>
+            <param name="serverRealName"></param>
+            <param name="instanceName"></param>
+            <param name="isUseTrust"></param>
+            <param name="dbName"></param>
+            <param name="logOnUserId"></param>
+            <param name="logOnPassword"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            空処理
+            </summary>
+            <param name="serverRealName"></param>
+            <param name="instanceName"></param>
+            <param name="isUseTrust"></param>
+            <param name="dbName"></param>
+            <param name="logOnUserId"></param>
+            <param name="logOnPassword"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.CallProfile(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            空処理
+            </summary>
+            <param name="serverRealName"></param>
+            <param name="instanceName"></param>
+            <param name="isUseTrust"></param>
+            <param name="dbName"></param>
+            <param name="logOnUserId"></param>
+            <param name="logOnPassword"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetDdlCreateString(quickDBExplorer.DBObjectInfo,System.Boolean)">
+            <summary>
+            空処理
+            </summary>
+            <param name="databaseObjectInfo"></param>
+            <param name="useParentheses"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetDDLDropStr(quickDBExplorer.DBObjectInfo)">
+            <summary>
+            空処理
+            </summary>
+            <param name="databaseObjectInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.InitObjTable(System.Data.DataTable)">
+            <summary>
+            空処理
+            </summary>
+            <param name="objTable"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.AddObjectInfo(quickDBExplorer.DBObjectInfo,System.Data.DataTable)">
+            <summary>
+            空処理
+            </summary>
+            <param name="databaseObjectInfo"></param>
+            <param name="dt"></param>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.ObjectDetailSet">
+            <summary>
+            空処理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String})">
+            <summary>
+            空処理
+            </summary>
+            <param name="searchCondition"></param>
+            <param name="searchType"></param>
+            <param name="isCaseSensitive"></param>
+            <param name="limitSchema"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String},System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            空処理
+            </summary>
+            <param name="searchCondition"></param>
+            <param name="searchType"></param>
+            <param name="isCaseSensitive"></param>
+            <param name="limitSchema"></param>
+            <param name="isTable"></param>
+            <param name="isView"></param>
+            <param name="isSynonym"></param>
+            <param name="isFunction"></param>
+            <param name="isProcedure"></param>
+            <returns></returns>
+        </member>
+        <member name="P:quickDBExplorer.EmptySqlInterface.sqlVersion">
+            <summary>
+            SQL Version情報
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.SetupVersion(quickDBExplorer.SqlVersion)">
+            <summary>
+            SQL Version情報をセットする
+            </summary>
+            <param name="version"></param>
+        </member>
         <member name="T:quickDBExplorer.ISqlInterface">
             <summary>
             SQLのバージョンによる実装の違いからくるSQL文などを生成する為のクラス
@@ -225,408 +1046,11 @@
             <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
             <returns></returns>
         </member>
-        <member name="T:quickDBExplorer.DataType.baseType">
+        <member name="M:quickDBExplorer.ISqlInterface.SetupVersion(quickDBExplorer.SqlVersion)">
             <summary>
-            SQLデータタイプ
+            バージョン情報を設定する
             </summary>
-        </member>
-        <member name="M:quickDBExplorer.DataType.baseType.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DataType.baseType.Convert(System.Data.IDataReader,System.Int32,System.String,System.String,System.Boolean,quickDBExplorer.DBFieldInfo)">
-            <summary>
-            フィールドのデータを出力用に変換する
-            </summary>
-            <param name="dr">データリーダー</param>
-            <param name="col">カラム</param>
-            <param name="addstr"></param>
-            <param name="unichar"></param>
-            <param name="outNull"></param>
-            <param name="fieldInfo"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.DataType.baseType.GetFieldTypeString(System.String,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            フィールドリストに表示するための文字列を取得する
-            </summary>
-            <param name="typename"></param>
-            <param name="length"></param>
-            <param name="prec"></param>
-            <param name="xscale"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.DataType.baseType.TryParse(System.String,quickDBExplorer.DBFieldInfo,System.Object@)">
-            <summary>
-            データ受け入れ用のチェック
-            </summary>
-            <param name="data"></param>
-            <param name="fieldInfo"></param>
-            <param name="result"></param>
-            <returns></returns>
-        </member>
-        <member name="P:quickDBExplorer.DataType.baseType.TypeHasSize">
-            <summary>
-            型の表現に長さを含むか否か
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.DataGetEventHandler">
-            <summary>
-            フィールド情報取得時のデータ再取得用イベントハンドラ
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.DBObjectInfo">
-            <summary>
-            リストに表示する DB オブジェクトの情報を管理する
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
-            <summary>
-            コンストラクタ
-            </summary>
-            <param name="objectType">オブジェクトの型</param>
-            <param name="owner">オブジェクトの所有者名</param>
-            <param name="name">オブジェクトの名称</param>
-            <param name="createdTime">オブジェクトの作成日時</param>
-            <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
-            <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.ToString">
-            <summary>
-            文字列化する。
-            所有者名+"."+オブジェクト名
-            を返す
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.ClearField">
-            <summary>
-            フィールド情報をクリアする
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.AddField(quickDBExplorer.DBFieldInfo)">
-            <summary>
-            フィールド情報を追加する
-            </summary>
-            <param name="add"></param>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.GetAliasName(System.String)">
-            <summary>
-            Alias が指定されていた場合に、Alias 付きのオブジェクト正式名称を返す
-            </summary>
-            <param name="alias">オブジェクト修飾子</param>
-            <returns>解析後のオブジェクト名([owner].[tabblname] alias 形式)</returns>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.GetNameAdd(System.String)">
-            <summary>
-            正式名称に指定れた文字列を付加したものにして返す
-            </summary>
-            <param name="suffix">付加する文字列</param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.ReloadInfo">
-            <summary>
-            オブジェクトの情報を取得しなおす
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.SetSchemaInfo(System.Data.DataTable)">
-            <summary>
-            スキーマ情報のテーブルをセットする
-            </summary>
-            <param name="dt"></param>
-        </member>
-        <member name="E:quickDBExplorer.DBObjectInfo.DataGet">
-            <summary>
-            フィールド情報取得時に情報がまだ未取得時に発生するイベント
-            このイベントハンドラにより、データをセットさせる
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.ObjType">
-            <summary>
-            オブジェクトの種類
-            空白: Table
-            V:		View
-            S:		Synonym
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.DisplayObjType">
-            <summary>
-            オブジェクトの種類(表示用)
-            空白: Table
-            V:		View
-            S:		Synonym
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.Owner">
-            <summary>
-            オブジェクトの所有者名
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.ObjName">
-            <summary>
-            オブジェクトの名称
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.CreateTime">
-            <summary>
-            オブジェクトが生成された日時
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBase">
-            <summary>
-            オブジェクトがシノニムの場合、その参照先
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.SynonymBaseType">
-            <summary>
-            オブジェクトがシノニムの場合、その参照先のオブジェクトの種類
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.FormalName">
-            <summary>
-            [] でくくったオブジェクトの正式名称を取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.CanSelect">
-            <summary>
-            select 可能か否かを取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.IsSynonym">
-            <summary>
-            シノニムかどうかを取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.CanStatistics">
-            <summary>
-            統計情報の更新が可能などうかを取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.RealObjName">
-            <summary>
-            実際のオブジェクト名を取得する
-            シノニムの場合はその参照先のオブジェクト名を返す
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.RealObjNameNoPare">
-            <summary>
-            実際のオブジェクト名を取得する
-            名称には[]はつかない
-            シノニムの場合はその参照先のオブジェクト名を返す
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.RealObjType">
-            <summary>
-            実際のオブジェクトの型を取得する
-            シノニムの場合はその参照先のオブジェクトの型を返す
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.FieldInfo">
-            <summary>
-            オブジェクトのフィールド情報をキャッシュして保持する
-            フィールド情報のコレクションを管理する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.FieldCount">
-            <summary>
-            フィールドの項目数を取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.Item(System.String)">
-            <summary>
-            フィールドの情報を返す
-            </summary>
-            <param name="filedName">フィールド名</param>
-            <returns></returns>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.Item(System.Int32)">
-            <summary>
-            フィールドの情報を返す
-            </summary>
-            <param name="fieldorder">フィールドの順番(0オリジン)</param>
-            <returns></returns>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.SchemaBaseInfo">
-            <summary>
-            スキーマ情報を保持している DataTable
-            行は保持していない
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.IsUseAssemblyType">
-            <summary>
-            フィールドにアセンブリを利用した型があるか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBObjectInfo.IsUseIdentity">
-            <summary>
-            フィールドに Identityを利用したものを持つか否か
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.DBFieldInfo">
-            <summary>
-            テーブル等のフィールド項目の情報を管理するクラス
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.DBFieldInfo.pAssemblyId">
-            <summary>
-            この型の作成元であるアセンブリの ID です。
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.DBFieldInfo.pAssemblyClassName">
-            <summary>
-            この型を定義しているアセンブリ内のクラスの名前です。
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.DBFieldInfo.pAssemblyQFN">
-            <summary>
-            アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DBFieldInfo.#ctor">
-            <summary>
-            コンストラクタ
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.DBFieldInfo.ConvData(System.Data.IDataReader,System.Int32,System.String,System.String,System.Boolean)">
-            <summary>
-            出力用にデータを加工する
-            </summary>
-            <param name="dr"></param>
-            <param name="col"></param>
-            <param name="addstr"></param>
-            <param name="unichar"></param>
-            <param name="outNull"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.DBFieldInfo.GetFieldTypeString">
-            <summary>
-            フィールドの表示形式を取得する
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.DBFieldInfo.GetDDLTypeString(System.Boolean)">
-            <summary>
-            DDL用の型定義文字列を取得する
-            </summary>
-            <param name="useParentheses"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.DBFieldInfo.TryParse(System.String,quickDBExplorer.DBFieldInfo,System.Object@)">
-            <summary>
-            文字列をパースしてオブジェクトに変換する
-            </summary>
-            <param name="data"></param>
-            <param name="fieldInfo"></param>
-            <param name="result"></param>
-            <returns></returns>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.Col">
-            <summary>
-            対応するDataColumn
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.Name">
-            <summary>
-            フィールド名
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.FormalName">
-            <summary>
-            []付のフィールド名称を取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.TypeName">
-            <summary>
-            フィールドの型
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.FormalTypeName">
-            <summary>
-            []付の型名称を取得する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.RealTypeName">
-            <summary>
-            システムの型名
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.Length">
-            <summary>
-            フィールドの最大長(文字列の場合)
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.Prec">
-            <summary>
-            小数点の場合の整数値の最大桁数
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.Xscale">
-            <summary>
-            小数点の場合の小数点値の最大桁数
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.Colid">
-            <summary>
-            フィールドのカラムIDを管理する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.ColOrder">
-            <summary>
-            フィールドのカラム順序を管理する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.IsNullable">
-            <summary>
-            NULLを許可するか否かを管理する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.Collation">
-            <summary>
-            文字フィールドの場合の照合順序を管理する
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.PrimaryKeyOrder">
-            <summary>
-            プライマリキーの対象になっている場合のプライマリキー内の順序
-            開始は0
-            -1の場合はプライマリキーの要素でないことを指す
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.IsIdentity">
-            <summary>
-            Identity 属性を持つか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.IncSeed">
-            <summary>
-            Identityフィールドの場合の Seed値
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.IncStep">
-            <summary>
-            Identity フィールドの場合の Step値
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyId">
-            <summary>
-            この型の作成元であるアセンブリの ID です。
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyClassName">
-            <summary>
-            この型を定義しているアセンブリ内のクラスの名前です。
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.AssemblyQFN">
-            <summary>
-            アセンブリの修飾された型名です。この名前は、Type.GetType() に渡すのに適した形式になっています。
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.DBFieldInfo.IsAssembly">
-            <summary>
-            オブジェクトがアセンブリを利用しているか否か
-            </summary>
+            <param name="version"></param>
         </member>
         <member name="T:quickDBExplorer.SearchType">
             <summary>
@@ -648,356 +1072,128 @@
             完全一致
             </summary>
         </member>
-        <member name="T:quickDBExplorer.DataType.TypeFactory">
+        <member name="T:quickDBExplorer.SqlVersion">
             <summary>
-            SQLデータタイプのファクトリ
+            SqlVersion の概要の説明です。
+            </summary>
+            
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.pFullVersionString">
+            <summary>
+            バージョン番号をあらわす文字列
             </summary>
         </member>
-        <member name="M:quickDBExplorer.DataType.TypeFactory.Create(System.String)">
+        <member name="P:quickDBExplorer.SqlVersion.FullVersionString">
             <summary>
-            SQLデータタイプを生成する
-            </summary>
-            <param name="typeString">SQLデータタイプの型名(例：nvarchar, int)</param>
-            <returns></returns>
-        </member>
-        <member name="T:quickDBExplorer.ICommand.CommandArg">
-            <summary>
-            プラグイン用引数(画面条件)
+            バージョン番号をあらわす文字列
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.DataBaseName">
+        <member name="F:quickDBExplorer.SqlVersion.pPublicVersion">
             <summary>
-            データベース名
+            2000,2005,2008 等
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.Schema">
+        <member name="P:quickDBExplorer.SqlVersion.PublicVersionNo">
             <summary>
-            選択状態のスキーマ
+            製品名につくバージョン（2000,2005,2008等)
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.ShowSystemUser">
+        <member name="P:quickDBExplorer.SqlVersion.AdapterNameString">
             <summary>
-            システムユーザーを表示するか否か
+            接続用DLLにつく名称
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.ShowView">
+        <member name="F:quickDBExplorer.SqlVersion.pIsSynonym">
             <summary>
-            Viewを表示するか否か
+            該当バーージョンで Synonym を利用できるか
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.SortOrder">
+        <member name="P:quickDBExplorer.SqlVersion.CanUseSynonym">
             <summary>
-            オブジェクトの表示順
+            該当バーージョンで Synonym を利用できるか
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.Target">
+        <member name="F:quickDBExplorer.SqlVersion.pCanUseQueryAnalyzer">
             <summary>
-            出力先
+            クエリアナライザーを利用可能か否か
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.OutputTargetFileInfo">
+        <member name="P:quickDBExplorer.SqlVersion.CanUseQueryAnalyzer">
             <summary>
-            出力先ファイル情報
+            クエリアナライザーを利用可能か否か
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.Encode">
+        <member name="F:quickDBExplorer.SqlVersion.pIsManagementStudio">
             <summary>
-            出力文字エンコード
+            Management Studio と呼ぶか否か
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.Where">
+        <member name="P:quickDBExplorer.SqlVersion.IsManagementStudio">
             <summary>
-            where 条件
+            Management Studio と呼ぶか否か
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.OrderBy">
+        <member name="P:quickDBExplorer.SqlVersion.ProfilerExe">
             <summary>
-            ソート順
+            プロファイラーのEXE名
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.Alias">
+        <member name="P:quickDBExplorer.SqlVersion.ManagementExe">
             <summary>
-            テーブルAlias
+            マネージメントスタジオのEXE名
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.ShowGrid">
+        <member name="P:quickDBExplorer.SqlVersion.BinDir">
             <summary>
-            データを表示するか否か
+            ツールパス
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.MaxDataCount">
+        <member name="P:quickDBExplorer.SqlVersion.regkey">
             <summary>
-            データ表示の最大件数
+            設定値記憶レジストリパス
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.SelectedObjects">
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2000">
             <summary>
-            選択状態にあるオブジェクト
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.ICommand.CommandArg.ShowFieldAttribute">
-            <summary>
-            属性を表示するか否か
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.ICommand.OutputTarget">
-            <summary>
-            出力先
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ICommand.OutputTarget.OUTPUT_CLIPBOARD">
-            <summary>
-            クリップボード
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ICommand.OutputTarget.OUTPUT_SINGLEFILE">
-            <summary>
-            単一ファイル
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ICommand.OutputTarget.OUTPUT_MULTIFILE">
-            <summary>
-            複数ファイル
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.ICommand.OutputEncode">
-            <summary>
-            文字エンコーディング種類
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ICommand.OutputEncode.ENCODE_SJIS">
-            <summary>
-            SHIFTJIS
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ICommand.OutputEncode.ENCODE_UNICODE">
-            <summary>
-            UNICODE(UTF-16LE)
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.ICommand.OutputEncode.ENCODE_UTF8">
-            <summary>
-            UTF-8(LE)
-            </summary>
-        </member>
-        <member name="T:quickDBExplorer.EmptySqlInterface">
-            <summary>
-            空の ISqlInterface を返す
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.SetConnection(System.Data.IDbConnection,System.Int32)">
-            <summary>
-            空処理
-            </summary>
-            <param name="sqlConnection"></param>
-            <param name="timeout"></param>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.CloseConnection">
-            <summary>
-            空処理
-            </summary>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.SetTimeout(System.Int32)">
-            <summary>
-            空処理
-            </summary>
-            <param name="timeout"></param>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.NewDataAdapter">
-            <summary>
-            空処理
+            SQL Server 2000 を表すインスタンスを生成する
             </summary>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.NewSqlCommand">
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2005">
             <summary>
-            空処理
+            SQL Server 2005 を表すインスタンスを生成する
             </summary>
-            <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.NewSqlCommand(System.String)">
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2008">
             <summary>
-            空処理
+            SQL Server 2008 を表すインスタンスを生成する
             </summary>
-            <param name="stSql"></param>
-            <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.SetSelectCmd(System.Data.Common.DbDataAdapter,System.Data.IDbCommand)">
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2008R2">
             <summary>
-            空処理
+            SQL Server 2008R2 を表すインスタンスを生成する
             </summary>
-            <param name="da"></param>
-            <param name="cmd"></param>
         </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.SetTransaction(System.Data.IDbCommand)">
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2012">
             <summary>
-            空処理
+            SQL Server 2012 を表すインスタンスを生成する
             </summary>
-            <param name="cmd"></param>
-            <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.SetCommandBuilder(System.Data.Common.DbDataAdapter)">
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2014">
             <summary>
-            空処理
+            SQL Server 2014 を表すインスタンスを生成する
             </summary>
-            <param name="da"></param>
         </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetDataReaderBytes(System.Data.IDataReader,System.Int32)">
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2016">
             <summary>
-            空処理
+            SQL Server 2008 を表すインスタンスを生成する
             </summary>
-            <param name="dr"></param>
-            <param name="col"></param>
-            <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetDataReaderDateTimeOffSet(System.Data.IDataReader,System.Int32)">
+        <member name="M:quickDBExplorer.SqlVersion.#ctor(System.String)">
             <summary>
-            空処理
+            コンストラクタ
             </summary>
-            <param name="dr"></param>
-            <param name="col"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetDBSelect">
-            <summary>
-            空処理
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.SetDatabase(System.String)">
-            <summary>
-            空処理
-            </summary>
-            <param name="dbName"></param>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetTableListColumnName">
-            <summary>
-            空処理
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetOwnerLabel1">
-            <summary>
-            空処理
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetOwnerLabel2">
-            <summary>
-            空処理
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetDisplayObjList(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.String)">
-            <summary>
-            空処理
-            </summary>
-            <param name="isDisplayTable"></param>
-            <param name="isDisplayView"></param>
-            <param name="isSynonym"></param>
-            <param name="isDisplayFunction"></param>
-            <param name="isDisplaySP"></param>
-            <param name="ownerList"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetOwnerList(System.Boolean)">
-            <summary>
-            空処理
-            </summary>
-            <param name="isDisplaySysUser"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.CallISQL(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
-            <summary>
-            空処理
-            </summary>
-            <param name="serverRealName"></param>
-            <param name="instanceName"></param>
-            <param name="isUseTrust"></param>
-            <param name="dbName"></param>
-            <param name="logOnUserId"></param>
-            <param name="logOnPassword"></param>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
-            <summary>
-            空処理
-            </summary>
-            <param name="serverRealName"></param>
-            <param name="instanceName"></param>
-            <param name="isUseTrust"></param>
-            <param name="dbName"></param>
-            <param name="logOnUserId"></param>
-            <param name="logOnPassword"></param>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.CallProfile(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
-            <summary>
-            空処理
-            </summary>
-            <param name="serverRealName"></param>
-            <param name="instanceName"></param>
-            <param name="isUseTrust"></param>
-            <param name="dbName"></param>
-            <param name="logOnUserId"></param>
-            <param name="logOnPassword"></param>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetDdlCreateString(quickDBExplorer.DBObjectInfo,System.Boolean)">
-            <summary>
-            空処理
-            </summary>
-            <param name="databaseObjectInfo"></param>
-            <param name="useParentheses"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetDDLDropStr(quickDBExplorer.DBObjectInfo)">
-            <summary>
-            空処理
-            </summary>
-            <param name="databaseObjectInfo"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.InitObjTable(System.Data.DataTable)">
-            <summary>
-            空処理
-            </summary>
-            <param name="objTable"></param>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.AddObjectInfo(quickDBExplorer.DBObjectInfo,System.Data.DataTable)">
-            <summary>
-            空処理
-            </summary>
-            <param name="databaseObjectInfo"></param>
-            <param name="dt"></param>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.ObjectDetailSet">
-            <summary>
-            空処理
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String})">
-            <summary>
-            空処理
-            </summary>
-            <param name="searchCondition"></param>
-            <param name="searchType"></param>
-            <param name="isCaseSensitive"></param>
-            <param name="limitSchema"></param>
-            <returns></returns>
-        </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String},System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
-            <summary>
-            空処理
-            </summary>
-            <param name="searchCondition"></param>
-            <param name="searchType"></param>
-            <param name="isCaseSensitive"></param>
-            <param name="limitSchema"></param>
-            <param name="isTable"></param>
-            <param name="isView"></param>
-            <param name="isSynonym"></param>
-            <param name="isFunction"></param>
-            <param name="isProcedure"></param>
-            <returns></returns>
+            <param name="versionStr">Connection.ServerVersion の結果を渡す</param>
         </member>
     </members>
 </doc>

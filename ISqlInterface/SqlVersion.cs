@@ -128,7 +128,7 @@ namespace quickDBExplorer
 		}
 
         /// <summary>
-        /// SQL Server 2008 を表すインスタンスを生成する
+        /// SQL Server 2008R2 を表すインスタンスを生成する
         /// </summary>
         public static SqlVersion SQLSERVER2008R2()
         {
@@ -137,7 +137,7 @@ namespace quickDBExplorer
 
 
         /// <summary>
-        /// SQL Server 2008 を表すインスタンスを生成する
+        /// SQL Server 2012 を表すインスタンスを生成する
         /// </summary>
         public static SqlVersion SQLSERVER2012()
         {
@@ -145,18 +145,26 @@ namespace quickDBExplorer
         }
 
         /// <summary>
-        /// SQL Server 2008 を表すインスタンスを生成する
+        /// SQL Server 2014 を表すインスタンスを生成する
         /// </summary>
         public static SqlVersion SQLSERVER2014()
         {
             return new SqlVersion("12.0");
         }
 
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		/// <param name="versionStr">Connection.ServerVersion の結果を渡す</param>
-		public SqlVersion(string versionStr)
+        /// <summary>
+        /// SQL Server 2008 を表すインスタンスを生成する
+        /// </summary>
+        public static SqlVersion SQLSERVER2016()
+        {
+            return new SqlVersion("13.0");
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="versionStr">Connection.ServerVersion の結果を渡す</param>
+        public SqlVersion(string versionStr)
 		{
 			// Connection.ServerVersion の結果が渡されるので、ここで判断する
 			if(versionStr.StartsWith("08") )
@@ -232,6 +240,18 @@ namespace quickDBExplorer
                 this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\120\Tools\ClientSetup\";
                 this.BinDir = @"binn\";
             }
+            else if (versionStr.StartsWith("13.0"))
+            {
+                this.pPublicVersion = "2016";
+                this.pFullVersionString = versionStr;
+                this.pIsSynonym = true;
+                this.pCanUseQueryAnalyzer = false;
+                this.pIsManagementStudio = true;
+                this.ProfilerExe = "profiler.exe";
+                this.ManagementExe = "ssms.exe";
+                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\130\Tools\ClientSetup\";
+                this.BinDir = @"binn\";
+            }
         }
-	}
+    }
 }
