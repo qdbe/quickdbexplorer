@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A644365-E55B-4DF9-B963-84CB8CC643BA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SqlServer2016Driver</RootNamespace>
+    <AssemblyName>SqlServer2016Driver</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServer2016.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SqlServer2005Driver\SqlServer2005Driver.csproj">
+      <Project>{fd530f44-ea9f-444d-a9a2-807c2489626e}</Project>
+      <Name>SqlServer2005Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2008Driver\SqlServer2008Driver.csproj">
+      <Project>{629dc552-a57e-4795-b1c3-7a61f08a8e11}</Project>
+      <Name>SqlServer2008Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2008R2Driver\SqlServer2008R2Driver.csproj">
+      <Project>{5384d94c-dfac-48e9-afa3-1f8b236de917}</Project>
+      <Name>SqlServer2008R2Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2012Driver\SqlServer2012Driver.csproj">
+      <Project>{1db514c0-3cda-4daf-a3ae-a0983afbb73d}</Project>
+      <Name>SqlServer2012Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2014Driver\SqlServer2014Driver.csproj">
+      <Project>{b7dd9c65-ccd3-4a77-ad46-08e12f14a734}</Project>
+      <Name>SqlServer2014Driver</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)quickDBExplorer\bin\$(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -3,3 +3,23 @@
 ################################################################################
 
 /ISqlInterface/bin/Debug
+/ISqlInterface/obj/Debug
+/quickDBExplorer/bin/Debug
+/quickDBExplorer/obj/Debug
+/.vs/QuickDBExplorer/v14/.suo
+/SqlServer2000Driver/bin/Debug
+/SqlServer2000Driver/obj/Debug
+/SqlServer2005Driver/bin/Debug
+/SqlServer2005Driver/obj/Debug
+/SqlServer2000Driver/SqlServer2000Driver.xml
+/SqlServer2005Driver/SqlServer2005Driver.xml
+/SqlServer2008Driver/bin/Debug
+/SqlServer2008Driver/obj/Debug
+/SqlServer2008R2Driver/bin/Debug
+/SqlServer2008R2Driver/obj/Debug
+/SqlServer2012Driver/bin/Debug
+/SqlServer2012Driver/obj/Debug
+/SqlServer2014Driver/bin/Debug
+/SqlServer2014Driver/obj/Debug
+/SqlServer2016Driver/bin/Debug
+/SqlServer2016Driver/obj/Debug
