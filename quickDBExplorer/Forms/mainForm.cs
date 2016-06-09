@@ -308,7 +308,12 @@ namespace quickDBExplorer.Forms
         private ToolTip commTooltip;
         private MenuItem fldmenuMakePoco;
         private MenuItem fldmenuMakePocoNoClass;
-		private System.Windows.Forms.ColumnHeader ColCreateDate;
+        private ContextMenuStrip filterMenu;
+        private ToolStripMenuItem filterCS;
+        private ToolStripMenuItem filterNonCS;
+        private System.Windows.Forms.ColumnHeader ColCreateDate;
+        private ToolStripMenuItem filterClear;
+        private bool IsFilterCaseSensitive = true;
 
 		/// <summary>
 		/// コンストラクタ
@@ -412,10 +417,10 @@ namespace quickDBExplorer.Forms
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dbList = new quickDBExplorer.qdbeListBox();
             this.objectList = new quickDBExplorer.ObjectListView();
-            this.ColTVSType = new System.Windows.Forms.ColumnHeader();
-            this.ColOwner = new System.Windows.Forms.ColumnHeader();
-            this.ColObjName = new System.Windows.Forms.ColumnHeader();
-            this.ColCreateDate = new System.Windows.Forms.ColumnHeader();
+            this.ColTVSType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColOwner = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColObjName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColCreateDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuISQLW = new System.Windows.Forms.MenuItem();
             this.btnInsert = new System.Windows.Forms.Button();
             this.btnFieldList = new System.Windows.Forms.Button();
@@ -503,6 +508,10 @@ namespace quickDBExplorer.Forms
             this.menuTimeoutChange = new System.Windows.Forms.ToolStripMenuItem();
             this.DBReloadMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.commTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.filterMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.filterCS = new System.Windows.Forms.ToolStripMenuItem();
+            this.filterNonCS = new System.Windows.Forms.ToolStripMenuItem();
+            this.filterClear = new System.Windows.Forms.ToolStripMenuItem();
             this.grpViewMode.SuspendLayout();
             this.grpSortMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -520,6 +529,7 @@ namespace quickDBExplorer.Forms
             this.UpDownSplitter.Panel2.SuspendLayout();
             this.UpDownSplitter.SuspendLayout();
             this.dbMenu.SuspendLayout();
+            this.filterMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // MsgArea
@@ -530,8 +540,8 @@ namespace quickDBExplorer.Forms
             // 
             // dbList
             // 
-            this.dbList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dbList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dbList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.dbList.HorizontalScrollbar = true;
             this.dbList.ItemHeight = 12;
@@ -546,9 +556,9 @@ namespace quickDBExplorer.Forms
             // 
             this.objectList.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.objectList.AllowDrop = true;
-            this.objectList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.objectList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.objectList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ColTVSType,
             this.ColOwner,
@@ -567,9 +577,9 @@ namespace quickDBExplorer.Forms
             this.objectList.UseCompatibleStateImageBehavior = false;
             this.objectList.View = System.Windows.Forms.View.Details;
             this.objectList.CopyData += new quickDBExplorer.qdbeListView.CopyDataEventHandler(this.objectList_CopyData);
+            this.objectList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.objectList_ColumnClick);
             this.objectList.SelectedIndexChanged += new System.EventHandler(this.objectList_SelectedIndexChanged);
             this.objectList.DoubleClick += new System.EventHandler(this.InsertMake);
-            this.objectList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.objectList_ColumnClick);
             // 
             // ColTVSType
             // 
@@ -682,8 +692,8 @@ namespace quickDBExplorer.Forms
             // 
             // txtWhere
             // 
-            this.txtWhere.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtWhere.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtWhere.CanCtrlDelete = true;
             this.txtWhere.Histories = null;
             this.txtWhere.HistoryKey = "txtWhere";
@@ -693,15 +703,15 @@ namespace quickDBExplorer.Forms
             this.txtWhere.Name = "txtWhere";
             this.txtWhere.Size = new System.Drawing.Size(117, 19);
             this.txtWhere.TabIndex = 11;
-            this.txtWhere.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtWhere_KeyDown);
             this.txtWhere.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtWhere_ShowHistory);
-            this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
             this.txtWhere.ShowZoom += new quickDBExplorer.ShowZoomEventHandler(this.txtWhere_ShowZoom);
+            this.txtWhere.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtWhere_KeyDown);
+            this.txtWhere.Leave += new System.EventHandler(this.txtWhere_Leave);
             // 
             // txtSort
             // 
-            this.txtSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSort.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSort.CanCtrlDelete = true;
             this.txtSort.Histories = null;
             this.txtSort.HistoryKey = "txtSort";
@@ -711,10 +721,10 @@ namespace quickDBExplorer.Forms
             this.txtSort.Name = "txtSort";
             this.txtSort.Size = new System.Drawing.Size(117, 19);
             this.txtSort.TabIndex = 14;
-            this.txtSort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSort_KeyDown);
             this.txtSort.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtSort_ShowHistory);
-            this.txtSort.Leave += new System.EventHandler(this.txtSort_Leave);
             this.txtSort.ShowZoom += new quickDBExplorer.ShowZoomEventHandler(this.txtSort_ShowZoom);
+            this.txtSort.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSort_KeyDown);
+            this.txtSort.Leave += new System.EventHandler(this.txtSort_Leave);
             // 
             // label1
             // 
@@ -744,8 +754,8 @@ namespace quickDBExplorer.Forms
             // 
             // ownerListbox
             // 
-            this.ownerListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.ownerListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ownerListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ownerListbox.HorizontalScrollbar = true;
             this.ownerListbox.ItemHeight = 12;
@@ -769,9 +779,9 @@ namespace quickDBExplorer.Forms
             // dbGrid
             // 
             this.dbGrid.AlternatingBackColor = System.Drawing.Color.Silver;
-            this.dbGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.dbGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dbGrid.BackColor = System.Drawing.Color.White;
             this.dbGrid.CaptionBackColor = System.Drawing.Color.Gainsboro;
             this.dbGrid.CaptionFont = new System.Drawing.Font("Tahoma", 8F);
@@ -895,8 +905,8 @@ namespace quickDBExplorer.Forms
             this.txtDispCount.Size = new System.Drawing.Size(72, 19);
             this.txtDispCount.TabIndex = 1;
             this.txtDispCount.Text = "1000";
-            this.txtDispCount.Leave += new System.EventHandler(this.txtDispCount_Leave);
             this.txtDispCount.TextChanged += new System.EventHandler(this.txtDispCount_TextChanged);
+            this.txtDispCount.Leave += new System.EventHandler(this.txtDispCount_Leave);
             // 
             // label3
             // 
@@ -964,8 +974,8 @@ namespace quickDBExplorer.Forms
             // 
             // txtOutput
             // 
-            this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOutput.CanCtrlDelete = true;
             this.txtOutput.Histories = null;
             this.txtOutput.HistoryKey = "txtOutput";
@@ -1025,9 +1035,9 @@ namespace quickDBExplorer.Forms
             // 
             // fieldListbox
             // 
-            this.fieldListbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.fieldListbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.fieldListbox.ContextMenu = this.fldContextMenu;
             this.fieldListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.fieldListbox.HorizontalScrollbar = true;
@@ -1312,8 +1322,8 @@ namespace quickDBExplorer.Forms
             // 
             // txtAlias
             // 
-            this.txtAlias.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtAlias.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAlias.CanCtrlDelete = true;
             this.txtAlias.Histories = null;
             this.txtAlias.HistoryKey = "txtAlias";
@@ -1324,11 +1334,11 @@ namespace quickDBExplorer.Forms
             this.txtAlias.Size = new System.Drawing.Size(137, 19);
             this.txtAlias.TabIndex = 17;
             this.commTooltip.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
-            this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
             this.txtAlias.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtAlias_ShowHistory);
-            this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
-            this.txtAlias.Enter += new System.EventHandler(this.txtAlias_Enter);
             this.txtAlias.ShowZoom += new quickDBExplorer.ShowZoomEventHandler(this.txtAlias_ShowZoom);
+            this.txtAlias.Enter += new System.EventHandler(this.txtAlias_Enter);
+            this.txtAlias.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAlias_KeyDown);
+            this.txtAlias.Leave += new System.EventHandler(this.txtAlias_Leave);
             // 
             // ObjFieldSplitter
             // 
@@ -1374,12 +1384,12 @@ namespace quickDBExplorer.Forms
             this.labelFilter.Size = new System.Drawing.Size(54, 12);
             this.labelFilter.TabIndex = 3;
             this.labelFilter.Text = "フィルタ(&A)";
-            this.labelFilter.Click += new System.EventHandler(this.label4_Click);
+            this.labelFilter.MouseClick += new System.Windows.Forms.MouseEventHandler(this.labelFilter_MouseClick);
             // 
             // txtObjFilter
             // 
-            this.txtObjFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtObjFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtObjFilter.CanCtrlDelete = true;
             this.txtObjFilter.Histories = null;
             this.txtObjFilter.HistoryKey = "txtObjFilter";
@@ -1390,14 +1400,14 @@ namespace quickDBExplorer.Forms
             this.txtObjFilter.Size = new System.Drawing.Size(153, 19);
             this.txtObjFilter.TabIndex = 22;
             this.txtObjFilter.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtObjFilter_ShowHistory);
-            this.txtObjFilter.Leave += new System.EventHandler(this.txtObjFilter_Leave);
             this.txtObjFilter.TextChanged += new System.EventHandler(this.txtObjFilter_TextChanged);
+            this.txtObjFilter.Leave += new System.EventHandler(this.txtObjFilter_Leave);
             // 
             // MainSplitter
             // 
-            this.MainSplitter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.MainSplitter.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.MainSplitter.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.MainSplitter.Location = new System.Drawing.Point(0, 0);
             this.MainSplitter.Name = "MainSplitter";
@@ -1467,21 +1477,53 @@ namespace quickDBExplorer.Forms
             this.menuTimeoutChange,
             this.DBReloadMenu});
             this.dbMenu.Name = "dbMenu";
-            this.dbMenu.Size = new System.Drawing.Size(168, 48);
+            this.dbMenu.Size = new System.Drawing.Size(163, 48);
             // 
             // menuTimeoutChange
             // 
             this.menuTimeoutChange.Name = "menuTimeoutChange";
-            this.menuTimeoutChange.Size = new System.Drawing.Size(167, 22);
+            this.menuTimeoutChange.Size = new System.Drawing.Size(162, 22);
             this.menuTimeoutChange.Text = "タイムアウト変更(&t)";
             this.menuTimeoutChange.Click += new System.EventHandler(this.menuTimeoutChange_Click);
             // 
             // DBReloadMenu
             // 
             this.DBReloadMenu.Name = "DBReloadMenu";
-            this.DBReloadMenu.Size = new System.Drawing.Size(167, 22);
+            this.DBReloadMenu.Size = new System.Drawing.Size(162, 22);
             this.DBReloadMenu.Text = "DB再読み込み(&R)";
             this.DBReloadMenu.Click += new System.EventHandler(this.DBReloadMenu_Click);
+            // 
+            // filterMenu
+            // 
+            this.filterMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.filterClear,
+            this.filterCS,
+            this.filterNonCS});
+            this.filterMenu.Name = "filterMenu";
+            this.filterMenu.Size = new System.Drawing.Size(214, 92);
+            // 
+            // filterCS
+            // 
+            this.filterCS.Name = "filterCS";
+            this.filterCS.Size = new System.Drawing.Size(213, 22);
+            this.filterCS.Text = "大文字・小文字を区別する";
+            this.filterCS.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.filterCS.Click += new System.EventHandler(this.filterCS_Click);
+            // 
+            // filterNonCS
+            // 
+            this.filterNonCS.Name = "filterNonCS";
+            this.filterNonCS.Size = new System.Drawing.Size(213, 22);
+            this.filterNonCS.Text = "大文字・小文字を区別しない";
+            this.filterNonCS.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.filterNonCS.Click += new System.EventHandler(this.filterNonCS_Click);
+            // 
+            // filterClear
+            // 
+            this.filterClear.Name = "filterClear";
+            this.filterClear.Size = new System.Drawing.Size(213, 22);
+            this.filterClear.Text = "フィルター値をクリア";
+            this.filterClear.Click += new System.EventHandler(this.filterClear_Click);
             // 
             // MainForm
             // 
@@ -1495,8 +1537,8 @@ namespace quickDBExplorer.Forms
             this.ShowInTaskbar = false;
             this.Text = "Database選択";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.Controls.SetChildIndex(this.MsgArea, 0);
             this.Controls.SetChildIndex(this.MainSplitter, 0);
@@ -1521,6 +1563,7 @@ namespace quickDBExplorer.Forms
             this.UpDownSplitter.Panel2.ResumeLayout(false);
             this.UpDownSplitter.ResumeLayout(false);
             this.dbMenu.ResumeLayout(false);
+            this.filterMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -1560,16 +1603,40 @@ namespace quickDBExplorer.Forms
 		/// ポップアップ系メニューを初期化する
 		/// </summary>
 		public	void	InitPopupMenu()
-		{
+        {
             List<qdbeMenuItem> menuAr = SetInitPopupMenu();
 
 
             ContextMenu objMenu = CreatePopupMenuItem(menuAr);
 
-			this.objectList.ContextMenu = objMenu;
+            this.objectList.ContextMenu = objMenu;
 
             SetButtonPopup(menuAr);
-		}
+
+            SetFilterMenuItem();
+
+        }
+
+        private void SetFilterMenuItem()
+        {
+            ToolStripMenuItem onitem;
+            ToolStripMenuItem offitem;
+            if (this.IsFilterCaseSensitive)
+            {
+                onitem = this.filterCS;
+                offitem = this.filterNonCS;
+            }
+            else
+            {
+                onitem = this.filterNonCS;
+                offitem = this.filterCS;
+            }
+            if (!onitem.Text.StartsWith("●"))
+            {
+                onitem.Text = "●" + onitem.Text;
+            }
+            offitem.Text = offitem.Text.Replace("●", "");
+        }
 
         private void SetButtonPopup(List<qdbeMenuItem> menuAr)
         {
@@ -6550,13 +6617,9 @@ namespace quickDBExplorer.Forms
 
         private void txtObjFilter_TextChanged(object sender, EventArgs e)
         {
-            this.objectList.FilterObjectList(this.txtObjFilter.Text);
+            this.objectList.FilterObjectList(this.txtObjFilter.Text, this.IsFilterCaseSensitive);
         }
 
-        private void label4_Click(object sender, EventArgs e)
-        {
-            this.txtObjFilter.Text = string.Empty;
-        }
 
         private void DBReloadMenu_Click(object sender, EventArgs e)
         {
@@ -6671,5 +6734,31 @@ namespace quickDBExplorer.Forms
 
         }
 
-	}
+        private void filterCS_Click(object sender, EventArgs e)
+        {
+            IsFilterCaseSensitive = true;
+            SetFilterMenuItem();
+            this.objectList.FilterObjectList(this.txtObjFilter.Text, this.IsFilterCaseSensitive);
+        }
+
+        private void filterNonCS_Click(object sender, EventArgs e)
+        {
+            IsFilterCaseSensitive = false;
+            SetFilterMenuItem();
+            this.objectList.FilterObjectList(this.txtObjFilter.Text, this.IsFilterCaseSensitive);
+        }
+
+        private void labelFilter_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                this.filterMenu.Show((Control)this.labelFilter, new Point(0, 0));
+            }
+        }
+
+        private void filterClear_Click(object sender, EventArgs e)
+        {
+            this.txtObjFilter.Text = string.Empty;
+        }
+    }
 }

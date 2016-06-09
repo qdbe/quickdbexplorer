@@ -79,6 +79,14 @@ namespace quickDBExplorer
         /// <param name="filterText"></param>
         public void FilterObjectList(string filterText)
         {
+            FilterObjectList(filterText, true);
+        }
+        /// <summary>
+        /// リストの内容をフィルタリングして表示する
+        /// </summary>
+        /// <param name="filterText"></param>
+        public void FilterObjectList(string filterText, bool isCaseSensitive)
+        {
             this.BeginUpdate();
             this.Items.Clear();
             if (filterText == string.Empty)
@@ -87,12 +95,26 @@ namespace quickDBExplorer
                 this.EndUpdate();
                 return;
             }
+            if (!isCaseSensitive)
+            {
+                filterText = filterText.ToLower();
+            }
             List<ListViewItem> newlist = new List<ListViewItem>();
             foreach (ListViewItem itm in currentItems)
             {
-                if (((DBObjectInfo)itm.Tag).ObjName.Contains(filterText))
+                if (isCaseSensitive)
                 {
-                    newlist.Add(itm);
+                    if (((DBObjectInfo)itm.Tag).ObjName.Contains(filterText))
+                    {
+                        newlist.Add(itm);
+                    }
+                }
+                else
+                {
+                    if (((DBObjectInfo)itm.Tag).ObjName.ToLower().Contains(filterText))
+                    {
+                        newlist.Add(itm);
+                    }
                 }
             }
 

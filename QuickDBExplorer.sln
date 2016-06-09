@@ -31,6 +31,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2014Driver", "SqlServer2014Driver\SqlServer2014Driver.csproj", "{B7DD9C65-CCD3-4A77-AD46-08E12F14A734}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2016Driver", "SqlServer2016Driver\SqlServer2016Driver.csproj", "{4A644365-E55B-4DF9-B963-84CB8CC643BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{607646D5-0110-4F20-8916-E1C7B75FF090} = {607646D5-0110-4F20-8916-E1C7B75FF090}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

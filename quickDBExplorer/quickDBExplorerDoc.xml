@@ -58,6 +58,12 @@
             </summary>
             <param name="filterText"></param>
         </member>
+        <member name="M:quickDBExplorer.ObjectListView.FilterObjectList(System.String,System.Boolean)">
+            <summary>
+            リストの内容をフィルタリングして表示する
+            </summary>
+            <param name="filterText"></param>
+        </member>
         <member name="M:quickDBExplorer.ObjectListView.GetSelectOneObjectName">
             <summary>
             単一選択されているオブジェクト名を取得する([]なし)
