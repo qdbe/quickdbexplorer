@@ -2338,71 +2338,86 @@ namespace quickDBExplorer.Forms
 
 		private void objectList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if( this.chkDispData.CheckState == CheckState.Checked &&
-				this.objectList.SelectedItems.Count == 1 )
-			{
-				// 1件のみ選択されている場合
+            try
+            {
 
-				if( isInCmbEvent == false )
-				{
-					// 選択されたTable/View を記憶する
-					if( this.selectedTables.Contains(this.objectList.GetSelectOneObjectName()) == false )
-					{
-						if( this.selectedTables.Count > MaxTableHistory )
-						{
-							this.selectedTables.RemoveAt(0);
-						}
-					}
-					else
-					{
-						this.selectedTables.Remove(this.objectList.GetSelectOneObjectName());
+                if (this.chkDispData.CheckState == CheckState.Checked &&
+                    this.objectList.SelectedItems.Count == 1)
+                {
+                    // 1件のみ選択されている場合
 
-					}
-					this.selectedTables.Add(this.objectList.GetSelectOneObjectName());
-					this.cmbHistory.DataSource = null;
-					this.cmbHistory.DataSource = this.selectedTables;
-					int i = this.cmbHistory.FindStringExact(this.objectList.GetSelectOneObjectName());
-					this.cmbHistory.SelectedIndex = i;
-					this.cmbHistory.Refresh();
-				}
+                    if (isInCmbEvent == false)
+                    {
+                        // 選択されたTable/View を記憶する
+                        if (this.selectedTables.Contains(this.objectList.GetSelectOneObjectName()) == false)
+                        {
+                            if (this.selectedTables.Count > MaxTableHistory)
+                            {
+                                this.selectedTables.RemoveAt(0);
+                            }
+                        }
+                        else
+                        {
+                            this.selectedTables.Remove(this.objectList.GetSelectOneObjectName());
+
+                        }
+                        this.selectedTables.Add(this.objectList.GetSelectOneObjectName());
+                        this.cmbHistory.DataSource = null;
+                        this.cmbHistory.DataSource = this.selectedTables;
+                        int i = this.cmbHistory.FindStringExact(this.objectList.GetSelectOneObjectName());
+                        this.cmbHistory.SelectedIndex = i;
+                        this.cmbHistory.Refresh();
+                    }
 
 
 
-                this.txtWhere.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
-                this.txtSort.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
-                this.txtAlias.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
-				// データ表示部に、該当オブジェクトのデータを表示する
-				DispData(this.objectList.GetSelectObject(0));
-			}
-			else
-			{
-				DispData(null);
-			}
-			if( this.objectList.SelectedItems.Count == 1 )
-			{
-				DispFldList(this.objectList.GetSelectObject(0));
-			}
-			else
-			{
-				DispFldList(null);
-			}
-			if( indexdlg != null && indexdlg.Visible == true )
-			{
-				if( this.objectList.SelectedItems.Count == 1 )
-				{
-					indexdlg.SetDisplayTable(this.objectList.GetSelectObject(0));
-				}
-				else
-				{
-					indexdlg.SetDisplayTable(null);
-				}
-				indexdlg.Show();
-			}
+                    this.txtWhere.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
+                    this.txtSort.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
+                    this.txtAlias.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
+                    // データ表示部に、該当オブジェクトのデータを表示する
+                    DispData(this.objectList.GetSelectObject(0));
+                }
+                else
+                {
+                    DispData(null);
+                }
+                if (this.objectList.SelectedItems.Count == 1)
+                {
+                    DispFldList(this.objectList.GetSelectObject(0));
+                }
+                else
+                {
+                    DispFldList(null);
+                }
+                if (indexdlg != null && indexdlg.Visible == true)
+                {
+                    if (this.objectList.SelectedItems.Count == 1)
+                    {
+                        indexdlg.SetDisplayTable(this.objectList.GetSelectObject(0));
+                    }
+                    else
+                    {
+                        indexdlg.SetDisplayTable(null);
+                    }
+                    indexdlg.Show();
+                }
 
-			setWhereDialog(true,false);
-		}
+                setWhereDialog(true, false);
+            }
+            catch (System.Data.SqlClient.SqlException se)
+            {
+                if (!SetPoolingError(se))
+                {
+                    this.SetErrorMessage(se);
+                }
+            }
+            catch (Exception exp)
+            {
+                this.SetErrorMessage(exp);
+            }
+        }
 
-		private void rdoDispView_CheckedChanged(object sender, System.EventArgs e)
+        private void rdoDispView_CheckedChanged(object sender, System.EventArgs e)
 		{
 			// オブジェクトの選択履歴をクリア
 			this.selectedTables.Clear();
@@ -5651,13 +5666,28 @@ namespace quickDBExplorer.Forms
 				this.btnTmpAllDisp.ForeColor = this.btnForeColor;
 				this.btnGridFormat.Enabled = true;
 			}
-			catch( Exception exp)
+            catch ( Exception exp)
 			{
 				this.SetErrorMessage(exp);
 			}
 		}
 
-		private void CopyTableName(bool addcomma)
+        protected bool SetPoolingError(System.Data.SqlClient.SqlException se)
+        {
+            if (se.Number == 5846)
+            {
+                // 簡易プーリングでは、共通言語ランタイム (CLR) の実行はサポートされていません。"clr enabled" オプションまたは "lightweight pooling" オプションのいずれかを無効にしてください。
+                MessageBox.Show("SQL SERVER の設定で「Windows ファイバーを使用する」が有効になっている為 CLRが処理できません。https://msdn.microsoft.com/ja-jp/library/ms178074(v=sql.120).aspx を参考にして設定を変更して下さい。");
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+        private void CopyTableName(bool addcomma)
 		{
 			if( this.objectList.SelectedItems.Count > 0 )
 			{

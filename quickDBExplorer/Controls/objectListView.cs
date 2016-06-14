@@ -85,6 +85,7 @@ namespace quickDBExplorer
         /// リストの内容をフィルタリングして表示する
         /// </summary>
         /// <param name="filterText"></param>
+        /// <param name="isCaseSensitive">フィルター適用時に大文字小文字を区別するか否か</param>
         public void FilterObjectList(string filterText, bool isCaseSensitive)
         {
             this.BeginUpdate();
