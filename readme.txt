@@ -1,6 +1,6 @@
 What's quickDBExplorer?
 
-Åü Front End tool for Microsoft SQL Server 2014/2012/2008R2/2008/2000/2005
+Åü Front End tool for Microsoft SQL Server 2014/2012/2008R2/2008/2005/2000
 this tool can follows
 
     make insert script from data
