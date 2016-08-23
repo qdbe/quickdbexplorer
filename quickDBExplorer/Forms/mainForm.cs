@@ -313,7 +313,7 @@ namespace quickDBExplorer.Forms
         private ToolStripMenuItem filterNonCS;
         private System.Windows.Forms.ColumnHeader ColCreateDate;
         private ToolStripMenuItem filterClear;
-        private bool IsFilterCaseSensitive = true;
+        private bool IsFilterCaseSensitive = false;
 
 		/// <summary>
 		/// コンストラクタ
