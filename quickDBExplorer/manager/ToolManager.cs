@@ -8,7 +8,7 @@ namespace quickDBExplorer.manager
 {
     class ToolManager
     {
-        private const string SettingPath = "outerTools.xml";
+        private const string SettingPath = "outerTools.";
         private const string TOOLTABLENAME = "TOOLS";
         /// <summary>
         /// ツール情報を保存する
@@ -16,7 +16,7 @@ namespace quickDBExplorer.manager
         public void Save(List<ToolInfo> saveList)
         {
             DataSet ds = this.Convert2DataSet(saveList);
-            ds.WriteXml(SettingPath);
+            ds.WriteXml(SettingPath + System.Environment.MachineName + ".xml");
         }
 
         private DataSet Convert2DataSet(List<ToolInfo> saveList)
@@ -39,7 +39,14 @@ namespace quickDBExplorer.manager
             DataSet ds = new DataSet();
             try
             {
-                ds.ReadXml(SettingPath);
+                if (System.IO.File.Exists(SettingPath + System.Environment.MachineName + ".xml"))
+                {
+                    ds.ReadXml(SettingPath + System.Environment.MachineName + ".xml");
+                }
+                else
+                {
+                    ds.ReadXml(SettingPath + ".xml");
+                }
                 return Convert2Tools(ds);
             }
             catch (Exception exp)

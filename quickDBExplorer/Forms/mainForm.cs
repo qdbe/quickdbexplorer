@@ -6790,5 +6790,11 @@ namespace quickDBExplorer.Forms
         {
             this.txtObjFilter.Text = string.Empty;
         }
+
+        public void ReConnect()
+        {
+            this.SqlDriver.ReConnect();
+            dbList_SelectedIndexChanged(null, null);
+        }
     }
 }

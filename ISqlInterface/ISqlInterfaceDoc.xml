@@ -814,6 +814,11 @@
             <param name="isProcedure"></param>
             <returns></returns>
         </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.ReConnect">
+            <summary>
+            再接続する
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.EmptySqlInterface.sqlVersion">
             <summary>
             SQL Version情報

@@ -1167,5 +1167,21 @@ where
             this.sqlVersion = version;
         }
 
-	}
+        public void ReConnect()
+        {
+            try
+            {
+                if (this.pSqlConnect.State != ConnectionState.Broken &&
+                    this.pSqlConnect.State != ConnectionState.Closed )
+                {
+                    this.SqlConnect.Close();
+                }
+                this.SqlConnect.Open();
+            }
+            catch (Exception exp)
+            {
+                throw;
+            }
+        }
+    }
 }

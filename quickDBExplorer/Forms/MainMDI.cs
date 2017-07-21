@@ -69,6 +69,8 @@ namespace quickDBExplorer.Forms
 
         private List<ToolInfo> outerTools;
         private ToolManager outerToolManager;
+        private MenuItem menuReConnect;
+        private MenuItem menuItem1;
         private ToolMacroManager toolMacroManager;
 
 
@@ -112,6 +114,7 @@ namespace quickDBExplorer.Forms
             this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.menuConnect = new System.Windows.Forms.MenuItem();
             this.menuNewConnect = new System.Windows.Forms.MenuItem();
+            this.menuReConnect = new System.Windows.Forms.MenuItem();
             this.menuQuit = new System.Windows.Forms.MenuItem();
             this.menuWindow = new System.Windows.Forms.MenuItem();
             this.menuBookamrk = new System.Windows.Forms.MenuItem();
@@ -126,6 +129,7 @@ namespace quickDBExplorer.Forms
             this.menuAbout = new System.Windows.Forms.MenuItem();
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -151,6 +155,8 @@ namespace quickDBExplorer.Forms
             this.menuConnect.Index = 0;
             this.menuConnect.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuNewConnect,
+            this.menuReConnect,
+            this.menuItem1,
             this.menuQuit});
             this.menuConnect.Text = "接続(&C)";
             // 
@@ -161,9 +167,15 @@ namespace quickDBExplorer.Forms
             this.menuNewConnect.Text = "新規接続(&N)";
             this.menuNewConnect.Click += new System.EventHandler(this.menuNewConnect_Click);
             // 
+            // menuReConnect
+            // 
+            this.menuReConnect.Index = 1;
+            this.menuReConnect.Text = "再接続";
+            this.menuReConnect.Click += new System.EventHandler(this.menuReConnect_Click);
+            // 
             // menuQuit
             // 
-            this.menuQuit.Index = 1;
+            this.menuQuit.Index = 3;
             this.menuQuit.Text = "終了(&Q)";
             this.menuQuit.Click += new System.EventHandler(this.menuQuit_Click);
             // 
@@ -253,6 +265,12 @@ namespace quickDBExplorer.Forms
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // menuItem1
+            // 
+            this.menuItem1.Index = 2;
+            this.menuItem1.Text = "設定を保存(&S)";
+            this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
+            // 
             // MainMdi
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -263,8 +281,8 @@ namespace quickDBExplorer.Forms
             this.Menu = this.mainMenu1;
             this.Name = "MainMdi";
             this.Text = "quickDBExplorer";
-            this.Load += new System.EventHandler(this.MainMdi_Load);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.MainMdi_Closing);
+            this.Load += new System.EventHandler(this.MainMdi_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
 
@@ -382,7 +400,15 @@ namespace quickDBExplorer.Forms
             {
                 // 設定ファイルを読み込み
                 string path = Application.StartupPath;
-                fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Open);
+                string filename = path + "\\quickDBExplorer." + System.Environment.MachineName + ".xml";
+                if(File.Exists(filename))
+                {
+                    fs = new FileStream(filename, FileMode.Open);
+                }
+                if (fs == null)
+                {
+                    fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Open);
+                }
                 // Soap Serialize しているので、それをDeSerialize
                 SoapFormatter sf = new SoapFormatter();
                 if (fs != null && fs.CanRead)
@@ -440,15 +466,22 @@ namespace quickDBExplorer.Forms
         /// <param name="e">--</param>
         private void MainMdi_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            SaveSettings();
+        }
+
+        private void SaveSettings()
+        {
             FileStream fs = null;
+
+            string machinename = System.Environment.MachineName;
 
             try
             {
                 string path = Application.StartupPath;
-                fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.OpenOrCreate);
+                fs = new FileStream(path + "\\quickDBExplorer."+ machinename + ".xml", FileMode.OpenOrCreate);
                 fs.Close();
                 fs = null;
-                fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Truncate, FileAccess.Write);
+                fs = new FileStream(path + "\\quickDBExplorer." + machinename + ".xml", FileMode.Truncate, FileAccess.Write);
                 SoapFormatter sf = new SoapFormatter();
                 if (fs != null && fs.CanWrite)
                 {
@@ -837,6 +870,17 @@ namespace quickDBExplorer.Forms
             catch 
             {
             }
+        }
+
+        private void menuReConnect_Click(object sender, EventArgs e)
+        {
+            MainForm main = (MainForm)this.ActiveMdiChild;
+            main.ReConnect();
+        }
+
+        private void menuItem1_Click(object sender, EventArgs e)
+        {
+            this.SaveSettings();
         }
     }
 }

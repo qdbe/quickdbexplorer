@@ -309,6 +309,14 @@ namespace quickDBExplorer
             return string.Empty;
         }
 
+        /// <summary>
+        /// 再接続する
+        /// </summary>
+        public void ReConnect()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
 
         /// <summary>
@@ -324,5 +332,6 @@ namespace quickDBExplorer
         {
             this.sqlVersion = version;
         }
+
     }
 }

@@ -22,7 +22,7 @@ namespace quickDBExplorer.manager
         public void Save(Dictionary<string,List<BookmarkInfo>> bookmark)
         {
             DataSet ds = this.Convert2DataSet(bookmark);
-            ds.WriteXml("Bookmark.xml");
+            ds.WriteXml("Bookmark."+System.Environment.MachineName+".xml");
         }
 
         /// <summary>
@@ -35,7 +35,14 @@ namespace quickDBExplorer.manager
             Dictionary<string, List<BookmarkInfo>> bookmark;
             try
             {
-                ds.ReadXml("Bookmark.xml");
+                if (System.IO.File.Exists("Bookmark."+System.Environment.MachineName+".xml"))
+                {
+                    ds.ReadXml("Bookmark." + System.Environment.MachineName +".xml");
+                }
+                else 
+                {
+                    ds.ReadXml("Bookmark.xml");
+                }
                 bookmark = Convert2Bookmark(ds);
             }
             catch (Exception exp)
