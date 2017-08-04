@@ -95,6 +95,8 @@ namespace quickDBExplorer.Forms
 		private	string	DateFormat;
 		private string aliasText;
 
+        private bool IsOverwriteExistingFile = false;
+
 
 		#region 公開メンバ
 		private ISqlInterface	pSqlDriver = null;
@@ -3333,6 +3335,7 @@ namespace quickDBExplorer.Forms
 			// select 文の作成
 
 			this.InitErrMessage();
+            this.IsOverwriteExistingFile = false;
 
 			try
 			{
@@ -3369,9 +3372,13 @@ namespace quickDBExplorer.Forms
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + 
-							dboInfo.ToString()
-							+ ".sql",false, GetEncode());
+                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
+                        if (CheckOverWrite(filen) == false)
+                        {
+                            return;
+                        }
+
+                        StreamWriter sw = new StreamWriter(filen,false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
@@ -3435,8 +3442,30 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
+        private bool CheckOverWrite(string filepath)
+        {
+            if (File.Exists(filepath))
+            {
+                if (this.IsOverwriteExistingFile == true)
+                {
+                    return true;
+                }
+                FileOverWriteConfirm dlg = new FileOverWriteConfirm();
+                dlg.FileName = filepath;
+                dlg.TargetFileCount = this.objectList.SelectedItems.Count;
+                if (dlg.ShowDialog(this) != DialogResult.Yes)
+                {
+                    return false;
+                }
+                this.IsOverwriteExistingFile = dlg.IsOverWriteEtc;
+                return true;
+            }
+            else {
+                return true;
+            }
+        }
 
-		private void btnIndex_Click(object sender, System.EventArgs e)
+        private void btnIndex_Click(object sender, System.EventArgs e)
 		{
 			if( indexdlg == null )
 			{
@@ -3511,7 +3540,12 @@ namespace quickDBExplorer.Forms
 					dboInfo = this.objectList.GetSelectObject(ti);
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv",false, GetEncode());
+                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv";
+                        if (CheckOverWrite(filen) == false)
+                        {
+                            return;
+                        }
+                        StreamWriter sw = new StreamWriter(filen,false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
@@ -3630,7 +3664,7 @@ namespace quickDBExplorer.Forms
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+                    StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
@@ -3645,7 +3679,17 @@ namespace quickDBExplorer.Forms
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp",false, GetEncode());
+                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv";
+                        if (CheckOverWrite(filen) == false)
+                        {
+                            return;
+                        }
+                        string tfilen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp";
+                        if (CheckOverWrite(tfilen) == false)
+                        {
+                            return;
+                        }
+                        StreamWriter sw = new StreamWriter(tfilen, false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						wr.WriteLine("オブジェクト名,データ件数");
@@ -4816,7 +4860,7 @@ namespace quickDBExplorer.Forms
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false,GetEncode());
+                    StreamWriter sw = new StreamWriter(this.txtOutput.Text,false,GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
@@ -4836,7 +4880,17 @@ namespace quickDBExplorer.Forms
 					
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp",false, GetEncode());
+                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
+                        if (CheckOverWrite(filen) == false)
+                        {
+                            return;
+                        }
+                        string tfilen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp";
+                        if (CheckOverWrite(tfilen) == false)
+                        {
+                            return;
+                        }
+                        StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						wr.Write("SET NOCOUNT ON{0}GO{0}{0}",wr.NewLine);
@@ -5068,7 +5122,7 @@ namespace quickDBExplorer.Forms
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+                    StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
@@ -5081,7 +5135,13 @@ namespace quickDBExplorer.Forms
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql",false, GetEncode());
+                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
+                        if (CheckOverWrite(filen) == false)
+                        {
+                            return;
+                        }
+
+                        StreamWriter sw = new StreamWriter(filen, false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
@@ -5192,7 +5252,7 @@ namespace quickDBExplorer.Forms
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+                    StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
@@ -5205,7 +5265,18 @@ namespace quickDBExplorer.Forms
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp",false, GetEncode());
+                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv";
+                        if (CheckOverWrite(filen) == false)
+                        {
+                            return;
+                        }
+                        string tfilen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp";
+                        if (CheckOverWrite(tfilen) == false)
+                        {
+                            return;
+                        }
+
+                        StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp",false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 					}
@@ -5393,7 +5464,7 @@ namespace quickDBExplorer.Forms
 				}
 				else if( this.rdoOutFile.Checked == true ) 
 				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+                    StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
@@ -5407,7 +5478,12 @@ namespace quickDBExplorer.Forms
 
 					if( this.rdoOutFolder.Checked == true ) 
 					{
-						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql",false, GetEncode());
+                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
+                        if (CheckOverWrite(filen) == false)
+                        {
+                            return;
+                        }
+                        StreamWriter sw = new StreamWriter(filen, false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
@@ -6231,12 +6307,15 @@ namespace quickDBExplorer.Forms
 		#region クラス内ユーティリティ関連
 		private bool CheckFileSpec()
 		{
+            this.IsOverwriteExistingFile = false;
+
 			if( this.rdoOutFile.Checked == true ) 
 			{
 				if( this.txtOutput.Text == "" )
 				{
 					this.saveFileDialog1.CreatePrompt = true;
 					this.saveFileDialog1.Filter = "SQL|*.sql|csv|*.csv|txt|*.txt|全て|*.*";
+                    this.saveFileDialog1.OverwritePrompt = true;
 					DialogResult ret = this.saveFileDialog1.ShowDialog();
 					if( ret == DialogResult.OK )
 					{
@@ -6251,8 +6330,14 @@ namespace quickDBExplorer.Forms
 						MessageBox.Show("指定されたファイル名はフォルダを指しています。ファイル名を指定してください。処理を中断します");
 						return false;
 					}
-				}
-				if( this.txtOutput.Text == "" )
+
+                    if (CheckOverWrite(this.txtOutput.Text) == false)
+                    {
+                        return false;
+                    }
+
+                }
+                if ( this.txtOutput.Text == "" )
 				{
 					MessageBox.Show("ファイル名が指定されていないので、処理を中断します");
 					return false;
