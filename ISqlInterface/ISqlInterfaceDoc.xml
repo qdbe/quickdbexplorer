@@ -1057,6 +1057,11 @@
             </summary>
             <param name="version"></param>
         </member>
+        <member name="M:quickDBExplorer.ISqlInterface.ReConnect">
+            <summary>
+            DBへの再接続を強制する
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.SearchType">
             <summary>
             オブジェクト等を検索する場合の検索条件

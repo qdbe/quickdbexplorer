@@ -704,6 +704,31 @@
             コード エディタで変更しないでください。
             </summary>
         </member>
+        <member name="T:quickDBExplorer.Forms.FileOverWriteConfirm">
+            <summary>
+            ファイル上書き確認
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.FileOverWriteConfirm.FileName">
+            <summary>
+            上書きするファイル名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.FileOverWriteConfirm.IsOverWriteEtc">
+            <summary>
+            表示以外のファイルを同様に上書きするか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.FileOverWriteConfirm.TargetFileCount">
+            <summary>
+            対象ファイル数
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.FileOverWriteConfirm.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
         <member name="F:quickDBExplorer.Forms.FileOverWriteConfirm.components">
             <summary>
             Required designer variable.

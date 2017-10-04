@@ -241,6 +241,9 @@ namespace quickDBExplorer
         /// <param name="version"></param>
         void SetupVersion(SqlVersion version);
 
+        /// <summary>
+        /// DB‚Ö‚ÌÄÚ‘±‚ğ‹­§‚·‚é
+        /// </summary>
         void ReConnect();
 	}
 }

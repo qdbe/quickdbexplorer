@@ -1167,6 +1167,9 @@ where
             this.sqlVersion = version;
         }
 
+        /// <summary>
+        /// DB‚Ö‚ÌÄÚ‘±‚ğ‹­§‚·‚é
+        /// </summary>
         public void ReConnect()
         {
             try
