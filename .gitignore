@@ -23,3 +23,8 @@
 /SqlServer2014Driver/obj
 /SqlServer2016Driver/bin
 /SqlServer2016Driver/obj
+/SqlServer2017Driver/bin/Debug
+/SqlServer2017Driver/bin/Release
+/SqlServer2017Driver/obj/Debug
+/SqlServer2017Driver/obj/Release
+/installPack/quickDBExplorer
