@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorer", "quickDBExplorer\quickDBExplorer.csproj", "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
 EndProject
@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2016Driver", "SqlS
 	ProjectSection(ProjectDependencies) = postProject
 		{607646D5-0110-4F20-8916-E1C7B75FF090} = {607646D5-0110-4F20-8916-E1C7B75FF090}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2017Driver", "SqlServer2017Driver\SqlServer2017Driver.csproj", "{F40BA08E-FB92-4798-B98C-CBD3D08B17B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +79,10 @@ Global
 		{4A644365-E55B-4DF9-B963-84CB8CC643BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A644365-E55B-4DF9-B963-84CB8CC643BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A644365-E55B-4DF9-B963-84CB8CC643BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F40BA08E-FB92-4798-B98C-CBD3D08B17B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F40BA08E-FB92-4798-B98C-CBD3D08B17B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F40BA08E-FB92-4798-B98C-CBD3D08B17B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F40BA08E-FB92-4798-B98C-CBD3D08B17B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

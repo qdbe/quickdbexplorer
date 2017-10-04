@@ -1196,7 +1196,12 @@
         </member>
         <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2016">
             <summary>
-            SQL Server 2008 を表すインスタンスを生成する
+            SQL Server 2016 を表すインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2017">
+            <summary>
+            SQL Server 2017 を表すインスタンスを生成する
             </summary>
         </member>
         <member name="M:quickDBExplorer.SqlVersion.#ctor(System.String)">

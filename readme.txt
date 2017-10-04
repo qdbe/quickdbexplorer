@@ -1,6 +1,6 @@
 What's quickDBExplorer?
 
-◆ Front End tool for Microsoft SQL Server 2016/2014/2012/2008R2/2008/2005/2000
+◆ Front End tool for Microsoft SQL Server 2017/2016/2014/2012/2008R2/2008/2005/2000
 this tool can follows
 
     make insert script from data
@@ -14,7 +14,7 @@ this tool can follows
 These results are output to a clipboard or a file.
 Run under .NET Framework 3.5 SP1 
 
-◆ quickDBExplorer は Microsoft 社のSQL SERVER (2016/2014/2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツールです
+◆ quickDBExplorer は Microsoft 社のSQL SERVER (2017/2016/2014/2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツールです
 .NET Framework 3.5上で動作する、データベースアプリケーションの開発者向けのMDI形式の補助ツールです。エンタープライズマネージャーやクエリアナライザでは用意されていない機能を実現したり、使いにくい機能を補助する目的に作成されました(完全な置き換えは目標としていません)。 特にテーブルに対する処理に特化しています。
 テーブル/View/Synonymを指定した
 
@@ -38,7 +38,7 @@ Run under .NET Framework 3.5 SP1
 
     .NET Framework 3.5 SP1 がインストールされているWindowsマシン
     画面解像度 が　1024 x 768 あることを想定して画面デザインしています
-    対象としているデータベースエンジンは SQL SERVER 2016/2014/2012/2008R2/2008/2005/2000 
+    対象としているデータベースエンジンは SQL SERVER 2017/2016/2014/2012/2008R2/2008/2005/2000 
 
 ◆ Announce!
 
