@@ -9,14 +9,29 @@ using System.Windows.Forms;
 
 namespace quickDBExplorer.Forms
 {
+    /// <summary>
+    /// ファイル上書き確認
+    /// </summary>
     public partial class FileOverWriteConfirm : quickDBExplorer.quickDBExplorerBaseForm
     {
-
+        /// <summary>
+        /// 上書きするファイル名
+        /// </summary>
         public string FileName { get; set; }
+
+        /// <summary>
+        /// 表示以外のファイルを同様に上書きするか
+        /// </summary>
         public bool IsOverWriteEtc { get; private set; }
 
+        /// <summary>
+        /// 対象ファイル数
+        /// </summary>
         public int  TargetFileCount { get; set; }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public FileOverWriteConfirm()
         {
             InitializeComponent();
