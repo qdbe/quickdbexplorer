@@ -137,7 +137,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FileOverWriteConfirm";
-            this.Text = "FileOverWriteConfirm";
+            this.Text = "ファイル上書き確認";
             this.Load += new System.EventHandler(this.FileOverWriteConfirm_Load);
             this.Controls.SetChildIndex(this.MsgArea, 0);
             this.Controls.SetChildIndex(this.btnYes, 0);
