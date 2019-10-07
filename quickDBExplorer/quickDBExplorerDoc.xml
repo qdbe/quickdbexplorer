@@ -1528,6 +1528,11 @@
             インスタンス名
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.DatabaseName">
+            <summary>
+            接続先データベース名
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.ConnectionInfo.LogOnUid">
             <summary>
             ログインID
@@ -1558,13 +1563,14 @@
             DBサーバーバージョン情報
             </summary>
         </member>
-        <member name="M:quickDBExplorer.ConnectionInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.Boolean,quickDBExplorer.ISqlInterface,quickDBExplorer.SqlVersion,quickDBExplorer.ServerData)">
+        <member name="M:quickDBExplorer.ConnectionInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,quickDBExplorer.ISqlInterface,quickDBExplorer.SqlVersion,quickDBExplorer.ServerData)">
             <summary>
             コンストラクタ
             </summary>
             <param name="serverName"></param>
             <param name="serverRealName"></param>
             <param name="instanceName"></param>
+            <param name="databaseName"></param>
             <param name="logonUid"></param>
             <param name="logonPassword"></param>
             <param name="isUseTruse"></param>
@@ -2781,7 +2787,7 @@
         </member>
         <member name="M:quickDBExplorer.WhereDialog.btnClear_Click(System.Object,System.EventArgs)">
             <summary>
-            条件をクリアする
+            全ての条件をクリアする
             </summary>
             <param name="sender"></param>
             <param name="e"></param>

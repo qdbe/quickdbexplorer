@@ -62,6 +62,8 @@ namespace quickDBExplorer
         private Hashtable commnadArgHt = null;
         private Button btnSelectServer;
         private Button btnClear;
+        private quickDBExplorerTextBox txtDatabaseName;
+        private Label label6;
         private bool IsActivateWithArgs = false;
 
         internal event LoginConnectedHandler LoginConnected;
@@ -140,26 +142,28 @@ namespace quickDBExplorer
             this.label1 = new System.Windows.Forms.Label();
             this.btnSelectServer = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
+            this.txtDatabaseName = new quickDBExplorer.quickDBExplorerTextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // MsgArea
             // 
-            this.MsgArea.Location = new System.Drawing.Point(152, 240);
+            this.MsgArea.Location = new System.Drawing.Point(152, 276);
             this.MsgArea.Size = new System.Drawing.Size(206, 25);
             // 
             // chkTrust
             // 
-            this.chkTrust.Location = new System.Drawing.Point(40, 129);
+            this.chkTrust.Location = new System.Drawing.Point(27, 166);
             this.chkTrust.Name = "chkTrust";
             this.chkTrust.Size = new System.Drawing.Size(160, 16);
-            this.chkTrust.TabIndex = 18;
+            this.chkTrust.TabIndex = 9;
             this.chkTrust.Text = "Windows認証を利用(&T)";
             this.chkTrust.CheckedChanged += new System.EventHandler(this.chkTrust_CheckedChanged);
             // 
             // labelSchema
             // 
             this.labelSchema.Font = new System.Drawing.Font("MS UI Gothic", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelSchema.Location = new System.Drawing.Point(8, 249);
+            this.labelSchema.Location = new System.Drawing.Point(8, 287);
             this.labelSchema.Name = "labelSchema";
             this.labelSchema.Size = new System.Drawing.Size(48, 16);
             this.labelSchema.TabIndex = 20;
@@ -167,10 +171,10 @@ namespace quickDBExplorer
             // 
             // chkSaveInfo
             // 
-            this.chkSaveInfo.Location = new System.Drawing.Point(364, 88);
+            this.chkSaveInfo.Location = new System.Drawing.Point(373, 88);
             this.chkSaveInfo.Name = "chkSaveInfo";
             this.chkSaveInfo.Size = new System.Drawing.Size(144, 16);
-            this.chkSaveInfo.TabIndex = 13;
+            this.chkSaveInfo.TabIndex = 6;
             this.chkSaveInfo.Text = "接続先を保存する(&V)";
             // 
             // btnServerHistory
@@ -178,26 +182,26 @@ namespace quickDBExplorer
             this.btnServerHistory.Location = new System.Drawing.Point(40, 1);
             this.btnServerHistory.Name = "btnServerHistory";
             this.btnServerHistory.Size = new System.Drawing.Size(304, 24);
-            this.btnServerHistory.TabIndex = 12;
+            this.btnServerHistory.TabIndex = 16;
             this.btnServerHistory.Text = "過去に接続したサーバーから選択(&Z)";
             this.btnServerHistory.Click += new System.EventHandler(this.btnServerHistory_Click);
             // 
             // btnLogin
             // 
             this.btnLogin.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnLogin.Location = new System.Drawing.Point(40, 225);
+            this.btnLogin.Location = new System.Drawing.Point(40, 263);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(88, 24);
-            this.btnLogin.TabIndex = 24;
+            this.btnLogin.TabIndex = 14;
             this.btnLogin.Text = "接続(&O)";
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(40, 201);
+            this.label4.Location = new System.Drawing.Point(25, 239);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 23);
-            this.label4.TabIndex = 22;
+            this.label4.TabIndex = 12;
             this.label4.Text = "パスワード(&P)";
             // 
             // txtPassword
@@ -207,11 +211,11 @@ namespace quickDBExplorer
             this.txtPassword.HistoryKey = "txtPassword";
             this.txtPassword.IsDigitOnly = false;
             this.txtPassword.IsShowZoom = false;
-            this.txtPassword.Location = new System.Drawing.Point(144, 201);
+            this.txtPassword.Location = new System.Drawing.Point(153, 239);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(208, 19);
-            this.txtPassword.TabIndex = 23;
+            this.txtPassword.TabIndex = 13;
             // 
             // txtUser
             // 
@@ -220,10 +224,10 @@ namespace quickDBExplorer
             this.txtUser.HistoryKey = "txtUser";
             this.txtUser.IsDigitOnly = false;
             this.txtUser.IsShowZoom = false;
-            this.txtUser.Location = new System.Drawing.Point(144, 161);
+            this.txtUser.Location = new System.Drawing.Point(153, 199);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(208, 19);
-            this.txtUser.TabIndex = 21;
+            this.txtUser.TabIndex = 11;
             this.txtUser.Text = "sa";
             // 
             // txtInstance
@@ -233,10 +237,10 @@ namespace quickDBExplorer
             this.txtInstance.HistoryKey = "txtInstance";
             this.txtInstance.IsDigitOnly = false;
             this.txtInstance.IsShowZoom = false;
-            this.txtInstance.Location = new System.Drawing.Point(144, 89);
+            this.txtInstance.Location = new System.Drawing.Point(153, 89);
             this.txtInstance.Name = "txtInstance";
             this.txtInstance.Size = new System.Drawing.Size(208, 19);
-            this.txtInstance.TabIndex = 17;
+            this.txtInstance.TabIndex = 5;
             // 
             // txtServerName
             // 
@@ -245,61 +249,81 @@ namespace quickDBExplorer
             this.txtServerName.HistoryKey = "txtServerName";
             this.txtServerName.IsDigitOnly = false;
             this.txtServerName.IsShowZoom = false;
-            this.txtServerName.Location = new System.Drawing.Point(144, 49);
+            this.txtServerName.Location = new System.Drawing.Point(153, 49);
             this.txtServerName.Name = "txtServerName";
             this.txtServerName.Size = new System.Drawing.Size(208, 19);
-            this.txtServerName.TabIndex = 15;
+            this.txtServerName.TabIndex = 2;
             this.txtServerName.Text = "(local)";
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(40, 161);
+            this.label3.Location = new System.Drawing.Point(25, 199);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 23);
-            this.label3.TabIndex = 19;
+            this.label3.TabIndex = 10;
             this.label3.Text = "ユーザーID(&U)";
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(32, 89);
+            this.label2.Location = new System.Drawing.Point(25, 89);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(96, 23);
-            this.label2.TabIndex = 25;
+            this.label2.TabIndex = 4;
             this.label2.Text = "インスタンス(&I)";
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(32, 49);
+            this.label1.Location = new System.Drawing.Point(25, 49);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 23);
-            this.label1.TabIndex = 14;
+            this.label1.TabIndex = 1;
             this.label1.Text = "サーバーの指定(&S)";
             // 
             // btnSelectServer
             // 
-            this.btnSelectServer.Location = new System.Drawing.Point(364, 47);
+            this.btnSelectServer.Location = new System.Drawing.Point(373, 47);
             this.btnSelectServer.Name = "btnSelectServer";
             this.btnSelectServer.Size = new System.Drawing.Size(101, 23);
-            this.btnSelectServer.TabIndex = 16;
+            this.btnSelectServer.TabIndex = 3;
             this.btnSelectServer.Text = "接続先(&L)";
             this.btnSelectServer.UseVisualStyleBackColor = true;
             this.btnSelectServer.Click += new System.EventHandler(this.btnSelectServer_Click);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(364, 226);
+            this.btnClear.Location = new System.Drawing.Point(373, 264);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(101, 23);
-            this.btnClear.TabIndex = 26;
+            this.btnClear.TabIndex = 15;
             this.btnClear.Text = "CLear(&C)";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // txtDatabaseName
+            // 
+            this.txtDatabaseName.CanCtrlDelete = true;
+            this.txtDatabaseName.Histories = null;
+            this.txtDatabaseName.HistoryKey = "txtInstance";
+            this.txtDatabaseName.IsDigitOnly = false;
+            this.txtDatabaseName.IsShowZoom = false;
+            this.txtDatabaseName.Location = new System.Drawing.Point(153, 128);
+            this.txtDatabaseName.Name = "txtDatabaseName";
+            this.txtDatabaseName.Size = new System.Drawing.Size(208, 19);
+            this.txtDatabaseName.TabIndex = 8;
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(25, 131);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(122, 23);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "接続先データベース名(&D)";
             // 
             // LogOnDialog
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-            this.ClientSize = new System.Drawing.Size(520, 266);
+            this.ClientSize = new System.Drawing.Size(520, 302);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnSelectServer);
             this.Controls.Add(this.chkTrust);
@@ -310,9 +334,11 @@ namespace quickDBExplorer
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtUser);
+            this.Controls.Add(this.txtDatabaseName);
             this.Controls.Add(this.txtInstance);
             this.Controls.Add(this.txtServerName);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -324,9 +350,11 @@ namespace quickDBExplorer
             this.Controls.SetChildIndex(this.MsgArea, 0);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.label6, 0);
             this.Controls.SetChildIndex(this.label3, 0);
             this.Controls.SetChildIndex(this.txtServerName, 0);
             this.Controls.SetChildIndex(this.txtInstance, 0);
+            this.Controls.SetChildIndex(this.txtDatabaseName, 0);
             this.Controls.SetChildIndex(this.txtUser, 0);
             this.Controls.SetChildIndex(this.txtPassword, 0);
             this.Controls.SetChildIndex(this.label4, 0);
@@ -462,6 +490,7 @@ namespace quickDBExplorer
                     this.txtServerName.Text,
                     this.txtServerName.Text,
                     this.txtInstance.Text,
+                    this.txtDatabaseName.Text,
                     this.txtUser.Text,
                     this.txtPassword.Text,
                     this.chkTrust.Checked,
@@ -529,14 +558,16 @@ namespace quickDBExplorer
                     // インスタンス名あり
                     myConnString = "Server=" + this.txtServerName.Text + @"\" + this.txtInstance.Text + ";"
                         + "Database=master;User ID=" + this.txtUser.Text
-                        + ";Password=" + this.txtPassword.Text;
+                        + ";Password=" + this.txtPassword.Text
+                        + ";";
                 }
                 else
                 {
                     // インスタンス名なし
                     myConnString = "Server=" + this.txtServerName.Text + ";"
                         + "Database=master;User ID=" + this.txtUser.Text
-                        + ";Password=" + this.txtPassword.Text;
+                        + ";Password=" + this.txtPassword.Text
+                        + ";";
                 }
             }
             else
@@ -554,6 +585,11 @@ namespace quickDBExplorer
                     myConnString = "Server=" + this.txtServerName.Text + ";"
                         + "Database=master;Integrated Security=SSPI;";
                 }
+            }
+
+            if (!string.IsNullOrEmpty(this.txtDatabaseName.Text))
+            {
+                myConnString += string.Format("Initial Catalog={0};", this.txtDatabaseName.Text);
             }
             return myConnString;
         }

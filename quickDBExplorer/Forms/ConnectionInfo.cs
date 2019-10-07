@@ -21,6 +21,11 @@ namespace quickDBExplorer
         /// インスタンス名
         /// </summary>
         public string InstanceName { get; private set; }
+
+        /// <summary>
+        /// 接続先データベース名
+        /// </summary>
+        public string DatabaseName { get; private set; }
         /// <summary>
         /// ログインID
         /// </summary>
@@ -52,6 +57,7 @@ namespace quickDBExplorer
         /// <param name="serverName"></param>
         /// <param name="serverRealName"></param>
         /// <param name="instanceName"></param>
+        /// <param name="databaseName"></param>
         /// <param name="logonUid"></param>
         /// <param name="logonPassword"></param>
         /// <param name="isUseTruse"></param>
@@ -62,6 +68,7 @@ namespace quickDBExplorer
             string serverName,
             string serverRealName,
             string instanceName,
+            string databaseName,
             string logonUid,
             string logonPassword,
             bool isUseTruse,
@@ -73,6 +80,7 @@ namespace quickDBExplorer
             this.ServerName = serverName;
             this.ServerRealName = serverRealName;
             this.InstanceName = instanceName;
+            this.DatabaseName = databaseName;
             this.LogOnUid = logonUid;
             this.LogOnPassword = logonPassword;
             this.IsUseTruse = isUseTruse;
@@ -91,6 +99,7 @@ namespace quickDBExplorer
                 "DummyServerName",
                 "DummyServerName",
                 "SQLSERVER",
+                "",
                 "sa",
                 "saPassword",
                 false,

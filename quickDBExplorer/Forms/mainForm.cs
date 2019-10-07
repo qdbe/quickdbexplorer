@@ -2061,22 +2061,38 @@ namespace quickDBExplorer.Forms
                 this.rdoNotDispView.Checked = false;
             }
 
-            // 前回の値を元にDB先を変更する
-            if (svdata.LastDatabase != null && svdata.LastDatabase != "")
+            if (string.IsNullOrEmpty(this.ConnectionArg.DatabaseName))
+            {
+                // DB の指定がないので
+                // 前回の値を元にDB先を変更する
+                if (svdata.LastDatabase != null && svdata.LastDatabase != "")
+                {
+                    for (int i = 0; i < this.dbList.Items.Count; i++)
+                    {
+                        if ((string)this.dbList.Items[i] == svdata.LastDatabase)
+                        {
+                            this.dbList.SetSelected(i, true);
+                            this.dbList.Focus();
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    this.dbList.SelectedIndex = 0;
+                }
+            }
+            else
             {
                 for (int i = 0; i < this.dbList.Items.Count; i++)
                 {
-                    if ((string)this.dbList.Items[i] == svdata.LastDatabase)
+                    if ((string)this.dbList.Items[i] == this.ConnectionArg.DatabaseName)
                     {
                         this.dbList.SetSelected(i, true);
                         this.dbList.Focus();
                         break;
                     }
                 }
-            }
-            else
-            {
-                this.dbList.SelectedIndex = 0;
             }
             gfont = this.dbGrid.Font;
             gcolor = this.dbGrid.ForeColor;
