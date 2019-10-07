@@ -61,7 +61,7 @@ namespace quickDBExplorer
         /// </summary>
         private Hashtable commnadArgHt = null;
         private Button btnSelectServer;
-
+        private Button btnClear;
         private bool IsActivateWithArgs = false;
 
         internal event LoginConnectedHandler LoginConnected;
@@ -139,12 +139,13 @@ namespace quickDBExplorer
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSelectServer = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // MsgArea
             // 
             this.MsgArea.Location = new System.Drawing.Point(152, 240);
-            this.MsgArea.Size = new System.Drawing.Size(339, 25);
+            this.MsgArea.Size = new System.Drawing.Size(206, 25);
             // 
             // chkTrust
             // 
@@ -202,6 +203,8 @@ namespace quickDBExplorer
             // txtPassword
             // 
             this.txtPassword.CanCtrlDelete = true;
+            this.txtPassword.Histories = null;
+            this.txtPassword.HistoryKey = "txtPassword";
             this.txtPassword.IsDigitOnly = false;
             this.txtPassword.IsShowZoom = false;
             this.txtPassword.Location = new System.Drawing.Point(144, 201);
@@ -213,6 +216,8 @@ namespace quickDBExplorer
             // txtUser
             // 
             this.txtUser.CanCtrlDelete = true;
+            this.txtUser.Histories = null;
+            this.txtUser.HistoryKey = "txtUser";
             this.txtUser.IsDigitOnly = false;
             this.txtUser.IsShowZoom = false;
             this.txtUser.Location = new System.Drawing.Point(144, 161);
@@ -224,6 +229,8 @@ namespace quickDBExplorer
             // txtInstance
             // 
             this.txtInstance.CanCtrlDelete = true;
+            this.txtInstance.Histories = null;
+            this.txtInstance.HistoryKey = "txtInstance";
             this.txtInstance.IsDigitOnly = false;
             this.txtInstance.IsShowZoom = false;
             this.txtInstance.Location = new System.Drawing.Point(144, 89);
@@ -234,6 +241,8 @@ namespace quickDBExplorer
             // txtServerName
             // 
             this.txtServerName.CanCtrlDelete = true;
+            this.txtServerName.Histories = null;
+            this.txtServerName.HistoryKey = "txtServerName";
             this.txtServerName.IsDigitOnly = false;
             this.txtServerName.IsShowZoom = false;
             this.txtServerName.Location = new System.Drawing.Point(144, 49);
@@ -276,11 +285,22 @@ namespace quickDBExplorer
             this.btnSelectServer.UseVisualStyleBackColor = true;
             this.btnSelectServer.Click += new System.EventHandler(this.btnSelectServer_Click);
             // 
+            // btnClear
+            // 
+            this.btnClear.Location = new System.Drawing.Point(364, 226);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(101, 23);
+            this.btnClear.TabIndex = 26;
+            this.btnClear.Text = "CLear(&C)";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
             // LogOnDialog
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
             this.ClientSize = new System.Drawing.Size(520, 266);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnSelectServer);
             this.Controls.Add(this.chkTrust);
             this.Controls.Add(this.labelSchema);
@@ -299,8 +319,8 @@ namespace quickDBExplorer
             this.Name = "LogOnDialog";
             this.Text = "ÉçÉOÉCÉì";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.LogOnDialog_Load);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.LogOnDialog_Closing);
+            this.Load += new System.EventHandler(this.LogOnDialog_Load);
             this.Controls.SetChildIndex(this.MsgArea, 0);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label2, 0);
@@ -316,6 +336,7 @@ namespace quickDBExplorer
             this.Controls.SetChildIndex(this.labelSchema, 0);
             this.Controls.SetChildIndex(this.chkTrust, 0);
             this.Controls.SetChildIndex(this.btnSelectServer, 0);
+            this.Controls.SetChildIndex(this.btnClear, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -627,6 +648,15 @@ namespace quickDBExplorer
             }
             SetServer(dlg.SelectedServerName,dlg.SelectedInstanceName);
         }
-	}
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            this.txtServerName.Text = string.Empty;
+            this.txtInstance.Text = string.Empty;
+            this.txtUser.Text = string.Empty;
+            this.txtPassword.Text = string.Empty;
+            this.chkTrust.Checked = true;
+        }
+    }
 }
 
