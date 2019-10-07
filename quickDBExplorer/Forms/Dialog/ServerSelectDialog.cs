@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace quickDBExplorer
 {
@@ -181,15 +182,25 @@ namespace quickDBExplorer
 
         private void DispServerList()
         {
-            this.serverListBox.Items.Clear();
-            foreach (object sd in ServerList.PerServerData.Values)
+            this.serverListBox.SuspendLayout();
+            try
             {
-                ServerData svd = (ServerData)sd;
-                this.serverListBox.Items.Add(svd.Servername + ":" + svd.InstanceName);
+                this.serverListBox.Items.Clear();
+
+                foreach (object sd in ServerList.PerServerData.Values)
+                {
+                    ServerData svd = (ServerData)sd;
+                    this.serverListBox.Items.Add(svd.Servername + ":" + svd.InstanceName);
+                }
+                this.serverListBox.Sorted = true;
+            }
+            finally
+            {
+                this.serverListBox.ResumeLayout();
             }
         }
 
-		private void serverListBox_DoubleClick(object sender, System.EventArgs e)
+        private void serverListBox_DoubleClick(object sender, System.EventArgs e)
 		{
 			this.btnOk.PerformClick();
 		}
