@@ -1163,6 +1163,16 @@
             設定値記憶レジストリパス
             </summary>
         </member>
+        <member name="F:quickDBExplorer.SqlVersion.MaxVer">
+            <summary>
+            SQL SERVER VERSION 最大値
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.MinVer">
+            <summary>
+            SQL SERVER VERSION 最小値
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2000">
             <summary>
             SQL Server 2000 を表すインスタンスを生成する
@@ -1202,6 +1212,11 @@
         <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2017">
             <summary>
             SQL Server 2017 を表すインスタンスを生成する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2019">
+            <summary>
+            SQL Server 2019 を表すインスタンスを生成する
             </summary>
         </member>
         <member name="M:quickDBExplorer.SqlVersion.#ctor(System.String)">

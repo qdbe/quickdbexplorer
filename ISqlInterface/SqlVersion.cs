@@ -102,11 +102,21 @@ namespace quickDBExplorer
         /// </summary>
         public string regkey { get; set; }
 
-		/// <summary>
-		/// SQL Server 2000 を表すインスタンスを生成する
-		/// </summary>
-		/// <returns></returns>
-		public static SqlVersion SQLSERVER2000()
+        /// <summary>
+        /// SQL SERVER VERSION 最大値
+        /// </summary>
+        public static int MaxVer = 16;
+
+        /// <summary>
+        /// SQL SERVER VERSION 最小値
+        /// </summary>
+        public static int MinVer = 8;
+
+        /// <summary>
+        /// SQL Server 2000 を表すインスタンスを生成する
+        /// </summary>
+        /// <returns></returns>
+        public static SqlVersion SQLSERVER2000()
 		{
 			return new SqlVersion("08.00.2039");
 		}
@@ -166,6 +176,15 @@ namespace quickDBExplorer
         public static SqlVersion SQLSERVER2017()
         {
             return new SqlVersion("14.0");
+        }
+
+
+        /// <summary>
+        /// SQL Server 2019 を表すインスタンスを生成する
+        /// </summary>
+        public static SqlVersion SQLSERVER2019()
+        {
+            return new SqlVersion("15.0");
         }
 
         /// <summary>
@@ -272,17 +291,29 @@ namespace quickDBExplorer
                 this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\140\Tools\ClientSetup\";
                 this.BinDir = @"binn\";
             }
-            else
+            else if (versionStr.StartsWith("15.0"))
             {
-                // 既定で 2017 にしておく
-                this.pPublicVersion = "2017";
+                this.pPublicVersion = "2019";
                 this.pFullVersionString = versionStr;
                 this.pIsSynonym = true;
                 this.pCanUseQueryAnalyzer = false;
                 this.pIsManagementStudio = true;
                 this.ProfilerExe = "profiler.exe";
                 this.ManagementExe = "ssms.exe";
-                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\140\Tools\ClientSetup\";
+                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\150\Tools\ClientSetup\";
+                this.BinDir = @"binn\";
+            }
+            else
+            {
+                // 既定で 2019 にしておく
+                this.pPublicVersion = "2019";
+                this.pFullVersionString = versionStr;
+                this.pIsSynonym = true;
+                this.pCanUseQueryAnalyzer = false;
+                this.pIsManagementStudio = true;
+                this.ProfilerExe = "profiler.exe";
+                this.ManagementExe = "ssms.exe";
+                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\150\Tools\ClientSetup\";
                 this.BinDir = @"binn\";
             }
         }
