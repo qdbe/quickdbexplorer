@@ -11,7 +11,7 @@ using System.Text;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// SqlServer2005 の概要の説明です。
+	/// SqlServer2008R2 の概要の説明です。
 	/// </summary>
 	public class SqlServerDriver2008R2 : SqlServerDriver2008
 	{
