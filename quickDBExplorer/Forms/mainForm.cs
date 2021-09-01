@@ -276,7 +276,6 @@ namespace quickDBExplorer.Forms
 		private System.Windows.Forms.Button btnWhereZoom;
 		private System.Windows.Forms.Button btnOrderZoom;
 		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.CheckBox useCheckBox;
 		private System.Windows.Forms.Label labelObject;
 		private System.Windows.Forms.ContextMenu dbGridMenu;
 		private System.Windows.Forms.MenuItem copyDbGridMenu;
@@ -315,6 +314,8 @@ namespace quickDBExplorer.Forms
         private ToolStripMenuItem filterNonCS;
         private System.Windows.Forms.ColumnHeader ColCreateDate;
         private ToolStripMenuItem filterClear;
+        private SplitContainer conditionSplitter;
+        private SplitContainer conditionSplitter2;
         private bool IsFilterCaseSensitive = false;
 
 		/// <summary>
@@ -495,7 +496,6 @@ namespace quickDBExplorer.Forms
             this.btnEtc = new System.Windows.Forms.Button();
             this.btnWhereZoom = new System.Windows.Forms.Button();
             this.btnOrderZoom = new System.Windows.Forms.Button();
-            this.useCheckBox = new System.Windows.Forms.CheckBox();
             this.labelObject = new System.Windows.Forms.Label();
             this.cmbHistory = new System.Windows.Forms.ComboBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -505,15 +505,17 @@ namespace quickDBExplorer.Forms
             this.labelFilter = new System.Windows.Forms.Label();
             this.txtObjFilter = new quickDBExplorer.quickDBExplorerTextBox();
             this.MainSplitter = new System.Windows.Forms.SplitContainer();
+            this.conditionSplitter = new System.Windows.Forms.SplitContainer();
+            this.conditionSplitter2 = new System.Windows.Forms.SplitContainer();
             this.UpDownSplitter = new System.Windows.Forms.SplitContainer();
             this.dbMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuTimeoutChange = new System.Windows.Forms.ToolStripMenuItem();
             this.DBReloadMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.commTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.filterMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.filterClear = new System.Windows.Forms.ToolStripMenuItem();
             this.filterCS = new System.Windows.Forms.ToolStripMenuItem();
             this.filterNonCS = new System.Windows.Forms.ToolStripMenuItem();
-            this.filterClear = new System.Windows.Forms.ToolStripMenuItem();
             this.grpViewMode.SuspendLayout();
             this.grpSortMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -527,6 +529,12 @@ namespace quickDBExplorer.Forms
             this.MainSplitter.Panel1.SuspendLayout();
             this.MainSplitter.Panel2.SuspendLayout();
             this.MainSplitter.SuspendLayout();
+            this.conditionSplitter.Panel1.SuspendLayout();
+            this.conditionSplitter.Panel2.SuspendLayout();
+            this.conditionSplitter.SuspendLayout();
+            this.conditionSplitter2.Panel1.SuspendLayout();
+            this.conditionSplitter2.Panel2.SuspendLayout();
+            this.conditionSplitter2.SuspendLayout();
             this.UpDownSplitter.Panel1.SuspendLayout();
             this.UpDownSplitter.Panel2.SuspendLayout();
             this.UpDownSplitter.SuspendLayout();
@@ -542,14 +550,16 @@ namespace quickDBExplorer.Forms
             // 
             // dbList
             // 
-            this.dbList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.dbList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dbList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.dbList.HorizontalScrollbar = true;
+            this.dbList.IntegralHeight = false;
             this.dbList.ItemHeight = 12;
-            this.dbList.Location = new System.Drawing.Point(60, 8);
+            this.dbList.Location = new System.Drawing.Point(60, 3);
             this.dbList.Name = "dbList";
-            this.dbList.Size = new System.Drawing.Size(164, 52);
+            this.dbList.Size = new System.Drawing.Size(184, 74);
             this.dbList.TabIndex = 1;
             this.dbList.CopyData += new quickDBExplorer.CopyDataEventHandler(this.dbList_CopyData);
             this.dbList.SelectedIndexChanged += new System.EventHandler(this.dbList_SelectedIndexChanged);
@@ -649,7 +659,7 @@ namespace quickDBExplorer.Forms
             // 
             this.grpViewMode.Controls.Add(this.rdoNotDispView);
             this.grpViewMode.Controls.Add(this.rdoDispView);
-            this.grpViewMode.Location = new System.Drawing.Point(8, 212);
+            this.grpViewMode.Location = new System.Drawing.Point(8, 57);
             this.grpViewMode.Name = "grpViewMode";
             this.grpViewMode.Size = new System.Drawing.Size(216, 40);
             this.grpViewMode.TabIndex = 6;
@@ -668,7 +678,7 @@ namespace quickDBExplorer.Forms
             // 
             this.grpSortMode.Controls.Add(this.rdoSortOwnerTable);
             this.grpSortMode.Controls.Add(this.rdoSortTable);
-            this.grpSortMode.Location = new System.Drawing.Point(8, 256);
+            this.grpSortMode.Location = new System.Drawing.Point(8, 101);
             this.grpSortMode.Name = "grpSortMode";
             this.grpSortMode.Size = new System.Drawing.Size(216, 52);
             this.grpSortMode.TabIndex = 7;
@@ -701,9 +711,9 @@ namespace quickDBExplorer.Forms
             this.txtWhere.HistoryKey = "txtWhere";
             this.txtWhere.IsDigitOnly = false;
             this.txtWhere.IsShowZoom = true;
-            this.txtWhere.Location = new System.Drawing.Point(72, 480);
+            this.txtWhere.Location = new System.Drawing.Point(72, 314);
             this.txtWhere.Name = "txtWhere";
-            this.txtWhere.Size = new System.Drawing.Size(117, 19);
+            this.txtWhere.Size = new System.Drawing.Size(144, 19);
             this.txtWhere.TabIndex = 11;
             this.txtWhere.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtWhere_ShowHistory);
             this.txtWhere.ShowZoom += new quickDBExplorer.ShowZoomEventHandler(this.txtWhere_ShowZoom);
@@ -719,9 +729,9 @@ namespace quickDBExplorer.Forms
             this.txtSort.HistoryKey = "txtSort";
             this.txtSort.IsDigitOnly = false;
             this.txtSort.IsShowZoom = true;
-            this.txtSort.Location = new System.Drawing.Point(72, 508);
+            this.txtSort.Location = new System.Drawing.Point(72, 342);
             this.txtSort.Name = "txtSort";
-            this.txtSort.Size = new System.Drawing.Size(117, 19);
+            this.txtSort.Size = new System.Drawing.Size(144, 19);
             this.txtSort.TabIndex = 14;
             this.txtSort.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtSort_ShowHistory);
             this.txtSort.ShowZoom += new quickDBExplorer.ShowZoomEventHandler(this.txtSort_ShowZoom);
@@ -730,7 +740,7 @@ namespace quickDBExplorer.Forms
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(8, 480);
+            this.label1.Location = new System.Drawing.Point(8, 314);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(52, 16);
             this.label1.TabIndex = 10;
@@ -738,7 +748,7 @@ namespace quickDBExplorer.Forms
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(8, 508);
+            this.label2.Location = new System.Drawing.Point(8, 342);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 16);
             this.label2.TabIndex = 13;
@@ -756,15 +766,17 @@ namespace quickDBExplorer.Forms
             // 
             // ownerListbox
             // 
-            this.ownerListbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.ownerListbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ownerListbox.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.ownerListbox.HorizontalScrollbar = true;
+            this.ownerListbox.IntegralHeight = false;
             this.ownerListbox.ItemHeight = 12;
-            this.ownerListbox.Location = new System.Drawing.Point(60, 72);
+            this.ownerListbox.Location = new System.Drawing.Point(60, 3);
             this.ownerListbox.Name = "ownerListbox";
             this.ownerListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.ownerListbox.Size = new System.Drawing.Size(164, 88);
+            this.ownerListbox.Size = new System.Drawing.Size(184, 72);
             this.ownerListbox.TabIndex = 4;
             this.ownerListbox.CopyData += new quickDBExplorer.CopyDataEventHandler(this.ownerListbox_CopyData);
             this.ownerListbox.SelectedIndexChanged += new System.EventHandler(this.ownerListbox_SelectedIndexChanged);
@@ -884,7 +896,7 @@ namespace quickDBExplorer.Forms
             this.grpDataDispMode.Controls.Add(this.txtDispCount);
             this.grpDataDispMode.Controls.Add(this.label3);
             this.grpDataDispMode.Controls.Add(this.chkDispData);
-            this.grpDataDispMode.Location = new System.Drawing.Point(8, 557);
+            this.grpDataDispMode.Location = new System.Drawing.Point(8, 391);
             this.grpDataDispMode.Name = "grpDataDispMode";
             this.grpDataDispMode.Size = new System.Drawing.Size(216, 44);
             this.grpDataDispMode.TabIndex = 18;
@@ -923,7 +935,7 @@ namespace quickDBExplorer.Forms
             // 
             this.grpSysUserMode.Controls.Add(this.rdoNotDispSysUser);
             this.grpSysUserMode.Controls.Add(this.rdoDispSysUser);
-            this.grpSysUserMode.Location = new System.Drawing.Point(8, 168);
+            this.grpSysUserMode.Location = new System.Drawing.Point(8, 13);
             this.grpSysUserMode.Name = "grpSysUserMode";
             this.grpSysUserMode.Size = new System.Drawing.Size(216, 40);
             this.grpSysUserMode.TabIndex = 5;
@@ -957,7 +969,7 @@ namespace quickDBExplorer.Forms
             this.grpOutputMode.Controls.Add(this.rdoOutFile);
             this.grpOutputMode.Controls.Add(this.rdoClipboard);
             this.grpOutputMode.Controls.Add(this.rdoOutFolder);
-            this.grpOutputMode.Location = new System.Drawing.Point(8, 316);
+            this.grpOutputMode.Location = new System.Drawing.Point(8, 156);
             this.grpOutputMode.Name = "grpOutputMode";
             this.grpOutputMode.Size = new System.Drawing.Size(216, 84);
             this.grpOutputMode.TabIndex = 8;
@@ -967,7 +979,7 @@ namespace quickDBExplorer.Forms
             // btnReference
             // 
             this.btnReference.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReference.Location = new System.Drawing.Point(168, 52);
+            this.btnReference.Location = new System.Drawing.Point(168, 55);
             this.btnReference.Name = "btnReference";
             this.btnReference.Size = new System.Drawing.Size(40, 20);
             this.btnReference.TabIndex = 4;
@@ -983,7 +995,7 @@ namespace quickDBExplorer.Forms
             this.txtOutput.HistoryKey = "txtOutput";
             this.txtOutput.IsDigitOnly = false;
             this.txtOutput.IsShowZoom = false;
-            this.txtOutput.Location = new System.Drawing.Point(8, 52);
+            this.txtOutput.Location = new System.Drawing.Point(8, 55);
             this.txtOutput.Name = "txtOutput";
             this.txtOutput.Size = new System.Drawing.Size(160, 19);
             this.txtOutput.TabIndex = 3;
@@ -991,7 +1003,7 @@ namespace quickDBExplorer.Forms
             // 
             // rdoOutFile
             // 
-            this.rdoOutFile.Location = new System.Drawing.Point(8, 32);
+            this.rdoOutFile.Location = new System.Drawing.Point(8, 35);
             this.rdoOutFile.Name = "rdoOutFile";
             this.rdoOutFile.Size = new System.Drawing.Size(88, 16);
             this.rdoOutFile.TabIndex = 1;
@@ -1000,7 +1012,7 @@ namespace quickDBExplorer.Forms
             // 
             // rdoClipboard
             // 
-            this.rdoClipboard.Location = new System.Drawing.Point(8, 12);
+            this.rdoClipboard.Location = new System.Drawing.Point(8, 15);
             this.rdoClipboard.Name = "rdoClipboard";
             this.rdoClipboard.Size = new System.Drawing.Size(88, 16);
             this.rdoClipboard.TabIndex = 0;
@@ -1009,7 +1021,7 @@ namespace quickDBExplorer.Forms
             // 
             // rdoOutFolder
             // 
-            this.rdoOutFolder.Location = new System.Drawing.Point(104, 32);
+            this.rdoOutFolder.Location = new System.Drawing.Point(104, 35);
             this.rdoOutFolder.Name = "rdoOutFolder";
             this.rdoOutFolder.Size = new System.Drawing.Size(88, 16);
             this.rdoOutFolder.TabIndex = 2;
@@ -1018,7 +1030,7 @@ namespace quickDBExplorer.Forms
             // 
             // labelDB
             // 
-            this.labelDB.Location = new System.Drawing.Point(8, 20);
+            this.labelDB.Location = new System.Drawing.Point(10, 18);
             this.labelDB.Name = "labelDB";
             this.labelDB.Size = new System.Drawing.Size(48, 32);
             this.labelDB.TabIndex = 0;
@@ -1028,7 +1040,7 @@ namespace quickDBExplorer.Forms
             // 
             // labelSchema
             // 
-            this.labelSchema.Location = new System.Drawing.Point(4, 72);
+            this.labelSchema.Location = new System.Drawing.Point(6, 12);
             this.labelSchema.Name = "labelSchema";
             this.labelSchema.Size = new System.Drawing.Size(48, 32);
             this.labelSchema.TabIndex = 3;
@@ -1144,7 +1156,7 @@ namespace quickDBExplorer.Forms
             this.grpCharaSet.Controls.Add(this.rdoUtf8);
             this.grpCharaSet.Controls.Add(this.rdoSjis);
             this.grpCharaSet.Controls.Add(this.rdoUnicode);
-            this.grpCharaSet.Location = new System.Drawing.Point(8, 404);
+            this.grpCharaSet.Location = new System.Drawing.Point(8, 244);
             this.grpCharaSet.Name = "grpCharaSet";
             this.grpCharaSet.Size = new System.Drawing.Size(216, 60);
             this.grpCharaSet.TabIndex = 9;
@@ -1269,7 +1281,7 @@ namespace quickDBExplorer.Forms
             // btnWhereZoom
             // 
             this.btnWhereZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnWhereZoom.Location = new System.Drawing.Point(189, 480);
+            this.btnWhereZoom.Location = new System.Drawing.Point(219, 314);
             this.btnWhereZoom.Name = "btnWhereZoom";
             this.btnWhereZoom.Size = new System.Drawing.Size(16, 20);
             this.btnWhereZoom.TabIndex = 12;
@@ -1278,20 +1290,11 @@ namespace quickDBExplorer.Forms
             // btnOrderZoom
             // 
             this.btnOrderZoom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOrderZoom.Location = new System.Drawing.Point(189, 508);
+            this.btnOrderZoom.Location = new System.Drawing.Point(219, 342);
             this.btnOrderZoom.Name = "btnOrderZoom";
             this.btnOrderZoom.Size = new System.Drawing.Size(16, 20);
             this.btnOrderZoom.TabIndex = 15;
             this.btnOrderZoom.Click += new System.EventHandler(this.btnOrderZoom_Click);
-            // 
-            // useCheckBox
-            // 
-            this.useCheckBox.Location = new System.Drawing.Point(20, 116);
-            this.useCheckBox.Name = "useCheckBox";
-            this.useCheckBox.Size = new System.Drawing.Size(36, 36);
-            this.useCheckBox.TabIndex = 2;
-            this.useCheckBox.Text = "CheckList";
-            this.useCheckBox.Visible = false;
             // 
             // labelObject
             // 
@@ -1315,7 +1318,7 @@ namespace quickDBExplorer.Forms
             // 
             // label11
             // 
-            this.label11.Location = new System.Drawing.Point(8, 536);
+            this.label11.Location = new System.Drawing.Point(8, 370);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(60, 16);
             this.label11.TabIndex = 16;
@@ -1331,9 +1334,9 @@ namespace quickDBExplorer.Forms
             this.txtAlias.HistoryKey = "txtAlias";
             this.txtAlias.IsDigitOnly = false;
             this.txtAlias.IsShowZoom = true;
-            this.txtAlias.Location = new System.Drawing.Point(72, 532);
+            this.txtAlias.Location = new System.Drawing.Point(72, 366);
             this.txtAlias.Name = "txtAlias";
-            this.txtAlias.Size = new System.Drawing.Size(137, 19);
+            this.txtAlias.Size = new System.Drawing.Size(165, 19);
             this.txtAlias.TabIndex = 17;
             this.commTooltip.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
             this.txtAlias.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtAlias_ShowHistory);
@@ -1417,25 +1420,7 @@ namespace quickDBExplorer.Forms
             // MainSplitter.Panel1
             // 
             this.MainSplitter.Panel1.AutoScroll = true;
-            this.MainSplitter.Panel1.Controls.Add(this.dbList);
-            this.MainSplitter.Panel1.Controls.Add(this.txtAlias);
-            this.MainSplitter.Panel1.Controls.Add(this.useCheckBox);
-            this.MainSplitter.Panel1.Controls.Add(this.label11);
-            this.MainSplitter.Panel1.Controls.Add(this.btnOrderZoom);
-            this.MainSplitter.Panel1.Controls.Add(this.labelSchema);
-            this.MainSplitter.Panel1.Controls.Add(this.btnWhereZoom);
-            this.MainSplitter.Panel1.Controls.Add(this.grpDataDispMode);
-            this.MainSplitter.Panel1.Controls.Add(this.grpSysUserMode);
-            this.MainSplitter.Panel1.Controls.Add(this.grpViewMode);
-            this.MainSplitter.Panel1.Controls.Add(this.grpSortMode);
-            this.MainSplitter.Panel1.Controls.Add(this.txtWhere);
-            this.MainSplitter.Panel1.Controls.Add(this.txtSort);
-            this.MainSplitter.Panel1.Controls.Add(this.grpCharaSet);
-            this.MainSplitter.Panel1.Controls.Add(this.label1);
-            this.MainSplitter.Panel1.Controls.Add(this.labelDB);
-            this.MainSplitter.Panel1.Controls.Add(this.label2);
-            this.MainSplitter.Panel1.Controls.Add(this.grpOutputMode);
-            this.MainSplitter.Panel1.Controls.Add(this.ownerListbox);
+            this.MainSplitter.Panel1.Controls.Add(this.conditionSplitter);
             // 
             // MainSplitter.Panel2
             // 
@@ -1444,6 +1429,60 @@ namespace quickDBExplorer.Forms
             this.MainSplitter.SplitterDistance = 251;
             this.MainSplitter.SplitterWidth = 2;
             this.MainSplitter.TabIndex = 0;
+            // 
+            // conditionSplitter
+            // 
+            this.conditionSplitter.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.conditionSplitter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.conditionSplitter.Location = new System.Drawing.Point(0, 0);
+            this.conditionSplitter.Name = "conditionSplitter";
+            this.conditionSplitter.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // conditionSplitter.Panel1
+            // 
+            this.conditionSplitter.Panel1.Controls.Add(this.dbList);
+            this.conditionSplitter.Panel1.Controls.Add(this.labelDB);
+            // 
+            // conditionSplitter.Panel2
+            // 
+            this.conditionSplitter.Panel2.Controls.Add(this.conditionSplitter2);
+            this.conditionSplitter.Size = new System.Drawing.Size(251, 660);
+            this.conditionSplitter.SplitterDistance = 84;
+            this.conditionSplitter.TabIndex = 19;
+            // 
+            // conditionSplitter2
+            // 
+            this.conditionSplitter2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.conditionSplitter2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.conditionSplitter2.Location = new System.Drawing.Point(0, 0);
+            this.conditionSplitter2.Name = "conditionSplitter2";
+            this.conditionSplitter2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // conditionSplitter2.Panel1
+            // 
+            this.conditionSplitter2.Panel1.Controls.Add(this.labelSchema);
+            this.conditionSplitter2.Panel1.Controls.Add(this.ownerListbox);
+            // 
+            // conditionSplitter2.Panel2
+            // 
+            this.conditionSplitter2.Panel2.AutoScroll = true;
+            this.conditionSplitter2.Panel2.Controls.Add(this.txtAlias);
+            this.conditionSplitter2.Panel2.Controls.Add(this.label11);
+            this.conditionSplitter2.Panel2.Controls.Add(this.btnOrderZoom);
+            this.conditionSplitter2.Panel2.Controls.Add(this.btnWhereZoom);
+            this.conditionSplitter2.Panel2.Controls.Add(this.grpDataDispMode);
+            this.conditionSplitter2.Panel2.Controls.Add(this.grpSysUserMode);
+            this.conditionSplitter2.Panel2.Controls.Add(this.grpViewMode);
+            this.conditionSplitter2.Panel2.Controls.Add(this.grpSortMode);
+            this.conditionSplitter2.Panel2.Controls.Add(this.txtWhere);
+            this.conditionSplitter2.Panel2.Controls.Add(this.txtSort);
+            this.conditionSplitter2.Panel2.Controls.Add(this.grpCharaSet);
+            this.conditionSplitter2.Panel2.Controls.Add(this.label1);
+            this.conditionSplitter2.Panel2.Controls.Add(this.label2);
+            this.conditionSplitter2.Panel2.Controls.Add(this.grpOutputMode);
+            this.conditionSplitter2.Size = new System.Drawing.Size(251, 572);
+            this.conditionSplitter2.SplitterDistance = 82;
+            this.conditionSplitter2.TabIndex = 0;
             // 
             // UpDownSplitter
             // 
@@ -1479,19 +1518,19 @@ namespace quickDBExplorer.Forms
             this.menuTimeoutChange,
             this.DBReloadMenu});
             this.dbMenu.Name = "dbMenu";
-            this.dbMenu.Size = new System.Drawing.Size(163, 48);
+            this.dbMenu.Size = new System.Drawing.Size(164, 48);
             // 
             // menuTimeoutChange
             // 
             this.menuTimeoutChange.Name = "menuTimeoutChange";
-            this.menuTimeoutChange.Size = new System.Drawing.Size(162, 22);
+            this.menuTimeoutChange.Size = new System.Drawing.Size(163, 22);
             this.menuTimeoutChange.Text = "タイムアウト変更(&t)";
             this.menuTimeoutChange.Click += new System.EventHandler(this.menuTimeoutChange_Click);
             // 
             // DBReloadMenu
             // 
             this.DBReloadMenu.Name = "DBReloadMenu";
-            this.DBReloadMenu.Size = new System.Drawing.Size(162, 22);
+            this.DBReloadMenu.Size = new System.Drawing.Size(163, 22);
             this.DBReloadMenu.Text = "DB再読み込み(&R)";
             this.DBReloadMenu.Click += new System.EventHandler(this.DBReloadMenu_Click);
             // 
@@ -1502,7 +1541,14 @@ namespace quickDBExplorer.Forms
             this.filterCS,
             this.filterNonCS});
             this.filterMenu.Name = "filterMenu";
-            this.filterMenu.Size = new System.Drawing.Size(214, 92);
+            this.filterMenu.Size = new System.Drawing.Size(214, 70);
+            // 
+            // filterClear
+            // 
+            this.filterClear.Name = "filterClear";
+            this.filterClear.Size = new System.Drawing.Size(213, 22);
+            this.filterClear.Text = "フィルター値をクリア";
+            this.filterClear.Click += new System.EventHandler(this.filterClear_Click);
             // 
             // filterCS
             // 
@@ -1519,13 +1565,6 @@ namespace quickDBExplorer.Forms
             this.filterNonCS.Text = "大文字・小文字を区別しない";
             this.filterNonCS.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.filterNonCS.Click += new System.EventHandler(this.filterNonCS_Click);
-            // 
-            // filterClear
-            // 
-            this.filterClear.Name = "filterClear";
-            this.filterClear.Size = new System.Drawing.Size(213, 22);
-            this.filterClear.Text = "フィルター値をクリア";
-            this.filterClear.Click += new System.EventHandler(this.filterClear_Click);
             // 
             // MainForm
             // 
@@ -1558,9 +1597,15 @@ namespace quickDBExplorer.Forms
             this.ObjFieldSplitter.Panel2.ResumeLayout(false);
             this.ObjFieldSplitter.ResumeLayout(false);
             this.MainSplitter.Panel1.ResumeLayout(false);
-            this.MainSplitter.Panel1.PerformLayout();
             this.MainSplitter.Panel2.ResumeLayout(false);
             this.MainSplitter.ResumeLayout(false);
+            this.conditionSplitter.Panel1.ResumeLayout(false);
+            this.conditionSplitter.Panel2.ResumeLayout(false);
+            this.conditionSplitter.ResumeLayout(false);
+            this.conditionSplitter2.Panel1.ResumeLayout(false);
+            this.conditionSplitter2.Panel2.ResumeLayout(false);
+            this.conditionSplitter2.Panel2.PerformLayout();
+            this.conditionSplitter2.ResumeLayout(false);
             this.UpDownSplitter.Panel1.ResumeLayout(false);
             this.UpDownSplitter.Panel2.ResumeLayout(false);
             this.UpDownSplitter.ResumeLayout(false);
