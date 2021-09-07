@@ -28,17 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.sqlServerList = new quickDBExplorer.qdbeListView();
-            this.ServerNameCol = new System.Windows.Forms.ColumnHeader();
-            this.InstanceNameCol = new System.Windows.Forms.ColumnHeader();
-            this.IsClusteredCol = new System.Windows.Forms.ColumnHeader();
-            this.VersionCol = new System.Windows.Forms.ColumnHeader();
+            this.ServerNameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.InstanceNameCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.IsClusteredCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.VersionCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.grpServerList = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtFilter = new System.Windows.Forms.TextBox();
             this.btnReload = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.grpServerList.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,15 +52,16 @@
             // 
             // sqlServerList
             // 
-            this.sqlServerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.sqlServerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.sqlServerList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.ServerNameCol,
             this.InstanceNameCol,
             this.IsClusteredCol,
             this.VersionCol});
             this.sqlServerList.FullRowSelect = true;
+            this.sqlServerList.HideSelection = false;
             this.sqlServerList.IsAutoColumSort = true;
             this.sqlServerList.Location = new System.Drawing.Point(15, 44);
             this.sqlServerList.MultiSelect = false;
@@ -113,9 +116,9 @@
             // 
             // grpServerList
             // 
-            this.grpServerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.grpServerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.grpServerList.Controls.Add(this.label1);
             this.grpServerList.Controls.Add(this.txtFilter);
             this.grpServerList.Controls.Add(this.btnReload);
@@ -155,6 +158,10 @@
             this.btnReload.UseVisualStyleBackColor = true;
             this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.StartSearch);
+            // 
             // SqlServerSelector
             // 
             this.AcceptButton = this.btnOk;
@@ -165,6 +172,7 @@
             this.Controls.Add(this.btnOk);
             this.Name = "SqlServerSelector";
             this.Text = "サーバー選択";
+            this.Load += new System.EventHandler(this.SqlServerSelector_Load);
             this.Controls.SetChildIndex(this.MsgArea, 0);
             this.Controls.SetChildIndex(this.btnOk, 0);
             this.Controls.SetChildIndex(this.btnCancel, 0);
@@ -188,5 +196,6 @@
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtFilter;
+        private System.Windows.Forms.Timer timer1;
     }
 }

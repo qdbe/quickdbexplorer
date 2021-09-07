@@ -6,6 +6,7 @@ using System.Data.Sql;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Timers;
 
 namespace quickDBExplorer
 {
@@ -33,20 +34,18 @@ namespace quickDBExplorer
 
         private DataTable displayList;
 
-
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="serverList">SqlDataSourceEnumerator.GetDataSourcesの結果を渡す</param>
-        public SqlServerSelector(DataTable serverList)
+        public SqlServerSelector()
         {
             InitializeComponent();
 
 
-            SetServerList(serverList, string.Empty);
         }
 
-        private void SetServerList(DataTable　serverList, string filterString)
+        private void SetServerList(DataTable serverList, string filterString)
         {
             displayList = serverList;
             this.sqlServerList.BeginUpdate();
@@ -104,29 +103,43 @@ namespace quickDBExplorer
 
         private void btnReload_Click(object sender, EventArgs e)
         {
-            ReloadServerList();
+            StartTimer();
         }
 
-        private void ReloadServerList()
+        private void StartTimer()
         {
-            SqlDataSourceEnumerator list = System.Data.Sql.SqlDataSourceEnumerator.Instance;
-            this.Cursor = Cursors.WaitCursor;
-            DataTable serverList = list.GetDataSources();
-            this.Cursor = Cursors.Default;
-            if (serverList.Rows.Count == 0)
-            {
-                MessageBox.Show("選択可能なサーバーはありません");
-                return;
-            }
-
-            this.txtFilter.Text = string.Empty;
-            SetServerList(serverList, string.Empty);
+            this.timer1.Interval = 500;
+            this.timer1.Start();
         }
 
         private void txtFilter_TextChanged(object sender, EventArgs e)
         {
             string filterText = this.txtFilter.Text;
             SetServerList(displayList, filterText);
+        }
+
+        private void SqlServerSelector_Load(object sender, EventArgs e)
+        {
+            StartTimer();
+        }
+
+        private void StartSearch(object sender, EventArgs e)
+        {
+            this.timer1.Stop();
+            SqlServerSearch searchdlg = new SqlServerSearch();
+            searchdlg.Owner = this;
+            searchdlg.ShowDialog();
+            if (searchdlg.DialogResult == DialogResult.OK)
+            {
+                DataTable serverList = searchdlg.SearchResult;
+                if (serverList.Rows.Count == 0)
+                {
+                    MessageBox.Show("選択可能なサーバーはありません");
+                    return;
+                }
+                this.txtFilter.Text = string.Empty;
+                SetServerList(serverList, string.Empty);
+            }
         }
     }
 }

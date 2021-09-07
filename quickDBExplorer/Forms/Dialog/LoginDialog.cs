@@ -285,7 +285,7 @@ namespace quickDBExplorer
             this.btnSelectServer.Name = "btnSelectServer";
             this.btnSelectServer.Size = new System.Drawing.Size(101, 23);
             this.btnSelectServer.TabIndex = 3;
-            this.btnSelectServer.Text = "接続先(&L)";
+            this.btnSelectServer.Text = "接続先検索(&L)";
             this.btnSelectServer.UseVisualStyleBackColor = true;
             this.btnSelectServer.Click += new System.EventHandler(this.btnSelectServer_Click);
             // 
@@ -668,21 +668,40 @@ namespace quickDBExplorer
 
         private void btnSelectServer_Click(object sender, EventArgs e)
         {
-            SqlDataSourceEnumerator list = System.Data.Sql.SqlDataSourceEnumerator.Instance;
-            this.Cursor = Cursors.WaitCursor;
-            DataTable serverList = list.GetDataSources();
-            this.Cursor = Cursors.Default;
-            if (serverList.Rows.Count == 0)
-            {
-                MessageBox.Show("選択可能なサーバーはありません");
-                return;
-            }
-            SqlServerSelector dlg = new SqlServerSelector(serverList);
+            //SqlDataSourceEnumerator list = System.Data.Sql.SqlDataSourceEnumerator.Instance;
+            //DataTable serverList = new DataTable();
+            //this.Cursor = Cursors.WaitCursor;
+            //System.Threading.Thread th = new System.Threading.Thread(new System.Threading.ThreadStart(() =>
+            //{
+            //    serverList = list.GetDataSources();
+            //}));
+            //th.Start();
+
+            //try
+            //{
+            //    this.Enabled = false;
+
+            //    while (true)
+            //    {
+            //        bool result = th.Join(300);
+            //        if (result == true)
+            //        {
+            //            break;
+            //        }
+            //        Application.DoEvents();
+            //    }
+            //}
+            //finally
+            //{
+            //    this.Enabled = true;
+            //    this.Cursor = Cursors.Default;
+            //}
+            SqlServerSelector dlg = new SqlServerSelector();
             if (dlg.ShowDialog() != DialogResult.OK)
             {
                 return;
             }
-            SetServer(dlg.SelectedServerName,dlg.SelectedInstanceName);
+            SetServer(dlg.SelectedServerName, dlg.SelectedInstanceName);
         }
 
         private void btnClear_Click(object sender, EventArgs e)

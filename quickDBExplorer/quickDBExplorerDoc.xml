@@ -2642,6 +2642,34 @@
             コード エディタで変更しないでください。
             </summary>
         </member>
+        <member name="T:quickDBExplorer.SqlServerSearch">
+            <summary>
+            SQL Server の一覧を選択するダイアログ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlServerSearch.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="serverList">SqlDataSourceEnumerator.GetDataSourcesの結果を渡す</param>
+        </member>
+        <member name="F:quickDBExplorer.SqlServerSearch.components">
+            <summary>
+            必要なデザイナ変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlServerSearch.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージ リソースが破棄される場合 true、破棄されない場合は false です。</param>
+        </member>
+        <member name="M:quickDBExplorer.SqlServerSearch.InitializeComponent">
+            <summary>
+            デザイナ サポートに必要なメソッドです。このメソッドの内容を
+            コード エディタで変更しないでください。
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.SqlServerSelector">
             <summary>
             SQL Server の一覧を選択するダイアログ
@@ -2667,7 +2695,7 @@
             選択されたサーバーのバージョン
             </summary>
         </member>
-        <member name="M:quickDBExplorer.SqlServerSelector.#ctor(System.Data.DataTable)">
+        <member name="M:quickDBExplorer.SqlServerSelector.#ctor">
             <summary>
             コンストラクタ
             </summary>
