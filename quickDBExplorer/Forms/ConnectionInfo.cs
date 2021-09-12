@@ -45,7 +45,7 @@ namespace quickDBExplorer
         /// <summary>
         /// 前回終了値
         /// </summary>
-        public ServerData ServerDataInfo {get;private set; }
+        public ServerJsonData ServerDataInfo {get;private set; }
         /// <summary>
         /// DBサーバーバージョン情報
         /// </summary>
@@ -74,7 +74,7 @@ namespace quickDBExplorer
             bool isUseTruse,
             ISqlInterface sqlDriver,
             SqlVersion sqlVersion,
-            ServerData serverdata
+            ServerJsonData serverdata
             )
         {
             this.ServerName = serverName;
@@ -105,7 +105,7 @@ namespace quickDBExplorer
                 false,
                 new EmptySqlInterface(),
                 SqlVersion.SQLSERVER2000(),
-                new ServerData()
+                new ServerJsonData()
                 );
         }
     }

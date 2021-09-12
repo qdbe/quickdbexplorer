@@ -20,7 +20,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 		private System.Windows.Forms.Button btnCancel;
-		private	ConditionRecorder	ServerList;
+		private	ConditionRecorderJson	ServerList;
 
 		/// <summary>
 		/// 選択されたサーバー名
@@ -52,7 +52,7 @@ namespace quickDBExplorer
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="cl">過去の接続サーバー履歴情報</param>
-		public ServerSelectDialog(ConditionRecorder cl)
+		public ServerSelectDialog(ConditionRecorderJson cl)
 		{
 			//
 			// Windows フォーム デザイナ サポートに必要です。
@@ -189,7 +189,7 @@ namespace quickDBExplorer
 
                 foreach (object sd in ServerList.PerServerData.Values)
                 {
-                    ServerData svd = (ServerData)sd;
+                    ServerJsonData svd = (ServerJsonData)sd;
                     this.serverListBox.Items.Add(svd.Servername + ":" + svd.InstanceName);
                 }
                 this.serverListBox.Sorted = true;
@@ -228,10 +228,10 @@ namespace quickDBExplorer
             string delimStr = ":";
             string[] str = this.serverListBox.SelectedItem.ToString().Split(delimStr.ToCharArray(), 2);
 
-            ServerData deltarget = null;
+            ServerJsonData deltarget = null;
             foreach (object sd in ServerList.PerServerData.Values)
             {
-                deltarget = (ServerData)sd;
+                deltarget = (ServerJsonData)sd;
                 if (deltarget.Servername == str[0] &&
                     (
                         (string.IsNullOrEmpty(deltarget.InstanceName) && string.IsNullOrEmpty(str[1])) ||

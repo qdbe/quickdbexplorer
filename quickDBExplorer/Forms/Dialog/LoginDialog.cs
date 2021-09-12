@@ -18,7 +18,7 @@ namespace quickDBExplorer
 		/// <summary>
 		/// 以前までの接続時記録情報
 		/// </summary>
-		private ConditionRecorder	initOpt;
+		private ConditionRecorderJson	initOpt;
 
 		private System.Windows.Forms.CheckBox chkTrust;
 		private System.Windows.Forms.Label labelSchema;
@@ -73,7 +73,7 @@ namespace quickDBExplorer
 		/// コンストラクタ
 		/// </summary>
 		/// <param name="initialOption">記憶された設定情報</param>
-		public LogOnDialog(ConditionRecorder initialOption)
+		public LogOnDialog(ConditionRecorderJson initialOption)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
@@ -87,7 +87,7 @@ namespace quickDBExplorer
         /// </summary>
         /// <param name="initialOption">記憶された設定情報</param>
         /// <param name="argHt">コマンド引数を格納したパラメータ</param>
-        public LogOnDialog(ConditionRecorder initialOption, 
+        public LogOnDialog(ConditionRecorderJson initialOption, 
             Hashtable argHt
             )
         {
@@ -437,9 +437,9 @@ namespace quickDBExplorer
 			if( initOpt.LastServerKey.Length != 0 )
 			{
 				// 記憶されたサーバー別の記憶情報
-				ServerData sv = (ServerData)initOpt.PerServerData[initOpt.LastServerKey];
-                if (sv != null)
+                if (initOpt.PerServerData.ContainsKey(initOpt.LastServerKey))
                 {
+                    ServerJsonData sv = (ServerJsonData)initOpt.PerServerData[initOpt.LastServerKey];
                     SetServer(sv.Servername, sv.InstanceName);
                 }
 				// パスワードは記憶していないので戻す必要なし
@@ -478,7 +478,7 @@ namespace quickDBExplorer
 
 
                 // 以前のサーバー別情報があれば、それを再作成する
-                ServerData sv = CreateServerData();
+                ServerJsonData sv = CreateServerData();
 
                 // SQL 処理クラスの初期化
                 SqlVersion sqlVer = new SqlVersion(con.ServerVersion);
@@ -518,18 +518,18 @@ namespace quickDBExplorer
             //}
         }
 
-        private ServerData CreateServerData()
+        private ServerJsonData CreateServerData()
         {
-            ServerData sv = new ServerData();
+            ServerJsonData sv = new ServerJsonData();
             sv.Servername = this.txtServerName.Text;
             sv.InstanceName = this.txtInstance.Text;
-            if (initOpt.PerServerData[sv.KeyName] == null)
+            if (!initOpt.PerServerData.ContainsKey(sv.KeyName))
             {
                 initOpt.PerServerData.Add(sv.KeyName, sv);
             }
             else
             {
-                sv = (ServerData)initOpt.PerServerData[sv.KeyName];
+                sv = (ServerJsonData)initOpt.PerServerData[sv.KeyName];
             }
 
             if (this.chkSaveInfo.Checked == false)
@@ -632,11 +632,13 @@ namespace quickDBExplorer
             this.txtServerName.Text = serverName;
             this.txtInstance.Text = instanceName;
 
-            ServerData sv = new ServerData();
+            ServerJsonData sv = new ServerJsonData();
             sv.Servername = this.txtServerName.Text;
             sv.InstanceName = this.txtInstance.Text;
 
-            ServerData selectSv = (ServerData)this.initOpt.PerServerData[sv.KeyName];
+            ServerJsonData selectSv = this.initOpt.PerServerData.ContainsKey(sv.KeyName) ?
+                this.initOpt.PerServerData[sv.KeyName] :
+                null;
             if (selectSv != null && selectSv.IsUseTrust == true)
             {
                 this.chkTrust.Checked = true;

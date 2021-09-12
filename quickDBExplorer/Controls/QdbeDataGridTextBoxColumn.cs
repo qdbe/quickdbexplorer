@@ -325,17 +325,24 @@ namespace quickDBExplorer
 			int rowNum, Rectangle bounds, bool readOnly,
 			string displayText, bool cellIsVisible)
 		{
-			this._source = source;
-			this.editrow = rowNum;
-			if( this.isThisImage == true )
-			{
-				//this.TextBox.Text = "";
-				base.Edit(source, rowNum, bounds, readOnly, displayText, cellIsVisible);
-			}
-			else
-			{
-				base.Edit(source, rowNum, bounds, readOnly, displayText, cellIsVisible);
-			}
+            try
+            {
+                this._source = source;
+                this.editrow = rowNum;
+                if (this.isThisImage == true)
+                {
+                    //this.TextBox.Text = "";
+                    base.Edit(source, rowNum, bounds, readOnly, displayText, cellIsVisible);
+                }
+                else
+                {
+                    base.Edit(source, rowNum, bounds, readOnly, displayText, cellIsVisible);
+                }
+            }
+            catch (Exception exp)
+            {
+                throw;
+            }
 		}
 
 		/// <summary>
@@ -365,33 +372,48 @@ namespace quickDBExplorer
 			Brush foreBrush,
 			bool alignToRight)
 		{
-			//セルの値を取得する
-			object cellValue =
-				this.GetColumnValueAtRow(source, rowNum);
-			if (cellValue == DBNull.Value)
-			{
-				// NULLの場合は水色に着色
-				backBrush = new SolidBrush(Color.FromArgb(0xbf,0xef,0xff));
-			}
-			if (cellValue is byte[])
-			{
-				// バイナリデータの場合、コバルトグリーンに着色
-				backBrush = new SolidBrush(Color.FromArgb(0x10,0xC9,0x8D));
-				g.FillRectangle(backBrush,bounds);
-				return;
-			}
-			else if( cellValue is string && 
-				( 
-				(cellValue as string).IndexOf("\r\n",StringComparison.CurrentCulture) >= 0 ||
-				(cellValue as string).IndexOf("\n", StringComparison.CurrentCulture) >= 0))
-			{
-				// 文字列で複数行にわたる場合、とき色に着色
-				backBrush = new SolidBrush(Color.FromArgb(0xf4,0xb3,0xc2));
-			}
+            //セルの値を取得する
 
-			//基本クラスのPaintメソッドを呼び出す
-			base.Paint(g, bounds, source, rowNum,
-				backBrush, foreBrush, alignToRight);
+            bool isBacknew = false;
+            try
+            {
+                object cellValue =
+                    this.GetColumnValueAtRow(source, rowNum);
+                if (cellValue == DBNull.Value)
+                {
+                    // NULLの場合は水色に着色
+                    backBrush = new SolidBrush(Color.FromArgb(0xbf, 0xef, 0xff));
+                    isBacknew = true;
+                }
+                if (cellValue is byte[])
+                {
+                    // バイナリデータの場合、コバルトグリーンに着色
+                    backBrush = new SolidBrush(Color.FromArgb(0x10, 0xC9, 0x8D));
+                    isBacknew = true;
+                    g.FillRectangle(backBrush, bounds);
+                    return;
+                }
+                else if (cellValue is string &&
+                    (
+                    (cellValue as string).IndexOf("\r\n", StringComparison.CurrentCulture) >= 0 ||
+                    (cellValue as string).IndexOf("\n", StringComparison.CurrentCulture) >= 0))
+                {
+                    // 文字列で複数行にわたる場合、とき色に着色
+                    backBrush = new SolidBrush(Color.FromArgb(0xf4, 0xb3, 0xc2));
+                    isBacknew = true;
+                }
+
+                //基本クラスのPaintメソッドを呼び出す
+                base.Paint(g, bounds, source, rowNum,
+                    backBrush, foreBrush, alignToRight);
+            }
+            finally
+            {
+                if (isBacknew == true)
+                {
+                    backBrush.Dispose();
+                }
+            }
 		}
 	}
 }

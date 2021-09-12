@@ -1245,7 +1245,7 @@
             全ての親画面となるMDIフォーム
             </summary>
         </member>
-        <member name="F:quickDBExplorer.Forms.MainMdi.initopt">
+        <member name="P:quickDBExplorer.Forms.MainMdi.InitOpt">
             <summary>
             前回操作時の各種記憶情報
             </summary>
@@ -1563,7 +1563,7 @@
             DBサーバーバージョン情報
             </summary>
         </member>
-        <member name="M:quickDBExplorer.ConnectionInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,quickDBExplorer.ISqlInterface,quickDBExplorer.SqlVersion,quickDBExplorer.ServerData)">
+        <member name="M:quickDBExplorer.ConnectionInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,quickDBExplorer.ISqlInterface,quickDBExplorer.SqlVersion,quickDBExplorer.ServerJsonData)">
             <summary>
             コンストラクタ
             </summary>
@@ -1770,56 +1770,6 @@
         <member name="F:quickDBExplorer.GridFormatDialog.components">
             <summary>
             必要なデザイナ変数です。
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.gridFont">
-            <summary>
-            表示フォントの指定
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.Gfont">
-            <summary>
-            表示フォントの指定
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.gridColor">
-            <summary>
-            フォント表示色の指定
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.Gcolor">
-            <summary>
-            フォント表示色の指定
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.numberFormat">
-            <summary>
-            数値変換書式の指定
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.NumFormat">
-            <summary>
-            数値変換書式の指定
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.gridFloatFormat">
-            <summary>
-            小数点書式の指定
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.FloatFormat">
-            <summary>
-            小数点書式の指定
-            </summary>
-        </member>
-        <member name="F:quickDBExplorer.GridFormatDialog.gridDateFormat">
-            <summary>
-            日付変換書式の指定
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.GridFormatDialog.DateFormat">
-            <summary>
-            日付変換書式の指定
             </summary>
         </member>
         <member name="M:quickDBExplorer.GridFormatDialog.#ctor">
@@ -2129,13 +2079,13 @@
             コマンド引数
             </summary>
         </member>
-        <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorder)">
+        <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorderJson)">
             <summary>
             コンストラクタ
             </summary>
             <param name="initialOption">記憶された設定情報</param>
         </member>
-        <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorder,System.Collections.Hashtable)">
+        <member name="M:quickDBExplorer.LogOnDialog.#ctor(quickDBExplorer.ConditionRecorderJson,System.Collections.Hashtable)">
             <summary>
             コンストラクタ
             </summary>
@@ -2625,7 +2575,7 @@
             選択されたインスタンス名
             </summary>
         </member>
-        <member name="M:quickDBExplorer.ServerSelectDialog.#ctor(quickDBExplorer.ConditionRecorder)">
+        <member name="M:quickDBExplorer.ServerSelectDialog.#ctor(quickDBExplorer.ConditionRecorderJson)">
             <summary>
             コンストラクタ
             </summary>
@@ -3452,6 +3402,237 @@
             サーバー＋インスタンスを利用した接続先サーバーのHashtableのキー情報
             </summary>
         </member>
+        <member name="T:quickDBExplorer.ServerJsonData">
+            <summary>
+            サーバー別の各種指定履歴データを管理する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.Servername">
+            <summary>
+            接続先サーバー名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.InstanceName">
+            <summary>
+            接続先インスタンス名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.KeyName">
+            <summary>
+            サーバー＋インスタンスを利用した接続先サーバーのHashtableのキー情報
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.servername">
+            <summary>
+            接続先サーバー名
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.instancename">
+            <summary>
+            接続先インスタンス名
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.keyname">
+            <summary>
+            サーバー＋インスタンスを利用した接続先サーバーのDictionaryのキー情報
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.pLastDatabase">
+            <summary>
+            最後に利用したDB名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.LastDatabase">
+            <summary>
+            最後に利用したDB名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.Dbopt">
+            <summary>
+            // DB 毎の最終ユーザーを記録する
+            複数を登録させるため、内部はstring の要素を持ったListとする
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.isShowsysuser">
+            <summary>
+            システムユーザーを表示するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.IsShowsysuser">
+            <summary>
+            システムユーザーを表示するか否か
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.sortKey">
+             <summary>
+            table/view リストのソート順 
+             </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.SortKey">
+             <summary>
+            table/view リストのソート順 
+             </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.showView">
+            <summary>
+            view を表示させるかどうか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.ShowView">
+            <summary>
+            view を表示させるかどうか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.OutDest">
+            <summary>
+            データ出力先の指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.OutFile">
+            <summary>
+            データ出力先のファイル・フォルダ名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.ShowGrid">
+            <summary>
+            データグリッドを表示するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.GridDispCnt">
+            <summary>
+            グリッド表示件数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.TxtEncode">
+            <summary>
+            テキスト出力時の文字コード
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.isSaveKey">
+            <summary>
+            サーバー別情報を記憶するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.IsSaveKey">
+            <summary>
+            サーバー別情報を記憶するか否か
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.isUseTrust">
+            <summary>
+            信頼関係接続を利用するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.IsUseTrust">
+            <summary>
+            信頼関係接続を利用するか否か
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.pLogOnUser">
+            <summary>
+            ログインユーザー名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.LogOnUser">
+            <summary>
+            ログインユーザー名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.InputHistories">
+            <summary>
+            各種入力履歴
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ServerJsonData.gridSetting">
+            <summary>
+            グリッド表示書式
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.GridSetting">
+            <summary>
+            グリッド表示書式
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ServerJsonData.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ServerJsonData.Dispose(System.Boolean)">
+            <summary>
+            内部リソースを破棄する
+            </summary>
+            <param name="disposing">破棄するか否かのフラグ</param>
+        </member>
+        <member name="M:quickDBExplorer.ServerJsonData.Dispose">
+            <summary>
+            内部リソースを破棄する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ServerJsonData.HashtableToDictionary``2(System.Collections.Hashtable)">
+            <summary>
+            Hashtable からDictionary に変換する
+            </summary>
+            <typeparam name="K"></typeparam>
+            <typeparam name="V"></typeparam>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.GridFormatSetting">
+            <summary>
+            グリッド表示書式
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatSetting.gridFont">
+            <summary>
+            表示フォントの指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatSetting.GridFont">
+            <summary>
+            表示フォントの指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatSetting.gridForeColor">
+            <summary>
+            フォント表示色の指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatSetting.GridForeColor">
+            <summary>
+            フォント表示色の指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatSetting.gridNumberFormat">
+            <summary>
+            数値変換書式の指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatSetting.GridNumberFormat">
+            <summary>
+            数値変換書式の指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatSetting.gridFloatFormat">
+            <summary>
+            小数点書式の指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatSetting.GridFloatFormat">
+            <summary>
+            小数点書式の指定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.GridFormatSetting.gridDateFormat">
+            <summary>
+            日付変換書式の指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatSetting.GridDateFormat">
+            <summary>
+            日付変換書式の指定
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.ConditionRecorder">
             <summary>
             ConditionRecorder の概要の説明です。
@@ -3497,6 +3678,27 @@
             </summary>
             <param name="info"></param>
             <param name="context"></param>
+        </member>
+        <member name="T:quickDBExplorer.ConditionRecorderJson">
+            <summary>
+            ConditionRecorder の概要の説明です。
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConditionRecorderJson.PerServerData">
+            <summary>
+            サーバー別情報を管理するハッシュテーブル
+            サーバー名＋インスタンス名をキーとする
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConditionRecorderJson.LastServerKey">
+            <summary>
+            最後に接続したサーバーのHashkey
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ConditionRecorderJson.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
         </member>
         <member name="T:quickDBExplorer.TextHistoryDataSet">
              <summary>

@@ -19,10 +19,10 @@ using System.Diagnostics;
 
 namespace quickDBExplorer.Forms
 {
-    
-	/// <summary>
-	/// 全ての親画面となるMDIフォーム
-	/// </summary>
+
+    /// <summary>
+    /// 全ての親画面となるMDIフォーム
+    /// </summary>
     [System.Runtime.InteropServices.ComVisible(false)]
     public class MainMdi : System.Windows.Forms.Form
     {
@@ -39,10 +39,17 @@ namespace quickDBExplorer.Forms
         private System.Windows.Forms.MenuItem menuVersion;
         private System.Windows.Forms.MenuItem menuAbout;
 
+        protected ConditionRecorderJson _initOpt = null;
         /// <summary>
         /// 前回操作時の各種記憶情報
         /// </summary>
-        private ConditionRecorder initopt;
+        public ConditionRecorderJson InitOpt {
+            get {
+                return this._initOpt; 
+            }
+            set { this._initOpt = value; }
+        }
+    
         /// <summary>
         /// 表示エラーメッセージ
         /// </summary>
@@ -305,11 +312,11 @@ namespace quickDBExplorer.Forms
             LogOnDialog logindlg;
             if (argHt == null)
             {
-                logindlg = new LogOnDialog(this.initopt);
+                logindlg = new LogOnDialog(this.InitOpt);
             }
             else
             {
-                logindlg = new LogOnDialog(this.initopt, argHt);
+                logindlg = new LogOnDialog(this.InitOpt, argHt);
             }
             logindlg.MdiParent = this;
             logindlg.LoginConnected += new LoginConnectedHandler(logindlg_LoginConnected);
@@ -389,50 +396,20 @@ namespace quickDBExplorer.Forms
                 this.Close();
             }
 
-            // 設定ファイルの読み込みストリーム
-            FileStream fs = null;
 
             // エラーメッセージを初期化
             this.InitErrMessage();
 
-            initopt = new ConditionRecorder();
             try
             {
-                // 設定ファイルを読み込み
-                string path = Application.StartupPath;
-                string filename = path + "\\quickDBExplorer." + System.Environment.MachineName + ".xml";
-                if(File.Exists(filename))
-                {
-                    fs = new FileStream(filename, FileMode.Open);
-                }
-                if (fs == null)
-                {
-                    fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Open);
-                }
-                // Soap Serialize しているので、それをDeSerialize
-                SoapFormatter sf = new SoapFormatter();
-                if (fs != null && fs.CanRead)
-                {
-                    initopt = (ConditionRecorder)sf.Deserialize(fs);
-                }
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                // 初回インストール時はファイルがない可能性がある
-                ;
+                this.InitOpt = ConditionRecorderJson.Create();
             }
             catch (Exception exp)
             {
                 this.SetErrorMessage(exp);
-                initopt = new ConditionRecorder();
+                this.InitOpt = new ConditionRecorderJson();
             }
-            finally
-            {
-                if (fs != null)
-                {
-                    fs.Close();
-                }
-            }
+
             // 最新バージョンの存在チェックを実施
             // 自動的にやってしまうと問題なので、ここではやらない
             //CheckNewVersion(false);
@@ -445,6 +422,7 @@ namespace quickDBExplorer.Forms
             // 最初は強制的にログインを表示する
             OpenLogOnDlg(argHt);
         }
+
 
         private void InitTools()
         {
@@ -471,42 +449,9 @@ namespace quickDBExplorer.Forms
 
         private void SaveSettings()
         {
-            FileStream fs = null;
-
-            string machinename = System.Environment.MachineName;
-
             try
             {
-                string path = Application.StartupPath;
-                fs = new FileStream(path + "\\quickDBExplorer."+ machinename + ".xml", FileMode.OpenOrCreate);
-                fs.Close();
-                fs = null;
-                fs = new FileStream(path + "\\quickDBExplorer." + machinename + ".xml", FileMode.Truncate, FileAccess.Write);
-                SoapFormatter sf = new SoapFormatter();
-                if (fs != null && fs.CanWrite)
-                {
-                    ArrayList ar = new ArrayList();
-                    foreach (object keys in initopt.PerServerData.Keys)
-                    {
-                        if (((ServerData)(initopt.PerServerData[keys])).IsSaveKey == false)
-                        {
-                            ar.Add((string)keys);
-                        }
-                    }
-                    foreach (string kk in ar)
-                    {
-                        initopt.PerServerData.Remove(kk);
-                    }
-                    if (initopt.PerServerData.Count == 0)
-                    {
-                        ServerData sv = new ServerData();
-                        sv.Servername = "(local)";
-                        sv.InstanceName = "";
-                        sv.IsUseTrust = false;
-                        initopt.PerServerData.Add(sv.KeyName, sv);
-                    }
-                    sf.Serialize(fs, (object)initopt);
-                }
+                this.InitOpt.Save();
 
                 if (this.bmManager != null)
                 {
@@ -517,20 +462,9 @@ namespace quickDBExplorer.Forms
                     this.outerToolManager.Save(this.outerTools);
                 }
             }
-            catch (System.IO.FileNotFoundException)
-            {
-                ;
-            }
             catch (Exception ex)
             {
                 this.SetErrorMessage(ex);
-            }
-            finally
-            {
-                if (fs != null)
-                {
-                    fs.Close();
-                }
             }
         }
 
