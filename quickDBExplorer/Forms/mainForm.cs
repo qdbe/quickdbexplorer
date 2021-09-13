@@ -1452,7 +1452,8 @@ namespace quickDBExplorer.Forms
             this.conditionSplitter.Panel2.Controls.Add(this.conditionSplitter2);
             this.conditionSplitter.Size = new System.Drawing.Size(251, 660);
             this.conditionSplitter.SplitterDistance = 84;
-            this.conditionSplitter.TabIndex = 19;
+            this.conditionSplitter.SplitterWidth = 2;
+            this.conditionSplitter.TabIndex = 0;
             // 
             // conditionSplitter2
             // 
@@ -1484,8 +1485,9 @@ namespace quickDBExplorer.Forms
             this.conditionSplitter2.Panel2.Controls.Add(this.label1);
             this.conditionSplitter2.Panel2.Controls.Add(this.label2);
             this.conditionSplitter2.Panel2.Controls.Add(this.grpOutputMode);
-            this.conditionSplitter2.Size = new System.Drawing.Size(251, 572);
+            this.conditionSplitter2.Size = new System.Drawing.Size(251, 574);
             this.conditionSplitter2.SplitterDistance = 82;
+            this.conditionSplitter2.SplitterWidth = 2;
             this.conditionSplitter2.TabIndex = 0;
             // 
             // UpDownSplitter
