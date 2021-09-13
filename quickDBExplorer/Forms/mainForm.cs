@@ -7011,11 +7011,25 @@ namespace quickDBExplorer.Forms
                 {
                     if (!string.IsNullOrEmpty(col.MappingName))
                     {
-                        if (!this.svdata.PerTableColumnWidth.ContainsKey(this.dbgridTableName))
+                        if (col.Width == this.dbGrid.PreferredColumnWidth)
                         {
-                            this.svdata.PerTableColumnWidth[this.dbgridTableName] = new Dictionary<string, int>();
+                            // 既定値と同じであればjsonファイルの容量圧縮の為、設定削除
+                            if (this.svdata.PerTableColumnWidth.ContainsKey(this.dbgridTableName))
+                            {
+                                if (this.svdata.PerTableColumnWidth[this.dbgridTableName].ContainsKey(col.MappingName))
+                                {
+                                    this.svdata.PerTableColumnWidth[this.dbgridTableName].Remove(col.MappingName);
+                                }
+                            }
                         }
-                        this.svdata.PerTableColumnWidth[this.dbgridTableName][col.MappingName] = col.Width;
+                        else
+                        {
+                            if (!this.svdata.PerTableColumnWidth.ContainsKey(this.dbgridTableName))
+                            {
+                                this.svdata.PerTableColumnWidth[this.dbgridTableName] = new Dictionary<string, int>();
+                            }
+                            this.svdata.PerTableColumnWidth[this.dbgridTableName][col.MappingName] = col.Width;
+                        }
                     }
                 }
 

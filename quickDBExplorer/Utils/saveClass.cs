@@ -721,6 +721,7 @@ namespace quickDBExplorer
             this.TxtEncode = new Dictionary<string, int>();
             InputHistories = new Dictionary<string, TextHistoryDataSet>();
             PerTableColumnWidth = new Dictionary<string, Dictionary<string, int>>();
+            this.GridSetting = GridFormatSetting.Defalt();
         }
 
 
