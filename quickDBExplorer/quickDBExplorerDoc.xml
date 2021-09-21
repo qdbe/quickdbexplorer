@@ -2512,6 +2512,21 @@
             関数を検索するか否か
             </summary>
         </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsShowTable">
+            <summary>
+            テーブルを表示対象に含めるか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsShowView">
+            <summary>
+            VIEWを表示対象に含めるか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsShowSynonym">
+            <summary>
+            Synonymを表示対象に含めるか
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.SearchConditionDlg.IsShowTableSelect">
             <summary>
             検索結果を元にオブジェクトを選択するか否か
@@ -2720,6 +2735,12 @@
             オブジェクトの alias
             </summary>
         </member>
+        <member name="P:quickDBExplorer.WhereDialog.WhereHistory">
+            <summary>
+            Whereダイアログ テーブル毎履歴
+            database, object wherestring 
+            </summary>
+        </member>
         <member name="F:quickDBExplorer.WhereDialog.pAliasName">
             <summary>
             オブジェクトの alias
@@ -2728,6 +2749,11 @@
         <member name="P:quickDBExplorer.WhereDialog.AliasName">
             <summary>
             オブジェクトの alias
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.WhereDialog.DbName">
+            <summary>
+            接続先データベース名
             </summary>
         </member>
         <member name="M:quickDBExplorer.WhereDialog.#ctor">
@@ -2794,6 +2820,11 @@
             画面を閉じる場合でも、非表示にし、実体を Dispose しない
             </summary>
             <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.WhereDialog.TextValuesChanged">
+            <summary>
+            テキストの値が外部から変更された場合の処理
+            </summary>
         </member>
         <member name="T:quickDBExplorer.ZoomDialog">
             <summary>
@@ -2878,6 +2909,12 @@
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.ZoomDialog.TextValuesChanged">
+            <summary>
+            何か値が変わった時に呼び出される
+            派生先での利用を想定
+            </summary>
         </member>
         <member name="T:quickDBExplorer.ZoomFloatingDialog">
             <summary>
@@ -3543,6 +3580,12 @@
             各種入力履歴
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ServerJsonData.WhereGridHistory">
+            <summary>
+            Whereダイアログ テーブル毎履歴
+            database, object wherestring 
+            </summary>
+        </member>
         <member name="F:quickDBExplorer.ServerJsonData.gridSetting">
             <summary>
             グリッド表示書式
@@ -3551,6 +3594,11 @@
         <member name="P:quickDBExplorer.ServerJsonData.GridSetting">
             <summary>
             グリッド表示書式
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.PerTableColumnWidth">
+            <summary>
+            Gridのカラム幅の記憶
             </summary>
         </member>
         <member name="M:quickDBExplorer.ServerJsonData.#ctor">

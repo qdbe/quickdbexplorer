@@ -857,9 +857,12 @@ order by colorder",
 
 			DBFieldInfo addInfo;
             databaseObjectInfo.ClearField();
-			foreach(DataRow fdr in ds.Tables["fieldList"].Rows )
+            int i = 1; // column_id が 飛び番になっている可能性がる
+            foreach (DataRow fdr in ds.Tables["fieldList"].Rows )
 			{
-				// フィールドの情報でぐるぐるまわって、セットしていく
+                // フィールドの情報でぐるぐるまわって、セットしていく
+                fdr["colorder"] = i;
+                i++;
                 addInfo = GetDBFieldInfo(ds, fdr);
                 databaseObjectInfo.AddField(addInfo);
 			}

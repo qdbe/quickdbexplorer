@@ -688,6 +688,13 @@ namespace quickDBExplorer
         public Dictionary<string, TextHistoryDataSet> InputHistories { get; set; }
 
         /// <summary>
+        /// Whereダイアログ テーブル毎履歴
+        /// database, object wherestring 
+        /// </summary>
+        public Dictionary<string, Dictionary<string, Dictionary<string, DataSet>>> WhereGridHistory { get; set; }
+
+
+        /// <summary>
         /// グリッド表示書式
         /// </summary>
         protected GridFormatSetting gridSetting;
@@ -701,6 +708,9 @@ namespace quickDBExplorer
             set { this.gridSetting = value; }
         }
 
+        /// <summary>
+        /// Gridのカラム幅の記憶
+        /// </summary>
         public Dictionary<string, Dictionary<string, int>> PerTableColumnWidth { get; set; }
 
 
@@ -722,6 +732,7 @@ namespace quickDBExplorer
             InputHistories = new Dictionary<string, TextHistoryDataSet>();
             PerTableColumnWidth = new Dictionary<string, Dictionary<string, int>>();
             this.GridSetting = GridFormatSetting.Defalt();
+            this.WhereGridHistory = new Dictionary<string, Dictionary<string, Dictionary<string, DataSet>>>();
         }
 
 
@@ -803,8 +814,7 @@ namespace quickDBExplorer
             result.GridDispCnt = HashtableToDictionary<string, string>(data.GridDispCnt);
             result.TxtEncode = HashtableToDictionary<string, int>(data.TxtEncode);
             //result.InputHistories = HashtableToDictionary<string, TextHistoryDataSet>(data.InputHistories);
-
-            result.GridSetting = GridFormatSetting.Defalt();
+            //result.GridSetting = GridFormatSetting.Defalt();
 
             return result;
         }

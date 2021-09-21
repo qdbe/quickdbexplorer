@@ -3114,11 +3114,11 @@ namespace quickDBExplorer.Forms
 			// 履歴に現在の値を記録
             this.txtWhere.SaveHistory(tbname);
 
-			if (this.objectList.SelectedItems.Count == 1)
+            if (this.objectList.SelectedItems.Count == 1)
 			{
-				// 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
+                // 1件のみ選択されている場合、データ表示部に、該当オブジェクトのデータを表示する
 
-				DispData(this.objectList.GetSelectObject(0));
+                DispData(this.objectList.GetSelectObject(0));
 			}
 			else
 			{
@@ -6284,6 +6284,7 @@ namespace quickDBExplorer.Forms
                     if (linecount == 0 && isSkipFirstLine == true)
                     {
                         // 先頭行は読み飛ばし
+                        linecount++;
                         continue;
                     }
                     isSetAll = true;
@@ -6336,7 +6337,7 @@ namespace quickDBExplorer.Forms
                     {
                         object parseResult = null;
                         string errmsg = string.Empty;
-                        if (eachField.TryParse((string)readData[eachField.Colid-1], eachField, ref parseResult, ref errmsg) == false)
+                        if (eachField.TryParse((string)readData[eachField.ColOrder-1], eachField, ref parseResult, ref errmsg) == false)
                         {
                             MessageBox.Show("項目 " + eachField.Name + ": "+ errmsg + "行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
                             isSetAll = false;
@@ -6754,6 +6755,7 @@ namespace quickDBExplorer.Forms
 				this.wheredlg = new WhereDialog();
 				isInit = true;
 				isReset = false;
+                this.wheredlg.WhereHistory = this.svdata.WhereGridHistory;
 			}
 			if (wheredlg.Visible == true)
 			{
@@ -6761,8 +6763,9 @@ namespace quickDBExplorer.Forms
 				{
 					wheredlg.TargetObject = this.objectList.GetSelectObject(0);
 					wheredlg.AliasName = this.txtAlias.Text;
+                    wheredlg.DbName = this.dbList.SelectedItem.ToString();
 //					wheredlg.ResetTarget();
-				}
+                }
 				else
 				{
 					wheredlg.TargetObject = null;
@@ -6788,7 +6791,8 @@ namespace quickDBExplorer.Forms
 					dlg.TargetObject = this.objectList.GetSelectObject(0);
 				}
 				dlg.AliasName = this.txtAlias.Text;
-				if (isShow == true)
+                dlg.DbName = this.dbList.SelectedItem.ToString();
+                if (isShow == true)
 				{
 					dlg.Show();
 					dlg.BringToFront();

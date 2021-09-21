@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -88,6 +89,12 @@ namespace quickDBExplorer
         private Label label1;
 
         /// <summary>
+        /// Whereダイアログ テーブル毎履歴
+        /// database, object wherestring 
+        /// </summary>
+        public Dictionary<string, Dictionary<string, Dictionary<string, DataSet>>> WhereHistory { get; set; }
+
+        /// <summary>
         /// オブジェクトの alias
         /// </summary>
         private string pAliasName = "";
@@ -107,6 +114,11 @@ namespace quickDBExplorer
 				this.preAliasName = pAliasName; 
 			}
 		}
+
+        /// <summary>
+        /// 接続先データベース名
+        /// </summary>
+        public string DbName { get; set; }
 
 		/// <summary>
 		/// コンストラクタ
@@ -141,7 +153,7 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.fieldCondition = new System.Windows.Forms.DataGridView();
             this.clearLine = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Fields = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -178,6 +190,7 @@ namespace quickDBExplorer
             // 
             this.btnOk.Location = new System.Drawing.Point(14, 362);
             this.btnOk.TabIndex = 6;
+            this.btnOk.Enter += new System.EventHandler(this.OkOrApply);
             // 
             // btnClose
             // 
@@ -225,9 +238,9 @@ namespace quickDBExplorer
             // 
             this.clearLine.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.clearLine.DataPropertyName = "ClearButton";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.clearLine.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.clearLine.DefaultCellStyle = dataGridViewCellStyle1;
             this.clearLine.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.clearLine.HeaderText = "クリア";
             this.clearLine.Name = "clearLine";
@@ -331,6 +344,7 @@ namespace quickDBExplorer
             // 
             // btnClear
             // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnClear.Location = new System.Drawing.Point(14, 335);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(181, 23);
@@ -518,7 +532,9 @@ namespace quickDBExplorer
                 }
 
             }
-		}
+            SetFieldCondResult();
+
+        }
 
 		private void fieldCondition_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
@@ -834,7 +850,7 @@ namespace quickDBExplorer
             {
                 this.fieldCondition[COL_COND, e.RowIndex].Value = "";
                 this.fieldCondition[COL_VAL, e.RowIndex].Value = "";
-                this.fieldCondition[COL_COLLATE, e.RowIndex].Value = "指定なし";
+                this.fieldCondition[COL_COLLATE, e.RowIndex].Value = "";
             }
             SetFieldCondResult();
 
@@ -842,10 +858,15 @@ namespace quickDBExplorer
 
         private void btnCollateAllSet_Click(object sender, EventArgs e)
         {
+            string collateStr = string.Empty;
+            if (this.cmbCollate.SelectedIndex >= 0)
+            {
+                collateStr = this.cmbCollate.Items[this.cmbCollate.SelectedIndex].ToString();
+            }
             for (int rLine = 0; rLine < fieldDs.Tables[BASETABLE].Rows.Count; rLine++)
             {
                 DataRow each = fieldDs.Tables[BASETABLE].Rows[rLine];
-                string collateStr = this.cmbCollate.Items[this.cmbCollate.SelectedIndex].ToString();
+                
                 if ((string)each[CANCOLLATE] == "1")
                 {
                     fieldCondition[COLLATETYPE, rLine].Value = collateStr;
@@ -859,6 +880,79 @@ namespace quickDBExplorer
                     fieldCondition[COLLATETYPE, rLine].Style.BackColor = Color.LightGray;
                 }
 
+            }
+        }
+
+        private void OkOrApply(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(this.txtZoom.Text)||
+                this.fieldDs == null
+                )
+            {
+                return;
+            }
+            if (!this.WhereHistory.ContainsKey(this.DbName))
+            {
+                this.WhereHistory[DbName] = new Dictionary<string, Dictionary<string, DataSet>>();
+            }
+            if (!this.WhereHistory[DbName].ContainsKey(this.pTargetObject.FormalName))
+            {
+                this.WhereHistory[DbName][this.pTargetObject.FormalName] = new Dictionary<string, DataSet>();
+            }
+            this.WhereHistory[DbName][this.pTargetObject.FormalName][this.txtZoom.Text.Replace("\r\n","")] = this.fieldDs.Copy();
+        }
+
+        /// <summary>
+        /// テキストの値が外部から変更された場合の処理
+        /// </summary>
+        protected override void TextValuesChanged()
+        {
+            Console.WriteLine("TextValuesChanged");
+            string textkey = this.txtZoom.Text.Replace("\r\n", "");
+            if (string.IsNullOrEmpty(textkey)) 
+            {
+                return;
+            }
+            if (!this.WhereHistory.ContainsKey(this.DbName)) 
+            {
+                return;
+            }
+            if (!this.WhereHistory[DbName].ContainsKey(this.pTargetObject.FormalName))
+            {
+                return;
+            }
+            if (!this.WhereHistory[DbName][this.pTargetObject.FormalName].ContainsKey(textkey))
+            {
+                return;
+            }
+            DataSet ds = this.WhereHistory[DbName][this.pTargetObject.FormalName][textkey];
+            if (!ds.Tables.Contains(BASETABLE))
+            {
+                return;
+            }
+            if (ds.Tables[BASETABLE].Rows.Count == 0)
+            {
+                return;
+            }
+        //private const string CLEARBUTTON = "ClearButton";
+        //private const string FIELDNAME = "Fields";
+        //private const string CONDCMB = "cond";
+        //private const string VALUES = "datavalues";
+        //private const string FIELDTYPE = "fieldtypes";
+        //private const string COLLATETYPE = "collatetype";
+        //private const string CANCOLLATE = "cancollate";
+            foreach (DataRow dr in ds.Tables[BASETABLE].Rows)
+            {
+                foreach (DataRow fdr in this.fieldDs.Tables[BASETABLE].Rows)
+                {
+                    if ((string)dr[FIELDNAME] == (string)fdr[FIELDNAME])
+                    {
+                        fdr[CONDCMB] = (string)dr[CONDCMB];
+                        fdr[VALUES] = (string)dr[VALUES];
+                        fdr[COLLATETYPE] = (string)dr[COLLATETYPE];
+                        break;
+                    }
+                }
             }
         }
     }

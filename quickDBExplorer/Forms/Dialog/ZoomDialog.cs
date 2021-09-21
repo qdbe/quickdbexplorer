@@ -62,14 +62,15 @@ namespace quickDBExplorer
 					this.txtZoom.IsDisposed != true )
 				{
 					this.txtZoom.Text = value;
+                    TextValuesChanged();
 				}
 			}
 		}
 
-		/// <summary>
-		/// タイトル名称
-		/// </summary>
-		public virtual string LableName
+        /// <summary>
+        /// タイトル名称
+        /// </summary>
+        public virtual string LableName
 		{
 			get { return this.pLabelName; }
 			set 
@@ -220,5 +221,15 @@ namespace quickDBExplorer
 			this.DialogResult = DialogResult.Cancel;
 			this.Close();
 		}
-	}
+        
+        /// <summary>
+        /// 何か値が変わった時に呼び出される
+        /// 派生先での利用を想定
+        /// </summary>
+        protected virtual void TextValuesChanged()
+        {
+            
+        }
+
+    }
 }
