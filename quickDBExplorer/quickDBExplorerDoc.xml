@@ -419,6 +419,28 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="T:quickDBExplorer.qdbeTextChangedEventArgs">
+            <summary>
+            テキスト変更が確定した時（フォーカスアウト等）のイベント引数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.qdbeTextChangedEventArgs.OldText">
+            <summary>
+            変更前のテキスト
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.qdbeTextChangedEventArgs.NewText">
+            <summary>
+            変更後のテキスト
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.qdbeTextChangedEventHandler">
+            <summary>
+            テキストボックスが変更後、確定した時のイベントハンドラ
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
         <member name="T:quickDBExplorer.quickDBExplorerTextBox">
             <summary>
             CTRL+Aでの全選択機能、CTRL+Dでの文字削除を追加したテキストボックス
@@ -1078,7 +1100,7 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="M:quickDBExplorer.Forms.MainForm.ObjectSearchSub(System.String,quickDBExplorer.SearchType,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:quickDBExplorer.Forms.MainForm.ObjectSearchSub(System.String,quickDBExplorer.SearchType,quickDBExplorer.ObjectSearchCondition)">
             <summary>
             条件に応じてオブジェクトを検索する
             </summary>
@@ -2351,12 +2373,12 @@
             クエリ等を入力する為のダイアログ
             </summary>
         </member>
-        <member name="F:quickDBExplorer.QueryDialog.pSelectSql">
+        <member name="F:quickDBExplorer.QueryDialog.pInputedText">
             <summary>
             入力された文字列
             </summary>
         </member>
-        <member name="P:quickDBExplorer.QueryDialog.SelectSql">
+        <member name="P:quickDBExplorer.QueryDialog.InputedText">
             <summary>
             入力された文字列
             </summary>
@@ -2482,64 +2504,25 @@
             使用されているリソースに後処理を実行します。
             </summary>
         </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchField">
+        <member name="P:quickDBExplorer.SearchConditionDlg.Condition">
             <summary>
-            フィールド名を検索するか否か
+            画面で設定された検索条件
             </summary>
         </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchTable">
+        <member name="P:quickDBExplorer.SearchConditionDlg.ObjectSearchHistory">
             <summary>
-            テーブル名を検索するか否か
+            オブジェクト検索履歴（設定含む）
+            DBName,検索文字,ObjectSearchCondition
             </summary>
         </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchView">
+        <member name="P:quickDBExplorer.SearchConditionDlg.DbName">
             <summary>
-            View名を検索するか否か
+            DB名
             </summary>
         </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchSynonym">
+        <member name="P:quickDBExplorer.SearchConditionDlg.IsViewShow">
             <summary>
-            Synonym名を検索するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchProcedure">
-            <summary>
-            ストアドプロシージャーを検索するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSearchFunction">
-            <summary>
-            関数を検索するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsShowTable">
-            <summary>
-            テーブルを表示対象に含めるか
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsShowView">
-            <summary>
-            VIEWを表示対象に含めるか
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsShowSynonym">
-            <summary>
-            Synonymを表示対象に含めるか
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsShowTableSelect">
-            <summary>
-            検索結果を元にオブジェクトを選択するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsCaseSensitive">
-            <summary>
-            大文字・小文字を区別するか否か
-            </summary>
-        </member>
-        <member name="P:quickDBExplorer.SearchConditionDlg.IsSchemaOnly">
-            <summary>
-            現在表示中のスキーマのみ対象とするか否か
+            Viewを表示対象に含めるか否か
             </summary>
         </member>
         <member name="P:quickDBExplorer.SearchConditionDlg.SearchType">
@@ -2559,6 +2542,11 @@
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.SearchConditionDlg.SetFieldCondition">
+            <summary>
+            フィールド条件の設定
+            </summary>
         </member>
         <member name="T:quickDBExplorer.ServerSelectDialog">
             <summary>
@@ -3584,6 +3572,12 @@
             <summary>
             Whereダイアログ テーブル毎履歴
             database, object wherestring 
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.ObjectSearchHistory">
+            <summary>
+            オブジェクト検索履歴
+            database, search Text, object
             </summary>
         </member>
         <member name="F:quickDBExplorer.ServerJsonData.gridSetting">

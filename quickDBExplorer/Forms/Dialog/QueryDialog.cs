@@ -17,14 +17,14 @@ namespace quickDBExplorer
 		/// <summary>
 		/// “ü—Í‚³‚ê‚½•¶Žš—ñ
 		/// </summary>
-		private string	pSelectSql = "";
+		private string	pInputedText = "";
 		/// <summary>
 		/// “ü—Í‚³‚ê‚½•¶Žš—ñ
 		/// </summary>
-		public string	SelectSql
+		public string	InputedText
 		{
-			get { return this.pSelectSql; }
-			set { this.pSelectSql = value ; }
+			get { return this.pInputedText; }
+			set { this.pInputedText = value ; }
 		}
 		/// <summary>
 		/// Œ‹‰Ê‚É–ß‚è’l‚ª‚ ‚é‚©‚Ç‚¤‚©
@@ -225,7 +225,7 @@ namespace quickDBExplorer
 		/// <param name="e"></param>
 		internal virtual void btnGo_Click(object sender, System.EventArgs e)
 		{
-			SelectSql = this.txtInput.Text;
+			InputedText = this.txtInput.Text;
 			if( this.chkReturn.Checked == true )
 			{
 				this.pHasReturn = true;
@@ -240,7 +240,7 @@ namespace quickDBExplorer
 
 		private void QueryDialog_Load(object sender, System.EventArgs e)
 		{
-			this.txtInput.Text = SelectSql;
+			this.txtInput.Text = InputedText;
 			this.txtInput.Focus();
 		}
 

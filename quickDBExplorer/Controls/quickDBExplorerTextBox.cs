@@ -26,10 +26,42 @@ namespace quickDBExplorer
 		System.EventArgs e
 	);
 
-	/// <summary>
-	/// CTRL+Aでの全選択機能、CTRL+Dでの文字削除を追加したテキストボックス
-	/// </summary>
-	[System.Runtime.InteropServices.ComVisible(false)]
+
+    /// <summary>
+    /// テキスト変更が確定した時（フォーカスアウト等）のイベント引数
+    /// </summary>
+    public class qdbeTextChangedEventArgs
+    {
+        /// <summary>
+        /// 変更前のテキスト
+        /// </summary>
+        public string OldText { get; private set; }
+        
+        /// <summary>
+        /// 変更後のテキスト
+        /// </summary>
+        public string NewText { get; private set; }
+
+        public qdbeTextChangedEventArgs(string oldstring, string newstring)
+        {
+            this.OldText = oldstring;
+            this.NewText = newstring;
+        }
+    }
+    /// <summary>
+    /// テキストボックスが変更後、確定した時のイベントハンドラ
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public delegate void qdbeTextChangedEventHandler(
+        object sender,
+        qdbeTextChangedEventArgs e
+    );
+
+    /// <summary>
+    /// CTRL+Aでの全選択機能、CTRL+Dでの文字削除を追加したテキストボックス
+    /// </summary>
+    [System.Runtime.InteropServices.ComVisible(false)]
 	public class quickDBExplorerTextBox : TextBox
 	{
 		/// <summary>
@@ -53,6 +85,8 @@ namespace quickDBExplorer
 		/// Ctrl+Sが押された場合のイベント
 		/// </summary>
 		public event ShowZoomEventHandler ShowZoom = null;
+
+        public event qdbeTextChangedEventHandler qdbeTextChanged = null;
 
 
         private Dictionary<string, TextHistoryDataSet> pHistories;
@@ -240,10 +274,23 @@ namespace quickDBExplorer
 
 			this.KeyDown += new KeyEventHandler(quickDBExplorerTextBox_KeyDown);
 			this.Enter +=new EventHandler(quickDBExplorerTextBox_Enter);
-			this.TextChanged +=new EventHandler(quickDBExplorerTextBox_TextChanged);
+            this.Leave += new EventHandler(quickDBExplorerTextBox_Leave);
+			this.TextChanged += new EventHandler(quickDBExplorerTextBox_TextChanged);
 		}
 
-		private void menuAllDelete_Click(object sender, EventArgs e)
+        private void quickDBExplorerTextBox_Leave(object sender, EventArgs e)
+        {
+            string nowstr = this.Text;
+            if (this.enterString != nowstr)
+            {
+                if (this.qdbeTextChanged != null)
+                {
+                    this.qdbeTextChanged(this, new qdbeTextChangedEventArgs(this.enterString, nowstr));
+                }
+            }
+        }
+
+        private void menuAllDelete_Click(object sender, EventArgs e)
 		{
 			this.Text = string.Empty;
 		}
@@ -473,11 +520,19 @@ namespace quickDBExplorer
 			{
 				if (this.Text != hv.RetString)
 				{
-					//違う情報であれば、それを表示し、履歴として追加する
-					this.Text = hv.RetString;
+                    //違う情報であれば、それを表示し、履歴として追加する
+                    string nowstr = this.Text;
+                    this.Text = hv.RetString;
 					qdbeUtil.SetNewHistory(key, hv.RetString, this.History);
-				}
-				return true;
+                    if (hv.RetString != nowstr)
+                    {
+                        if (this.qdbeTextChanged != null)
+                        {
+                            this.qdbeTextChanged(this, new qdbeTextChangedEventArgs(nowstr, hv.RetString));
+                        }
+                    }
+                }
+                return true;
 			}
 			else
 			{

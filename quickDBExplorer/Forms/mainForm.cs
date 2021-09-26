@@ -343,9 +343,9 @@ namespace quickDBExplorer.Forms
 
         private void InitSubDialog()
         {
-            Sqldlg.SelectSql = "";
-            Sqldlg2.SelectSql = "";
-            cmdDialog.SelectSql = "";
+            Sqldlg.InputedText = "";
+            Sqldlg2.InputedText = "";
+            cmdDialog.InputedText = "";
         }
 
         private void InitHistory()
@@ -4182,7 +4182,7 @@ namespace quickDBExplorer.Forms
 				if( Sqldlg.ShowDialog() == DialogResult.OK )
 				{
 					DbDataAdapter da = this.SqlDriver.NewDataAdapter();
-					IDbCommand cmd = this.SqlDriver.NewSqlCommand(Sqldlg.SelectSql);
+					IDbCommand cmd = this.SqlDriver.NewSqlCommand(Sqldlg.InputedText);
 					this.SqlDriver.SetSelectCmd(da,cmd);
 
 					da.MissingSchemaAction = MissingSchemaAction.AddWithKey;
@@ -4200,7 +4200,7 @@ namespace quickDBExplorer.Forms
 
                     this.lastDispdata = null;
 
-                    this.dbgridTableName = Sqldlg.SelectSql;
+                    this.dbgridTableName = Sqldlg.InputedText;
 
                     QdbeDataGridTextBoxColumn cs;
 					foreach( DataColumn col in dspdt.Tables[0].Columns )
@@ -4246,9 +4246,9 @@ namespace quickDBExplorer.Forms
 					this.btnGridFormat.Enabled = true;
 					this.chkDispData.Checked = true;
 					this.dbGrid.AllowSorting = true;
-					this.commTooltip.SetToolTip(this.dbGrid,Sqldlg.SelectSql.Replace("\r\n"," ").Replace("\t"," "));
+					this.commTooltip.SetToolTip(this.dbGrid,Sqldlg.InputedText.Replace("\r\n"," ").Replace("\t"," "));
 					this.dbGrid.SetDataBinding(dspdt,dspdt.Tables[0].TableName);
-					this.dbGrid.Tag = Sqldlg.SelectSql;
+					this.dbGrid.Tag = Sqldlg.InputedText;
 					this.dbGrid.Show();
 				}
 			}
@@ -4270,7 +4270,7 @@ namespace quickDBExplorer.Forms
 
 				if( Sqldlg2.ShowDialog() == DialogResult.OK )
 				{
-					IDbCommand cm = this.SqlDriver.NewSqlCommand(Sqldlg2.SelectSql);
+					IDbCommand cm = this.SqlDriver.NewSqlCommand(Sqldlg2.InputedText);
 					tran = this.SqlDriver.SetTransaction(cm);
 
 					string msg = "";
@@ -4372,7 +4372,7 @@ namespace quickDBExplorer.Forms
 			{
 				this.InitErrMessage();
 
-				this.cmdDialog.SelectSql = " {0} ";
+				this.cmdDialog.InputedText = " {0} ";
                 this.cmdDialog.Histories = this.Histories;
                 this.cmdDialog.HistoryKey = "cmdHistory";
 
@@ -4387,7 +4387,7 @@ namespace quickDBExplorer.Forms
 					for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 					{
 						dboInfo = this.objectList.GetSelectObject(ti);
-						cm.CommandText = string.Format(System.Globalization.CultureInfo.CurrentCulture,this.cmdDialog.SelectSql,
+						cm.CommandText = string.Format(System.Globalization.CultureInfo.CurrentCulture,this.cmdDialog.InputedText,
 							dboInfo.FormalName);
 
 						if( cmdDialog.HasReturn == true )
@@ -4473,8 +4473,11 @@ namespace quickDBExplorer.Forms
 			this.InitErrMessage();
 
 			SearchConditionDlg dlg = new SearchConditionDlg(this.ConnectSqlVersion);
+            dlg.DbName = this.dbList.SelectedItem.ToString();
             dlg.Histories = this.Histories;
             dlg.HistoryKey = "searchHistory";
+            dlg.IsViewShow = this.rdoDispView.Checked;
+            dlg.ObjectSearchHistory = svdata.ObjectSearchHistory;
 
             if( dlg.ShowDialog() == DialogResult.OK )
 			{
@@ -4482,16 +4485,9 @@ namespace quickDBExplorer.Forms
 
 				// ‚±‚±‚©‚çŒŸõ‚·‚é
 				DataSet ds = this.ObjectSearchSub(
-					dlg.SelectSql,
+					dlg.InputedText,
 					dlg.SearchType,
-					dlg.IsCaseSensitive,
-					dlg.IsSchemaOnly,
-					dlg.IsSearchField,
-					dlg.IsSearchTable,
-					dlg.IsSearchView,
-					dlg.IsSearchSynonym,
-					dlg.IsSearchFunction,
-					dlg.IsSearchProcedure
+                    dlg.Condition
 					);
 
 				if( ds.Tables[0].Rows.Count == 0 )
@@ -4516,7 +4512,7 @@ namespace quickDBExplorer.Forms
 					sb.Append("\r\n");
 				}
 				Clipboard.SetDataObject(sb.ToString(),true );
-				if( dlg.IsShowTableSelect == true )
+				if(dlg.Condition.IsShowTableSelect == true )
 				{
 					this.tableSelect(sb.ToString());
 				}
@@ -4540,14 +4536,7 @@ namespace quickDBExplorer.Forms
 		private DataSet ObjectSearchSub(
 			string searchCondition,
 			SearchType searchType,
-			bool isCaseSensitive,
-			bool isLimitSchema,
-			bool isField,
-			bool isTable,
-			bool isView,
-			bool isSynonym,
-			bool isFunction,
-			bool isProcedure
+            ObjectSearchCondition condition
 			)
 		{
 			DbDataAdapter da = this.SqlDriver.NewDataAdapter();
@@ -4566,7 +4555,7 @@ namespace quickDBExplorer.Forms
 			ds.Tables["SearchResult"].Columns.Add("FieldName");
 
 			List<string> limitSchema = new List<string>();
-			if( isLimitSchema == true )
+			if(condition.IsSchemaOnly == true )
 			{
 				foreach( string itm in this.ownerListbox.SelectedItems )
 				{
@@ -4579,15 +4568,15 @@ namespace quickDBExplorer.Forms
 				}
 			}
 
-			if( isField == true )
+			if(condition.IsSearchField == true )
 			{
-				cm.CommandText = this.SqlDriver.GetSearchFieldSql(searchCondition,searchType, isCaseSensitive,limitSchema);
+				cm.CommandText = this.SqlDriver.GetSearchFieldSql(searchCondition,searchType, limitSchema, condition);
 				da.Fill(ds, "SearchResult");
 			}
 
-			if (isTable == true || isView == true || isSynonym == true || isFunction == true || isProcedure == true)
+			if (condition.IsSearchTable == true || condition.IsSearchView == true || condition.IsSearchSynonym == true || condition.IsSearchFunction == true || condition.IsSearchProcedure == true)
 			{
-				cm.CommandText = this.SqlDriver.GetSearchObjectSql(searchCondition,searchType, isCaseSensitive,limitSchema, isTable,isView,isSynonym,isFunction,isProcedure);
+				cm.CommandText = this.SqlDriver.GetSearchObjectSql(searchCondition,searchType, limitSchema, condition);
 				da.Fill(ds, "SearchResult");
 			}
 

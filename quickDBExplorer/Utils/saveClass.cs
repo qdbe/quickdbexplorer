@@ -695,6 +695,13 @@ namespace quickDBExplorer
 
 
         /// <summary>
+        /// オブジェクト検索履歴
+        /// database, search Text, object
+        /// </summary>
+        public Dictionary<string, Dictionary<string, ObjectSearchCondition>> ObjectSearchHistory { get; set; }
+
+
+        /// <summary>
         /// グリッド表示書式
         /// </summary>
         protected GridFormatSetting gridSetting;
@@ -729,10 +736,11 @@ namespace quickDBExplorer
             this.ShowGrid = new Dictionary<string, int>();
             this.GridDispCnt = new Dictionary<string, string>();
             this.TxtEncode = new Dictionary<string, int>();
-            InputHistories = new Dictionary<string, TextHistoryDataSet>();
-            PerTableColumnWidth = new Dictionary<string, Dictionary<string, int>>();
+            this.InputHistories = new Dictionary<string, TextHistoryDataSet>();
+            this.PerTableColumnWidth = new Dictionary<string, Dictionary<string, int>>();
             this.GridSetting = GridFormatSetting.Defalt();
             this.WhereGridHistory = new Dictionary<string, Dictionary<string, Dictionary<string, DataSet>>>();
+            this.ObjectSearchHistory = new Dictionary<string, Dictionary<string, ObjectSearchCondition>>();
         }
 
 
@@ -850,6 +858,27 @@ namespace quickDBExplorer
                 object eachData = JsonConvert.DeserializeObject(objstr, t);
                 ht[dkey] = eachData;
             }
+        }
+
+        public void SetDefaultValueIfNeed()
+        {
+            if (PerTableColumnWidth == null)
+            {
+                this.PerTableColumnWidth = new Dictionary<string, Dictionary<string, int>>();
+            }
+            if (this.GridSetting == null)
+            {
+                this.GridSetting = GridFormatSetting.Defalt();
+            }
+            if (this.WhereGridHistory == null)
+            {
+                this.WhereGridHistory = new Dictionary<string, Dictionary<string, Dictionary<string, DataSet>>>();
+            }
+            if (this.ObjectSearchHistory == null)
+            {
+                this.ObjectSearchHistory = new Dictionary<string, Dictionary<string, ObjectSearchCondition>>();
+            }
+
         }
     }
 
@@ -1266,6 +1295,11 @@ namespace quickDBExplorer
                     if (str.Length != 0)
                     {
                         result = JsonConvert.DeserializeObject<ConditionRecorderJson>(str);
+                        foreach(string each in result.PerServerData.Keys)
+                        {
+                            ServerJsonData s = result.PerServerData[each];
+                            s.SetDefaultValueIfNeed();
+                        }
                     }
                 }
             }

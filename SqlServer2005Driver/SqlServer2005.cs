@@ -961,11 +961,11 @@ order by colorder",
 		public string	GetSearchFieldSql(
 			string searchCondition, 
 			quickDBExplorer.SearchType searchType, 
-			bool isCaseSensitive, 
-			List<string> limitSchema)
+			List<string> limitSchema,
+            ObjectSearchCondition condition)
 		{
 			searchCondition = searchCondition.Replace("'","''");
-			if( isCaseSensitive == false )
+			if(condition.IsCaseSensitive == false )
 			{
 				searchCondition = searchCondition.ToLower();
 			}
@@ -1004,7 +1004,7 @@ order by colorder",
 			}
 
 			string addCondition = string.Empty;
-			if( isCaseSensitive == true )
+			if( condition.IsCaseSensitive == true )
 			{
 				addCondition = " t3.name ";
 			}
@@ -1012,6 +1012,38 @@ order by colorder",
 			{
 				addCondition = " LOWER(t3.name) ";
 			}
+
+            List<string> ar = new List<string>();
+
+            if (condition.IsFieldTable == true)
+            {
+                ar.Add("U ");
+                ar.Add("S ");
+            }
+            if (condition.IsFieldView == true)
+            {
+                ar.Add("V ");
+            }
+            if (condition.IsFieldSynonym == true)
+            {
+                ar.Add("SN");
+            }
+
+            string typeCondition = string.Empty;
+            if( ar.Count != 0 )
+            {
+                typeCondition = " and t1.type in ( ";
+                for (int ix = 0; ix < ar.Count; ix++)
+                {
+                    string eachtype = ar[ix];
+                    if (ix != 0)
+                    {
+                        typeCondition += ",";
+                    }
+                    typeCondition += string.Format("'{0}'", eachtype);
+                }
+                typeCondition += ") ";
+            }
 
 			return string.Format(System.Globalization.CultureInfo.CurrentCulture,
 				@"select t2.name as UserName, t1.name as ObjName, t3.name as FieldName
@@ -1022,8 +1054,8 @@ from
 	inner join sys.all_columns t3 on
 		t1.object_id = t3.object_id
 where
-	{0} {1} {2} ", addCondition, condSql , schemaFilter
-				);
+	{0} {1} {2} {3}", addCondition, condSql , schemaFilter, typeCondition
+                );
 		}
 
 		/// <summary>
@@ -1042,16 +1074,11 @@ where
 		public string	GetSearchObjectSql(
 			string searchCondition, 
 			quickDBExplorer.SearchType searchType, 
-			bool isCaseSensitive,
 			List<string> limitSchema,
-			bool isTable, 
-			bool isView, 
-			bool isSynonym, 
-			bool isFunction, 
-			bool isProcedure)
+            ObjectSearchCondition condition)
 		{
 			searchCondition = searchCondition.Replace("'","''");
-			if( isCaseSensitive == false )
+			if(condition.IsCaseSensitive== false )
 			{
 				searchCondition = searchCondition.ToLower();
 			}
@@ -1075,21 +1102,21 @@ where
 
 			List<string> ar = new List<string>();
 
-			if( isTable == true )
+			if( condition.IsSearchTable == true )
 			{
 				ar.Add("U ");
 				ar.Add("S ");
 			}
-			if( isView == true )
+			if(condition.IsSearchView == true )
 			{
 				ar.Add("V ");
 			}
-			if( isSynonym == true )
+			if(condition.IsSearchSynonym == true )
 			{
 				ar.Add("SN");
 			}
 
-			if( isFunction == true )
+			if(condition.IsSearchFunction == true )
 			{
 				ar.Add("AF");
 				ar.Add("FN");
@@ -1100,7 +1127,7 @@ where
 
 			}
 
-			if( isProcedure == true )
+			if(condition.IsSearchProcedure == true )
 			{
 				ar.Add("P ");
 				ar.Add("X ");
@@ -1118,7 +1145,7 @@ where
 			}
 
 			string addCondition = string.Empty;
-			if( isCaseSensitive == true )
+			if(condition.IsCaseSensitive == true )
 			{
 				addCondition = " t1.name ";
 			}

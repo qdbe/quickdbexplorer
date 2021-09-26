@@ -286,7 +286,7 @@ namespace quickDBExplorer
         /// <param name="isCaseSensitive"></param>
         /// <param name="limitSchema"></param>
         /// <returns></returns>
-        public string GetSearchFieldSql(string searchCondition, SearchType searchType, bool isCaseSensitive, List<string> limitSchema)
+        public string GetSearchFieldSql(string searchCondition, SearchType searchType, List<string> limitSchema, ObjectSearchCondition condition)
         {
             return string.Empty;
         }
@@ -304,7 +304,7 @@ namespace quickDBExplorer
         /// <param name="isFunction"></param>
         /// <param name="isProcedure"></param>
         /// <returns></returns>
-        public string GetSearchObjectSql(string searchCondition, SearchType searchType, bool isCaseSensitive, List<string> limitSchema, bool isTable, bool isView, bool isSynonym, bool isFunction, bool isProcedure)
+        public string GetSearchObjectSql(string searchCondition, SearchType searchType, List<string> limitSchema, ObjectSearchCondition condition)
         {
             return string.Empty;
         }

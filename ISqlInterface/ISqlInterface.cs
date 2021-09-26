@@ -213,25 +213,20 @@ namespace quickDBExplorer
 		/// </summary>
 		/// <param name="searchCondition">検索対象の文字</param>
 		/// <param name="searchType">検索方法</param>
-		/// <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
 		/// <param name="limitSchema">スキーマの絞込み対象</param>
+        /// <param name="condition">検索条件詳細</param>
 		/// <returns></returns>
-		string	GetSearchFieldSql(string searchCondition, quickDBExplorer.SearchType searchType, bool isCaseSensitive, List<string> limitSchema);
+		string	GetSearchFieldSql(string searchCondition, quickDBExplorer.SearchType searchType, List<string> limitSchema, ObjectSearchCondition condition);
 
-		/// <summary>
-		/// オブジェクト名を検索する SQL文を生成する
-		/// </summary>
-		/// <param name="searchCondition">検索対象の文字</param>
-		/// <param name="searchType">検索方法</param>
-		/// <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
-		/// <param name="limitSchema">スキーマの絞込み対象</param>
-		/// <param name="isTable">テーブルを検索するか否か</param>
-		/// <param name="isView">Viewを検索するか否か</param>
-		/// <param name="isSynonym">シノニムを検索するか否か</param>
-		/// <param name="isFunction">ファンクションを検索するか否か</param>
-		/// <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
-		/// <returns></returns>
-		string GetSearchObjectSql(string searchCondition, quickDBExplorer.SearchType searchType, bool isCaseSensitive, List<string> limitSchema, bool isTable, bool isView, bool isSynonym, bool isFunction, bool isProcedure);
+        /// <summary>
+        /// オブジェクト名を検索する SQL文を生成する
+        /// </summary>
+        /// <param name="searchCondition">検索対象の文字</param>
+        /// <param name="searchType">検索方法</param>
+        /// <param name="limitSchema">スキーマの絞込み対象</param>
+        /// <param name="condition">検索条件詳細</param>
+        /// <returns></returns>
+        string GetSearchObjectSql(string searchCondition, quickDBExplorer.SearchType searchType, List<string> limitSchema, ObjectSearchCondition condition);
 
 
 

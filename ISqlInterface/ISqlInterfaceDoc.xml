@@ -789,7 +789,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String})">
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Collections.Generic.List{System.String},quickDBExplorer.ObjectSearchCondition)">
             <summary>
             空処理
             </summary>
@@ -799,7 +799,7 @@
             <param name="limitSchema"></param>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.EmptySqlInterface.GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String},System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:quickDBExplorer.EmptySqlInterface.GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Collections.Generic.List{System.String},quickDBExplorer.ObjectSearchCondition)">
             <summary>
             空処理
             </summary>
@@ -1026,29 +1026,24 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.ISqlInterface.GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String})">
+        <member name="M:quickDBExplorer.ISqlInterface.GetSearchFieldSql(System.String,quickDBExplorer.SearchType,System.Collections.Generic.List{System.String},quickDBExplorer.ObjectSearchCondition)">
             <summary>
             フィールド名を検索する SQL文を生成する
             </summary>
             <param name="searchCondition">検索対象の文字</param>
             <param name="searchType">検索方法</param>
-            <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
             <param name="limitSchema">スキーマの絞込み対象</param>
+            <param name="condition">検索条件詳細</param>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.ISqlInterface.GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Boolean,System.Collections.Generic.List{System.String},System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:quickDBExplorer.ISqlInterface.GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Collections.Generic.List{System.String},quickDBExplorer.ObjectSearchCondition)">
             <summary>
             オブジェクト名を検索する SQL文を生成する
             </summary>
             <param name="searchCondition">検索対象の文字</param>
             <param name="searchType">検索方法</param>
-            <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
             <param name="limitSchema">スキーマの絞込み対象</param>
-            <param name="isTable">テーブルを検索するか否か</param>
-            <param name="isView">Viewを検索するか否か</param>
-            <param name="isSynonym">シノニムを検索するか否か</param>
-            <param name="isFunction">ファンクションを検索するか否か</param>
-            <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
+            <param name="condition">検索条件詳細</param>
             <returns></returns>
         </member>
         <member name="M:quickDBExplorer.ISqlInterface.SetupVersion(quickDBExplorer.SqlVersion)">
@@ -1060,6 +1055,66 @@
         <member name="M:quickDBExplorer.ISqlInterface.ReConnect">
             <summary>
             DBへの再接続を強制する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsSearchField">
+            <summary>
+            フィールド名を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsSearchTable">
+            <summary>
+            テーブル名を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsSearchView">
+            <summary>
+            View名を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsSearchSynonym">
+            <summary>
+            Synonym名を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsSearchProcedure">
+            <summary>
+            ストアドプロシージャーを検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsSearchFunction">
+            <summary>
+            関数を検索するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsFieldTable">
+            <summary>
+            フィールド検索にテーブルを対象に含めるか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsFieldView">
+            <summary>
+            フィールド検索にVIEWを対象に含めるか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsFieldSynonym">
+            <summary>
+            フィールド検索にSynonymを対象に含めるか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsShowTableSelect">
+            <summary>
+            検索結果を元にオブジェクトを選択するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsCaseSensitive">
+            <summary>
+            大文字・小文字を区別するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsSchemaOnly">
+            <summary>
+            現在表示中のスキーマのみ対象とするか否か
             </summary>
         </member>
         <member name="T:quickDBExplorer.SearchType">
