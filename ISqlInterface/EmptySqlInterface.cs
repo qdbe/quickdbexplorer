@@ -283,8 +283,8 @@ namespace quickDBExplorer
         /// </summary>
         /// <param name="searchCondition"></param>
         /// <param name="searchType"></param>
-        /// <param name="isCaseSensitive"></param>
         /// <param name="limitSchema"></param>
+        /// <param name="condition">検索条件</param>
         /// <returns></returns>
         public string GetSearchFieldSql(string searchCondition, SearchType searchType, List<string> limitSchema, ObjectSearchCondition condition)
         {
@@ -296,13 +296,8 @@ namespace quickDBExplorer
         /// </summary>
         /// <param name="searchCondition"></param>
         /// <param name="searchType"></param>
-        /// <param name="isCaseSensitive"></param>
         /// <param name="limitSchema"></param>
-        /// <param name="isTable"></param>
-        /// <param name="isView"></param>
-        /// <param name="isSynonym"></param>
-        /// <param name="isFunction"></param>
-        /// <param name="isProcedure"></param>
+        /// <param name="condition">検索条件</param>
         /// <returns></returns>
         public string GetSearchObjectSql(string searchCondition, SearchType searchType, List<string> limitSchema, ObjectSearchCondition condition)
         {

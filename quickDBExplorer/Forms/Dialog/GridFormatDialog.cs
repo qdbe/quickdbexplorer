@@ -33,6 +33,9 @@ namespace quickDBExplorer
         private GridFormatSetting settings;
         private Button btnDefault;
 
+        /// <summary>
+        /// グリッド表示条件
+        /// </summary>
         public GridFormatSetting Option
         {
             get { return this.settings; }

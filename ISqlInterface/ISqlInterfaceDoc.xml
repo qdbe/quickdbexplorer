@@ -795,8 +795,8 @@
             </summary>
             <param name="searchCondition"></param>
             <param name="searchType"></param>
-            <param name="isCaseSensitive"></param>
             <param name="limitSchema"></param>
+            <param name="condition">検索条件</param>
             <returns></returns>
         </member>
         <member name="M:quickDBExplorer.EmptySqlInterface.GetSearchObjectSql(System.String,quickDBExplorer.SearchType,System.Collections.Generic.List{System.String},quickDBExplorer.ObjectSearchCondition)">
@@ -805,13 +805,8 @@
             </summary>
             <param name="searchCondition"></param>
             <param name="searchType"></param>
-            <param name="isCaseSensitive"></param>
             <param name="limitSchema"></param>
-            <param name="isTable"></param>
-            <param name="isView"></param>
-            <param name="isSynonym"></param>
-            <param name="isFunction"></param>
-            <param name="isProcedure"></param>
+            <param name="condition">検索条件</param>
             <returns></returns>
         </member>
         <member name="M:quickDBExplorer.EmptySqlInterface.ReConnect">
@@ -1057,6 +1052,11 @@
             DBへの再接続を強制する
             </summary>
         </member>
+        <member name="T:quickDBExplorer.ObjectSearchCondition">
+            <summary>
+            オブジェクト検索の条件を管理
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.ObjectSearchCondition.IsSearchField">
             <summary>
             フィールド名を検索するか否か
@@ -1115,6 +1115,11 @@
         <member name="P:quickDBExplorer.ObjectSearchCondition.IsSchemaOnly">
             <summary>
             現在表示中のスキーマのみ対象とするか否か
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ObjectSearchCondition.#ctor">
+            <summary>
+            コンストラクタ
             </summary>
         </member>
         <member name="T:quickDBExplorer.SearchType">

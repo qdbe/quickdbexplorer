@@ -37,7 +37,6 @@ namespace quickDBExplorer
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="serverList">SqlDataSourceEnumerator.GetDataSourcesの結果を渡す</param>
         public SqlServerSelector()
         {
             InitializeComponent();

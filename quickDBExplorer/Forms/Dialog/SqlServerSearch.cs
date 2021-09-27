@@ -15,15 +15,23 @@ namespace quickDBExplorer
     public partial class SqlServerSearch : quickDBExplorer.quickDBExplorerBaseForm
     {
 
+        /// <summary>
+        /// 検索結果
+        /// </summary>
         public DataTable SearchResult { get; private set; }
 
+        /// <summary>
+        /// キャンセルしたか否か
+        /// </summary>
         protected bool IsCancel { get; set; }
 
+        /// <summary>
+        /// 完了したか否か
+        /// </summary>
         protected bool IsComplete { get; set; }
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        /// <param name="serverList">SqlDataSourceEnumerator.GetDataSourcesの結果を渡す</param>
         public SqlServerSearch()
         {
             InitializeComponent();

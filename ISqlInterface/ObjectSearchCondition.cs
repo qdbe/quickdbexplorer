@@ -5,6 +5,9 @@ using System.Text;
 
 namespace quickDBExplorer
 {
+    /// <summary>
+    /// オブジェクト検索の条件を管理
+    /// </summary>
     public class ObjectSearchCondition
     {
         /// <summary>
@@ -115,6 +118,9 @@ namespace quickDBExplorer
             set;
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public ObjectSearchCondition()
         {
             this.IsCaseSensitive = true;

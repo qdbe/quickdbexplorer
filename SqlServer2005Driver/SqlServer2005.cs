@@ -955,8 +955,8 @@ order by colorder",
 		/// </summary>
 		/// <param name="searchCondition">検索対象の文字</param>
 		/// <param name="searchType">検索方法</param>
-		/// <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
 		/// <param name="limitSchema">スキーマの絞込み対象</param>
+        /// <param name="condition">検索条件</param>
 		/// <returns></returns>
 		public string	GetSearchFieldSql(
 			string searchCondition, 
@@ -1063,13 +1063,8 @@ where
 		/// </summary>
 		/// <param name="searchCondition">検索対象の文字</param>
 		/// <param name="searchType">検索方法</param>
-		/// <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
 		/// <param name="limitSchema">スキーマの絞込み対象</param>
-		/// <param name="isTable">テーブルを検索するか否か</param>
-		/// <param name="isView">Viewを検索するか否か</param>
-		/// <param name="isSynonym">シノニムを検索するか否か</param>
-		/// <param name="isFunction">ファンクションを検索するか否か</param>
-		/// <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
+        /// <param name="condition">検索条件</param>
 		/// <returns></returns>
 		public string	GetSearchObjectSql(
 			string searchCondition, 

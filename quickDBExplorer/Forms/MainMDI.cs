@@ -39,6 +39,9 @@ namespace quickDBExplorer.Forms
         private System.Windows.Forms.MenuItem menuVersion;
         private System.Windows.Forms.MenuItem menuAbout;
 
+        /// <summary>
+        /// 各種設定値（履歴含む）
+        /// </summary>
         protected ConditionRecorderJson _initOpt = null;
         /// <summary>
         /// 前回操作時の各種記憶情報

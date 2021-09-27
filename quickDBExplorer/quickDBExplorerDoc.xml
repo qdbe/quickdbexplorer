@@ -434,6 +434,13 @@
             変更後のテキスト
             </summary>
         </member>
+        <member name="M:quickDBExplorer.qdbeTextChangedEventArgs.#ctor(System.String,System.String)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="oldstring"></param>
+            <param name="newstring"></param>
+        </member>
         <member name="T:quickDBExplorer.qdbeTextChangedEventHandler">
             <summary>
             テキストボックスが変更後、確定した時のイベントハンドラ
@@ -459,6 +466,11 @@
         <member name="E:quickDBExplorer.quickDBExplorerTextBox.ShowZoom">
             <summary>
             Ctrl+Sが押された場合のイベント
+            </summary>
+        </member>
+        <member name="E:quickDBExplorer.quickDBExplorerTextBox.qdbeTextChanged">
+            <summary>
+            テキスト変更確定後イベント
             </summary>
         </member>
         <member name="P:quickDBExplorer.quickDBExplorerTextBox.Histories">
@@ -1106,14 +1118,7 @@
             </summary>
             <param name="searchCondition">検索文字</param>
             <param name="searchType">検索条件</param>
-            <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
-            <param name="isLimitSchema">対象スキーマを現在表示中のもののみに絞り込むか否か</param>
-            <param name="isField">フィールドを検索するか否か</param>
-            <param name="isTable">テーブルを検索するか否か</param>
-            <param name="isView">Viewを検索するか否か</param>
-            <param name="isSynonym">シノニムを検索するか否か</param>
-            <param name="isFunction">ファンクションを検索するか否か</param>
-            <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
+            <param name="condition">条件</param>
             <returns></returns>
         </member>
         <member name="M:quickDBExplorer.Forms.MainForm.dbList_CopyData(System.Object,System.EventArgs)">
@@ -1265,6 +1270,11 @@
         <member name="T:quickDBExplorer.Forms.MainMdi">
             <summary>
             全ての親画面となるMDIフォーム
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.MainMdi._initOpt">
+            <summary>
+            各種設定値（履歴含む）
             </summary>
         </member>
         <member name="P:quickDBExplorer.Forms.MainMdi.InitOpt">
@@ -1787,6 +1797,11 @@
         <member name="T:quickDBExplorer.GridFormatDialog">
             <summary>
             データグリッドの表示書式を指定する
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatDialog.Option">
+            <summary>
+            グリッド表示条件
             </summary>
         </member>
         <member name="F:quickDBExplorer.GridFormatDialog.components">
@@ -2600,11 +2615,25 @@
             SQL Server の一覧を選択するダイアログ
             </summary>
         </member>
+        <member name="P:quickDBExplorer.SqlServerSearch.SearchResult">
+            <summary>
+            検索結果
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlServerSearch.IsCancel">
+            <summary>
+            キャンセルしたか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlServerSearch.IsComplete">
+            <summary>
+            完了したか否か
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.SqlServerSearch.#ctor">
             <summary>
             コンストラクタ
             </summary>
-            <param name="serverList">SqlDataSourceEnumerator.GetDataSourcesの結果を渡す</param>
         </member>
         <member name="F:quickDBExplorer.SqlServerSearch.components">
             <summary>
@@ -2652,7 +2681,6 @@
             <summary>
             コンストラクタ
             </summary>
-            <param name="serverList">SqlDataSourceEnumerator.GetDataSourcesの結果を渡す</param>
         </member>
         <member name="F:quickDBExplorer.SqlServerSelector.components">
             <summary>
@@ -3620,6 +3648,31 @@
             <param name="table"></param>
             <returns></returns>
         </member>
+        <member name="M:quickDBExplorer.ServerJsonData.HashtableToDictionaryListString``1(System.Collections.Hashtable)">
+            <summary>
+            Hash をDictionary に変換する
+            </summary>
+            <typeparam name="K"></typeparam>
+            <param name="table"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ServerJsonData.ConvertHashValues">
+            <summary>
+            Hash値を変換する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ServerJsonData.ConvertHashValuesSub(System.Collections.Hashtable,System.Type)">
+            <summary>
+            Hash値を変換する
+            </summary>
+            <param name="ht"></param>
+            <param name="t"></param>
+        </member>
+        <member name="M:quickDBExplorer.ServerJsonData.SetDefaultValueIfNeed">
+            <summary>
+            NULLの場合に既定値を設定する
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.GridFormatSetting">
             <summary>
             グリッド表示書式
@@ -3721,6 +3774,28 @@
             <param name="info"></param>
             <param name="context"></param>
         </member>
+        <member name="M:quickDBExplorer.ConditionRecorder.Create">
+            <summary>
+            作成する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ConditionRecorder.ReadXmlConfig">
+            <summary>
+            XML形式を読みこむ
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ConditionRecorder.SaveJson">
+            <summary>
+            Json形式で保存する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ConditionRecorder.SaveXml">
+            <summary>
+            XML形式で保存する
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.ConditionRecorderJson">
             <summary>
             ConditionRecorder の概要の説明です。
@@ -3740,6 +3815,34 @@
         <member name="M:quickDBExplorer.ConditionRecorderJson.#ctor">
             <summary>
             コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ConditionRecorderJson.ConvertFrom(quickDBExplorer.ConditionRecorder)">
+            <summary>
+            型変換
+            </summary>
+            <param name="srcdata"></param>
+        </member>
+        <member name="M:quickDBExplorer.ConditionRecorderJson.Create">
+            <summary>
+            作成する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ConditionRecorderJson.ReadJsonConfig">
+            <summary>
+            Json形式の設定を読み込む
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.ConditionRecorderJson.Save">
+            <summary>
+            保存する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ConditionRecorderJson.SaveJson">
+            <summary>
+            Json形式で保存する
             </summary>
         </member>
         <member name="T:quickDBExplorer.TextHistoryDataSet">

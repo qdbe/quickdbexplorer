@@ -4524,14 +4524,7 @@ namespace quickDBExplorer.Forms
 		/// </summary>
 		/// <param name="searchCondition">検索文字</param>
 		/// <param name="searchType">検索条件</param>
-		/// <param name="isCaseSensitive">大文字小文字を区別するか否か</param>
-		/// <param name="isLimitSchema">対象スキーマを現在表示中のもののみに絞り込むか否か</param>
-		/// <param name="isField">フィールドを検索するか否か</param>
-		/// <param name="isTable">テーブルを検索するか否か</param>
-		/// <param name="isView">Viewを検索するか否か</param>
-		/// <param name="isSynonym">シノニムを検索するか否か</param>
-		/// <param name="isFunction">ファンクションを検索するか否か</param>
-		/// <param name="isProcedure">ストアドプロシージャーを検索するか否か</param>
+        /// <param name="condition">条件</param>
 		/// <returns></returns>
 		private DataSet ObjectSearchSub(
 			string searchCondition,

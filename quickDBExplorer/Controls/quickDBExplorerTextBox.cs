@@ -42,6 +42,11 @@ namespace quickDBExplorer
         /// </summary>
         public string NewText { get; private set; }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="oldstring"></param>
+        /// <param name="newstring"></param>
         public qdbeTextChangedEventArgs(string oldstring, string newstring)
         {
             this.OldText = oldstring;
@@ -86,6 +91,9 @@ namespace quickDBExplorer
 		/// </summary>
 		public event ShowZoomEventHandler ShowZoom = null;
 
+        /// <summary>
+        /// テキスト変更確定後イベント
+        /// </summary>
         public event qdbeTextChangedEventHandler qdbeTextChanged = null;
 
 

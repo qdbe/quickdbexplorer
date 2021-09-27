@@ -775,6 +775,13 @@ namespace quickDBExplorer
             }
             return d;
         }
+        
+        /// <summary>
+        /// Hash をDictionary に変換する
+        /// </summary>
+        /// <typeparam name="K"></typeparam>
+        /// <param name="table"></param>
+        /// <returns></returns>
         public static Dictionary<K, List<string>> HashtableToDictionaryListString<K>(Hashtable table)
         {
             Dictionary<K, List<string>> d = new Dictionary<K, List<string>>();
@@ -827,6 +834,9 @@ namespace quickDBExplorer
             return result;
         }
 
+        /// <summary>
+        /// Hash値を変換する
+        /// </summary>
         public void ConvertHashValues()
         {
             Type d = typeof(ServerJsonData);
@@ -842,6 +852,11 @@ namespace quickDBExplorer
 
         }
 
+        /// <summary>
+        /// Hash値を変換する
+        /// </summary>
+        /// <param name="ht"></param>
+        /// <param name="t"></param>
         public void ConvertHashValuesSub(Hashtable ht, Type t)
         {
             List<object> keys = new List<object>();
@@ -860,6 +875,9 @@ namespace quickDBExplorer
             }
         }
 
+        /// <summary>
+        /// NULLの場合に既定値を設定する
+        /// </summary>
         public void SetDefaultValueIfNeed()
         {
             if (PerTableColumnWidth == null)
@@ -1041,7 +1059,10 @@ namespace quickDBExplorer
             info.AddValue("SERVERDATA", this.perServerData, typeof(Hashtable));
         }
 
-
+        /// <summary>
+        /// 作成する
+        /// </summary>
+        /// <returns></returns>
         public static ConditionRecorder Create()
         {
             ConditionRecorder _default = null;
@@ -1050,7 +1071,10 @@ namespace quickDBExplorer
         }
 
 
-
+        /// <summary>
+        /// XML形式を読みこむ
+        /// </summary>
+        /// <returns></returns>
         protected static ConditionRecorder ReadXmlConfig()
         {
             // 設定ファイルの読み込みストリーム
@@ -1098,7 +1122,9 @@ namespace quickDBExplorer
             return result;
         }
 
-
+        /// <summary>
+        /// Json形式で保存する
+        /// </summary>
         protected void SaveJson()
         {
             StreamWriter sw = null;
@@ -1149,6 +1175,9 @@ namespace quickDBExplorer
             }
         }
 
+        /// <summary>
+        /// XML形式で保存する
+        /// </summary>
         protected void SaveXml()
         {
             FileStream fs = null;
@@ -1240,7 +1269,10 @@ namespace quickDBExplorer
             this.PerServerData = new Dictionary<string, ServerJsonData>();
         }
 
-
+        /// <summary>
+        /// 型変換
+        /// </summary>
+        /// <param name="srcdata"></param>
         public void ConvertFrom(ConditionRecorder srcdata)
         {
             this.LastServerKey = srcdata.LastServerKey;
@@ -1262,6 +1294,10 @@ namespace quickDBExplorer
             }
         }
 
+        /// <summary>
+        /// 作成する
+        /// </summary>
+        /// <returns></returns>
         public static ConditionRecorderJson Create()
         {
             ConditionRecorderJson _default = null;
@@ -1275,6 +1311,10 @@ namespace quickDBExplorer
             return _default;
         }
 
+        /// <summary>
+        /// Json形式の設定を読み込む
+        /// </summary>
+        /// <returns></returns>
         protected static ConditionRecorderJson ReadJsonConfig()
         {
             // 設定ファイルの読み込みストリーム
@@ -1324,12 +1364,17 @@ namespace quickDBExplorer
         }
 
 
-
+        /// <summary>
+        /// 保存する
+        /// </summary>
         public void Save()
         {
             SaveJson();
         }
 
+        /// <summary>
+        /// Json形式で保存する
+        /// </summary>
         protected void SaveJson()
         {
             StreamWriter sw = null;
