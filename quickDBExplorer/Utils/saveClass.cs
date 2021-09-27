@@ -805,6 +805,11 @@ namespace quickDBExplorer
             return d;
         }
 
+        /// <summary>
+        /// ServerDataからコンバートする
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static ServerJsonData CreateFrom(ServerData data)
         {
             ServerJsonData result = new ServerJsonData();
@@ -967,6 +972,10 @@ namespace quickDBExplorer
             set { this.gridDateFormat = value; }
         }
 
+        /// <summary>
+        /// 既定値の設定を作成する
+        /// </summary>
+        /// <returns></returns>
         public static GridFormatSetting Defalt()
         {
             GridFormatSetting defaultValue = new GridFormatSetting();
@@ -1221,7 +1230,7 @@ namespace quickDBExplorer
             {
                 ;
             }
-            catch (Exception ex)
+            catch (Exception exp)
             {
                 throw;
             }

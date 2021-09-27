@@ -3656,6 +3656,13 @@
             <param name="table"></param>
             <returns></returns>
         </member>
+        <member name="M:quickDBExplorer.ServerJsonData.CreateFrom(quickDBExplorer.ServerData)">
+            <summary>
+            ServerDataからコンバートする
+            </summary>
+            <param name="data"></param>
+            <returns></returns>
+        </member>
         <member name="M:quickDBExplorer.ServerJsonData.ConvertHashValues">
             <summary>
             Hash値を変換する
@@ -3727,6 +3734,12 @@
             <summary>
             日付変換書式の指定
             </summary>
+        </member>
+        <member name="M:quickDBExplorer.GridFormatSetting.Defalt">
+            <summary>
+            既定値の設定を作成する
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:quickDBExplorer.ConditionRecorder">
             <summary>
