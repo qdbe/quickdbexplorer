@@ -127,7 +127,7 @@ namespace quickDBExplorer
             this.timer1.Stop();
             SqlServerSearch searchdlg = new SqlServerSearch();
             searchdlg.Owner = this;
-            searchdlg.ShowDialog();
+            searchdlg.ShowDialog(this);
             if (searchdlg.DialogResult == DialogResult.OK)
             {
                 DataTable serverList = searchdlg.SearchResult;

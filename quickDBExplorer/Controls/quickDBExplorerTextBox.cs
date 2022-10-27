@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Windows;
 using System.Text.RegularExpressions;
+using System.Drawing;
 
 namespace quickDBExplorer
 {
@@ -67,7 +68,7 @@ namespace quickDBExplorer
     /// CTRL+Aでの全選択機能、CTRL+Dでの文字削除を追加したテキストボックス
     /// </summary>
     [System.Runtime.InteropServices.ComVisible(false)]
-	public class quickDBExplorerTextBox : TextBox
+	public class quickDBExplorerTextBox : PlaceholderTextBox
 	{
 		/// <summary>
 		/// テキスト入力エリアでの右クリックメニュー
@@ -134,7 +135,7 @@ namespace quickDBExplorer
             }
         }
 
-        private void ResetHistoryMemuItem()
+		private void ResetHistoryMemuItem()
         {
             if (Histories == null)
             {
@@ -524,7 +525,7 @@ namespace quickDBExplorer
 			{
 				hv.IsShowTable = false;
 			}
-			if (DialogResult.OK == hv.ShowDialog())
+			if (DialogResult.OK == hv.ShowDialog(this))
 			{
 				if (this.Text != hv.RetString)
 				{

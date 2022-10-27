@@ -27,8 +27,8 @@ using System.Runtime.InteropServices;
 // 下にあるように、'*' を使って、すべての値を指定するか、
 // ビルドおよびリビジョン番号を既定値にすることができます。
 
-[assembly: AssemblyVersion("2.6.0.*")]
-[assembly: AssemblyInformationalVersion("2.6.0")]
+[assembly: AssemblyVersion("2.7.0.*")]
+[assembly: AssemblyInformationalVersion("2.7.0")]
 [assembly: System.Resources.NeutralResourcesLanguage("ja-JP")]
 
 //

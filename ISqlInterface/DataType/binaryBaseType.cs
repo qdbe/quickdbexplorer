@@ -112,5 +112,25 @@ namespace quickDBExplorer.DataType
         {
             return "byte[]";
         }
+
+        public override bool TryCheckObject(object data, DBFieldInfo fieldInfo, ref string errmsg)
+        {
+            if (data == DBNull.Value)
+            {
+                return true;
+            }
+
+            byte[] datas = (byte[])data;
+            int maxlen = datas.Length;
+            if (this.TypeHasSize == true)
+            {
+                if (fieldInfo.Length >= 0 && fieldInfo.Length < maxlen)
+                {
+                    errmsg = "データサイズを超えています";
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }

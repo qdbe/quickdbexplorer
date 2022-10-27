@@ -720,6 +720,11 @@ namespace quickDBExplorer
         /// </summary>
         public Dictionary<string, Dictionary<string, int>> PerTableColumnWidth { get; set; }
 
+        /// <summary>
+        /// Gridの見出しのサイズ
+        /// </summary>
+        public Dictionary<string, Dictionary<string, int>> PerTableHeaderSize { get; set; }
+
 
         /// <summary>
         /// コンストラクタ
@@ -738,6 +743,7 @@ namespace quickDBExplorer
             this.TxtEncode = new Dictionary<string, int>();
             this.InputHistories = new Dictionary<string, TextHistoryDataSet>();
             this.PerTableColumnWidth = new Dictionary<string, Dictionary<string, int>>();
+            this.PerTableHeaderSize = new Dictionary<string, Dictionary<string, int>>();
             this.GridSetting = GridFormatSetting.Defalt();
             this.WhereGridHistory = new Dictionary<string, Dictionary<string, Dictionary<string, DataSet>>>();
             this.ObjectSearchHistory = new Dictionary<string, Dictionary<string, ObjectSearchCondition>>();
@@ -885,9 +891,13 @@ namespace quickDBExplorer
         /// </summary>
         public void SetDefaultValueIfNeed()
         {
-            if (PerTableColumnWidth == null)
+            if (this.PerTableColumnWidth == null)
             {
                 this.PerTableColumnWidth = new Dictionary<string, Dictionary<string, int>>();
+            }
+            if (this.PerTableHeaderSize == null)
+            {
+                this.PerTableHeaderSize = new Dictionary<string, Dictionary<string, int>>();
             }
             if (this.GridSetting == null)
             {
@@ -947,6 +957,17 @@ namespace quickDBExplorer
             set { this.gridNumberFormat = value; }
 
         }
+
+
+        /// <summary>
+        /// 数値変換書式
+        /// </summary>
+        public string GridNumberFormatPlain
+        {
+            get { return this.GetFormat(this.GridNumberFormat); }
+        }
+    
+
         /// <summary>
         /// 小数点書式の指定
         /// </summary>
@@ -959,6 +980,16 @@ namespace quickDBExplorer
             get { return this.gridFloatFormat; }
             set { this.gridFloatFormat = value; }
         }
+
+
+        /// <summary>
+        /// 小数点書式
+        /// </summary>
+        public string GridFloatFormatPlain
+        {
+            get { return this.GetFormat(this.GridFloatFormat); }
+        }
+
         /// <summary>
         /// 日付変換書式の指定
         /// </summary>
@@ -970,6 +1001,13 @@ namespace quickDBExplorer
         {
             get { return this.gridDateFormat; }
             set { this.gridDateFormat = value; }
+        }
+        /// <summary>
+        /// 日付変換書式
+        /// </summary>
+        public string GridDateFormatPlain
+        {
+            get { return this.GetFormat(this.GridDateFormat); }
         }
 
         /// <summary>
@@ -988,6 +1026,26 @@ namespace quickDBExplorer
 
             return defaultValue;
         }
+
+        /// <summary>
+        /// 書式から説明を除外する
+        /// </summary>
+        /// <param name="fstr"></param>
+        /// <returns></returns>
+        protected string GetFormat(string fstr)
+        {
+            if (fstr == null)
+            {
+                return "";
+            }
+            int termp = fstr.IndexOf("	");
+            if (termp == -1)
+            {
+                return fstr;
+            }
+            return fstr.Substring(0, termp);
+        }
+
     }
 
     /// <summary>

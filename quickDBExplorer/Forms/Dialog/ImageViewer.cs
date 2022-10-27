@@ -399,7 +399,7 @@ namespace quickDBExplorer
             dlg.OverwritePrompt = true;
             dlg.Filter = "Bmp|*.bmp|Gif|*.gif|Icon|*.ico|jpeg|*.jpeg|Png|*.png|‘S‚Ä|*.*";
 
-            if (dlg.ShowDialog() != DialogResult.OK)
+            if (dlg.ShowDialog(this) != DialogResult.OK)
             {
                 return;
             }
@@ -462,7 +462,7 @@ namespace quickDBExplorer
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "Bmp|*.bmp|Gif|*.gif|Icon|*.ico|jpeg|*.jpeg|Png|*.png|‘S‚Ä|*.*";
-            if (dlg.ShowDialog() != DialogResult.OK)
+            if (dlg.ShowDialog(this) != DialogResult.OK)
             {
                 return;
             }

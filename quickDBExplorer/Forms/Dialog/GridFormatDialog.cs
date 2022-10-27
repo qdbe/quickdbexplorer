@@ -308,7 +308,7 @@ namespace quickDBExplorer
             this.fontDialog1.Color = this.Option.GridForeColor;
             this.fontDialog1.ShowColor = false;
 
-            if (this.fontDialog1.ShowDialog() == DialogResult.OK)
+            if (this.fontDialog1.ShowDialog(this) == DialogResult.OK)
             {
                 this.Option.GridFont = this.fontDialog1.Font;
                 this.Option.GridForeColor = Color.FromArgb(this.fontDialog1.Color.ToArgb());

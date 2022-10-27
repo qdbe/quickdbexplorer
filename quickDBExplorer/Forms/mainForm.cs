@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
@@ -11,6 +12,7 @@ using System.Threading;
 using System.Windows.Forms;
 using quickDBExplorer.Forms;
 using quickDBExplorer.Forms.Events;
+using LumenWorks.Framework.IO.Csv;
 
 namespace quickDBExplorer.Forms
 {
@@ -38,7 +40,7 @@ namespace quickDBExplorer.Forms
 		private System.Windows.Forms.CheckBox chkDispData;
 		private System.Windows.Forms.CheckBox chkDispFieldAttr;
 		private System.Windows.Forms.ContextMenu fldContextMenu;
-		private System.Windows.Forms.DataGrid dbGrid;
+		private quickDBExplorer.Controls.qdbeDataGridView dbGrid;
 		private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
 		private System.Windows.Forms.GroupBox grpCharaSet;
 		private System.Windows.Forms.GroupBox grpDataDispMode;
@@ -57,6 +59,7 @@ namespace quickDBExplorer.Forms
 		private quickDBExplorer.qdbeListBox fieldListbox;
 		private quickDBExplorer.qdbeListBox ownerListbox;
 		private quickDBExplorer.ObjectListView objectList;
+		private System.Windows.Forms.MenuItem menuFieldMakeWhere;
 		private System.Windows.Forms.MenuItem fldmenuCopy;
 		private System.Windows.Forms.MenuItem fldmenuCopyNoCRLF;
 		private System.Windows.Forms.MenuItem fldmenuCopyNoCRLFNoComma;
@@ -77,32 +80,32 @@ namespace quickDBExplorer.Forms
 		private quickDBExplorerTextBox txtDispCount;
 		private quickDBExplorerTextBox txtOutput;
 		private quickDBExplorerTextBox txtSort;
-        private quickDBExplorerTextBox txtWhere;
+		private quickDBExplorerTextBox txtWhere;
 
 		private QueryDialog Sqldlg2 = new QueryDialog();
 		private QueryDialogSelect Sqldlg = new QueryDialogSelect();
-		private	CmdInputDialog	cmdDialog = new CmdInputDialog();
+		private CmdInputDialog cmdDialog = new CmdInputDialog();
 		private DataSet dspdt = new DataSet();
 		private ServerJsonData svdata;
 		//private	Font	gfont;
 		//private	Color	gcolor;
-		private Color	btnBackColor;
-		private Color	btnForeColor;
-		private	IndexViewDialog indexdlg = null;
+		private Color btnBackColor;
+		private Color btnForeColor;
+		private IndexViewDialog indexdlg = null;
 		private WhereDialog wheredlg = null;
 		private string aliasText;
 
-        private bool IsOverwriteExistingFile = false;
+		private bool IsOverwriteExistingFile = false;
 
-        private string dbgridTableName = "";
+		private string dbgridTableName = "";
 
 
 		#region 公開メンバ
-		private ISqlInterface	pSqlDriver = null;
+		private ISqlInterface pSqlDriver = null;
 		/// <summary>
 		/// SQL文を処理するクラス
 		/// </summary>
-		public	ISqlInterface	SqlDriver
+		public ISqlInterface SqlDriver
 		{
 			get { return this.pSqlDriver; }
 			set { this.pSqlDriver = value; }
@@ -123,22 +126,22 @@ namespace quickDBExplorer.Forms
 		}
 
 
-        /// <summary>
-        ///  接続先のサーバー名。表示用にのみ利用
-        /// </summary>
-        public string ServerInstanceName
-        {
-            get {
-                if (this.InstanceName == null || this.InstanceName.Length == 0)
-                {
-                    return this.pServerName;
-                }
-                else
-                {
-                    return this.pServerName + @"\" + this.InstanceName;
-                }
-            }
-        }
+		/// <summary>
+		///  接続先のサーバー名。表示用にのみ利用
+		/// </summary>
+		public string ServerInstanceName
+		{
+			get {
+				if (this.InstanceName == null || this.InstanceName.Length == 0)
+				{
+					return this.pServerName;
+				}
+				else
+				{
+					return this.pServerName + @"\" + this.InstanceName;
+				}
+			}
+		}
 
 		/// <summary>
 		/// 接続先サーバーの本当の名前。インスタンス名を含まない
@@ -147,7 +150,7 @@ namespace quickDBExplorer.Forms
 		/// <summary>
 		/// 接続先サーバーの本当の名前。インスタンス名を含まない
 		/// </summary>
-		public string ServerRealName 
+		public string ServerRealName
 		{
 			get { return this.pServerRealName; }
 			set { this.pServerRealName = value; }
@@ -160,7 +163,7 @@ namespace quickDBExplorer.Forms
 		/// <summary>
 		/// 接続先サーバーのインスタンス名
 		/// </summary>
-		public string InstanceName 
+		public string InstanceName
 		{
 			get { return this.pInstanceName; }
 			set { this.pInstanceName = value; }
@@ -173,7 +176,7 @@ namespace quickDBExplorer.Forms
 		/// <summary>
 		/// ログインID
 		/// </summary>
-		public string LogOnUid 
+		public string LogOnUid
 		{
 			get { return this.pLogOnUid; }
 			set { this.pLogOnUid = value; }
@@ -186,7 +189,7 @@ namespace quickDBExplorer.Forms
 		/// <summary>
 		/// ログイン用パスワード
 		/// </summary>
-		public string LogOnPassword 
+		public string LogOnPassword
 		{
 			get { return this.pLogOnPassword; }
 			set { this.pLogOnPassword = value; }
@@ -199,7 +202,7 @@ namespace quickDBExplorer.Forms
 		/// <summary>
 		/// 信頼関係接続を利用するか否か
 		/// </summary>
-		public bool IsUseTruse 
+		public bool IsUseTruse
 		{
 			get { return this.pIsUseTrust; }
 			set { this.pIsUseTrust = value; }
@@ -228,28 +231,28 @@ namespace quickDBExplorer.Forms
 		/// </summary>
 		private bool isInCmbEvent = false;
 
-        /// <summary>
-        /// クエリ実行タイムアウト値の規定値
-        /// </summary>
-        public static int DefaultSqlTimeOut = 300;
+		/// <summary>
+		/// クエリ実行タイムアウト値の規定値
+		/// </summary>
+		public static int DefaultSqlTimeOut = 300;
 
 		/// <summary>
 		/// SQL のクエリ実行タイムアウト値
 		/// </summary>
-        private int pSqlTimeout = DefaultSqlTimeOut;
+		private int pSqlTimeout = DefaultSqlTimeOut;
 		/// <summary>
 		/// SQL のクエリ実行タイムアウト値
 		/// </summary>
-		public int SqlTimeout 
+		public int SqlTimeout
 		{
 			get { return this.pSqlTimeout; }
-			set { 
-				this.pSqlTimeout = value; 
+			set {
+				this.pSqlTimeout = value;
 				this.SqlDriver.SetTimeout(this.pSqlTimeout);
 			}
 		}
 
-        private Dictionary<string, TextHistoryDataSet> Histories = new Dictionary<string, TextHistoryDataSet>();
+		private Dictionary<string, TextHistoryDataSet> Histories = new Dictionary<string, TextHistoryDataSet>();
 
 		/// <summary>
 		/// 接続した先のSQL Serverのバージョン
@@ -258,17 +261,17 @@ namespace quickDBExplorer.Forms
 		/// <summary>
 		/// 接続した先のSQL Serverのバージョン
 		/// </summary>
-		public	SqlVersion		ConnectSqlVersion
+		public SqlVersion ConnectSqlVersion
 		{
 			get { return this.pSqlVersion; }
 			set { this.pSqlVersion = value; }
 		}
 
-        public ConnectionInfo ConnectionArg { get; private set; }
+		public ConnectionInfo ConnectionArg { get; private set; }
 
-        private DBObjectInfo lastDispdata { get; set; }
+		private DBObjectInfo lastDispdata { get; set; }
 
-        #endregion
+		#endregion
 
 		private System.Windows.Forms.Button btnEtc;
 		private System.Windows.Forms.MenuItem menuISQLW;
@@ -276,11 +279,10 @@ namespace quickDBExplorer.Forms
 		private System.Windows.Forms.Button btnOrderZoom;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label labelObject;
-		private System.Windows.Forms.ContextMenu dbGridMenu;
-		private System.Windows.Forms.MenuItem copyDbGridMenu;
+		//private System.Windows.Forms.ContextMenu dbGridMenu;
 		private System.Windows.Forms.OpenFileDialog openFileDialog1;
 		private System.Windows.Forms.Label label11;
-        private quickDBExplorer.quickDBExplorerTextBox txtAlias;
+		private quickDBExplorer.quickDBExplorerTextBox txtAlias;
 		private System.Windows.Forms.MenuItem menuFieldAliasCopy;
 		/// <summary>
 		/// コマンド入力ダイアログ
@@ -289,34 +291,26 @@ namespace quickDBExplorer.Forms
 		private System.Windows.Forms.ColumnHeader ColTVSType;
 		private System.Windows.Forms.ColumnHeader ColOwner;
 		private System.Windows.Forms.ColumnHeader ColObjName;
-		private System.Windows.Forms.MenuItem allSelectDbGridMenu;
-		private System.Windows.Forms.MenuItem allUnSelectDbGridMenu;
-		private System.Windows.Forms.MenuItem readCsvDbGridMenu;
-		private System.Windows.Forms.MenuItem readTsvDbGridMenu;
-		private System.Windows.Forms.MenuItem readCsvDQDbGridMenu;
-		private System.Windows.Forms.MenuItem readTsvDQDbGridMenu;
-		private System.Windows.Forms.MenuItem copySelectedDbGridMenu;
-		private System.Windows.Forms.MenuItem menuFieldMakeWhere;
 		private SplitContainer ObjFieldSplitter;
 		private SplitContainer MainSplitter;
 		private SplitContainer UpDownSplitter;
-        private Label labelFilter;
-        private quickDBExplorerTextBox txtObjFilter;
-        private ContextMenuStrip dbMenu;
-        private ToolStripMenuItem menuTimeoutChange;
-        private ToolStripMenuItem DBReloadMenu;
-        private ToolTip commTooltip;
-        private MenuItem fldmenuMakePoco;
-        private MenuItem fldmenuMakePocoNoClass;
-        private ContextMenuStrip filterMenu;
-        private ToolStripMenuItem filterCS;
-        private ToolStripMenuItem filterNonCS;
-        private System.Windows.Forms.ColumnHeader ColCreateDate;
-        private ToolStripMenuItem filterClear;
-        private SplitContainer conditionSplitter;
-        private SplitContainer conditionSplitter2;
-        private Button btnResetWidth;
-        private bool IsFilterCaseSensitive = false;
+		private SplitContainer conditionSplitter;
+		private SplitContainer conditionSplitter2;
+		private Label labelFilter;
+		private quickDBExplorerTextBox txtObjFilter;
+		private ContextMenuStrip dbMenu;
+		private ToolStripMenuItem menuTimeoutChange;
+		private ToolStripMenuItem DBReloadMenu;
+		private ToolTip commTooltip;
+		private MenuItem fldmenuMakePoco;
+		private MenuItem fldmenuMakePocoNoClass;
+		private ContextMenuStrip filterMenu;
+		private ToolStripMenuItem filterCS;
+		private ToolStripMenuItem filterNonCS;
+		private System.Windows.Forms.ColumnHeader ColCreateDate;
+		private ToolStripMenuItem filterClear;
+		private Button btnColRow;
+		private bool IsFilterCaseSensitive = false;
 
 		/// <summary>
 		/// コンストラクタ
@@ -330,18 +324,52 @@ namespace quickDBExplorer.Forms
 			//
 			InitializeComponent();
 
-            SetParams(mdiparent, conn);
+			SetParams(mdiparent, conn);
 
-            InitSubDialog();
-            InitHistory();
+			InitSubDialog();
+			InitHistory();
 
-            //this.GridFormart = GridFormatSetting.Defalt();
+			//this.GridFormart = GridFormatSetting.Defalt();
 
 			// 右クリックメニューや、ボタンポップアップメニューを初期化する
 			InitPopupMenu();
+
+			SaveSplitLayout();
 		}
 
-        private void InitSubDialog()
+		private void SaveSplitLayout()
+		{
+			List<SplitContainer> splitList = new List<SplitContainer>();
+			splitList.Add(ObjFieldSplitter);
+			splitList.Add(MainSplitter);
+			splitList.Add(UpDownSplitter);
+			splitList.Add(conditionSplitter);
+			splitList.Add(conditionSplitter2);
+
+			foreach (SplitContainer each in splitList)
+			{
+				// 初期の分割点を記憶
+				each.Tag = each.SplitterDistance;
+			}
+		}
+
+		public void ResetSplitLayout()
+		{
+			List<SplitContainer> splitList = new List<SplitContainer>();
+			splitList.Add(MainSplitter);
+			splitList.Add(ObjFieldSplitter);
+			splitList.Add(conditionSplitter);
+			splitList.Add(conditionSplitter2);
+			splitList.Add(UpDownSplitter);
+
+			foreach (SplitContainer each in splitList)
+			{
+				int distance = (int)each.Tag;
+				each.SplitterDistance = distance;
+			}
+		}
+
+		private void InitSubDialog()
         {
             Sqldlg.InputedText = "";
             Sqldlg2.InputedText = "";
@@ -443,16 +471,7 @@ namespace quickDBExplorer.Forms
             this.btnSelect = new System.Windows.Forms.Button();
             this.ownerListbox = new quickDBExplorer.qdbeListBox();
             this.btnDDL = new System.Windows.Forms.Button();
-            this.dbGrid = new System.Windows.Forms.DataGrid();
-            this.dbGridMenu = new System.Windows.Forms.ContextMenu();
-            this.copyDbGridMenu = new System.Windows.Forms.MenuItem();
-            this.copySelectedDbGridMenu = new System.Windows.Forms.MenuItem();
-            this.allSelectDbGridMenu = new System.Windows.Forms.MenuItem();
-            this.allUnSelectDbGridMenu = new System.Windows.Forms.MenuItem();
-            this.readCsvDbGridMenu = new System.Windows.Forms.MenuItem();
-            this.readCsvDQDbGridMenu = new System.Windows.Forms.MenuItem();
-            this.readTsvDbGridMenu = new System.Windows.Forms.MenuItem();
-            this.readTsvDQDbGridMenu = new System.Windows.Forms.MenuItem();
+            this.dbGrid = new quickDBExplorer.Controls.qdbeDataGridView();
             this.chkDispData = new System.Windows.Forms.CheckBox();
             this.grpDataDispMode = new System.Windows.Forms.GroupBox();
             this.txtDispCount = new quickDBExplorer.quickDBExplorerTextBox();
@@ -510,7 +529,7 @@ namespace quickDBExplorer.Forms
             this.conditionSplitter = new System.Windows.Forms.SplitContainer();
             this.conditionSplitter2 = new System.Windows.Forms.SplitContainer();
             this.UpDownSplitter = new System.Windows.Forms.SplitContainer();
-            this.btnResetWidth = new System.Windows.Forms.Button();
+            this.btnColRow = new System.Windows.Forms.Button();
             this.dbMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuTimeoutChange = new System.Windows.Forms.ToolStripMenuItem();
             this.DBReloadMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -716,6 +735,8 @@ namespace quickDBExplorer.Forms
             this.txtWhere.IsShowZoom = true;
             this.txtWhere.Location = new System.Drawing.Point(72, 314);
             this.txtWhere.Name = "txtWhere";
+            this.txtWhere.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtWhere.PlaceholderText = null;
             this.txtWhere.Size = new System.Drawing.Size(144, 19);
             this.txtWhere.TabIndex = 11;
             this.txtWhere.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtWhere_ShowHistory);
@@ -734,6 +755,8 @@ namespace quickDBExplorer.Forms
             this.txtSort.IsShowZoom = true;
             this.txtSort.Location = new System.Drawing.Point(72, 342);
             this.txtSort.Name = "txtSort";
+            this.txtSort.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtSort.PlaceholderText = null;
             this.txtSort.Size = new System.Drawing.Size(144, 19);
             this.txtSort.TabIndex = 14;
             this.txtSort.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtSort_ShowHistory);
@@ -795,96 +818,21 @@ namespace quickDBExplorer.Forms
             // 
             // dbGrid
             // 
-            this.dbGrid.AlternatingBackColor = System.Drawing.Color.Silver;
+            this.dbGrid.AllowUserToOrderColumns = true;
             this.dbGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dbGrid.BackColor = System.Drawing.Color.White;
-            this.dbGrid.CaptionBackColor = System.Drawing.Color.Gainsboro;
-            this.dbGrid.CaptionFont = new System.Drawing.Font("Tahoma", 8F);
-            this.dbGrid.CaptionForeColor = System.Drawing.Color.White;
-            this.dbGrid.CaptionVisible = false;
-            this.dbGrid.ContextMenu = this.dbGridMenu;
-            this.dbGrid.DataMember = "";
+            this.dbGrid.ColumnHeadersHeight = 17;
+            this.dbGrid.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dbGrid.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.dbGrid.ForeColor = System.Drawing.Color.Black;
-            this.dbGrid.GridLineColor = System.Drawing.Color.Silver;
-            this.dbGrid.HeaderBackColor = System.Drawing.Color.Silver;
-            this.dbGrid.HeaderFont = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dbGrid.HeaderForeColor = System.Drawing.Color.Black;
-            this.dbGrid.LinkColor = System.Drawing.Color.Maroon;
             this.dbGrid.Location = new System.Drawing.Point(4, 64);
             this.dbGrid.Name = "dbGrid";
-            this.dbGrid.ParentRowsBackColor = System.Drawing.Color.Silver;
-            this.dbGrid.ParentRowsForeColor = System.Drawing.Color.Black;
-            this.dbGrid.RowHeaderWidth = 40;
-            this.dbGrid.SelectionBackColor = System.Drawing.Color.Maroon;
-            this.dbGrid.SelectionForeColor = System.Drawing.Color.White;
+            this.dbGrid.RowHeadersWidth = 40;
+            this.dbGrid.ServerData = null;
+            this.dbGrid.ShowCellToolTips = false;
             this.dbGrid.Size = new System.Drawing.Size(764, 240);
             this.dbGrid.TabIndex = 42;
-            this.dbGrid.Paint += new System.Windows.Forms.PaintEventHandler(this.dbGrid_Paint);
-            this.dbGrid.Leave += new System.EventHandler(this.dbGrid_Leave);
-            // 
-            // dbGridMenu
-            // 
-            this.dbGridMenu.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.copyDbGridMenu,
-            this.copySelectedDbGridMenu,
-            this.allSelectDbGridMenu,
-            this.allUnSelectDbGridMenu,
-            this.readCsvDbGridMenu,
-            this.readCsvDQDbGridMenu,
-            this.readTsvDbGridMenu,
-            this.readTsvDQDbGridMenu});
-            this.dbGridMenu.Popup += new System.EventHandler(this.dbGridMenu_Popup);
-            // 
-            // copyDbGridMenu
-            // 
-            this.copyDbGridMenu.Index = 0;
-            this.copyDbGridMenu.Text = "全ての行をクリップボードにコピー";
-            this.copyDbGridMenu.Click += new System.EventHandler(this.copyDbGridMenu_Click);
-            // 
-            // copySelectedDbGridMenu
-            // 
-            this.copySelectedDbGridMenu.Index = 1;
-            this.copySelectedDbGridMenu.Text = "選択行のみクリップボードにコピー";
-            this.copySelectedDbGridMenu.Click += new System.EventHandler(this.copySelectedDbGridMenu_Click);
-            // 
-            // allSelectDbGridMenu
-            // 
-            this.allSelectDbGridMenu.Index = 2;
-            this.allSelectDbGridMenu.Text = "全行選択";
-            this.allSelectDbGridMenu.Click += new System.EventHandler(this.allSelectDbGridMenu_Click);
-            // 
-            // allUnSelectDbGridMenu
-            // 
-            this.allUnSelectDbGridMenu.Index = 3;
-            this.allUnSelectDbGridMenu.Text = "全行選択解除";
-            this.allUnSelectDbGridMenu.Click += new System.EventHandler(this.allUnSelectDbGridMenu_Click);
-            // 
-            // readCsvDbGridMenu
-            // 
-            this.readCsvDbGridMenu.Index = 4;
-            this.readCsvDbGridMenu.Text = "データ取込(CSV)";
-            this.readCsvDbGridMenu.Click += new System.EventHandler(this.readCsvDbGridMenu_Click);
-            // 
-            // readCsvDQDbGridMenu
-            // 
-            this.readCsvDQDbGridMenu.Index = 5;
-            this.readCsvDQDbGridMenu.Text = "データ取込(CSV)(\"付き)";
-            this.readCsvDQDbGridMenu.Click += new System.EventHandler(this.readCsvDQDbGridMenu_Click);
-            // 
-            // readTsvDbGridMenu
-            // 
-            this.readTsvDbGridMenu.Index = 6;
-            this.readTsvDbGridMenu.Text = "データ取込(TAB)";
-            this.readTsvDbGridMenu.Click += new System.EventHandler(this.readTsvDbGridMenu_Click);
-            // 
-            // readTsvDQDbGridMenu
-            // 
-            this.readTsvDQDbGridMenu.Index = 7;
-            this.readTsvDQDbGridMenu.Text = "データ取込(TAB)(\"付き)";
-            this.readTsvDQDbGridMenu.Click += new System.EventHandler(this.readTsvDQDbGridMenu_Click);
+            this.dbGrid.TableName = null;
             // 
             // chkDispData
             // 
@@ -920,6 +868,8 @@ namespace quickDBExplorer.Forms
             this.txtDispCount.Location = new System.Drawing.Point(132, 16);
             this.txtDispCount.MaxLength = 300;
             this.txtDispCount.Name = "txtDispCount";
+            this.txtDispCount.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtDispCount.PlaceholderText = null;
             this.txtDispCount.Size = new System.Drawing.Size(72, 19);
             this.txtDispCount.TabIndex = 1;
             this.txtDispCount.Text = "1000";
@@ -1001,6 +951,8 @@ namespace quickDBExplorer.Forms
             this.txtOutput.IsShowZoom = false;
             this.txtOutput.Location = new System.Drawing.Point(8, 55);
             this.txtOutput.Name = "txtOutput";
+            this.txtOutput.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtOutput.PlaceholderText = null;
             this.txtOutput.Size = new System.Drawing.Size(160, 19);
             this.txtOutput.TabIndex = 3;
             this.txtOutput.TextChanged += new System.EventHandler(this.txtOutput_TextChanged);
@@ -1063,7 +1015,7 @@ namespace quickDBExplorer.Forms
             this.fieldListbox.Location = new System.Drawing.Point(1, 26);
             this.fieldListbox.Name = "fieldListbox";
             this.fieldListbox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.fieldListbox.Size = new System.Drawing.Size(292, 292);
+            this.fieldListbox.Size = new System.Drawing.Size(289, 292);
             this.fieldListbox.TabIndex = 35;
             this.fieldListbox.CopyData += new quickDBExplorer.CopyDataEventHandler(this.fieldListbox_CopyData);
             this.fieldListbox.ExtendedCopyData += new quickDBExplorer.ExtendedCopyDataEventHandler(this.fieldListbox_ExtendedCopyData);
@@ -1130,30 +1082,27 @@ namespace quickDBExplorer.Forms
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(8, 44);
+            this.label9.Location = new System.Drawing.Point(8, 43);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(280, 16);
+            this.label9.Size = new System.Drawing.Size(388, 17);
             this.label9.TabIndex = 37;
-            this.label9.Text = "複数行にわたる文字列はとき色(ピンク)に着色されます。";
-            this.commTooltip.SetToolTip(this.label9, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
+            this.label9.Text = "背景色   NULL⇒水色  複数行⇒とき色(ピンク)　バイナリ⇒コバルトグリーン";
             // 
             // label7
             // 
-            this.label7.Location = new System.Drawing.Point(8, 8);
+            this.label7.Location = new System.Drawing.Point(8, 7);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(368, 16);
+            this.label7.Size = new System.Drawing.Size(440, 16);
             this.label7.TabIndex = 35;
-            this.label7.Text = "見出しに★がある列はNULL可です。NULLのセルは水色に着色されます。";
-            this.commTooltip.SetToolTip(this.label7, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
+            this.label7.Text = "見出し　  ★⇒NULL可  ※⇒PK";
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(8, 24);
+            this.label8.Location = new System.Drawing.Point(8, 25);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(500, 16);
             this.label8.TabIndex = 36;
-            this.label8.Text = "NULLを入力するにはCtrl+1 を、空文字列を入力するにはCtrl+2を押下します。Ctrl+3で値拡大表示。";
-            this.commTooltip.SetToolTip(this.label8, "セル背景色: 水色 ⇒ NULL値 : とき色(ピンク) ⇒ 複数行にわたる文字列 : コバルトグリーン ⇒ バイナリデータ");
+            this.label8.Text = "入力　　　Ctrl+1 ⇒ NULL　Ctrl+2 ⇒ 空文字列　Ctrl+3 ⇒ 値拡大表示";
             // 
             // grpCharaSet
             // 
@@ -1236,7 +1185,7 @@ namespace quickDBExplorer.Forms
             // btnGridFormat
             // 
             this.btnGridFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnGridFormat.Location = new System.Drawing.Point(609, 16);
+            this.btnGridFormat.Location = new System.Drawing.Point(609, 17);
             this.btnGridFormat.Name = "btnGridFormat";
             this.btnGridFormat.Size = new System.Drawing.Size(156, 20);
             this.btnGridFormat.TabIndex = 40;
@@ -1270,7 +1219,7 @@ namespace quickDBExplorer.Forms
             this.btnTmpAllDisp.Name = "btnTmpAllDisp";
             this.btnTmpAllDisp.Size = new System.Drawing.Size(156, 20);
             this.btnTmpAllDisp.TabIndex = 41;
-            this.btnTmpAllDisp.Text = "一時的に全データを表示(&A)";
+            this.btnTmpAllDisp.Text = "一時的に全データを表示(&C)";
             this.btnTmpAllDisp.Click += new System.EventHandler(this.btnTmpAllDisp_Click);
             // 
             // btnEtc
@@ -1340,6 +1289,8 @@ namespace quickDBExplorer.Forms
             this.txtAlias.IsShowZoom = true;
             this.txtAlias.Location = new System.Drawing.Point(72, 366);
             this.txtAlias.Name = "txtAlias";
+            this.txtAlias.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtAlias.PlaceholderText = null;
             this.txtAlias.Size = new System.Drawing.Size(165, 19);
             this.txtAlias.TabIndex = 17;
             this.commTooltip.SetToolTip(this.txtAlias, "選択したオブジェクトに別名(Alias)をつけることができます");
@@ -1374,15 +1325,17 @@ namespace quickDBExplorer.Forms
             this.ObjFieldSplitter.Panel1.Controls.Add(this.btnIndex);
             this.ObjFieldSplitter.Panel1.Controls.Add(this.btnDataUpdate);
             this.ObjFieldSplitter.Panel1.Controls.Add(this.btnDataEdit);
+            this.ObjFieldSplitter.Panel1MinSize = 100;
             // 
             // ObjFieldSplitter.Panel2
             // 
             this.ObjFieldSplitter.Panel2.AutoScroll = true;
             this.ObjFieldSplitter.Panel2.Controls.Add(this.chkDispFieldAttr);
             this.ObjFieldSplitter.Panel2.Controls.Add(this.fieldListbox);
+            this.ObjFieldSplitter.Panel2MinSize = 100;
             this.ObjFieldSplitter.Size = new System.Drawing.Size(779, 340);
             this.ObjFieldSplitter.SplitterDistance = 480;
-            this.ObjFieldSplitter.SplitterWidth = 2;
+            this.ObjFieldSplitter.SplitterWidth = 5;
             this.ObjFieldSplitter.TabIndex = 19;
             // 
             // labelFilter
@@ -1406,6 +1359,8 @@ namespace quickDBExplorer.Forms
             this.txtObjFilter.IsShowZoom = false;
             this.txtObjFilter.Location = new System.Drawing.Point(319, 3);
             this.txtObjFilter.Name = "txtObjFilter";
+            this.txtObjFilter.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtObjFilter.PlaceholderText = "(部分一致)";
             this.txtObjFilter.Size = new System.Drawing.Size(153, 19);
             this.txtObjFilter.TabIndex = 22;
             this.txtObjFilter.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtObjFilter_ShowHistory);
@@ -1506,7 +1461,7 @@ namespace quickDBExplorer.Forms
             // UpDownSplitter.Panel2
             // 
             this.UpDownSplitter.Panel2.AutoScroll = true;
-            this.UpDownSplitter.Panel2.Controls.Add(this.btnResetWidth);
+            this.UpDownSplitter.Panel2.Controls.Add(this.btnColRow);
             this.UpDownSplitter.Panel2.Controls.Add(this.dbGrid);
             this.UpDownSplitter.Panel2.Controls.Add(this.label9);
             this.UpDownSplitter.Panel2.Controls.Add(this.btnGridFormat);
@@ -1519,15 +1474,14 @@ namespace quickDBExplorer.Forms
             this.UpDownSplitter.SplitterWidth = 2;
             this.UpDownSplitter.TabIndex = 0;
             // 
-            // btnResetWidth
+            // btnColRow
             // 
-            this.btnResetWidth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnResetWidth.Location = new System.Drawing.Point(383, 40);
-            this.btnResetWidth.Name = "btnResetWidth";
-            this.btnResetWidth.Size = new System.Drawing.Size(108, 20);
-            this.btnResetWidth.TabIndex = 38;
-            this.btnResetWidth.Text = "列幅初期化(&M)";
-            this.btnResetWidth.Click += new System.EventHandler(this.btnResetWidth_Click);
+            this.btnColRow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnColRow.Location = new System.Drawing.Point(497, 17);
+            this.btnColRow.Name = "btnColRow";
+            this.btnColRow.Size = new System.Drawing.Size(108, 20);
+            this.btnColRow.TabIndex = 38;
+            this.btnColRow.Text = "行列サイズ(&M)";
             // 
             // dbMenu
             // 
@@ -1595,7 +1549,9 @@ namespace quickDBExplorer.Forms
             this.ShowInTaskbar = false;
             this.Text = "Database選択";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Activated += new System.EventHandler(this.MainForm_Activated);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
+            this.Deactivate += new System.EventHandler(this.MainForm_Deactivate);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.Controls.SetChildIndex(this.MsgArea, 0);
@@ -1633,11 +1589,9 @@ namespace quickDBExplorer.Forms
 		}
 
 
+        #endregion
 
-
-		#endregion
-
-		#region ボタンメニュー関連処理
+        #region ボタンメニュー関連処理
 #if false
 		// 現在未使用
 		private void DispButtonMenu(object sender, System.EventArgs e, MenuItem[] list)
@@ -1663,10 +1617,10 @@ namespace quickDBExplorer.Forms
 		}
 #endif
 
-		/// <summary>
-		/// ポップアップ系メニューを初期化する
-		/// </summary>
-		public	void	InitPopupMenu()
+        /// <summary>
+        /// ポップアップ系メニューを初期化する
+        /// </summary>
+        public	void	InitPopupMenu()
         {
             List<qdbeMenuItem> menuAr = SetInitPopupMenu();
 
@@ -1704,40 +1658,36 @@ namespace quickDBExplorer.Forms
 
         private void SetButtonPopup(List<qdbeMenuItem> menuAr)
         {
-            List<Control> btnAr = new List<Control>();
-            btnAr.Add(this.btnCSV);
-            btnAr.Add(this.btnDDL);
-            btnAr.Add(this.btnEtc);
-            btnAr.Add(this.btnFieldList);
-            btnAr.Add(this.btnInsert);
+			var ar = menuAr.Select(x => x.CallBtnName).Distinct();
 
-            foreach (Button btn in btnAr)
+			foreach (string btn in ar)
             {
                 ContextMenu btnMenu = new ContextMenu();
                 int i = 0;
                 int j = 0;
 
-                foreach (qdbeMenuItem itm in menuAr)
+                foreach (qdbeMenuItem itm in menuAr.Where(x=>x.CallBtnName== btn))
                 {
-                    if (itm.CallBtnName == btn.Name)
+                    if (itm.IsSeparater == true)
                     {
-                        if (itm.IsSeparater == true)
-                        {
-                            btnMenu.MenuItems.Add(itm.CreateMenuItem(i, 0));
-                        }
-                        else
-                        {
-                            btnMenu.MenuItems.Add(itm.CreateMenuItem(i, j + 1));
-                            j++;
-                        }
-                        i++;
+                        btnMenu.MenuItems.Add(itm.CreateMenuItem(i, 0));
                     }
+                    else
+                    {
+                        btnMenu.MenuItems.Add(itm.CreateMenuItem(i, j + 1));
+                        j++;
+                    }
+                    i++;
                 }
-                if (btnMenu.MenuItems.Count > 0)
+                if (btnMenu.MenuItems.Count > 0 && btn != null)
                 {
-                    btn.Tag = btnMenu;
-                    btn.Click += new EventHandler(btn_Click);
-                }
+					Control con = this.Controls.Find(btn, true).FirstOrDefault();
+					if (con != null)
+					{
+						con.Tag = btnMenu;
+						con.Click += new EventHandler(btn_Click);
+					}
+				}
             }
         }
 
@@ -1815,7 +1765,14 @@ namespace quickDBExplorer.Forms
             menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "各種コマンド実行", new EventHandler(this.menuDoQuery_Click)));
             menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "オブジェクト情報表示", new EventHandler(this.DispObjectInfo)));
             menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "オブジェクト検索", new EventHandler(this.ObjectSearch)));
-            return menuAr;
+
+
+			menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "列幅-初期化", new EventHandler(this.ResetWidth2Default)));
+			menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "列幅-全表示", new EventHandler(this.SetWidth2Full)));
+			menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "行高-初期化", new EventHandler(this.ResetHeight2Default)));
+			menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "全初期化", new EventHandler(this.ResetWidthHeight2Defalt)));
+
+			return menuAr;
         }
 
 		private void btn_Click(object sender, EventArgs e)
@@ -2076,6 +2033,7 @@ namespace quickDBExplorer.Forms
 				this.rdoSortOwnerTable.Text = this.SqlDriver.GetOwnerLabel2();
 				//this.ColObjName.Text = this.SqlDriver.GetTableListColumnName();
 
+
 				this.Text = pServerName;
 
 				// DB一覧の表示を実行
@@ -2087,6 +2045,7 @@ namespace quickDBExplorer.Forms
 			}
             LoadInitialSetting();
 		}
+
 
         private void LoadInitialSetting()
         {
@@ -2156,8 +2115,7 @@ namespace quickDBExplorer.Forms
                     }
                 }
             }
-            this.dbGrid.Font = this.svdata.GridSetting.GridFont;
-            this.dbGrid.ForeColor = this.svdata.GridSetting.GridForeColor;
+			this.dbGrid.SetDisplayFont(this.svdata.GridSetting);
 
             // ボタンの表示色を記憶しておく
             this.btnBackColor = this.btnDataEdit.BackColor;
@@ -2180,6 +2138,9 @@ namespace quickDBExplorer.Forms
                 this.dbList.Items.Add(row["name"]);
             }
         }
+
+
+
 
 		private void MainForm_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
@@ -2735,7 +2696,7 @@ namespace quickDBExplorer.Forms
 				
 				this.saveFileDialog1.CreatePrompt = true;
 				this.saveFileDialog1.Filter = "SQL|*.sql|csv|*.csv|txt|*.txt|全て|*.*";
-				DialogResult ret = this.saveFileDialog1.ShowDialog();
+				DialogResult ret = this.saveFileDialog1.ShowDialog(this);
 				if( ret == DialogResult.OK )
 				{
 					this.txtOutput.Text = this.saveFileDialog1.FileName;
@@ -2771,7 +2732,7 @@ namespace quickDBExplorer.Forms
 				}
 				
 				this.folderBrowserDialog1.ShowNewFolderButton = true;
-				DialogResult ret = this.folderBrowserDialog1.ShowDialog();
+				DialogResult ret = this.folderBrowserDialog1.ShowDialog(this);
 				if( ret == DialogResult.OK )
 				{
 					this.txtOutput.Text = this.folderBrowserDialog1.SelectedPath;
@@ -2810,9 +2771,10 @@ namespace quickDBExplorer.Forms
 			{
 				this.InitErrMessage();
 
-				this.dbGrid.EndEdit(this.dbGrid.TableStyles[0].GridColumnStyles[this.dbGrid.CurrentCell.ColumnNumber], this.dbGrid.CurrentCell.RowNumber, false);
+				this.dbGrid.EndEdit();
+				//this.dbGrid.EndEdit(this.dbGrid.TableStyles[0].GridColumnStyles[this.dbGrid.CurrentCell.ColumnNumber], this.dbGrid.CurrentCell.RowNumber, false);
 
-                if (this.dspdt.EnforceConstraints == false)
+				if (this.dspdt.EnforceConstraints == false)
                 {
                     try
                     {
@@ -2870,7 +2832,7 @@ namespace quickDBExplorer.Forms
 					da.Update(dspdt, dspdt.Tables[0].TableName);
 					tran.Commit();
 
-					this.dbGrid.SetDataBinding(dspdt, dspdt.Tables[0].TableName);
+					this.dbGrid.DataSource = dspdt.Tables[0];
 				}
 			}
 			catch (System.Data.DBConcurrencyException exp)
@@ -2903,7 +2865,7 @@ namespace quickDBExplorer.Forms
 				if( this.dbGrid.ReadOnly == true )
 				{
 					// 編集可にする
-					this.dbGrid.ReadOnly = false;
+					this.dbGrid.SetReadOnly(false);
 					this.btnDataEdit.Text = "データ編集終了(&T)";
 					this.btnDataEdit.ForeColor = Color.WhiteSmoke;
 					this.btnDataEdit.BackColor = Color.Navy;
@@ -2914,7 +2876,7 @@ namespace quickDBExplorer.Forms
 					if( this.dspdt.Tables[0].GetChanges() == null ||
 						this.dspdt.Tables[0].GetChanges().Rows.Count == 0 )
 					{
-						this.dbGrid.ReadOnly = true;
+						this.dbGrid.SetReadOnly(true);
 						this.btnDataEdit.Text = "データ編集(&T)";
 						this.btnDataEdit.BackColor = this.btnBackColor;
 						this.btnDataEdit.ForeColor = this.btnForeColor;
@@ -2925,9 +2887,9 @@ namespace quickDBExplorer.Forms
 						if( MessageBox.Show("変更を破棄してもよろしいですか?","",MessageBoxButtons.YesNo) == DialogResult.Yes )
 						{
 							this.dspdt.Tables[0].RejectChanges();
-							this.dbGrid.SetDataBinding(dspdt, dspdt.Tables[0].TableName);
+							this.dbGrid.DataSource = dspdt.Tables[0];
 							this.dbGrid.Show();
-							this.dbGrid.ReadOnly = true;
+							this.dbGrid.SetReadOnly(true);
 							this.btnDataEdit.Text = "データ編集(&T)";
 							this.btnDataEdit.BackColor = this.btnBackColor;
 							this.btnDataEdit.ForeColor = this.btnForeColor;
@@ -2941,116 +2903,115 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
-		private void dbGrid_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-		{
-			if( this.dspdt == null ||
-				this.dspdt.Tables.Count == 0 ||
-				this.dspdt.Tables[0].Rows.Count == 0 )
-			{
-				return;
-			}
+		//private void dbGrid_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
+		//{
+		//	if( this.dspdt == null ||
+		//		this.dspdt.Tables.Count == 0 ||
+		//		this.dspdt.Tables[0].Rows.Count == 0 )
+		//	{
+		//		return;
+		//	}
 
-			int row=0;
-			int yDelta = 0;
+		//	int row=0;
+		//	int yDelta = 0;
 
-			int headerHeight = this.dbGrid.PreferredRowHeight + 3;
+		//	int headerHeight = this.dbGrid.PreferredSize.Height + 3;
 
-			CurrencyManager cm = (CurrencyManager) this.BindingContext[dbGrid.DataSource, dbGrid.DataMember];
-			int dispRow = 0;
-			Rectangle rect = Rectangle.Empty;
+		//	CurrencyManager cm = (CurrencyManager) this.BindingContext[dbGrid.DataSource, dbGrid.DataMember];
+		//	int dispRow = 0;
+		//	Rectangle rect = Rectangle.Empty;
 
 
-			int firstCheckHeight = this.dbGrid.PreferredRowHeight * 2;
-			int firstCheckCol = this.dbGrid.RowHeaderWidth + 3;
+		//	int firstCheckHeight = this.dbGrid.PreferredSize.Height * 2;
+		//	int firstCheckCol = this.dbGrid.RowHeadersWidth + 3;
 
-			DataGrid.HitTestInfo hinfo = null;
-			bool isFound = false;
-			while( firstCheckHeight > 0 && isFound == false)
-			{
-				hinfo = this.dbGrid.HitTest(firstCheckCol,firstCheckHeight);
-				switch( hinfo.Type )
-				{
-					case(System.Windows.Forms.DataGrid.HitTestType.Cell):
-						isFound = true;
-						break;
+		//	DataGrid.HitTestInfo hinfo = null;
+		//	bool isFound = false;
+		//	while( firstCheckHeight > 0 && isFound == false)
+		//	{
+		//		hinfo = this.dbGrid.HitTest(firstCheckCol,firstCheckHeight);
+		//		switch( hinfo.Type )
+		//		{
+		//			case(System.Windows.Forms.DataGrid.HitTestType.Cell):
+		//				isFound = true;
+		//				break;
        
-					case(System.Windows.Forms.DataGrid.HitTestType.Caption):
-						break;
+		//			case(System.Windows.Forms.DataGrid.HitTestType.Caption):
+		//				break;
        
-					case(System.Windows.Forms.DataGrid.HitTestType.ColumnHeader):
-						firstCheckHeight++;
-						break;
+		//			case(System.Windows.Forms.DataGrid.HitTestType.ColumnHeader):
+		//				firstCheckHeight++;
+		//				break;
           
-					case(System.Windows.Forms.DataGrid.HitTestType.ColumnResize):
-						firstCheckHeight++;
-						break;
+		//			case(System.Windows.Forms.DataGrid.HitTestType.ColumnResize):
+		//				firstCheckHeight++;
+		//				break;
           
-					case(System.Windows.Forms.DataGrid.HitTestType.ParentRows):
-						isFound = true;
-						break;
+		//			case(System.Windows.Forms.DataGrid.HitTestType.ParentRows):
+		//				isFound = true;
+		//				break;
           
-					case(System.Windows.Forms.DataGrid.HitTestType.RowHeader):
-						firstCheckHeight++;
-						break;
+		//			case(System.Windows.Forms.DataGrid.HitTestType.RowHeader):
+		//				firstCheckHeight++;
+		//				break;
           
-					case(System.Windows.Forms.DataGrid.HitTestType.RowResize):
-						firstCheckHeight++;
-						break;
+		//			case(System.Windows.Forms.DataGrid.HitTestType.RowResize):
+		//				firstCheckHeight++;
+		//				break;
           
-					case(System.Windows.Forms.DataGrid.HitTestType.None):
-						isFound = true;
-						break;
+		//			case(System.Windows.Forms.DataGrid.HitTestType.None):
+		//				isFound = true;
+		//				break;
 
-					default:
-						break;
-				}
-			}
+		//			default:
+		//				break;
+		//		}
+		//	}
 
-			// 最初に表示される可能性のある行を探し出す
-			row = hinfo.Row;
-			if( row < 0 )
-			{
-				row = 0;
-			}
-			else
-			{
-				for(;row > 0; row-- )
-				{
-					rect = dbGrid.GetCellBounds(row, 0);
-					if( rect.Top < 0 )
-					{
-						break;
-					}
-				}
-			}
+		//	// 最初に表示される可能性のある行を探し出す
+		//	row = hinfo.Row;
+		//	if( row < 0 )
+		//	{
+		//		row = 0;
+		//	}
+		//	else
+		//	{
+		//		for(;row > 0; row-- )
+		//		{
+		//			rect = dbGrid.GetCellBounds(row, 0);
+		//			if( rect.Top < 0 )
+		//			{
+		//				break;
+		//			}
+		//		}
+		//	}
 
-			while(row < cm.Count && yDelta < this.dbGrid.Height)
-			{
-				rect = dbGrid.GetCellBounds(row, 0);
-				if( ( rect.Top + 1 ) <= headerHeight )
-				{
-					row++;
-					continue;
-				}
-				//get & draw the header text...
-				yDelta = dbGrid.GetCellBounds(row, 0).Top;
-				string text = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}", row+1);
-				e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 10, yDelta+2);
-				row++;
-				dispRow++;
-			}
-		}
+		//	while(row < cm.Count && yDelta < this.dbGrid.Height)
+		//	{
+		//		rect = dbGrid.GetCellBounds(row, 0);
+		//		if( ( rect.Top + 1 ) <= headerHeight )
+		//		{
+		//			row++;
+		//			continue;
+		//		}
+		//		//get & draw the header text...
+		//		yDelta = dbGrid.GetCellBounds(row, 0).Top;
+		//		string text = string.Format(System.Globalization.CultureInfo.CurrentCulture,"{0}", row+1);
+		//		e.Graphics.DrawString(text, dbGrid.Font, new SolidBrush(Color.Black), 10, yDelta+2);
+		//		row++;
+		//		dispRow++;
+		//	}
+		//}
 
 		private void btnGridFormat_Click(object sender, System.EventArgs e)
 		{
 			GridFormatDialog dlg = new GridFormatDialog();
             dlg.Option = this.svdata.GridSetting;
 			
-			if( dlg.ShowDialog() == DialogResult.OK )
+			if( dlg.ShowDialog(this) == DialogResult.OK )
 			{
                 this.svdata.GridSetting = dlg.Option;
-				this.dbGrid.Font = this.svdata.GridSetting.GridFont;
-				this.dbGrid.ForeColor = this.svdata.GridSetting.GridForeColor;
+				this.dbGrid.SetDisplayFont(this.svdata.GridSetting);
 			}
 		}
 
@@ -3362,7 +3323,7 @@ namespace quickDBExplorer.Forms
 		{
 			TableSelectDialog dlg = new TableSelectDialog();
 			dlg.ResultStr = tableList;
-			if( dlg.ShowDialog() == DialogResult.OK && dlg.ResultStr != "")
+			if( dlg.ShowDialog(this) == DialogResult.OK && dlg.ResultStr != "")
 			{
 				string tabs = dlg.ResultStr;
 				string []objectLists = tabs.Replace("\r\n","\r").Split("\r\n".ToCharArray());
@@ -3986,7 +3947,7 @@ namespace quickDBExplorer.Forms
 				else
 				{
 					DataGridViewBase dlg = new DataGridViewBase(rcdt,"データ件数");
-					dlg.ShowDialog();
+					dlg.ShowDialog(this);
 				}
 			}
 			catch ( System.Data.SqlClient.SqlException se )
@@ -4015,159 +3976,7 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
-		/// <summary>
-		/// すべての行をクリップボードにコピーする
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void copyDbGridMenu_Click(object sender, System.EventArgs e)
-		{
-			copyDbGrid(false);
-		}
 
-		/// <summary>
-		/// 選択行のみクリップボードにコピーする
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void copySelectedDbGridMenu_Click(object sender, System.EventArgs e)
-		{
-			copyDbGrid(true);
-		}
-
-		/// <summary>
-		/// 選択行のみクリップボードにコピーする
-		/// </summary>
-		/// <param name="isSelectOnly">選択行のみコピーするか否か</param>
-		private void copyDbGrid(bool isSelectOnly)
-		{
-			if( this.dbGrid.Visible == false )
-			{
-				return;
-			}
-			if( this.dbGrid.DataSource == null )
-			{
-				return;
-			}
-			DataTable dt = null;
-			if( this.dbGrid.DataSource is DataSet )
-			{
-				dt = ((DataSet)this.dbGrid.DataSource).Tables[0];
-			}
-			else if( this.dbGrid.DataSource is DataTable )
-			{
-				dt = (DataTable)this.dbGrid.DataSource;
-			}
-			if( dt == null ||
-				dt.Rows.Count == 0 )
-			{
-				return;
-			}
-			StringBuilder strline = new StringBuilder();
-			StringWriter wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
-			// header 
-			int cnt = 0;
-			foreach( DataColumn col in dt.Columns )
-			{
-				if( cnt != 0 )
-				{
-					wr.Write("\t");
-				}
-				wr.Write(col.ColumnName);
-				cnt++;
-			}
-			wr.Write(wr.NewLine);
-
-			CurrencyManager cm = (CurrencyManager) this.BindingContext[this.dbGrid.DataSource, this.dbGrid.DataMember];
-
-			for( int y = 0; y < cm.Count; y++ )
-			{
-				if( isSelectOnly == true &&
-					this.dbGrid.IsSelected(y) == false )
-				{
-					continue;
-				}
-				for( int x = 0; x < dt.Columns.Count; x++ )
-				{
-					if( x != 0 )
-					{
-						wr.Write("\t");
-					}
-					if( this.dbGrid[y,x] != DBNull.Value )
-					{
-						wr.Write(this.dbGrid[y,x].ToString());
-					}
-				}
-				wr.Write(wr.NewLine);
-			}
-			Clipboard.SetDataObject(strline.ToString(),true );
-			MessageBox.Show("処理を完了しました");
-		}
-
-		private void allSelectDbGridMenu_Click(object sender, System.EventArgs e)
-		{
-			if( this.dbGrid.Visible == false )
-			{
-				return;
-			}
-			if( this.dbGrid.DataSource == null )
-			{
-				return;
-			}
-			CurrencyManager cm = (CurrencyManager) this.BindingContext[this.dbGrid.DataSource, this.dbGrid.DataMember];
-			int maxCnt = cm.Count;
-			this.dbGrid.SuspendLayout();
-			for( int i = 0; i < maxCnt; i++ )
-			{
-				this.dbGrid.Select(i);
-			}
-			this.dbGrid.ResumeLayout();
-		}
-
-		private void allUnSelectDbGridMenu_Click(object sender, System.EventArgs e)
-		{
-			if( this.dbGrid.Visible == false )
-			{
-				return;
-			}
-			if( this.dbGrid.DataSource == null )
-			{
-				return;
-			}
-			CurrencyManager cm = (CurrencyManager) this.BindingContext[this.dbGrid.DataSource, this.dbGrid.DataMember];
-			int maxCnt = cm.Count;
-			this.dbGrid.SuspendLayout();
-			for( int i = 0; i < maxCnt; i++ )
-			{
-				this.dbGrid.UnSelect(i);
-			}
-			this.dbGrid.ResumeLayout();
-		}
-
-		/// <summary>
-		/// データグリッドへの CSVの取込
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void readCsvDbGridMenu_Click(object sender, System.EventArgs e)
-		{
-			this.LoadFile2Grid(true,false);
-		}
-
-		private void readTsvDbGridMenu_Click(object sender, System.EventArgs e)
-		{
-			this.LoadFile2Grid(false,false);
-		}
-
-		private void readCsvDQDbGridMenu_Click(object sender, System.EventArgs e)
-		{
-			this.LoadFile2Grid(true,true);
-		}
-
-		private void readTsvDQDbGridMenu_Click(object sender, System.EventArgs e)
-		{
-			this.LoadFile2Grid(false,true);
-		}
 
 
 		private void btnQuerySelect_Click(object sender, System.EventArgs e)
@@ -4179,7 +3988,7 @@ namespace quickDBExplorer.Forms
                 Sqldlg.Histories = this.Histories;
                 Sqldlg.HistoryKey = "selectHistory";
 
-				if( Sqldlg.ShowDialog() == DialogResult.OK )
+				if( Sqldlg.ShowDialog(this) == DialogResult.OK )
 				{
 					DbDataAdapter da = this.SqlDriver.NewDataAdapter();
 					IDbCommand cmd = this.SqlDriver.NewSqlCommand(Sqldlg.InputedText);
@@ -4193,49 +4002,15 @@ namespace quickDBExplorer.Forms
                     dspdt.EnforceConstraints = true;
 					da.Fill(dspdt,"aaaa");
 
-					//新しいDataGridTableStyleの作成
-					DataGridTableStyle ts = new DataGridTableStyle();
-					//マップ名を指定する
-					ts.MappingName = "aaaa";
-
                     this.lastDispdata = null;
 
                     this.dbgridTableName = Sqldlg.InputedText;
+					this.dbGrid.Columns.Clear();
 
-                    QdbeDataGridTextBoxColumn cs;
-					foreach( DataColumn col in dspdt.Tables[0].Columns )
-					{
-						//列スタイルにQdbeDataGridTextBoxColumnを使う
-						cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col, 
-							GetFormat(this.svdata.GridSetting.GridNumberFormat),
-							GetFormat(this.svdata.GridSetting.GridFloatFormat),
-							GetFormat(this.svdata.GridSetting.GridDateFormat),
-                            null
-							);
+					this.dbGrid.SetColumns(this.dbgridTableName, dspdt.Tables[0], this.svdata, null);
 
-                        if (this.svdata.PerTableColumnWidth.ContainsKey(this.dbgridTableName))
-                        {
-                            if (!string.IsNullOrEmpty(cs.MappingName))
-                            {
-                                if (this.svdata.PerTableColumnWidth[this.dbgridTableName].ContainsKey(cs.MappingName))
-                                {
-                                    cs.Width = this.svdata.PerTableColumnWidth[this.dbgridTableName][cs.MappingName];
-                                }
-                            }
-                        }
+					this.dbGrid.SetReadOnly(true);
 
-                        cs.WidthChanged += Cs_WidthChanged;
-
-						//DataGridTableStyleに追加する
-						ts.GridColumnStyles.Add(cs);
-					}
-
-					//オブジェクトスタイルをDataGridに追加する
-					this.dbGrid.TableStyles.Clear();
-					this.dbGrid.TableStyles.Add(ts);
-
-
-                    this.dbGrid.ReadOnly = true;
 					this.btnDataEdit.BackColor = this.btnBackColor;
 					this.btnDataEdit.ForeColor = this.btnForeColor;
 					this.btnTmpAllDisp.BackColor = this.btnBackColor;
@@ -4245,9 +4020,9 @@ namespace quickDBExplorer.Forms
 					this.btnDataEdit.Enabled = false;
 					this.btnGridFormat.Enabled = true;
 					this.chkDispData.Checked = true;
-					this.dbGrid.AllowSorting = true;
 					this.commTooltip.SetToolTip(this.dbGrid,Sqldlg.InputedText.Replace("\r\n"," ").Replace("\t"," "));
-					this.dbGrid.SetDataBinding(dspdt,dspdt.Tables[0].TableName);
+
+					this.dbGrid.DataSource=dspdt.Tables[0];
 					this.dbGrid.Tag = Sqldlg.InputedText;
 					this.dbGrid.Show();
 				}
@@ -4268,7 +4043,7 @@ namespace quickDBExplorer.Forms
                 Sqldlg2.Histories = this.Histories;
                 Sqldlg2.HistoryKey = "DMLHistory";
 
-				if( Sqldlg2.ShowDialog() == DialogResult.OK )
+				if( Sqldlg2.ShowDialog(this) == DialogResult.OK )
 				{
 					IDbCommand cm = this.SqlDriver.NewSqlCommand(Sqldlg2.InputedText);
 					tran = this.SqlDriver.SetTransaction(cm);
@@ -4376,7 +4151,7 @@ namespace quickDBExplorer.Forms
                 this.cmdDialog.Histories = this.Histories;
                 this.cmdDialog.HistoryKey = "cmdHistory";
 
-				if( cmdDialog.ShowDialog() == DialogResult.OK )
+				if( cmdDialog.ShowDialog(this) == DialogResult.OK )
 				{
 					DataSet	ds = new DataSet("retData");
 					ds.CaseSensitive = true;
@@ -4403,9 +4178,9 @@ namespace quickDBExplorer.Forms
 					}
 					if( cmdDialog.HasReturn == true )
 					{
-						this.dbGrid.SetDataBinding(ds,"retdata");
+						this.dbGrid.DataSource = ds.Tables["retdata"];
 						this.dbGrid.Show();
-						this.dbGrid.ReadOnly = true;
+						this.dbGrid.SetReadOnly(true);
 						this.btnDataEdit.Text = "データ編集(&T)";
 						this.btnDataEdit.BackColor = this.btnBackColor;
 						this.btnDataEdit.ForeColor = this.btnForeColor;
@@ -4455,7 +4230,7 @@ namespace quickDBExplorer.Forms
 				}
 
 				DataGridViewBase dlg = new DataGridViewBase(objTable,"オブジェクト情報");
-				dlg.ShowDialog();
+				dlg.ShowDialog(this);
 			}
 			catch( Exception se )
 			{
@@ -4479,7 +4254,7 @@ namespace quickDBExplorer.Forms
             dlg.IsViewShow = this.rdoDispView.Checked;
             dlg.ObjectSearchHistory = svdata.ObjectSearchHistory;
 
-            if( dlg.ShowDialog() == DialogResult.OK )
+            if( dlg.ShowDialog(this) == DialogResult.OK )
 			{
 				//ここまでは条件が入力されただけ
 
@@ -5631,15 +5406,12 @@ namespace quickDBExplorer.Forms
 				this.InitErrMessage();
 
 				// 編集中の可能性があるので、これをキャンセルする
-				DataGridCell curcell = this.dbGrid.CurrentCell;
-				//int rownum = curcell.RowNumber;
-				int colnum  = curcell.ColumnNumber;
-				DataSet ds = (DataSet)this.dbGrid.DataSource;
-				if( ds != null )
+				DataTable dt = (DataTable)this.dbGrid.DataSource;
+				if( dt != null )
 				{
-					if( ds.Tables[0].Rows.Count > 0 )
+					if( dt.Rows.Count > 0 )
 					{
-						((QdbeDataGridTextBoxColumn)this.dbGrid.TableStyles[0].GridColumnStyles[colnum]).CancelEdit();
+						this.dbGrid.CancelEdit();
 					}
 				}
 
@@ -5756,49 +5528,12 @@ namespace quickDBExplorer.Forms
 					this.btnTmpAllDisp.Enabled = false;
 				}
 
-				//新しいDataGridTableStyleの作成
-				DataGridTableStyle ts = new DataGridTableStyle();
-				//マップ名を指定する
-				ts.MappingName = "aaaa";
-
                 this.dbgridTableName = dboInfo.FormalName;
+				this.dbGrid.Columns.Clear();
 
-                QdbeDataGridTextBoxColumn cs;
-				foreach( DataColumn col in dspdt.Tables[0].Columns )
-				{
-                    
-					//列スタイルにQdbeDataGridTextBoxColumnを使う
-					cs = new QdbeDataGridTextBoxColumn(this.dbGrid,col, 
-						GetFormat(this.svdata.GridSetting.GridNumberFormat),
-						GetFormat(this.svdata.GridSetting.GridFloatFormat),
-						GetFormat(this.svdata.GridSetting.GridDateFormat),
-                        dboInfo == null ? null : dboInfo[col.ColumnName]
-						);
+				this.dbGrid.SetColumns(this.dbgridTableName, dspdt.Tables[0], this.svdata, dboInfo);
 
-                    if (!string.IsNullOrEmpty(cs.MappingName))
-                    {
-                        if (this.svdata.PerTableColumnWidth.ContainsKey(this.dbgridTableName))
-                        {
-                            if (this.svdata.PerTableColumnWidth[this.dbgridTableName].ContainsKey(cs.MappingName))
-                            {
-                                cs.Width = this.svdata.PerTableColumnWidth[this.dbgridTableName][cs.MappingName];
-                            }
-                        }
-                    }
-                    cs.WidthChanged += Cs_WidthChanged;
-					
-					//DataGridTableStyleに追加する
-					ts.GridColumnStyles.Add(cs);
-				}
-
-				//テーブルスタイルをDataGridに追加する
-				this.dbGrid.TableStyles.Clear();
-				this.dbGrid.TableStyles.Add(ts);
-
-
-
-				this.dbGrid.AllowSorting = true;
-				this.dbGrid.SetDataBinding(dspdt, dspdt.Tables[0].TableName);
+				this.dbGrid.DataSource = dspdt.Tables[0];
 				if (usePreSql == false)
 				{
 					this.commTooltip.SetToolTip(this.dbGrid, stSqlDisp);
@@ -5818,6 +5553,7 @@ namespace quickDBExplorer.Forms
 					this.btnDataEdit.Enabled = true;
 				}
 				this.dbGrid.ReadOnly = true;
+				this.dbGrid.AllowUserToAddRows = false;
 				this.btnDataEdit.BackColor = this.btnBackColor;
 				this.btnDataEdit.ForeColor = this.btnForeColor;
 				this.btnTmpAllDisp.BackColor = this.btnBackColor;
@@ -5830,18 +5566,6 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
-        private void Cs_WidthChanged(object sender, EventArgs e)
-        {
-            QdbeDataGridTextBoxColumn col = (QdbeDataGridTextBoxColumn)sender;
-            if (!string.IsNullOrEmpty(col.MappingName))
-            {
-                if (!this.svdata.PerTableColumnWidth.ContainsKey(this.dbgridTableName))
-                {
-                    this.svdata.PerTableColumnWidth[this.dbgridTableName] = new Dictionary<string, int>();
-                }
-                this.svdata.PerTableColumnWidth[this.dbgridTableName][col.MappingName] = col.Width;
-            }
-        }
 
         protected bool SetPoolingError(System.Data.SqlClient.SqlException se)
         {
@@ -5926,6 +5650,12 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
+
+		private void DbGrid_LoadData(object sender, Controls.qdbeLoadDataEventArgs e)
+		{
+			LoadFile2Data(e.IsCSV, e.IsUseDQ);
+		}
+
 		/// <summary>
 		/// ファイルからデータを読み込みDBへ登録する
 		/// CSV,TSVの指定、また ”の利用を指定可能
@@ -6002,7 +5732,7 @@ namespace quickDBExplorer.Forms
                     else
                     {
                         quickDBExplorer.Forms.Dialog.EncodeSelector endlg = new quickDBExplorer.Forms.Dialog.EncodeSelector();
-                        if (endlg.ShowDialog() != DialogResult.OK)
+                        if (endlg.ShowDialog(this) != DialogResult.OK)
                         {
                             return;
                         }
@@ -6210,13 +5940,13 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
-
+#if true
 		/// <summary>
 		/// ファイルからデータを読み込み
 		/// CSV,TSVの指定、また ”の利用を指定可能
 		/// </summary>
-        /// <param name="targetDt">読込先のDataTable</param>
-        /// <param name="dbobj">データオブジェクトの情報</param>
+		/// <param name="targetDt">読込先のDataTable</param>
+		/// <param name="dbobj">データオブジェクトの情報</param>
 		/// <param name="wr">読み込むテキストのストリーム</param>
 		/// <param name="isCsv">true: CSVでの読み込み false : TSV での読み込み</param>
 		/// <param name="isUseDQ">文字列にダブルクォートをつけているか
@@ -6224,7 +5954,7 @@ namespace quickDBExplorer.Forms
 		/// <returns>読み込みに成功したか否か 成功した場合、その件数
 		/// 1以上 -- 成功した
 		/// 0以下 -- 何かしらの理由で失敗した</returns>
-        protected ArrayList LoadFile2DataTable(DataTable targetDt, DBObjectInfo dbobj, TextReader wr, bool isCsv, bool isUseDQ)
+		protected ArrayList LoadFile2DataTable(DataTable targetDt, DBObjectInfo dbobj, TextReader wr, bool isCsv, bool isUseDQ)
 		{
 			bool isSetAll = true;
 			int linecount = 0;
@@ -6235,17 +5965,6 @@ namespace quickDBExplorer.Forms
             {
                 // ファイルのチェックを実施する
 
-                string readstr = "";
-                string Separator = "";
-                if (isCsv == true)
-                {
-                    Separator = ",";
-                }
-                else
-                {
-                    Separator = "\t";
-                }
-
                 List<string> readData = new List<string>();
                 //ArrayList readData = new ArrayList();
 
@@ -6255,86 +5974,88 @@ namespace quickDBExplorer.Forms
                     // 一行読み飛ばし
                     isSkipFirstLine = true;
                 }
+				char Separator;
+				if (isCsv == true)
+				{
+					Separator = ',';
+				}
+				else
+				{
+					Separator = '\t';
+				}
 
-                for (; ; )
-                {
-                    readstr = wr.ReadLine();
-                    if (readstr == null)
-                    {
-                        break;
-                    }
-                    if (linecount == 0 && isSkipFirstLine == true)
-                    {
-                        // 先頭行は読み飛ばし
-                        linecount++;
-                        continue;
-                    }
-                    isSetAll = true;
-                    linecount++;
+				using (var csv = new CsvReader(wr, 
+					hasHeaders:isSkipFirstLine, 
+					delimiter: Separator,
+					quote: isUseDQ ? '"' : '\"'
+					))
+				{
+					csv.SupportsMultiline = true;
+					csv.SkipEmptyLines = true;
 
-                    string[] firstsplit = readstr.Split(Separator.ToCharArray());
-                    readData.Clear();
-                    if (!isUseDQ)
-                    {
-                        readData.AddRange(firstsplit);
-                    }
-                    else
-                    {
-                        // ダブルクォートが指定されている為、文字の途中で切れている可能性がある
-                        GetOneQuotedLine(readData, firstsplit);
-                    }
+					while(csv.ReadNextRecord())
+					{
+						if (csv.EndOfStream)
+						{
+							break;
+						}
 
-                    // 一行のデータが ar に配置されたので、dt と比較する
 
-                    if (readData.Count != targetDt.Columns.Count)
-                    {
-                        MessageBox.Show("項目数が違います 行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-                        isSetAll = false;
-                        break;
-                    }
+						isSetAll = true;
+						linecount++;
 
-                    if (targetDt.Columns.Count != dbobj.FieldCount)
-                    {
-                        MessageBox.Show("フィールド情報が古い可能性があります。オブジェクト情報再読込を行って下さい");
-                        isSetAll = false;
-                        break;
-                    }
+						// 一行のデータが ar に配置されたので、dt と比較する
 
-                    foreach (DBFieldInfo each in dbobj.FieldInfo)
-                    {
-                        if (!each.CanLoadData)
-                        {
-                            MessageBox.Show("読み込みに指定できません:列" + each.Name);
-                            isSetAll = false;
-                            break;
-                        }
-                    }
-                    if (isSetAll == false)
-                    {
-                        break;
-                    }
+						if (csv.FieldCount != targetDt.Columns.Count)
+						{
+							MessageBox.Show("項目数が違います 行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
+							isSetAll = false;
+							break;
+						}
 
-                    DataRow dr = targetDt.NewRow();
-                    foreach (DBFieldInfo eachField in dbobj.FieldInfo)
-                    {
-                        object parseResult = null;
-                        string errmsg = string.Empty;
-                        if (eachField.TryParse((string)readData[eachField.ColOrder-1], eachField, ref parseResult, ref errmsg) == false)
-                        {
-                            MessageBox.Show("項目 " + eachField.Name + ": "+ errmsg + "行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
-                            isSetAll = false;
-                            break;
-                        }
+						if (targetDt.Columns.Count != dbobj.FieldCount)
+						{
+							MessageBox.Show("フィールド情報が古い可能性があります。オブジェクト情報再読込を行って下さい");
+							isSetAll = false;
+							break;
+						}
 
-                        dr[eachField.Name] = parseResult;
+						foreach (DBFieldInfo each in dbobj.FieldInfo)
+						{
+							if (!each.CanLoadData)
+							{
+								MessageBox.Show("読み込みに指定できません:列" + each.Name);
+								isSetAll = false;
+								break;
+							}
+						}
+						if (isSetAll == false)
+						{
+							break;
+						}
 
-                    }
-                    if (isSetAll == false){
-                        break;
-                    }
-                    drAr.Add(dr);
-                }
-                if (linecount == 0)
+						DataRow dr = targetDt.NewRow();
+						foreach (DBFieldInfo eachField in dbobj.FieldInfo)
+						{
+							object parseResult = null;
+							string errmsg = string.Empty;
+							if (eachField.TryParse((string)csv[eachField.ColOrder - 1], eachField, ref parseResult, ref errmsg) == false)
+							{
+								MessageBox.Show("項目 " + eachField.Name + ": " + errmsg + "行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
+								isSetAll = false;
+								break;
+							}
+
+							dr[eachField.Name] = parseResult;
+						}
+						if (isSetAll == false)
+						{
+							break;
+						}
+						drAr.Add(dr);
+					}
+				}
+				if (linecount == 0)
                 {
                     MessageBox.Show("読み込みすべき行がありませんでした。");
                     isSetAll = false;
@@ -6351,8 +6072,138 @@ namespace quickDBExplorer.Forms
             }
 			return drAr;
 		}
+#else
 
-        private void GetOneQuotedLine(List<string> readData, string[] firstsplit)
+		protected ArrayList LoadFile2DataTable(DataTable targetDt, DBObjectInfo dbobj, TextReader wr, bool isCsv, bool isUseDQ)
+		{
+			bool isSetAll = true;
+			int linecount = 0;
+			ArrayList drAr = new ArrayList();
+			bool isSkipFirstLine = false;
+
+			try
+			{
+				// ファイルのチェックを実施する
+
+				string readstr = "";
+				string Separator = "";
+				if (isCsv == true)
+				{
+					Separator = ",";
+				}
+				else
+				{
+					Separator = "\t";
+				}
+
+				List<string> readData = new List<string>();
+				//ArrayList readData = new ArrayList();
+
+				if (MessageBox.Show("先頭行は見出しですか?", "確認", System.Windows.Forms.MessageBoxButtons.YesNo) ==
+					DialogResult.Yes)
+				{
+					// 一行読み飛ばし
+					isSkipFirstLine = true;
+				}
+
+				for (; ; )
+				{
+					readstr = wr.ReadLine();
+					if (readstr == null)
+					{
+						break;
+					}
+					if (linecount == 0 && isSkipFirstLine == true)
+					{
+						// 先頭行は読み飛ばし
+						linecount++;
+						continue;
+					}
+					isSetAll = true;
+					linecount++;
+
+					string[] firstsplit = readstr.Split(Separator.ToCharArray());
+					readData.Clear();
+					if (!isUseDQ)
+					{
+						readData.AddRange(firstsplit);
+					}
+					else
+					{
+						// ダブルクォートが指定されている為、文字の途中で切れている可能性がある
+						GetOneQuotedLine(readData, firstsplit);
+					}
+
+					// 一行のデータが ar に配置されたので、dt と比較する
+
+					if (readData.Count != targetDt.Columns.Count)
+					{
+						MessageBox.Show("項目数が違います 行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
+						isSetAll = false;
+						break;
+					}
+
+					if (targetDt.Columns.Count != dbobj.FieldCount)
+					{
+						MessageBox.Show("フィールド情報が古い可能性があります。オブジェクト情報再読込を行って下さい");
+						isSetAll = false;
+						break;
+					}
+
+					foreach (DBFieldInfo each in dbobj.FieldInfo)
+					{
+						if (!each.CanLoadData)
+						{
+							MessageBox.Show("読み込みに指定できません:列" + each.Name);
+							isSetAll = false;
+							break;
+						}
+					}
+					if (isSetAll == false)
+					{
+						break;
+					}
+
+					DataRow dr = targetDt.NewRow();
+					foreach (DBFieldInfo eachField in dbobj.FieldInfo)
+					{
+						object parseResult = null;
+						string errmsg = string.Empty;
+						if (eachField.TryParse((string)readData[eachField.ColOrder - 1], eachField, ref parseResult, ref errmsg) == false)
+						{
+							MessageBox.Show("項目 " + eachField.Name + ": " + errmsg + "行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
+							isSetAll = false;
+							break;
+						}
+
+						dr[eachField.Name] = parseResult;
+
+					}
+					if (isSetAll == false)
+					{
+						break;
+					}
+					drAr.Add(dr);
+				}
+				if (linecount == 0)
+				{
+					MessageBox.Show("読み込みすべき行がありませんでした。");
+					isSetAll = false;
+				}
+				// エラー発生時は何も返さない
+				if (isSetAll == false)
+				{
+					drAr.Clear();
+				}
+			}
+			catch (Exception exp)
+			{
+				this.SetErrorMessage(exp);
+			}
+			return drAr;
+		}
+#endif
+		private void GetOneQuotedLine(List<string> readData, string[] firstsplit)
         {
             string addstr = "";
             for (int j = 0; j < firstsplit.Length; j++)
@@ -6412,7 +6263,7 @@ namespace quickDBExplorer.Forms
 					this.saveFileDialog1.CreatePrompt = true;
 					this.saveFileDialog1.Filter = "SQL|*.sql|csv|*.csv|txt|*.txt|全て|*.*";
                     this.saveFileDialog1.OverwritePrompt = true;
-					DialogResult ret = this.saveFileDialog1.ShowDialog();
+					DialogResult ret = this.saveFileDialog1.ShowDialog(this);
 					if( ret == DialogResult.OK )
 					{
 						this.txtOutput.Text = this.saveFileDialog1.FileName;
@@ -6446,7 +6297,7 @@ namespace quickDBExplorer.Forms
 				{
 					this.folderBrowserDialog1.SelectedPath = "";
 					this.folderBrowserDialog1.ShowNewFolderButton = true;
-					DialogResult ret = this.folderBrowserDialog1.ShowDialog();
+					DialogResult ret = this.folderBrowserDialog1.ShowDialog(this);
 					if( ret == DialogResult.OK )
 					{
 						this.txtOutput.Text = this.folderBrowserDialog1.SelectedPath;
@@ -6663,35 +6514,6 @@ namespace quickDBExplorer.Forms
 
 		#endregion
 
-		private void dbGridMenu_Popup(object sender, System.EventArgs e)
-		{
-			ArrayList controlTarget = new ArrayList();
-			controlTarget.Add(this.readCsvDbGridMenu);
-			controlTarget.Add(this.readCsvDQDbGridMenu);
-			controlTarget.Add(this.readTsvDbGridMenu);
-			controlTarget.Add(this.readTsvDQDbGridMenu);
-
-
-			if( this.dbGrid.Visible == true &&
-				this.dbGrid.ReadOnly == false &&
-				this.dbGrid.DataSource != null )
-			{
-				// 編集可能
-				foreach(MenuItem mi in controlTarget)
-				{
-					mi.Visible = true;
-				}
-			}
-			else
-			{
-				// 編集不可
-				foreach(MenuItem mi in controlTarget)
-				{
-					mi.Visible = false;
-				}
-			}
-
-		}
 
 		/// <summary>
 		/// フィールドリストから where 句を生成する
@@ -6981,47 +6803,50 @@ namespace quickDBExplorer.Forms
             dbList_SelectedIndexChanged(null, null);
         }
 
-        private void btnResetWidth_Click(object sender, EventArgs e)
+		private void ResetWidth2Default(object sender, EventArgs e)
+		{
+			this.dbGrid.ResetWidth2Default();
+		}
+		private void SetWidth2Full(object sender, EventArgs e)
+		{
+			this.dbGrid.SetWidth2Full();
+		}
+		private void ResetHeight2Default(object sender, EventArgs e)
+		{
+			this.dbGrid.ResetHight2Default();
+		}
+		private void ResetWidthHeight2Defalt(object sender, EventArgs e)
+		{
+			this.dbGrid.ResetWidthHeight2Defalt();
+		}
+		
+		/// <summary>
+		/// https://www.yamacho-blog.com/2017/03/vbnetdatagridviewformaccessviolationexc.html
+		/// http://stackoverflow.com/questions/8335983/accessviolationexception-on-tooltip-that-faults-comctl32-dll-net-4-0
+		/// Comctl32.dll バグ対応
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void MainForm_Activated(object sender, EventArgs e)
         {
-            DataGridTableStyle ts = this.dbGrid.TableStyles[0];
-            foreach (QdbeDataGridTextBoxColumn each in ts.GridColumnStyles)
-            {
-                each.Width = this.dbGrid.PreferredColumnWidth;
-            }
-        }
+			//Console.WriteLine("MainForm_Activated");
+			//this.dbGrid.ShowCellToolTips = true;
+			//this.commTooltip.Active = true;
 
-        private void dbGrid_Leave(object sender, EventArgs e)
+		}
+
+		/// <summary>
+		/// https://www.yamacho-blog.com/2017/03/vbnetdatagridviewformaccessviolationexc.html
+		/// http://stackoverflow.com/questions/8335983/accessviolationexception-on-tooltip-that-faults-comctl32-dll-net-4-0
+		/// Comctl32.dll バグ対応
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void MainForm_Deactivate(object sender, EventArgs e)
         {
-            if (this.dbGrid.DataSource != null)
-            {
-                DataGridTableStyle ts = this.dbGrid.TableStyles[0];
-                foreach (QdbeDataGridTextBoxColumn col in ts.GridColumnStyles)
-                {
-                    if (!string.IsNullOrEmpty(col.MappingName))
-                    {
-                        if (col.Width == this.dbGrid.PreferredColumnWidth)
-                        {
-                            // 既定値と同じであればjsonファイルの容量圧縮の為、設定削除
-                            if (this.svdata.PerTableColumnWidth.ContainsKey(this.dbgridTableName))
-                            {
-                                if (this.svdata.PerTableColumnWidth[this.dbgridTableName].ContainsKey(col.MappingName))
-                                {
-                                    this.svdata.PerTableColumnWidth[this.dbgridTableName].Remove(col.MappingName);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (!this.svdata.PerTableColumnWidth.ContainsKey(this.dbgridTableName))
-                            {
-                                this.svdata.PerTableColumnWidth[this.dbgridTableName] = new Dictionary<string, int>();
-                            }
-                            this.svdata.PerTableColumnWidth[this.dbgridTableName][col.MappingName] = col.Width;
-                        }
-                    }
-                }
-
-            }
-        }
-    }
+			//Console.WriteLine("MainForm_Deactivate");
+			//this.dbGrid.ShowCellToolTips = false;
+			//this.commTooltip.Active = false;
+		}
+	}
 }

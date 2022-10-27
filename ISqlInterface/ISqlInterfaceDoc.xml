@@ -209,6 +209,24 @@
             <param name="errmsg"></param>
             <returns></returns>
         </member>
+        <member name="M:quickDBExplorer.DataType.baseType.CheckValue(System.Object,quickDBExplorer.DBFieldInfo,System.String@)">
+            <summary>
+            値が正しいかどうかチェックする
+            </summary>
+            <param name="val"></param>
+            <param name="fieldInfo"></param>
+            <param name="errmsg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DataType.baseType.TryCheckObject(System.Object,quickDBExplorer.DBFieldInfo,System.String@)">
+            <summary>
+            値をチェックする
+            </summary>
+            <param name="data"></param>
+            <param name="fieldInfo"></param>
+            <param name="errmsg"></param>
+            <returns></returns>
+        </member>
         <member name="T:quickDBExplorer.DataType.TypeFactory">
             <summary>
             SQLデータタイプのファクトリ
@@ -389,6 +407,14 @@
             <param name="data"></param>
             <param name="fieldInfo"></param>
             <param name="result"></param>
+            <param name="errmsg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBFieldInfo.CheckValue(System.Object,System.String@)">
+            <summary>
+            値が正しいかどうかチェックする
+            </summary>
+            <param name="data"></param>
             <param name="errmsg"></param>
             <returns></returns>
         </member>

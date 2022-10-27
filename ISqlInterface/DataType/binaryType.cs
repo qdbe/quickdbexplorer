@@ -10,6 +10,5 @@ namespace quickDBExplorer.DataType
         {
             this.TypeHasSize = true;
         }
-
     }
 }

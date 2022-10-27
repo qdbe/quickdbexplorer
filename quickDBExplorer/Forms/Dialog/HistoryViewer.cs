@@ -348,7 +348,7 @@ namespace quickDBExplorer
 				dlg.EditText = this.historyList.SelectedItems[0].SubItems[0].Text;
 			}
 			dlg.LableName = "—š—ðŠg‘å•\Ž¦";
-			dlg.ShowDialog();
+			dlg.ShowDialog(this);
 		}
 	}
 }

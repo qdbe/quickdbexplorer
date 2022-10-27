@@ -214,6 +214,8 @@ namespace quickDBExplorer
             this.txtPassword.Location = new System.Drawing.Point(153, 239);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
+            this.txtPassword.PlaceholderText = null;
+            this.txtPassword.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtPassword.Size = new System.Drawing.Size(208, 19);
             this.txtPassword.TabIndex = 13;
             // 
@@ -226,6 +228,8 @@ namespace quickDBExplorer
             this.txtUser.IsShowZoom = false;
             this.txtUser.Location = new System.Drawing.Point(153, 199);
             this.txtUser.Name = "txtUser";
+            this.txtUser.PlaceholderText = null;
+            this.txtUser.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtUser.Size = new System.Drawing.Size(208, 19);
             this.txtUser.TabIndex = 11;
             this.txtUser.Text = "sa";
@@ -239,6 +243,8 @@ namespace quickDBExplorer
             this.txtInstance.IsShowZoom = false;
             this.txtInstance.Location = new System.Drawing.Point(153, 89);
             this.txtInstance.Name = "txtInstance";
+            this.txtInstance.PlaceholderText = null;
+            this.txtInstance.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtInstance.Size = new System.Drawing.Size(208, 19);
             this.txtInstance.TabIndex = 5;
             // 
@@ -251,6 +257,8 @@ namespace quickDBExplorer
             this.txtServerName.IsShowZoom = false;
             this.txtServerName.Location = new System.Drawing.Point(153, 49);
             this.txtServerName.Name = "txtServerName";
+            this.txtServerName.PlaceholderText = null;
+            this.txtServerName.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtServerName.Size = new System.Drawing.Size(208, 19);
             this.txtServerName.TabIndex = 2;
             this.txtServerName.Text = "(local)";
@@ -308,6 +316,8 @@ namespace quickDBExplorer
             this.txtDatabaseName.IsShowZoom = false;
             this.txtDatabaseName.Location = new System.Drawing.Point(153, 128);
             this.txtDatabaseName.Name = "txtDatabaseName";
+            this.txtDatabaseName.PlaceholderText = "Azure ìôÇÃèÍçáÇ…ÇÕéwíËÇ™ïKóv";
+            this.txtDatabaseName.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtDatabaseName.Size = new System.Drawing.Size(208, 19);
             this.txtDatabaseName.TabIndex = 8;
             // 
@@ -619,7 +629,7 @@ namespace quickDBExplorer
 			{
 				ServerSelectDialog dlg = new ServerSelectDialog(this.initOpt);
 			
-				if( dlg.ShowDialog() == DialogResult.OK	)
+				if( dlg.ShowDialog(this) == DialogResult.OK	)
 				{
                     SetServer(dlg.SelectedServer,dlg.SelectedInstance);
                     this.txtPassword.Focus();
@@ -699,7 +709,7 @@ namespace quickDBExplorer
             //    this.Cursor = Cursors.Default;
             //}
             SqlServerSelector dlg = new SqlServerSelector();
-            if (dlg.ShowDialog() != DialogResult.OK)
+            if (dlg.ShowDialog(this) != DialogResult.OK)
             {
                 return;
             }

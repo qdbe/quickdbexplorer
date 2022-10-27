@@ -37,8 +37,8 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.grpServerList = new System.Windows.Forms.GroupBox();
+            this.txtFilter = new quickDBExplorer.quickDBExplorerTextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtFilter = new System.Windows.Forms.TextBox();
             this.btnReload = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.grpServerList.SuspendLayout();
@@ -119,8 +119,8 @@
             this.grpServerList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grpServerList.Controls.Add(this.label1);
             this.grpServerList.Controls.Add(this.txtFilter);
+            this.grpServerList.Controls.Add(this.label1);
             this.grpServerList.Controls.Add(this.btnReload);
             this.grpServerList.Controls.Add(this.sqlServerList);
             this.grpServerList.Location = new System.Drawing.Point(13, 8);
@@ -130,6 +130,21 @@
             this.grpServerList.TabStop = false;
             this.grpServerList.Text = "SQL SERVER 一覧";
             // 
+            // txtFilter
+            // 
+            this.txtFilter.CanCtrlDelete = true;
+            this.txtFilter.Histories = null;
+            this.txtFilter.HistoryKey = "quickDBExplorerTextBox1";
+            this.txtFilter.IsDigitOnly = false;
+            this.txtFilter.IsShowZoom = false;
+            this.txtFilter.Location = new System.Drawing.Point(190, 18);
+            this.txtFilter.Name = "txtFilter";
+            this.txtFilter.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtFilter.PlaceholderText = "(部分一致)";
+            this.txtFilter.Size = new System.Drawing.Size(189, 19);
+            this.txtFilter.TabIndex = 4;
+            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -138,14 +153,6 @@
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 0;
             this.label1.Text = "フィルタ(&F)";
-            // 
-            // txtFilter
-            // 
-            this.txtFilter.Location = new System.Drawing.Point(185, 18);
-            this.txtFilter.Name = "txtFilter";
-            this.txtFilter.Size = new System.Drawing.Size(191, 19);
-            this.txtFilter.TabIndex = 1;
-            this.txtFilter.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
             // 
             // btnReload
             // 
@@ -195,7 +202,7 @@
         private System.Windows.Forms.ColumnHeader VersionCol;
         private System.Windows.Forms.Button btnReload;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtFilter;
         private System.Windows.Forms.Timer timer1;
+        private quickDBExplorerTextBox txtFilter;
     }
 }

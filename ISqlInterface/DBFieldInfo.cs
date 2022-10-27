@@ -379,5 +379,26 @@ namespace quickDBExplorer
             }
             return this.dataType.TryParse(data, fieldInfo, ref result, ref errmsg);
         }
-	}
+
+        /// <summary>
+        /// 値が正しいかどうかチェックする
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="errmsg"></param>
+        /// <returns></returns>
+        public bool CheckValue(object data, out string errmsg)
+        {
+            errmsg = string.Empty;
+            if (this.IsAllowNull == false && 
+                ( data == null ||
+                data == DBNull.Value)
+                )
+            {
+                errmsg = "値の指定が必要です。";
+                return false;
+            }
+            return this.dataType.CheckValue(data, this, out errmsg);
+        }
+
+    }
 }

@@ -131,9 +131,29 @@
             データグリッドの表示形式を管理する
             </summary>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.CancelEdit">
+        <member name="P:quickDBExplorer.QdbeDataGridTextBoxColumn.FiledInfo">
             <summary>
-            編集処理を中断する
+            フィールド情報
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.QdbeDataGridTextBoxColumn.DefalutWidth">
+            <summary>
+            既定値の幅
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.QdbeDataGridTextBoxColumn.MaxLength">
+            <summary>
+            入力可能な最大文字数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.QdbeDataGridTextBoxColumn.CanSetEmptyString">
+            <summary>
+            空文字列を設定できるか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.QdbeDataGridTextBoxColumn.CanSetNull">
+            <summary>
+            NULLを設定できるか否か
             </summary>
         </member>
         <member name="P:quickDBExplorer.QdbeDataGridTextBoxColumn.IsThisImage">
@@ -141,14 +161,19 @@
             管理するデータがイメージか否かを取得・設定する
             </summary>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Boolean)">
+        <member name="F:quickDBExplorer.QdbeDataGridTextBoxColumn.DefaultHeaderBackColor">
+            <summary>
+            既定のヘッダの背景色
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGridView,System.Boolean)">
             <summary>
             コンストラクタ
             </summary>
             <param name="pa">親となるグリッド</param>
             <param name="canset">空白文字列の設定が可能か否か</param>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Data.DataColumn)">
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGridView,System.Data.DataColumn)">
             <summary>
             コンストラクタ
             データカラムに応じ、自動的に、
@@ -159,7 +184,7 @@
             <param name="pa">親となるグリッド</param>
             <param name="col">結合させるデータカラム</param>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Data.DataColumn,System.String,System.String,System.String,quickDBExplorer.DBFieldInfo)">
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGridView,System.Data.DataColumn,quickDBExplorer.GridFormatSetting,quickDBExplorer.DBFieldInfo)">
             <summary>
             コンストラクタ
             データカラムに応じ、自動的に、
@@ -170,12 +195,10 @@
             </summary>
             <param name="pa">親となるグリッド</param>
             <param name="col">結合させるデータカラム</param>
-            <param name="numberFormat">整数表示の場合の書式</param>
-            <param name="floatFormat">小数点表示の場合の書式</param>
-            <param name="dateFormat">日付表示の場合の書式</param>
+            <param name="setting">グリッド表示書式</param>
             <param name="finfo">フィールド情報</param>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGrid,System.Boolean,System.Boolean)">
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.#ctor(System.Windows.Forms.DataGridView,System.Boolean,System.Boolean)">
             <summary>
             コンストラクタ
             </summary>
@@ -183,47 +206,274 @@
             <param name="canset">空白文字列の設定が可能か否か</param>
             <param name="isImage">管理するデータがイメージか否か</param>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.GridTextControler(System.Object,System.EventArgs)">
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.ResetWidth2Defalt">
             <summary>
-            TextBoxへのイベントハンドラ
+            幅を既定値に戻す
             </summary>
-            <param name="sender">--</param>
-            <param name="e">--</param>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.GridKeyDownControler(System.Object,System.Windows.Forms.KeyEventArgs)">
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.SetFreezeColor">
+            <summary>
+            固定列の色に変更する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.UnsetFreezeColor">
+            <summary>
+            通常列の色に変更する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.CheckValue(System.Object,System.String@)">
+            <summary>
+            値をチェックする
+            </summary>
+            <param name="val"></param>
+            <param name="errmsg"></param>
+            <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.Controls.qdbeDataGridView">
+            <summary>
+            独自DataGridView
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeDataGridView.ServerData">
+            <summary>
+            サーバー毎設定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeDataGridView.TableName">
+            <summary>
+            表示対象にしていてるテーブル名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeDataGridView.DefaultRowHeight">
+            <summary>
+            既定の行の高さ
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeDataGridView.DefaultRowHeaderWidth">
+            <summary>
+            既定の行ヘッダの幅
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeDataGridView.DefaultColumnHeaderHeight">
+            <summary>
+            既定の見出しの高さ
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.Controls.qdbeDataGridView.LoadDataEventHandler">
+            <summary>
+            データロード時に発生するイベント
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="E:quickDBExplorer.Controls.qdbeDataGridView.LoadData">
+            <summary>
+            メニューでファイルからのデータ読み込み時に発生するイベント
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetDisplayFont(quickDBExplorer.GridFormatSetting)">
+            <summary>
+            表示フォントを設定する
+            </summary>
+            <param name="setting"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.QdbeDataGridView_CellClick(System.Object,System.Windows.Forms.DataGridViewCellEventArgs)">
+            <summary>
+            行ヘッダクリック時でもセルが編集状態のままであることへの対応
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:quickDBExplorer.Controls.qdbeDataGridView.gridMenuData">
+            <summary>
+            メニューデータ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.QdbeDataGridView_DataError(System.Object,System.Windows.Forms.DataGridViewDataErrorEventArgs)">
+            <summary>
+            データエラー時にメッセージを表示
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.GetColumn(System.Int32)">
+            <summary>
+            カラムを取得する
+            </summary>
+            <param name="col"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetReadOnly(System.Boolean)">
+            <summary>
+            読み取り専用か否かを設定する
+            </summary>
+            <param name="isReadOnly"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetAllSelect(System.Boolean)">
+            <summary>
+            全ての行を選択状態にする
+            </summary>
+            <param name="isSet"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetColumns(System.String,System.Data.DataTable,quickDBExplorer.ServerJsonData,quickDBExplorer.DBObjectInfo)">
+            <summary>
+            カラムを設定する
+            </summary>
+            <param name="tableName"></param>
+            <param name="dt"></param>
+            <param name="svdata"></param>
+            <param name="dboInfo"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.GetFormat(System.String)">
+            <summary>
+            フォーマット文字列を取得する
+            </summary>
+            <param name="fstr">基の表示書式</param>
+            <returns>表示書式文字列</returns>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetCellColor(System.Int32,System.Int32,System.Windows.Forms.DataGridViewCellFormattingEventArgs)">
+            <summary>
+            セルの背景色を変更する
+            </summary>
+            <param name="colIdx"></param>
+            <param name="rowIdx"></param>
+            <param name="e">イベント</param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.GridKeyDownControler(System.Object,System.Windows.Forms.KeyEventArgs)">
             <summary>
             グリッド上でのキーダウンイベント処理
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.Edit(System.Windows.Forms.CurrencyManager,System.Int32,System.Drawing.Rectangle,System.Boolean,System.String,System.Boolean)">
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.copyDbGridMenu_Click(System.Object,System.EventArgs)">
             <summary>
-            編集開始時処理のオーバーライド
+            すべての行をクリップボードにコピーする
             </summary>
-            <param name="source"></param>
-            <param name="rowNum"></param>
-            <param name="bounds"></param>
-            <param name="readOnly"></param>
-            <param name="displayText"></param>
-            <param name="cellIsVisible"></param>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.EnterNullValue">
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.copySelectedDbGridMenu_Click(System.Object,System.EventArgs)">
             <summary>
-            NULL値入力処理のオーバーライド
+            選択行のみクリップボードにコピーする
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.copyDbGrid(System.Boolean)">
+            <summary>
+            選択行のみクリップボードにコピーする
+            </summary>
+            <param name="isSelectOnly">選択行のみコピーするか否か</param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.readCsvDbGridMenu_Click(System.Object,System.EventArgs)">
+            <summary>
+            データグリッドへの CSVの取込
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.LoadFile2Grid(System.Boolean,System.Boolean)">
+            <summary>
+            ファイルからのデータ読み込み
+            </summary>
+            <param name="isCsv"></param>
+            <param name="isUseDQ"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.UnsetFreezeMenu_Click(System.Object,System.EventArgs)">
+            <summary>
+            カラム固定をなくす
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetFreezeMenu_Click(System.Object,System.EventArgs)">
+            <summary>
+            カラム固定を行う
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.DeleteGridRow_Click(System.Object,System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetColumn2DefaultWidth(System.Object,System.EventArgs)">
+            <summary>
+            特定のカラムの幅を初期化する
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetColumn2FullWidth(System.Object,System.EventArgs)">
+            <summary>
+            特定のカラムの幅を全表示にする
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.QdbeDataGridView_CellContextMenuStripNeeded(System.Object,System.Windows.Forms.DataGridViewCellContextMenuStripNeededEventArgs)">
+            <summary>
+            メニュー表示時の要否を判断する
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.ResetWidth2Default">
+            <summary>
+            列幅を初期化する
             </summary>
         </member>
-        <member name="M:quickDBExplorer.QdbeDataGridTextBoxColumn.Paint(System.Drawing.Graphics,System.Drawing.Rectangle,System.Windows.Forms.CurrencyManager,System.Int32,System.Drawing.Brush,System.Drawing.Brush,System.Boolean)">
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetWidth2Full">
             <summary>
-            Paintメソッドをオーバーライドする
+            列を全セルが表示される幅に設定する
             </summary>
-            <param name="g"></param>
-            <param name="bounds"></param>
-            <param name="source"></param>
-            <param name="rowNum"></param>
-            <param name="backBrush"></param>
-            <param name="foreBrush"></param>
-            <param name="alignToRight"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.ResetHight2Default">
+            <summary>
+            高さを既定値に戻す
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.ResetWidthHeight2Defalt">
+            <summary>
+            列幅、行高さを既定値に戻す
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.GetClipboardContent">
+            <summary>
+            クリップボードにコピーする内容を取得する
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.Controls.qdbeLoadDataEventArgs">
+            <summary>
+            ファイルからのデータ読み込み時イベント引数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeLoadDataEventArgs.IsCSV">
+            <summary>
+            CSV形式か否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeLoadDataEventArgs.IsUseDQ">
+            <summary>
+            ダブルクォーテーションがあるか否か
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeLoadDataEventArgs.#ctor(System.Boolean,System.Boolean)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="csv"></param>
+            <param name="dq"></param>
         </member>
         <member name="T:quickDBExplorer.CopyDataEventHandler">
             <summary>
@@ -404,6 +654,42 @@
             <param name="x">比較元</param>
             <param name="y">比較元</param>
             <returns>1,0,-1のいづれか</returns>
+        </member>
+        <member name="T:quickDBExplorer.PlaceholderTextBox">
+            <summary>
+            プレースホルダーを表示するテキストボックス
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.PlaceholderTextBox.#ctor">
+            <summary>
+             コンストラクタ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.PlaceholderTextBox._placeholderText">
+            <summary>
+            プレースホルダーのテキスト
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.PlaceholderTextBox.PlaceholderText">
+            <summary>
+            プレースホルダー文字列
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.PlaceholderTextBox._placeholderColor">
+            <summary>
+            プレースホルダーの色
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.PlaceholderTextBox.PlaceholderColor">
+            <summary>
+            プレースホルダーの色
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.PlaceholderTextBox.WndProc(System.Windows.Forms.Message@)">
+            <summary>
+            WndProcMethodのオーバーライド
+            </summary>
+            <param name="message"></param>
         </member>
         <member name="T:quickDBExplorer.ShowHistoryEventHandler">
             <summary>
@@ -1064,33 +1350,6 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="M:quickDBExplorer.Forms.MainForm.copyDbGridMenu_Click(System.Object,System.EventArgs)">
-            <summary>
-            すべての行をクリップボードにコピーする
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.Forms.MainForm.copySelectedDbGridMenu_Click(System.Object,System.EventArgs)">
-            <summary>
-            選択行のみクリップボードにコピーする
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
-        <member name="M:quickDBExplorer.Forms.MainForm.copyDbGrid(System.Boolean)">
-            <summary>
-            選択行のみクリップボードにコピーする
-            </summary>
-            <param name="isSelectOnly">選択行のみコピーするか否か</param>
-        </member>
-        <member name="M:quickDBExplorer.Forms.MainForm.readCsvDbGridMenu_Click(System.Object,System.EventArgs)">
-            <summary>
-            データグリッドへの CSVの取込
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
-        </member>
         <member name="M:quickDBExplorer.Forms.MainForm.menuStasticUpdate_Click(System.Object,System.EventArgs)">
             <summary>
             選択されたオブジェクトの統計情報を更新する
@@ -1263,6 +1522,24 @@
         <member name="M:quickDBExplorer.Forms.MainForm.labelObject_DoubleClick(System.Object,System.EventArgs)">
             <summary>
             オブジェクトリストのラベルがダブルクリックされた場合、オブジェクトリストを再読み込みする
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.MainForm_Activated(System.Object,System.EventArgs)">
+            <summary>
+            https://www.yamacho-blog.com/2017/03/vbnetdatagridviewformaccessviolationexc.html
+            http://stackoverflow.com/questions/8335983/accessviolationexception-on-tooltip-that-faults-comctl32-dll-net-4-0
+            Comctl32.dll バグ対応
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.MainForm_Deactivate(System.Object,System.EventArgs)">
+            <summary>
+            https://www.yamacho-blog.com/2017/03/vbnetdatagridviewformaccessviolationexc.html
+            http://stackoverflow.com/questions/8335983/accessviolationexception-on-tooltip-that-faults-comctl32-dll-net-4-0
+            Comctl32.dll バグ対応
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
@@ -3623,6 +3900,11 @@
             Gridのカラム幅の記憶
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ServerJsonData.PerTableHeaderSize">
+            <summary>
+            Gridの見出しのサイズ
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.ServerJsonData.#ctor">
             <summary>
             コンストラクタ
@@ -3715,6 +3997,11 @@
             数値変換書式の指定
             </summary>
         </member>
+        <member name="P:quickDBExplorer.GridFormatSetting.GridNumberFormatPlain">
+            <summary>
+            数値変換書式
+            </summary>
+        </member>
         <member name="F:quickDBExplorer.GridFormatSetting.gridFloatFormat">
             <summary>
             小数点書式の指定
@@ -3723,6 +4010,11 @@
         <member name="P:quickDBExplorer.GridFormatSetting.GridFloatFormat">
             <summary>
             小数点書式の指定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.GridFormatSetting.GridFloatFormatPlain">
+            <summary>
+            小数点書式
             </summary>
         </member>
         <member name="F:quickDBExplorer.GridFormatSetting.gridDateFormat">
@@ -3735,10 +4027,22 @@
             日付変換書式の指定
             </summary>
         </member>
+        <member name="P:quickDBExplorer.GridFormatSetting.GridDateFormatPlain">
+            <summary>
+            日付変換書式
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.GridFormatSetting.Defalt">
             <summary>
             既定値の設定を作成する
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.GridFormatSetting.GetFormat(System.String)">
+            <summary>
+            書式から説明を除外する
+            </summary>
+            <param name="fstr"></param>
             <returns></returns>
         </member>
         <member name="T:quickDBExplorer.ConditionRecorder">

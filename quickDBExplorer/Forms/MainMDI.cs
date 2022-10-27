@@ -81,6 +81,7 @@ namespace quickDBExplorer.Forms
         private ToolManager outerToolManager;
         private MenuItem menuReConnect;
         private MenuItem menuItem1;
+        private MenuItem menuResetLayout;
         private ToolMacroManager toolMacroManager;
 
 
@@ -125,8 +126,10 @@ namespace quickDBExplorer.Forms
             this.menuConnect = new System.Windows.Forms.MenuItem();
             this.menuNewConnect = new System.Windows.Forms.MenuItem();
             this.menuReConnect = new System.Windows.Forms.MenuItem();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.menuQuit = new System.Windows.Forms.MenuItem();
             this.menuWindow = new System.Windows.Forms.MenuItem();
+            this.menuResetLayout = new System.Windows.Forms.MenuItem();
             this.menuBookamrk = new System.Windows.Forms.MenuItem();
             this.menuAddBookMark = new System.Windows.Forms.MenuItem();
             this.menuEditBookmark = new System.Windows.Forms.MenuItem();
@@ -139,7 +142,6 @@ namespace quickDBExplorer.Forms
             this.menuAbout = new System.Windows.Forms.MenuItem();
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.menuItem1 = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -183,6 +185,12 @@ namespace quickDBExplorer.Forms
             this.menuReConnect.Text = "再接続";
             this.menuReConnect.Click += new System.EventHandler(this.menuReConnect_Click);
             // 
+            // menuItem1
+            // 
+            this.menuItem1.Index = 2;
+            this.menuItem1.Text = "設定を保存(&S)";
+            this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
+            // 
             // menuQuit
             // 
             this.menuQuit.Index = 3;
@@ -193,7 +201,15 @@ namespace quickDBExplorer.Forms
             // 
             this.menuWindow.Index = 1;
             this.menuWindow.MdiList = true;
+            this.menuWindow.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuResetLayout});
             this.menuWindow.Text = "ウィンドウ(&W)";
+            // 
+            // menuResetLayout
+            // 
+            this.menuResetLayout.Index = 0;
+            this.menuResetLayout.Text = "ウィンドウレイアウト初期化";
+            this.menuResetLayout.Click += new System.EventHandler(this.menuResetLayout_Click);
             // 
             // menuBookamrk
             // 
@@ -275,12 +291,6 @@ namespace quickDBExplorer.Forms
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // menuItem1
-            // 
-            this.menuItem1.Index = 2;
-            this.menuItem1.Text = "設定を保存(&S)";
-            this.menuItem1.Click += new System.EventHandler(this.menuItem1_Click);
-            // 
             // MainMdi
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -291,7 +301,9 @@ namespace quickDBExplorer.Forms
             this.Menu = this.mainMenu1;
             this.Name = "MainMdi";
             this.Text = "quickDBExplorer";
+            this.Activated += new System.EventHandler(this.MainMdi_Activated);
             this.Closing += new System.ComponentModel.CancelEventHandler(this.MainMdi_Closing);
+            this.Deactivate += new System.EventHandler(this.MainMdi_Deactivate);
             this.Load += new System.EventHandler(this.MainMdi_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
@@ -737,7 +749,7 @@ namespace quickDBExplorer.Forms
             toolMacroManager.SetMacroArg(arg);
 
             Forms.Dialog.OuterToolEditForm dlg = new quickDBExplorer.Forms.Dialog.OuterToolEditForm(outerTools, toolMacroManager);
-            if (dlg.ShowDialog() == DialogResult.OK)
+            if (dlg.ShowDialog(this) == DialogResult.OK)
             {
                 this.outerTools = dlg.ResultToolList;
             }
@@ -818,6 +830,30 @@ namespace quickDBExplorer.Forms
         private void menuItem1_Click(object sender, EventArgs e)
         {
             this.SaveSettings();
+        }
+
+        private void menuResetLayout_Click(object sender, EventArgs e)
+        {
+            MainForm main = (MainForm)this.ActiveMdiChild;
+            main.ResetSplitLayout();
+        }
+
+        private void MainMdi_Activated(object sender, EventArgs e)
+        {
+            MainForm main = this.ActiveMdiChild as MainForm;
+            if (main != null)
+            {
+                main.MainForm_Activated(sender, e);
+            }
+        }
+
+        private void MainMdi_Deactivate(object sender, EventArgs e)
+        {
+            MainForm main = this.ActiveMdiChild as MainForm;
+            if (main != null)
+            {
+                main.MainForm_Deactivate(sender, e);
+            }
         }
     }
 }

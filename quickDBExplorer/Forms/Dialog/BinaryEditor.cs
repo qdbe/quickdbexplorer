@@ -178,7 +178,7 @@ namespace quickDBExplorer.Forms.Dialog
                 dlg.OverwritePrompt = true;
                 dlg.Filter = "全て|*.*";
 
-                if (dlg.ShowDialog() != DialogResult.OK)
+                if (dlg.ShowDialog(this) != DialogResult.OK)
                 {
                     return;
                 }
@@ -202,7 +202,7 @@ namespace quickDBExplorer.Forms.Dialog
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Filter = "全て|*.*";
-            if (dlg.ShowDialog() != DialogResult.OK)
+            if (dlg.ShowDialog(this) != DialogResult.OK)
             {
                 return;
             }

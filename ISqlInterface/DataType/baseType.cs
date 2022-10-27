@@ -148,5 +148,41 @@ namespace quickDBExplorer.DataType
             }
             return false;
         }
+
+        /// <summary>
+        /// 値が正しいかどうかチェックする
+        /// </summary>
+        /// <param name="val"></param>
+        /// <param name="fieldInfo"></param>
+        /// <param name="errmsg"></param>
+        /// <returns></returns>
+        public virtual bool CheckValue(object val, DBFieldInfo fieldInfo, out string errmsg)
+        {
+            errmsg = "";
+            if (val != null && val != DBNull.Value)
+            {
+                if (val.GetType() != this.Type)
+                {
+                    errmsg = "型が違います";
+                    return false;
+                }
+            }
+            bool result = this.TryCheckObject(val, fieldInfo, ref errmsg);
+
+            return result;
+        }
+
+        /// <summary>
+        /// 値をチェックする
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="fieldInfo"></param>
+        /// <param name="errmsg"></param>
+        /// <returns></returns>
+        public virtual bool TryCheckObject(object data, DBFieldInfo fieldInfo, ref string errmsg)
+        {
+            object result = null;
+            return TryParse(data.ToString(), fieldInfo, ref result, ref errmsg);
+        }
     }
 }

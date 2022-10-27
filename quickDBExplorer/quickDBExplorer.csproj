@@ -100,6 +100,9 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LumenWorks.Framework.IO, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5ad3ea2f85776344, processorArchitecture=MSIL">
+      <HintPath>..\packages\LumenWorksCsvReader.4.0.0\lib\net35\LumenWorks.Framework.IO.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
@@ -144,10 +147,16 @@
     <Compile Include="Controls\QdbeDataGridTextBoxColumn.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\qdbeDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\qdbeListBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\qdbeListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\PlaceHolderTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\quickDBExplorerTextBox.cs">
@@ -288,6 +297,9 @@
     <EmbeddedResource Include="Controls\qdbeListBox.resx">
       <DependentUpon>qdbeListBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlaceHolderTextBox.resx">
+      <DependentUpon>PlaceHolderTextBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\quickDBExplorerTextBox.resx">
       <DependentUpon>quickDBExplorerTextBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -312,6 +324,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\FieldGetDialog.resx">
       <DependentUpon>FieldGetDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\FileOverWriteConfirm.resx">
       <DependentUpon>FileOverWriteConfirm.cs</DependentUpon>
