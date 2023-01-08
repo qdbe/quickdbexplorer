@@ -188,6 +188,14 @@ namespace quickDBExplorer
         }
 
         /// <summary>
+        /// SQL Server 2022 を表すインスタンスを生成する
+        /// </summary>
+        public static SqlVersion SQLSERVER2022()
+        {
+            return new SqlVersion("16.0");
+        }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="versionStr">Connection.ServerVersion の結果を渡す</param>
@@ -303,17 +311,29 @@ namespace quickDBExplorer
                 this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\150\Tools\ClientSetup\";
                 this.BinDir = @"binn\";
             }
-            else
+            else if (versionStr.StartsWith("16.0"))
             {
-                // 既定で 2019 にしておく
-                this.pPublicVersion = "2019";
+                this.pPublicVersion = "2022";
                 this.pFullVersionString = versionStr;
                 this.pIsSynonym = true;
                 this.pCanUseQueryAnalyzer = false;
                 this.pIsManagementStudio = true;
                 this.ProfilerExe = "profiler.exe";
                 this.ManagementExe = "ssms.exe";
-                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\150\Tools\ClientSetup\";
+                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\160\Tools\ClientSetup\";
+                this.BinDir = @"binn\";
+            }
+            else
+            {
+                // 既定で 2022 にしておく
+                this.pPublicVersion = "2022";
+                this.pFullVersionString = versionStr;
+                this.pIsSynonym = true;
+                this.pCanUseQueryAnalyzer = false;
+                this.pIsManagementStudio = true;
+                this.ProfilerExe = "profiler.exe";
+                this.ManagementExe = "ssms.exe";
+                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\160\Tools\ClientSetup\";
                 this.BinDir = @"binn\";
             }
         }

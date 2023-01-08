@@ -1305,6 +1305,11 @@
             SQL Server 2019 を表すインスタンスを生成する
             </summary>
         </member>
+        <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2022">
+            <summary>
+            SQL Server 2022 を表すインスタンスを生成する
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.SqlVersion.#ctor(System.String)">
             <summary>
             コンストラクタ

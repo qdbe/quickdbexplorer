@@ -94,7 +94,7 @@ namespace quickDBExplorer.Controls
             this.DataError += QdbeDataGridView_DataError;
             this.RowPostPaint += QdbeDataGridView_RowPostPaint;
             this.CellClick += QdbeDataGridView_CellClick;
-            this.CellValidating += QdbeDataGridView_CellValidating;
+            //this.CellValidating += QdbeDataGridView_CellValidating;
             this.RowValidating += QdbeDataGridView_RowValidating;
 
             this.DoubleBuffered = true;
@@ -141,6 +141,7 @@ namespace quickDBExplorer.Controls
                 return;
             }
 
+            StringBuilder sb = new StringBuilder();
             for (int col = 0; col < this.ColumnCount; col++)
             {
                 QdbeDataGridTextBoxColumn gcol = this.GetColumn(col);
@@ -151,10 +152,14 @@ namespace quickDBExplorer.Controls
                 if (!gcol.CheckValue(val, out errmsg))
                 {
                     e.Cancel = true;
-                    MessageBox.Show(string.Format("{0}行目, {1} の値が不正です({2})", row + 1, gcol.FiledInfo.Name, errmsg));
+                    sb.AppendFormat("{0}行目, {1} の値が不正です({2})", row + 1, gcol.FiledInfo.Name, errmsg);
+                    sb.AppendLine("");
                 }
             }
-
+            if (e.Cancel == true)
+            {
+                MessageBox.Show(sb.ToString());
+            }
         }
 
         /// <summary>

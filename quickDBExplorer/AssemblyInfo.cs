@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // 情報を変更するには、これらの属性値を変更してください。
 //
 [assembly: AssemblyTitle("quickDBExplorer")]
-[assembly: AssemblyDescription("Front End tool for Microsoft SQL Server 2019/2017/2016/2014/2012/2008R2/2008/2005/2000 \r\nSQL SERVER (2017/2016/2014/2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツール")]
+[assembly: AssemblyDescription("Front End tool for Microsoft SQL Server 2022/2019/2017/2016/2014/2012/2008R2/2008/2005/2000 \r\nSQL SERVER (2022/2019/2017/2016/2014/2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツール")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("-")]
 [assembly: AssemblyProduct("quickDBExplorer!")]
