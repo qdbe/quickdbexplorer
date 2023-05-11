@@ -14,16 +14,29 @@ namespace quickDBExplorer.DataType
             return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", dr.GetValue(col).ToString(), addstr);
         }
 
-        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
             try
             {
-                if (string.IsNullOrEmpty(data.Trim()))
+                if (string.IsNullOrEmpty(data))
                 {
-                    result = DBNull.Value;
-                    return true;
+                    if (isEmptyAsNull == EmptyNullBehavior.NoConv)
+                    {
+                        result = data;
+                    }
+                    else if (isEmptyAsNull == EmptyNullBehavior.AsNULL)
+                    {
+                        result = null;
+                    }
+                    else if (isEmptyAsNull == EmptyNullBehavior.AsEmpty)
+                    {
+                        result = string.Empty;
+                    }
                 }
-                result = data;
+                else
+                {
+                    result = data;
+                }
                 return true;
             }
             catch

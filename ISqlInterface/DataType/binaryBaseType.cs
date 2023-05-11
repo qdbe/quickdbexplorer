@@ -24,7 +24,7 @@ namespace quickDBExplorer.DataType
             return sodata;
         }
 
-        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
             if (string.IsNullOrEmpty(data.Trim()))
             {
@@ -113,7 +113,7 @@ namespace quickDBExplorer.DataType
             return "byte[]";
         }
 
-        public override bool TryCheckObject(object data, DBFieldInfo fieldInfo, ref string errmsg)
+        public override bool TryCheckObject(object data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref string errmsg)
         {
             if (data == DBNull.Value)
             {

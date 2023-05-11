@@ -76,9 +76,14 @@ namespace quickDBExplorer
         public string CreateTime { get; private set; }
 
 		/// <summary>
+		/// オブジェクトが更新された日時
+		/// </summary>
+		public string ModifyTime { get; private set; }
+
+		/// <summary>
 		/// オブジェクトがシノニムの場合、その参照先
 		/// </summary>
-        public string SynonymBase { get; private set; }
+		public string SynonymBase { get; private set; }
 
 		/// <summary>
 		/// オブジェクトがシノニムの場合、その参照先のオブジェクトの種類
@@ -311,14 +316,15 @@ namespace quickDBExplorer
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
-        /// <param name="objectid">オブジェクトID</param>
+		/// <param name="objectid">オブジェクトID</param>
 		/// <param name="objectType">オブジェクトの型</param>
 		/// <param name="owner">オブジェクトの所有者名</param>
 		/// <param name="name">オブジェクトの名称</param>
 		/// <param name="createdTime">オブジェクトの作成日時</param>
+		/// <param name="modifyTime">オブジェクトの更新日時</param>
 		/// <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
 		/// <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
-		public DBObjectInfo( int objectid, string objectType, string owner, string name, string createdTime, string synonymBase, string synonymBaseType )
+		public DBObjectInfo( int objectid, string objectType, string owner, string name, string createdTime, string modifyTime, string synonymBase, string synonymBaseType )
 		{
 			if( objectType == null )
 			{
@@ -334,6 +340,7 @@ namespace quickDBExplorer
 			this.Owner = owner;
 			this.ObjName = name;
 			this.CreateTime = createdTime;
+			this.ModifyTime = modifyTime;
 			this.SynonymBase = synonymBase;
 			this.SynonymBaseType = synonymBaseType.TrimEnd(null);
 			this.pSchemaBaseInfo = null;

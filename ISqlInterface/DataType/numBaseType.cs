@@ -13,9 +13,9 @@ namespace quickDBExplorer.DataType
             return dr.GetDecimal(col).ToString(System.Globalization.CultureInfo.CurrentCulture);
         }
 
-        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
-            return TryParse(data, typeof(decimal), "Decimal値を指定してください。", ref result, ref errmsg);
+            return TryParse(data, typeof(decimal), "Decimal値を指定してください。", isEmptyAsNull, ref result, ref errmsg);
         }
 
         public override string GetFieldTypeString(string typename, int length, int prec, int xscale)

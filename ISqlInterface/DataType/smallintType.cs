@@ -15,9 +15,9 @@ namespace quickDBExplorer.DataType
             return dr.GetInt16(col).ToString(System.Globalization.CultureInfo.CurrentCulture);
         }
 
-        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
-            return TryParse(data, typeof(System.Int16), "Int16 の整数を指定してください。", ref result, ref errmsg);
+            return TryParse(data, typeof(System.Int16), "Int16 の整数を指定してください。", isEmptyAsNull, ref result, ref errmsg);
         }
 
         public override bool CanLoadData()

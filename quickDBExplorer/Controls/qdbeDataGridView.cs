@@ -91,7 +91,7 @@ namespace quickDBExplorer.Controls
             this.ColumnWidthChanged += DbGrid_ColumnWidthChanged;
             this.Leave += new System.EventHandler(this.dbGrid_Leave);
             this.KeyDown += QdbeDataGridView_KeyDown;
-            this.DataError += QdbeDataGridView_DataError;
+            //this.DataError += QdbeDataGridView_DataError;
             this.RowPostPaint += QdbeDataGridView_RowPostPaint;
             this.CellClick += QdbeDataGridView_CellClick;
             //this.CellValidating += QdbeDataGridView_CellValidating;

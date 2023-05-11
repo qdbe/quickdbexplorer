@@ -124,6 +124,26 @@
             UTF-8(LE)
             </summary>
         </member>
+        <member name="T:quickDBExplorer.DataType.EmptyNullBehavior">
+            <summary>
+            空文字とNULLの扱い
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DataType.EmptyNullBehavior.NoConv">
+            <summary>
+            変換なし
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DataType.EmptyNullBehavior.AsNULL">
+            <summary>
+            NULLとして設定
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.DataType.EmptyNullBehavior.AsEmpty">
+            <summary>
+            空文字として設定
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.DataType.baseType">
             <summary>
             SQLデータタイプ
@@ -188,42 +208,46 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.DataType.baseType.TryParse(System.String,quickDBExplorer.DBFieldInfo,System.Object@,System.String@)">
+        <member name="M:quickDBExplorer.DataType.baseType.TryParse(System.String,quickDBExplorer.DBFieldInfo,quickDBExplorer.DataType.EmptyNullBehavior,System.Object@,System.String@)">
             <summary>
             データ受け入れ用のチェック
             </summary>
             <param name="data"></param>
             <param name="fieldInfo"></param>
+            <param name="isEmptyAsNull"></param>
             <param name="result"></param>
             <param name="errmsg"></param>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.DataType.baseType.TryParse(System.String,System.Type,System.String,System.Object@,System.String@)">
+        <member name="M:quickDBExplorer.DataType.baseType.TryParse(System.String,System.Type,System.String,quickDBExplorer.DataType.EmptyNullBehavior,System.Object@,System.String@)">
             <summary>
             文字列をパースする
             </summary>
             <param name="data"></param>
             <param name="t"></param>
             <param name="defaultErrorMessage"></param>
+            <param name="isEmptyAsNull"></param>
             <param name="result"></param>
             <param name="errmsg"></param>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.DataType.baseType.CheckValue(System.Object,quickDBExplorer.DBFieldInfo,System.String@)">
+        <member name="M:quickDBExplorer.DataType.baseType.CheckValue(System.Object,quickDBExplorer.DBFieldInfo,quickDBExplorer.DataType.EmptyNullBehavior,System.String@)">
             <summary>
             値が正しいかどうかチェックする
             </summary>
             <param name="val"></param>
             <param name="fieldInfo"></param>
+            <param name="isEmptyAsNull"></param>
             <param name="errmsg"></param>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.DataType.baseType.TryCheckObject(System.Object,quickDBExplorer.DBFieldInfo,System.String@)">
+        <member name="M:quickDBExplorer.DataType.baseType.TryCheckObject(System.Object,quickDBExplorer.DBFieldInfo,quickDBExplorer.DataType.EmptyNullBehavior,System.String@)">
             <summary>
             値をチェックする
             </summary>
             <param name="data"></param>
             <param name="fieldInfo"></param>
+            <param name="isEmptyAsNull"></param>
             <param name="errmsg"></param>
             <returns></returns>
         </member>
@@ -400,12 +424,13 @@
             <param name="useParentheses"></param>
             <returns></returns>
         </member>
-        <member name="M:quickDBExplorer.DBFieldInfo.TryParse(System.String,quickDBExplorer.DBFieldInfo,System.Object@,System.String@)">
+        <member name="M:quickDBExplorer.DBFieldInfo.TryParse(System.String,quickDBExplorer.DBFieldInfo,quickDBExplorer.DataType.EmptyNullBehavior,System.Object@,System.String@)">
             <summary>
             文字列をパースしてオブジェクトに変換する
             </summary>
             <param name="data"></param>
             <param name="fieldInfo"></param>
+            <param name="isEmptyAsNull"></param>
             <param name="result"></param>
             <param name="errmsg"></param>
             <returns></returns>
@@ -468,6 +493,11 @@
         <member name="P:quickDBExplorer.DBObjectInfo.CreateTime">
             <summary>
             オブジェクトが生成された日時
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.DBObjectInfo.ModifyTime">
+            <summary>
+            オブジェクトが更新された日時
             </summary>
         </member>
         <member name="P:quickDBExplorer.DBObjectInfo.SynonymBase">
@@ -550,7 +580,7 @@
             行は保持していない
             </summary>
         </member>
-        <member name="M:quickDBExplorer.DBObjectInfo.#ctor(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:quickDBExplorer.DBObjectInfo.#ctor(System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             コンストラクタ
             </summary>
@@ -559,6 +589,7 @@
             <param name="owner">オブジェクトの所有者名</param>
             <param name="name">オブジェクトの名称</param>
             <param name="createdTime">オブジェクトの作成日時</param>
+            <param name="modifyTime">オブジェクトの更新日時</param>
             <param name="synonymBase">シノニムの場合、その参照先のオブジェクト名</param>
             <param name="synonymBaseType">シノニムの場合、その参照先のオブジェクトの型</param>
         </member>

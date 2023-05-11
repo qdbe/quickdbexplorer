@@ -37,7 +37,8 @@ namespace quickDBExplorer
 				(string)dr["uname"],
 				(string)dr["tbname"],
 				(string)((DateTime)dr["cretime"]).ToString("yyyy/MM/dd HH:mm:ss"),
-				(string)dr["synbase"],
+                (string)((DateTime)dr["modtime"]).ToString("yyyy/MM/dd HH:mm:ss"),
+                (string)dr["synbase"],
 				(string)dr["synType"]
 				);
 			dboInfo.DataGet	+= dataSetter;
@@ -46,8 +47,9 @@ namespace quickDBExplorer
 																dboInfo.DisplayObjType,
 																dboInfo.Owner,
 																dboInfo.ObjName,
-																dboInfo.CreateTime
-															}
+																dboInfo.CreateTime,
+                                                                dboInfo.ModifyTime
+                                                            }
 				);
 			it.Tag = dboInfo;
 			return it;

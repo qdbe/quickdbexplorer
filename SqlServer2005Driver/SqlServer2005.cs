@@ -297,11 +297,12 @@ namespace quickDBExplorer
 				destObj += "'" + ar[i] + "'";
 			}
 
-			retsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,@"select 
+			retsql = string.Format(System.Globalization.CultureInfo.CurrentCulture, @"select 
 	t1.name as tbname, 
 	t2.name as uname ,
 	t1.type as tvs,
 	t1.create_date as cretime,
+	t1.modify_date as modtime,
 	isnull(t3.base_object_name,'') as synbase,
 	isnull(t4.type, ' ') as synType,
     t1.object_id  as objectid

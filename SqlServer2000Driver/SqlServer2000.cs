@@ -305,6 +305,7 @@ namespace quickDBExplorer
 					sysusers.name as uname ,
 					xtype as tvs,
 					sysobjects.crdate as cretime,
+					'' as modtime,
 					'' as synbase,
 					'' as synType,
                     id as objectid

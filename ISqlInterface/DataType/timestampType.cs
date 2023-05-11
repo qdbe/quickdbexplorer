@@ -31,7 +31,7 @@ namespace quickDBExplorer.DataType
             
         }
 
-        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
             return true;
         }

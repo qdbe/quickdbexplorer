@@ -99,10 +99,11 @@ namespace quickDBExplorer.DataType
         /// </summary>
         /// <param name="data"></param>
         /// <param name="fieldInfo"></param>
+        /// <param name="isEmptyAsNull"></param>
         /// <param name="result"></param>
         /// <param name="errmsg"></param>
         /// <returns></returns>
-        public abstract bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg);
+        public abstract bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg);
 
         /// <summary>
         /// 文字列をパースする
@@ -110,17 +111,30 @@ namespace quickDBExplorer.DataType
         /// <param name="data"></param>
         /// <param name="t"></param>
         /// <param name="defaultErrorMessage"></param>
+        /// <param name="isEmptyAsNull"></param>
         /// <param name="result"></param>
         /// <param name="errmsg"></param>
         /// <returns></returns>
-        protected bool TryParse(string data, Type t, string defaultErrorMessage, ref object result, ref string errmsg)
+        protected bool TryParse(string data, Type t, string defaultErrorMessage, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
             errmsg = null;
             try
             {
                 if (string.IsNullOrEmpty(data.Trim()))
                 {
-                    result = DBNull.Value;
+                    if (isEmptyAsNull == 0)
+                    {
+                        result = DBNull.Value;
+                    }
+                    else if( result is string )
+                    {
+                        result = string.Empty;
+                    }
+                    else
+                    {
+                        errmsg = defaultErrorMessage;
+                        return false;
+                    }
                     return true;
                 }
                 else
@@ -154,9 +168,10 @@ namespace quickDBExplorer.DataType
         /// </summary>
         /// <param name="val"></param>
         /// <param name="fieldInfo"></param>
+        /// <param name="isEmptyAsNull"></param>
         /// <param name="errmsg"></param>
         /// <returns></returns>
-        public virtual bool CheckValue(object val, DBFieldInfo fieldInfo, out string errmsg)
+        public virtual bool CheckValue(object val, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, out string errmsg)
         {
             errmsg = "";
             if (val != null && val != DBNull.Value)
@@ -167,7 +182,7 @@ namespace quickDBExplorer.DataType
                     return false;
                 }
             }
-            bool result = this.TryCheckObject(val, fieldInfo, ref errmsg);
+            bool result = this.TryCheckObject(val, fieldInfo, isEmptyAsNull, ref errmsg);
 
             return result;
         }
@@ -177,12 +192,13 @@ namespace quickDBExplorer.DataType
         /// </summary>
         /// <param name="data"></param>
         /// <param name="fieldInfo"></param>
+        /// <param name="isEmptyAsNull"></param>
         /// <param name="errmsg"></param>
         /// <returns></returns>
-        public virtual bool TryCheckObject(object data, DBFieldInfo fieldInfo, ref string errmsg)
+        public virtual bool TryCheckObject(object data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref string errmsg)
         {
             object result = null;
-            return TryParse(data.ToString(), fieldInfo, ref result, ref errmsg);
+            return TryParse(data.ToString(), fieldInfo, isEmptyAsNull, ref result, ref errmsg);
         }
     }
 }

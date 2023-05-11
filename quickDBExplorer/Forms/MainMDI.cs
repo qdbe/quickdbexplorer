@@ -82,6 +82,10 @@ namespace quickDBExplorer.Forms
         private MenuItem menuReConnect;
         private MenuItem menuItem1;
         private MenuItem menuResetLayout;
+        private MenuItem menuItem2;
+        private MenuItem menuOptNullOrEmpty;
+        private MenuItem menuOptNull;
+        private MenuItem menuOptEmpty;
         private ToolMacroManager toolMacroManager;
 
 
@@ -142,6 +146,10 @@ namespace quickDBExplorer.Forms
             this.menuAbout = new System.Windows.Forms.MenuItem();
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
+            this.menuOptNullOrEmpty = new System.Windows.Forms.MenuItem();
+            this.menuOptNull = new System.Windows.Forms.MenuItem();
+            this.menuOptEmpty = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -160,6 +168,7 @@ namespace quickDBExplorer.Forms
             this.menuWindow,
             this.menuBookamrk,
             this.menuTools,
+            this.menuItem2,
             this.menuHelpMain});
             // 
             // menuConnect
@@ -262,7 +271,7 @@ namespace quickDBExplorer.Forms
             // 
             // menuHelpMain
             // 
-            this.menuHelpMain.Index = 4;
+            this.menuHelpMain.Index = 5;
             this.menuHelpMain.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuViewHelp,
             this.menuAbout,
@@ -290,6 +299,35 @@ namespace quickDBExplorer.Forms
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
+            // 
+            // menuItem2
+            // 
+            this.menuItem2.Index = 4;
+            this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuOptNullOrEmpty});
+            this.menuItem2.Text = "ÉIÉvÉVÉáÉì(&T)";
+            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
+            // 
+            // menuOptNullOrEmpty
+            // 
+            this.menuOptNullOrEmpty.Index = 0;
+            this.menuOptNullOrEmpty.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuOptNull,
+            this.menuOptEmpty});
+            this.menuOptNullOrEmpty.Text = "ì«çûéûÇÃãÛîíÇÃàµÇ¢";
+            // 
+            // menuOptNull
+            // 
+            this.menuOptNull.Checked = true;
+            this.menuOptNull.Index = 0;
+            this.menuOptNull.Text = "NULL";
+            this.menuOptNull.Click += new System.EventHandler(this.menuOptNullEmpty_Click);
+            // 
+            // menuOptEmpty
+            // 
+            this.menuOptEmpty.Index = 1;
+            this.menuOptEmpty.Text = "ãÛï∂éö";
+            this.menuOptEmpty.Click += new System.EventHandler(this.menuOptNullEmpty_Click);
             // 
             // MainMdi
             // 
@@ -349,6 +387,29 @@ namespace quickDBExplorer.Forms
         void mainform_Enter(object sender, EventArgs e)
         {
             SetBookmarkPopupList((MainForm)sender);
+            SetOption((MainForm)sender);
+        }
+
+        private void SetOption(MainForm sender)
+        {
+            if (sender != null)
+            {
+                SetOptNullEmpty(sender);
+            }
+        }
+
+        private void SetOptNullEmpty(MainForm sender)
+        {
+            if (sender.ReadEmptyAsNull)
+            {
+                this.menuOptNull.Checked = true;
+                this.menuOptEmpty.Checked = false;
+            }
+            else
+            {
+                this.menuOptNull.Checked = false;
+                this.menuOptEmpty.Checked = true;
+            }
         }
 
         /// <summary>
@@ -855,5 +916,28 @@ namespace quickDBExplorer.Forms
                 main.MainForm_Deactivate(sender, e);
             }
         }
+
+        private void menuItem2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuOptNullEmpty_Click(object sender, EventArgs e)
+        {
+            MainForm main = this.ActiveMdiChild as MainForm;
+            if (main != null)
+            {
+                if (sender == this.menuOptEmpty)
+                {
+                    main.ReadEmptyAsNull = false;
+                }
+                else
+                {
+                    main.ReadEmptyAsNull = true;
+                }
+                SetOptNullEmpty(main);
+            }
+        }
+
     }
 }

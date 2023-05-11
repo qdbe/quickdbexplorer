@@ -29,7 +29,7 @@ namespace quickDBExplorer.DataType
 
         }
 
-        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
             errmsg = null;
             if (IsSingleByte == true)
@@ -48,7 +48,21 @@ namespace quickDBExplorer.DataType
                     return false;
                 }
             }
-            result = data;
+            if (string.IsNullOrEmpty(data))
+            {
+                if (isEmptyAsNull == EmptyNullBehavior.NoConv)
+                {
+                    result = data;
+                }
+                else if (isEmptyAsNull == EmptyNullBehavior.AsNULL)
+                {
+                    result = null;
+                }
+                else if (isEmptyAsNull == EmptyNullBehavior.AsEmpty)
+                {
+                    result = string.Empty;
+                }
+            }
             return true;
         }
 

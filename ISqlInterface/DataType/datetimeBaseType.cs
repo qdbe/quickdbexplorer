@@ -13,9 +13,9 @@ namespace quickDBExplorer.DataType
             return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", dr.GetDateTime(col).ToString(System.Globalization.CultureInfo.CurrentCulture), addstr);
         }
 
-        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException(); // Baseなので実装不要
         }
 
         public override bool CanLoadData()

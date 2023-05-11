@@ -136,6 +136,7 @@ namespace quickDBExplorer.manager
                             (string)objDr["Owner"],
                             (string)objDr["ObjectName"],
                             (string)objDr["CreateTime"],
+                            (string)objDr["ModifyTime"],
                             (string)objDr["SynonymBase"],
                             (string)objDr["SynonymBaseType"]
                             );

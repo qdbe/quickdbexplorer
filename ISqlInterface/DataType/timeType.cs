@@ -11,9 +11,9 @@ namespace quickDBExplorer.DataType
             return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{1}{0}{1}", dr.GetValue(col).ToString(), addstr);
         }
 
-        public override bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
+        public override bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
-            return TryParse(data, typeof(System.TimeSpan), "TimeSpanを表す値を指定してください。", ref result, ref errmsg);
+            return TryParse(data, typeof(System.TimeSpan), "TimeSpanを表す値を指定してください。", isEmptyAsNull, ref result, ref errmsg);
         }
 
         public timeType()

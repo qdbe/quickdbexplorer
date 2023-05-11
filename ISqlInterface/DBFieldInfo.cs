@@ -76,7 +76,7 @@ namespace quickDBExplorer
                     object retobj = null;
                     string errmsg = "";
                     // 引数の型が対応していない場合、DefaultTypeになりエラーとなるはず
-                    dataType.TryParse(dataType.DefalutParseString, this, ref retobj, ref errmsg);
+                    dataType.TryParse(dataType.DefalutParseString, this, EmptyNullBehavior.NoConv, ref retobj, ref errmsg);
                 }
             }
 		}
@@ -367,17 +367,18 @@ namespace quickDBExplorer
         /// </summary>
         /// <param name="data"></param>
         /// <param name="fieldInfo"></param>
+        /// <param name="isEmptyAsNull"></param>
         /// <param name="result"></param>
         /// <param name="errmsg"></param>
         /// <returns></returns>
-        public bool TryParse(string data, DBFieldInfo fieldInfo, ref object result, ref string errmsg)
+        public bool TryParse(string data, DBFieldInfo fieldInfo, EmptyNullBehavior isEmptyAsNull, ref object result, ref string errmsg)
         {
             if (this.IsAllowNull == false && string.IsNullOrEmpty(data))
             {
                 errmsg = "値の指定が必要です。";
                 return false;
             }
-            return this.dataType.TryParse(data, fieldInfo, ref result, ref errmsg);
+            return this.dataType.TryParse(data, fieldInfo, isEmptyAsNull, ref result, ref errmsg);
         }
 
         /// <summary>
@@ -397,7 +398,7 @@ namespace quickDBExplorer
                 errmsg = "値の指定が必要です。";
                 return false;
             }
-            return this.dataType.CheckValue(data, this, out errmsg);
+            return this.dataType.CheckValue(data, this, EmptyNullBehavior.NoConv, out errmsg);
         }
 
     }

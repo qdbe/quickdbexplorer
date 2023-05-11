@@ -3682,6 +3682,11 @@
             ログインユーザー名
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ServerData.ReadEmptyAsNull">
+            <summary>
+            空白をNULLとして読み込むか否か
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.ServerData.InputHistories">
             <summary>
             各種入力履歴
@@ -3866,6 +3871,11 @@
         <member name="P:quickDBExplorer.ServerJsonData.LogOnUser">
             <summary>
             ログインユーザー名
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.ReadEmptyAsNull">
+            <summary>
+            空白をNULLとして読み込むか否か
             </summary>
         </member>
         <member name="P:quickDBExplorer.ServerJsonData.InputHistories">

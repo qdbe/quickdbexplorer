@@ -125,6 +125,16 @@ namespace quickDBExplorer.Forms
 			set { this.pServerName = value; }
 		}
 
+		public bool ReadEmptyAsNull { 
+			get {
+				return this.svdata.ReadEmptyAsNull;
+            }
+			set
+			{
+				this.svdata.ReadEmptyAsNull = value;
+			}
+		}
+
 
 		/// <summary>
 		///  接続先のサーバー名。表示用にのみ利用
@@ -310,7 +320,8 @@ namespace quickDBExplorer.Forms
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
 		private ToolStripMenuItem filterClear;
 		private Button btnColRow;
-		private bool IsFilterCaseSensitive = false;
+        private ColumnHeader ColModifyDate;
+        private bool IsFilterCaseSensitive = false;
 
 		/// <summary>
 		/// コンストラクタ
@@ -538,6 +549,7 @@ namespace quickDBExplorer.Forms
             this.filterClear = new System.Windows.Forms.ToolStripMenuItem();
             this.filterCS = new System.Windows.Forms.ToolStripMenuItem();
             this.filterNonCS = new System.Windows.Forms.ToolStripMenuItem();
+            this.ColModifyDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpViewMode.SuspendLayout();
             this.grpSortMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -597,7 +609,8 @@ namespace quickDBExplorer.Forms
             this.ColTVSType,
             this.ColOwner,
             this.ColObjName,
-            this.ColCreateDate});
+            this.ColCreateDate,
+            this.ColModifyDate});
             this.objectList.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.objectList.FullRowSelect = true;
             this.objectList.GridLines = true;
@@ -1536,6 +1549,11 @@ namespace quickDBExplorer.Forms
             this.filterNonCS.Text = "大文字・小文字を区別しない";
             this.filterNonCS.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.filterNonCS.Click += new System.EventHandler(this.filterNonCS_Click);
+            // 
+            // ColModifyDate
+            // 
+            this.ColModifyDate.Text = "更新日";
+            this.ColModifyDate.Width = 130;
             // 
             // MainForm
             // 
@@ -6039,7 +6057,7 @@ namespace quickDBExplorer.Forms
 						{
 							object parseResult = null;
 							string errmsg = string.Empty;
-							if (eachField.TryParse((string)csv[eachField.ColOrder - 1], eachField, ref parseResult, ref errmsg) == false)
+							if (eachField.TryParse((string)csv[eachField.ColOrder - 1], eachField, this.svdata.ReadEmptyAsNull ? DataType.EmptyNullBehavior.AsNULL : DataType.EmptyNullBehavior.AsEmpty, ref parseResult, ref errmsg) == false)
 							{
 								MessageBox.Show("項目 " + eachField.Name + ": " + errmsg + "行:" + linecount.ToString(System.Globalization.CultureInfo.CurrentCulture));
 								isSetAll = false;

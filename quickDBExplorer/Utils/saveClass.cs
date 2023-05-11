@@ -201,6 +201,16 @@ namespace quickDBExplorer
         }
 
         /// <summary>
+        /// ‹ó”’‚ğNULL‚Æ‚µ‚Ä“Ç‚İ‚Ş‚©”Û‚©
+        /// </summary>
+        public bool ReadEmptyAsNull
+        {
+            get;
+            set;
+        }
+
+
+        /// <summary>
         /// Šeí“ü—Í—š—ğ
         /// </summary>
         public Dictionary<string, TextHistoryDataSet> InputHistories { get; set; }
@@ -216,6 +226,7 @@ namespace quickDBExplorer
             sortKey = 0;
             showView = 0;
             IsUseTrust = false;
+            ReadEmptyAsNull = true;
             outdest = new Hashtable();
             outfile = new Hashtable();
             showgrid = new Hashtable();
@@ -270,6 +281,7 @@ namespace quickDBExplorer
             sortKey = 0;
             showView = 0;
             IsUseTrust = false;
+            ReadEmptyAsNull = true;
             outdest = new Hashtable();
             outfile = new Hashtable();
             showgrid = new Hashtable();
@@ -681,6 +693,11 @@ namespace quickDBExplorer
             get { return this.pLogOnUser; }
             set { this.pLogOnUser = value; }
         }
+
+        /// <summary>
+        /// ‹ó”’‚ğNULL‚Æ‚µ‚Ä“Ç‚İ‚Ş‚©”Û‚©
+        /// </summary>
+        public bool ReadEmptyAsNull { get; set; }
 
         /// <summary>
         /// Šeí“ü—Í—š—ğ

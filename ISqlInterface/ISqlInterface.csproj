@@ -106,6 +106,7 @@
     <Compile Include="DataType\decimalType.cs" />
     <Compile Include="DataType\defaultType.cs" />
     <Compile Include="DataType\doubleType.cs" />
+    <Compile Include="DataType\EmptyNullBehavior.cs" />
     <Compile Include="DataType\floatType.cs" />
     <Compile Include="DataType\baseType.cs" />
     <Compile Include="DataType\IDataType.cs" />
