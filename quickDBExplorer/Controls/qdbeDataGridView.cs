@@ -640,7 +640,7 @@ namespace quickDBExplorer.Controls
                 curcell != null
                 )
             {
-                curcell.Value = null;
+                curcell.Value = DBNull.Value;
                 this.InvalidateCell(curcell);
             }
             // CTRL+2 で空白文字列の入力
