@@ -1200,12 +1200,17 @@ where
         {
             try
             {
-                if (this.pSqlConnect.State != ConnectionState.Broken &&
+
+				if (this.pSqlConnect.State != ConnectionState.Broken &&
                     this.pSqlConnect.State != ConnectionState.Closed )
                 {
                     this.SqlConnect.Close();
                 }
-                this.SqlConnect.Open();
+				if (this.pSqlConnect.State != ConnectionState.Closed)
+				{
+					this.SqlConnect.Close();
+				}
+				this.SqlConnect.Open();
             }
             catch (Exception exp)
             {

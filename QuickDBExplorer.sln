@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29409.12
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorer", "quickDBExplorer\quickDBExplorer.csproj", "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
 EndProject
@@ -40,6 +40,43 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2019Driver", "SqlServer2019Driver\SqlServer2019Driver.csproj", "{EA397F4D-4ACF-46B6-9036-CE9CE866D491}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2022Driver", "SqlServer2022Driver\SqlServer2022Driver.csproj", "{4AE74634-51A3-442E-8336-36D95033BD26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISqlInterfaceV40", "ISqlInterface\ISqlInterfaceV40.csproj", "{AE64AE33-4E1A-41C2-B154-A5AEAF3250BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4AE74634-51A3-442E-8336-36D95033BD26} = {4AE74634-51A3-442E-8336-36D95033BD26}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2000DriverV40", "SqlServer2000Driver\SqlServer2000DriverV40.csproj", "{F07BA996-7BCF-452A-A124-BD67A9846C84}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AE64AE33-4E1A-41C2-B154-A5AEAF3250BA} = {AE64AE33-4E1A-41C2-B154-A5AEAF3250BA}
+		{EDFFD956-F6E0-4C23-B219-70FCA92A11EF} = {EDFFD956-F6E0-4C23-B219-70FCA92A11EF}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2005DriverV40", "SqlServer2005Driver\SqlServer2005DriverV40.csproj", "{1B0677CE-A271-4E0C-9506-B33FC4421FF3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EDFFD956-F6E0-4C23-B219-70FCA92A11EF} = {EDFFD956-F6E0-4C23-B219-70FCA92A11EF}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2008DriverV40", "SqlServer2008Driver\SqlServer2008DriverV40.csproj", "{4BDA78D1-653A-482D-A64A-4F4ABE4AE7D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2008R2DriverV40", "SqlServer2008R2Driver\SqlServer2008R2DriverV40.csproj", "{620E8EF3-9397-486B-9966-BD4BC77C1898}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2012DriverV40", "SqlServer2012Driver\SqlServer2012DriverV40.csproj", "{E4253E7B-E8D8-4323-9DD0-9AEE3A0EF336}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2014DriverV40", "SqlServer2014Driver\SqlServer2014DriverV40.csproj", "{CE1D3B13-CD48-45FC-BD48-2730A474E812}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2016DriverV40", "SqlServer2016Driver\SqlServer2016DriverV40.csproj", "{038592DE-13AA-46D7-896B-6303B16C9484}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2017DriverV40", "SqlServer2017Driver\SqlServer2017DriverV40.csproj", "{03EEE7FB-C88E-47E3-A40D-E593679C24CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2019DriverV40", "SqlServer2019Driver\SqlServer2019DriverV40.csproj", "{9C8B06E1-86CE-45AF-A317-B36FD89B40B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2022DriverV40", "SqlServer2022Driver\SqlServer2022DriverV40.csproj", "{AC31DCBB-E598-49CA-9103-41C8AABA1001}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4AE74634-51A3-442E-8336-36D95033BD26} = {4AE74634-51A3-442E-8336-36D95033BD26}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorerV40", "quickDBExplorer\quickDBExplorerV40.csproj", "{EDFFD956-F6E0-4C23-B219-70FCA92A11EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +132,54 @@ Global
 		{4AE74634-51A3-442E-8336-36D95033BD26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AE74634-51A3-442E-8336-36D95033BD26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AE74634-51A3-442E-8336-36D95033BD26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE64AE33-4E1A-41C2-B154-A5AEAF3250BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE64AE33-4E1A-41C2-B154-A5AEAF3250BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE64AE33-4E1A-41C2-B154-A5AEAF3250BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE64AE33-4E1A-41C2-B154-A5AEAF3250BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F07BA996-7BCF-452A-A124-BD67A9846C84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F07BA996-7BCF-452A-A124-BD67A9846C84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F07BA996-7BCF-452A-A124-BD67A9846C84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F07BA996-7BCF-452A-A124-BD67A9846C84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B0677CE-A271-4E0C-9506-B33FC4421FF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B0677CE-A271-4E0C-9506-B33FC4421FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B0677CE-A271-4E0C-9506-B33FC4421FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B0677CE-A271-4E0C-9506-B33FC4421FF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BDA78D1-653A-482D-A64A-4F4ABE4AE7D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BDA78D1-653A-482D-A64A-4F4ABE4AE7D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BDA78D1-653A-482D-A64A-4F4ABE4AE7D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BDA78D1-653A-482D-A64A-4F4ABE4AE7D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{620E8EF3-9397-486B-9966-BD4BC77C1898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{620E8EF3-9397-486B-9966-BD4BC77C1898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{620E8EF3-9397-486B-9966-BD4BC77C1898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{620E8EF3-9397-486B-9966-BD4BC77C1898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4253E7B-E8D8-4323-9DD0-9AEE3A0EF336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4253E7B-E8D8-4323-9DD0-9AEE3A0EF336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4253E7B-E8D8-4323-9DD0-9AEE3A0EF336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4253E7B-E8D8-4323-9DD0-9AEE3A0EF336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE1D3B13-CD48-45FC-BD48-2730A474E812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE1D3B13-CD48-45FC-BD48-2730A474E812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE1D3B13-CD48-45FC-BD48-2730A474E812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE1D3B13-CD48-45FC-BD48-2730A474E812}.Release|Any CPU.Build.0 = Release|Any CPU
+		{038592DE-13AA-46D7-896B-6303B16C9484}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{038592DE-13AA-46D7-896B-6303B16C9484}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{038592DE-13AA-46D7-896B-6303B16C9484}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{038592DE-13AA-46D7-896B-6303B16C9484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03EEE7FB-C88E-47E3-A40D-E593679C24CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03EEE7FB-C88E-47E3-A40D-E593679C24CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03EEE7FB-C88E-47E3-A40D-E593679C24CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03EEE7FB-C88E-47E3-A40D-E593679C24CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C8B06E1-86CE-45AF-A317-B36FD89B40B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C8B06E1-86CE-45AF-A317-B36FD89B40B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C8B06E1-86CE-45AF-A317-B36FD89B40B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C8B06E1-86CE-45AF-A317-B36FD89B40B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC31DCBB-E598-49CA-9103-41C8AABA1001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC31DCBB-E598-49CA-9103-41C8AABA1001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC31DCBB-E598-49CA-9103-41C8AABA1001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC31DCBB-E598-49CA-9103-41C8AABA1001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDFFD956-F6E0-4C23-B219-70FCA92A11EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDFFD956-F6E0-4C23-B219-70FCA92A11EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDFFD956-F6E0-4C23-B219-70FCA92A11EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDFFD956-F6E0-4C23-B219-70FCA92A11EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
