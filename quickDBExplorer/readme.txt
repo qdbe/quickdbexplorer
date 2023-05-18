@@ -8,7 +8,7 @@
 
 
 1.1.	quickDBExplorer とは
-.NET Framework 3.5.1上で動作する、データベース(SQL SERVER 2022/2019/2017/2016/2014/2012/2008R2/2008/2005/2000)アプリケーションの開発者向けのMDI形式の補助ツールです。エンタープライズマネージャー/SQL Server Management Studioやクエリアナライザでは用意されていない機能を実現したり、使いにくい機能を補助する目的に作成されました(完全な置き換えは目標としていません)。
+.NET Framework 3.5.1もしくは4.5以上で動作する、データベース(SQL SERVER 2022/2019/2017/2016/2014/2012/2008R2/2008/2005/2000)アプリケーションの開発者向けのMDI形式の補助ツールです。エンタープライズマネージャー/SQL Server Management Studioやクエリアナライザでは用意されていない機能を実現したり、使いにくい機能を補助する目的に作成されました(完全な置き換えは目標としていません)。
 特にテーブルに対する処理に特化しています。
 テーブルを指定した
 ・	insert文の生成(insert文によるデータエクスポート機能)
@@ -45,7 +45,7 @@
 
 3.1.		インストール方法
 	以前のバージョンを利用している場合には、コントロールパネル-プログラムの追加と削除 からquickDBExplorerを選択し、一旦アンインストールするか、展開後のファイルで上書きしてください。
-	quickDBExplorer.2.6.0.zip を任意の場所に解凍して下さい。
+	quickDBExplorer.2.7.0.zip を任意の場所に解凍して下さい。
 	Ver 2.0 以降はレジストリなどは利用していません。
 
 3.2.		アンインストール方法
@@ -57,7 +57,7 @@
 
 4.1		ライセンス等の詳細
 
-Copyright (C) 2004-2020　Y.N(godz)
+Copyright (C) 2004-2023　Y.N(godz)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
