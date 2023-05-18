@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{038592DE-13AA-46D7-896B-6303B16C9484}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SqlServer2016Driver</RootNamespace>
+    <AssemblyName>SqlServer2016Driver</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\net40\Debug\</OutputPath>
+    <BaseIntermediateOutputPath>obj\net40\</BaseIntermediateOutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\net40\Release\</OutputPath>
+    <BaseIntermediateOutputPath>obj\net40\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServer2016.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ISqlInterface\ISqlInterfaceV40.csproj">
+      <Project>{ae64ae33-4e1a-41c2-b154-a5aeaf3250ba}</Project>
+      <Name>ISqlInterfaceV40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2005Driver\SqlServer2005DriverV40.csproj">
+      <Project>{1b0677ce-a271-4e0c-9506-b33fc4421ff3}</Project>
+      <Name>SqlServer2005DriverV40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2008Driver\SqlServer2008DriverV40.csproj">
+      <Project>{4bda78d1-653a-482d-a64a-4f4abe4ae7d9}</Project>
+      <Name>SqlServer2008DriverV40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2008R2Driver\SqlServer2008R2DriverV40.csproj">
+      <Project>{620e8ef3-9397-486b-9966-bd4bc77c1898}</Project>
+      <Name>SqlServer2008R2DriverV40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2012Driver\SqlServer2012DriverV40.csproj">
+      <Project>{e4253e7b-e8d8-4323-9dd0-9aee3a0ef336}</Project>
+      <Name>SqlServer2012DriverV40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2014Driver\SqlServer2014DriverV40.csproj">
+      <Project>{ce1d3b13-cd48-45fc-bd48-2730a474e812}</Project>
+      <Name>SqlServer2014DriverV40</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)quickDBExplorer\bin\net40\$(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
