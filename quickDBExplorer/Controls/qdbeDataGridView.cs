@@ -72,6 +72,7 @@ namespace quickDBExplorer.Controls
             this.AutoGenerateColumns = false;
             this.DefaultCellStyle.WrapMode = DataGridViewTriState.False;
             this.DefaultCellStyle.NullValue = string.Empty;
+            this.DefaultCellStyle.DataSourceNullValue = DBNull.Value;
             this.RowHeadersWidth = 40;
             this.DefaultRowHeaderWidth = this.RowHeadersWidth;
             this.RowTemplate.Height = 15;
@@ -640,7 +641,7 @@ namespace quickDBExplorer.Controls
                 curcell != null
                 )
             {
-                curcell.Value = DBNull.Value;
+                curcell.Value = null;
                 this.InvalidateCell(curcell);
             }
             // CTRL+2 で空白文字列の入力
