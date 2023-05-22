@@ -522,8 +522,9 @@ namespace quickDBExplorer.Controls
             if (e.KeyData == (Keys.Control | Keys.C))
             {
                 //System.Diagnostics.Debug.WriteLine("Ctrl+C");
-                
-                Clipboard.SetDataObject(obj.ToString(), true);
+
+                copyDbGrid(selectionMode.SELECTED_CELL,false);
+                e.SuppressKeyPress = true;
                 return;
             }
             //System.Diagnostics.Debug.WriteLine(e.ToString() + ":" + e.KeyCode.ToString() + ":" + e.Alt + ":" + e.Control + ":" + e.Shift);
@@ -757,7 +758,7 @@ namespace quickDBExplorer.Controls
         /// <param name="e"></param>
         private void copyDbGridMenu_Click(object sender, System.EventArgs e)
         {
-            copyDbGrid(false);
+            copyDbGrid(selectionMode.ALL);
         }
 
         /// <summary>
@@ -767,14 +768,21 @@ namespace quickDBExplorer.Controls
         /// <param name="e"></param>
         private void copySelectedDbGridMenu_Click(object sender, System.EventArgs e)
         {
-            copyDbGrid(true);
+            copyDbGrid(selectionMode.SELECTED_LINE);
+        }
+
+        protected enum selectionMode { 
+            ALL,
+            SELECTED_LINE,
+            SELECTED_CELL
         }
 
         /// <summary>
         /// 選択行のみクリップボードにコピーする
         /// </summary>
         /// <param name="isSelectOnly">選択行のみコピーするか否か</param>
-        private void copyDbGrid(bool isSelectOnly)
+        /// <param name="copyHeader"></param>
+        private void copyDbGrid(selectionMode selMode, bool copyHeader = true)
         {
             if (this.Visible == false)
             {
@@ -799,43 +807,66 @@ namespace quickDBExplorer.Controls
                 return;
             }
             StringBuilder strline = new StringBuilder();
+            StringBuilder strHeader = new StringBuilder();
             StringWriter wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
-            // header 
-            int cnt = 0;
-            foreach (DataColumn col in dt.Columns)
-            {
-                if (cnt != 0)
-                {
-                    wr.Write("\t");
-                }
-                wr.Write(col.ColumnName);
-                cnt++;
-            }
-            wr.Write(wr.NewLine);
+
+            bool hasSetHeader = false;
+
+            bool isMulitiSelect = this.SelectedCells.Count == 1 ? false : true;
+
 
             for (int y = 0; y < this.Rows.Count; y++)
             {
-                if (isSelectOnly == true &&
-                    this.Rows[y].Selected == false)
+                if (selMode == selectionMode.SELECTED_LINE &&
+                    !this.Rows[y].Selected)
                 {
                     continue;
                 }
+
+                bool hasData = false;
+                int colCnt = 0;
                 for (int x = 0; x < dt.Columns.Count; x++)
                 {
-                    if (x != 0)
+                    if (selMode == selectionMode.SELECTED_CELL &&
+                        this[x, y].Selected == false)
+                    {
+                        continue;
+                    }
+                    // header 
+                    if (hasSetHeader == false && copyHeader)
+                    {
+                        if (strHeader.Length != 0)
+                        {
+                            strHeader.Append("\t");
+                        }
+                        strHeader.Append(dt.Columns[x].ColumnName);
+                    }
+                    if (colCnt != 0)
                     {
                         wr.Write("\t");
                     }
-                    if (this[x,y].Value != DBNull.Value &&
+                    if (this[x, y].Value != DBNull.Value &&
                         this[x, y].Value != null)
                     {
-                        wr.Write(this[x,y].Value.ToString());
+                        wr.Write(this[x, y].Value.ToString());
+                    }
+                    colCnt++;
+                    hasData = true;
+                }
+                if (hasData)
+                {
+                    hasSetHeader = true;
+                    if (isMulitiSelect|| copyHeader)
+                    {
+                        wr.Write(wr.NewLine);
                     }
                 }
-                wr.Write(wr.NewLine);
             }
-            Clipboard.SetDataObject(strline.ToString(), true);
-            MessageBox.Show("処理を完了しました");
+            if (strHeader.Length > 0)
+            {
+                strHeader.AppendLine("");
+            }
+            Clipboard.SetDataObject(strHeader.ToString() + strline.ToString(), true);
         }
 
         private void allSelectDbGridMenu_Click(object sender, System.EventArgs e)

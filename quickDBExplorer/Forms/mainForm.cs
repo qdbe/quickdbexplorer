@@ -125,6 +125,9 @@ namespace quickDBExplorer.Forms
 			set { this.pServerName = value; }
 		}
 
+		/// <summary>
+		/// テキスト読込時に空文字をNULL・空文字のいずれとして読み込むか
+		/// </summary>
 		public bool ReadEmptyAsNull { 
 			get {
 				return this.svdata.ReadEmptyAsNull;
@@ -135,11 +138,26 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
+        /// <summary>
+        /// グリッド表示時の幅の初期値
+        /// </summary>
+        public bool GridDefaltWidth
+        {
+            get
+            {
+                return this.svdata.GridDefaltWidth;
+            }
+            set
+            {
+                this.svdata.GridDefaltWidth = value;
+            }
+        }
 
-		/// <summary>
-		///  接続先のサーバー名。表示用にのみ利用
-		/// </summary>
-		public string ServerInstanceName
+
+        /// <summary>
+        ///  接続先のサーバー名。表示用にのみ利用
+        /// </summary>
+        public string ServerInstanceName
 		{
 			get {
 				if (this.InstanceName == null || this.InstanceName.Length == 0)
@@ -2435,6 +2453,14 @@ namespace quickDBExplorer.Forms
                     this.txtAlias.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
                     // データ表示部に、該当オブジェクトのデータを表示する
                     DispData(this.objectList.GetSelectObject(0));
+					if (this.svdata.GridDefaltWidth == true)
+					{
+						//this.dbGrid.ResetWidth2Default();
+					}
+					else
+					{
+                        this.dbGrid.SetWidth2Full();
+                    }
                 }
                 else
                 {

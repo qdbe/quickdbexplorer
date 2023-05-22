@@ -365,11 +365,12 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.copyDbGrid(System.Boolean)">
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.copyDbGrid(quickDBExplorer.Controls.qdbeDataGridView.selectionMode,System.Boolean)">
             <summary>
             選択行のみクリップボードにコピーする
             </summary>
             <param name="isSelectOnly">選択行のみコピーするか否か</param>
+            <param name="copyHeader"></param>
         </member>
         <member name="M:quickDBExplorer.Controls.qdbeDataGridView.readCsvDbGridMenu_Click(System.Object,System.EventArgs)">
             <summary>
@@ -1098,6 +1099,16 @@
              接続先のサーバー名。表示用にのみ利用
             </summary>
         </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.ReadEmptyAsNull">
+            <summary>
+            テキスト読込時に空文字をNULL・空文字のいずれとして読み込むか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.GridDefaltWidth">
+            <summary>
+            グリッド表示時の幅の初期値
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.Forms.MainForm.ServerInstanceName">
             <summary>
              接続先のサーバー名。表示用にのみ利用
@@ -1596,6 +1607,12 @@
             </summary>
             <param name="sender">--</param>
             <param name="e">--</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainMdi.SetGridDefaultWidth(quickDBExplorer.Forms.MainForm)">
+            <summary>
+            グリッドの幅の初期値を設定する
+            </summary>
+            <param name="sender"></param>
         </member>
         <member name="M:quickDBExplorer.Forms.MainMdi.InitErrMessage">
             <summary>
@@ -3687,6 +3704,11 @@
             空白をNULLとして読み込むか否か
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ServerData.GridDefaltWidth">
+            <summary>
+            グリッド表示時の幅の初期値
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.ServerData.InputHistories">
             <summary>
             各種入力履歴
@@ -3876,6 +3898,11 @@
         <member name="P:quickDBExplorer.ServerJsonData.ReadEmptyAsNull">
             <summary>
             空白をNULLとして読み込むか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.GridDefaltWidth">
+            <summary>
+            グリッド表示時の幅の初期値
             </summary>
         </member>
         <member name="P:quickDBExplorer.ServerJsonData.InputHistories">

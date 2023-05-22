@@ -209,6 +209,12 @@ namespace quickDBExplorer
             set;
         }
 
+        /// <summary>
+        /// グリッド表示時の幅の初期値
+        /// </summary>
+        public bool GridDefaltWidth { get; set; }
+
+
 
         /// <summary>
         /// 各種入力履歴
@@ -227,6 +233,7 @@ namespace quickDBExplorer
             showView = 0;
             IsUseTrust = false;
             ReadEmptyAsNull = true;
+            GridDefaltWidth = true;
             outdest = new Hashtable();
             outfile = new Hashtable();
             showgrid = new Hashtable();
@@ -282,6 +289,7 @@ namespace quickDBExplorer
             showView = 0;
             IsUseTrust = false;
             ReadEmptyAsNull = true;
+            GridDefaltWidth = true;
             outdest = new Hashtable();
             outfile = new Hashtable();
             showgrid = new Hashtable();
@@ -698,6 +706,12 @@ namespace quickDBExplorer
         /// 空白をNULLとして読み込むか否か
         /// </summary>
         public bool ReadEmptyAsNull { get; set; }
+
+
+        /// <summary>
+        /// グリッド表示時の幅の初期値
+        /// </summary>
+        public bool GridDefaltWidth { get; set; }
 
         /// <summary>
         /// 各種入力履歴
