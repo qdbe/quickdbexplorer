@@ -128,30 +128,47 @@ namespace quickDBExplorer.Forms
 		/// <summary>
 		/// テキスト読込時に空文字をNULL・空文字のいずれとして読み込むか
 		/// </summary>
-		public bool ReadEmptyAsNull { 
+		public bool ReadEmptyAsNull {
 			get {
 				return this.svdata.ReadEmptyAsNull;
-            }
+			}
 			set
 			{
 				this.svdata.ReadEmptyAsNull = value;
 			}
 		}
 
-        /// <summary>
-        /// グリッド表示時の幅の初期値
-        /// </summary>
-        public bool GridDefaltWidth
-        {
+		/// <summary>
+		/// グリッド表示時の幅の初期値
+		/// </summary>
+		public bool GridDefaltWidth
+		{
+			get
+			{
+				return this.svdata.GridDefaltWidth;
+			}
+			set
+			{
+				this.svdata.GridDefaltWidth = value;
+			}
+		}
+
+		/// <summary>
+		/// フィルタで大文字小文字を区別するか否か
+		/// </summary>
+		public bool IsFilterCaseSensitive
+		{
             get
             {
-                return this.svdata.GridDefaltWidth;
+                return this.svdata.IsFilterCaseSensitive;
             }
             set
             {
-                this.svdata.GridDefaltWidth = value;
+                this.svdata.IsFilterCaseSensitive = value;
             }
+
         }
+
 
 
         /// <summary>
@@ -332,15 +349,12 @@ namespace quickDBExplorer.Forms
 		private ToolTip commTooltip;
 		private MenuItem fldmenuMakePoco;
 		private MenuItem fldmenuMakePocoNoClass;
-		private ContextMenuStrip filterMenu;
-		private ToolStripMenuItem filterCS;
-		private ToolStripMenuItem filterNonCS;
 		private System.Windows.Forms.ColumnHeader ColCreateDate;
-		private ToolStripMenuItem filterClear;
 		private Button btnColRow;
         private ColumnHeader ColModifyDate;
-        private bool IsFilterCaseSensitive = false;
-
+		private MenuItem fldmenuSchemaTableField;
+		private MenuItem fldmenuSchemaTableFieldComma;
+		
 		/// <summary>
 		/// コンストラクタ
 		/// </summary>
@@ -483,6 +497,7 @@ namespace quickDBExplorer.Forms
             this.ColOwner = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColObjName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColCreateDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColModifyDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuISQLW = new System.Windows.Forms.MenuItem();
             this.btnInsert = new System.Windows.Forms.Button();
             this.btnFieldList = new System.Windows.Forms.Button();
@@ -528,6 +543,8 @@ namespace quickDBExplorer.Forms
             this.menuFieldMakeWhere = new System.Windows.Forms.MenuItem();
             this.fldmenuMakePoco = new System.Windows.Forms.MenuItem();
             this.fldmenuMakePocoNoClass = new System.Windows.Forms.MenuItem();
+            this.fldmenuSchemaTableField = new System.Windows.Forms.MenuItem();
+            this.fldmenuSchemaTableFieldComma = new System.Windows.Forms.MenuItem();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -563,11 +580,6 @@ namespace quickDBExplorer.Forms
             this.menuTimeoutChange = new System.Windows.Forms.ToolStripMenuItem();
             this.DBReloadMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.commTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.filterMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.filterClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.filterCS = new System.Windows.Forms.ToolStripMenuItem();
-            this.filterNonCS = new System.Windows.Forms.ToolStripMenuItem();
-            this.ColModifyDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grpViewMode.SuspendLayout();
             this.grpSortMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -591,7 +603,6 @@ namespace quickDBExplorer.Forms
             this.UpDownSplitter.Panel2.SuspendLayout();
             this.UpDownSplitter.SuspendLayout();
             this.dbMenu.SuspendLayout();
-            this.filterMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // MsgArea
@@ -665,6 +676,11 @@ namespace quickDBExplorer.Forms
             // 
             this.ColCreateDate.Text = "作成日";
             this.ColCreateDate.Width = 130;
+            // 
+            // ColModifyDate
+            // 
+            this.ColModifyDate.Text = "更新日";
+            this.ColModifyDate.Width = 130;
             // 
             // menuISQLW
             // 
@@ -1061,7 +1077,9 @@ namespace quickDBExplorer.Forms
             this.menuFieldAliasCopy,
             this.menuFieldMakeWhere,
             this.fldmenuMakePoco,
-            this.fldmenuMakePocoNoClass});
+            this.fldmenuMakePocoNoClass,
+            this.fldmenuSchemaTableField,
+            this.fldmenuSchemaTableFieldComma});
             // 
             // fldmenuCopy
             // 
@@ -1110,6 +1128,18 @@ namespace quickDBExplorer.Forms
             this.fldmenuMakePocoNoClass.Index = 7;
             this.fldmenuMakePocoNoClass.Text = "Pocoクラス生成(クラス無し)";
             this.fldmenuMakePocoNoClass.Click += new System.EventHandler(this.fldmenuMakePocoNoClass_Click);
+            // 
+            // fldmenuSchemaTableField
+            // 
+            this.fldmenuSchemaTableField.Index = 8;
+            this.fldmenuSchemaTableField.Text = "スキーマ+テーブル名＋フィールド名";
+            this.fldmenuSchemaTableField.Click += new System.EventHandler(this.fldmenuSchemaTableField_Click);
+            // 
+            // fldmenuSchemaTableFieldComma
+            // 
+            this.fldmenuSchemaTableFieldComma.Index = 9;
+            this.fldmenuSchemaTableFieldComma.Text = "スキーマ+テーブル名＋フィールド名＋カンマ";
+            this.fldmenuSchemaTableFieldComma.Click += new System.EventHandler(this.fldmenuSchemaTableFieldComma_Click);
             // 
             // label9
             // 
@@ -1377,7 +1407,6 @@ namespace quickDBExplorer.Forms
             this.labelFilter.Size = new System.Drawing.Size(54, 12);
             this.labelFilter.TabIndex = 3;
             this.labelFilter.Text = "フィルタ(&A)";
-            this.labelFilter.MouseClick += new System.Windows.Forms.MouseEventHandler(this.labelFilter_MouseClick);
             // 
             // txtObjFilter
             // 
@@ -1536,43 +1565,6 @@ namespace quickDBExplorer.Forms
             this.DBReloadMenu.Text = "DB再読み込み(&R)";
             this.DBReloadMenu.Click += new System.EventHandler(this.DBReloadMenu_Click);
             // 
-            // filterMenu
-            // 
-            this.filterMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filterClear,
-            this.filterCS,
-            this.filterNonCS});
-            this.filterMenu.Name = "filterMenu";
-            this.filterMenu.Size = new System.Drawing.Size(214, 70);
-            // 
-            // filterClear
-            // 
-            this.filterClear.Name = "filterClear";
-            this.filterClear.Size = new System.Drawing.Size(213, 22);
-            this.filterClear.Text = "フィルター値をクリア";
-            this.filterClear.Click += new System.EventHandler(this.filterClear_Click);
-            // 
-            // filterCS
-            // 
-            this.filterCS.Name = "filterCS";
-            this.filterCS.Size = new System.Drawing.Size(213, 22);
-            this.filterCS.Text = "大文字・小文字を区別する";
-            this.filterCS.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.filterCS.Click += new System.EventHandler(this.filterCS_Click);
-            // 
-            // filterNonCS
-            // 
-            this.filterNonCS.Name = "filterNonCS";
-            this.filterNonCS.Size = new System.Drawing.Size(213, 22);
-            this.filterNonCS.Text = "大文字・小文字を区別しない";
-            this.filterNonCS.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.filterNonCS.Click += new System.EventHandler(this.filterNonCS_Click);
-            // 
-            // ColModifyDate
-            // 
-            this.ColModifyDate.Text = "更新日";
-            this.ColModifyDate.Width = 130;
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -1619,7 +1611,6 @@ namespace quickDBExplorer.Forms
             this.UpDownSplitter.Panel2.ResumeLayout(false);
             this.UpDownSplitter.ResumeLayout(false);
             this.dbMenu.ResumeLayout(false);
-            this.filterMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -1667,29 +1658,16 @@ namespace quickDBExplorer.Forms
 
             SetButtonPopup(menuAr);
 
-            SetFilterMenuItem();
+            //SetFilterMenuItem();
 
         }
 
-        private void SetFilterMenuItem()
+        public void SetFilterCS()
         {
-            ToolStripMenuItem onitem;
-            ToolStripMenuItem offitem;
-            if (this.IsFilterCaseSensitive)
-            {
-                onitem = this.filterCS;
-                offitem = this.filterNonCS;
+			if (!string.IsNullOrEmpty(this.txtObjFilter.Text))
+			{
+                this.objectList.FilterObjectList(this.txtObjFilter.Text, this.IsFilterCaseSensitive);
             }
-            else
-            {
-                onitem = this.filterNonCS;
-                offitem = this.filterCS;
-            }
-            if (!onitem.Text.StartsWith("●"))
-            {
-                onitem.Text = "●" + onitem.Text;
-            }
-            offitem.Text = offitem.Text.Replace("●", "");
         }
 
         private void SetButtonPopup(List<qdbeMenuItem> menuAr)
@@ -1961,10 +1939,19 @@ namespace quickDBExplorer.Forms
 
         }
 
+        private void fldmenuSchemaTableField_Click(object sender, EventArgs e)
+        {
+			CopyFldList(true, false, true);
+        }
+
+        private void fldmenuSchemaTableFieldComma_Click(object sender, EventArgs e)
+        {
+            CopyFldList(true, true, true);
+        }
 
 
 
-		private void rdoUnicode_CheckedChanged(object sender, System.EventArgs e)
+        private void rdoUnicode_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if( this.rdoUnicode.Checked == true )
 			{
@@ -5656,10 +5643,16 @@ namespace quickDBExplorer.Forms
 		/// </summary>
 		/// <param name="lf">改行をつけるか否か</param>
 		/// <param name="docomma">カンマをつけるか否か</param>
-		protected void CopyFldList(bool lf, bool docomma)
+		/// <param name="schemaTable"></param>
+		protected void CopyFldList(bool lf, bool docomma, bool schemaTable = false)
 		{
 			StringBuilder str = new StringBuilder();
-			for( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
+			if (this.fieldListbox.SelectedItems.Count == 0)
+			{
+				return;
+			}
+			string tableNm = this.objectList.GetSelectObjectName(0);
+            for ( int i=0; i < this.fieldListbox.SelectedItems.Count; i++ )
 			{
 				if( i != 0 )
 				{
@@ -5685,6 +5678,10 @@ namespace quickDBExplorer.Forms
 							str.Append("\t");
 						}
 					}
+				}
+				if (schemaTable)
+				{
+					str.Append(tableNm).Append(".");
 				}
 				str.Append((string)this.fieldListbox.SelectedItems[i].ToString());
 			}
@@ -6814,33 +6811,6 @@ namespace quickDBExplorer.Forms
 
         }
 
-        private void filterCS_Click(object sender, EventArgs e)
-        {
-            IsFilterCaseSensitive = true;
-            SetFilterMenuItem();
-            this.objectList.FilterObjectList(this.txtObjFilter.Text, this.IsFilterCaseSensitive);
-        }
-
-        private void filterNonCS_Click(object sender, EventArgs e)
-        {
-            IsFilterCaseSensitive = false;
-            SetFilterMenuItem();
-            this.objectList.FilterObjectList(this.txtObjFilter.Text, this.IsFilterCaseSensitive);
-        }
-
-        private void labelFilter_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right)
-            {
-                this.filterMenu.Show((Control)this.labelFilter, new Point(0, 0));
-            }
-        }
-
-        private void filterClear_Click(object sender, EventArgs e)
-        {
-            this.txtObjFilter.Text = string.Empty;
-        }
-
         public void ReConnect()
         {
             this.SqlDriver.ReConnect();
@@ -6892,5 +6862,6 @@ namespace quickDBExplorer.Forms
 			//this.dbGrid.ShowCellToolTips = false;
 			//this.commTooltip.Active = false;
 		}
+
 	}
 }

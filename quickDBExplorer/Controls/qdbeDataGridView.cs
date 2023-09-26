@@ -771,17 +771,29 @@ namespace quickDBExplorer.Controls
             copyDbGrid(selectionMode.SELECTED_LINE);
         }
 
+        /// <summary>
+        /// 選択モード種別
+        /// </summary>
         protected enum selectionMode { 
+            /// <summary>
+            /// 全選択
+            /// </summary>
             ALL,
+            /// <summary>
+            /// 行選択
+            /// </summary>
             SELECTED_LINE,
+            /// <summary>
+            /// セル選択
+            /// </summary>
             SELECTED_CELL
         }
 
         /// <summary>
         /// 選択行のみクリップボードにコピーする
         /// </summary>
-        /// <param name="isSelectOnly">選択行のみコピーするか否か</param>
         /// <param name="copyHeader"></param>
+        /// <param name="selMode"></param>
         private void copyDbGrid(selectionMode selMode, bool copyHeader = true)
         {
             if (this.Visible == false)

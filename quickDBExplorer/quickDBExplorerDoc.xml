@@ -365,12 +365,32 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="T:quickDBExplorer.Controls.qdbeDataGridView.selectionMode">
+            <summary>
+            選択モード種別
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Controls.qdbeDataGridView.selectionMode.ALL">
+            <summary>
+            全選択
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Controls.qdbeDataGridView.selectionMode.SELECTED_LINE">
+            <summary>
+            行選択
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Controls.qdbeDataGridView.selectionMode.SELECTED_CELL">
+            <summary>
+            セル選択
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.Controls.qdbeDataGridView.copyDbGrid(quickDBExplorer.Controls.qdbeDataGridView.selectionMode,System.Boolean)">
             <summary>
             選択行のみクリップボードにコピーする
             </summary>
-            <param name="isSelectOnly">選択行のみコピーするか否か</param>
             <param name="copyHeader"></param>
+            <param name="selMode"></param>
         </member>
         <member name="M:quickDBExplorer.Controls.qdbeDataGridView.readCsvDbGridMenu_Click(System.Object,System.EventArgs)">
             <summary>
@@ -1109,6 +1129,11 @@
             グリッド表示時の幅の初期値
             </summary>
         </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.IsFilterCaseSensitive">
+            <summary>
+            フィルタで大文字小文字を区別するか否か
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.Forms.MainForm.ServerInstanceName">
             <summary>
              接続先のサーバー名。表示用にのみ利用
@@ -1430,12 +1455,13 @@
             false; 全て表示しない</param>
             <param name="usePreSql">前回表示時のクエリの結果をもう一度取得しなおすか否か</param>
         </member>
-        <member name="M:quickDBExplorer.Forms.MainForm.CopyFldList(System.Boolean,System.Boolean)">
+        <member name="M:quickDBExplorer.Forms.MainForm.CopyFldList(System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             フィールドリスト情報のコピー
             </summary>
             <param name="lf">改行をつけるか否か</param>
             <param name="docomma">カンマをつけるか否か</param>
+            <param name="schemaTable"></param>
         </member>
         <member name="M:quickDBExplorer.Forms.MainForm.LoadFile2Data(System.Boolean,System.Boolean)">
             <summary>
@@ -3709,6 +3735,11 @@
             グリッド表示時の幅の初期値
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ServerData.IsFilterCaseSensitive">
+            <summary>
+            フィルタで大文字小文字を区別するか否か
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.ServerData.InputHistories">
             <summary>
             各種入力履歴
@@ -3903,6 +3934,11 @@
         <member name="P:quickDBExplorer.ServerJsonData.GridDefaltWidth">
             <summary>
             グリッド表示時の幅の初期値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.IsFilterCaseSensitive">
+            <summary>
+            フィルタで大文字小文字を区別するか否か
             </summary>
         </member>
         <member name="P:quickDBExplorer.ServerJsonData.InputHistories">

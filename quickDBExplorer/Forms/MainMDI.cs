@@ -89,6 +89,9 @@ namespace quickDBExplorer.Forms
         private MenuItem menuOptWidth;
         private MenuItem menuOptWidthDefalut;
         private MenuItem menuOptWidthFull;
+        private MenuItem menuItem3;
+        private MenuItem menuOptFilterNoCS;
+        private MenuItem menuOptFilterCS;
         private ToolMacroManager toolMacroManager;
 
 
@@ -156,6 +159,9 @@ namespace quickDBExplorer.Forms
             this.menuOptWidth = new System.Windows.Forms.MenuItem();
             this.menuOptWidthDefalut = new System.Windows.Forms.MenuItem();
             this.menuOptWidthFull = new System.Windows.Forms.MenuItem();
+            this.menuItem3 = new System.Windows.Forms.MenuItem();
+            this.menuOptFilterNoCS = new System.Windows.Forms.MenuItem();
+            this.menuOptFilterCS = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -280,7 +286,8 @@ namespace quickDBExplorer.Forms
             this.menuItem2.Index = 4;
             this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuOptNullOrEmpty,
-            this.menuOptWidth});
+            this.menuOptWidth,
+            this.menuItem3});
             this.menuItem2.Text = "オプション(&T)";
             this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
             // 
@@ -356,6 +363,26 @@ namespace quickDBExplorer.Forms
             this.menuOptWidthFull.Text = "全表示";
             this.menuOptWidthFull.Click += new System.EventHandler(this.menuOptWidth_Click);
             // 
+            // menuItem3
+            // 
+            this.menuItem3.Index = 2;
+            this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuOptFilterNoCS,
+            this.menuOptFilterCS});
+            this.menuItem3.Text = "オブジェクトフィルタ";
+            // 
+            // menuOptFilterNoCS
+            // 
+            this.menuOptFilterNoCS.Index = 0;
+            this.menuOptFilterNoCS.Text = "大文字小文字を区別しない";
+            this.menuOptFilterNoCS.Click += new System.EventHandler(this.menuOptFilter_Click);
+            // 
+            // menuOptFilterCS
+            // 
+            this.menuOptFilterCS.Index = 1;
+            this.menuOptFilterCS.Text = "大文字小文字を区別する";
+            this.menuOptFilterCS.Click += new System.EventHandler(this.menuOptFilter_Click);
+            // 
             // MainMdi
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -423,6 +450,7 @@ namespace quickDBExplorer.Forms
             {
                 SetOptNullEmpty(sender);
                 SetGridDefaultWidth(sender);
+                SetOptFilter(sender);
             }
         }
 
@@ -439,6 +467,23 @@ namespace quickDBExplorer.Forms
                 this.menuOptEmpty.Checked = true;
             }
         }
+
+        private void SetOptFilter(MainForm sender)
+        {
+            if (sender.IsFilterCaseSensitive)
+            {
+                this.menuOptFilterNoCS.Checked = false;
+                this.menuOptFilterCS.Checked = true;
+            }
+            else
+            {
+                this.menuOptFilterNoCS.Checked = true;
+                this.menuOptFilterCS.Checked = false;
+            }
+
+            sender.SetFilterCS();
+        }
+
 
         /// <summary>
         /// グリッドの幅の初期値を設定する
@@ -999,6 +1044,23 @@ namespace quickDBExplorer.Forms
                     main.GridDefaltWidth = false;
                 }
                 SetGridDefaultWidth(main);
+            }
+        }
+
+        private void menuOptFilter_Click(object sender, EventArgs e)
+        {
+            MainForm main = this.ActiveMdiChild as MainForm;
+            if (main != null)
+            {
+                if (sender == this.menuOptFilterNoCS)
+                {
+                    main.IsFilterCaseSensitive = false;
+                }
+                else
+                {
+                    main.IsFilterCaseSensitive = true;
+                }
+                SetOptFilter(main);
             }
         }
     }

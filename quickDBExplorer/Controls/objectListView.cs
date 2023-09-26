@@ -92,6 +92,7 @@ namespace quickDBExplorer
         {
             this.BeginUpdate();
             this.Items.Clear();
+            filterText = filterText.Trim();
             if (filterText == string.Empty)
             {
                 this.Items.AddRange(currentItems.ToArray());

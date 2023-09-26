@@ -214,6 +214,11 @@ namespace quickDBExplorer
         /// </summary>
         public bool GridDefaltWidth { get; set; }
 
+        /// <summary>
+        /// フィルタで大文字小文字を区別するか否か
+        /// </summary>
+        public bool IsFilterCaseSensitive { get; set; }
+
 
 
         /// <summary>
@@ -234,6 +239,8 @@ namespace quickDBExplorer
             IsUseTrust = false;
             ReadEmptyAsNull = true;
             GridDefaltWidth = true;
+            IsFilterCaseSensitive = false;
+
             outdest = new Hashtable();
             outfile = new Hashtable();
             showgrid = new Hashtable();
@@ -290,6 +297,7 @@ namespace quickDBExplorer
             IsUseTrust = false;
             ReadEmptyAsNull = true;
             GridDefaltWidth = true;
+            IsFilterCaseSensitive = false;
             outdest = new Hashtable();
             outfile = new Hashtable();
             showgrid = new Hashtable();
@@ -712,6 +720,11 @@ namespace quickDBExplorer
         /// グリッド表示時の幅の初期値
         /// </summary>
         public bool GridDefaltWidth { get; set; }
+
+        /// <summary>
+        /// フィルタで大文字小文字を区別するか否か
+        /// </summary>
+        public bool IsFilterCaseSensitive { get; set; }
 
         /// <summary>
         /// 各種入力履歴
