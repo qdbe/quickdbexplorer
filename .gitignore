@@ -28,3 +28,10 @@
 /SqlServer2017Driver/obj/Debug
 /SqlServer2017Driver/obj/Release
 /installPack/quickDBExplorer
+v15
+/.vs/QuickDBExplorer/v16
+/.vs/QuickDBExplorer/v17
+/.vs/QuickDBExplorerV40/v16
+/SqlServer2019Driver/*.user
+/ISqlInterface/*.user
+/quickDBExplorer/*.user
