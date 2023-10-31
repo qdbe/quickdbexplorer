@@ -489,19 +489,27 @@ namespace quickDBExplorer
 			}
 		}
 
-		/// <summary>
-		/// 値拡大ダイアログを表示する
-		/// </summary>
-		/// <param name="labelName">Windowタイトル</param>
-		/// <param name="dlgEnter">ダイアログでOKボタンが押下された時のイベントハンドラ</param>
-		public void DoShowZoom(string labelName, System.EventHandler dlgEnter)
+        ZoomFloatingDialog dlg;
+
+        /// <summary>
+        /// 値拡大ダイアログを表示する
+        /// </summary>
+        /// <param name="labelName">Windowタイトル</param>
+        /// <param name="dlgEnter">ダイアログでOKボタンが押下された時のイベントハンドラ</param>
+        public void DoShowZoom(string labelName, System.EventHandler dlgEnter)
 		{
-			ZoomFloatingDialog dlg = new ZoomFloatingDialog();
+			if (dlg == null || dlg.IsDisposed)
+			{
+                dlg = new ZoomFloatingDialog();
+            }
 			dlg.EditText = this.Text;
 			dlg.LableName = labelName;
 			dlg.Enter += dlgEnter;
-			dlg.Show();
-			dlg.BringToFront();
+			if (!dlg.Visible)
+			{
+                dlg.Show(this);
+            }
+            dlg.BringToFront();
 			dlg.Focus();
 		}
 

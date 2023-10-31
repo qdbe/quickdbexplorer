@@ -48,6 +48,7 @@ namespace quickDBExplorer
 			// Windows フォーム デザイナ サポートに必要です。
 			//
 			InitializeComponent();
+			this.StartPosition = FormStartPosition.WindowsDefaultLocation;
 
 		}
 
@@ -158,5 +159,17 @@ namespace quickDBExplorer
 				Clipboard.SetDataObject(this.ErrMessage,true );
 			}
 		}
+
+		/// <summary>
+		/// モードレスの時の表示位置を設定
+		/// </summary>
+		/// <param name="parentWin"></param>
+		public void SetModelessPosition(Form parentWin)
+		{
+            this.StartPosition = FormStartPosition.Manual;
+            this.Left = parentWin.Left + (parentWin.Width - this.Width) / 2;
+            this.Top = parentWin.Top + (parentWin.Height - this.Height) / 2;
+            this.Owner = parentWin; // 常に親ウィンドウの手前に表示
+        }
 	}
 }

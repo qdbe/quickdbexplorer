@@ -2471,7 +2471,10 @@ namespace quickDBExplorer.Forms
                     {
                         indexdlg.SetDisplayTable(null);
                     }
-                    indexdlg.Show();
+					if (!indexdlg.Visible)
+					{
+                        indexdlg.Show(this);
+                    }
                 }
 
                 setWhereDialog(true, false);
@@ -3535,14 +3538,19 @@ namespace quickDBExplorer.Forms
 
 				indexdlg.SqlDriver = this.SqlDriver;
 				indexdlg.DisplayObj = this.objectList.GetSelectObject(0);
-
-				indexdlg.Show();
+				if (!indexdlg.Visible)
+				{
+					indexdlg.Show(this);
+				}
 			}
 			else
 			{
 				indexdlg.SetDisplayTable(this.objectList.GetSelectObject(0));
-				indexdlg.Show();
-				indexdlg.BringToFront();
+				if (!indexdlg.Visible)
+				{
+                    indexdlg.Show(this);
+                }
+                indexdlg.BringToFront();
 			}
 		}
 
@@ -6619,8 +6627,12 @@ namespace quickDBExplorer.Forms
 				if (isShow == true)
 				{
 					wheredlg.EditText = this.txtWhere.Text;
-					wheredlg.Show();
-					wheredlg.BringToFront();
+					//wheredlg.SetModelessPosition(this);
+					if (!wheredlg.Visible)
+					{
+                        wheredlg.Show(this);
+                    }
+                    wheredlg.BringToFront();
 				}
 			}
 			else
@@ -6639,8 +6651,11 @@ namespace quickDBExplorer.Forms
                 dlg.DbName = this.dbList.SelectedItem.ToString();
                 if (isShow == true)
 				{
-					dlg.Show();
-					dlg.BringToFront();
+					if (!dlg.Visible)
+					{
+                        dlg.Show(this);
+                    }
+                    dlg.BringToFront();
 					dlg.Focus();
 				}
 				if (isReset == true)

@@ -3350,6 +3350,12 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="M:quickDBExplorer.quickDBExplorerBaseForm.SetModelessPosition(System.Windows.Forms.Form)">
+            <summary>
+            モードレスの時の表示位置を設定
+            </summary>
+            <param name="parentWin"></param>
+        </member>
         <member name="M:quickDBExplorer.manager.BookmarkManager.Save(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{quickDBExplorer.Forms.BookmarkInfo}})">
             <summary>
             ブックマークを保存する

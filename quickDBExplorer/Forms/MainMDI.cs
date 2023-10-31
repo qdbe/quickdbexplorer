@@ -656,7 +656,7 @@ namespace quickDBExplorer.Forms
 #if true
             // Ç±Ç¡ÇøÇ™ê≥ÇµÇ¢
             qdbeAboutBox dlg = new qdbeAboutBox();
-            dlg.Show();
+            dlg.Show(this);
 #else
             //object []obj = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute),false);
             //string aboutstr = Application.ProductName + " Version " + Application.ProductVersion;
