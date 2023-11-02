@@ -173,7 +173,7 @@ namespace quickDBExplorer
 			// 
 			// ZoomDialog
 			// 
-			this.AcceptButton = this.btnOk;
+			//this.AcceptButton = this.btnOk;
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
 			this.CancelButton = this.btnClose;
 			this.ClientSize = new System.Drawing.Size(550, 272);
