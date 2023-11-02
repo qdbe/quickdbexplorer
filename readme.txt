@@ -1,6 +1,6 @@
 What's quickDBExplorer?
 
-◆ Front End tool for Microsoft SQL Server 2019/2017/2016/2014/2012/2008R2/2008/2005/2000
+◆ Front End tool for Microsoft SQL Server 2022/2019/2017/2016/2014/2012/2008R2/2008/2005/2000
 this tool can follows
 
     make insert script from data
@@ -12,10 +12,10 @@ this tool can follows
     etc... 
 
 These results are output to a clipboard or a file.
-Run under .NET Framework 3.5 SP1 
+Run under .NET Framework 3.5 SP1 or .NET Framework 4.5 or later
 
-◆ quickDBExplorer は Microsoft 社のSQL SERVER (2019/2017/2016/2014/2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツールです
-.NET Framework 3.5上で動作する、データベースアプリケーションの開発者向けのMDI形式の補助ツールです。エンタープライズマネージャーやクエリアナライザでは用意されていない機能を実現したり、使いにくい機能を補助する目的に作成されました(完全な置き換えは目標としていません)。 特にテーブルに対する処理に特化しています。
+◆ quickDBExplorer は Microsoft 社のSQL SERVER (2022/2019/2017/2016/2014/2012/2008R2/2008/2005/2000)を利用している開発者向けの補助ツールです
+.NET Framework 3.5もしくは.NET Framework 4.5以上で動作する、データベースアプリケーションの開発者向けのMDI形式の補助ツールです。エンタープライズマネージャーやクエリアナライザでは用意されていない機能を実現したり、使いにくい機能を補助する目的に作成されました(完全な置き換えは目標としていません)。 特にテーブルに対する処理に特化しています。
 テーブル/View/Synonymを指定した
 
 *     insert文の生成(insert文によるデータエクスポート機能)
@@ -36,13 +36,13 @@ Run under .NET Framework 3.5 SP1
 
 ◆動作環境
 
-    .NET Framework 3.5 SP1 がインストールされているWindowsマシン
+    .NET Framework 3.5 SP1 もしくは .NET Framework 4.5 以上 がインストールされているWindowsマシン
     画面解像度 が　1024 x 768 あることを想定して画面デザインしています
-    対象としているデータベースエンジンは SQL SERVER 2019/2017/2016/2014/2012/2008R2/2008/2005/2000 
+    対象としているデータベースエンジンは SQL SERVER 2022/2019/2017/2016/2014/2012/2008R2/2008/2005/2000 
 
 ◆ Announce!
 
-    2.6.0 Release版のダウンロードが可能になりました。 最新の更新情報・変更情報はこちら 
+    2.7.0 Release版のダウンロードが可能になりました。 最新の更新情報・変更情報はこちら 
 
 ◆ ScreenShot
 
