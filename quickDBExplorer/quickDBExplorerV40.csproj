@@ -156,6 +156,12 @@
     <Compile Include="Controls\PlaceHolderTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\qdbeProgressBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\qdbeProgressBar.Designer.cs">
+      <DependentUpon>qdbeProgressBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\quickDBExplorerTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -217,6 +223,12 @@
     </Compile>
     <Compile Include="Forms\Dialog\OuterToolEditForm.Designer.cs">
       <DependentUpon>OuterToolEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Dialog\ProcessingDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialog\ProcessingDialog.Designer.cs">
+      <DependentUpon>ProcessingDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Dialog\qdbeAboutBox.cs">
       <SubType>Form</SubType>
@@ -297,6 +309,9 @@
     <EmbeddedResource Include="Controls\PlaceHolderTextBox.resx">
       <DependentUpon>PlaceHolderTextBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\qdbeProgressBar.resx">
+      <DependentUpon>qdbeProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\quickDBExplorerTextBox.resx">
       <DependentUpon>quickDBExplorerTextBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -346,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\OuterToolEditForm.resx">
       <DependentUpon>OuterToolEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dialog\ProcessingDialog.resx">
+      <DependentUpon>ProcessingDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\qdbeAboutBox.resx">
       <DependentUpon>qdbeAboutBox.cs</DependentUpon>

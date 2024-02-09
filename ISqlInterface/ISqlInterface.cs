@@ -182,12 +182,12 @@ namespace quickDBExplorer
 		/// <returns></returns>
 		string	GetDdlCreateString(DBObjectInfo databaseObjectInfo, bool useParentheses);
 
-		/// <summary>
-		/// オブジェクトに対するDROP 文を生成する
-		/// </summary>
-		/// <param name="databaseObjectInfo"></param>
-		/// <returns></returns>
-		string	GetDDLDropStr(DBObjectInfo databaseObjectInfo);
+        /// <summary>
+        /// オブジェクトに対するDROP 文を生成する
+        /// </summary>
+        /// <param name="databaseObjectInfo"></param>
+        /// <returns></returns>
+        string GetDDLDropStr(DBObjectInfo databaseObjectInfo);
 
 		/// <summary>
 		/// オブジェクト情報をセットするDataTableを初期化する

@@ -103,6 +103,33 @@ namespace quickDBExplorer.DataType
             return "string";
         }
 
+        public override string GetFieldExcelOutString(string typename, int length, int prec, int xscale, bool isComma)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (!this.TypeHasSize)
+            {
+                sb.Append(typename);
+                sb.Append(this.GetSeparator(isComma));
+                sb.Append(this.GetSeparator(isComma));
+            }
+            else
+            {
+                sb.Append(typename);
+                sb.Append(this.GetSeparator(isComma));
+                if (length < 0)
+                {
+                    sb.Append("max");
+                }
+                else
+                {
+                    sb.Append(length);
+                }
+                sb.Append(this.GetSeparator(isComma));
+            }
+            return sb.ToString();
+
+        }
+
         public override Type Type
         {
             get { return typeof(string); }

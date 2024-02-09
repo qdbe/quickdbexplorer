@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using quickDBExplorer.Forms;
 using quickDBExplorer.Forms.Events;
 using LumenWorks.Framework.IO.Csv;
+using quickDBExplorer.Forms.Dialog;
 
 namespace quickDBExplorer.Forms
 {
@@ -1739,6 +1740,8 @@ namespace quickDBExplorer.Forms
             menuAr.Add(new qdbeMenuItem(false, true, this.btnFieldList.Name, "フィールドリスト作成", new EventHandler(this.makefldlist)));
             menuAr.Add(new qdbeMenuItem(false, true, this.btnFieldList.Name, "フィールドリスト改行作成", new EventHandler(this.makefldListLF)));
             menuAr.Add(new qdbeMenuItem(false, true, this.btnFieldList.Name, "フィールドリストカンマなし作成", new EventHandler(this.makefldListNoComma)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnFieldList.Name, "フィールドリストEXCEL用(CSV)", new EventHandler(this.makefldListEXCELCsv)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnFieldList.Name, "フィールドリストEXCEL用(Tab)", new EventHandler(this.makefldListEXCELTab)));
             menuAr.Add(new qdbeMenuItem(true, true, null, "-", null));
             menuAr.Add(new qdbeMenuItem(false, true, this.btnDDL.Name, "簡易定義文生成", new EventHandler(this.makeDDL)));
             menuAr.Add(new qdbeMenuItem(false, true, this.btnDDL.Name, "簡易定義文生成 DROP文付き", new EventHandler(this.makeDDLDrop)));
@@ -1830,7 +1833,17 @@ namespace quickDBExplorer.Forms
 			CreateFldList(true,false);
 		}
 
-		private void makeCSV(object sender, System.EventArgs e)
+        private void makefldListEXCELCsv(object sender, System.EventArgs e)
+        {
+            CreateFldListEXCEL(true);
+        }
+
+        private void makefldListEXCELTab(object sender, System.EventArgs e)
+        {
+            CreateFldListEXCEL(false);
+        }
+
+        private void makeCSV(object sender, System.EventArgs e)
 		{
 			CreateTCsvText(false, ",");
 		}
@@ -1886,7 +1899,7 @@ namespace quickDBExplorer.Forms
 			this.CreDDL(true, true);
 		}
 
-		private void menuTableCopy_Click(object sender, System.EventArgs e)
+        private void menuTableCopy_Click(object sender, System.EventArgs e)
 		{
 			CopyTableName(false);
 		}
@@ -3397,6 +3410,9 @@ namespace quickDBExplorer.Forms
 
 		private void btnSelect_Click(object sender, System.EventArgs e)
 		{
+
+			ProcessingDialog dlg = null;
+
 			// select 文の作成
 
 			this.InitErrMessage();
@@ -3404,26 +3420,30 @@ namespace quickDBExplorer.Forms
 
 			try
 			{
-				if( this.objectList.SelectedItems.Count == 0 )
+				if (this.objectList.SelectedItems.Count == 0)
 				{
 					return;
 				}
-				if( CheckFileSpec() == false )
+				if (CheckFileSpec() == false)
 				{
 					return;
 				}
 
-				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+                dlg = new ProcessingDialog(this.objectList.SelectedItems.Count);
+
+                dlg.Show(this);
+
+                StringBuilder strline = new StringBuilder();
+				TextWriter wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.rdoClipboard.Checked == true) 
+				if (this.rdoClipboard.Checked == true)
 				{
-					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+					wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				}
-				else if( this.rdoOutFile.Checked == true ) 
+				else if (this.rdoOutFile.Checked == true)
 				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text, false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
@@ -3431,36 +3451,44 @@ namespace quickDBExplorer.Forms
 
 				string alias = this.GetAlias();
 
-				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
+				for (int ti = 0; ti < this.objectList.SelectedItems.Count; ti++)
 				{
 					DBObjectInfo dboInfo = this.objectList.GetSelectObject(ti);
 
-					if( this.rdoOutFolder.Checked == true ) 
-					{
-                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
-                        if (CheckOverWrite(filen) == false)
-                        {
-                            return;
-                        }
+                    dlg.CurVal = ti;
+                    dlg.CurTarget = dboInfo.ToString();
 
-                        StreamWriter sw = new StreamWriter(filen,false, GetEncode());
+                    if (dlg.IsCancel)
+                    {
+                        break;
+                    }
+
+                    if (this.rdoOutFolder.Checked == true)
+					{
+						string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
+						if (CheckOverWrite(filen) == false)
+						{
+							return;
+						}
+
+						StreamWriter sw = new StreamWriter(filen, false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 					}
 					// get id 
 
-					wr.Write("select {0}",wr.NewLine);
-                    int i = 0;
-                    foreach(DBFieldInfo each in dboInfo.FieldInfo)
-                    {
-						if( i != 0 )
+					wr.Write("select {0}", wr.NewLine);
+					int i = 0;
+					foreach (DBFieldInfo each in dboInfo.FieldInfo)
+					{
+						if (i != 0)
 						{
 							wr.Write(",{0}", wr.NewLine);
 						}
 
 						wr.Write("\t");
-						if( alias != string.Empty )
+						if (alias != string.Empty)
 						{
 							wr.Write(alias + ".");
 						}
@@ -3468,42 +3496,57 @@ namespace quickDBExplorer.Forms
 
 						wr.Write("{0}", each.Name);
 
-                        i++;
+						i++;
 					}
 					wr.Write(wr.NewLine);
-					wr.Write(" from {0}{1}", dboInfo.GetAliasName(this.GetAlias()),wr.NewLine);
-					if( this.txtWhere.Text.Trim() != "" )
+					wr.Write(" from {0}{1}", dboInfo.GetAliasName(this.GetAlias()), wr.NewLine);
+					if (this.txtWhere.Text.Trim() != "")
 					{
-						wr.Write(" where {0}{1}", this.txtWhere.Text.Trim(),wr.NewLine);
+						wr.Write(" where {0}{1}", this.txtWhere.Text.Trim(), wr.NewLine);
 					}
-					if( this.txtSort.Text.Trim() != "" )
+					if (this.txtSort.Text.Trim() != "")
 					{
-						wr.Write(" order by {0}{1}", this.txtSort.Text.Trim(),wr.NewLine);
+						wr.Write(" order by {0}{1}", this.txtSort.Text.Trim(), wr.NewLine);
 					}
-					if( this.rdoOutFolder.Checked == true ) 
+					if (this.rdoOutFolder.Checked == true)
 					{
 						wr.Close();
 					}
 				}
-				if( this.rdoOutFolder.Checked == false ) 
+				if (this.rdoOutFolder.Checked == false)
 				{
 					wr.Close();
 				}
 
-				if( this.rdoClipboard.Checked == true ) 
+				if (this.rdoClipboard.Checked == true)
 				{
-					Clipboard.SetDataObject(strline.ToString(),true );
+					Clipboard.SetDataObject(strline.ToString(), true);
 				}
 				else
 				{
-					Clipboard.SetDataObject(fname.ToString(),true );
+					Clipboard.SetDataObject(fname.ToString(), true);
 				}
 
-				MessageBox.Show( "処理を終了しました" );
-			}
-			catch( Exception exp )
+                dlg.Close();
+                if (dlg.IsCancel)
+                {
+                    MessageBox.Show("処理を中断しました");
+                }
+                else
+                {
+                    MessageBox.Show("処理を終了しました");
+                }
+            }
+            catch (Exception exp)
 			{
 				this.SetErrorMessage(exp);
+			}
+			finally
+			{
+				if (dlg != null)
+				{
+					dlg.Close();
+				}
 			}
 		}
 
@@ -3561,6 +3604,8 @@ namespace quickDBExplorer.Forms
 		/// <param name="e"></param>
 		private void DependOutPut(object sender, System.EventArgs e)
 		{
+			ProcessingDialog dlg = null;
+
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
 				return;
@@ -3569,18 +3614,22 @@ namespace quickDBExplorer.Forms
 			{
 				return;
 			}
-			
-			this.InitErrMessage();
+
+            dlg = new ProcessingDialog(this.objectList.SelectedItems.Count);
+
+            dlg.Show(this);
+
+            this.InitErrMessage();
 
 			try
 			{
-				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+				StringBuilder strline = new StringBuilder();
+				TextWriter wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.rdoClipboard.Checked == true) 
+				if (this.rdoClipboard.Checked == true)
 				{
-					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+					wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 					wr.Write("オブジェクト名");
 					wr.Write("\t依存関係先名称");
 					wr.Write("\t種類");
@@ -3589,9 +3638,9 @@ namespace quickDBExplorer.Forms
 					wr.Write("\t従属性が存在する列またはパラメータ");
 					wr.Write(wr.NewLine);
 				}
-				else if( this.rdoOutFile.Checked == true ) 
+				else if (this.rdoOutFile.Checked == true)
 				{
-					StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text, false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
@@ -3604,18 +3653,27 @@ namespace quickDBExplorer.Forms
 					wr.Write(wr.NewLine);
 				}
 
-				DBObjectInfo	dboInfo;
-				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
+				DBObjectInfo dboInfo;
+				for (int ti = 0; ti < this.objectList.SelectedItems.Count; ti++)
 				{
 					dboInfo = this.objectList.GetSelectObject(ti);
-					if( this.rdoOutFolder.Checked == true ) 
+
+					dlg.CurVal = ti;
+					dlg.CurTarget = dboInfo.ToString();
+
+					if (dlg.IsCancel)
 					{
-                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv";
-                        if (CheckOverWrite(filen) == false)
-                        {
-                            return;
-                        }
-                        StreamWriter sw = new StreamWriter(filen,false, GetEncode());
+						break;
+					}
+
+					if (this.rdoOutFolder.Checked == true)
+					{
+						string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv";
+						if (CheckOverWrite(filen) == false)
+						{
+							return;
+						}
+						StreamWriter sw = new StreamWriter(filen, false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
@@ -3633,26 +3691,26 @@ namespace quickDBExplorer.Forms
 					// get id 
 					string stSql;
 
-					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"sp_depends N'{0}'", dboInfo.FormalName );
+					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, "sp_depends N'{0}'", dboInfo.FormalName);
 
 					DbDataAdapter da = this.SqlDriver.NewDataAdapter();
 					IDbCommand cmd = this.SqlDriver.NewSqlCommand(stSql);
-					this.SqlDriver.SetSelectCmd(da,cmd);
+					this.SqlDriver.SetSelectCmd(da, cmd);
 
 					DataSet ds = new DataSet();
 					ds.CaseSensitive = true;
 					ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
-					da.Fill(ds,dboInfo.ToString());
+					da.Fill(ds, dboInfo.ToString());
 
-					if(	ds.Tables.Count != 0 &&
+					if (ds.Tables.Count != 0 &&
 						ds.Tables[dboInfo.ToString()].Rows != null &&
 						ds.Tables[dboInfo.ToString()].Rows.Count != 0)
 					{
-						foreach(DataRow dr in ds.Tables[dboInfo.ToString()].Rows)
+						foreach (DataRow dr in ds.Tables[dboInfo.ToString()].Rows)
 						{
 							// オブジェクト名
 							wr.Write(dboInfo.FormalName);
-							foreach( DataColumn col in ds.Tables[dboInfo.ToString()].Columns)
+							foreach (DataColumn col in ds.Tables[dboInfo.ToString()].Columns)
 							{
 								wr.Write("\t");
 								wr.Write(dr[col.ColumnName].ToString());
@@ -3661,28 +3719,43 @@ namespace quickDBExplorer.Forms
 						}
 					}
 
-					if( this.rdoOutFolder.Checked == true ) 
+					if (this.rdoOutFolder.Checked == true)
 					{
 						wr.Close();
 					}
 				}
-				if( this.rdoOutFolder.Checked == false ) 
+				if (this.rdoOutFolder.Checked == false)
 				{
 					wr.Close();
 				}
-				if( this.rdoClipboard.Checked == true ) 
+				if (this.rdoClipboard.Checked == true)
 				{
-					Clipboard.SetDataObject(strline.ToString(),true );
+					Clipboard.SetDataObject(strline.ToString(), true);
 				}
 				else
 				{
-					Clipboard.SetDataObject(fname.ToString(),true );
+					Clipboard.SetDataObject(fname.ToString(), true);
 				}
-				MessageBox.Show("処理を完了しました");
+				dlg.Close();
+				if (dlg.IsCancel)
+				{
+					MessageBox.Show("処理を中断しました");
+				}
+				else
+				{
+					MessageBox.Show("処理を完了しました");
+				}
 			}
-			catch ( Exception se )
+			catch (Exception se)
 			{
 				this.SetErrorMessage(se);
+			}
+			finally
+			{
+				if (dlg != null)
+				{
+					dlg.Close();
+				}
 			}
 		}
 
@@ -4120,6 +4193,8 @@ namespace quickDBExplorer.Forms
 		/// <param name="e"></param>
 		private void menuStasticUpdate_Click(object sender, System.EventArgs e)
 		{
+			ProcessingDialog dlg = null;
+
 			// SQL 的には、UPDATE STATISTICS table を実施する
 			IDbCommand cm = this.SqlDriver.NewSqlCommand();
 
@@ -4130,15 +4205,28 @@ namespace quickDBExplorer.Forms
 		
 			this.InitErrMessage();
 
-			try
-			{
+            dlg = new ProcessingDialog(this.objectList.SelectedItems.Count);
+
+            dlg.Show(this);
+
+
+            try
+            {
 
 				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 				{
 					dboInfo = this.objectList.GetSelectObject(ti);
 
-					string stSql;
+                    dlg.CurVal = ti;
+                    dlg.CurTarget = dboInfo.ToString();
+
+                    if (dlg.IsCancel)
+                    {
+                        break;
+                    }
+
+                    string stSql;
 
 
 					if( dboInfo.CanStatistics ==  false )
@@ -4150,8 +4238,17 @@ namespace quickDBExplorer.Forms
 					cm.CommandText = stSql;
 					cm.ExecuteNonQuery();
 				}
-				MessageBox.Show("処理を完了しました");
-			}
+
+				dlg.Close();
+				if (dlg.IsCancel)
+				{
+                    MessageBox.Show("処理を中断しました");
+                }
+                else 
+				{
+                    MessageBox.Show("処理を完了しました");
+                }
+            }
 			catch ( System.Data.SqlClient.SqlException se )
 			{
 				this.SetErrorMessage(se);
@@ -4166,6 +4263,10 @@ namespace quickDBExplorer.Forms
 				{
 					cm.Dispose();
 				}
+				if (dlg != null)
+				{
+					dlg.Close();
+				}
 			}
 		}
 
@@ -4173,12 +4274,18 @@ namespace quickDBExplorer.Forms
 		{
 			// オブジェクト名称を引数として、各種クエリの実行を可能にする
 
+			ProcessingDialog dlg = null;
+
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
 				return;
 			}
 
-			DbDataAdapter da = this.SqlDriver.NewDataAdapter();
+            dlg = new ProcessingDialog(this.objectList.SelectedItems.Count);
+
+            dlg.Show(this);
+
+            DbDataAdapter da = this.SqlDriver.NewDataAdapter();
 			IDbCommand cm = this.SqlDriver.NewSqlCommand();
 			this.SqlDriver.SetSelectCmd(da,cm);
 
@@ -4201,7 +4308,16 @@ namespace quickDBExplorer.Forms
 					for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
 					{
 						dboInfo = this.objectList.GetSelectObject(ti);
-						cm.CommandText = string.Format(System.Globalization.CultureInfo.CurrentCulture,this.cmdDialog.InputedText,
+
+                        dlg.CurVal = ti;
+                        dlg.CurTarget = dboInfo.ToString();
+
+                        if (dlg.IsCancel)
+                        {
+                            break;
+                        }
+
+                        cm.CommandText = string.Format(System.Globalization.CultureInfo.CurrentCulture,this.cmdDialog.InputedText,
 							dboInfo.FormalName);
 
 						if( cmdDialog.HasReturn == true )
@@ -4224,8 +4340,16 @@ namespace quickDBExplorer.Forms
 						this.btnDataEdit.BackColor = this.btnBackColor;
 						this.btnDataEdit.ForeColor = this.btnForeColor;
 					}
-					MessageBox.Show("処理を完了しました");
-				}
+					dlg.Close();
+					if (dlg.IsCancel)
+					{
+                        MessageBox.Show("処理を中断しました");
+                    }
+                    else
+					{
+                        MessageBox.Show("処理を完了しました");
+                    }
+                }
 			}
 			catch( Exception exp)
 			{
@@ -4696,121 +4820,135 @@ namespace quickDBExplorer.Forms
 
 		private void CreInsert(bool fieldlst, bool deletefrom, bool isTaihi)
 		{
+			ProcessingDialog dlg = null;
 			try
 			{
 				this.InitErrMessage();
 				// insert 文の作成
-				if( this.objectList.SelectedItems.Count == 0 )
+				if (this.objectList.SelectedItems.Count == 0)
 				{
 					return;
 				}
-				if( this.objectList.SelectedItems.Count > 1 &&
+				if (this.objectList.SelectedItems.Count > 1 &&
 					this.txtWhere.Text != null &&
-					this.txtWhere.Text.Trim() != "" )
+					this.txtWhere.Text.Trim() != "")
 				{
-					if( MessageBox.Show("複数オブジェクトに同一の where 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
-						== System.Windows.Forms.DialogResult.No )
+					if (MessageBox.Show("複数オブジェクトに同一の where 句を適用しますか？", "確認", System.Windows.Forms.MessageBoxButtons.YesNo)
+						== System.Windows.Forms.DialogResult.No)
 					{
 						return;
 					}
 				}
-				if( this.objectList.SelectedItems.Count > 1 &&
+				if (this.objectList.SelectedItems.Count > 1 &&
 					this.txtSort.Text != null &&
-					this.txtSort.Text.Trim() != "" )
+					this.txtSort.Text.Trim() != "")
 				{
-					if( MessageBox.Show("複数オブジェクトに同一の order by 句を適用しますか？","確認",System.Windows.Forms.MessageBoxButtons.YesNo) 
-						== System.Windows.Forms.DialogResult.No )
+					if (MessageBox.Show("複数オブジェクトに同一の order by 句を適用しますか？", "確認", System.Windows.Forms.MessageBoxButtons.YesNo)
+						== System.Windows.Forms.DialogResult.No)
 					{
 						return;
 					}
 				}
-			
-				if( CheckFileSpec() == false )
+
+				if (CheckFileSpec() == false)
 				{
 					return;
 				}
-			
-				int			rowcount = 0;
-				int			trow	= 0;
-				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+
+				dlg = new ProcessingDialog(this.objectList.SelectedItems.Count);
+
+				dlg.Show(this);
+
+				int rowcount = 0;
+				int trow = 0;
+				StringBuilder strline = new StringBuilder();
+				TextWriter wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.rdoClipboard.Checked == true) 
+				if (this.rdoClipboard.Checked == true)
 				{
-					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+					wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				}
-				else if( this.rdoOutFile.Checked == true ) 
+				else if (this.rdoOutFile.Checked == true)
 				{
-                    StreamWriter sw = new StreamWriter(this.txtOutput.Text,false,GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text, false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
 				}
-				if( this.rdoOutFolder.Checked == false ) 
+				if (this.rdoOutFolder.Checked == false)
 				{
-					wr.Write("SET NOCOUNT ON{0}GO{0}{0}",wr.NewLine);
+					wr.Write("SET NOCOUNT ON{0}GO{0}{0}", wr.NewLine);
 				}
 
 				IDataReader dr = null;
-				IDbCommand 	cm = this.SqlDriver.NewSqlCommand();
+				IDbCommand cm = this.SqlDriver.NewSqlCommand();
 
-				DBObjectInfo	dboInfo;
-				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
+				DBObjectInfo dboInfo;
+				for (int ti = 0; ti < this.objectList.SelectedItems.Count; ti++)
 				{
+
 					dboInfo = this.objectList.GetSelectObject(ti);
-					
-					if( this.rdoOutFolder.Checked == true ) 
+
+                    dlg.CurVal = ti;
+                    dlg.CurTarget = dboInfo.ToString();
+
+					if (dlg.IsCancel)
 					{
-                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
-                        if (CheckOverWrite(filen) == false)
-                        {
-                            return;
-                        }
-                        string tfilen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp";
-                        if (CheckOverWrite(tfilen) == false)
-                        {
-                            return;
-                        }
-                        StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp",false, GetEncode());
+						break;
+					}
+
+					if (this.rdoOutFolder.Checked == true)
+					{
+						string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
+						if (CheckOverWrite(filen) == false)
+						{
+							return;
+						}
+						string tfilen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp";
+						if (CheckOverWrite(tfilen) == false)
+						{
+							return;
+						}
+						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp", false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						wr.Write("SET NOCOUNT ON{0}GO{0}{0}",wr.NewLine);
+						wr.Write("SET NOCOUNT ON{0}GO{0}{0}", wr.NewLine);
 					}
 
 					// get id 
 					string stSql;
-					if( dboInfo.IsUseAssemblyType == true )
+					if (dboInfo.IsUseAssemblyType == true)
 					{
 						// アセンブリを利用している場合、フィールド名＋.ToString()をつける必要あり
 						StringBuilder fieldStr = new StringBuilder();
 						fieldStr.Append("select ");
 						int loop = 0;
-						foreach(DBFieldInfo fi in dboInfo.FieldInfo)
+						foreach (DBFieldInfo fi in dboInfo.FieldInfo)
 						{
-							if( loop != 0 )
+							if (loop != 0)
 							{
 								fieldStr.Append(",");
 							}
 							fieldStr.Append(fi.Name);
-							if( fi.IsAssembly == true )
+							if (fi.IsAssembly == true)
 							{
 								fieldStr.Append(".ToString() as ").Append(fi.Name);
 							}
 							loop++;
 						}
-						fieldStr.AppendFormat(" from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+						fieldStr.AppendFormat(" from {0} ", dboInfo.GetAliasName(this.GetAlias()));
 						stSql = fieldStr.ToString();
 					}
 					else
 					{
-						stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+						stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, "select  * from {0} ", dboInfo.GetAliasName(this.GetAlias()));
 					}
-					if( this.txtWhere.Text.Trim() != "" )
+					if (this.txtWhere.Text.Trim() != "")
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
 					}
-					if( this.txtSort.Text.Trim() != "" )
+					if (this.txtSort.Text.Trim() != "")
 					{
 						stSql += " order by " + this.txtSort.Text.Trim();
 					}
@@ -4820,117 +4958,117 @@ namespace quickDBExplorer.Forms
 
 					List<string> fldname = new List<string>();
 					List<Type> strint = new List<Type>();
-					int			maxcol;
-	
+					int maxcol;
+
 					fldname.Clear();
 					strint.Clear();
 
 					maxcol = dr.FieldCount;
-					for( int j=0 ; j < maxcol; j++ )
+					for (int j = 0; j < maxcol; j++)
 					{
-						fldname.Add( dr.GetName(j) );
-						strint.Add( dr.GetFieldType(j) );
+						fldname.Add(dr.GetName(j));
+						strint.Add(dr.GetFieldType(j));
 					}
 
 					bool IsIdentity = false;
-					if( dboInfo.IsUseIdentity == true )
+					if (dboInfo.IsUseIdentity == true)
 					{
 						// Identity 列がある場合、SET IDENTITY_INSERT table on をつける
-						string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture,"SET IDENTITY_INSERT {0} on ",dboInfo.FormalName);
+						string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture, "SET IDENTITY_INSERT {0} on ", dboInfo.FormalName);
 						wr.WriteLine(addidinsert);
 						wr.Write(wr.NewLine);
 						IsIdentity = true;
 					}
 
-					if( isTaihi == true )
+					if (isTaihi == true)
 					{
-						string taihistr = 
-							String.Format(System.Globalization.CultureInfo.CurrentCulture,"select * into {1} from {0} ",
+						string taihistr =
+							String.Format(System.Globalization.CultureInfo.CurrentCulture, "select * into {1} from {0} ",
 							dboInfo.GetAliasName(this.GetAlias()),
-							dboInfo.GetNameAdd(DateTime.Now.ToString("yyyyMMdd",System.Globalization.CultureInfo.CurrentCulture))
+							dboInfo.GetNameAdd(DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture))
 							);
-						if( this.txtWhere.Text.Trim() != "" )
+						if (this.txtWhere.Text.Trim() != "")
 						{
-							taihistr += string.Format(System.Globalization.CultureInfo.CurrentCulture," where {0}", this.txtWhere.Text.Trim() );
+							taihistr += string.Format(System.Globalization.CultureInfo.CurrentCulture, " where {0}", this.txtWhere.Text.Trim());
 						}
-						wr.Write("{0}GO{0}",wr.NewLine );
+						wr.Write("{0}GO{0}", wr.NewLine);
 						wr.Write(taihistr);
-						wr.Write("{0}GO{0}",wr.NewLine );
+						wr.Write("{0}GO{0}", wr.NewLine);
 
 					}
 
-					trow	= 0;
+					trow = 0;
 					string flds = "";
-					if( fieldlst == true )
+					if (fieldlst == true)
 					{
 						StringBuilder sb = new StringBuilder();
 						sb.Append(" ( ");
-						for( int i = 0 ; i < maxcol; i++ )
+						for (int i = 0; i < maxcol; i++)
 						{
-							if( i != 0 )
+							if (i != 0)
 							{
 								sb.Append(",");
 							}
 							sb.Append("[").Append(fldname[i]).Append("]");
 						}
-						sb.Append( " ) " );
+						sb.Append(" ) ");
 						flds = sb.ToString();
 					}
-					while(dr.Read())
+					while (dr.Read())
 					{
-						if( deletefrom == true && trow == 0)
+						if (deletefrom == true && trow == 0)
 						{
 							wr.Write("delete from  ");
 							wr.Write(dboInfo.FormalName);
-							if( this.txtWhere.Text.Trim() != "" )
+							if (this.txtWhere.Text.Trim() != "")
 							{
-								wr.Write( " where {0}", this.txtWhere.Text.Trim() );
+								wr.Write(" where {0}", this.txtWhere.Text.Trim());
 
 							}
-							wr.Write("{0}GO{0}",wr.NewLine );
+							wr.Write("{0}GO{0}", wr.NewLine);
 						}
-						if( trow != 0 && ( trow % 1000 == 0 ) )
+						if (trow != 0 && (trow % 1000 == 0))
 						{
-							wr.Write("GO{0}",wr.NewLine);
+							wr.Write("GO{0}", wr.NewLine);
 						}
 						trow++;
-						rowcount ++;
-						wr.Write("insert into {0} {1} values ( ", dboInfo.FormalName, flds );
+						rowcount++;
+						wr.Write("insert into {0} {1} values ( ", dboInfo.FormalName, flds);
 
-                        int i = 0 ;
-                        foreach(DBFieldInfo each in dboInfo.FieldInfo)
-                        {
-							if( i != 0 )
+						int i = 0;
+						foreach (DBFieldInfo each in dboInfo.FieldInfo)
+						{
+							if (i != 0)
 							{
-								wr.Write( ", " );
+								wr.Write(", ");
 							}
-							wr.Write(each.ConvData(dr, i, "'","N",true));
-                            i++;
+							wr.Write(each.ConvData(dr, i, "'", "N", true));
+							i++;
 						}
-						wr.Write( " ) {0}",wr.NewLine );
+						wr.Write(" ) {0}", wr.NewLine);
 					}
-					if( trow > 0 )
+					if (trow > 0)
 					{
-						wr.Write("GO{0}{0}",wr.NewLine );
+						wr.Write("GO{0}{0}", wr.NewLine);
 					}
-					if( IsIdentity == true )
+					if (IsIdentity == true)
 					{
 						// Identity 列がある場合、SET IDENTITY_INSERT table off をつける
-						string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture,"SET IDENTITY_INSERT {0} off",dboInfo.FormalName);
+						string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture, "SET IDENTITY_INSERT {0} off", dboInfo.FormalName);
 						wr.WriteLine(addidinsert);
 						wr.WriteLine("GO");
 						wr.Write(wr.NewLine);
 					}
 
-					if( this.rdoOutFolder.Checked == true ) 
+					if (this.rdoOutFolder.Checked == true)
 					{
 						wr.Close();
 						File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql");
-						if( trow > 0 )
+						if (trow > 0)
 						{
 							fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 							// ファイルをリネームする
-							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp", 
+							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp",
 								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql");
 						}
 						else
@@ -4939,91 +5077,124 @@ namespace quickDBExplorer.Forms
 						}
 
 					}
-					if( dr != null && dr.IsClosed == false )
+					if (dr != null && dr.IsClosed == false)
 					{
 						dr.Close();
 					}
 				}
-				if( dr != null && dr.IsClosed == false )
+				if (dr != null && dr.IsClosed == false)
 				{
 					dr.Close();
 				}
 
 
+				dlg.Close();
 				// set datas to clipboard
-				if( rowcount == 0 )
+				if (rowcount == 0)
 				{
 					MessageBox.Show("対象データがありませんでした");
 				}
 				else
 				{
-					if( this.rdoOutFolder.Checked == false ) 
+					if (this.rdoOutFolder.Checked == false)
 					{
 						wr.Close();
 					}
-					if( this.rdoClipboard.Checked == true ) 
+					if (this.rdoClipboard.Checked == true)
 					{
-						Clipboard.SetDataObject(strline.ToString(),true );
+						Clipboard.SetDataObject(strline.ToString(), true);
 					}
 					else
 					{
-						Clipboard.SetDataObject(fname.ToString(),true );
+						Clipboard.SetDataObject(fname.ToString(), true);
 					}
-					MessageBox.Show("処理を完了しました");
-				}
-			}
-			catch( Exception exp )
+					dlg.Close();
+                    if (dlg.IsCancel)
+                    {
+                        MessageBox.Show("処理を中断しました");
+                    }
+                    else
+                    {
+                        MessageBox.Show("処理を完了しました");
+                    }
+                }
+
+            }
+			catch (Exception exp)
 			{
 				this.SetErrorMessage(exp);
+			}
+			finally
+			{
+				if (dlg != null)
+				{
+					dlg.Close();
+				}
 			}
 		}
 
 		private void CreateFldList(bool isLF, bool iscomma)
 		{
+			ProcessingDialog dlg = null;
 			try
 			{
 				this.InitErrMessage();
 
-				if( this.objectList.SelectedItems.Count == 0 )
+				if (this.objectList.SelectedItems.Count == 0)
 				{
 					return;
 				}
 
-				if( CheckFileSpec() == false )
+				if (CheckFileSpec() == false)
 				{
 					return;
 				}
 
-				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+                dlg = new ProcessingDialog(this.objectList.SelectedItems.Count);
+
+                dlg.Show(this);
+
+
+                StringBuilder strline = new StringBuilder();
+				TextWriter wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.rdoClipboard.Checked == true) 
+				if (this.rdoClipboard.Checked == true)
 				{
-					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+					wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				}
-				else if( this.rdoOutFile.Checked == true ) 
+				else if (this.rdoOutFile.Checked == true)
 				{
-                    StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text, false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
 				}
 
-				DBObjectInfo	dboInfo;
-				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
+				DBObjectInfo dboInfo;
+				for (int ti = 0; ti < this.objectList.SelectedItems.Count; ti++)
 				{
-					dboInfo = this.objectList.GetSelectObject(ti);
 
-					if( this.rdoOutFolder.Checked == true ) 
+                    dboInfo = this.objectList.GetSelectObject(ti);
+
+                    dlg.CurVal = ti;
+                    dlg.CurTarget = dboInfo.ToString();
+
+                    if (dlg.IsCancel)
+                    {
+                        break;
+                    }
+
+
+                    if (this.rdoOutFolder.Checked == true)
 					{
-                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
-                        if (CheckOverWrite(filen) == false)
-                        {
-                            return;
-                        }
+						string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
+						if (CheckOverWrite(filen) == false)
+						{
+							return;
+						}
 
-                        StreamWriter sw = new StreamWriter(filen, false, GetEncode());
+						StreamWriter sw = new StreamWriter(filen, false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
@@ -5032,58 +5203,239 @@ namespace quickDBExplorer.Forms
 					// get id 
 					wr.Write(dboInfo.FormalName);
 					wr.Write(":");
-					string	alias = this.GetAlias();
-                    int i = 0;
-                    foreach( DBFieldInfo each in dboInfo.FieldInfo)
+					string alias = this.GetAlias();
+					int i = 0;
+					foreach (DBFieldInfo each in dboInfo.FieldInfo)
 					{
-						if( i != 0 && iscomma )
+						if (i != 0 && iscomma)
 						{
 							wr.Write(",");
 						}
-						if( isLF )
+						if (isLF)
 						{
-							wr.Write("{0}\t",wr.NewLine);
+							wr.Write("{0}\t", wr.NewLine);
 						}
 
-						if( alias != string.Empty )
+						if (alias != string.Empty)
 						{
-							wr.Write(alias + "." );
+							wr.Write(alias + ".");
 						}
 						wr.Write(each.Name);
-                        i++;
+						i++;
 					}
 					wr.Write(wr.NewLine);
 
-					if( this.rdoOutFolder.Checked == true ) 
+					if (this.rdoOutFolder.Checked == true)
 					{
 						wr.Close();
 					}
 				}
 
-				if( this.rdoOutFolder.Checked == false ) 
+				if (this.rdoOutFolder.Checked == false)
 				{
 					wr.Close();
 				}
-				if( this.rdoClipboard.Checked == true ) 
+				if (this.rdoClipboard.Checked == true)
 				{
-					Clipboard.SetDataObject(strline.ToString(),true );
+					Clipboard.SetDataObject(strline.ToString(), true);
 				}
 				else
 				{
-					Clipboard.SetDataObject(fname.ToString(),true );
+					Clipboard.SetDataObject(fname.ToString(), true);
 				}
 
-				MessageBox.Show( "処理を終了しました" );
-			}
-			catch( Exception exp )
+                dlg.Close();
+                if (dlg.IsCancel)
+                {
+                    MessageBox.Show("処理を中断しました");
+                }
+                else
+                {
+                    MessageBox.Show("処理を完了しました");
+                }
+            }
+            catch (Exception exp)
 			{
 				this.SetErrorMessage(exp);
 			}
+			finally
+			{
+				if (dlg != null)
+				{
+					dlg.Close();
+				}
+			}
 		}
+
+        private void CreateFldListEXCEL(bool iscomma)
+        {
+			ProcessingDialog dlg = null;
+			try
+			{
+				this.InitErrMessage();
+
+				if (this.objectList.SelectedItems.Count == 0)
+				{
+					return;
+				}
+
+				if (CheckFileSpec() == false)
+				{
+					return;
+				}
+
+				dlg = new ProcessingDialog(this.objectList.SelectedItems.Count);
+
+				dlg.Show(this);
+
+				StringBuilder strline = new StringBuilder();
+				TextWriter wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
+				StringBuilder fname = new StringBuilder();
+
+				if (this.rdoClipboard.Checked == true)
+				{
+					wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
+				}
+				else if (this.rdoOutFile.Checked == true)
+				{
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text, false, GetEncode());
+					sw.AutoFlush = false;
+					wr = sw;
+					fname.Append(this.txtOutput.Text);
+				}
+
+				wr.Write("スキーマ");
+				writeSeparator(iscomma, wr);
+				wr.Write("オブジェクト名");
+				writeSeparator(iscomma, wr);
+				wr.Write("カラムNo");
+				writeSeparator(iscomma, wr);
+				wr.Write("カラム名");
+				writeSeparator(iscomma, wr);
+				wr.Write("型");
+				writeSeparator(iscomma, wr);
+				wr.Write("サイズ");
+				writeSeparator(iscomma, wr);
+				wr.Write("精度");
+				writeSeparator(iscomma, wr);
+				wr.Write("Nullable");
+				writeSeparator(iscomma, wr);
+				wr.Write("PKEY");
+				wr.Write("{0}", wr.NewLine);
+
+				DBObjectInfo dboInfo;
+				for (int ti = 0; ti < this.objectList.SelectedItems.Count; ti++)
+				{
+					dlg.CurVal = ti;
+
+					dboInfo = this.objectList.GetSelectObject(ti);
+					if (dboInfo.IsSynonym)
+					{
+						continue;
+					}
+					dlg.CurTarget = dboInfo.ToString();
+
+					if (dlg.IsCancel)
+					{
+						break;
+					}
+
+					if (this.rdoOutFolder.Checked == true)
+					{
+						string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
+						if (CheckOverWrite(filen) == false)
+						{
+							return;
+						}
+
+						StreamWriter sw = new StreamWriter(filen, false, GetEncode());
+						sw.AutoFlush = false;
+						wr = sw;
+						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
+					}
+
+					// get id 
+					int i = 0;
+					foreach (DBFieldInfo each in dboInfo.FieldInfo)
+					{
+						wr.Write(dboInfo.Owner);
+						writeSeparator(iscomma, wr);
+						wr.Write(dboInfo.ObjName);
+						writeSeparator(iscomma, wr);
+						wr.Write(each.ColOrder);
+						writeSeparator(iscomma, wr);
+						wr.Write(each.Name);
+						writeSeparator(iscomma, wr);
+
+						wr.Write(each.GetFieldExcelOutString(iscomma));
+
+						wr.Write("{0}", wr.NewLine);
+						i++;
+					}
+
+					if (this.rdoOutFolder.Checked == true)
+					{
+						wr.Close();
+					}
+				}
+
+				if (this.rdoOutFolder.Checked == false)
+				{
+					wr.Close();
+				}
+				if (this.rdoClipboard.Checked == true)
+				{
+					Clipboard.SetDataObject(strline.ToString(), true);
+				}
+				else
+				{
+					Clipboard.SetDataObject(fname.ToString(), true);
+				}
+				dlg.Close();
+				if (dlg.IsCancel)
+				{
+                    MessageBox.Show("処理を中断しました");
+                }
+                else 
+				{ 
+                    MessageBox.Show("処理を終了しました");
+                }
+                dlg = null;
+
+			}
+			catch (Exception exp)
+			{
+                this.SetErrorMessage(exp);
+			}
+			finally
+			{
+				if (dlg != null)
+				{
+					dlg.Close();
+
+                }
+			}
+        }
+
+		private static void writeSeparator(bool iscomma, TextWriter wr)
+		{
+			if (iscomma)
+			{
+				wr.Write(",");
+			}
+			else
+			{
+				wr.Write("\t");
+			}
+		}
+
+
 
 		// CSVもしくはTSVを生成する
 		private void CreateTCsvText(bool isdquote, string separater)
 		{
+			ProcessingDialog dlg = null;
+
 			IDataReader dr = null;
 			IDbCommand 	cm = this.SqlDriver.NewSqlCommand();
 
@@ -5117,7 +5469,10 @@ namespace quickDBExplorer.Forms
 				return;
 			}
 
-			this.InitErrMessage();
+            dlg = new ProcessingDialog(this.objectList.SelectedItems.Count);
+            dlg.Show(this);
+
+            this.InitErrMessage();
 
 			int			rowcount = 0;
 			int			trow = 0;
@@ -5145,7 +5500,16 @@ namespace quickDBExplorer.Forms
 				{
 					dboInfo = this.objectList.GetSelectObject(ti);
 
-					if( this.rdoOutFolder.Checked == true ) 
+                    dlg.CurVal = ti;
+                    dlg.CurTarget = dboInfo.ToString();
+
+                    if (dlg.IsCancel)
+                    {
+                        break;
+                    }
+
+
+                    if ( this.rdoOutFolder.Checked == true ) 
 					{
                         string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv";
                         if (CheckOverWrite(filen) == false)
@@ -5287,8 +5651,17 @@ namespace quickDBExplorer.Forms
 					{
 						Clipboard.SetDataObject(fname.ToString(),true );
 					}
-					MessageBox.Show("処理を完了しました");
-				}
+
+					dlg.Close();
+					if (dlg.IsCancel)
+					{
+                        MessageBox.Show("処理を中断しました");
+                    }
+                    else
+					{
+                        MessageBox.Show("処理を完了しました");
+                    }
+                }
 			}
 			catch ( System.Data.SqlClient.SqlException se )
 			{
@@ -5313,6 +5686,10 @@ namespace quickDBExplorer.Forms
 				{
 					cm.Dispose();
 				}
+				if (dlg != null)
+				{
+					dlg.Close();
+				}
 			}
 
 			// set datas to clipboard
@@ -5322,7 +5699,8 @@ namespace quickDBExplorer.Forms
 		/// 現在の画面上のDB、Owner から、オブジェクト一覧を表示する
 		/// </summary>
 		private void CreDDL(bool bDrop, bool useParentheses)
-		{	
+		{
+			ProcessingDialog dlg = null;
 			if( this.objectList.SelectedItems.Count == 0 )
 			{
 				return;
@@ -5336,94 +5714,123 @@ namespace quickDBExplorer.Forms
 
 			try
 			{
-				StringBuilder strline =  new StringBuilder();
-				TextWriter	wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+
+                dlg = new ProcessingDialog(this.objectList.SelectedItems.Count);
+                dlg.Show(this);
+
+                StringBuilder strline = new StringBuilder();
+				TextWriter wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
-				if( this.rdoClipboard.Checked == true) 
+				if (this.rdoClipboard.Checked == true)
 				{
-					wr = new StringWriter(strline,System.Globalization.CultureInfo.CurrentCulture);
+					wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				}
-				else if( this.rdoOutFile.Checked == true ) 
+				else if (this.rdoOutFile.Checked == true)
 				{
-                    StreamWriter sw = new StreamWriter(this.txtOutput.Text,false, GetEncode());
+					StreamWriter sw = new StreamWriter(this.txtOutput.Text, false, GetEncode());
 					sw.AutoFlush = false;
 					wr = sw;
 					fname.Append(this.txtOutput.Text);
 				}
 
 
-				DBObjectInfo	dboInfo;
-				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
+				DBObjectInfo dboInfo;
+				for (int ti = 0; ti < this.objectList.SelectedItems.Count; ti++)
 				{
 					dboInfo = this.objectList.GetSelectObject(ti);
 
-					if( this.rdoOutFolder.Checked == true ) 
+                    dlg.CurVal = ti;
+                    dlg.CurTarget = dboInfo.ToString();
+
+                    if (dlg.IsCancel)
+                    {
+                        break;
+                    }
+
+                    if (this.rdoOutFolder.Checked == true)
 					{
-                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
-                        if (CheckOverWrite(filen) == false)
-                        {
-                            return;
-                        }
-                        StreamWriter sw = new StreamWriter(filen, false, GetEncode());
+						string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql";
+						if (CheckOverWrite(filen) == false)
+						{
+							return;
+						}
+						StreamWriter sw = new StreamWriter(filen, false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
 						fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
 					}
 
-					if( dboInfo.IsSynonym )
+					if (dboInfo.IsSynonym)
 					{
 						// Synonym 
-						if( bDrop )
+						if (bDrop)
 						{
-							wr.Write( "DROP SYNONYM " );
-							wr.Write("{0}{1}", dboInfo.FormalName,wr.NewLine);
-							wr.Write( "GO{0}",wr.NewLine);
+							wr.Write("DROP SYNONYM ");
+							wr.Write("{0}{1}", dboInfo.FormalName, wr.NewLine);
+							wr.Write("GO{0}", wr.NewLine);
 						}
-						wr.Write( string.Format(System.Globalization.CultureInfo.CurrentCulture,"create synonym {0} for {1}",
+						wr.Write(string.Format(System.Globalization.CultureInfo.CurrentCulture, "create synonym {0} for {1}",
 							dboInfo.FormalName,
-							dboInfo.SynonymBase )
+							dboInfo.SynonymBase)
 							);
-						wr.Write("{0}Go{0}{0}",wr.NewLine);
+						wr.Write("{0}Go{0}{0}", wr.NewLine);
 
 					}
 
-					if( bDrop )
+					if (bDrop)
 					{
 						wr.Write(this.SqlDriver.GetDDLDropStr(dboInfo));
 					}
 
 					wr.Write(this.SqlDriver.GetDdlCreateString(dboInfo, useParentheses));
 
-					if( this.rdoOutFolder.Checked == true ) 
+					if (this.rdoOutFolder.Checked == true)
 					{
 						wr.Close();
 					}
 				}
-				if( this.rdoOutFolder.Checked == false ) 
+				if (this.rdoOutFolder.Checked == false)
 				{
 					wr.Close();
 				}
-				if( this.rdoClipboard.Checked == true ) 
+				if (this.rdoClipboard.Checked == true)
 				{
-					Clipboard.SetDataObject(strline.ToString(),true );
+					Clipboard.SetDataObject(strline.ToString(), true);
 				}
 				else
 				{
-					Clipboard.SetDataObject(fname.ToString(),true );
+					Clipboard.SetDataObject(fname.ToString(), true);
 				}
-				MessageBox.Show("処理を完了しました");
-			}
-			catch ( Exception se )
+
+				dlg.Close();
+				if (dlg.IsCancel)
+				{
+                    MessageBox.Show("処理を中断しました");
+                }
+                else
+				{
+                    MessageBox.Show("処理を完了しました");
+                }
+            }
+			catch (Exception se)
 			{
 				this.SetErrorMessage(se);
 			}
+			finally
+			{
+				if (dlg != null)
+				{
+					dlg.Close();
+				}
+			}
 		}
 
-		/// <summary>
-		/// 指定されたオブジェクトの情報を表示する
-		/// </summary>
-		protected void DispData(DBObjectInfo dboInfo)
+
+        /// <summary>
+        /// 指定されたオブジェクトの情報を表示する
+        /// </summary>
+        protected void DispData(DBObjectInfo dboInfo)
 		{
 			DispData(dboInfo,false,false);
 		}

@@ -29,6 +29,7 @@ namespace quickDBExplorer.DataType
         public datetimeoffsetType()
         {
             this.DefalutParseString = "2016/01/21 +09:00";
+            this.TypeHasSize = true;
         }
         #endregion
 
@@ -36,6 +37,29 @@ namespace quickDBExplorer.DataType
         {
             return "DateTimeOffset";
         }
+
+        public override string GetFieldTypeString(string typename, int length, int prec, int xscale)
+        {
+            return string.Format(System.Globalization.CultureInfo.CurrentCulture, "{0}({1})",
+                typename,
+                xscale);
+        }
+
+
+        public override string GetFieldExcelOutString(string typename, int length, int prec, int xscale, bool isComma)
+        {
+            if (this.TypeHasSize == false) return typename;
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(typename);
+            sb.Append(this.GetSeparator(isComma));
+            sb.Append(xscale);
+            sb.Append(this.GetSeparator(isComma));
+
+            return sb.ToString();
+        }
+
+
 
         public override Type Type
         {

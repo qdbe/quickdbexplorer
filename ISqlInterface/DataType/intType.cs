@@ -30,6 +30,16 @@ namespace quickDBExplorer.DataType
             return "int";
         }
 
+        public override string GetFieldExcelOutString(string typename, int length, int prec, int xscale, bool isComma)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(typename);
+            sb.Append(this.GetSeparator(isComma));
+            sb.Append(this.GetSeparator(isComma));
+            return sb.ToString();
+
+        }
+
         public override Type Type
         {
             get { return typeof(int); }

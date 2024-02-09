@@ -83,6 +83,34 @@ namespace quickDBExplorer.DataType
         }
 
         /// <summary>
+        /// EXCEL出力用のカラムの方情報を出力する
+        /// </summary>
+        /// <param name="typename"></param>
+        /// <param name="length"></param>
+        /// <param name="prec"></param>
+        /// <param name="xscale"></param>
+        /// <param name="isComma"></param>
+        /// <returns></returns>
+        public abstract string GetFieldExcelOutString(string typename, int length, int prec, int xscale, bool isComma);
+
+        /// <summary>
+        /// 区切り文字を出力する（カンマ、タブ）
+        /// </summary>
+        /// <param name="isComma"></param>
+        /// <returns></returns>
+        public virtual string GetSeparator(bool isComma)
+        {
+            if (isComma)
+            {
+                return ",";
+            }
+            else
+            {
+                return "\t";
+            }
+        }
+
+        /// <summary>
         /// C# の型名を返す
         /// </summary>
         /// <returns></returns>

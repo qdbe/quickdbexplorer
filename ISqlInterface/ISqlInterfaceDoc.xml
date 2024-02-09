@@ -202,6 +202,24 @@
             <param name="xscale"></param>
             <returns></returns>
         </member>
+        <member name="M:quickDBExplorer.DataType.baseType.GetFieldExcelOutString(System.String,System.Int32,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            EXCEL出力用のカラムの方情報を出力する
+            </summary>
+            <param name="typename"></param>
+            <param name="length"></param>
+            <param name="prec"></param>
+            <param name="xscale"></param>
+            <param name="isComma"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DataType.baseType.GetSeparator(System.Boolean)">
+            <summary>
+            区切り文字を出力する（カンマ、タブ）
+            </summary>
+            <param name="isComma"></param>
+            <returns></returns>
+        </member>
         <member name="M:quickDBExplorer.DataType.baseType.GetCSharpTypeString">
             <summary>
             C# の型名を返す
@@ -415,6 +433,13 @@
             <summary>
             フィールドの表示形式を取得する
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.DBFieldInfo.GetFieldExcelOutString(System.Boolean)">
+            <summary>
+            EXCEL用フィールドリストを出力する
+            </summary>
+            <param name="isComma"></param>
             <returns></returns>
         </member>
         <member name="M:quickDBExplorer.DBFieldInfo.GetDDLTypeString(System.Boolean)">

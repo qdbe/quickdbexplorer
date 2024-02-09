@@ -496,6 +496,70 @@
             <param name="csv"></param>
             <param name="dq"></param>
         </member>
+        <member name="T:quickDBExplorer.Controls.qdbeProgressBar">
+            <summary>
+            プログレスバー
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeProgressBar.Maximum">
+            <summary>
+            最大値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeProgressBar.Minimum">
+            <summary>
+            最小値
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Controls.qdbeProgressBar._value">
+            <summary>
+            現在値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeProgressBar.Value">
+            <summary>
+            現在値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Controls.qdbeProgressBar.BarColor">
+            <summary>
+            バーの色
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeProgressBar.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeProgressBar.OnResize(System.EventArgs)">
+            <summary>
+            リサイズ時
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeProgressBar.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            描画処理
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="F:quickDBExplorer.Controls.qdbeProgressBar.components">
+            <summary> 
+            必要なデザイナー変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeProgressBar.Dispose(System.Boolean)">
+            <summary> 
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージド リソースを破棄する場合は true を指定し、その他の場合は false を指定します。</param>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeProgressBar.InitializeComponent">
+            <summary> 
+            デザイナー サポートに必要なメソッドです。このメソッドの内容を 
+            コード エディターで変更しないでください。
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.CopyDataEventHandler">
             <summary>
             Ctrl+C 押下時の デリゲート
@@ -1082,6 +1146,34 @@
             <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         </member>
         <member name="M:quickDBExplorer.Forms.FileOverWriteConfirm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.Forms.ProcessingDialog">
+            <summary>
+            処理中の状態を表示する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.ProcessingDialog.#ctor(System.Int32)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="maxVal"></param>
+        </member>
+        <member name="F:quickDBExplorer.Forms.ProcessingDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.ProcessingDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.ProcessingDialog.InitializeComponent">
             <summary>
             Required method for Designer support - do not modify
             the contents of this method with the code editor.

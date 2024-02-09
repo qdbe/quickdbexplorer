@@ -318,6 +318,48 @@ namespace quickDBExplorer
         }
 
         /// <summary>
+        /// EXCEL用フィールドリストを出力する
+        /// </summary>
+        /// <param name="isComma"></param>
+        /// <returns></returns>
+        public string GetFieldExcelOutString(bool isComma)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(
+                this.dataType.GetFieldExcelOutString(this.TypeName, this.Length, this.Prec, this.Xscale, isComma)
+            );
+            if (isComma)
+            {
+                sb.Append(",");
+            }
+            else
+            {
+                sb.Append("\t");
+            }
+            if (this.IsAllowNull == false)
+            {
+                sb.Append("N");
+            }
+            else
+            {
+                sb.Append("Y");
+            }
+            if (isComma)
+            {
+                sb.Append(",");
+            }
+            else
+            {
+                sb.Append("\t");
+            }
+            if (this.PrimaryKeyOrder >= 0)
+            {
+                sb.Append(this.PrimaryKeyOrder + 1);
+            }
+            return sb.ToString();
+        }
+
+        /// <summary>
         /// DDL用の型定義文字列を取得する
         /// </summary>
         /// <param name="useParentheses"></param>

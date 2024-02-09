@@ -19,12 +19,27 @@ namespace quickDBExplorer.DataType
         public timeType()
         {
             this.DefalutParseString = "12:00";
+            this.TypeHasSize = true;
         }
 
         public override string GetCSharpTypeString()
         {
             return "TimeSpan";
         }
+
+        public override string GetFieldExcelOutString(string typename, int length, int prec, int xscale, bool isComma)
+        {
+            if (this.TypeHasSize == false) return typename;
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append(typename);
+            sb.Append(this.GetSeparator(isComma));
+            sb.Append(xscale);
+            sb.Append(this.GetSeparator(isComma));
+
+            return sb.ToString();
+        }
+
 
         public override Type Type
         {
