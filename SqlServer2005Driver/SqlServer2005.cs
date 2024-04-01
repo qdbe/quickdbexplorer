@@ -1014,6 +1014,70 @@ order by colorder",
 				addCondition = " LOWER(t3.name) ";
 			}
 
+            // 以下のフィールドを含まない(テーブル、VIEW検索時も有効）
+            string excludeFieldCondition = string.Empty;
+            if (!string.IsNullOrEmpty(condition.ExcludeField))
+			{
+				string[] exf = condition.ExcludeField.Split(" 　".ToCharArray());
+                int st = 1;
+                foreach (string f in exf)
+				{
+                    if (string.IsNullOrEmpty(f.Trim()))
+                    {
+						continue;
+                    }
+                    if (condition.IsCaseSensitive == true)
+                    {
+                        excludeFieldCondition += string.Format(" and not exists ( select 1 from sys.all_columns te{1} where t1.object_id = te{1}.object_id and te{1}.name like '%{0}%' ) ", f, st);
+                    }
+                    else
+                    {
+                        excludeFieldCondition += string.Format(" and not exists ( select 1 from sys.all_columns te{1} where t1.object_id = te{1}.object_id and LOWER(te{1}.name) like '%{0}%' ) ", f.ToLower(), st);
+                    }
+					st++;
+                }
+            }
+
+            // 以下をフィールド名検索から除外（フィールド検索時のみ有効）
+            string excludeFieldNameCondition = string.Empty;
+            if (!string.IsNullOrEmpty(condition.ExcludeFieldName))
+            {
+                string[] exf = condition.ExcludeFieldName.Split(" 　".ToCharArray());
+                foreach (string f in exf)
+                {
+                    if (string.IsNullOrEmpty(f.Trim()))
+                    {
+                        continue;
+                    }
+                    if (condition.IsCaseSensitive == true)
+                    {
+                        excludeFieldNameCondition += string.Format(" and (t3.name not like '%{0}%') ", f);
+                    }
+                    else
+                    {
+                        excludeFieldNameCondition += string.Format(" and (LOWER(t3.name) not like '%{0}%') ", f.ToLower());
+                    }
+                }
+            }
+
+            //以下のオブジェクト名を含まない（フィールド検索時も有効）
+            string excludeObjNameCondition = string.Empty;
+            if (!string.IsNullOrEmpty(condition.ExcludeObjName))
+            {
+                string[] exf = condition.ExcludeObjName.Split(" 　".ToCharArray());
+				foreach (string f in exf)
+				{
+                    if (condition.IsCaseSensitive == true)
+                    {
+                        excludeObjNameCondition += string.Format(" and (t1.name not like '%{0}%') ", f);
+                    }
+                    else
+                    {
+                        excludeObjNameCondition += string.Format(" and (LOWER(t1.name) not like '%{0}%') ", f.ToLower());
+                    }
+                }
+            }
+
             List<string> ar = new List<string>();
 
             if (condition.IsFieldTable == true)
@@ -1055,7 +1119,14 @@ from
 	inner join sys.all_columns t3 on
 		t1.object_id = t3.object_id
 where
-	{0} {1} {2} {3}", addCondition, condSql , schemaFilter, typeCondition
+	{0} {1} {2} {3} {4} {5} {6}", 
+				addCondition, 
+				condSql , 
+				schemaFilter, 
+				typeCondition, 
+				excludeFieldCondition,
+                excludeFieldNameCondition,
+                excludeObjNameCondition
                 );
 		}
 
@@ -1150,7 +1221,45 @@ where
 				addCondition = " LOWER(t1.name) ";
 			}
 
-			string schemaFilter = string.Empty;
+            // 以下のフィールドを含まない(テーブル、VIEW検索時も有効）
+            string excludeFieldCondition = string.Empty;
+            if (!string.IsNullOrEmpty(condition.ExcludeField))
+            {
+                string[] exf = condition.ExcludeField.Split(" 　".ToCharArray());
+                int st = 1;
+                foreach (string f in exf)
+                {
+                    if (string.IsNullOrEmpty(f.Trim()))
+                    {
+                        continue;
+                    }
+                    if (condition.IsCaseSensitive == true)
+                    {
+                        excludeFieldCondition += string.Format(" and not exists ( select 1 from sys.all_columns te{1} where t1.object_id = te{1}.object_id and te{1}.name like '%{0}%' ) ", f, st);
+                    }
+                    else
+                    {
+                        excludeFieldCondition += string.Format(" and not exists ( select 1 from sys.all_columns te{1} where t1.object_id = te{1}.object_id and LOWER(te{1}.name) like '%{0}%' ) ", f.ToLower(), st);
+                    }
+                    st++;
+                }
+            }
+
+            string excludeObjNameCondition = string.Empty;
+            if (!string.IsNullOrEmpty(condition.ExcludeObjName))
+            {
+                if (condition.IsCaseSensitive == true)
+                {
+                    excludeObjNameCondition = string.Format(" and t1.name not like '%{0}%' ", condition.ExcludeObjName);
+                }
+                else
+                {
+                    excludeObjNameCondition = string.Format(" and LOWER(t1.name) not like '%{0}%' ", condition.ExcludeObjName.ToLower());
+                }
+            }
+
+
+            string schemaFilter = string.Empty;
 			if( limitSchema != null && 
 				limitSchema.Count != 0 )
 			{
@@ -1173,8 +1282,14 @@ from
 	inner join sys.schemas t2 on
 		t1.schema_id = t2.schema_id
 where
-	{0} {1} and t1.type in ( {2} ) {3} ", addCondition, condSql, typeCondition, schemaFilter
-				);		
+	{0} {1} and t1.type in ( {2} ) {3} {4} {5} ", 
+				addCondition, 
+				condSql, 
+				typeCondition, 
+				schemaFilter, 
+				excludeObjNameCondition, 
+				excludeFieldCondition
+                );		
 		}
 
 		#endregion
@@ -1214,6 +1329,7 @@ where
             }
             catch (Exception exp)
             {
+                Console.WriteLine(exp.ToString());
                 throw;
             }
         }

@@ -23,13 +23,22 @@ namespace quickDBExplorer
 		private System.Windows.Forms.CheckBox chkView;
 		private System.Windows.Forms.CheckBox chkSynonym;
 		private System.ComponentModel.IContainer components = null;
-		private System.Windows.Forms.CheckBox chkShowObjectSelector;
 		private System.Windows.Forms.CheckBox chkCaseSensitive;
 		private System.Windows.Forms.CheckBox chkSchema;
         private GroupBox groupBox3;
         private CheckBox chkTargetSynonym;
         private CheckBox chkTargetView;
         private CheckBox chkTargetTable;
+        private GroupBox groupBox4;
+        private RadioButton rdoObjectFilter;
+        private RadioButton rdoShowObjectSelector;
+        private Label label2;
+        private GroupBox groupBox5;
+        private quickDBExplorerTextBox txtExcludeField;
+        private quickDBExplorerTextBox txtExcludeObjName;
+        private Label label3;
+        private quickDBExplorerTextBox txtExcludeFieldName;
+        private Label label4;
         private SqlVersion pSqlVersion = null;
 
 		/// <summary>
@@ -79,9 +88,13 @@ namespace quickDBExplorer
                 result.IsFieldTable = this.chkTargetTable.Checked;
                 result.IsFieldView = this.chkTargetView.Checked;
                 result.IsFieldSynonym = this.chkTargetSynonym.Checked;
-                result.IsShowTableSelect = this.chkShowObjectSelector.Checked;
+                result.IsShowTableSelect = this.rdoShowObjectSelector.Checked;
+                result.IsTableFilter = this.rdoObjectFilter.Checked;
                 result.IsCaseSensitive = this.chkCaseSensitive.Checked;
                 result.IsSchemaOnly = this.chkSchema.Checked;
+                result.ExcludeField = this.txtExcludeField.Text;
+                result.ExcludeFieldName = this.txtExcludeFieldName.Text;
+                result.ExcludeObjName = this.txtExcludeObjName.Text;
                 return result;
             }
         }
@@ -101,8 +114,6 @@ namespace quickDBExplorer
         /// Viewを表示対象に含めるか否か
         /// </summary>
         public bool IsViewShow { get; set; }
-
-
 
         /// <summary>
         /// 検索方法を取得する
@@ -144,15 +155,26 @@ namespace quickDBExplorer
             this.rdoStartWith = new System.Windows.Forms.RadioButton();
             this.rdoContain = new System.Windows.Forms.RadioButton();
             this.rdoExact = new System.Windows.Forms.RadioButton();
-            this.chkShowObjectSelector = new System.Windows.Forms.CheckBox();
             this.chkSchema = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.chkTargetSynonym = new System.Windows.Forms.CheckBox();
             this.chkTargetView = new System.Windows.Forms.CheckBox();
             this.chkTargetTable = new System.Windows.Forms.CheckBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.rdoObjectFilter = new System.Windows.Forms.RadioButton();
+            this.rdoShowObjectSelector = new System.Windows.Forms.RadioButton();
+            this.label2 = new System.Windows.Forms.Label();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.txtExcludeFieldName = new quickDBExplorer.quickDBExplorerTextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtExcludeObjName = new quickDBExplorer.quickDBExplorerTextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtExcludeField = new quickDBExplorer.quickDBExplorerTextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtInput
@@ -167,24 +189,24 @@ namespace quickDBExplorer
             // btnGo
             // 
             this.btnGo.DialogResult = System.Windows.Forms.DialogResult.None;
-            this.btnGo.Location = new System.Drawing.Point(16, 344);
+            this.btnGo.Location = new System.Drawing.Point(16, 619);
             this.btnGo.TabIndex = 7;
             this.btnGo.Text = "決定(&O)";
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(346, 344);
+            this.btnCancel.Location = new System.Drawing.Point(346, 619);
             this.btnCancel.TabIndex = 9;
             // 
             // chkReturn
             // 
-            this.chkReturn.Location = new System.Drawing.Point(250, 107);
+            this.chkReturn.Location = new System.Drawing.Point(258, 461);
             this.chkReturn.Size = new System.Drawing.Size(208, 18);
             this.chkReturn.Visible = false;
             // 
             // btnHistory
             // 
-            this.btnHistory.Location = new System.Drawing.Point(144, 344);
+            this.btnHistory.Location = new System.Drawing.Point(144, 619);
             this.btnHistory.TabIndex = 8;
             // 
             // label1
@@ -266,7 +288,7 @@ namespace quickDBExplorer
             // 
             this.chkCaseSensitive.Checked = true;
             this.chkCaseSensitive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkCaseSensitive.Location = new System.Drawing.Point(16, 116);
+            this.chkCaseSensitive.Location = new System.Drawing.Point(14, 110);
             this.chkCaseSensitive.Name = "chkCaseSensitive";
             this.chkCaseSensitive.Size = new System.Drawing.Size(152, 24);
             this.chkCaseSensitive.TabIndex = 3;
@@ -297,16 +319,6 @@ namespace quickDBExplorer
             this.rdoExact.Size = new System.Drawing.Size(104, 24);
             this.rdoExact.TabIndex = 2;
             this.rdoExact.Text = "完全一致";
-            // 
-            // chkShowObjectSelector
-            // 
-            this.chkShowObjectSelector.Checked = true;
-            this.chkShowObjectSelector.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkShowObjectSelector.Location = new System.Drawing.Point(16, 317);
-            this.chkShowObjectSelector.Name = "chkShowObjectSelector";
-            this.chkShowObjectSelector.Size = new System.Drawing.Size(222, 24);
-            this.chkShowObjectSelector.TabIndex = 6;
-            this.chkShowObjectSelector.Text = "検索結果を元にオブジェクトを選択する";
             // 
             // chkSchema
             // 
@@ -366,13 +378,131 @@ namespace quickDBExplorer
             this.chkTargetTable.Text = "テーブル";
             this.chkTargetTable.UseVisualStyleBackColor = true;
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.rdoObjectFilter);
+            this.groupBox4.Controls.Add(this.rdoShowObjectSelector);
+            this.groupBox4.Location = new System.Drawing.Point(16, 316);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(434, 88);
+            this.groupBox4.TabIndex = 10;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "処理";
+            // 
+            // rdoObjectFilter
+            // 
+            this.rdoObjectFilter.AutoSize = true;
+            this.rdoObjectFilter.Location = new System.Drawing.Point(14, 52);
+            this.rdoObjectFilter.Name = "rdoObjectFilter";
+            this.rdoObjectFilter.Size = new System.Drawing.Size(203, 16);
+            this.rdoObjectFilter.TabIndex = 1;
+            this.rdoObjectFilter.Text = "検索結果を元にオブジェクトを絞り込む";
+            this.rdoObjectFilter.UseVisualStyleBackColor = true;
+            // 
+            // rdoShowObjectSelector
+            // 
+            this.rdoShowObjectSelector.AutoSize = true;
+            this.rdoShowObjectSelector.Checked = true;
+            this.rdoShowObjectSelector.Location = new System.Drawing.Point(14, 18);
+            this.rdoShowObjectSelector.Name = "rdoShowObjectSelector";
+            this.rdoShowObjectSelector.Size = new System.Drawing.Size(204, 16);
+            this.rdoShowObjectSelector.TabIndex = 0;
+            this.rdoShowObjectSelector.TabStop = true;
+            this.rdoShowObjectSelector.Text = "検索結果を元にオブジェクトを選択する";
+            this.rdoShowObjectSelector.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 26);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(285, 12);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "以下のフィールドを含まない(テーブル、VIEW検索時も有効）";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.txtExcludeFieldName);
+            this.groupBox5.Controls.Add(this.label4);
+            this.groupBox5.Controls.Add(this.txtExcludeObjName);
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Controls.Add(this.txtExcludeField);
+            this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Location = new System.Drawing.Point(16, 410);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(432, 194);
+            this.groupBox5.TabIndex = 12;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "除外設定";
+            // 
+            // txtExcludeFieldName
+            // 
+            this.txtExcludeFieldName.CanCtrlDelete = true;
+            this.txtExcludeFieldName.Histories = null;
+            this.txtExcludeFieldName.HistoryKey = "quickDBExplorerTextBox1";
+            this.txtExcludeFieldName.IsDigitOnly = false;
+            this.txtExcludeFieldName.IsShowZoom = false;
+            this.txtExcludeFieldName.Location = new System.Drawing.Point(16, 97);
+            this.txtExcludeFieldName.Name = "txtExcludeFieldName";
+            this.txtExcludeFieldName.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtExcludeFieldName.PlaceholderText = "";
+            this.txtExcludeFieldName.Size = new System.Drawing.Size(328, 19);
+            this.txtExcludeFieldName.TabIndex = 16;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 78);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(297, 12);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "以下をフィールド名検索から除外（フィールド検索時のみ有効）";
+            // 
+            // txtExcludeObjName
+            // 
+            this.txtExcludeObjName.CanCtrlDelete = true;
+            this.txtExcludeObjName.Histories = null;
+            this.txtExcludeObjName.HistoryKey = "quickDBExplorerTextBox1";
+            this.txtExcludeObjName.IsDigitOnly = false;
+            this.txtExcludeObjName.IsShowZoom = false;
+            this.txtExcludeObjName.Location = new System.Drawing.Point(16, 154);
+            this.txtExcludeObjName.Name = "txtExcludeObjName";
+            this.txtExcludeObjName.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtExcludeObjName.PlaceholderText = "";
+            this.txtExcludeObjName.Size = new System.Drawing.Size(328, 19);
+            this.txtExcludeObjName.TabIndex = 14;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(8, 139);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(277, 12);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "以下のオブジェクト名を含まない（フィールド検索時も有効）";
+            // 
+            // txtExcludeField
+            // 
+            this.txtExcludeField.CanCtrlDelete = true;
+            this.txtExcludeField.Histories = null;
+            this.txtExcludeField.HistoryKey = "quickDBExplorerTextBox1";
+            this.txtExcludeField.IsDigitOnly = false;
+            this.txtExcludeField.IsShowZoom = false;
+            this.txtExcludeField.Location = new System.Drawing.Point(14, 45);
+            this.txtExcludeField.Name = "txtExcludeField";
+            this.txtExcludeField.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtExcludeField.PlaceholderText = "";
+            this.txtExcludeField.Size = new System.Drawing.Size(328, 19);
+            this.txtExcludeField.TabIndex = 12;
+            // 
             // SearchConditionDlg
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-            this.ClientSize = new System.Drawing.Size(478, 374);
+            this.ClientSize = new System.Drawing.Size(478, 649);
+            this.Controls.Add(this.groupBox5);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.chkSchema);
-            this.Controls.Add(this.chkShowObjectSelector);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
@@ -383,18 +513,23 @@ namespace quickDBExplorer
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
-            this.Controls.SetChildIndex(this.chkShowObjectSelector, 0);
             this.Controls.SetChildIndex(this.chkSchema, 0);
+            this.Controls.SetChildIndex(this.groupBox3, 0);
+            this.Controls.SetChildIndex(this.groupBox4, 0);
             this.Controls.SetChildIndex(this.btnCancel, 0);
             this.Controls.SetChildIndex(this.chkReturn, 0);
             this.Controls.SetChildIndex(this.txtInput, 0);
             this.Controls.SetChildIndex(this.btnGo, 0);
             this.Controls.SetChildIndex(this.btnHistory, 0);
-            this.Controls.SetChildIndex(this.groupBox3, 0);
+            this.Controls.SetChildIndex(this.groupBox5, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -531,9 +666,13 @@ namespace quickDBExplorer
             this.chkTargetTable.Checked = opt.IsFieldTable;
             this.chkTargetView.Checked = opt.IsFieldView;
             this.chkTargetSynonym.Checked = opt.IsFieldSynonym;
-            this.chkShowObjectSelector.Checked = opt.IsShowTableSelect;
+            this.rdoShowObjectSelector.Checked = opt.IsShowTableSelect;
+            this.rdoObjectFilter.Checked = opt.IsTableFilter;
             this.chkCaseSensitive.Checked = opt.IsCaseSensitive;
             this.chkSchema.Checked = opt.IsSchemaOnly;
+            this.txtExcludeField.Text = opt.ExcludeField;
+            this.txtExcludeFieldName.Text = opt.ExcludeFieldName;
+            this.txtExcludeObjName.Text = opt.ExcludeObjName;
         }
     }
 }

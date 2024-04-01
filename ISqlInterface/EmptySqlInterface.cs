@@ -327,10 +327,5 @@ namespace quickDBExplorer
         {
             this.sqlVersion = version;
         }
-
-        public string GetDdlCreateDetailString(DBObjectInfo databaseObjectInfo, bool useParentheses)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

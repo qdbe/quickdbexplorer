@@ -138,9 +138,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\FieldListItem.cs" />
-    <Compile Include="Controls\objectListView.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Controls\objectListView.cs" />
     <Compile Include="Controls\QdbeDataGridTextBoxColumn.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -217,6 +215,12 @@
     </Compile>
     <Compile Include="Forms\Dialog\MakeFieldWhereDlg.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialog\MultiTableFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialog\MultiTableFilter.Designer.cs">
+      <DependentUpon>MultiTableFilter.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Dialog\OuterToolEditForm.cs">
       <SubType>Form</SubType>
@@ -358,6 +362,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\MakeFieldWhereDlg.resx">
       <DependentUpon>MakeFieldWhereDlg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dialog\MultiTableFilter.resx">
+      <DependentUpon>MultiTableFilter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\OuterToolEditForm.resx">
       <DependentUpon>OuterToolEditForm.cs</DependentUpon>

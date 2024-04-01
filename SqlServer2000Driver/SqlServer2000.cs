@@ -955,6 +955,71 @@ order by syscolumns.colorder",
 				addCondition = " LOWER(t3.name) ";
 			}
 
+            string excludeFieldCondition = string.Empty;
+            if (!string.IsNullOrEmpty(condition.ExcludeField))
+            {
+                string[] exf = condition.ExcludeField.Split(" Å@".ToCharArray());
+                int st = 4;
+                foreach (string f in exf)
+                {
+                    if (string.IsNullOrEmpty(f.Trim()))
+                    {
+                        continue;
+                    }
+                    if (condition.IsCaseSensitive == true)
+                    {
+                        excludeFieldCondition += string.Format(" and not exists ( select 1 from sys.all_columns t{1} where t1.object_id = t{1}.object_id and t{1}.name like '{0}' ) ", f, st);
+                    }
+                    else
+                    {
+                        excludeFieldCondition += string.Format(" and not exists ( select 1 from sys.all_columns t{1} where t1.object_id = t{1}.object_id and LOWER(t{1}.name) like '{0}' ) ", f.ToLower(), st);
+                    }
+                    st++;
+                }
+            }
+
+
+            string excludeFieldNameCondition = string.Empty;
+            if (!string.IsNullOrEmpty(condition.ExcludeFieldName))
+            {
+                string[] exf = condition.ExcludeFieldName.Split(" Å@".ToCharArray());
+                int st = 4;
+                foreach (string f in exf)
+                {
+                    if (string.IsNullOrEmpty(f.Trim()))
+                    {
+                        continue;
+                    }
+                    if (condition.IsCaseSensitive == true)
+                    {
+                        excludeFieldCondition += string.Format(" and not exists ( select 1 from sys.all_columns t{1} where t1.object_id = t{1}.object_id and t{1}.name like '{0}' ) ", f, st);
+                    }
+                    else
+                    {
+                        excludeFieldCondition += string.Format(" and not exists ( select 1 from sys.all_columns t{1} where t1.object_id = t{1}.object_id and LOWER(t{1}.name) like '{0}' ) ", f.ToLower(), st);
+                    }
+                    st++;
+                }
+            }
+
+            string excludeObjNameCondition = string.Empty;
+            if (!string.IsNullOrEmpty(condition.ExcludeObjName))
+            {
+                string[] exf = condition.ExcludeObjName.Split(" Å@".ToCharArray());
+                foreach (string f in exf)
+                {
+                    if (condition.IsCaseSensitive == true)
+                    {
+                        excludeObjNameCondition += string.Format(" and t1.name not like '%{0}%' ", f);
+                    }
+                    else
+                    {
+                        excludeObjNameCondition += string.Format(" and LOWER(t1.name) not like '%{0}%' ", f.ToLower());
+                    }
+                }
+            }
+
+
             List<string> ar = new List<string>();
 
             if (condition.IsFieldTable == true)
@@ -997,7 +1062,7 @@ from
 	inner join syscolumns t3 on
 		t1.id = t3.id		
 where
-	{0} {1} {2} {3}", addCondition, condSql , schemaFilter, typeCondition
+	{0} {1} {2} {3} {4} {5} {6}", addCondition, condSql , schemaFilter, typeCondition, excludeFieldCondition, excludeObjNameCondition, excludeFieldNameCondition
                 );
 		}
 
@@ -1088,7 +1153,21 @@ where
 				addCondition = " LOWER(t1.name) ";
 			}
 
-			string schemaFilter = string.Empty;
+            string excludeObjNameCondition = string.Empty;
+            if (!string.IsNullOrEmpty(condition.ExcludeObjName))
+            {
+                if (condition.IsCaseSensitive == true)
+                {
+                    excludeObjNameCondition = string.Format(" and t1.name not like '%{0}%' ", condition.ExcludeObjName);
+                }
+                else
+                {
+                    excludeObjNameCondition = string.Format(" and LOWER(t1.name) not like '%{0}%' ", condition.ExcludeObjName.ToLower());
+                }
+            }
+
+
+            string schemaFilter = string.Empty;
 			if( limitSchema != null && 
 				limitSchema.Count != 0 )
 			{
@@ -1111,8 +1190,8 @@ from
 	inner join sysusers  t2 on
 		t1.uid = t2.uid
 where
-	{0} {1} and t1.xtype in ( {2} ) {3} ", addCondition, condSql, typeCondition, schemaFilter
-				);		
+	{0} {1} and t1.xtype in ( {2} ) {3} {4} ", addCondition, condSql, typeCondition, schemaFilter, excludeObjNameCondition
+                );		
 		}
 		#endregion
 
@@ -1147,6 +1226,7 @@ where
             }
             catch( Exception exp)
             {
+                Console.WriteLine(exp.ToString());
                 throw;
             }
         }

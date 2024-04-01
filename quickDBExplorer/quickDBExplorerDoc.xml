@@ -27,9 +27,34 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:quickDBExplorer.ObjectFilterChangedEventArgs">
+            <summary>
+            オブジェクト一覧の絞り込み条件変更イベント引数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectFilterChangedEventArgs.IsFilterd">
+            <summary>
+            絞り込みされているか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectFilterChangedEventArgs.Sender">
+            <summary>
+            対象コントロール
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.ObjectFilterChangedEventHandler">
+            <summary>
+            オブジェクト一覧の絞り込み条件変更イベントDelegate
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.ObjectListView">
             <summary>
             Table等DBオブジェクトの一覧表示専用クラス
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.ObjectListView.ObjectFilterChanged">
+            <summary>
+            オブジェクト一覧の絞り込み条件変更イベントハンドラー
             </summary>
         </member>
         <member name="M:quickDBExplorer.ObjectListView.#ctor">
@@ -64,6 +89,22 @@
             </summary>
             <param name="filterText"></param>
             <param name="isCaseSensitive">フィルター適用時に大文字小文字を区別するか否か</param>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.FilterObjectList(System.String[],System.Boolean,quickDBExplorer.SearchType)">
+            <summary>
+            複数のフィルタを設定する
+            </summary>
+            <param name="filterTexts"></param>
+            <param name="isCaseSensitive"></param>
+            <param name="selectType"></param>
+        </member>
+        <member name="M:quickDBExplorer.ObjectListView.FilterObjectListDs(System.Data.DataTable,System.Boolean,quickDBExplorer.SearchType)">
+            <summary>
+            複数のフィルタを設定する
+            </summary>
+            <param name="dt"></param>
+            <param name="isCaseSensitive"></param>
+            <param name="selectType"></param>
         </member>
         <member name="M:quickDBExplorer.ObjectListView.GetSelectOneObjectName">
             <summary>
@@ -454,6 +495,11 @@
             </summary>
         </member>
         <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetWidth2Full">
+            <summary>
+            列を全セルが表示される幅に設定する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Controls.qdbeDataGridView.SetHeight2Full">
             <summary>
             列を全セルが表示される幅に設定する
             </summary>
@@ -1077,6 +1123,50 @@
             決定ボタン
             </summary>
         </member>
+        <member name="T:quickDBExplorer.Forms.Dialog.MultiTableFilter">
+            <summary>
+            オブジェクト一覧の絞り込み複数指定ダイアログ
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.MultiTableFilter.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.MultiTableFilter.SelecteType">
+            <summary>
+            検索方法
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.MultiTableFilter.IsCaseSensitive">
+            <summary>
+            大文字小文字を区別するか否か
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.MultiTableFilter.btnGo_Click(System.Object,System.EventArgs)">
+            <summary>
+            実行ボタン押下時
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:quickDBExplorer.Forms.Dialog.MultiTableFilter.components">
+            <summary>
+            必要なデザイナー変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.MultiTableFilter.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージド リソースを破棄する場合は true を指定し、その他の場合は false を指定します。</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.MultiTableFilter.InitializeComponent">
+            <summary>
+            デザイナー サポートに必要なメソッドです。このメソッドの内容を
+            コード エディターで変更しないでください。
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.Forms.Dialog.OuterToolEditForm">
             <summary>
             外部ツール情報の編集ダイアログ
@@ -1156,11 +1246,57 @@
             処理中の状態を表示する
             </summary>
         </member>
+        <member name="P:quickDBExplorer.Forms.ProcessingDialog.Caller">
+            <summary>
+            当ダイアログの呼び出し元
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.Forms.ProcessingDialog.#ctor(System.Int32)">
             <summary>
             コンストラクタ
             </summary>
             <param name="maxVal"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.ProcessingDialog.#ctor">
+            <summary>
+            コンストラクタ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.ProcessingDialog._curVal">
+            <summary>
+            現在値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.ProcessingDialog.CurVal">
+            <summary>
+            現在値
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.ProcessingDialog._curTarget">
+            <summary>
+            進行の最大値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.ProcessingDialog.CurTarget">
+            <summary>
+            進行の最大値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.ProcessingDialog.MaxVal">
+            <summary>
+            最大値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.ProcessingDialog.IsCancel">
+            <summary>
+            キャンセルされたか否か
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.ProcessingDialog.Show(System.Windows.Forms.Form)">
+            <summary>
+            ダイアログを表示
+            </summary>
+            <param name="owner"></param>
         </member>
         <member name="F:quickDBExplorer.Forms.ProcessingDialog.components">
             <summary>
@@ -1217,6 +1353,11 @@
             </summary>
         </member>
         <member name="P:quickDBExplorer.Forms.MainForm.GridDefaltWidth">
+            <summary>
+            グリッド表示時の幅の初期値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.GridDefaltHeight">
             <summary>
             グリッド表示時の幅の初期値
             </summary>
@@ -1673,6 +1814,33 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.labelFilter_MouseClick(System.Object,System.Windows.Forms.MouseEventArgs)">
+            <summary>
+            フィルタ設定のメニューを表示
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.menuSetMultiFilter_Click(System.Object,System.EventArgs)">
+            <summary>
+            オブジェクトリストのフィルタを設定する
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.menuClearMultiFilter_Click(System.Object,System.EventArgs)">
+            <summary>
+            オブジェクトリストのフィルタを解除する
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.SetEnable(System.Boolean)">
+            <summary>
+            this.Enabled の代わりにパネルの利用可否を設定する
+            </summary>
+            <param name="isEnable"></param>
+        </member>
         <member name="T:quickDBExplorer.Forms.MainMdi">
             <summary>
             全ての親画面となるMDIフォーム
@@ -1727,6 +1895,12 @@
             <param name="e">--</param>
         </member>
         <member name="M:quickDBExplorer.Forms.MainMdi.SetGridDefaultWidth(quickDBExplorer.Forms.MainForm)">
+            <summary>
+            グリッドの幅の初期値を設定する
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainMdi.SetGridDefaultHeight(quickDBExplorer.Forms.MainForm)">
             <summary>
             グリッドの幅の初期値を設定する
             </summary>
@@ -3833,6 +4007,11 @@
             グリッド表示時の幅の初期値
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ServerData.GridDefaltHeight">
+            <summary>
+            グリッド表示時の高さの初期値
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.ServerData.IsFilterCaseSensitive">
             <summary>
             フィルタで大文字小文字を区別するか否か
@@ -4032,6 +4211,11 @@
         <member name="P:quickDBExplorer.ServerJsonData.GridDefaltWidth">
             <summary>
             グリッド表示時の幅の初期値
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.GridDefaltHeight">
+            <summary>
+            グリッド表示時の高さの初期値
             </summary>
         </member>
         <member name="P:quickDBExplorer.ServerJsonData.IsFilterCaseSensitive">

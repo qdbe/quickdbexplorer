@@ -2,6 +2,7 @@ using	System;
 using	System.Data;
 using	System.Collections;
 using   System.Collections.Generic;
+using System.Web;
 
 namespace quickDBExplorer
 {
@@ -480,5 +481,88 @@ namespace quickDBExplorer
             }
         }
 
-	}
+
+		/// <summary>
+		/// 指定された名前に一致するかどうか
+		/// </summary>
+		/// <param name="schema"></param>
+		/// <param name="objName"></param>
+		/// <param name="isCheckSchema"></param>
+		/// <param name="isCaseSensitive"></param>
+		/// <param name="selectType"></param>
+		/// <returns></returns>
+        public bool IsMatch(string schema, string objName, bool isCheckSchema, bool isCaseSensitive, SearchType selectType)
+		{
+			if (isCheckSchema)
+			{
+				if(Owner == schema)
+				{
+					return CheckObjName(objName, isCaseSensitive,selectType);
+				}
+			}
+            else
+            {
+                return CheckObjName(objName, isCaseSensitive,selectType);
+            }
+			return false;
+        }
+
+        private bool CheckObjName(string objName, bool isCaseSensitive, SearchType selectType)
+        {
+			string objn = this.ObjName;
+			string searchName = objName;
+			string[] searchNames = searchName.Split(".".ToCharArray());
+			if (searchNames.Length == 2 &&
+				!string.IsNullOrEmpty(searchNames[0])
+				)
+			{
+				// スキーマ付き
+				if (isCaseSensitive)
+				{
+					if (this.Owner != searchNames[0])
+					{
+						return false;
+					}
+				}
+				else
+				{
+					if (this.Owner != searchNames[0])
+					{
+						return false;
+					}
+				}
+                searchName = searchNames[1];
+            }
+
+            if (!isCaseSensitive)
+            {
+				objn = objn.ToLower();
+				searchName = searchName.ToLower();
+            }
+            switch (selectType)
+            {
+                case SearchType.SearchExact:
+                    if (objn == searchName)
+                    {
+						return true;
+                    }
+                    break;
+                case SearchType.SearchContain:
+                    if (objn.Contains(searchName))
+                    {
+                        return true;
+                    }
+                    break;
+                case SearchType.SearchStartWith:
+                    if (objn.StartsWith(searchName))
+                    {
+                        return true;
+                    }
+                    break;
+                default:
+                    break;
+            }
+			return false;
+        }
+    }
 }

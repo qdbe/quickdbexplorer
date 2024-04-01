@@ -5,10 +5,11 @@ using System.Text;
 
 namespace quickDBExplorer
 {
+    [Obsolete("no uses",true)]
     /// <summary>
     /// オブジェクト検索の条件を管理
     /// </summary>
-    public class ObjectSearchCondition
+    public class MultiTableFilterCondition
     {
         /// <summary>
         /// フィールド名を検索するか否か
@@ -128,39 +129,19 @@ namespace quickDBExplorer
             set;
         }
 
-        /// <summary>
-        /// ここで指定された名前を持つフィールドを持たないオブジェクトのみに絞り込み
-        /// </summary>
         public string ExcludeField{get;set;}
 
-        /// <summary>
-        /// 検索対象で かつ ここで指定されたものを含まない
-        /// </summary>
         public string ExcludeFieldName { get; set; }
 
-        /// <summary>
-        /// オブジェクト名から、指定された名前を持つものを除外
-        /// </summary>
+
         public string ExcludeObjName { get; set; }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public ObjectSearchCondition()
+        public MultiTableFilterCondition()
         {
             this.IsCaseSensitive = true;
-            this.IsFieldSynonym = true;
-            this.IsFieldTable = true;
-            this.IsFieldView = true;
-            this.IsSchemaOnly = true;
-            this.IsSearchField = true;
-            this.IsSearchFunction = false;
-            this.IsSearchProcedure = true;
-            this.IsSearchSynonym = true;
-            this.IsSearchTable = true;
-            this.IsSearchView = true;
-            this.IsShowTableSelect = true;
-            this.IsTableFilter = false;
             this.ExcludeField = "";
             this.ExcludeFieldName = "";
             this.ExcludeObjName = "";

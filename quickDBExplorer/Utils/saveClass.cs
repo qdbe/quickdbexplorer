@@ -215,6 +215,11 @@ namespace quickDBExplorer
         public bool GridDefaltWidth { get; set; }
 
         /// <summary>
+        /// グリッド表示時の高さの初期値
+        /// </summary>
+        public bool GridDefaltHeight { get; set; }
+
+        /// <summary>
         /// フィルタで大文字小文字を区別するか否か
         /// </summary>
         public bool IsFilterCaseSensitive { get; set; }
@@ -239,6 +244,7 @@ namespace quickDBExplorer
             IsUseTrust = false;
             ReadEmptyAsNull = true;
             GridDefaltWidth = true;
+            GridDefaltHeight = true;
             IsFilterCaseSensitive = false;
 
             outdest = new Hashtable();
@@ -297,6 +303,7 @@ namespace quickDBExplorer
             IsUseTrust = false;
             ReadEmptyAsNull = true;
             GridDefaltWidth = true;
+            GridDefaltHeight = true;
             IsFilterCaseSensitive = false;
             outdest = new Hashtable();
             outfile = new Hashtable();
@@ -720,6 +727,11 @@ namespace quickDBExplorer
         /// グリッド表示時の幅の初期値
         /// </summary>
         public bool GridDefaltWidth { get; set; }
+
+        /// <summary>
+        /// グリッド表示時の高さの初期値
+        /// </summary>
+        public bool GridDefaltHeight { get; set; }
 
         /// <summary>
         /// フィルタで大文字小文字を区別するか否か
@@ -1220,6 +1232,7 @@ namespace quickDBExplorer
             }
             catch (Exception exp)
             {
+                Console.WriteLine(exp.ToString());
                 throw;
             }
             finally
@@ -1275,6 +1288,8 @@ namespace quickDBExplorer
             }
             catch (Exception exp)
             {
+                Console.WriteLine(exp.ToString());
+
                 throw;
             }
             finally
@@ -1334,6 +1349,7 @@ namespace quickDBExplorer
             }
             catch (Exception exp)
             {
+                Console.WriteLine(exp.ToString());
                 throw;
             }
             finally
@@ -1461,6 +1477,7 @@ namespace quickDBExplorer
             }
             catch (Exception exp)
             {
+                Console.WriteLine(exp.ToString());
                 throw;
             }
             finally
@@ -1525,6 +1542,7 @@ namespace quickDBExplorer
             }
             catch (Exception exp)
             {
+                Console.WriteLine(exp.ToString());
                 throw;
             }
             finally

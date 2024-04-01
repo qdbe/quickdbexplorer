@@ -196,6 +196,15 @@ namespace quickDBExplorer
         }
 
         /// <summary>
+        /// SQLSERVERの最大バージョンを取得する
+        /// </summary>
+        /// <returns></returns>
+        public static SqlVersion GetMaxVersion()
+        {
+            return SQLSERVER2022();
+        }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="versionStr">Connection.ServerVersion の結果を渡す</param>

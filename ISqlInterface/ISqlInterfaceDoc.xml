@@ -677,6 +677,17 @@
             </summary>
             <param name="dt"></param>
         </member>
+        <member name="M:quickDBExplorer.DBObjectInfo.IsMatch(System.String,System.String,System.Boolean,System.Boolean,quickDBExplorer.SearchType)">
+            <summary>
+            指定された名前に一致するかどうか
+            </summary>
+            <param name="schema"></param>
+            <param name="objName"></param>
+            <param name="isCheckSchema"></param>
+            <param name="isCaseSensitive"></param>
+            <param name="selectType"></param>
+            <returns></returns>
+        </member>
         <member name="T:quickDBExplorer.EmptySqlInterface">
             <summary>
             空の ISqlInterface を返す
@@ -1189,6 +1200,11 @@
             検索結果を元にオブジェクトを選択するか否か
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.IsTableFilter">
+            <summary>
+            検索結果を元にオブジェクトを絞り込むか否か
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.ObjectSearchCondition.IsCaseSensitive">
             <summary>
             大文字・小文字を区別するか否か
@@ -1197,6 +1213,21 @@
         <member name="P:quickDBExplorer.ObjectSearchCondition.IsSchemaOnly">
             <summary>
             現在表示中のスキーマのみ対象とするか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.ExcludeField">
+            <summary>
+            ここで指定された名前を持つフィールドを持たないオブジェクトのみに絞り込み
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.ExcludeFieldName">
+            <summary>
+            検索対象で かつ ここで指定されたものを含まない
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ObjectSearchCondition.ExcludeObjName">
+            <summary>
+            オブジェクト名から、指定された名前を持つものを除外
             </summary>
         </member>
         <member name="M:quickDBExplorer.ObjectSearchCondition.#ctor">
@@ -1365,6 +1396,12 @@
             <summary>
             SQL Server 2022 を表すインスタンスを生成する
             </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.GetMaxVersion">
+            <summary>
+            SQLSERVERの最大バージョンを取得する
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:quickDBExplorer.SqlVersion.#ctor(System.String)">
             <summary>

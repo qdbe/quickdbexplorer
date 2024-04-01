@@ -100,8 +100,15 @@ namespace quickDBExplorer.Controls
 
             this.DoubleBuffered = true;
 
+            //this.CurrentCellChanged += QdbeDataGridView_CurrentCellChanged;
+
             InitializeConponents();
 
+        }
+
+        private void QdbeDataGridView_CurrentCellChanged(object sender, EventArgs e)
+        {
+            
         }
 
         private void QdbeDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -171,6 +178,8 @@ namespace quickDBExplorer.Controls
         {
             this.Font = setting.GridFont;
             this.ForeColor = setting.GridForeColor;
+
+            this.AutoResizeColumnHeadersHeight();
         }
 
         /// <summary>
@@ -1025,6 +1034,7 @@ namespace quickDBExplorer.Controls
             int colidx = (int)menu.Tag;
             if (colidx < 0) return;
             QdbeDataGridTextBoxColumn col = (QdbeDataGridTextBoxColumn)this.Columns[colidx];
+
             int width = col.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true);
 
             if (width > 65536)
@@ -1032,6 +1042,8 @@ namespace quickDBExplorer.Controls
                 return;
             }
             col.Width = width;
+
+            
         }
 
 
@@ -1163,8 +1175,10 @@ namespace quickDBExplorer.Controls
         /// </summary>
         public void ResetWidth2Default()
         {
+            this.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
             foreach (QdbeDataGridTextBoxColumn each in this.Columns)
             {
+                each.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                 each.ResetWidth2Defalt();
             }
             this.RowHeadersWidth = this.DefaultRowHeaderWidth;
@@ -1175,15 +1189,36 @@ namespace quickDBExplorer.Controls
         /// </summary>
         public void SetWidth2Full()
         {
+            //this.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            
+            //this.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells, true);
             foreach (QdbeDataGridTextBoxColumn each in this.Columns)
             {
-                int width =  each.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true);
-                if (width > 65536)
-                {
-                    continue;
-                }
-                each.Width = width;
+                each.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                //int width =  each.GetPreferredWidth(DataGridViewAutoSizeColumnMode.AllCells, true);
+                //if (width > 65536)
+                //{
+                //    continue;
+                //}
+                //each.Width = width;
             }
+        }
+
+        /// <summary>
+        /// 列を全セルが表示される幅に設定する
+        /// </summary>
+        public void SetHeight2Full()
+        {
+            this.AutoResizeRows(DataGridViewAutoSizeRowsMode.AllCells,true);
+            //foreach (DataGridViewRow each in this.Rows)
+            //{
+            //    int height = each.GetPreferredHeight(each.Index, DataGridViewAutoSizeRowMode.AllCellsExceptHeader, false);
+            //    if (height > 65536)
+            //    {
+            //        continue;
+            //    }
+            //    each.Height = height;
+            //}
         }
 
         /// <summary>

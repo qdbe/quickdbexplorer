@@ -100,6 +100,8 @@ namespace quickDBExplorer.Forms
 
 		private string dbgridTableName = "";
 
+		//public bool IsProcessing { get; set; }
+
 
 		#region 公開メンバ
 		private ISqlInterface pSqlDriver = null;
@@ -154,10 +156,25 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
-		/// <summary>
-		/// フィルタで大文字小文字を区別するか否か
-		/// </summary>
-		public bool IsFilterCaseSensitive
+        /// <summary>
+        /// グリッド表示時の幅の初期値
+        /// </summary>
+        public bool GridDefaltHeight
+        {
+            get
+            {
+                return this.svdata.GridDefaltHeight;
+            }
+            set
+            {
+                this.svdata.GridDefaltHeight = value;
+            }
+        }
+
+        /// <summary>
+        /// フィルタで大文字小文字を区別するか否か
+        /// </summary>
+        public bool IsFilterCaseSensitive
 		{
             get
             {
@@ -345,7 +362,8 @@ namespace quickDBExplorer.Forms
 		private Label labelFilter;
 		private quickDBExplorerTextBox txtObjFilter;
 		private ContextMenuStrip dbMenu;
-		private ToolStripMenuItem menuTimeoutChange;
+        private ContextMenuStrip filterMenu;
+        private ToolStripMenuItem menuTimeoutChange;
 		private ToolStripMenuItem DBReloadMenu;
 		private ToolTip commTooltip;
 		private MenuItem fldmenuMakePoco;
@@ -354,7 +372,9 @@ namespace quickDBExplorer.Forms
 		private Button btnColRow;
         private ColumnHeader ColModifyDate;
 		private MenuItem fldmenuSchemaTableField;
-		private MenuItem fldmenuSchemaTableFieldComma;
+        private ToolStripMenuItem menuSetMultiFilter;
+        private ToolStripMenuItem menuClearMultiFilter;
+        private MenuItem fldmenuSchemaTableFieldComma;
 		
 		/// <summary>
 		/// コンストラクタ
@@ -379,6 +399,8 @@ namespace quickDBExplorer.Forms
 			InitPopupMenu();
 
 			SaveSplitLayout();
+
+			//this.IsProcessing = false;
 		}
 
 		private void SaveSplitLayout()
@@ -580,7 +602,10 @@ namespace quickDBExplorer.Forms
             this.dbMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuTimeoutChange = new System.Windows.Forms.ToolStripMenuItem();
             this.DBReloadMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.filterMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.commTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.menuSetMultiFilter = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuClearMultiFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.grpViewMode.SuspendLayout();
             this.grpSortMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -604,6 +629,7 @@ namespace quickDBExplorer.Forms
             this.UpDownSplitter.Panel2.SuspendLayout();
             this.UpDownSplitter.SuspendLayout();
             this.dbMenu.SuspendLayout();
+            this.filterMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // MsgArea
@@ -657,6 +683,7 @@ namespace quickDBExplorer.Forms
             this.objectList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.objectList_ColumnClick);
             this.objectList.SelectedIndexChanged += new System.EventHandler(this.objectList_SelectedIndexChanged);
             this.objectList.DoubleClick += new System.EventHandler(this.InsertMake);
+			this.objectList.ObjectFilterChanged += new ObjectFilterChangedEventHandler(this.OnObjectFilterChanged);
             // 
             // ColTVSType
             // 
@@ -1408,6 +1435,7 @@ namespace quickDBExplorer.Forms
             this.labelFilter.Size = new System.Drawing.Size(54, 12);
             this.labelFilter.TabIndex = 3;
             this.labelFilter.Text = "フィルタ(&A)";
+            this.labelFilter.MouseClick += new System.Windows.Forms.MouseEventHandler(this.labelFilter_MouseClick);
             // 
             // txtObjFilter
             // 
@@ -1566,6 +1594,28 @@ namespace quickDBExplorer.Forms
             this.DBReloadMenu.Text = "DB再読み込み(&R)";
             this.DBReloadMenu.Click += new System.EventHandler(this.DBReloadMenu_Click);
             // 
+            // filterMenu
+            // 
+            this.filterMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSetMultiFilter,
+            this.menuClearMultiFilter});
+            this.filterMenu.Name = "filterMenu";
+            this.filterMenu.Size = new System.Drawing.Size(181, 70);
+            // 
+            // menuSetMultiFilter
+            // 
+            this.menuSetMultiFilter.Name = "menuSetMultiFilter";
+            this.menuSetMultiFilter.Size = new System.Drawing.Size(180, 22);
+            this.menuSetMultiFilter.Text = "複数フィルターセット";
+            this.menuSetMultiFilter.Click += new System.EventHandler(this.menuSetMultiFilter_Click);
+            // 
+            // menuClearMultiFilter
+            // 
+            this.menuClearMultiFilter.Name = "menuClearMultiFilter";
+            this.menuClearMultiFilter.Size = new System.Drawing.Size(180, 22);
+            this.menuClearMultiFilter.Text = "複数フィルター解除";
+            this.menuClearMultiFilter.Click += new System.EventHandler(this.menuClearMultiFilter_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -1612,9 +1662,22 @@ namespace quickDBExplorer.Forms
             this.UpDownSplitter.Panel2.ResumeLayout(false);
             this.UpDownSplitter.ResumeLayout(false);
             this.dbMenu.ResumeLayout(false);
+            this.filterMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
+
+        private void OnObjectFilterChanged(object sender, ObjectFilterChangedEventArgs e)
+        {
+			if (e.IsFilterd)
+			{
+				this.labelFilter.ForeColor = Color.Red;
+			}
+			else
+			{
+                this.labelFilter.ForeColor = this.ForeColor;
+            }
+        }
 
 
         #endregion
@@ -1782,17 +1845,22 @@ namespace quickDBExplorer.Forms
             menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "各種コマンド実行", new EventHandler(this.menuDoQuery_Click)));
             menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "オブジェクト情報表示", new EventHandler(this.DispObjectInfo)));
             menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "オブジェクト検索", new EventHandler(this.ObjectSearch)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "複数フィルターセット", new EventHandler(this.menuSetMultiFilter_Click)));
+            menuAr.Add(new qdbeMenuItem(false, true, this.btnEtc.Name, "複数フィルター解除", new EventHandler(this.menuClearMultiFilter_Click)));
 
 
 			menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "列幅-初期化", new EventHandler(this.ResetWidth2Default)));
 			menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "列幅-全表示", new EventHandler(this.SetWidth2Full)));
-			menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "行高-初期化", new EventHandler(this.ResetHeight2Default)));
-			menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "全初期化", new EventHandler(this.ResetWidthHeight2Defalt)));
+            menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "行高-初期化", new EventHandler(this.ResetHeight2Default)));
+            menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "行高-全表示", new EventHandler(this.SetHeight2Full)));
+            menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "全初期化", new EventHandler(this.ResetWidthHeight2Defalt)));
+            menuAr.Add(new qdbeMenuItem(false, false, this.btnColRow.Name, "行列全表示", new EventHandler(this.SetWidthHeight2Full)));
 
-			return menuAr;
+            return menuAr;
         }
 
-		private void btn_Click(object sender, EventArgs e)
+
+        private void btn_Click(object sender, EventArgs e)
 		{
 			Button btn = (Button)sender;
 			ContextMenu btnMenu = (ContextMenu)btn.Tag;
@@ -1815,12 +1883,12 @@ namespace quickDBExplorer.Forms
 		
 		private void InsertMake(object sender, System.EventArgs e)
 		{
-			this.CreInsert(true,false,false);
+            this.CreInsert(true,false,false);
 		}
 
 		private void makefldlist(object sender, System.EventArgs e)
 		{
-			CreateFldList(false,true);
+            CreateFldList(false,true);
 		}
 
 		private void makefldListLF(object sender, System.EventArgs e)
@@ -2453,13 +2521,23 @@ namespace quickDBExplorer.Forms
                     this.txtAlias.SaveHistory(this.objectList.GetSelectOneObjectFormalName());
                     // データ表示部に、該当オブジェクトのデータを表示する
                     DispData(this.objectList.GetSelectObject(0));
+
 					if (this.svdata.GridDefaltWidth == true)
 					{
-						//this.dbGrid.ResetWidth2Default();
+                        this.dbGrid.ResetWidth2Default();
+                    }
+                    else
+					{
+                        this.dbGrid.SetWidth2Full();
+                    }
+
+                    if (this.svdata.GridDefaltHeight == true)
+					{
+                        this.dbGrid.ResetHight2Default();
 					}
 					else
 					{
-                        this.dbGrid.SetWidth2Full();
+                        this.dbGrid.SetHeight2Full();
                     }
                 }
                 else
@@ -4434,37 +4512,48 @@ namespace quickDBExplorer.Forms
 					return;
 				}
 
-				StringBuilder sb = new StringBuilder();
-				foreach(DataRow dr in ds.Tables[0].Rows)
-				{
-					sb.AppendFormat("[{0}].[{1}]",
-						dr[0].ToString(),
-						dr[1].ToString()
-						);
-					if( dr[2] != DBNull.Value )
+				//if (dlg.Condition.IsSearchTable)
+				//{
+					StringBuilder sb = new StringBuilder();
+					foreach (DataRow dr in ds.Tables[0].Rows)
 					{
-						sb.AppendFormat("\t[{0}]",
-							dr[2].ToString()
+						sb.AppendFormat("[{0}].[{1}]",
+							dr[0].ToString(),
+							dr[1].ToString()
 							);
+						if (dr[2] != DBNull.Value)
+						{
+							sb.AppendFormat("\t[{0}]",
+								dr[2].ToString()
+								);
+						}
+						sb.Append("\r\n");
 					}
-					sb.Append("\r\n");
-				}
-				Clipboard.SetDataObject(sb.ToString(),true );
-				if(dlg.Condition.IsShowTableSelect == true )
-				{
-					this.tableSelect(sb.ToString());
-				}
-			}
+					Clipboard.SetDataObject(sb.ToString(), true);
+					if (dlg.Condition.IsShowTableSelect == true)
+					{
+						this.tableSelect(sb.ToString());
+					}
+					else if (dlg.Condition.IsTableFilter)
+					{
+						this.objectList.FilterObjectListDs(ds.Tables[0], dlg.Condition.IsCaseSensitive, SearchType.SearchExact);
+					}
+				//}
+				//else if (dlg.Condition.IsSearchField)
+				//{
+				//}
+
+            }
 		}
 
-		/// <summary>
-		/// 条件に応じてオブジェクトを検索する
-		/// </summary>
-		/// <param name="searchCondition">検索文字</param>
-		/// <param name="searchType">検索条件</param>
+        /// <summary>
+        /// 条件に応じてオブジェクトを検索する
+        /// </summary>
+        /// <param name="searchCondition">検索文字</param>
+        /// <param name="searchType">検索条件</param>
         /// <param name="condition">条件</param>
-		/// <returns></returns>
-		private DataSet ObjectSearchSub(
+        /// <returns></returns>
+        private DataSet ObjectSearchSub(
 			string searchCondition,
 			SearchType searchType,
             ObjectSearchCondition condition
@@ -5985,7 +6074,8 @@ namespace quickDBExplorer.Forms
 					this.commTooltip.SetToolTip(this.dbGrid, stSqlDisp);
 					this.dbGrid.Tag = stSql;
 				}
-				this.dbGrid.Show();
+                this.dbGrid.SetDisplayFont(this.svdata.GridSetting);
+                this.dbGrid.Show();
 				this.btnDataEdit.Text = "データ編集(&T)";
                 if (lastDispdata == null || dspdt.Tables[0].PrimaryKey.Length == 0)
 				{
@@ -7255,15 +7345,25 @@ namespace quickDBExplorer.Forms
 		{
 			this.dbGrid.ResetWidthHeight2Defalt();
 		}
-		
-		/// <summary>
-		/// https://www.yamacho-blog.com/2017/03/vbnetdatagridviewformaccessviolationexc.html
-		/// http://stackoverflow.com/questions/8335983/accessviolationexception-on-tooltip-that-faults-comctl32-dll-net-4-0
-		/// Comctl32.dll バグ対応
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		public void MainForm_Activated(object sender, EventArgs e)
+        private void SetHeight2Full(object sender, EventArgs e)
+        {
+			this.dbGrid.SetHeight2Full();
+        }
+        private void SetWidthHeight2Full(object sender, EventArgs e)
+        {
+            this.dbGrid.SetWidth2Full();
+            this.dbGrid.SetHeight2Full();
+        }
+
+
+        /// <summary>
+        /// https://www.yamacho-blog.com/2017/03/vbnetdatagridviewformaccessviolationexc.html
+        /// http://stackoverflow.com/questions/8335983/accessviolationexception-on-tooltip-that-faults-comctl32-dll-net-4-0
+        /// Comctl32.dll バグ対応
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void MainForm_Activated(object sender, EventArgs e)
         {
 			//Console.WriteLine("MainForm_Activated");
 			//this.dbGrid.ShowCellToolTips = true;
@@ -7285,5 +7385,66 @@ namespace quickDBExplorer.Forms
 			//this.commTooltip.Active = false;
 		}
 
-	}
+		/// <summary>
+		/// フィルタ設定のメニューを表示
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+        private void labelFilter_MouseClick(object sender, MouseEventArgs e)
+        {
+            // 一覧を指定された文字（複数）を含むものだけに絞り込む。
+            // ここで解除も必要
+            if (e.Button == MouseButtons.Right)
+            {
+                this.filterMenu.Show((Control)this.labelFilter, new Point(0, 0));
+            }
+
+        }
+
+		/// <summary>
+		/// オブジェクトリストのフィルタを設定する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+        private void menuSetMultiFilter_Click(object sender, EventArgs e)
+        {
+            MultiTableFilter dlg = new MultiTableFilter();
+            dlg.InputedText = "";
+            dlg.Histories = this.Histories;
+            dlg.HistoryKey = "MultiFIlterHistory";
+
+
+            if (dlg.ShowDialog(this) == DialogResult.OK && dlg.InputedText != "")
+            {
+                string tabs = dlg.InputedText;
+                string[] objectLists = tabs.Replace("\r\n", "\r").Split("\r\n".ToCharArray());
+                this.objectList.FilterObjectList(objectLists, this.IsFilterCaseSensitive, dlg.SelecteType);
+            }
+        }
+
+		/// <summary>
+		/// オブジェクトリストのフィルタを解除する
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+        private void menuClearMultiFilter_Click(object sender, EventArgs e)
+        {
+			this.objectList.FilterObjectList(new string[0], this.IsFilterCaseSensitive, SearchType.SearchExact);
+        }
+
+		/// <summary>
+		/// this.Enabled の代わりにパネルの利用可否を設定する
+		/// </summary>
+		/// <param name="isEnable"></param>
+		public void SetEnable(bool isEnable)
+		{
+			foreach (Control e in this.Controls)
+			{
+				if (e is SplitContainer)
+				{
+					e.Enabled = isEnable;
+				}
+			}
+		}
+    }
 }

@@ -89,9 +89,12 @@ namespace quickDBExplorer.Forms
         private MenuItem menuOptWidth;
         private MenuItem menuOptWidthDefalut;
         private MenuItem menuOptWidthFull;
-        private MenuItem menuItem3;
+        private MenuItem menuOptFilter;
         private MenuItem menuOptFilterNoCS;
         private MenuItem menuOptFilterCS;
+        private MenuItem menuOptHeight;
+        private MenuItem menuOptHeightDefalut;
+        private MenuItem menuOptHeightFull;
         private ToolMacroManager toolMacroManager;
 
 
@@ -151,17 +154,20 @@ namespace quickDBExplorer.Forms
             this.menuOptNullOrEmpty = new System.Windows.Forms.MenuItem();
             this.menuOptNull = new System.Windows.Forms.MenuItem();
             this.menuOptEmpty = new System.Windows.Forms.MenuItem();
+            this.menuOptWidth = new System.Windows.Forms.MenuItem();
+            this.menuOptWidthDefalut = new System.Windows.Forms.MenuItem();
+            this.menuOptWidthFull = new System.Windows.Forms.MenuItem();
+            this.menuOptFilter = new System.Windows.Forms.MenuItem();
+            this.menuOptFilterNoCS = new System.Windows.Forms.MenuItem();
+            this.menuOptFilterCS = new System.Windows.Forms.MenuItem();
+            this.menuOptHeight = new System.Windows.Forms.MenuItem();
+            this.menuOptHeightDefalut = new System.Windows.Forms.MenuItem();
+            this.menuOptHeightFull = new System.Windows.Forms.MenuItem();
             this.menuHelpMain = new System.Windows.Forms.MenuItem();
             this.menuViewHelp = new System.Windows.Forms.MenuItem();
             this.menuAbout = new System.Windows.Forms.MenuItem();
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.menuOptWidth = new System.Windows.Forms.MenuItem();
-            this.menuOptWidthDefalut = new System.Windows.Forms.MenuItem();
-            this.menuOptWidthFull = new System.Windows.Forms.MenuItem();
-            this.menuItem3 = new System.Windows.Forms.MenuItem();
-            this.menuOptFilterNoCS = new System.Windows.Forms.MenuItem();
-            this.menuOptFilterCS = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -287,7 +293,8 @@ namespace quickDBExplorer.Forms
             this.menuItem2.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuOptNullOrEmpty,
             this.menuOptWidth,
-            this.menuItem3});
+            this.menuOptHeight,
+            this.menuOptFilter});
             this.menuItem2.Text = "オプション(&T)";
             this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
             // 
@@ -311,6 +318,66 @@ namespace quickDBExplorer.Forms
             this.menuOptEmpty.Index = 1;
             this.menuOptEmpty.Text = "空文字";
             this.menuOptEmpty.Click += new System.EventHandler(this.menuOptNullEmpty_Click);
+            // 
+            // menuOptWidth
+            // 
+            this.menuOptWidth.Index = 1;
+            this.menuOptWidth.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuOptWidthDefalut,
+            this.menuOptWidthFull});
+            this.menuOptWidth.Text = "グリッド幅";
+            // 
+            // menuOptWidthDefalut
+            // 
+            this.menuOptWidthDefalut.Index = 0;
+            this.menuOptWidthDefalut.Text = "既定値";
+            this.menuOptWidthDefalut.Click += new System.EventHandler(this.menuOptWidth_Click);
+            // 
+            // menuOptWidthFull
+            // 
+            this.menuOptWidthFull.Index = 1;
+            this.menuOptWidthFull.Text = "全表示";
+            this.menuOptWidthFull.Click += new System.EventHandler(this.menuOptWidth_Click);
+            // 
+            // menuItem3
+            // 
+            this.menuOptFilter.Index = 3;
+            this.menuOptFilter.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuOptFilterNoCS,
+            this.menuOptFilterCS});
+            this.menuOptFilter.Text = "オブジェクトフィルタ";
+            // 
+            // menuOptFilterNoCS
+            // 
+            this.menuOptFilterNoCS.Index = 0;
+            this.menuOptFilterNoCS.Text = "大文字小文字を区別しない";
+            this.menuOptFilterNoCS.Click += new System.EventHandler(this.menuOptFilter_Click);
+            // 
+            // menuOptFilterCS
+            // 
+            this.menuOptFilterCS.Index = 1;
+            this.menuOptFilterCS.Text = "大文字小文字を区別する";
+            this.menuOptFilterCS.Click += new System.EventHandler(this.menuOptFilter_Click);
+            // 
+            // menuItem4
+            // 
+            this.menuOptHeight.Index = 2;
+            this.menuOptHeight.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuOptHeightDefalut,
+            this.menuOptHeightFull});
+            this.menuOptHeight.Text = "グリッド高さ";
+            // 
+            // menuOptHeightDefalut
+            // 
+            this.menuOptHeightDefalut.Index = 0;
+            this.menuOptHeightDefalut.Text = "既定値";
+            this.menuOptHeightDefalut.Click += new System.EventHandler(this.menuOptHeight_Click);
+            // 
+            // menuOptHeightFull
+            // 
+            this.menuOptHeightFull.Index = 1;
+            this.menuOptHeightFull.Text = "全表示";
+            this.menuOptHeightFull.Click += new System.EventHandler(this.menuOptHeight_Click);
             // 
             // menuHelpMain
             // 
@@ -342,46 +409,6 @@ namespace quickDBExplorer.Forms
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // menuOptWidth
-            // 
-            this.menuOptWidth.Index = 1;
-            this.menuOptWidth.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuOptWidthDefalut,
-            this.menuOptWidthFull});
-            this.menuOptWidth.Text = "グリッド幅";
-            // 
-            // menuOptWidthDefalut
-            // 
-            this.menuOptWidthDefalut.Index = 0;
-            this.menuOptWidthDefalut.Text = "既定値";
-            this.menuOptWidthDefalut.Click += new System.EventHandler(this.menuOptWidth_Click);
-            // 
-            // menuOptWidthFull
-            // 
-            this.menuOptWidthFull.Index = 1;
-            this.menuOptWidthFull.Text = "全表示";
-            this.menuOptWidthFull.Click += new System.EventHandler(this.menuOptWidth_Click);
-            // 
-            // menuItem3
-            // 
-            this.menuItem3.Index = 2;
-            this.menuItem3.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuOptFilterNoCS,
-            this.menuOptFilterCS});
-            this.menuItem3.Text = "オブジェクトフィルタ";
-            // 
-            // menuOptFilterNoCS
-            // 
-            this.menuOptFilterNoCS.Index = 0;
-            this.menuOptFilterNoCS.Text = "大文字小文字を区別しない";
-            this.menuOptFilterNoCS.Click += new System.EventHandler(this.menuOptFilter_Click);
-            // 
-            // menuOptFilterCS
-            // 
-            this.menuOptFilterCS.Index = 1;
-            this.menuOptFilterCS.Text = "大文字小文字を区別する";
-            this.menuOptFilterCS.Click += new System.EventHandler(this.menuOptFilter_Click);
             // 
             // MainMdi
             // 
@@ -451,6 +478,7 @@ namespace quickDBExplorer.Forms
                 SetOptNullEmpty(sender);
                 SetGridDefaultWidth(sender);
                 SetOptFilter(sender);
+                SetGridDefaultHeight(sender);
             }
         }
 
@@ -502,6 +530,25 @@ namespace quickDBExplorer.Forms
                 this.menuOptWidthFull.Checked = true;
             }
         }
+
+        /// <summary>
+        /// グリッドの幅の初期値を設定する
+        /// </summary>
+        /// <param name="sender"></param>
+        private void SetGridDefaultHeight(MainForm sender)
+        {
+            if (sender.GridDefaltHeight)
+            {
+                this.menuOptHeightDefalut.Checked = true;
+                this.menuOptHeightFull.Checked = false;
+            }
+            else
+            {
+                this.menuOptHeightDefalut.Checked = false;
+                this.menuOptHeightFull.Checked = true;
+            }
+        }
+
 
         /// <summary>
         /// エラーメッセージの初期化を行う
@@ -995,6 +1042,7 @@ namespace quickDBExplorer.Forms
             MainForm main = this.ActiveMdiChild as MainForm;
             if (main != null)
             {
+                Console.WriteLine(string.Format("MainMdi_Activated {0} ", main.Text));
                 main.MainForm_Activated(sender, e);
             }
         }
@@ -1004,6 +1052,7 @@ namespace quickDBExplorer.Forms
             MainForm main = this.ActiveMdiChild as MainForm;
             if (main != null)
             {
+                Console.WriteLine(string.Format("MainMdi_Deactivate {0} ", main.Text));
                 main.MainForm_Deactivate(sender, e);
             }
         }
@@ -1062,6 +1111,24 @@ namespace quickDBExplorer.Forms
                 }
                 SetOptFilter(main);
             }
+        }
+
+        private void menuOptHeight_Click(object sender, EventArgs e)
+        {
+            MainForm main = this.ActiveMdiChild as MainForm;
+            if (main != null)
+            {
+                if (sender == this.menuOptHeightDefalut)
+                {
+                    main.GridDefaltHeight = true;
+                }
+                else
+                {
+                    main.GridDefaltHeight = false;
+                }
+                SetGridDefaultHeight(main);
+            }
+
         }
     }
 }

@@ -15,6 +15,12 @@ namespace quickDBExplorer.Forms
     /// </summary>
     public partial class ProcessingDialog : quickDBExplorer.quickDBExplorerBaseForm, IDisposable
     {
+
+        /// <summary>
+        /// 当ダイアログの呼び出し元
+        /// </summary>
+        public Form Caller { get; set; }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -26,6 +32,9 @@ namespace quickDBExplorer.Forms
             this.MaxVal = maxVal;
         }
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public ProcessingDialog()
         {
             InitializeComponent();
@@ -34,13 +43,24 @@ namespace quickDBExplorer.Forms
 
         private void ProcessingDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.Owner != null)
+            if (this.Caller != null)
             {
-                this.Owner.Enabled = true;
+                ((MainForm)this.Caller).SetEnable(true);
+                if (this.Caller is MainForm)
+                {
+                    ((MainForm)this.Caller).Activate();
+                }
             }
+
         }
 
+        /// <summary>
+        /// 現在値
+        /// </summary>
         protected int _curVal;
+        /// <summary>
+        /// 現在値
+        /// </summary>
         public int CurVal
         {
             get
@@ -65,7 +85,13 @@ namespace quickDBExplorer.Forms
             }
         }
 
+        /// <summary>
+        /// 進行の最大値
+        /// </summary>
         protected string _curTarget;
+        /// <summary>
+        /// 進行の最大値
+        /// </summary>
         public string CurTarget { 
             get {  return _curTarget; }
             set
@@ -78,24 +104,44 @@ namespace quickDBExplorer.Forms
             }
         }
 
+        /// <summary>
+        /// 最大値
+        /// </summary>
         public int MaxVal { get; set; }
 
+        /// <summary>
+        /// キャンセルされたか否か
+        /// </summary>
         public bool IsCancel { get; protected set; }
 
-
+        /// <summary>
+        /// ダイアログを表示
+        /// </summary>
+        /// <param name="owner"></param>
         public virtual void Show(Form owner)
         {
             this.IsCancel = false;
-            this.Owner = owner;
-            this.Owner.Enabled = false;
+            //this.Owner = owner;
+            this.Caller = owner;
+
+            if (this.Caller is MainForm)
+            {
+                //((MainForm)this.Caller).IsProcessing = true;
+                //this.MdiParent = ((MainForm)this.Caller).MdiParent;
+
+                ((MainForm)this.Caller).SetEnable(false);
+            }
+            else
+            {
+                this.Caller.Enabled = false;
+            }
             this.progressBar1.Maximum = this.MaxVal;
             this.txtTotal.Text = this.MaxVal.ToString();
             this.Show();
             this.Location = new Point(
-                this.Owner.Location.X + (this.Owner.Width / 2) - (this.Width / 2),
-                this.Owner.Location.Y + (this.Owner.Height / 2) - (this.Height / 2)
+                this.Caller.Location.X + (this.Caller.Width / 2) - (this.Width / 2),
+                this.Caller.Location.Y + (this.Caller.Height / 2) - (this.Height / 2)
                 );
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
