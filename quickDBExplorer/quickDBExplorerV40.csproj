@@ -122,6 +122,7 @@
     <Reference Include="System.Runtime.Serialization.Formatters.Soap">
       <Name>System.Runtime.Serialization.Formatters.Soap</Name>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
     </Reference>
@@ -209,6 +210,12 @@
     </Compile>
     <Compile Include="Forms\Dialog\IndexViewDialog.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialog\InsertOptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dialog\InsertOptionDialog.Designer.cs">
+      <DependentUpon>InsertOptionDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Dialog\LoginDialog.cs">
       <SubType>Form</SubType>
@@ -298,6 +305,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\CredentialManager.cs" />
     <Compile Include="Utils\qdbeUtil.cs" />
     <Compile Include="Utils\saveClass.cs" />
     <Compile Include="Utils\TextHistoryDataSet.Designer.cs" />
@@ -356,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\IndexViewDialog.resx">
       <DependentUpon>IndexViewDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Dialog\InsertOptionDialog.resx">
+      <DependentUpon>InsertOptionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Dialog\LoginDialog.resx">
       <DependentUpon>LoginDialog.cs</DependentUpon>

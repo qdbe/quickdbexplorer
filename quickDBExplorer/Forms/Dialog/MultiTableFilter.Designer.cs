@@ -40,22 +40,24 @@
             // txtInput
             // 
             this.txtInput.Location = new System.Drawing.Point(16, 161);
-            this.txtInput.Size = new System.Drawing.Size(975, 281);
+            this.txtInput.Size = new System.Drawing.Size(678, 281);
             this.txtInput.TabIndex = 1;
             // 
             // btnGo
             // 
             this.btnGo.Location = new System.Drawing.Point(16, 472);
+            this.btnGo.Size = new System.Drawing.Size(107, 24);
             this.btnGo.TabIndex = 2;
+            this.btnGo.Text = "絞り込み実施(&O)";
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(879, 472);
+            this.btnCancel.Location = new System.Drawing.Point(582, 472);
             this.btnCancel.TabIndex = 4;
             // 
             // chkReturn
             // 
-            this.chkReturn.Location = new System.Drawing.Point(571, 448);
+            this.chkReturn.Location = new System.Drawing.Point(274, 448);
             this.chkReturn.Visible = false;
             // 
             // btnHistory
@@ -117,16 +119,17 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(13, 132);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 13);
+            this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 7;
             this.label1.Text = "検索文字";
             // 
             // MultiTableFilter
             // 
-            this.ClientSize = new System.Drawing.Size(1011, 501);
+            this.ClientSize = new System.Drawing.Size(714, 501);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
             this.Name = "MultiTableFilter";
+            this.Text = "複数オブジェクトフィルター指定";
             this.Controls.SetChildIndex(this.txtInput, 0);
             this.Controls.SetChildIndex(this.btnGo, 0);
             this.Controls.SetChildIndex(this.btnCancel, 0);

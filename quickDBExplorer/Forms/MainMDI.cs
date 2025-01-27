@@ -16,6 +16,7 @@ using quickDBExplorer.Forms;
 using quickDBExplorer.Forms.Events;
 using quickDBExplorer.manager;
 using System.Diagnostics;
+using quickDBExplorer.Forms.Dialog;
 
 namespace quickDBExplorer.Forms
 {
@@ -95,6 +96,7 @@ namespace quickDBExplorer.Forms
         private MenuItem menuOptHeight;
         private MenuItem menuOptHeightDefalut;
         private MenuItem menuOptHeightFull;
+        private MenuItem menuInsertType;
         private ToolMacroManager toolMacroManager;
 
 
@@ -109,6 +111,7 @@ namespace quickDBExplorer.Forms
             InitializeComponent();
             this.ParseArg(args);
         }
+
 
         /// <summary>
         /// 使用されているリソースに後処理を実行します。
@@ -157,17 +160,18 @@ namespace quickDBExplorer.Forms
             this.menuOptWidth = new System.Windows.Forms.MenuItem();
             this.menuOptWidthDefalut = new System.Windows.Forms.MenuItem();
             this.menuOptWidthFull = new System.Windows.Forms.MenuItem();
-            this.menuOptFilter = new System.Windows.Forms.MenuItem();
-            this.menuOptFilterNoCS = new System.Windows.Forms.MenuItem();
-            this.menuOptFilterCS = new System.Windows.Forms.MenuItem();
             this.menuOptHeight = new System.Windows.Forms.MenuItem();
             this.menuOptHeightDefalut = new System.Windows.Forms.MenuItem();
             this.menuOptHeightFull = new System.Windows.Forms.MenuItem();
+            this.menuOptFilter = new System.Windows.Forms.MenuItem();
+            this.menuOptFilterNoCS = new System.Windows.Forms.MenuItem();
+            this.menuOptFilterCS = new System.Windows.Forms.MenuItem();
             this.menuHelpMain = new System.Windows.Forms.MenuItem();
             this.menuViewHelp = new System.Windows.Forms.MenuItem();
             this.menuAbout = new System.Windows.Forms.MenuItem();
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.menuInsertType = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -294,7 +298,8 @@ namespace quickDBExplorer.Forms
             this.menuOptNullOrEmpty,
             this.menuOptWidth,
             this.menuOptHeight,
-            this.menuOptFilter});
+            this.menuOptFilter,
+            this.menuInsertType});
             this.menuItem2.Text = "オプション(&T)";
             this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
             // 
@@ -339,27 +344,7 @@ namespace quickDBExplorer.Forms
             this.menuOptWidthFull.Text = "全表示";
             this.menuOptWidthFull.Click += new System.EventHandler(this.menuOptWidth_Click);
             // 
-            // menuItem3
-            // 
-            this.menuOptFilter.Index = 3;
-            this.menuOptFilter.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuOptFilterNoCS,
-            this.menuOptFilterCS});
-            this.menuOptFilter.Text = "オブジェクトフィルタ";
-            // 
-            // menuOptFilterNoCS
-            // 
-            this.menuOptFilterNoCS.Index = 0;
-            this.menuOptFilterNoCS.Text = "大文字小文字を区別しない";
-            this.menuOptFilterNoCS.Click += new System.EventHandler(this.menuOptFilter_Click);
-            // 
-            // menuOptFilterCS
-            // 
-            this.menuOptFilterCS.Index = 1;
-            this.menuOptFilterCS.Text = "大文字小文字を区別する";
-            this.menuOptFilterCS.Click += new System.EventHandler(this.menuOptFilter_Click);
-            // 
-            // menuItem4
+            // menuOptHeight
             // 
             this.menuOptHeight.Index = 2;
             this.menuOptHeight.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
@@ -378,6 +363,26 @@ namespace quickDBExplorer.Forms
             this.menuOptHeightFull.Index = 1;
             this.menuOptHeightFull.Text = "全表示";
             this.menuOptHeightFull.Click += new System.EventHandler(this.menuOptHeight_Click);
+            // 
+            // menuOptFilter
+            // 
+            this.menuOptFilter.Index = 3;
+            this.menuOptFilter.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuOptFilterNoCS,
+            this.menuOptFilterCS});
+            this.menuOptFilter.Text = "オブジェクトフィルタ";
+            // 
+            // menuOptFilterNoCS
+            // 
+            this.menuOptFilterNoCS.Index = 0;
+            this.menuOptFilterNoCS.Text = "大文字小文字を区別しない";
+            this.menuOptFilterNoCS.Click += new System.EventHandler(this.menuOptFilter_Click);
+            // 
+            // menuOptFilterCS
+            // 
+            this.menuOptFilterCS.Index = 1;
+            this.menuOptFilterCS.Text = "大文字小文字を区別する";
+            this.menuOptFilterCS.Click += new System.EventHandler(this.menuOptFilter_Click);
             // 
             // menuHelpMain
             // 
@@ -409,6 +414,12 @@ namespace quickDBExplorer.Forms
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
+            // 
+            // menuInsertType
+            // 
+            this.menuInsertType.Index = 4;
+            this.menuInsertType.Text = "INSERT文の出力設定";
+            this.menuInsertType.Click += new System.EventHandler(this.menuInsertType_Click);
             // 
             // MainMdi
             // 
@@ -1129,6 +1140,16 @@ namespace quickDBExplorer.Forms
                 SetGridDefaultHeight(main);
             }
 
+        }
+
+        private void menuInsertType_Click(object sender, EventArgs e)
+        {
+            MainForm main = this.ActiveMdiChild as MainForm;
+            if (main != null)
+            {
+                InsertOptionDialog dlg = new InsertOptionDialog(main.ServerDataInfo, main.ConnectSqlVersion);
+                dlg.ShowDialog();
+            }
         }
     }
 }

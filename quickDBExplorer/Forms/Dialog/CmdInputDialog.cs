@@ -47,70 +47,74 @@ namespace quickDBExplorer
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.SuspendLayout();
-			// 
-			// txtInput
-			// 
-			this.txtInput.Location = new System.Drawing.Point(16, 49);
-			this.txtInput.Size = new System.Drawing.Size(444, 206);
-			// 
-			// btnGo
-			// 
-			this.btnGo.Location = new System.Drawing.Point(16, 289);
-			this.btnGo.TabIndex = 3;
-			// 
-			// btnCancel
-			// 
-			this.btnCancel.Location = new System.Drawing.Point(360, 289);
-			this.btnCancel.TabIndex = 5;
-			// 
-			// chkReturn
-			// 
-			this.chkReturn.Location = new System.Drawing.Point(16, 261);
-			this.chkReturn.TabIndex = 2;
-			// 
-			// btnHistory
-			// 
-			this.btnHistory.Location = new System.Drawing.Point(144, 289);
-			this.btnHistory.TabIndex = 4;
-			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(14, 8);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(434, 18);
-			this.label1.TabIndex = 4;
-			this.label1.Text = "{0}をクエリ内に記載することで、選択しているオブジェクト名に実行時に変換されます";
-			// 
-			// label2
-			// 
-			this.label2.Location = new System.Drawing.Point(14, 28);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(434, 18);
-			this.label2.TabIndex = 4;
-			this.label2.Text = "例： truncate table {0}";
-			// 
-			// CmdInputDialog
-			// 
-			this.AcceptButton = null;
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
-			this.ClientSize = new System.Drawing.Size(480, 325);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.label2);
-			this.Name = "CmdInputDialog";
-			this.Text = "各種クエリ実行(オブジェクト引数)";
-			this.VisibleChanged += new System.EventHandler(this.CmdInputDialog_VisibleChanged);
-			this.Controls.SetChildIndex(this.txtInput, 0);
-			this.Controls.SetChildIndex(this.btnCancel, 0);
-			this.Controls.SetChildIndex(this.chkReturn, 0);
-			this.Controls.SetChildIndex(this.btnHistory, 0);
-			this.Controls.SetChildIndex(this.btnGo, 0);
-			this.Controls.SetChildIndex(this.label2, 0);
-			this.Controls.SetChildIndex(this.label1, 0);
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // txtInput
+            // 
+            this.txtInput.Location = new System.Drawing.Point(22, 61);
+            this.txtInput.Size = new System.Drawing.Size(430, 177);
+            // 
+            // btnGo
+            // 
+            this.btnGo.Location = new System.Drawing.Point(22, 280);
+            this.btnGo.Size = new System.Drawing.Size(135, 30);
+            this.btnGo.TabIndex = 3;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(312, 280);
+            this.btnCancel.Size = new System.Drawing.Size(123, 30);
+            this.btnCancel.TabIndex = 5;
+            // 
+            // chkReturn
+            // 
+            this.chkReturn.Location = new System.Drawing.Point(-170, 245);
+            this.chkReturn.Size = new System.Drawing.Size(292, 20);
+            this.chkReturn.TabIndex = 2;
+            // 
+            // btnHistory
+            // 
+            this.btnHistory.Location = new System.Drawing.Point(202, 280);
+            this.btnHistory.Size = new System.Drawing.Size(123, 30);
+            this.btnHistory.TabIndex = 4;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(20, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(607, 22);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "{0}をクエリ内に記載することで、選択しているオブジェクト名に実行時に変換されます";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(20, 35);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(607, 23);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "例： truncate table {0}";
+            // 
+            // CmdInputDialog
+            // 
+            this.AcceptButton = null;
+            this.AutoScaleBaseSize = new System.Drawing.Size(7, 15);
+            this.ClientSize = new System.Drawing.Size(480, 325);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label2);
+            this.Name = "CmdInputDialog";
+            this.Text = "各種クエリ実行(オブジェクト引数)";
+            this.VisibleChanged += new System.EventHandler(this.CmdInputDialog_VisibleChanged);
+            this.Controls.SetChildIndex(this.txtInput, 0);
+            this.Controls.SetChildIndex(this.btnCancel, 0);
+            this.Controls.SetChildIndex(this.chkReturn, 0);
+            this.Controls.SetChildIndex(this.btnHistory, 0);
+            this.Controls.SetChildIndex(this.btnGo, 0);
+            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.label1, 0);
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 		#endregion

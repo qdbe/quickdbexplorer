@@ -14,6 +14,7 @@ namespace quickDBExplorer
         [STAThread]
         static void Main(string[] args)
         {
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
             //Application.EnableVisualStyles();
             Application.Run(new MainMdi(args));
         }

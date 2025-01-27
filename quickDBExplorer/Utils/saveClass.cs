@@ -781,6 +781,11 @@ namespace quickDBExplorer
         /// </summary>
         public Dictionary<string, Dictionary<string, int>> PerTableHeaderSize { get; set; }
 
+        /// <summary>
+        /// Insert
+        /// </summary>
+        public InsertOptionSetting InsertOption { get; set; }
+
 
         /// <summary>
         /// コンストラクタ
@@ -803,6 +808,8 @@ namespace quickDBExplorer
             this.GridSetting = GridFormatSetting.Defalt();
             this.WhereGridHistory = new Dictionary<string, Dictionary<string, Dictionary<string, DataSet>>>();
             this.ObjectSearchHistory = new Dictionary<string, Dictionary<string, ObjectSearchCondition>>();
+            this.InsertOption = new InsertOptionSetting();
+
         }
 
 
@@ -837,7 +844,7 @@ namespace quickDBExplorer
             }
             return d;
         }
-        
+
         /// <summary>
         /// Hash をDictionary に変換する
         /// </summary>
@@ -897,6 +904,7 @@ namespace quickDBExplorer
             result.TxtEncode = HashtableToDictionary<string, int>(data.TxtEncode);
             //result.InputHistories = HashtableToDictionary<string, TextHistoryDataSet>(data.InputHistories);
             //result.GridSetting = GridFormatSetting.Defalt();
+
 
             return result;
         }
@@ -1022,7 +1030,7 @@ namespace quickDBExplorer
         {
             get { return this.GetFormat(this.GridNumberFormat); }
         }
-    
+
 
         /// <summary>
         /// 小数点書式の指定
@@ -1103,6 +1111,40 @@ namespace quickDBExplorer
         }
 
     }
+
+    /// <summary>
+    /// INSERT文生成のオプション
+    /// </summary>
+    public class InsertOptionSetting 
+    {
+        /// <summary>
+        /// INSERT文生成タイプ
+        /// 0: INSER文を全ての行に付与
+        /// 1: VALUESに複数行記載
+        /// </summary>
+        public int InsertType { get; set; }
+
+        /// <summary>
+        /// GOを挿入する行数
+        /// </summary>
+        public int GoInsertLine { get; set; }
+
+        /// <summary>
+        /// VALUESに記載するデータ行数
+        /// </summary>
+        public int ValuesLine { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public InsertOptionSetting()
+        {
+            this.InsertType = 0;
+            this.GoInsertLine = 1000;
+            this.ValuesLine = 50;
+        }
+    }
+
 
     /// <summary>
     /// ConditionRecorder の概要の説明です。

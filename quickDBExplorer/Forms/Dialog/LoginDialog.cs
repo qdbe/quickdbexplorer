@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using quickDBExplorer.Forms;
 using quickDBExplorer.Forms.Events;
+using quickDBExplorer.Utils;
 
 namespace quickDBExplorer
 {
@@ -64,16 +65,19 @@ namespace quickDBExplorer
         private Button btnClear;
         private quickDBExplorerTextBox txtDatabaseName;
         private Label label6;
+        private Button btnDispPasswd;
         private bool IsActivateWithArgs = false;
 
         internal event LoginConnectedHandler LoginConnected;
 
+        private bool isPassDisp = false;
 
-		/// <summary>
-		/// コンストラクタ
-		/// </summary>
-		/// <param name="initialOption">記憶された設定情報</param>
-		public LogOnDialog(ConditionRecorderJson initialOption)
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="initialOption">記憶された設定情報</param>
+        public LogOnDialog(ConditionRecorderJson initialOption)
 		{
 			// この呼び出しは Windows フォーム デザイナで必要です。
 			InitializeComponent();
@@ -144,6 +148,7 @@ namespace quickDBExplorer
             this.btnClear = new System.Windows.Forms.Button();
             this.txtDatabaseName = new quickDBExplorer.quickDBExplorerTextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.btnDispPasswd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // MsgArea
@@ -214,8 +219,8 @@ namespace quickDBExplorer
             this.txtPassword.Location = new System.Drawing.Point(153, 239);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.PasswordChar = '*';
-            this.txtPassword.PlaceholderText = null;
             this.txtPassword.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtPassword.PlaceholderText = null;
             this.txtPassword.Size = new System.Drawing.Size(208, 19);
             this.txtPassword.TabIndex = 13;
             // 
@@ -228,8 +233,8 @@ namespace quickDBExplorer
             this.txtUser.IsShowZoom = false;
             this.txtUser.Location = new System.Drawing.Point(153, 199);
             this.txtUser.Name = "txtUser";
-            this.txtUser.PlaceholderText = null;
             this.txtUser.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtUser.PlaceholderText = null;
             this.txtUser.Size = new System.Drawing.Size(208, 19);
             this.txtUser.TabIndex = 11;
             this.txtUser.Text = "sa";
@@ -243,8 +248,8 @@ namespace quickDBExplorer
             this.txtInstance.IsShowZoom = false;
             this.txtInstance.Location = new System.Drawing.Point(153, 89);
             this.txtInstance.Name = "txtInstance";
-            this.txtInstance.PlaceholderText = null;
             this.txtInstance.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtInstance.PlaceholderText = null;
             this.txtInstance.Size = new System.Drawing.Size(208, 19);
             this.txtInstance.TabIndex = 5;
             // 
@@ -257,8 +262,8 @@ namespace quickDBExplorer
             this.txtServerName.IsShowZoom = false;
             this.txtServerName.Location = new System.Drawing.Point(153, 49);
             this.txtServerName.Name = "txtServerName";
-            this.txtServerName.PlaceholderText = null;
             this.txtServerName.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtServerName.PlaceholderText = null;
             this.txtServerName.Size = new System.Drawing.Size(208, 19);
             this.txtServerName.TabIndex = 2;
             this.txtServerName.Text = "(local)";
@@ -316,8 +321,8 @@ namespace quickDBExplorer
             this.txtDatabaseName.IsShowZoom = false;
             this.txtDatabaseName.Location = new System.Drawing.Point(153, 128);
             this.txtDatabaseName.Name = "txtDatabaseName";
-            this.txtDatabaseName.PlaceholderText = "Azure 等の場合には指定が必要";
             this.txtDatabaseName.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtDatabaseName.PlaceholderText = "Azure 等の場合には指定が必要";
             this.txtDatabaseName.Size = new System.Drawing.Size(208, 19);
             this.txtDatabaseName.TabIndex = 8;
             // 
@@ -329,11 +334,22 @@ namespace quickDBExplorer
             this.label6.TabIndex = 7;
             this.label6.Text = "接続先データベース名(&D)";
             // 
+            // btnDispPasswd
+            // 
+            this.btnDispPasswd.Location = new System.Drawing.Point(367, 237);
+            this.btnDispPasswd.Name = "btnDispPasswd";
+            this.btnDispPasswd.Size = new System.Drawing.Size(107, 23);
+            this.btnDispPasswd.TabIndex = 21;
+            this.btnDispPasswd.Text = "パスワードを表示";
+            this.btnDispPasswd.UseVisualStyleBackColor = true;
+            this.btnDispPasswd.Click += new System.EventHandler(this.btnDispPasswd_Click);
+            // 
             // LogOnDialog
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
             this.ClientSize = new System.Drawing.Size(520, 302);
+            this.Controls.Add(this.btnDispPasswd);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnSelectServer);
             this.Controls.Add(this.chkTrust);
@@ -375,6 +391,7 @@ namespace quickDBExplorer
             this.Controls.SetChildIndex(this.chkTrust, 0);
             this.Controls.SetChildIndex(this.btnSelectServer, 0);
             this.Controls.SetChildIndex(this.btnClear, 0);
+            this.Controls.SetChildIndex(this.btnDispPasswd, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -411,6 +428,16 @@ namespace quickDBExplorer
                     else
                     {
                         this.chkTrust.Checked = false;
+                    }
+                    if (this.chkTrust.Checked == false)
+                    {
+                        string target = GetCredentialTarget();
+
+                        CredManager.Credential cred = CredManager.Read(target);
+                        if (!string.IsNullOrEmpty(cred.Password))
+                        {
+                            this.txtPassword.Text = cred.Password;
+                        }
                     }
                 }
                 this.txtUser.Text = (string)this.commnadArgHt[PARAM_USER];
@@ -462,14 +489,26 @@ namespace quickDBExplorer
 			{
 				this.btnServerHistory.Enabled = false;
 			}
-		}
+            if (this.chkTrust.Checked == false)
+            {
+                string target = GetCredentialTarget();
 
-		/// <summary>
-		/// ログインボタン押下時処理
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void btnLogin_Click(object sender, System.EventArgs e)
+                CredManager.Credential cred = CredManager.Read(target);
+                if(!string.IsNullOrEmpty(cred.Password))
+                {
+                    this.txtPassword.Text = cred.Password;
+                }
+            }
+
+
+        }
+
+        /// <summary>
+        /// ログインボタン押下時処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnLogin_Click(object sender, System.EventArgs e)
 		{
             DoLogin();
 		}
@@ -510,6 +549,19 @@ namespace quickDBExplorer
 
                 if( LoginConnected != null )
                 {
+
+                    if (this.chkTrust.Checked == false)
+                    {
+                        CredManager.Credential cred = new CredManager.Credential();
+                        cred.UserName = this.txtUser.Text;
+                        cred.Password = this.txtPassword.Text;
+
+                        string target = GetCredentialTarget();
+                        CredManager.Write(target, cred);
+                    }
+
+
+
                     LoginConnected(connectInfo);
                 }
 
@@ -526,6 +578,22 @@ namespace quickDBExplorer
             //finally {
             //	mainForm.sqlConnection1.Close();
             //}
+        }
+
+        private string GetCredentialTarget()
+        {
+            string target = string.Format("qdbe_{0}@{1}",
+                this.txtUser.Text, this.txtServerName.Text);
+            if (string.IsNullOrEmpty(this.txtInstance.Text) == false)
+            {
+                target += "\\" + this.txtInstance.Text;
+            }
+            if (string.IsNullOrEmpty(this.txtDatabaseName.Text) == false)
+            {
+                target += "_" + this.txtDatabaseName.Text;
+            }
+
+            return target;
         }
 
         private ServerJsonData CreateServerData()
@@ -658,25 +726,56 @@ namespace quickDBExplorer
                 this.chkTrust.Checked = false;
                 this.txtPassword.Text = "";
             }
+
+            if (this.chkTrust.Checked == false)
+            {
+                string target = GetCredentialTarget();
+
+                CredManager.Credential cred = CredManager.Read(target);
+                if (!string.IsNullOrEmpty(cred.Password))
+                {
+                    this.txtPassword.Text = cred.Password;
+                }
+            }
+
         }
 
-		private void LogOnDialog_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void LogOnDialog_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 		}
 
 		private void chkTrust_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if( this.chkTrust.Checked == true )
-			{
-				this.txtUser.Enabled = false;
-				this.txtPassword.Enabled = false;
-			}
-			else
-			{
-				this.txtUser.Enabled = true;
-				this.txtPassword.Enabled = true;
-			}
-		}
+            try
+            {
+                if (this.chkTrust.Checked == true)
+                {
+                    this.txtUser.Enabled = false;
+                    this.txtPassword.Enabled = false;
+                }
+                else
+                {
+                    this.txtUser.Enabled = true;
+                    this.txtPassword.Enabled = true;
+
+                    string target = GetCredentialTarget();
+
+                    CredManager.Credential cred = CredManager.Read(target);
+                    if (!string.IsNullOrEmpty(cred.Password))
+                    {
+                        this.txtPassword.Text = cred.Password;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                this.SetErrorMessage(ex);
+            }
+            finally
+            {
+                
+            }
+        }
 
         private void btnSelectServer_Click(object sender, EventArgs e)
         {
@@ -723,6 +822,21 @@ namespace quickDBExplorer
             this.txtUser.Text = string.Empty;
             this.txtPassword.Text = string.Empty;
             this.chkTrust.Checked = true;
+        }
+
+        private void btnDispPasswd_Click(object sender, EventArgs e)
+        {
+            isPassDisp = !isPassDisp;
+            if (isPassDisp)
+            {
+                this.txtPassword.PasswordChar = '\0';
+                this.btnDispPasswd.Text = "パスワードを非表示";
+            }
+            else
+            {
+                this.txtPassword.PasswordChar = '*';
+                this.btnDispPasswd.Text = "パスワードを表示";
+            }
         }
     }
 }

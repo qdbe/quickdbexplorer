@@ -100,7 +100,7 @@ namespace quickDBExplorer.Controls
 
             this.DoubleBuffered = true;
 
-            //this.CurrentCellChanged += QdbeDataGridView_CurrentCellChanged;
+            this.CurrentCellChanged += QdbeDataGridView_CurrentCellChanged;
 
             InitializeConponents();
 
@@ -108,7 +108,19 @@ namespace quickDBExplorer.Controls
 
         private void QdbeDataGridView_CurrentCellChanged(object sender, EventArgs e)
         {
-            
+            if (this.CurrentCell == null)
+            {
+                return;
+            }
+            if (this.CurrentCell.Displayed == false)
+            {
+                System.Diagnostics.Debug.WriteLine("CELL NOT VISIBLE");
+                this.FirstDisplayedScrollingColumnIndex = this.CurrentCell.ColumnIndex;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("CELL VISIBLE " + this.CurrentCell.ColumnIndex.ToString());
+            }
         }
 
         private void QdbeDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -1191,7 +1203,7 @@ namespace quickDBExplorer.Controls
         {
             //this.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             
-            //this.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells, true);
+            this.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells, true);
             foreach (QdbeDataGridTextBoxColumn each in this.Columns)
             {
                 each.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;

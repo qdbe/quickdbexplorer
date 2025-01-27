@@ -1123,6 +1123,94 @@
             決定ボタン
             </summary>
         </member>
+        <member name="T:quickDBExplorer.Forms.Dialog.InsertOptionDialog">
+            <summary>
+            INSERT文設定ダイアログ
+            </summary>
+            <summary>
+            INSERT文設定ダイアログ
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.InsertOptionDialog._insertOption">
+            <summary>
+            INSERT文設定
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.InsertOptionDialog._svData">
+            <summary>
+            サーバ情報
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.Dialog.InsertOptionDialog._version">
+            <summary>
+            SQLServerのバージョン 
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.Dialog.InsertOptionDialog.isLoading">
+            <summary>
+            起動中か否かの判定
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.InsertOptionDialog.#ctor(quickDBExplorer.ServerJsonData,quickDBExplorer.SqlVersion)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="svData"></param>  
+            <param name="_version"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.InsertOptionDialog.#ctor">
+            <summary>
+            コンストラクタ（デザイン用）
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.InsertOptionDialog.OnLoad(System.EventArgs)">
+            <summary>
+            表示時処理
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.InsertOptionDialog.DispData(quickDBExplorer.InsertOptionSetting)">
+            <summary>
+            データを出力する
+            </summary>
+            <param name="insertOption"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.InsertOptionDialog.rdoInsert_CheckedChanged(System.Object,System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.InsertOptionDialog.DispSample">
+            <summary>
+            サンプルの表示
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.InsertOptionDialog.btnOk_Click(System.Object,System.EventArgs)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="F:quickDBExplorer.Forms.Dialog.InsertOptionDialog.components">
+            <summary>
+            必要なデザイナー変数です。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.InsertOptionDialog.Dispose(System.Boolean)">
+            <summary>
+            使用中のリソースをすべてクリーンアップします。
+            </summary>
+            <param name="disposing">マネージド リソースを破棄する場合は true を指定し、その他の場合は false を指定します。</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.Dialog.InsertOptionDialog.InitializeComponent">
+            <summary>
+            デザイナー サポートに必要なメソッドです。このメソッドの内容を
+            コード エディターで変更しないでください。
+            </summary>
+        </member>
         <member name="T:quickDBExplorer.Forms.Dialog.MultiTableFilter">
             <summary>
             オブジェクト一覧の絞り込み複数指定ダイアログ
@@ -1365,6 +1453,11 @@
         <member name="P:quickDBExplorer.Forms.MainForm.IsFilterCaseSensitive">
             <summary>
             フィルタで大文字小文字を区別するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.InsertOption">
+            <summary>
+            INSERT文生成設定
             </summary>
         </member>
         <member name="P:quickDBExplorer.Forms.MainForm.ServerInstanceName">
@@ -4260,6 +4353,11 @@
             Gridの見出しのサイズ
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ServerJsonData.InsertOption">
+            <summary>
+            Insert
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.ServerJsonData.#ctor">
             <summary>
             コンストラクタ
@@ -4399,6 +4497,33 @@
             </summary>
             <param name="fstr"></param>
             <returns></returns>
+        </member>
+        <member name="T:quickDBExplorer.InsertOptionSetting">
+            <summary>
+            INSERT文生成のオプション
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.InsertOptionSetting.InsertType">
+            <summary>
+            INSERT文生成タイプ
+            0: INSER文を全ての行に付与
+            1: VALUESに複数行記載
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.InsertOptionSetting.GoInsertLine">
+            <summary>
+            GOを挿入する行数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.InsertOptionSetting.ValuesLine">
+            <summary>
+            VALUESに記載するデータ行数
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.InsertOptionSetting.#ctor">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:quickDBExplorer.ConditionRecorder">
             <summary>

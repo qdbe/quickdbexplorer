@@ -14,6 +14,10 @@ using quickDBExplorer.Forms;
 using quickDBExplorer.Forms.Events;
 using LumenWorks.Framework.IO.Csv;
 using quickDBExplorer.Forms.Dialog;
+using System.Globalization;
+using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace quickDBExplorer.Forms
 {
@@ -185,6 +189,29 @@ namespace quickDBExplorer.Forms
                 this.svdata.IsFilterCaseSensitive = value;
             }
 
+        }
+
+		/// <summary>
+		/// INSERT文生成設定
+		/// </summary>
+		public InsertOptionSetting InsertOption
+		{
+			get
+			{
+				return this.svdata.InsertOption;
+			}
+			set
+			{
+				this.svdata.InsertOption = value;
+			}
+		}
+
+		public ServerJsonData ServerDataInfo
+        {
+            get
+            {
+                return this.svdata;
+            }
         }
 
 
@@ -374,6 +401,8 @@ namespace quickDBExplorer.Forms
 		private MenuItem fldmenuSchemaTableField;
         private ToolStripMenuItem menuSetMultiFilter;
         private ToolStripMenuItem menuClearMultiFilter;
+        private MenuItem fldmenuMakePocoCamel;
+        private MenuItem fldmenuMakePocoPascal;
         private MenuItem fldmenuSchemaTableFieldComma;
 		
 		/// <summary>
@@ -603,9 +632,11 @@ namespace quickDBExplorer.Forms
             this.menuTimeoutChange = new System.Windows.Forms.ToolStripMenuItem();
             this.DBReloadMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.filterMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.commTooltip = new System.Windows.Forms.ToolTip(this.components);
             this.menuSetMultiFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.menuClearMultiFilter = new System.Windows.Forms.ToolStripMenuItem();
+            this.commTooltip = new System.Windows.Forms.ToolTip(this.components);
+            this.fldmenuMakePocoCamel = new System.Windows.Forms.MenuItem();
+            this.fldmenuMakePocoPascal = new System.Windows.Forms.MenuItem();
             this.grpViewMode.SuspendLayout();
             this.grpSortMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -613,18 +644,23 @@ namespace quickDBExplorer.Forms
             this.grpSysUserMode.SuspendLayout();
             this.grpOutputMode.SuspendLayout();
             this.grpCharaSet.SuspendLayout();
+            //this.ObjFieldSplitter.BeginInit();
             this.ObjFieldSplitter.Panel1.SuspendLayout();
             this.ObjFieldSplitter.Panel2.SuspendLayout();
             this.ObjFieldSplitter.SuspendLayout();
+            //this.MainSplitter.BeginInit();
             this.MainSplitter.Panel1.SuspendLayout();
             this.MainSplitter.Panel2.SuspendLayout();
             this.MainSplitter.SuspendLayout();
+            //this.conditionSplitter.BeginInit();
             this.conditionSplitter.Panel1.SuspendLayout();
             this.conditionSplitter.Panel2.SuspendLayout();
             this.conditionSplitter.SuspendLayout();
+            //this.conditionSplitter2.BeginInit();
             this.conditionSplitter2.Panel1.SuspendLayout();
             this.conditionSplitter2.Panel2.SuspendLayout();
             this.conditionSplitter2.SuspendLayout();
+            //this.UpDownSplitter.BeginInit();
             this.UpDownSplitter.Panel1.SuspendLayout();
             this.UpDownSplitter.Panel2.SuspendLayout();
             this.UpDownSplitter.SuspendLayout();
@@ -683,7 +719,6 @@ namespace quickDBExplorer.Forms
             this.objectList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.objectList_ColumnClick);
             this.objectList.SelectedIndexChanged += new System.EventHandler(this.objectList_SelectedIndexChanged);
             this.objectList.DoubleClick += new System.EventHandler(this.InsertMake);
-			this.objectList.ObjectFilterChanged += new ObjectFilterChangedEventHandler(this.OnObjectFilterChanged);
             // 
             // ColTVSType
             // 
@@ -1106,6 +1141,8 @@ namespace quickDBExplorer.Forms
             this.menuFieldMakeWhere,
             this.fldmenuMakePoco,
             this.fldmenuMakePocoNoClass,
+            this.fldmenuMakePocoCamel,
+            this.fldmenuMakePocoPascal,
             this.fldmenuSchemaTableField,
             this.fldmenuSchemaTableFieldComma});
             // 
@@ -1159,13 +1196,13 @@ namespace quickDBExplorer.Forms
             // 
             // fldmenuSchemaTableField
             // 
-            this.fldmenuSchemaTableField.Index = 8;
+            this.fldmenuSchemaTableField.Index = 10;
             this.fldmenuSchemaTableField.Text = "スキーマ+テーブル名＋フィールド名";
             this.fldmenuSchemaTableField.Click += new System.EventHandler(this.fldmenuSchemaTableField_Click);
             // 
             // fldmenuSchemaTableFieldComma
             // 
-            this.fldmenuSchemaTableFieldComma.Index = 9;
+            this.fldmenuSchemaTableFieldComma.Index = 11;
             this.fldmenuSchemaTableFieldComma.Text = "スキーマ+テーブル名＋フィールド名＋カンマ";
             this.fldmenuSchemaTableFieldComma.Click += new System.EventHandler(this.fldmenuSchemaTableFieldComma_Click);
             // 
@@ -1600,21 +1637,34 @@ namespace quickDBExplorer.Forms
             this.menuSetMultiFilter,
             this.menuClearMultiFilter});
             this.filterMenu.Name = "filterMenu";
-            this.filterMenu.Size = new System.Drawing.Size(181, 70);
+            this.filterMenu.Size = new System.Drawing.Size(167, 48);
             // 
             // menuSetMultiFilter
             // 
             this.menuSetMultiFilter.Name = "menuSetMultiFilter";
-            this.menuSetMultiFilter.Size = new System.Drawing.Size(180, 22);
+            this.menuSetMultiFilter.Size = new System.Drawing.Size(166, 22);
             this.menuSetMultiFilter.Text = "複数フィルターセット";
             this.menuSetMultiFilter.Click += new System.EventHandler(this.menuSetMultiFilter_Click);
             // 
             // menuClearMultiFilter
             // 
             this.menuClearMultiFilter.Name = "menuClearMultiFilter";
-            this.menuClearMultiFilter.Size = new System.Drawing.Size(180, 22);
+            this.menuClearMultiFilter.Size = new System.Drawing.Size(166, 22);
             this.menuClearMultiFilter.Text = "複数フィルター解除";
             this.menuClearMultiFilter.Click += new System.EventHandler(this.menuClearMultiFilter_Click);
+            // 
+            // menuItem1
+            // 
+            this.fldmenuMakePocoCamel.Index = 8;
+            this.fldmenuMakePocoCamel.Text = "Pocoクラス生成(camel)";
+            this.fldmenuMakePocoCamel.Click += new System.EventHandler(this.fldmenuMakePocoCamel_Click);
+            // 
+            // menuItem2
+            // 
+            this.fldmenuMakePocoPascal.Index = 9;
+            this.fldmenuMakePocoPascal.Text = "Pocoクラス生成(pascal)";
+            this.fldmenuMakePocoPascal.Click += new System.EventHandler(this.fldmenuMakePocoPascal_Click
+				);
             // 
             // MainForm
             // 
@@ -1647,19 +1697,24 @@ namespace quickDBExplorer.Forms
             this.ObjFieldSplitter.Panel1.ResumeLayout(false);
             this.ObjFieldSplitter.Panel1.PerformLayout();
             this.ObjFieldSplitter.Panel2.ResumeLayout(false);
+            //this.ObjFieldSplitter.EndInit();
             this.ObjFieldSplitter.ResumeLayout(false);
             this.MainSplitter.Panel1.ResumeLayout(false);
             this.MainSplitter.Panel2.ResumeLayout(false);
+            //this.MainSplitter.EndInit();
             this.MainSplitter.ResumeLayout(false);
             this.conditionSplitter.Panel1.ResumeLayout(false);
             this.conditionSplitter.Panel2.ResumeLayout(false);
+            //this.conditionSplitter.EndInit();
             this.conditionSplitter.ResumeLayout(false);
             this.conditionSplitter2.Panel1.ResumeLayout(false);
             this.conditionSplitter2.Panel2.ResumeLayout(false);
             this.conditionSplitter2.Panel2.PerformLayout();
+            //this.conditionSplitter2.EndInit();
             this.conditionSplitter2.ResumeLayout(false);
             this.UpDownSplitter.Panel1.ResumeLayout(false);
             this.UpDownSplitter.Panel2.ResumeLayout(false);
+            //this.UpDownSplitter.EndInit();
             this.UpDownSplitter.ResumeLayout(false);
             this.dbMenu.ResumeLayout(false);
             this.filterMenu.ResumeLayout(false);
@@ -1998,25 +2053,34 @@ namespace quickDBExplorer.Forms
 			CopyFldList(false,false);
 		}
 
-        private void fldmenuMakePoco_Click(object sender, EventArgs e)
+
+		public enum pocoStyle
+		{
+				Snake,
+				Camel,
+				Pascal
+		}
+
+
+		private void fldmenuMakePoco_Click(object sender, EventArgs e)
         {
-            MakePoco(true,false);
+            MakePoco(true,false, pocoStyle.Snake);
         }
 
         private void fldmenuMakePocoNoClass_Click(object sender, EventArgs e)
         {
-            MakePoco(false, false);
+            MakePoco(false, false, pocoStyle.Snake);
         }
 
         private void fldmenuMakePocoNul_Click(object sender, EventArgs e)
         {
-            MakePoco(true,true);
+            //MakePoco(true,true);
 
         }
 
         private void fldmenuMakePocoNoClassNul_Click(object sender, EventArgs e)
         {
-            MakePoco(false,true);
+            //MakePoco(false,true);
 
         }
 
@@ -5103,6 +5167,7 @@ namespace quickDBExplorer.Forms
 						sb.Append(" ) ");
 						flds = sb.ToString();
 					}
+
 					while (dr.Read())
 					{
 						if (deletefrom == true && trow == 0)
@@ -5116,15 +5181,33 @@ namespace quickDBExplorer.Forms
 							}
 							wr.Write("{0}GO{0}", wr.NewLine);
 						}
-						if (trow != 0 && (trow % 1000 == 0))
+						if (this.svdata.InsertOption.InsertType == 0)
 						{
-							wr.Write("GO{0}", wr.NewLine);
-						}
-						trow++;
-						rowcount++;
-						wr.Write("insert into {0} {1} values ( ", dboInfo.FormalName, flds);
+                            if (trow != 0 && (trow % this.svdata.InsertOption.GoInsertLine == 0)) // 1000
+                            {
+                                wr.Write("GO{0}", wr.NewLine);
+                            }
+                            wr.Write("insert into {0} {1} values ( ", dboInfo.FormalName, flds);
+                        }
+                        else
+						{
+                            if (trow % this.svdata.InsertOption.ValuesLine == 0)
+							{
+                                if (trow != 0) // 1000
+                                {
+                                    wr.Write("GO{0}", wr.NewLine);
+                                }
+                                wr.Write("insert into {0} {1} \r\nvalues \r\n ( ", dboInfo.FormalName, flds);
+							}
+							else
+							{
+                                wr.Write(",( ");
+                            }
+                        }
+                        trow++;
+                        rowcount++;
 
-						int i = 0;
+                        int i = 0;
 						foreach (DBFieldInfo each in dboInfo.FieldInfo)
 						{
 							if (i != 0)
@@ -7276,7 +7359,7 @@ namespace quickDBExplorer.Forms
             txtObjFilter.SaveHistory("");
         }
 
-        private void MakePoco(bool addClassDeclare, bool nullable)
+        private void MakePoco(bool addClassDeclare, bool nullable, pocoStyle pstyle)
         {
             if (this.objectList.SelectedItems.Count != 1)
             {
@@ -7292,7 +7375,17 @@ namespace quickDBExplorer.Forms
             DBObjectInfo objInfo = this.objectList.GetSelectObject(0);
             if (addClassDeclare == true)
             {
-                sb.AppendFormat("public class {0} ", objInfo.ObjName);
+				string cname = objInfo.ObjName;
+				if (pstyle == pocoStyle.Camel)
+				{
+                    cname = toCamel(cname);
+                }
+				else if (pstyle == pocoStyle.Pascal)
+				{
+					cname = toPascal(cname);
+
+                }
+                sb.AppendFormat("public class {0} ", cname);
                 sb.AppendLine();
                 sb.AppendLine("{");
             }
@@ -7310,7 +7403,24 @@ namespace quickDBExplorer.Forms
                     }
                 }
                 sb.Append("\t");
-                sb.AppendFormat("{0}", fi.Name);
+				if (pstyle == pocoStyle.Snake)
+				{
+                    sb.AppendFormat("{0}", fi.Name);
+                }
+				else if (pstyle == pocoStyle.Camel)
+				{
+					string nn = fi.Name;
+					nn = toCamel(nn);
+
+                    sb.AppendFormat("{0}", nn);
+                }
+                else if (pstyle == pocoStyle.Pascal)
+                {
+
+                    string nn = fi.Name;
+					nn = toPascal(nn);
+                    sb.AppendFormat("{0}", nn);
+                }
                 sb.AppendLine(" { get; set; }");
             }
 
@@ -7321,6 +7431,29 @@ namespace quickDBExplorer.Forms
 
             Clipboard.SetDataObject(sb.ToString(), true);
 
+        }
+
+        private string toCamel(string nn)
+        {
+            string ret = nn;
+            ret = ret.ToLower();
+
+            return Regex.Replace(
+                    ret,
+                    @"_\w",
+                    x => x.Value.ToUpper()).Replace("_", "");
+
+        }
+
+        private string toPascal(string nn)
+        {
+			string ret = nn;
+			ret = ret.Replace("_", " ").ToLower();
+
+            return Regex.Replace(
+                    ret,
+                    @"\b[a-z]",
+                    x => x.Value.ToUpper()).Replace(" ", "");
         }
 
         public void ReConnect()
@@ -7446,5 +7579,15 @@ namespace quickDBExplorer.Forms
 				}
 			}
 		}
+
+        private void fldmenuMakePocoCamel_Click(object sender, EventArgs e)
+        {
+            MakePoco(true, false, pocoStyle.Camel);
+        }
+
+        private void fldmenuMakePocoPascal_Click(object sender, EventArgs e)
+        {
+            MakePoco(true, false, pocoStyle.Pascal);
+        }
     }
 }
