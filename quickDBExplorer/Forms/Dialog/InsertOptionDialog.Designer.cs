@@ -43,19 +43,26 @@
             this.txtValueLine = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblSample = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtMaxLinePerFile = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtFileSplitNoKetasu = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // MsgArea
             // 
-            this.MsgArea.Location = new System.Drawing.Point(160, 447);
+            this.MsgArea.Location = new System.Drawing.Point(160, 511);
+            this.MsgArea.Size = new System.Drawing.Size(510, 16);
             // 
             // btnCancel
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(640, 432);
+            this.btnCancel.Location = new System.Drawing.Point(582, 496);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(88, 24);
             this.btnCancel.TabIndex = 6;
@@ -64,7 +71,7 @@
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnOk.Location = new System.Drawing.Point(12, 432);
+            this.btnOk.Location = new System.Drawing.Point(12, 496);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(96, 24);
             this.btnOk.TabIndex = 5;
@@ -117,16 +124,16 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(50, 359);
+            this.label2.Location = new System.Drawing.Point(50, 351);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 12);
+            this.label2.Size = new System.Drawing.Size(185, 12);
             this.label2.TabIndex = 8;
-            this.label2.Text = "GO を出力する行数";
+            this.label2.Text = "区切り文字(GO/ ； ) を出力する行数";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(50, 398);
+            this.label3.Location = new System.Drawing.Point(50, 376);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(150, 12);
             this.label3.TabIndex = 8;
@@ -134,19 +141,21 @@
             // 
             // txtGoInsertLine
             // 
-            this.txtGoInsertLine.Location = new System.Drawing.Point(253, 356);
+            this.txtGoInsertLine.Location = new System.Drawing.Point(409, 351);
             this.txtGoInsertLine.Name = "txtGoInsertLine";
             this.txtGoInsertLine.Size = new System.Drawing.Size(209, 19);
             this.txtGoInsertLine.TabIndex = 3;
             this.txtGoInsertLine.Text = "1000";
+            this.txtGoInsertLine.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtValueLine
             // 
-            this.txtValueLine.Location = new System.Drawing.Point(253, 395);
+            this.txtValueLine.Location = new System.Drawing.Point(409, 376);
             this.txtValueLine.Name = "txtValueLine";
             this.txtValueLine.Size = new System.Drawing.Size(209, 19);
             this.txtValueLine.TabIndex = 4;
             this.txtValueLine.Text = "10";
+            this.txtValueLine.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // groupBox2
             // 
@@ -167,11 +176,71 @@
             this.lblSample.TabIndex = 0;
             this.lblSample.Text = "サンプル";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(50, 402);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(152, 12);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "1つのファイルに出力する最大行";
+            // 
+            // txtMaxLinePerFile
+            // 
+            this.txtMaxLinePerFile.Location = new System.Drawing.Point(409, 402);
+            this.txtMaxLinePerFile.Name = "txtMaxLinePerFile";
+            this.txtMaxLinePerFile.Size = new System.Drawing.Size(209, 19);
+            this.txtMaxLinePerFile.TabIndex = 10;
+            this.txtMaxLinePerFile.Text = "0";
+            this.txtMaxLinePerFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(82, 421);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(229, 12);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "※出力先が複数ファイルの場合にのみ有効です";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(50, 465);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(353, 12);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "複数のファイルに分割出力する場合のファイル名に付加する数値部分桁数";
+            // 
+            // txtFileSplitNoKetasu
+            // 
+            this.txtFileSplitNoKetasu.Location = new System.Drawing.Point(409, 462);
+            this.txtFileSplitNoKetasu.Name = "txtFileSplitNoKetasu";
+            this.txtFileSplitNoKetasu.Size = new System.Drawing.Size(209, 19);
+            this.txtFileSplitNoKetasu.TabIndex = 13;
+            this.txtFileSplitNoKetasu.Text = "0";
+            this.txtFileSplitNoKetasu.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(82, 442);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(165, 12);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "※指定された場合分割されません";
+            // 
             // InsertOptionDialog
             // 
             this.AcceptButton = this.btnOk;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(744, 468);
+            this.ClientSize = new System.Drawing.Size(686, 532);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtFileSplitNoKetasu);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtMaxLinePerFile);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.txtValueLine);
             this.Controls.Add(this.txtGoInsertLine);
@@ -193,6 +262,12 @@
             this.Controls.SetChildIndex(this.txtGoInsertLine, 0);
             this.Controls.SetChildIndex(this.txtValueLine, 0);
             this.Controls.SetChildIndex(this.groupBox2, 0);
+            this.Controls.SetChildIndex(this.label4, 0);
+            this.Controls.SetChildIndex(this.txtMaxLinePerFile, 0);
+            this.Controls.SetChildIndex(this.label5, 0);
+            this.Controls.SetChildIndex(this.label6, 0);
+            this.Controls.SetChildIndex(this.txtFileSplitNoKetasu, 0);
+            this.Controls.SetChildIndex(this.label7, 0);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -216,5 +291,11 @@
         private System.Windows.Forms.TextBox txtValueLine;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label lblSample;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtMaxLinePerFile;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox txtFileSplitNoKetasu;
+        private System.Windows.Forms.Label label7;
     }
 }

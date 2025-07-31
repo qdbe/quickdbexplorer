@@ -41,7 +41,10 @@ namespace quickDBExplorer.manager
                 }
                 else 
                 {
-                    ds.ReadXml("Bookmark.xml");
+                    if (System.IO.File.Exists("Bookmark.xml"))
+                    {
+                        ds.ReadXml("Bookmark.xml");
+                    }
                 }
                 bookmark = Convert2Bookmark(ds);
             }

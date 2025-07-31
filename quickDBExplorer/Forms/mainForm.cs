@@ -1,23 +1,24 @@
+using LumenWorks.Framework.IO.Csv;
+using Newtonsoft.Json.Linq;
+using quickDBExplorer.Forms;
+using quickDBExplorer.Forms.Dialog;
+using quickDBExplorer.Forms.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.Common;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
-using quickDBExplorer.Forms;
-using quickDBExplorer.Forms.Events;
-using LumenWorks.Framework.IO.Csv;
-using quickDBExplorer.Forms.Dialog;
-using System.Globalization;
 using static System.Net.Mime.MediaTypeNames;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq;
+using static System.Net.WebRequestMethods;
 
 namespace quickDBExplorer.Forms
 {
@@ -26,7 +27,7 @@ namespace quickDBExplorer.Forms
 	/// DBの選択、オーナーの選択、オブジェクトの選択、処理の選択などのメインとなる処理を全て実装している
 	/// </summary>
 	[System.Runtime.InteropServices.ComVisible(false)]
-	internal class MainForm : quickDBExplorerBaseForm
+	public class MainForm : quickDBExplorerBaseForm
 	{
 		private System.ComponentModel.IContainer components;
 		private System.Windows.Forms.Button btnCSV;
@@ -145,10 +146,41 @@ namespace quickDBExplorer.Forms
 			}
 		}
 
+        /// <summary>
+        /// DirtyReadを許可するか否か
+        /// </summary>
+
+        public bool IsDirtyRead {
+            get
+            {
+                return this.svdata.IsDirtyRead;
+            }
+            set
+            {
+                this.svdata.IsDirtyRead = value;
+            }
+        }
+
 		/// <summary>
-		/// グリッド表示時の幅の初期値
+		/// SQL 区切り文字
 		/// </summary>
-		public bool GridDefaltWidth
+        public string SqlDelimiter
+		{
+			get
+			{
+				return this.svdata.SqlDelimiter;
+			}
+			set
+			{
+				this.svdata.SqlDelimiter = value;
+			}
+        }
+
+
+        /// <summary>
+        /// グリッド表示時の幅の初期値
+        /// </summary>
+        public bool GridDefaltWidth
 		{
 			get
 			{
@@ -403,6 +435,8 @@ namespace quickDBExplorer.Forms
         private ToolStripMenuItem menuClearMultiFilter;
         private MenuItem fldmenuMakePocoCamel;
         private MenuItem fldmenuMakePocoPascal;
+        private quickDBExplorer.quickDBExplorerTextBox txtDbFilter;
+        private quickDBExplorer.quickDBExplorerTextBox txtSchemaFilter;
         private MenuItem fldmenuSchemaTableFieldComma;
 		
 		/// <summary>
@@ -481,6 +515,10 @@ namespace quickDBExplorer.Forms
             this.txtAlias.Histories = this.Histories;
 
             this.txtObjFilter.Histories = this.Histories;
+
+			this.txtDbFilter.Histories = this.Histories;
+
+			this.txtSchemaFilter.Histories = this.Histories;
         }
 
         private void SetParams(Form mdiparent, ConnectionInfo conn)
@@ -595,6 +633,8 @@ namespace quickDBExplorer.Forms
             this.menuFieldMakeWhere = new System.Windows.Forms.MenuItem();
             this.fldmenuMakePoco = new System.Windows.Forms.MenuItem();
             this.fldmenuMakePocoNoClass = new System.Windows.Forms.MenuItem();
+            this.fldmenuMakePocoCamel = new System.Windows.Forms.MenuItem();
+            this.fldmenuMakePocoPascal = new System.Windows.Forms.MenuItem();
             this.fldmenuSchemaTableField = new System.Windows.Forms.MenuItem();
             this.fldmenuSchemaTableFieldComma = new System.Windows.Forms.MenuItem();
             this.label9 = new System.Windows.Forms.Label();
@@ -625,7 +665,9 @@ namespace quickDBExplorer.Forms
             this.txtObjFilter = new quickDBExplorer.quickDBExplorerTextBox();
             this.MainSplitter = new System.Windows.Forms.SplitContainer();
             this.conditionSplitter = new System.Windows.Forms.SplitContainer();
+            this.txtDbFilter = new quickDBExplorer.quickDBExplorerTextBox();
             this.conditionSplitter2 = new System.Windows.Forms.SplitContainer();
+            this.txtSchemaFilter = new quickDBExplorer.quickDBExplorerTextBox();
             this.UpDownSplitter = new System.Windows.Forms.SplitContainer();
             this.btnColRow = new System.Windows.Forms.Button();
             this.dbMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -635,8 +677,6 @@ namespace quickDBExplorer.Forms
             this.menuSetMultiFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.menuClearMultiFilter = new System.Windows.Forms.ToolStripMenuItem();
             this.commTooltip = new System.Windows.Forms.ToolTip(this.components);
-            this.fldmenuMakePocoCamel = new System.Windows.Forms.MenuItem();
-            this.fldmenuMakePocoPascal = new System.Windows.Forms.MenuItem();
             this.grpViewMode.SuspendLayout();
             this.grpSortMode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dbGrid)).BeginInit();
@@ -644,23 +684,18 @@ namespace quickDBExplorer.Forms
             this.grpSysUserMode.SuspendLayout();
             this.grpOutputMode.SuspendLayout();
             this.grpCharaSet.SuspendLayout();
-            //this.ObjFieldSplitter.BeginInit();
             this.ObjFieldSplitter.Panel1.SuspendLayout();
             this.ObjFieldSplitter.Panel2.SuspendLayout();
             this.ObjFieldSplitter.SuspendLayout();
-            //this.MainSplitter.BeginInit();
             this.MainSplitter.Panel1.SuspendLayout();
             this.MainSplitter.Panel2.SuspendLayout();
             this.MainSplitter.SuspendLayout();
-            //this.conditionSplitter.BeginInit();
             this.conditionSplitter.Panel1.SuspendLayout();
             this.conditionSplitter.Panel2.SuspendLayout();
             this.conditionSplitter.SuspendLayout();
-            //this.conditionSplitter2.BeginInit();
             this.conditionSplitter2.Panel1.SuspendLayout();
             this.conditionSplitter2.Panel2.SuspendLayout();
             this.conditionSplitter2.SuspendLayout();
-            //this.UpDownSplitter.BeginInit();
             this.UpDownSplitter.Panel1.SuspendLayout();
             this.UpDownSplitter.Panel2.SuspendLayout();
             this.UpDownSplitter.SuspendLayout();
@@ -1194,6 +1229,18 @@ namespace quickDBExplorer.Forms
             this.fldmenuMakePocoNoClass.Text = "Pocoクラス生成(クラス無し)";
             this.fldmenuMakePocoNoClass.Click += new System.EventHandler(this.fldmenuMakePocoNoClass_Click);
             // 
+            // fldmenuMakePocoCamel
+            // 
+            this.fldmenuMakePocoCamel.Index = 8;
+            this.fldmenuMakePocoCamel.Text = "Pocoクラス生成(camel)";
+            this.fldmenuMakePocoCamel.Click += new System.EventHandler(this.fldmenuMakePocoCamel_Click);
+            // 
+            // fldmenuMakePocoPascal
+            // 
+            this.fldmenuMakePocoPascal.Index = 9;
+            this.fldmenuMakePocoPascal.Text = "Pocoクラス生成(pascal)";
+            this.fldmenuMakePocoPascal.Click += new System.EventHandler(this.fldmenuMakePocoPascal_Click);
+            // 
             // fldmenuSchemaTableField
             // 
             this.fldmenuSchemaTableField.Index = 10;
@@ -1525,6 +1572,7 @@ namespace quickDBExplorer.Forms
             // 
             // conditionSplitter.Panel1
             // 
+            this.conditionSplitter.Panel1.Controls.Add(this.txtDbFilter);
             this.conditionSplitter.Panel1.Controls.Add(this.dbList);
             this.conditionSplitter.Panel1.Controls.Add(this.labelDB);
             // 
@@ -1536,6 +1584,16 @@ namespace quickDBExplorer.Forms
             this.conditionSplitter.SplitterWidth = 2;
             this.conditionSplitter.TabIndex = 0;
             // 
+            // txtDbFilter
+            // 
+            this.txtDbFilter.Location = new System.Drawing.Point(5, 52);
+            this.txtDbFilter.Name = "txtDbFilter";
+            this.txtDbFilter.Size = new System.Drawing.Size(49, 19);
+            this.txtDbFilter.TabIndex = 2;
+            this.txtDbFilter.TextChanged += new System.EventHandler(this.txtDbFilter_TextChanged);
+            this.txtDbFilter.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtDbFilter_ShowHistory);
+			this.txtDbFilter.Leave += new System.EventHandler(this.txtDbFilter_Leave);
+            // 
             // conditionSplitter2
             // 
             this.conditionSplitter2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -1546,6 +1604,7 @@ namespace quickDBExplorer.Forms
             // 
             // conditionSplitter2.Panel1
             // 
+            this.conditionSplitter2.Panel1.Controls.Add(this.txtSchemaFilter);
             this.conditionSplitter2.Panel1.Controls.Add(this.labelSchema);
             this.conditionSplitter2.Panel1.Controls.Add(this.ownerListbox);
             // 
@@ -1570,6 +1629,16 @@ namespace quickDBExplorer.Forms
             this.conditionSplitter2.SplitterDistance = 82;
             this.conditionSplitter2.SplitterWidth = 2;
             this.conditionSplitter2.TabIndex = 0;
+            // 
+            // txtSchemaFilter
+            // 
+            this.txtSchemaFilter.Location = new System.Drawing.Point(6, 50);
+            this.txtSchemaFilter.Name = "txtSchemaFilter";
+            this.txtSchemaFilter.Size = new System.Drawing.Size(48, 19);
+            this.txtSchemaFilter.TabIndex = 5;
+            this.txtSchemaFilter.TextChanged += new System.EventHandler(this.txtSchemaFilter_TextChanged);
+			this.txtSchemaFilter.ShowHistory += new quickDBExplorer.ShowHistoryEventHandler(this.txtSchemaFilter_ShowHistory);
+			this.txtSchemaFilter.Leave += new System.EventHandler(this.txtSchemaFilter_Leave);	
             // 
             // UpDownSplitter
             // 
@@ -1653,19 +1722,6 @@ namespace quickDBExplorer.Forms
             this.menuClearMultiFilter.Text = "複数フィルター解除";
             this.menuClearMultiFilter.Click += new System.EventHandler(this.menuClearMultiFilter_Click);
             // 
-            // menuItem1
-            // 
-            this.fldmenuMakePocoCamel.Index = 8;
-            this.fldmenuMakePocoCamel.Text = "Pocoクラス生成(camel)";
-            this.fldmenuMakePocoCamel.Click += new System.EventHandler(this.fldmenuMakePocoCamel_Click);
-            // 
-            // menuItem2
-            // 
-            this.fldmenuMakePocoPascal.Index = 9;
-            this.fldmenuMakePocoPascal.Text = "Pocoクラス生成(pascal)";
-            this.fldmenuMakePocoPascal.Click += new System.EventHandler(this.fldmenuMakePocoPascal_Click
-				);
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
@@ -1697,30 +1753,47 @@ namespace quickDBExplorer.Forms
             this.ObjFieldSplitter.Panel1.ResumeLayout(false);
             this.ObjFieldSplitter.Panel1.PerformLayout();
             this.ObjFieldSplitter.Panel2.ResumeLayout(false);
-            //this.ObjFieldSplitter.EndInit();
             this.ObjFieldSplitter.ResumeLayout(false);
             this.MainSplitter.Panel1.ResumeLayout(false);
             this.MainSplitter.Panel2.ResumeLayout(false);
-            //this.MainSplitter.EndInit();
             this.MainSplitter.ResumeLayout(false);
             this.conditionSplitter.Panel1.ResumeLayout(false);
+            this.conditionSplitter.Panel1.PerformLayout();
             this.conditionSplitter.Panel2.ResumeLayout(false);
-            //this.conditionSplitter.EndInit();
             this.conditionSplitter.ResumeLayout(false);
             this.conditionSplitter2.Panel1.ResumeLayout(false);
+            this.conditionSplitter2.Panel1.PerformLayout();
             this.conditionSplitter2.Panel2.ResumeLayout(false);
             this.conditionSplitter2.Panel2.PerformLayout();
-            //this.conditionSplitter2.EndInit();
             this.conditionSplitter2.ResumeLayout(false);
             this.UpDownSplitter.Panel1.ResumeLayout(false);
             this.UpDownSplitter.Panel2.ResumeLayout(false);
-            //this.UpDownSplitter.EndInit();
             this.UpDownSplitter.ResumeLayout(false);
             this.dbMenu.ResumeLayout(false);
             this.filterMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
+
+        private void txtSchemaFilter_Leave(object sender, EventArgs e)
+        {
+			this.txtSchemaFilter.SaveHistory("");
+        }
+
+        private void txtSchemaFilter_ShowHistory(object sender, EventArgs e)
+        {
+            this.txtSchemaFilter.DoShowHistory("");
+        }
+
+		private void txtDbFilter_Leave(object sender, EventArgs e)
+		{
+			this.txtDbFilter.SaveHistory("");
+		}
+
+        private void txtDbFilter_ShowHistory(object sender, EventArgs e)
+        {
+            this.txtDbFilter.DoShowHistory("");
+        }
 
         private void OnObjectFilterChanged(object sender, ObjectFilterChangedEventArgs e)
         {
@@ -2265,6 +2338,7 @@ namespace quickDBExplorer.Forms
                             break;
                         }
                     }
+					this.dbList.SetCurrentItem();
                 }
                 else
                 {
@@ -2283,11 +2357,17 @@ namespace quickDBExplorer.Forms
                     }
                 }
             }
-			this.dbGrid.SetDisplayFont(this.svdata.GridSetting);
+			this.dbList.SetCurrentItem();
+            this.dbGrid.SetDisplayFont(this.svdata.GridSetting);
 
             // ボタンの表示色を記憶しておく
             this.btnBackColor = this.btnDataEdit.BackColor;
             this.btnForeColor = this.btnDataEdit.ForeColor;
+
+			if (this.ReadEmptyAsNull)
+			{
+
+			}
         }
 
         private void DBLoad()
@@ -2305,6 +2385,7 @@ namespace quickDBExplorer.Forms
             {
                 this.dbList.Items.Add(row["name"]);
             }
+            this.dbList.SetCurrentItem();
         }
 
 
@@ -3641,7 +3722,12 @@ namespace quickDBExplorer.Forms
 						i++;
 					}
 					wr.Write(wr.NewLine);
-					wr.Write(" from {0}{1}", dboInfo.GetAliasName(this.GetAlias()), wr.NewLine);
+					string lockstr = "";
+					if( this.svdata.IsDirtyRead == true )
+					{
+						lockstr = " with (nolock)";
+					}
+                    wr.Write(" from {0} {1} {2}", dboInfo.GetAliasName(this.GetAlias()), lockstr, wr.NewLine);
 					if (this.txtWhere.Text.Trim() != "")
 					{
 						wr.Write(" where {0}{1}", this.txtWhere.Text.Trim(), wr.NewLine);
@@ -3694,7 +3780,7 @@ namespace quickDBExplorer.Forms
 
         private bool CheckOverWrite(string filepath)
         {
-            if (File.Exists(filepath))
+            if (System.IO.File.Exists(filepath))
             {
                 if (this.IsOverwriteExistingFile == true)
                 {
@@ -4014,17 +4100,17 @@ namespace quickDBExplorer.Forms
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
-						File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
+						System.IO.File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
 						if( trow > 0 )
 						{
 							fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv\r\n");
 							// ファイルをリネームする
-							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp", 
+							System.IO.File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp", 
 								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
 						}
 						else
 						{
-							File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp");
+							System.IO.File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp");
 						}
 					}
 				}
@@ -4801,7 +4887,9 @@ namespace quickDBExplorer.Forms
 			this.objectList.EnsureVisible(setidx);
 			isInCmbEvent = false;
 			this.objectList.Focus();
-		}
+
+            this.dbList.SetCurrentItem();
+        }
 
 
 
@@ -4839,6 +4927,7 @@ namespace quickDBExplorer.Forms
 					}
 					this.fieldListbox.Items.Add(new FieldListItem(istr,fi));
 				}
+				this.fieldListbox.SetCurrentItem();
 			}
 			catch( Exception exp )
 			{
@@ -4953,7 +5042,8 @@ namespace quickDBExplorer.Forms
 				{
 					this.ownerListbox.Items.Add(dr["name"]);
 				}
-				dr.Close();
+				this.ownerListbox.SetCurrentItem();
+                dr.Close();
 			
 			}
 			catch ( Exception se )
@@ -5031,7 +5121,7 @@ namespace quickDBExplorer.Forms
 				}
 				if (this.rdoOutFolder.Checked == false)
 				{
-					wr.Write("SET NOCOUNT ON{0}GO{0}{0}", wr.NewLine);
+					wr.Write("SET NOCOUNT ON{0}{1}{0}{0}", wr.NewLine, this.SqlDelimiter);
 				}
 
 				IDataReader dr = null;
@@ -5066,7 +5156,7 @@ namespace quickDBExplorer.Forms
 						StreamWriter sw = new StreamWriter(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp", false, GetEncode());
 						sw.AutoFlush = false;
 						wr = sw;
-						wr.Write("SET NOCOUNT ON{0}GO{0}{0}", wr.NewLine);
+						wr.Write("SET NOCOUNT ON{0}{1}{0}{0}", wr.NewLine, this.SqlDelimiter);
 					}
 
 					// get id 
@@ -5144,11 +5234,11 @@ namespace quickDBExplorer.Forms
 						{
 							taihistr += string.Format(System.Globalization.CultureInfo.CurrentCulture, " where {0}", this.txtWhere.Text.Trim());
 						}
-						wr.Write("{0}GO{0}", wr.NewLine);
+						wr.Write("{0}{1}{0}", wr.NewLine, this.SqlDelimiter);
 						wr.Write(taihistr);
-						wr.Write("{0}GO{0}", wr.NewLine);
+                        wr.Write("{0}{1}{0}", wr.NewLine, this.SqlDelimiter);
 
-					}
+                    }
 
 					trow = 0;
 					string flds = "";
@@ -5168,6 +5258,8 @@ namespace quickDBExplorer.Forms
 						flds = sb.ToString();
 					}
 
+					int fcnt = 0;
+					int fidx = 1;
 					while (dr.Read())
 					{
 						if (deletefrom == true && trow == 0)
@@ -5179,13 +5271,41 @@ namespace quickDBExplorer.Forms
 								wr.Write(" where {0}", this.txtWhere.Text.Trim());
 
 							}
-							wr.Write("{0}GO{0}", wr.NewLine);
-						}
+                            wr.Write("{0}{1}{0}", wr.NewLine, this.SqlDelimiter);
+                        }
 						if (this.svdata.InsertOption.InsertType == 0)
 						{
                             if (trow != 0 && (trow % this.svdata.InsertOption.GoInsertLine == 0)) // 1000
                             {
-                                wr.Write("GO{0}", wr.NewLine);
+                                wr.Write("{0}{1}{0}", wr.NewLine, this.SqlDelimiter);
+								if (this.InsertOption.MaxInsertLinePerFile > 0 && 
+                                    fcnt >= this.InsertOption.MaxInsertLinePerFile)
+								{
+                                    wr.Close();
+
+									string fileAppend = string.Format("_{0:00000}", fidx);
+
+									string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + fileAppend + ".sql";
+
+									string tmpfile = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp";
+
+                                    if (CheckOverWrite(filen) == false)
+                                    {
+                                        ;
+                                    }
+
+                                    System.IO.File.Delete(filen);
+                                    fname.Append(filen + "\r\n");
+                                    // ファイルをリネームする
+                                    System.IO.File.Move(tmpfile, filen);
+
+                                    StreamWriter sw = new StreamWriter(tmpfile, false, GetEncode());
+                                    sw.AutoFlush = false;
+                                    wr = sw;
+
+                                    fcnt = 0;
+									fidx++;
+								}
                             }
                             wr.Write("insert into {0} {1} values ( ", dboInfo.FormalName, flds);
                         }
@@ -5195,7 +5315,35 @@ namespace quickDBExplorer.Forms
 							{
                                 if (trow != 0) // 1000
                                 {
-                                    wr.Write("GO{0}", wr.NewLine);
+                                    wr.Write("{0}{1}{0}", wr.NewLine, this.SqlDelimiter);
+                                    if (this.InsertOption.MaxInsertLinePerFile > 0 &&
+                                        fcnt >= this.InsertOption.MaxInsertLinePerFile)
+                                    {
+                                        wr.Close();
+
+                                        string fileAppend = string.Format("_{0:00000}", fidx);
+
+                                        string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + fileAppend + ".sql";
+
+                                        string tmpfile = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp";
+
+                                        if (CheckOverWrite(filen) == false)
+                                        {
+                                            ;
+                                        }
+
+                                        System.IO.File.Delete(filen);
+                                        fname.Append(filen + "\r\n");
+                                        // ファイルをリネームする
+                                        System.IO.File.Move(tmpfile, filen);
+
+                                        StreamWriter sw = new StreamWriter(tmpfile, false, GetEncode());
+                                        sw.AutoFlush = false;
+                                        wr = sw;
+
+                                        fcnt = 0;
+                                        fidx++;
+                                    }
                                 }
                                 wr.Write("insert into {0} {1} \r\nvalues \r\n ( ", dboInfo.FormalName, flds);
 							}
@@ -5204,6 +5352,7 @@ namespace quickDBExplorer.Forms
                                 wr.Write(",( ");
                             }
                         }
+                        fcnt++;
                         trow++;
                         rowcount++;
 
@@ -5221,31 +5370,57 @@ namespace quickDBExplorer.Forms
 					}
 					if (trow > 0)
 					{
-						wr.Write("GO{0}{0}", wr.NewLine);
+                        wr.Write("{1}{0}{0}", wr.NewLine, this.SqlDelimiter);
 					}
 					if (IsIdentity == true)
 					{
 						// Identity 列がある場合、SET IDENTITY_INSERT table off をつける
 						string addidinsert = string.Format(System.Globalization.CultureInfo.CurrentCulture, "SET IDENTITY_INSERT {0} off", dboInfo.FormalName);
 						wr.WriteLine(addidinsert);
-						wr.WriteLine("GO");
+                        wr.Write(this.SqlDelimiter);
 						wr.Write(wr.NewLine);
 					}
 
 					if (this.rdoOutFolder.Checked == true)
 					{
 						wr.Close();
-						File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql");
+
+						System.IO.File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql");
 						if (trow > 0)
 						{
-							fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
-							// ファイルをリネームする
-							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp",
-								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql");
-						}
+
+							if (this.InsertOption.MaxInsertLinePerFile > 0)
+							{
+								wr.Close();
+
+								string fileAppend = string.Format("_{0:00000}", fidx);
+
+								string filen = this.txtOutput.Text + "\\" + dboInfo.ToString() + fileAppend + ".sql";
+
+								string tmpfile = this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp";
+
+								if (CheckOverWrite(filen) == false)
+								{
+									;
+								}
+
+								System.IO.File.Delete(filen);
+								fname.Append(filen + "\r\n");
+								// ファイルをリネームする
+								System.IO.File.Move(tmpfile, filen);
+
+							}
+							else
+							{
+                                fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql\r\n");
+                                // ファイルをリネームする
+                                System.IO.File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp",
+                                    this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql");
+                            }
+                        }
 						else
 						{
-							File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp");
+							System.IO.File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".sql.tmp");
 						}
 
 					}
@@ -5791,17 +5966,17 @@ namespace quickDBExplorer.Forms
 					if( this.rdoOutFolder.Checked == true ) 
 					{
 						wr.Close();
-						File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
+						System.IO.File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
 						if( trow > 0 )
 						{
 							fname.Append(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv\r\n");
 							// ファイルをリネームする
-							File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp", 
+							System.IO.File.Move(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp", 
 								this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv");
 						}
 						else
 						{
-							File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp");
+							System.IO.File.Delete(this.txtOutput.Text + "\\" + dboInfo.ToString() + ".csv.tmp");
 						}
 					}
 				}
@@ -5940,17 +6115,17 @@ namespace quickDBExplorer.Forms
 						{
 							wr.Write("DROP SYNONYM ");
 							wr.Write("{0}{1}", dboInfo.FormalName, wr.NewLine);
-							wr.Write("GO{0}", wr.NewLine);
+                            wr.Write("{1}{0}", wr.NewLine, this.SqlDelimiter);
 						}
 						wr.Write(string.Format(System.Globalization.CultureInfo.CurrentCulture, "create synonym {0} for {1}",
 							dboInfo.FormalName,
 							dboInfo.SynonymBase)
 							);
-						wr.Write("{0}Go{0}{0}", wr.NewLine);
+                        wr.Write("{0}{1}{0}{0}", wr.NewLine, this.SqlDelimiter);
 
-					}
+                    }
 
-					if (bDrop)
+                    if (bDrop)
 					{
 						wr.Write(this.SqlDriver.GetDDLDropStr(dboInfo));
 					}
@@ -6084,6 +6259,12 @@ namespace quickDBExplorer.Forms
 				{
 					stSql += string.Format(System.Globalization.CultureInfo.CurrentCulture, " * from {0}", dboInfo.GetAliasName(procCond.AliasStr));
 					stSqlDisp += string.Format(System.Globalization.CultureInfo.CurrentCulture, " * from {0}", dboInfo.GetAliasName(procCond.AliasStr));
+
+					if (this.IsDirtyRead == true)
+					{
+						stSql += " WITH (NOLOCK) ";
+						stSqlDisp += " WITH (NOLOCK) ";
+                    }
 				}
 				if (procCond.WhereStr != "")
 				{
@@ -7551,7 +7732,7 @@ namespace quickDBExplorer.Forms
             {
                 string tabs = dlg.InputedText;
                 string[] objectLists = tabs.Replace("\r\n", "\r").Split("\r\n".ToCharArray());
-                this.objectList.FilterObjectList(objectLists, this.IsFilterCaseSensitive, dlg.SelecteType);
+                this.objectList.FilterObjectList(objectLists, dlg.IsCaseSensitive, dlg.SelecteType);
             }
         }
 
@@ -7588,6 +7769,16 @@ namespace quickDBExplorer.Forms
         private void fldmenuMakePocoPascal_Click(object sender, EventArgs e)
         {
             MakePoco(true, false, pocoStyle.Pascal);
+        }
+
+        private void txtSchemaFilter_TextChanged(object sender, EventArgs e)
+        {
+            this.ownerListbox.FilterObjectList(this.txtSchemaFilter.Text, this.IsFilterCaseSensitive);
+        }
+
+        private void txtDbFilter_TextChanged(object sender, EventArgs e)
+        {
+			this.dbList.FilterObjectList(this.txtDbFilter.Text, this.IsFilterCaseSensitive);
         }
     }
 }

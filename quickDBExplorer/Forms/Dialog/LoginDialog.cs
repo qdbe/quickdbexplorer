@@ -56,6 +56,14 @@ namespace quickDBExplorer
 		/// コマンド引数 Window認証
 		/// </summary>
 		public static string PARAM_TRUST = "TRUST";
+        /// <summary>
+        /// コマンド引数 暗号化
+        /// </summary>
+        public static string PARAM_ENCRYPT = "ENCRYPT";
+        /// <summary>
+        /// コマンド引数 証明書エラー無視
+        /// </summary>
+        public static string PARAM_CERTERROR = "CERTERROR";
 
         /// <summary>
         /// コマンド引数
@@ -67,6 +75,8 @@ namespace quickDBExplorer
         private Label label6;
         private Button btnDispPasswd;
         private bool IsActivateWithArgs = false;
+        private CheckBox chkEncrypt;
+        private CheckBox chkIgnoreCertError;
 
         internal event LoginConnectedHandler LoginConnected;
 
@@ -149,6 +159,8 @@ namespace quickDBExplorer
             this.txtDatabaseName = new quickDBExplorer.quickDBExplorerTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.btnDispPasswd = new System.Windows.Forms.Button();
+            this.chkEncrypt = new System.Windows.Forms.CheckBox();
+            this.chkIgnoreCertError = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // MsgArea
@@ -161,7 +173,7 @@ namespace quickDBExplorer
             this.chkTrust.Location = new System.Drawing.Point(27, 166);
             this.chkTrust.Name = "chkTrust";
             this.chkTrust.Size = new System.Drawing.Size(160, 16);
-            this.chkTrust.TabIndex = 9;
+            this.chkTrust.TabIndex = 8;
             this.chkTrust.Text = "Windows認証を利用(&T)";
             this.chkTrust.CheckedChanged += new System.EventHandler(this.chkTrust_CheckedChanged);
             // 
@@ -179,7 +191,7 @@ namespace quickDBExplorer
             this.chkSaveInfo.Location = new System.Drawing.Point(373, 88);
             this.chkSaveInfo.Name = "chkSaveInfo";
             this.chkSaveInfo.Size = new System.Drawing.Size(144, 16);
-            this.chkSaveInfo.TabIndex = 6;
+            this.chkSaveInfo.TabIndex = 5;
             this.chkSaveInfo.Text = "接続先を保存する(&V)";
             // 
             // btnServerHistory
@@ -187,7 +199,7 @@ namespace quickDBExplorer
             this.btnServerHistory.Location = new System.Drawing.Point(40, 1);
             this.btnServerHistory.Name = "btnServerHistory";
             this.btnServerHistory.Size = new System.Drawing.Size(304, 24);
-            this.btnServerHistory.TabIndex = 16;
+            this.btnServerHistory.TabIndex = 18;
             this.btnServerHistory.Text = "過去に接続したサーバーから選択(&Z)";
             this.btnServerHistory.Click += new System.EventHandler(this.btnServerHistory_Click);
             // 
@@ -197,7 +209,7 @@ namespace quickDBExplorer
             this.btnLogin.Location = new System.Drawing.Point(40, 263);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(88, 24);
-            this.btnLogin.TabIndex = 14;
+            this.btnLogin.TabIndex = 16;
             this.btnLogin.Text = "接続(&O)";
             this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
             // 
@@ -206,7 +218,7 @@ namespace quickDBExplorer
             this.label4.Location = new System.Drawing.Point(25, 239);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 23);
-            this.label4.TabIndex = 12;
+            this.label4.TabIndex = 13;
             this.label4.Text = "パスワード(&P)";
             // 
             // txtPassword
@@ -222,7 +234,7 @@ namespace quickDBExplorer
             this.txtPassword.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtPassword.PlaceholderText = null;
             this.txtPassword.Size = new System.Drawing.Size(208, 19);
-            this.txtPassword.TabIndex = 13;
+            this.txtPassword.TabIndex = 14;
             // 
             // txtUser
             // 
@@ -236,7 +248,7 @@ namespace quickDBExplorer
             this.txtUser.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtUser.PlaceholderText = null;
             this.txtUser.Size = new System.Drawing.Size(208, 19);
-            this.txtUser.TabIndex = 11;
+            this.txtUser.TabIndex = 12;
             this.txtUser.Text = "sa";
             // 
             // txtInstance
@@ -251,7 +263,7 @@ namespace quickDBExplorer
             this.txtInstance.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtInstance.PlaceholderText = null;
             this.txtInstance.Size = new System.Drawing.Size(208, 19);
-            this.txtInstance.TabIndex = 5;
+            this.txtInstance.TabIndex = 4;
             // 
             // txtServerName
             // 
@@ -265,7 +277,7 @@ namespace quickDBExplorer
             this.txtServerName.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtServerName.PlaceholderText = null;
             this.txtServerName.Size = new System.Drawing.Size(208, 19);
-            this.txtServerName.TabIndex = 2;
+            this.txtServerName.TabIndex = 1;
             this.txtServerName.Text = "(local)";
             // 
             // label3
@@ -273,7 +285,7 @@ namespace quickDBExplorer
             this.label3.Location = new System.Drawing.Point(25, 199);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 23);
-            this.label3.TabIndex = 10;
+            this.label3.TabIndex = 11;
             this.label3.Text = "ユーザーID(&U)";
             // 
             // label2
@@ -281,7 +293,7 @@ namespace quickDBExplorer
             this.label2.Location = new System.Drawing.Point(25, 89);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(96, 23);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 3;
             this.label2.Text = "インスタンス(&I)";
             // 
             // label1
@@ -289,7 +301,7 @@ namespace quickDBExplorer
             this.label1.Location = new System.Drawing.Point(25, 49);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 23);
-            this.label1.TabIndex = 1;
+            this.label1.TabIndex = 0;
             this.label1.Text = "サーバーの指定(&S)";
             // 
             // btnSelectServer
@@ -297,7 +309,7 @@ namespace quickDBExplorer
             this.btnSelectServer.Location = new System.Drawing.Point(373, 47);
             this.btnSelectServer.Name = "btnSelectServer";
             this.btnSelectServer.Size = new System.Drawing.Size(101, 23);
-            this.btnSelectServer.TabIndex = 3;
+            this.btnSelectServer.TabIndex = 2;
             this.btnSelectServer.Text = "接続先検索(&L)";
             this.btnSelectServer.UseVisualStyleBackColor = true;
             this.btnSelectServer.Click += new System.EventHandler(this.btnSelectServer_Click);
@@ -307,7 +319,7 @@ namespace quickDBExplorer
             this.btnClear.Location = new System.Drawing.Point(373, 264);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(101, 23);
-            this.btnClear.TabIndex = 15;
+            this.btnClear.TabIndex = 17;
             this.btnClear.Text = "CLear(&C)";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
@@ -324,14 +336,14 @@ namespace quickDBExplorer
             this.txtDatabaseName.PlaceholderColor = System.Drawing.Color.Empty;
             this.txtDatabaseName.PlaceholderText = "Azure 等の場合には指定が必要";
             this.txtDatabaseName.Size = new System.Drawing.Size(208, 19);
-            this.txtDatabaseName.TabIndex = 8;
+            this.txtDatabaseName.TabIndex = 7;
             // 
             // label6
             // 
             this.label6.Location = new System.Drawing.Point(25, 131);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(122, 23);
-            this.label6.TabIndex = 7;
+            this.label6.TabIndex = 6;
             this.label6.Text = "接続先データベース名(&D)";
             // 
             // btnDispPasswd
@@ -339,16 +351,38 @@ namespace quickDBExplorer
             this.btnDispPasswd.Location = new System.Drawing.Point(367, 237);
             this.btnDispPasswd.Name = "btnDispPasswd";
             this.btnDispPasswd.Size = new System.Drawing.Size(107, 23);
-            this.btnDispPasswd.TabIndex = 21;
+            this.btnDispPasswd.TabIndex = 15;
             this.btnDispPasswd.Text = "パスワードを表示";
             this.btnDispPasswd.UseVisualStyleBackColor = true;
             this.btnDispPasswd.Click += new System.EventHandler(this.btnDispPasswd_Click);
+            // 
+            // chkEncrypt
+            // 
+            this.chkEncrypt.AutoSize = true;
+            this.chkEncrypt.Location = new System.Drawing.Point(222, 166);
+            this.chkEncrypt.Name = "chkEncrypt";
+            this.chkEncrypt.Size = new System.Drawing.Size(84, 16);
+            this.chkEncrypt.TabIndex = 9;
+            this.chkEncrypt.Text = "暗号化接続";
+            this.chkEncrypt.UseVisualStyleBackColor = true;
+            // 
+            // chkIgnoreCertError
+            // 
+            this.chkIgnoreCertError.AutoSize = true;
+            this.chkIgnoreCertError.Location = new System.Drawing.Point(333, 166);
+            this.chkIgnoreCertError.Name = "chkIgnoreCertError";
+            this.chkIgnoreCertError.Size = new System.Drawing.Size(120, 16);
+            this.chkIgnoreCertError.TabIndex = 10;
+            this.chkIgnoreCertError.Text = "証明書エラーを無視";
+            this.chkIgnoreCertError.UseVisualStyleBackColor = true;
             // 
             // LogOnDialog
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
             this.ClientSize = new System.Drawing.Size(520, 302);
+            this.Controls.Add(this.chkIgnoreCertError);
+            this.Controls.Add(this.chkEncrypt);
             this.Controls.Add(this.btnDispPasswd);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnSelectServer);
@@ -392,6 +426,8 @@ namespace quickDBExplorer
             this.Controls.SetChildIndex(this.btnSelectServer, 0);
             this.Controls.SetChildIndex(this.btnClear, 0);
             this.Controls.SetChildIndex(this.btnDispPasswd, 0);
+            this.Controls.SetChildIndex(this.chkEncrypt, 0);
+            this.Controls.SetChildIndex(this.chkIgnoreCertError, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -440,6 +476,9 @@ namespace quickDBExplorer
                         }
                     }
                 }
+
+
+
                 this.txtUser.Text = (string)this.commnadArgHt[PARAM_USER];
                 this.txtPassword.Text = (string)this.commnadArgHt[PARAM_PASSWORD];
 
@@ -545,7 +584,10 @@ namespace quickDBExplorer
                     this.chkTrust.Checked,
                     driver,
                     sqlVer,
-                    sv );
+                    sv,
+                    this.chkEncrypt.Checked,
+                    this.chkIgnoreCertError.Checked
+                    );
 
                 if( LoginConnected != null )
                 {
@@ -622,6 +664,9 @@ namespace quickDBExplorer
             sv.LogOnUser = this.txtUser.Text;
             // 最後に接続したサーバーを更新
             initOpt.LastServerKey = sv.KeyName;
+            sv.UseEncrypt = this.chkEncrypt.Checked;
+            sv.IgnoreCertificateError = this.chkIgnoreCertError.Checked;
+
             return sv;
         }
 
@@ -669,6 +714,15 @@ namespace quickDBExplorer
             {
                 myConnString += string.Format("Initial Catalog={0};", this.txtDatabaseName.Text);
             }
+            if (this.chkEncrypt.Checked)
+            {
+                myConnString += "Encrypt=True;";
+            }
+            if (this.chkIgnoreCertError.Checked)
+            {
+                myConnString += "TrustServerCertificate=True;";
+            }
+
             return myConnString;
         }
 
@@ -737,7 +791,22 @@ namespace quickDBExplorer
                     this.txtPassword.Text = cred.Password;
                 }
             }
-
+            if (selectSv != null && selectSv.UseEncrypt == true)
+            {
+                this.chkEncrypt.Checked = true;
+            }
+            else
+            {
+                this.chkEncrypt.Checked = false;
+            }
+            if (selectSv != null && selectSv.IgnoreCertificateError == true)
+            {
+                this.chkIgnoreCertError.Checked = true;
+            }
+            else
+            {
+                this.chkIgnoreCertError.Checked = false;
+            }
         }
 
         private void LogOnDialog_Closing(object sender, System.ComponentModel.CancelEventArgs e)

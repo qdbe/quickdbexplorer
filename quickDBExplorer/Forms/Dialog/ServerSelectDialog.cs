@@ -29,7 +29,7 @@ namespace quickDBExplorer
         private Button btnDelete;
         private quickDBExplorerTextBox txtFilter;
         private Label label1;
-        private Button button1;
+        private Button btnClearFilter;
 
         /// <summary>
         /// 選択されたサーバー名
@@ -97,7 +97,7 @@ namespace quickDBExplorer
             this.btnDelete = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtFilter = new quickDBExplorer.quickDBExplorerTextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnClearFilter = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // serverListBox
@@ -162,20 +162,21 @@ namespace quickDBExplorer
             this.txtFilter.IsShowZoom = false;
             this.txtFilter.Location = new System.Drawing.Point(66, 7);
             this.txtFilter.Name = "txtFilter";
-            this.txtFilter.PlaceholderText = "（部分一致）";
             this.txtFilter.PlaceholderColor = System.Drawing.Color.Empty;
+            this.txtFilter.PlaceholderText = "（部分一致）";
             this.txtFilter.Size = new System.Drawing.Size(180, 19);
             this.txtFilter.TabIndex = 0;
             this.txtFilter.TextChanged += new System.EventHandler(this.quickDBExplorerTextBox1_TextChanged);
             // 
-            // button1
+            // btnClearFilter
             // 
-            this.button1.Location = new System.Drawing.Point(369, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnClearFilter.Location = new System.Drawing.Point(369, 7);
+            this.btnClearFilter.Name = "btnClearFilter";
+            this.btnClearFilter.Size = new System.Drawing.Size(75, 23);
+            this.btnClearFilter.TabIndex = 7;
+            this.btnClearFilter.Text = "クリア";
+            this.btnClearFilter.UseVisualStyleBackColor = true;
+            this.btnClearFilter.Click += new System.EventHandler(this.btnClearFilter_Click);
             // 
             // ServerSelectDialog
             // 
@@ -183,7 +184,7 @@ namespace quickDBExplorer
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 12);
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(456, 293);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnClearFilter);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtFilter);
             this.Controls.Add(this.btnDelete);
@@ -299,6 +300,11 @@ namespace quickDBExplorer
         private void quickDBExplorerTextBox1_TextChanged(object sender, EventArgs e)
         {
             DispServerList();
+        }
+
+        private void btnClearFilter_Click(object sender, EventArgs e)
+        {
+            this.txtFilter.Text = string.Empty;
         }
     }
 }

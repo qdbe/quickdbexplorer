@@ -97,6 +97,12 @@ namespace quickDBExplorer.Forms
         private MenuItem menuOptHeightDefalut;
         private MenuItem menuOptHeightFull;
         private MenuItem menuInsertType;
+        private MenuItem menuDirtyRead;
+        private MenuItem menuDirtyReadOff;
+        private MenuItem menuDirtyReadOn;
+        private MenuItem menuSqlSepChar;
+        private MenuItem menuSqlSepCharGo;
+        private MenuItem menuSqlSepCharSemiCol;
         private ToolMacroManager toolMacroManager;
 
 
@@ -166,12 +172,18 @@ namespace quickDBExplorer.Forms
             this.menuOptFilter = new System.Windows.Forms.MenuItem();
             this.menuOptFilterNoCS = new System.Windows.Forms.MenuItem();
             this.menuOptFilterCS = new System.Windows.Forms.MenuItem();
+            this.menuInsertType = new System.Windows.Forms.MenuItem();
+            this.menuDirtyRead = new System.Windows.Forms.MenuItem();
+            this.menuDirtyReadOff = new System.Windows.Forms.MenuItem();
+            this.menuDirtyReadOn = new System.Windows.Forms.MenuItem();
             this.menuHelpMain = new System.Windows.Forms.MenuItem();
             this.menuViewHelp = new System.Windows.Forms.MenuItem();
             this.menuAbout = new System.Windows.Forms.MenuItem();
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.menuInsertType = new System.Windows.Forms.MenuItem();
+            this.menuSqlSepChar = new System.Windows.Forms.MenuItem();
+            this.menuSqlSepCharGo = new System.Windows.Forms.MenuItem();
+            this.menuSqlSepCharSemiCol = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -299,7 +311,9 @@ namespace quickDBExplorer.Forms
             this.menuOptWidth,
             this.menuOptHeight,
             this.menuOptFilter,
-            this.menuInsertType});
+            this.menuInsertType,
+            this.menuDirtyRead,
+            this.menuSqlSepChar});
             this.menuItem2.Text = "オプション(&T)";
             this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
             // 
@@ -384,6 +398,34 @@ namespace quickDBExplorer.Forms
             this.menuOptFilterCS.Text = "大文字小文字を区別する";
             this.menuOptFilterCS.Click += new System.EventHandler(this.menuOptFilter_Click);
             // 
+            // menuInsertType
+            // 
+            this.menuInsertType.Index = 4;
+            this.menuInsertType.Text = "INSERT文の出力設定";
+            this.menuInsertType.Click += new System.EventHandler(this.menuInsertType_Click);
+            // 
+            // menuDirtyRead
+            // 
+            this.menuDirtyRead.Index = 5;
+            this.menuDirtyRead.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuDirtyReadOff,
+            this.menuDirtyReadOn});
+            this.menuDirtyRead.Text = "DirtyRead";
+            this.menuDirtyRead.Click += new System.EventHandler(this.menuDirtyRead_Click);
+            // 
+            // menuDirtyReadOff
+            // 
+            this.menuDirtyReadOff.Checked = true;
+            this.menuDirtyReadOff.Index = 0;
+            this.menuDirtyReadOff.Text = "OFF";
+            this.menuDirtyReadOff.Click += new System.EventHandler(this.menuDirtyRead_Click);
+            // 
+            // menuDirtyReadOn
+            // 
+            this.menuDirtyReadOn.Index = 1;
+            this.menuDirtyReadOn.Text = "On";
+            this.menuDirtyReadOn.Click += new System.EventHandler(this.menuDirtyRead_Click);
+            // 
             // menuHelpMain
             // 
             this.menuHelpMain.Index = 5;
@@ -415,11 +457,27 @@ namespace quickDBExplorer.Forms
             // 
             this.errorProvider1.ContainerControl = this;
             // 
-            // menuInsertType
+            // menuSqlSepChar
             // 
-            this.menuInsertType.Index = 4;
-            this.menuInsertType.Text = "INSERT文の出力設定";
-            this.menuInsertType.Click += new System.EventHandler(this.menuInsertType_Click);
+            this.menuSqlSepChar.Index = 6;
+            this.menuSqlSepChar.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuSqlSepCharGo,
+            this.menuSqlSepCharSemiCol});
+            this.menuSqlSepChar.Text = "SQL区切り文字";
+            this.menuSqlSepChar.Click += new System.EventHandler(this.menuSqlSepChar_Click);
+            // 
+            // menuSqlSepCharGo
+            // 
+            this.menuSqlSepCharGo.Checked = true;
+            this.menuSqlSepCharGo.Index = 0;
+            this.menuSqlSepCharGo.Text = "GO";
+            this.menuSqlSepCharGo.Click += new System.EventHandler(this.menuSqlSepChar_Click);
+            // 
+            // menuSqlSepCharSemiCol
+            // 
+            this.menuSqlSepCharSemiCol.Index = 1;
+            this.menuSqlSepCharSemiCol.Text = "セミコロン";
+            this.menuSqlSepCharSemiCol.Click += new System.EventHandler(this.menuSqlSepChar_Click);
             // 
             // MainMdi
             // 
@@ -482,7 +540,7 @@ namespace quickDBExplorer.Forms
             SetOption((MainForm)sender);
         }
 
-        private void SetOption(MainForm sender)
+        protected void SetOption(MainForm sender)
         {
             if (sender != null)
             {
@@ -490,10 +548,12 @@ namespace quickDBExplorer.Forms
                 SetGridDefaultWidth(sender);
                 SetOptFilter(sender);
                 SetGridDefaultHeight(sender);
+                SetOptDirtyRead(sender);
+                SetOptSqlDelimiter(sender);
             }
         }
 
-        private void SetOptNullEmpty(MainForm sender)
+        protected void SetOptNullEmpty(MainForm sender)
         {
             if (sender.ReadEmptyAsNull)
             {
@@ -507,7 +567,7 @@ namespace quickDBExplorer.Forms
             }
         }
 
-        private void SetOptFilter(MainForm sender)
+        protected void SetOptFilter(MainForm sender)
         {
             if (sender.IsFilterCaseSensitive)
             {
@@ -528,7 +588,7 @@ namespace quickDBExplorer.Forms
         /// グリッドの幅の初期値を設定する
         /// </summary>
         /// <param name="sender"></param>
-        private void SetGridDefaultWidth(MainForm sender)
+        protected void SetGridDefaultWidth(MainForm sender)
         {
             if (sender.GridDefaltWidth)
             {
@@ -546,7 +606,7 @@ namespace quickDBExplorer.Forms
         /// グリッドの幅の初期値を設定する
         /// </summary>
         /// <param name="sender"></param>
-        private void SetGridDefaultHeight(MainForm sender)
+        protected void SetGridDefaultHeight(MainForm sender)
         {
             if (sender.GridDefaltHeight)
             {
@@ -557,6 +617,36 @@ namespace quickDBExplorer.Forms
             {
                 this.menuOptHeightDefalut.Checked = false;
                 this.menuOptHeightFull.Checked = true;
+            }
+        }
+
+
+        protected void SetOptDirtyRead(MainForm sender)
+        {
+            if (sender.IsDirtyRead)
+            {
+                this.menuDirtyReadOff.Checked = false;
+                this.menuDirtyReadOn.Checked = true;
+            }
+            else
+            {
+                this.menuDirtyReadOff.Checked = true;
+                this.menuDirtyReadOn.Checked = false;
+            }
+        }
+
+
+        protected void SetOptSqlDelimiter(MainForm sender)
+        {
+            if (sender.SqlDelimiter == "GO")
+            {
+                this.menuSqlSepCharGo.Checked = true;
+                this.menuSqlSepCharSemiCol.Checked = false;
+            }
+            else
+            {
+                this.menuSqlSepCharGo.Checked = false;
+                this.menuSqlSepCharSemiCol.Checked = true;
             }
         }
 
@@ -833,6 +923,18 @@ namespace quickDBExplorer.Forms
                     case "-t":
                         // Windows 認証指定
                         this.argHt[LogOnDialog.PARAM_TRUST] = true;
+                        preParam = string.Empty;
+                        break;
+                    case "-E":
+                    case "-e":
+                        // 暗号化
+                        this.argHt[LogOnDialog.PARAM_ENCRYPT] = true;
+                        preParam = string.Empty;
+                        break;
+                    case "-C":
+                    case "-c":
+                        // 証明書無視
+                        this.argHt[LogOnDialog.PARAM_CERTERROR] = true;
                         preParam = string.Empty;
                         break;
                     default:
@@ -1151,5 +1253,42 @@ namespace quickDBExplorer.Forms
                 dlg.ShowDialog();
             }
         }
+
+        private void menuDirtyRead_Click(object sender, EventArgs e)
+        {
+            MainForm main = this.ActiveMdiChild as MainForm;
+            if (main != null)
+            {
+                if (sender == this.menuDirtyReadOff)
+                {
+                    main.IsDirtyRead = false;
+                }
+                else
+                {
+                    main.IsDirtyRead = true;
+                }
+                SetOptDirtyRead(main);
+            }
+
+        }
+
+        private void menuSqlSepChar_Click(object sender, EventArgs e)
+        {
+            MainForm main = this.ActiveMdiChild as MainForm;
+            if (main != null)
+            {
+                if (sender == this.menuSqlSepCharGo)
+                {
+                    main.SqlDelimiter = "GO";
+                }
+                else
+                {
+                    main.SqlDelimiter = ";";
+                }
+                SetOptSqlDelimiter(main);
+            }
+
+        }
+
     }
 }

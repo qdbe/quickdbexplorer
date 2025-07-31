@@ -45,7 +45,10 @@ namespace quickDBExplorer.manager
                 }
                 else
                 {
-                    ds.ReadXml(SettingPath + ".xml");
+                    if (System.IO.File.Exists(SettingPath + ".xml"))
+                    {
+                        ds.ReadXml(SettingPath + ".xml");
+                    }
                 }
                 return Convert2Tools(ds);
             }

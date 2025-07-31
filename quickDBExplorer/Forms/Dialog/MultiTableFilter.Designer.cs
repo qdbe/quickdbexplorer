@@ -80,8 +80,6 @@
             // 
             // chkCaseSensitive
             // 
-            this.chkCaseSensitive.Checked = true;
-            this.chkCaseSensitive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkCaseSensitive.Location = new System.Drawing.Point(14, 61);
             this.chkCaseSensitive.Name = "chkCaseSensitive";
             this.chkCaseSensitive.Size = new System.Drawing.Size(152, 24);

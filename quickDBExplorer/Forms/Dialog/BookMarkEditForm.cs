@@ -107,12 +107,15 @@ namespace quickDBExplorer.Forms.Dialog
             {
                 this.SchemaList.Items.Add(eachSchema);
             }
+            this.SchemaList.SetCurrentItem();
+            
             foreach (DBObjectInfo eachObj in bookmarkInfo.Objects)
             {
                 ListViewItem addItem = new ListViewItem(eachObj.FormalName);
                 addItem.Tag = eachObj;
                 this.ListObject.Items.Add(addItem);
             }
+            this.ListObject.SetCurrentItem();
         }
 
         private void ClearDetail()
@@ -120,7 +123,9 @@ namespace quickDBExplorer.Forms.Dialog
             this.txtBookmarkName.Text = string.Empty;
             this.txtDBname.Text = string.Empty;
             this.SchemaList.Items.Clear();
+            this.SchemaList.SetCurrentItem();
             this.ListObject.Items.Clear();
+            this.ListObject.SetCurrentItem();
         }
 
         private void btnAddSchema_Click(object sender, EventArgs e)
@@ -152,6 +157,8 @@ namespace quickDBExplorer.Forms.Dialog
             {
                 this.SchemaList.Items.Remove(delEach);
             }
+
+            this.SchemaList.SetCurrentItem();
             this.ResumeLayout();
         }
 
@@ -170,6 +177,7 @@ namespace quickDBExplorer.Forms.Dialog
             {
                 this.ListObject.Items.Remove(delEach);
             }
+            this.ListObject.SetCurrentItem();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)

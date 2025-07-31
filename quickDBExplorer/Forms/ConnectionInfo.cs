@@ -52,6 +52,16 @@ namespace quickDBExplorer
         public SqlVersion SqlVersionInfo { get; private set; }
 
         /// <summary>
+        /// 暗号化通信を使用するかどうか
+        /// </summary>
+        public bool IsUseTrusted { get; set; }
+
+        /// <summary>
+        /// SSL証明書エラーを無視するかどうか
+        /// </summary>
+        public bool IgnoreCertificateError { get; set; }
+
+        /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="serverName"></param>
@@ -74,7 +84,9 @@ namespace quickDBExplorer
             bool isUseTruse,
             ISqlInterface sqlDriver,
             SqlVersion sqlVersion,
-            ServerJsonData serverdata
+            ServerJsonData serverdata,
+            bool isUseTrusted,
+            bool ignoreCertificateError
             )
         {
             this.ServerName = serverName;
@@ -105,7 +117,9 @@ namespace quickDBExplorer
                 false,
                 new EmptySqlInterface(),
                 SqlVersion.SQLSERVER2000(),
-                new ServerJsonData()
+                new ServerJsonData(),
+                false,
+                false
                 );
         }
     }

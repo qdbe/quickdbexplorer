@@ -786,6 +786,29 @@ namespace quickDBExplorer
         /// </summary>
         public InsertOptionSetting InsertOption { get; set; }
 
+        /// <summary>
+        /// 暗号化を利用するか否か
+        /// 
+        /// </summary>
+        public bool UseEncrypt { get; set; }
+
+        /// <summary>
+        /// 証明書のエラーを無視するか否か
+        /// </summary>
+        public bool IgnoreCertificateError { get; set; }
+
+        /// <summary>
+        /// DIrtyReadを実施するか否か
+        /// 
+        /// </summary>
+        public bool IsDirtyRead { get; set; }
+
+        /// <summary>
+        /// SQL 区切り文字
+        /// </summary>
+        public string SqlDelimiter { get; set; }
+
+
 
         /// <summary>
         /// コンストラクタ
@@ -809,6 +832,13 @@ namespace quickDBExplorer
             this.WhereGridHistory = new Dictionary<string, Dictionary<string, Dictionary<string, DataSet>>>();
             this.ObjectSearchHistory = new Dictionary<string, Dictionary<string, ObjectSearchCondition>>();
             this.InsertOption = new InsertOptionSetting();
+
+            this.UseEncrypt = false;
+            this.IgnoreCertificateError = false;
+
+            this.IsDirtyRead = false;
+            this.SqlDelimiter = "GO";
+
 
         }
 
@@ -1134,6 +1164,17 @@ namespace quickDBExplorer
         /// </summary>
         public int ValuesLine { get; set; }
 
+
+        /// <summary>
+        /// 1つのファイルに記載する最大行数
+        /// </summary>
+        public int MaxInsertLinePerFile { get; set; }
+
+        /// <summary>
+        /// ファイルを分割する場合の、ファイル番号の桁数
+        /// </summary>
+        public int FileSplitNoKetasu { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -1142,6 +1183,8 @@ namespace quickDBExplorer
             this.InsertType = 0;
             this.GoInsertLine = 1000;
             this.ValuesLine = 50;
+            this.MaxInsertLinePerFile = 0;
+            this.FileSplitNoKetasu = 0;
         }
     }
 
@@ -1258,7 +1301,10 @@ namespace quickDBExplorer
                 }
                 if (fs == null)
                 {
-                    fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Open);
+                    if (File.Exists(path + "\\quickDBExplorer.xml"))
+                    {
+                        fs = new FileStream(path + "\\quickDBExplorer.xml", FileMode.Open);
+                    }
                 }
                 // Soap Serialize しているので、それをDeSerialize
                 SoapFormatter sf = new SoapFormatter();

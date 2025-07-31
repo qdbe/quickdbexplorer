@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace quickDBExplorer
@@ -20,19 +21,21 @@ namespace quickDBExplorer
 	System.EventArgs e
 	);
 
-	/// <summary>
-	/// リストボックスの拡張機能版
-	/// キー押下時の特殊処理(delegateでのイベントハンドラ呼び出し処理)が組み込んである
-	/// </summary>
-	[System.Runtime.InteropServices.ComVisible(false)]
+
+
+    /// <summary>
+    /// リストボックスの拡張機能版
+    /// キー押下時の特殊処理(delegateでのイベントハンドラ呼び出し処理)が組み込んである
+    /// </summary>
+    [System.Runtime.InteropServices.ComVisible(false)]
 	public class qdbeListBox : System.Windows.Forms.ListBox
 	{
 
 
-		/// <summary>
-		/// Ctrl+Cが押された場合のイベント
-		/// </summary>
-		public event CopyDataEventHandler CopyData = null;
+        /// <summary>
+        /// Ctrl+Cが押された場合のイベント
+        /// </summary>
+        public event CopyDataEventHandler CopyData = null;
 
 
 		/// <summary>
@@ -41,7 +44,15 @@ namespace quickDBExplorer
 		public event ExtendedCopyDataEventHandler ExtendedCopyData = null;
 
 
-		private bool isAllSelecting = false;
+        /// <summary>
+        /// 
+        /// </summary>
+        protected  List<object> currentItems = new List<object>();
+
+
+
+
+        private bool isAllSelecting = false;
 
 		/// <summary>
 		/// 全ての項目が選択されているか否か
@@ -137,5 +148,78 @@ namespace quickDBExplorer
                 }
             }
         }
-	}
+
+
+        /// <summary>
+        /// 現在のアイテムを固定する
+        /// </summary>
+
+        public void  SetCurrentItem()
+        {
+            if( this.currentItems != null && this.currentItems.Count > 0 )
+            {
+                this.currentItems.Clear();
+            }
+            else
+            {
+                this.currentItems = new List<object>();
+            }
+            if (this.Items != null)
+            {
+                foreach (var e in this.Items)
+                {
+                    this.currentItems.Add(e);
+                }
+            }
+        }
+
+        /// <summary>
+        /// リストの内容をフィルタリングして表示する
+        /// </summary>
+        /// <param name="filterText"></param>
+        /// <param name="isCaseSensitive">フィルター適用時に大文字小文字を区別するか否か</param>
+        public void FilterObjectList(string filterText, bool isCaseSensitive)
+        {
+
+            this.BeginUpdate();
+            this.Items.Clear();
+            filterText = filterText.Trim();
+            if (filterText == string.Empty)
+            {
+                foreach (object e in this.currentItems)
+                {
+                    this.Items.Add(e);
+                }
+                this.EndUpdate();
+                return;
+            }
+            if (!isCaseSensitive)
+            {
+                filterText = filterText.ToLower();
+            }
+            string[]filterWords = filterText.Split(@", \t".ToCharArray());
+            List<object> newlist = new List<object>();
+            foreach (object itm in currentItems)
+            {
+                string it = itm.ToString();
+                if (!isCaseSensitive)
+                {
+                    it = it.ToLower();
+                
+                }
+                foreach(string word in filterWords)
+                {
+                    if (it.Contains(word))
+                    {
+                        newlist.Add(itm);
+                        break; // 一つでもマッチしたら追加
+                    }
+                }
+            }
+
+            this.Items.AddRange(newlist.ToArray());
+            this.EndUpdate();
+        }
+
+    }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace quickDBExplorer.Forms
 {
-    class BookmarkInfo
+    public class BookmarkInfo
     {
         public string Name { get; set; }
         public string DBName { get; set; }

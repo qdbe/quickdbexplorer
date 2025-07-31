@@ -632,6 +632,11 @@
             Ctrl+F 押下時のイベント
             </summary>
         </member>
+        <member name="F:quickDBExplorer.qdbeListBox.currentItems">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.qdbeListBox.IsAllSelecting">
             <summary>
             全ての項目が選択されているか否か
@@ -661,6 +666,18 @@
             指定したアイテムを選択状態にする
             </summary>
             <param name="itemlist"></param>
+        </member>
+        <member name="M:quickDBExplorer.qdbeListBox.SetCurrentItem">
+            <summary>
+            現在のアイテムを固定する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.qdbeListBox.FilterObjectList(System.String,System.Boolean)">
+            <summary>
+            リストの内容をフィルタリングして表示する
+            </summary>
+            <param name="filterText"></param>
+            <param name="isCaseSensitive">フィルター適用時に大文字小文字を区別するか否か</param>
         </member>
         <member name="T:quickDBExplorer.qdbeListView">
             <summary>
@@ -1438,6 +1455,16 @@
         <member name="P:quickDBExplorer.Forms.MainForm.ReadEmptyAsNull">
             <summary>
             テキスト読込時に空文字をNULL・空文字のいずれとして読み込むか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.IsDirtyRead">
+            <summary>
+            DirtyReadを許可するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.SqlDelimiter">
+            <summary>
+            SQL 区切り文字
             </summary>
         </member>
         <member name="P:quickDBExplorer.Forms.MainForm.GridDefaltWidth">
@@ -2274,7 +2301,17 @@
             DBサーバーバージョン情報
             </summary>
         </member>
-        <member name="M:quickDBExplorer.ConnectionInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,quickDBExplorer.ISqlInterface,quickDBExplorer.SqlVersion,quickDBExplorer.ServerJsonData)">
+        <member name="P:quickDBExplorer.ConnectionInfo.IsUseTrusted">
+            <summary>
+            暗号化通信を使用するかどうか
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ConnectionInfo.IgnoreCertificateError">
+            <summary>
+            SSL証明書エラーを無視するかどうか
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.ConnectionInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,quickDBExplorer.ISqlInterface,quickDBExplorer.SqlVersion,quickDBExplorer.ServerJsonData,System.Boolean,System.Boolean)">
             <summary>
             コンストラクタ
             </summary>
@@ -2788,6 +2825,16 @@
         <member name="F:quickDBExplorer.LogOnDialog.PARAM_TRUST">
             <summary>
             コマンド引数 Window認証
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_ENCRYPT">
+            <summary>
+            コマンド引数 暗号化
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.LogOnDialog.PARAM_CERTERROR">
+            <summary>
+            コマンド引数 証明書エラー無視
             </summary>
         </member>
         <member name="F:quickDBExplorer.LogOnDialog.commnadArgHt">
@@ -4358,6 +4405,28 @@
             Insert
             </summary>
         </member>
+        <member name="P:quickDBExplorer.ServerJsonData.UseEncrypt">
+            <summary>
+            暗号化を利用するか否か
+            
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.IgnoreCertificateError">
+            <summary>
+            証明書のエラーを無視するか否か
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.IsDirtyRead">
+            <summary>
+            DIrtyReadを実施するか否か
+            
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.SqlDelimiter">
+            <summary>
+            SQL 区切り文字
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.ServerJsonData.#ctor">
             <summary>
             コンストラクタ
@@ -4518,6 +4587,16 @@
         <member name="P:quickDBExplorer.InsertOptionSetting.ValuesLine">
             <summary>
             VALUESに記載するデータ行数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.InsertOptionSetting.MaxInsertLinePerFile">
+            <summary>
+            1つのファイルに記載する最大行数
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.InsertOptionSetting.FileSplitNoKetasu">
+            <summary>
+            ファイルを分割する場合の、ファイル番号の桁数
             </summary>
         </member>
         <member name="M:quickDBExplorer.InsertOptionSetting.#ctor">

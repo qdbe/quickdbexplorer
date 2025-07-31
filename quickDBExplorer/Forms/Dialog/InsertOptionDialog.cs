@@ -71,12 +71,31 @@ namespace quickDBExplorer.Forms.Dialog
             base.OnLoad(e);
 
 
-            if( this._insertOption != null)
+            this.txtMaxLinePerFile.TextChanged += TxtMaxLinePerFile_TextChanged;
+            if ( this._insertOption != null)
             {
                 DispData(this._insertOption);
             }
 
             this.isLoading = false;
+
+        }
+
+        private void TxtMaxLinePerFile_TextChanged(object sender, EventArgs e)
+        {
+            if (this.txtMaxLinePerFile.Text == "0")
+            {
+                this.txtFileSplitNoKetasu.Text = "0";
+                this.txtFileSplitNoKetasu.Enabled = false;
+            }
+            else
+            {
+                if (this.txtFileSplitNoKetasu.Text == "0")
+                {
+                    this.txtFileSplitNoKetasu.Text = "5";
+                }
+                this.txtFileSplitNoKetasu.Enabled = true;
+            }
         }
 
 
@@ -101,6 +120,11 @@ namespace quickDBExplorer.Forms.Dialog
 
             this.txtGoInsertLine.Text = insertOption.GoInsertLine.ToString();
             this.txtValueLine.Text = insertOption.ValuesLine.ToString();
+
+            this.txtMaxLinePerFile.Text = insertOption.MaxInsertLinePerFile.ToString();
+            this.txtFileSplitNoKetasu.Text = insertOption.FileSplitNoKetasu.ToString();
+
+            TxtMaxLinePerFile_TextChanged(null, null);
 
             DispSample();
 
@@ -210,6 +234,8 @@ go ";
                     int.TryParse(this.txtValueLine.Text, out tmpValue);
                     this._insertOption.ValuesLine = tmpValue;
                 }
+                this._insertOption.MaxInsertLinePerFile = int.Parse(this.txtMaxLinePerFile.Text);  
+                this._insertOption.FileSplitNoKetasu = int.Parse(this.txtFileSplitNoKetasu.Text);
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -255,5 +281,6 @@ go ";
 
             return true;
         }
+
     }
 }
