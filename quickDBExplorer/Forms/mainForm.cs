@@ -176,11 +176,25 @@ namespace quickDBExplorer.Forms
 			}
         }
 
+		/// <summary>
+		/// フィールドのカンマの位置
+		/// </summary>
+		public int FieldCommaPlace
+		{
+			get {
+				return this.svdata.FieldCommaPlace;
+			} 
+			set {
+				this.svdata.FieldCommaPlace = value;
+            }
+        }
 
-        /// <summary>
-        /// グリッド表示時の幅の初期値
-        /// </summary>
-        public bool GridDefaltWidth
+
+
+		/// <summary>
+		/// グリッド表示時の幅の初期値
+		/// </summary>
+		public bool GridDefaltWidth
 		{
 			get
 			{
@@ -4238,8 +4252,15 @@ namespace quickDBExplorer.Forms
 			rcdt.Columns.Add("オブジェクト名");
 			rcdt.Columns.Add("データ件数",typeof(int));
 
-			try
-			{
+            string lockstr = "";
+            if (this.svdata.IsDirtyRead == true)
+            {
+                lockstr = " with (nolock)";
+            }
+
+
+            try
+            {
 
 				DBObjectInfo	dboInfo;
 				for( int ti = 0; ti < this.objectList.SelectedItems.Count; ti++ )
@@ -4248,7 +4269,7 @@ namespace quickDBExplorer.Forms
 
 					trow = 0;
 					string stSql;
-					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  count(1) from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+					stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  count(1) from {0} {2} ",dboInfo.GetAliasName(this.GetAlias()), lockstr);
 					if( this.txtWhere.Text.Trim() != "" )
 					{
 						stSql += " where " + this.txtWhere.Text.Trim();
@@ -5108,7 +5129,15 @@ namespace quickDBExplorer.Forms
 				TextWriter wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				StringBuilder fname = new StringBuilder();
 
-				if (this.rdoClipboard.Checked == true)
+                string lockstr = "";
+                if (this.svdata.IsDirtyRead == true)
+                {
+                    lockstr = " with (nolock)";
+                }
+
+
+
+                if (this.rdoClipboard.Checked == true)
 				{
 					wr = new StringWriter(strline, System.Globalization.CultureInfo.CurrentCulture);
 				}
@@ -5127,7 +5156,8 @@ namespace quickDBExplorer.Forms
 				IDataReader dr = null;
 				IDbCommand cm = this.SqlDriver.NewSqlCommand();
 
-				DBObjectInfo dboInfo;
+
+                DBObjectInfo dboInfo;
 				for (int ti = 0; ti < this.objectList.SelectedItems.Count; ti++)
 				{
 
@@ -5180,12 +5210,12 @@ namespace quickDBExplorer.Forms
 							}
 							loop++;
 						}
-						fieldStr.AppendFormat(" from {0} ", dboInfo.GetAliasName(this.GetAlias()));
+						fieldStr.AppendFormat(" from {0} {1} ", dboInfo.GetAliasName(this.GetAlias()), lockstr);
 						stSql = fieldStr.ToString();
 					}
 					else
 					{
-						stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, "select  * from {0} ", dboInfo.GetAliasName(this.GetAlias()));
+						stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture, "select  * from {0} {1} ", dboInfo.GetAliasName(this.GetAlias()), lockstr);
 					}
 					if (this.txtWhere.Text.Trim() != "")
 					{
@@ -5226,10 +5256,11 @@ namespace quickDBExplorer.Forms
 					if (isTaihi == true)
 					{
 						string taihistr =
-							String.Format(System.Globalization.CultureInfo.CurrentCulture, "select * into {1} from {0} ",
+							String.Format(System.Globalization.CultureInfo.CurrentCulture, "select * into {1} from {0} {2}",
 							dboInfo.GetAliasName(this.GetAlias()),
-							dboInfo.GetNameAdd(DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture))
-							);
+							dboInfo.GetNameAdd(DateTime.Now.ToString("yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture)),
+                            lockstr
+                            );
 						if (this.txtWhere.Text.Trim() != "")
 						{
 							taihistr += string.Format(System.Globalization.CultureInfo.CurrentCulture, " where {0}", this.txtWhere.Text.Trim());
@@ -5554,7 +5585,7 @@ namespace quickDBExplorer.Forms
 					int i = 0;
 					foreach (DBFieldInfo each in dboInfo.FieldInfo)
 					{
-						if (i != 0 && iscomma)
+						if (i != 0 && iscomma && this.FieldCommaPlace == 1)
 						{
 							wr.Write(",");
 						}
@@ -5563,7 +5594,12 @@ namespace quickDBExplorer.Forms
 							wr.Write("{0}\t", wr.NewLine);
 						}
 
-						if (alias != string.Empty)
+                        if (i != 0 && iscomma && this.FieldCommaPlace == 0)
+                        {
+                            wr.Write(",");
+                        }
+
+                        if (alias != string.Empty)
 						{
 							wr.Write(alias + ".");
 						}
@@ -5821,7 +5857,13 @@ namespace quickDBExplorer.Forms
 
             this.InitErrMessage();
 
-			int			rowcount = 0;
+			string lockstr = "";
+			if( this.svdata.IsDirtyRead == true)
+			{
+				lockstr = " with (nolock)";
+            }
+
+                int			rowcount = 0;
 			int			trow = 0;
 			try
 			{
@@ -5894,12 +5936,12 @@ namespace quickDBExplorer.Forms
 							}
 							loop++;
 						}
-						fieldStr.AppendFormat(" from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+						fieldStr.AppendFormat(" from {0} {1} ",dboInfo.GetAliasName(this.GetAlias()), lockstr);
 						stSql = fieldStr.ToString();
 					}
 					else
 					{
-						stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} ",dboInfo.GetAliasName(this.GetAlias()));
+						stSql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select  * from {0} {1} ",dboInfo.GetAliasName(this.GetAlias()), lockstr);
 					}
 					if( this.txtWhere.Text.Trim() != "" )
 					{
@@ -6427,7 +6469,7 @@ namespace quickDBExplorer.Forms
 				{
 					if( lf == true )
 					{
-						if( docomma ) 
+						if( docomma && this.FieldCommaPlace == 1) 
 						{
 							str.Append(",\r\n");
 						}
@@ -6438,7 +6480,7 @@ namespace quickDBExplorer.Forms
 					}
 					else
 					{
-						if( docomma )
+						if( docomma && this.FieldCommaPlace == 1)
 						{
 							str.Append(",");
 						}
@@ -6448,7 +6490,16 @@ namespace quickDBExplorer.Forms
 						}
 					}
 				}
-				if (schemaTable)
+
+				if (i != 0)
+				{
+					if (docomma && this.FieldCommaPlace == 0)
+					{
+						str.Append(",");
+					}
+				}
+
+                if (schemaTable)
 				{
 					str.Append(tableNm).Append(".");
 				}

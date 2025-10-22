@@ -47,13 +47,15 @@ namespace quickDBExplorer.Forms
         /// <summary>
         /// 前回操作時の各種記憶情報
         /// </summary>
-        public ConditionRecorderJson InitOpt {
-            get {
-                return this._initOpt; 
+        public ConditionRecorderJson InitOpt
+        {
+            get
+            {
+                return this._initOpt;
             }
             set { this._initOpt = value; }
         }
-    
+
         /// <summary>
         /// 表示エラーメッセージ
         /// </summary>
@@ -103,6 +105,9 @@ namespace quickDBExplorer.Forms
         private MenuItem menuSqlSepChar;
         private MenuItem menuSqlSepCharGo;
         private MenuItem menuSqlSepCharSemiCol;
+        private MenuItem menuFieldComma;
+        private MenuItem menuFieldCommaPre;
+        private MenuItem menuFieldCommaAfter;
         private ToolMacroManager toolMacroManager;
 
 
@@ -176,14 +181,17 @@ namespace quickDBExplorer.Forms
             this.menuDirtyRead = new System.Windows.Forms.MenuItem();
             this.menuDirtyReadOff = new System.Windows.Forms.MenuItem();
             this.menuDirtyReadOn = new System.Windows.Forms.MenuItem();
+            this.menuSqlSepChar = new System.Windows.Forms.MenuItem();
+            this.menuSqlSepCharGo = new System.Windows.Forms.MenuItem();
+            this.menuSqlSepCharSemiCol = new System.Windows.Forms.MenuItem();
+            this.menuFieldComma = new System.Windows.Forms.MenuItem();
+            this.menuFieldCommaPre = new System.Windows.Forms.MenuItem();
+            this.menuFieldCommaAfter = new System.Windows.Forms.MenuItem();
             this.menuHelpMain = new System.Windows.Forms.MenuItem();
             this.menuViewHelp = new System.Windows.Forms.MenuItem();
             this.menuAbout = new System.Windows.Forms.MenuItem();
             this.menuVersion = new System.Windows.Forms.MenuItem();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.menuSqlSepChar = new System.Windows.Forms.MenuItem();
-            this.menuSqlSepCharGo = new System.Windows.Forms.MenuItem();
-            this.menuSqlSepCharSemiCol = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -313,7 +321,8 @@ namespace quickDBExplorer.Forms
             this.menuOptFilter,
             this.menuInsertType,
             this.menuDirtyRead,
-            this.menuSqlSepChar});
+            this.menuSqlSepChar,
+            this.menuFieldComma});
             this.menuItem2.Text = "オプション(&T)";
             this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
             // 
@@ -426,6 +435,49 @@ namespace quickDBExplorer.Forms
             this.menuDirtyReadOn.Text = "On";
             this.menuDirtyReadOn.Click += new System.EventHandler(this.menuDirtyRead_Click);
             // 
+            // menuSqlSepChar
+            // 
+            this.menuSqlSepChar.Index = 6;
+            this.menuSqlSepChar.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuSqlSepCharGo,
+            this.menuSqlSepCharSemiCol});
+            this.menuSqlSepChar.Text = "SQL区切り文字";
+            this.menuSqlSepChar.Click += new System.EventHandler(this.menuSqlSepChar_Click);
+            // 
+            // menuSqlSepCharGo
+            // 
+            this.menuSqlSepCharGo.Checked = true;
+            this.menuSqlSepCharGo.Index = 0;
+            this.menuSqlSepCharGo.Text = "GO";
+            this.menuSqlSepCharGo.Click += new System.EventHandler(this.menuSqlSepChar_Click);
+            // 
+            // menuSqlSepCharSemiCol
+            // 
+            this.menuSqlSepCharSemiCol.Index = 1;
+            this.menuSqlSepCharSemiCol.Text = "セミコロン";
+            this.menuSqlSepCharSemiCol.Click += new System.EventHandler(this.menuSqlSepChar_Click);
+            // 
+            // menuFieldComma
+            // 
+            this.menuFieldComma.Index = 7;
+            this.menuFieldComma.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuFieldCommaPre,
+            this.menuFieldCommaAfter});
+            this.menuFieldComma.Text = "フィールドリストのカンマの位置";
+            this.menuFieldComma.Click += new System.EventHandler(this.menuFiledComma_Click);
+            // 
+            // menuFieldCommaPre
+            // 
+            this.menuFieldCommaPre.Index = 0;
+            this.menuFieldCommaPre.Text = "前";
+            this.menuFieldCommaPre.Click += new System.EventHandler(this.menuFiledComma_Click);
+            // 
+            // menuFieldCommaAfter
+            // 
+            this.menuFieldCommaAfter.Index = 1;
+            this.menuFieldCommaAfter.Text = "後";
+            this.menuFieldCommaAfter.Click += new System.EventHandler(this.menuFiledComma_Click);
+            // 
             // menuHelpMain
             // 
             this.menuHelpMain.Index = 5;
@@ -456,28 +508,6 @@ namespace quickDBExplorer.Forms
             // errorProvider1
             // 
             this.errorProvider1.ContainerControl = this;
-            // 
-            // menuSqlSepChar
-            // 
-            this.menuSqlSepChar.Index = 6;
-            this.menuSqlSepChar.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
-            this.menuSqlSepCharGo,
-            this.menuSqlSepCharSemiCol});
-            this.menuSqlSepChar.Text = "SQL区切り文字";
-            this.menuSqlSepChar.Click += new System.EventHandler(this.menuSqlSepChar_Click);
-            // 
-            // menuSqlSepCharGo
-            // 
-            this.menuSqlSepCharGo.Checked = true;
-            this.menuSqlSepCharGo.Index = 0;
-            this.menuSqlSepCharGo.Text = "GO";
-            this.menuSqlSepCharGo.Click += new System.EventHandler(this.menuSqlSepChar_Click);
-            // 
-            // menuSqlSepCharSemiCol
-            // 
-            this.menuSqlSepCharSemiCol.Index = 1;
-            this.menuSqlSepCharSemiCol.Text = "セミコロン";
-            this.menuSqlSepCharSemiCol.Click += new System.EventHandler(this.menuSqlSepChar_Click);
             // 
             // MainMdi
             // 
@@ -550,6 +580,7 @@ namespace quickDBExplorer.Forms
                 SetGridDefaultHeight(sender);
                 SetOptDirtyRead(sender);
                 SetOptSqlDelimiter(sender);
+                SetOptFieldCommaPlace(sender);
             }
         }
 
@@ -647,6 +678,20 @@ namespace quickDBExplorer.Forms
             {
                 this.menuSqlSepCharGo.Checked = false;
                 this.menuSqlSepCharSemiCol.Checked = true;
+            }
+        }
+
+        protected void SetOptFieldCommaPlace(MainForm sender)
+        {
+            if (sender.FieldCommaPlace == 0)
+            {
+                this.menuFieldCommaPre.Checked = true;
+                this.menuFieldCommaAfter.Checked = false;
+            }
+            else
+            {
+                this.menuFieldCommaPre.Checked = false;
+                this.menuFieldCommaAfter.Checked = true;
             }
         }
 
@@ -965,7 +1010,7 @@ namespace quickDBExplorer.Forms
         {
             this.menuBookamrk.MenuItems.Clear();
             if (this.ActiveMdiChild != null &&
-                this.ActiveMdiChild is MainForm )
+                this.ActiveMdiChild is MainForm)
             {
                 this.menuBookamrk.MenuItems.Add(menuAddBookMark);
             }
@@ -1112,11 +1157,11 @@ namespace quickDBExplorer.Forms
             string commandstr = this.toolMacroManager.BuildCommand(info.Command, arg);
             string argstr = this.toolMacroManager.BuildCommand(info.Args, arg);
 
-            StartProcess(commandstr,argstr);
+            StartProcess(commandstr, argstr);
         }
 
 
-        private void StartProcess(string commandstr,string arg)
+        private void StartProcess(string commandstr, string arg)
         {
             try
             {
@@ -1128,7 +1173,7 @@ namespace quickDBExplorer.Forms
                 startinfo.UseShellExecute = true;
                 Process.Start(startinfo);
             }
-            catch 
+            catch
             {
             }
         }
@@ -1290,5 +1335,22 @@ namespace quickDBExplorer.Forms
 
         }
 
+        private void menuFiledComma_Click(object sender, EventArgs e)
+        {
+            MainForm main = this.ActiveMdiChild as MainForm;
+            if (main != null)
+            {
+                if (sender == this.menuFieldCommaPre)
+                {
+                    main.FieldCommaPlace = 0;
+                }
+                else
+                {
+                    main.FieldCommaPlace = 1;
+                }
+                SetOptFieldCommaPlace(main);
+
+            }
+        }
     }
 }

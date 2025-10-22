@@ -1467,6 +1467,11 @@
             SQL 区切り文字
             </summary>
         </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.FieldCommaPlace">
+            <summary>
+            フィールドのカンマの位置
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.Forms.MainForm.GridDefaltWidth">
             <summary>
             グリッド表示時の幅の初期値
@@ -4425,6 +4430,12 @@
         <member name="P:quickDBExplorer.ServerJsonData.SqlDelimiter">
             <summary>
             SQL 区切り文字
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.ServerJsonData.FieldCommaPlace">
+            <summary>
+            フィールドのカンマの位置
+            0: 前 1: 後
             </summary>
         </member>
         <member name="M:quickDBExplorer.ServerJsonData.#ctor">

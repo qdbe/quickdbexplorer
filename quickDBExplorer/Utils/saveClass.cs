@@ -809,6 +809,13 @@ namespace quickDBExplorer
         public string SqlDelimiter { get; set; }
 
 
+        /// <summary>
+        /// フィールドのカンマの位置
+        /// 0: 前 1: 後
+        /// </summary>
+        public int FieldCommaPlace { get; set; }
+
+
 
         /// <summary>
         /// コンストラクタ
@@ -838,8 +845,7 @@ namespace quickDBExplorer
 
             this.IsDirtyRead = false;
             this.SqlDelimiter = "GO";
-
-
+            this.FieldCommaPlace = 1;   // フィールドのカンマの位置 0: 前 1: 後
         }
 
 
