@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B37CB810-67D6-4F19-B65C-F171F82C0A09}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SqlServer2025Driver</RootNamespace>
+    <AssemblyName>SqlServer2025Driver</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\net35\Debug\</OutputPath>
+    <BaseIntermediateOutputPath>obj\net35\</BaseIntermediateOutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\net35\Release\</OutputPath>
+    <BaseIntermediateOutputPath>obj\net35\</BaseIntermediateOutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SqlServer2025.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ISqlInterface\ISqlInterface.csproj">
+      <Project>{607646d5-0110-4f20-8916-e1c7b75ff090}</Project>
+      <Name>ISqlInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2005Driver\SqlServer2005Driver.csproj">
+      <Project>{fd530f44-ea9f-444d-a9a2-807c2489626e}</Project>
+      <Name>SqlServer2005Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2008Driver\SqlServer2008Driver.csproj">
+      <Project>{629dc552-a57e-4795-b1c3-7a61f08a8e11}</Project>
+      <Name>SqlServer2008Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2008R2Driver\SqlServer2008R2Driver.csproj">
+      <Project>{5384d94c-dfac-48e9-afa3-1f8b236de917}</Project>
+      <Name>SqlServer2008R2Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2012Driver\SqlServer2012Driver.csproj">
+      <Project>{1db514c0-3cda-4daf-a3ae-a0983afbb73d}</Project>
+      <Name>SqlServer2012Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2014Driver\SqlServer2014Driver.csproj">
+      <Project>{b7dd9c65-ccd3-4a77-ad46-08e12f14a734}</Project>
+      <Name>SqlServer2014Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2016Driver\SqlServer2016Driver.csproj">
+      <Project>{4a644365-e55b-4df9-b963-84cb8cc643ba}</Project>
+      <Name>SqlServer2016Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2017Driver\SqlServer2017Driver.csproj">
+      <Project>{f40ba08e-fb92-4798-b98c-cbd3d08b17b5}</Project>
+      <Name>SqlServer2017Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2019Driver\SqlServer2019Driver.csproj">
+      <Project>{ea397f4d-4acf-46b6-9036-ce9ce866d491}</Project>
+      <Name>SqlServer2019Driver</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlServer2022Driver\SqlServer2022Driver.csproj">
+      <Project>{4ae74634-51a3-442e-8336-36d95033bd26}</Project>
+      <Name>SqlServer2022Driver</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy $(TargetPath) $(SolutionDir)quickDBExplorer\bin\net35\$(ConfigurationName)</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

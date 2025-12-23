@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32901.215
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorer", "quickDBExplorer\quickDBExplorer.csproj", "{EA7BD8AC-2D82-48D4-B44C-C8AA31CDB2F0}"
 EndProject
@@ -77,6 +77,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2022DriverV40", "S
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "quickDBExplorerV40", "quickDBExplorer\quickDBExplorerV40.csproj", "{EDFFD956-F6E0-4C23-B219-70FCA92A11EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2025DriverV40", "SqlServer2025Driver\SqlServer2025DriverV40.csproj", "{C8809778-4E8B-405E-B915-43A77419EEF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer2025Driver", "SqlServer2025Driver\SqlServer2025Driver.csproj", "{B37CB810-67D6-4F19-B65C-F171F82C0A09}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -180,6 +184,14 @@ Global
 		{EDFFD956-F6E0-4C23-B219-70FCA92A11EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDFFD956-F6E0-4C23-B219-70FCA92A11EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDFFD956-F6E0-4C23-B219-70FCA92A11EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8809778-4E8B-405E-B915-43A77419EEF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8809778-4E8B-405E-B915-43A77419EEF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8809778-4E8B-405E-B915-43A77419EEF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8809778-4E8B-405E-B915-43A77419EEF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B37CB810-67D6-4F19-B65C-F171F82C0A09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B37CB810-67D6-4F19-B65C-F171F82C0A09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B37CB810-67D6-4F19-B65C-F171F82C0A09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B37CB810-67D6-4F19-B65C-F171F82C0A09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

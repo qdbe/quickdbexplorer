@@ -332,17 +332,29 @@ namespace quickDBExplorer
                 this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\160\Tools\ClientSetup\";
                 this.BinDir = @"binn\";
             }
-            else
+            else if (versionStr.StartsWith("17.0"))
             {
-                // Šù’è‚Å 2022 ‚É‚µ‚Ä‚¨‚­
-                this.pPublicVersion = "2022";
+                this.pPublicVersion = "2025";
                 this.pFullVersionString = versionStr;
                 this.pIsSynonym = true;
                 this.pCanUseQueryAnalyzer = false;
                 this.pIsManagementStudio = true;
                 this.ProfilerExe = "profiler.exe";
                 this.ManagementExe = "ssms.exe";
-                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\160\Tools\ClientSetup\";
+                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\170\Tools\ClientSetup\";
+                this.BinDir = @"binn\";
+            }
+            else
+            {
+                // Šù’è‚Å 2025 ‚É‚µ‚Ä‚¨‚­
+                this.pPublicVersion = "2025";
+                this.pFullVersionString = versionStr;
+                this.pIsSynonym = true;
+                this.pCanUseQueryAnalyzer = false;
+                this.pIsManagementStudio = true;
+                this.ProfilerExe = "profiler.exe";
+                this.ManagementExe = "ssms.exe";
+                this.regkey = @"SOFTWARE\Microsoft\Microsoft SQL Server\170\Tools\ClientSetup\";
                 this.BinDir = @"binn\";
             }
         }

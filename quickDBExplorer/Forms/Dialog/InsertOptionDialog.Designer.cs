@@ -226,9 +226,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(82, 442);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(165, 12);
+            this.label7.Size = new System.Drawing.Size(181, 12);
             this.label7.TabIndex = 14;
-            this.label7.Text = "※指定された場合分割されません";
+            this.label7.Text = "※0が指定された場合分割されません";
             // 
             // InsertOptionDialog
             // 
