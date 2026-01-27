@@ -197,7 +197,7 @@ namespace quickDBExplorer
             {
                 filterText = filterText.ToLower();
             }
-            string[]filterWords = filterText.Split(@", \t".ToCharArray());
+            string[]filterWords = filterText.Split(", \t".ToCharArray());
             List<object> newlist = new List<object>();
             foreach (object itm in currentItems)
             {
