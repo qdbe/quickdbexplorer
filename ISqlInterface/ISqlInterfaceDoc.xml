@@ -918,6 +918,20 @@
             </summary>
             <param name="version"></param>
         </member>
+        <member name="M:quickDBExplorer.EmptySqlInterface.CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Management Studioを起動する
+            </summary>
+            <param name="serverRealName"></param>
+            <param name="instanceName"></param>
+            <param name="isUseTrust"></param>
+            <param name="dbName"></param>
+            <param name="logOnUserId"></param>
+            <param name="logOnPassword"></param>
+            <param name="IsUseTrusted"></param>
+            <param name="IgnoreCertificateError"></param>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
         <member name="T:quickDBExplorer.ISqlInterface">
             <summary>
             SQLのバージョンによる実装の違いからくるSQL文などを生成する為のクラス
@@ -1058,7 +1072,7 @@
             <param name="logOnUserId">ログインID</param>
             <param name="logOnPassword">ログインパスワード</param>
         </member>
-        <member name="M:quickDBExplorer.ISqlInterface.CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+        <member name="M:quickDBExplorer.ISqlInterface.CallEPM(System.String,System.String,System.Boolean,System.String,System.String,System.String,System.Boolean,System.Boolean)">
             <summary>
             EnterPriseManagerを起動する
             </summary>
@@ -1068,6 +1082,8 @@
             <param name="dbName">データベース名</param>
             <param name="logOnUserId">ログインID</param>
             <param name="logOnPassword">ログインパスワード</param>
+            <param name="IsUseTrusted">信頼関係接続を利用するか否か</param>
+            <param name="IgnoreCertificateError">証明書エラーを無視するか否か</param>
         </member>
         <member name="M:quickDBExplorer.ISqlInterface.CallProfile(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
             <summary>
@@ -1336,6 +1352,16 @@
             設定値記憶レジストリパス
             </summary>
         </member>
+        <member name="P:quickDBExplorer.SqlVersion.SSMSParameterFormat">
+            <summary>
+            SSMSのパラメーター形式（旧形式 or 新形式）
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.SqlVersion.SSMSVersion">
+            <summary>
+            SSMS バージョン（パラメーター形式判定用）
+            </summary>
+        </member>
         <member name="F:quickDBExplorer.SqlVersion.MaxVer">
             <summary>
             SQL SERVER VERSION 最大値
@@ -1344,6 +1370,24 @@
         <member name="F:quickDBExplorer.SqlVersion.MinVer">
             <summary>
             SQL SERVER VERSION 最小値
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.SSMS_PARAM_FORMAT_OLD">
+            <summary>
+            SSMSパラメーター形式（旧形式）
+            SQL Server 2017以前: -S -d -U -P -E -nosplash
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.SSMS_PARAM_FORMAT_NEW">
+            <summary>
+            SSMSパラメーター形式（新形式）
+            SQL Server 2019以降: -S -d -U -P -E (nosplashなし)
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.SqlVersion.SSMS_PARAM_FORMAT_V22">
+            <summary>
+            SSMS 22以降のパラメーター形式
+            SQL Server 2022以降の SSMS: -A (認証用)、-Encrypt (暗号化用)
             </summary>
         </member>
         <member name="M:quickDBExplorer.SqlVersion.SQLSERVER2000">
@@ -1408,6 +1452,52 @@
             コンストラクタ
             </summary>
             <param name="versionStr">Connection.ServerVersion の結果を渡す</param>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.QuoteCommandLineArgument(System.String)">
+            <summary>
+            コマンドライン引数を Windows の引用規則に従って引用する。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.DetectInstalledSSMSVersion(System.String)">
+            <summary>
+            インストール済みSSMSのバージョンを検出する。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.FindSSMSExePath">
+            <summary>
+            インストール済みの ssms.exe を探索し、最も新しい実行ファイルを返す。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.BuildSSMSParameters(System.String,System.String,System.Boolean,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            実際に起動するSSMSのバージョンに対応した引数を生成する。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.LaunchSSMS(System.String,System.String,System.Boolean,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            SSMSを起動する。探索・バージョン判定・引数生成をこのクラスで一元管理する。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.FindProfilerExePath">
+            <summary>
+            インストール済みの SQL Profiler 実行ファイルを探索してフルパスを返す。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.FindSqlServerConfigurationManagerPath">
+            <summary>
+            インストール済みの SQL Server 構成マネージャーを検索する。
+            接続先と同じメジャーバージョンを優先し、見つからない場合は新しい版へフォールバックする。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.LaunchSqlServerConfigurationManager">
+            <summary>
+            SQL Server 構成マネージャーを起動する。
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.SqlVersion.LaunchProfiler(System.String,System.String,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            SQL Profilerを公式のスラッシュ形式の引数で起動する。
+            </summary>
         </member>
     </members>
 </doc>

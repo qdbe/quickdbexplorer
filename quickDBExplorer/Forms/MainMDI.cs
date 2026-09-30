@@ -570,6 +570,10 @@ namespace quickDBExplorer.Forms
             SetOption((MainForm)sender);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
         protected void SetOption(MainForm sender)
         {
             if (sender != null)
@@ -584,6 +588,10 @@ namespace quickDBExplorer.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
         protected void SetOptNullEmpty(MainForm sender)
         {
             if (sender.ReadEmptyAsNull)
@@ -598,6 +606,10 @@ namespace quickDBExplorer.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
         protected void SetOptFilter(MainForm sender)
         {
             if (sender.IsFilterCaseSensitive)
@@ -651,7 +663,10 @@ namespace quickDBExplorer.Forms
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
         protected void SetOptDirtyRead(MainForm sender)
         {
             if (sender.IsDirtyRead)
@@ -667,6 +682,10 @@ namespace quickDBExplorer.Forms
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
         protected void SetOptSqlDelimiter(MainForm sender)
         {
             if (sender.SqlDelimiter == "GO")
@@ -681,6 +700,10 @@ namespace quickDBExplorer.Forms
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
         protected void SetOptFieldCommaPlace(MainForm sender)
         {
             if (sender.FieldCommaPlace == 0)

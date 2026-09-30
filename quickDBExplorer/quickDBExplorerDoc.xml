@@ -1018,6 +1018,48 @@
             </summary>
             <param name="key"></param>
         </member>
+        <member name="T:quickDBExplorer.Forms.BookmarkInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.BookmarkInfo.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.BookmarkInfo.DBName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.BookmarkInfo.Schema">
+            <summary>
+                
+            </summary>
+        </member>
+        <member name="P:quickDBExplorer.Forms.BookmarkInfo.Objects">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.BookmarkInfo.#ctor(System.String,System.String[],System.Collections.Generic.List{quickDBExplorer.DBObjectInfo})">
+            <summary>
+            
+            </summary>
+            <param name="dbname"></param>
+            <param name="schema"></param>
+            <param name="objects"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.BookmarkInfo.#ctor(System.String,System.String,System.String[],System.Collections.Generic.List{quickDBExplorer.DBObjectInfo})">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <param name="dbname"></param>
+            <param name="schema"></param>
+            <param name="objects"></param>
+        </member>
         <member name="T:quickDBExplorer.Forms.Dialog.BinaryEditor">
             <summary>
             バイナリデータ参照・編集ダイアログ
@@ -1492,6 +1534,11 @@
             INSERT文生成設定
             </summary>
         </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.ServerDataInfo">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:quickDBExplorer.Forms.MainForm.ServerInstanceName">
             <summary>
              接続先のサーバー名。表示用にのみ利用
@@ -1594,6 +1641,11 @@
             接続した先のSQL Serverのバージョン
             </summary>
         </member>
+        <member name="P:quickDBExplorer.Forms.MainForm.ConnectionArg">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="F:quickDBExplorer.Forms.MainForm.cmbHistory">
             <summary>
             コマンド入力ダイアログ
@@ -1605,6 +1657,11 @@
             </summary>
             <param name="mdiparent">親MDIフォーム</param>
             <param name="conn">接続情報</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.ResetSplitLayout">
+            <summary>
+            
+            </summary>
         </member>
         <member name="M:quickDBExplorer.Forms.MainForm.Dispose(System.Boolean)">
             <summary>
@@ -1626,6 +1683,31 @@
         <member name="M:quickDBExplorer.Forms.MainForm.InitPopupMenu">
             <summary>
             ポップアップ系メニューを初期化する
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.SetFilterCS">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.Forms.MainForm.pocoStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.MainForm.pocoStyle.Snake">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.MainForm.pocoStyle.Camel">
+            <summary>
+            /
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Forms.MainForm.pocoStyle.Pascal">
+            <summary>
+            
             </summary>
         </member>
         <member name="M:quickDBExplorer.Forms.MainForm.fieldListbox_CopyData(System.Object,System.EventArgs)">
@@ -1744,6 +1826,11 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.CallSqlServerConfigurationManager(System.Object,System.EventArgs)">
+            <summary>
+            SQL Server 構成マネージャーを起動する。
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.Forms.MainForm.menuStasticUpdate_Click(System.Object,System.EventArgs)">
             <summary>
             選択されたオブジェクトの統計情報を更新する
@@ -1812,6 +1899,13 @@
             true: 全て表示する
             false; 全て表示しない</param>
             <param name="usePreSql">前回表示時のクエリの結果をもう一度取得しなおすか否か</param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.SetPoolingError(System.Data.SqlClient.SqlException)">
+            <summary>
+            
+            </summary>
+            <param name="se"></param>
+            <returns></returns>
         </member>
         <member name="M:quickDBExplorer.Forms.MainForm.CopyFldList(System.Boolean,System.Boolean,System.Boolean)">
             <summary>
@@ -1921,6 +2015,29 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.GetCurrentBookmarkInfo">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.LoadBookmark(quickDBExplorer.Forms.BookmarkInfo)">
+            <summary>
+            
+            </summary>
+            <param name="bookmark"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.CreateMacroArg">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainForm.ReConnect">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:quickDBExplorer.Forms.MainForm.MainForm_Activated(System.Object,System.EventArgs)">
             <summary>
             https://www.yamacho-blog.com/2017/03/vbnetdatagridviewformaccessviolationexc.html
@@ -2019,6 +2136,24 @@
             <param name="sender">--</param>
             <param name="e">--</param>
         </member>
+        <member name="M:quickDBExplorer.Forms.MainMdi.SetOption(quickDBExplorer.Forms.MainForm)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainMdi.SetOptNullEmpty(quickDBExplorer.Forms.MainForm)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainMdi.SetOptFilter(quickDBExplorer.Forms.MainForm)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+        </member>
         <member name="M:quickDBExplorer.Forms.MainMdi.SetGridDefaultWidth(quickDBExplorer.Forms.MainForm)">
             <summary>
             グリッドの幅の初期値を設定する
@@ -2028,6 +2163,24 @@
         <member name="M:quickDBExplorer.Forms.MainMdi.SetGridDefaultHeight(quickDBExplorer.Forms.MainForm)">
             <summary>
             グリッドの幅の初期値を設定する
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainMdi.SetOptDirtyRead(quickDBExplorer.Forms.MainForm)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainMdi.SetOptSqlDelimiter(quickDBExplorer.Forms.MainForm)">
+            <summary>
+            
+            </summary>
+            <param name="sender"></param>
+        </member>
+        <member name="M:quickDBExplorer.Forms.MainMdi.SetOptFieldCommaPlace(quickDBExplorer.Forms.MainForm)">
+            <summary>
+            
             </summary>
             <param name="sender"></param>
         </member>
@@ -2306,7 +2459,7 @@
             DBサーバーバージョン情報
             </summary>
         </member>
-        <member name="P:quickDBExplorer.ConnectionInfo.IsUseTrusted">
+        <member name="P:quickDBExplorer.ConnectionInfo.IsUseEncrypt">
             <summary>
             暗号化通信を使用するかどうか
             </summary>
@@ -2330,6 +2483,8 @@
             <param name="sqlDriver"></param>
             <param name="sqlVersion"></param>
             <param name="serverdata"></param>
+            <param name="ignoreCertificateError"></param>
+            <param name="isUseTrusted"></param>
         </member>
         <member name="M:quickDBExplorer.ConnectionInfo.CreateDummyConnection">
             <summary>
@@ -3944,6 +4099,119 @@
             <summary>
               型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
             </summary>
+        </member>
+        <member name="T:quickDBExplorer.Utils.CRED_TYPE">
+            <summary>
+            認証タイプ
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_TYPE.GENERIC">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_TYPE.DOMAIN_PASSWORD">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_TYPE.DOMAIN_CERTIFICATE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_TYPE.DOMAIN_VISIBLE_PASSWORD">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_TYPE.DOMAIN_EXTENDED">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.Utils.CRED_FLAGS">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_FLAGS.PROMPT_NOW">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_FLAGS.USERNAME_TARGET">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.Utils.CRED_PERSIST">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_PERSIST.SESSION">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_PERSIST.LOCAL_MACHINE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CRED_PERSIST.ENTERPRISE">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.Utils.CredManager">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:quickDBExplorer.Utils.CredManager.Credential">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CredManager.Credential.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:quickDBExplorer.Utils.CredManager.Credential.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:quickDBExplorer.Utils.CredManager.Read(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="targetname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.Utils.CredManager.Write(System.String,quickDBExplorer.Utils.CredManager.Credential)">
+            <summary>
+            
+            </summary>
+            <param name="targetname"></param>
+            <param name="c"></param>
+        </member>
+        <member name="M:quickDBExplorer.Utils.CredManager.Encrypt(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
+        </member>
+        <member name="M:quickDBExplorer.Utils.CredManager.Decrypt(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="s"></param>
+            <returns></returns>
         </member>
         <member name="T:quickDBExplorer.qdbeUtil">
             <summary>

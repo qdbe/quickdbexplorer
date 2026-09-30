@@ -151,27 +151,29 @@ namespace quickDBExplorer
 		void	CallISQL(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword);
 
 
-		/// <summary>
-		/// EnterPriseManagerを起動する
-		/// </summary>
-		/// <param name="serverRealName">サーバー名</param>
-		/// <param name="instanceName">インスタンス名</param>
-		/// <param name="isUseTrust">信頼関係接続を利用するか否か</param>
-		/// <param name="dbName">データベース名</param>
-		/// <param name="logOnUserId">ログインID</param>
-		/// <param name="logOnPassword">ログインパスワード</param>
-		void	CallEPM(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword);
+        /// <summary>
+        /// EnterPriseManagerを起動する
+        /// </summary>
+        /// <param name="serverRealName">サーバー名</param>
+        /// <param name="instanceName">インスタンス名</param>
+        /// <param name="isUseTrust">信頼関係接続を利用するか否か</param>
+        /// <param name="dbName">データベース名</param>
+        /// <param name="logOnUserId">ログインID</param>
+        /// <param name="logOnPassword">ログインパスワード</param>
+		/// <param name="IsUseTrusted">信頼関係接続を利用するか否か</param>
+		/// <param name="IgnoreCertificateError">証明書エラーを無視するか否か</param>
+        void CallEPM(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword, bool IsUseTrusted, bool IgnoreCertificateError);
 
-		/// <summary>
-		/// Profilerを起動する
-		/// </summary>
-		/// <param name="serverRealName">サーバー名</param>
-		/// <param name="instanceName">インスタンス名</param>
-		/// <param name="isUseTrust">信頼関係接続を利用するか否か</param>
-		/// <param name="dbName">データベース名</param>
-		/// <param name="logOnUserId">ログインID</param>
-		/// <param name="logOnPassword">ログインパスワード</param>
-		void	CallProfile(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword);
+        /// <summary>
+        /// Profilerを起動する
+        /// </summary>
+        /// <param name="serverRealName">サーバー名</param>
+        /// <param name="instanceName">インスタンス名</param>
+        /// <param name="isUseTrust">信頼関係接続を利用するか否か</param>
+        /// <param name="dbName">データベース名</param>
+        /// <param name="logOnUserId">ログインID</param>
+        /// <param name="logOnPassword">ログインパスワード</param>
+        void CallProfile(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword);
 
 
 		/// <summary>

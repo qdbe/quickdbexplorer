@@ -327,5 +327,22 @@ namespace quickDBExplorer
         {
             this.sqlVersion = version;
         }
+
+        /// <summary>
+        /// Management Studioを起動する
+        /// </summary>
+        /// <param name="serverRealName"></param>
+        /// <param name="instanceName"></param>
+        /// <param name="isUseTrust"></param>
+        /// <param name="dbName"></param>
+        /// <param name="logOnUserId"></param>
+        /// <param name="logOnPassword"></param>
+        /// <param name="IsUseTrusted"></param>
+        /// <param name="IgnoreCertificateError"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        public void CallEPM(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword, bool IsUseTrusted, bool IgnoreCertificateError)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

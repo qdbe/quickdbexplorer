@@ -54,7 +54,7 @@ namespace quickDBExplorer
         /// <summary>
         /// 暗号化通信を使用するかどうか
         /// </summary>
-        public bool IsUseTrusted { get; set; }
+        public bool IsUseEncrypt { get; set; }
 
         /// <summary>
         /// SSL証明書エラーを無視するかどうか
@@ -74,6 +74,8 @@ namespace quickDBExplorer
         /// <param name="sqlDriver"></param>
         /// <param name="sqlVersion"></param>
         /// <param name="serverdata"></param>
+        /// <param name="ignoreCertificateError"></param>
+        /// <param name="isUseTrusted"></param>
         public ConnectionInfo(
             string serverName,
             string serverRealName,
@@ -99,6 +101,8 @@ namespace quickDBExplorer
             this.SqlDriver = sqlDriver;
             this.SqlVersionInfo = sqlVersion;
             this.ServerDataInfo = serverdata;
+            this.IsUseEncrypt = isUseTrusted;
+            this.IgnoreCertificateError = ignoreCertificateError;
         }
 
         /// <summary>

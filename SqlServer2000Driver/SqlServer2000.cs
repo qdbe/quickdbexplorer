@@ -12,18 +12,18 @@ using System.Text;
 namespace quickDBExplorer
 {
 	/// <summary>
-	/// SqlServer2000 ‚ÌŠT—v‚Ìà–¾‚Å‚·B
+	/// SqlServer2000 ã®æ¦‚è¦ã®èª¬æ˜ã§ã™ã€‚
 	/// </summary>
 	public class SqlServerDriver2000 : ISqlInterface
 	{
 
 		/// <summary>
-		/// ƒRƒlƒNƒVƒ‡ƒ“
+		/// ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³
 		/// </summary>
 		private System.Data.SqlClient.SqlConnection pSqlConnect;
 
 		/// <summary>
-		/// ƒRƒlƒNƒVƒ‡ƒ“
+		/// ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³
 		/// </summary>
 		protected System.Data.SqlClient.SqlConnection SqlConnect
 		{
@@ -32,12 +32,12 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// SelectCommand “™‚Ìƒ^ƒCƒ€ƒAƒEƒg’l
+		/// SelectCommand ç­‰ã®ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå€¤
 		/// </summary>
 		private int pQueryTimeout;
 
 		/// <summary>
-		/// SelectCommand “™‚Ìƒ^ƒCƒ€ƒAƒEƒg’l
+		/// SelectCommand ç­‰ã®ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå€¤
 		/// </summary>
 		protected int QueryTimeout
 		{
@@ -46,22 +46,22 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		/// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		/// </summary>
 		public SqlServerDriver2000()
 		{
 			// 
-			// TODO: ƒRƒ“ƒXƒgƒ‰ƒNƒ^ ƒƒWƒbƒN‚ğ‚±‚±‚É’Ç‰Á‚µ‚Ä‚­‚¾‚³‚¢B
+			// TODO: ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ ãƒ­ã‚¸ãƒƒã‚¯ã‚’ã“ã“ã«è¿½åŠ ã—ã¦ãã ã•ã„ã€‚
 			//
 		}
 
-		#region ISqlInterface ƒƒ“ƒo
+		#region ISqlInterface ãƒ¡ãƒ³ãƒ
 
 		/// <summary>
-		/// SQLServer‚É‘Î‚·‚éƒRƒlƒNƒVƒ‡ƒ“î•ñ‚ğŠÇ—‚·‚é
+		/// SQLServerã«å¯¾ã™ã‚‹ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’ç®¡ç†ã™ã‚‹
 		/// </summary>
-		/// <param name="sqlConnection">ƒRƒlƒNƒVƒ‡ƒ“î•ñ</param>
-		/// <param name="timeout">ƒRƒ}ƒ“ƒhÀsƒ^ƒCƒ€ƒAƒEƒg’l</param>
+		/// <param name="sqlConnection">ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±</param>
+		/// <param name="timeout">ã‚³ãƒãƒ³ãƒ‰å®Ÿè¡Œã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå€¤</param>
 		public void SetConnection(IDbConnection sqlConnection, int timeout)
 		{
 			this.pSqlConnect = (System.Data.SqlClient.SqlConnection)sqlConnection;
@@ -69,7 +69,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// SQLSERVER‚É‘Î‚·‚éƒRƒlƒNƒVƒ‡ƒ“î•ñ‚ğ•Â‚¶‚é
+		/// SQLSERVERã«å¯¾ã™ã‚‹ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’é–‰ã˜ã‚‹
 		/// </summary>
 		public void CloseConnection()
 		{
@@ -77,7 +77,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// ƒ^ƒCƒ€ƒAƒEƒg’l‚ğİ’è‚µ‚È‚¨‚·
+		/// ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå€¤ã‚’è¨­å®šã—ãªãŠã™
 		/// </summary>
 		/// <param name="timeout"></param>
 		public void SetTimeout(int timeout)
@@ -86,7 +86,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// DataAdapter ‚ğæ“¾‚·‚é
+		/// DataAdapter ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		public DbDataAdapter NewDataAdapter()
 		{
@@ -94,8 +94,8 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// IDbCommand ‚ğV‹K‚Éì¬‚·‚éB
-		/// ‚½‚¾‚µAƒRƒlƒNƒVƒ‡ƒ“î•ñ‚Æƒ^ƒCƒ€ƒAƒEƒg’l‚Í‚·‚Å‚ÉƒZƒbƒg‚³‚ê‚Ä‚¢‚é
+		/// IDbCommand ã‚’æ–°è¦ã«ä½œæˆã™ã‚‹ã€‚
+		/// ãŸã ã—ã€ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±ã¨ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå€¤ã¯ã™ã§ã«ã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚‹
 		/// </summary>
 		/// <returns></returns>
 		public IDbCommand	NewSqlCommand()
@@ -107,10 +107,10 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// IDbCommand ‚ğV‹K‚Éì¬‚·‚éB
-		/// ‚½‚¾‚µAƒRƒ}ƒ“ƒh•¶š—ñAƒRƒlƒNƒVƒ‡ƒ“î•ñ‚Æƒ^ƒCƒ€ƒAƒEƒg’l‚Í‚·‚Å‚ÉƒZƒbƒg‚³‚ê‚Ä‚¢‚é
+		/// IDbCommand ã‚’æ–°è¦ã«ä½œæˆã™ã‚‹ã€‚
+		/// ãŸã ã—ã€ã‚³ãƒãƒ³ãƒ‰æ–‡å­—åˆ—ã€ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±ã¨ã‚¿ã‚¤ãƒ ã‚¢ã‚¦ãƒˆå€¤ã¯ã™ã§ã«ã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚‹
 		/// </summary>
-		/// <param name="stSql">Às‚·‚éƒRƒ}ƒ“ƒh•¶š—ñ</param>
+		/// <param name="stSql">å®Ÿè¡Œã™ã‚‹ã‚³ãƒãƒ³ãƒ‰æ–‡å­—åˆ—</param>
 		/// <returns></returns>
 		public IDbCommand		NewSqlCommand(string stSql)
 		{
@@ -120,7 +120,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// DataAdapter ‚É IDbCommand ‚ğ SelectCommand‚Æ‚µ‚ÄŠÖ˜A‚Ã‚¯‚é
+		/// DataAdapter ã« IDbCommand ã‚’ SelectCommandã¨ã—ã¦é–¢é€£ã¥ã‘ã‚‹
 		/// </summary>
 		/// <param name="da"></param>
 		/// <param name="cmd"></param>
@@ -138,7 +138,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// ƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“î•ñ‚ğæ“¾‚·‚é
+		/// ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³æƒ…å ±ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		public IDbTransaction	SetTransaction(IDbCommand cmd)
 		{
@@ -151,7 +151,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// select ƒRƒ}ƒ“ƒh‚©‚çAupdate, insert, delete ƒRƒ}ƒ“ƒh‚ğ¶¬‚µ‚È‚¨‚·
+		/// select ã‚³ãƒãƒ³ãƒ‰ã‹ã‚‰ã€update, insert, delete ã‚³ãƒãƒ³ãƒ‰ã‚’ç”Ÿæˆã—ãªãŠã™
 		/// </summary>
 		/// <param name="da"></param>
 		public void	SetCommandBuilder(DbDataAdapter da)
@@ -164,8 +164,8 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// DataReader‚©‚çbyte”z—ñ‚ğ“Ç‚İ‚ŞB
-		/// w’è‚³‚ê‚½ƒtƒB[ƒ‹ƒh‚Í‚à‚Æ‚à‚ÆƒoƒCƒiƒŠƒf[ƒ^‚Å‚ ‚é‚±‚Æ‚ª‘O’ñ
+		/// DataReaderã‹ã‚‰byteé…åˆ—ã‚’èª­ã¿è¾¼ã‚€ã€‚
+		/// æŒ‡å®šã•ã‚ŒãŸãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã¯ã‚‚ã¨ã‚‚ã¨ãƒã‚¤ãƒŠãƒªãƒ‡ãƒ¼ã‚¿ã§ã‚ã‚‹ã“ã¨ãŒå‰æ
 		/// </summary>
 		/// <param name="dr"></param>
 		/// <param name="col"></param>
@@ -184,18 +184,18 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// DataReader‚©‚çDateTimeOffset’l‚ğ“Ç‚İ‚ŞB
+		/// DataReaderã‹ã‚‰DateTimeOffsetå€¤ã‚’èª­ã¿è¾¼ã‚€ã€‚
 		/// </summary>
 		/// <param name="dr"></param>
 		/// <param name="col"></param>
 		/// <returns></returns>
 		public virtual DateTimeOffset GetDataReaderDateTimeOffSet(IDataReader dr, int col)
 		{
-			throw new InvalidOperationException("GetDataReaderDateTimeOffSet ‚Í SQL Server 2000 ‚Å‚Í—˜—p‚Å‚«‚Ü‚¹‚ñ");
+			throw new InvalidOperationException("GetDataReaderDateTimeOffSet ã¯ SQL Server 2000 ã§ã¯åˆ©ç”¨ã§ãã¾ã›ã‚“");
 		}
 
 		/// <summary>
-		/// DB‚Ìˆê——•\¦‚ğæ“¾‚·‚éSQL•¶‚ğ•Ô‚·
+		/// DBã®ä¸€è¦§è¡¨ç¤ºã‚’å–å¾—ã™ã‚‹SQLæ–‡ã‚’è¿”ã™
 		/// </summary>
 		/// <returns></returns>
 		public string GetDBSelect()
@@ -204,9 +204,9 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// w’è‚³‚ê‚½ƒf[ƒ^ƒx[ƒX‚Ö‚ÆÚ‘±‚ğ•ÏX‚·‚é
+		/// æŒ‡å®šã•ã‚ŒãŸãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã¸ã¨æ¥ç¶šã‚’å¤‰æ›´ã™ã‚‹
 		/// </summary>
-		/// <param name="dbName">•ÏXæ‚Ìƒf[ƒ^ƒx[ƒX–¼</param>
+		/// <param name="dbName">å¤‰æ›´å…ˆã®ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹å</param>
 		/// <returns></returns>
 		public void SetDatabase(string dbName)
 		{
@@ -214,7 +214,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// ƒIƒuƒWƒFƒNƒgˆê——‚ÌƒJƒ‰ƒ€ƒwƒbƒ_‚Ì•\¦•¶š‚ğæ“¾‚·‚é
+		/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸€è¦§ã®ã‚«ãƒ©ãƒ ãƒ˜ãƒƒãƒ€ã®è¡¨ç¤ºæ–‡å­—ã‚’å–å¾—ã™ã‚‹
 		/// </summary>
 		/// <returns></returns>
 		public string GetTableListColumnName()
@@ -224,7 +224,7 @@ namespace quickDBExplorer
 
 
 		/// <summary>
-		/// DBƒI[ƒi[‚Ìƒ‰ƒxƒ‹‚ğ•Ô‚·
+		/// DBã‚ªãƒ¼ãƒŠãƒ¼ã®ãƒ©ãƒ™ãƒ«ã‚’è¿”ã™
 		/// </summary>
 		/// <returns></returns>
 		public string GetOwnerLabel1()
@@ -233,23 +233,23 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// ƒ‰ƒWƒIƒ{ƒ^ƒ“‚Ìƒ‰ƒxƒ‹‚ğ•Ô‚·
+		/// ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³ã®ãƒ©ãƒ™ãƒ«ã‚’è¿”ã™
 		/// </summary>
 		/// <returns></returns>
 		public string GetOwnerLabel2()
 		{
-			return "ƒI[ƒi[–¼EƒIƒuƒWƒFƒNƒg–¼";
+			return "ã‚ªãƒ¼ãƒŠãƒ¼åãƒ»ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå";
 		}
 
 		/// <summary>
-		/// ƒIƒuƒWƒFƒNƒgˆê——‚Ì•\¦—pSQL‚Ìæ“¾
+		/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆä¸€è¦§ã®è¡¨ç¤ºç”¨SQLã®å–å¾—
 		/// </summary>
-		/// <param name="isDisplayTable">ƒe[ƒuƒ‹‚ğ•\¦‚³‚¹‚é‚©”Û‚© true: •\¦‚·‚é false: •\¦‚³‚¹‚È‚¢</param>
-		/// <param name="isDisplayView">View ‚ğ•\¦‚³‚¹‚é‚©”Û‚© true: •\¦‚·‚é false: •\¦‚³‚¹‚È‚¢</param>
-		/// <param name="isSynonym">ƒVƒmƒjƒ€‚ğ•\¦‚³‚¹‚é‚©”Û‚© true: •\¦‚·‚é false: •\¦‚³‚¹‚È‚¢</param>
-		/// <param name="isDisplayFunction">Function‚ğ•\¦‚³‚¹‚é‚©”Û‚© true: •\¦‚·‚é false: •\¦‚³‚¹‚È‚¢</param>
-		/// <param name="isDisplaySP">ƒXƒgƒAƒhƒvƒƒV[ƒWƒƒ‚ğ•\¦‚³‚¹‚é‚©”Û‚© true: •\¦‚·‚é false: •\¦‚³‚¹‚È‚¢</param>
-		/// <param name="ownerList">“Á’è‚ÌOwner‚ÌƒIƒuƒWƒFƒNƒg‚Ì‚İ•\¦‚·‚éê‡‚Í IN‹å‚É—˜—p‚·‚éƒJƒ“ƒ}‹æØ‚è•¶š—ñ‚ğ“n‚·</param>
+		/// <param name="isDisplayTable">ãƒ†ãƒ¼ãƒ–ãƒ«ã‚’è¡¨ç¤ºã•ã›ã‚‹ã‹å¦ã‹ true: è¡¨ç¤ºã™ã‚‹ false: è¡¨ç¤ºã•ã›ãªã„</param>
+		/// <param name="isDisplayView">View ã‚’è¡¨ç¤ºã•ã›ã‚‹ã‹å¦ã‹ true: è¡¨ç¤ºã™ã‚‹ false: è¡¨ç¤ºã•ã›ãªã„</param>
+		/// <param name="isSynonym">ã‚·ãƒãƒ‹ãƒ ã‚’è¡¨ç¤ºã•ã›ã‚‹ã‹å¦ã‹ true: è¡¨ç¤ºã™ã‚‹ false: è¡¨ç¤ºã•ã›ãªã„</param>
+		/// <param name="isDisplayFunction">Functionã‚’è¡¨ç¤ºã•ã›ã‚‹ã‹å¦ã‹ true: è¡¨ç¤ºã™ã‚‹ false: è¡¨ç¤ºã•ã›ãªã„</param>
+		/// <param name="isDisplaySP">ã‚¹ãƒˆã‚¢ãƒ‰ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã‚’è¡¨ç¤ºã•ã›ã‚‹ã‹å¦ã‹ true: è¡¨ç¤ºã™ã‚‹ false: è¡¨ç¤ºã•ã›ãªã„</param>
+		/// <param name="ownerList">ç‰¹å®šã®Ownerã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã¿è¡¨ç¤ºã™ã‚‹å ´åˆã¯ INå¥ã«åˆ©ç”¨ã™ã‚‹ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šæ–‡å­—åˆ—ã‚’æ¸¡ã™</param>
 		/// <returns></returns>
 		public string GetDisplayObjList(bool isDisplayTable, bool isDisplayView, bool isSynonym, bool isDisplayFunction, bool isDisplaySP, string ownerList)
 		{
@@ -285,7 +285,7 @@ namespace quickDBExplorer
 
 			if( ar.Count == 0 )
 			{
-				// ‰½‚àw’è‚ª‚È‚¯‚ê‚ÎAƒe[ƒuƒ‹‚Ì‚İ‚É‚µ‚Ä‚¨‚­
+				// ä½•ã‚‚æŒ‡å®šãŒãªã‘ã‚Œã°ã€ãƒ†ãƒ¼ãƒ–ãƒ«ã®ã¿ã«ã—ã¦ãŠã
 				ar.Add("U");
 			}
 
@@ -323,7 +323,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// Owner ‚Ìˆê——‚ğæ“¾‚·‚éSQL‚ğ¶¬‚·‚é
+		/// Owner ã®ä¸€è¦§ã‚’å–å¾—ã™ã‚‹SQLã‚’ç”Ÿæˆã™ã‚‹
 		/// </summary>
 		/// <param name="isDisplaySysUser"></param>
 		/// <returns></returns>
@@ -340,14 +340,14 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// ISQL ‚ğ‹N“®‚·‚éB
+		/// ISQL ã‚’èµ·å‹•ã™ã‚‹ã€‚
 		/// </summary>
-		/// <param name="serverRealName">ƒT[ƒo[–¼</param>
-		/// <param name="instanceName">ƒCƒ“ƒXƒ^ƒ“ƒX–¼</param>
-		/// <param name="isUseTrust">M—ŠŠÖŒWÚ‘±‚ğ—˜—p‚·‚é‚©”Û‚©</param>
-		/// <param name="dbName">ƒf[ƒ^ƒx[ƒX–¼</param>
-		/// <param name="logOnUserId">ƒƒOƒCƒ“ID</param>
-		/// <param name="logOnPassword">ƒƒOƒCƒ“ƒpƒXƒ[ƒh</param>
+		/// <param name="serverRealName">ã‚µãƒ¼ãƒãƒ¼å</param>
+		/// <param name="instanceName">ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å</param>
+		/// <param name="isUseTrust">ä¿¡é ¼é–¢ä¿‚æ¥ç¶šã‚’åˆ©ç”¨ã™ã‚‹ã‹å¦ã‹</param>
+		/// <param name="dbName">ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹å</param>
+		/// <param name="logOnUserId">ãƒ­ã‚°ã‚¤ãƒ³ID</param>
+		/// <param name="logOnPassword">ãƒ­ã‚°ã‚¤ãƒ³ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰</param>
 		public void	CallISQL(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
 		{
 			if( instanceName == null )
@@ -408,16 +408,18 @@ namespace quickDBExplorer
 			isqlProcess.Start();
 		}
 
-		/// <summary>
-		/// EnterPriseManager‚ğ‹N“®‚·‚é
-		/// </summary>
-		/// <param name="serverRealName">ƒT[ƒo[–¼</param>
-		/// <param name="instanceName">ƒCƒ“ƒXƒ^ƒ“ƒX–¼</param>
-		/// <param name="isUseTrust">M—ŠŠÖŒWÚ‘±‚ğ—˜—p‚·‚é‚©”Û‚©</param>
-		/// <param name="dbName">ƒf[ƒ^ƒx[ƒX–¼</param>
-		/// <param name="logOnUserId">ƒƒOƒCƒ“ID</param>
-		/// <param name="logOnPassword">ƒƒOƒCƒ“ƒpƒXƒ[ƒh</param>
-		public void	CallEPM(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
+        /// <summary>
+        /// EnterPriseManagerã‚’èµ·å‹•ã™ã‚‹
+        /// </summary>
+        /// <param name="serverRealName">ã‚µãƒ¼ãƒãƒ¼å</param>
+        /// <param name="instanceName">ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å</param>
+        /// <param name="isUseTrust">ä¿¡é ¼é–¢ä¿‚æ¥ç¶šã‚’åˆ©ç”¨ã™ã‚‹ã‹å¦ã‹</param>
+        /// <param name="dbName">ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹å</param>
+        /// <param name="logOnUserId">ãƒ­ã‚°ã‚¤ãƒ³ID</param>
+        /// <param name="logOnPassword">ãƒ­ã‚°ã‚¤ãƒ³ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰</param>
+        /// <param name="IsUseTrusted">	</param>
+        /// <param name="IgnoreCertificateError">	</param>
+        public void	CallEPM(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword, bool IsUseTrusted, bool IgnoreCertificateError)
 		{
 			Process isqlProcess = new Process();
 			isqlProcess.StartInfo.FileName = this.sqlVersion.ManagementExe;
@@ -428,14 +430,14 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// Profiler‚ğ‹N“®‚·‚é
+		/// Profilerã‚’èµ·å‹•ã™ã‚‹
 		/// </summary>
-		/// <param name="serverRealName">ƒT[ƒo[–¼</param>
-		/// <param name="instanceName">ƒCƒ“ƒXƒ^ƒ“ƒX–¼</param>
-		/// <param name="isUseTrust">M—ŠŠÖŒWÚ‘±‚ğ—˜—p‚·‚é‚©”Û‚©</param>
-		/// <param name="dbName">ƒf[ƒ^ƒx[ƒX–¼</param>
-		/// <param name="logOnUserId">ƒƒOƒCƒ“ID</param>
-		/// <param name="logOnPassword">ƒƒOƒCƒ“ƒpƒXƒ[ƒh</param>
+		/// <param name="serverRealName">ã‚µãƒ¼ãƒãƒ¼å</param>
+		/// <param name="instanceName">ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å</param>
+		/// <param name="isUseTrust">ä¿¡é ¼é–¢ä¿‚æ¥ç¶šã‚’åˆ©ç”¨ã™ã‚‹ã‹å¦ã‹</param>
+		/// <param name="dbName">ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹å</param>
+		/// <param name="logOnUserId">ãƒ­ã‚°ã‚¤ãƒ³ID</param>
+		/// <param name="logOnPassword">ãƒ­ã‚°ã‚¤ãƒ³ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰</param>
 		public void	CallProfile(string serverRealName, string instanceName, bool isUseTrust, string dbName, string logOnUserId, string logOnPassword)
 		{
 			if( instanceName == null )
@@ -447,91 +449,14 @@ namespace quickDBExplorer
 				throw new ArgumentNullException("dbName");
 			}
 
-			Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(this.sqlVersion.regkey, false);
-			string profilerPath = string.Empty;
-			if (rkey != null)
+			if (!this.sqlVersion.LaunchProfiler(serverRealName, instanceName, isUseTrust, dbName, logOnUserId, logOnPassword))
 			{
-				bool isPathExists = true;
-				object robj = rkey.GetValue("Path");
-				if (robj != null)
-				{
-					profilerPath = robj.ToString();
-				}
-				if( profilerPath == string.Empty )
-				{
-					isPathExists = false;
-					robj = rkey.GetValue("SQLPath");
-					if (robj != null)
-					{
-						profilerPath = robj.ToString();
-					}
-				}
-				if (profilerPath != null)
-				{
-					if (profilerPath.EndsWith(@"\") == false)
-					{
-						profilerPath += @"\";
-					}
-					if (isPathExists == false)
-					{
-						profilerPath += this.sqlVersion.BinDir;
-					}
-				}
+				throw new System.IO.FileNotFoundException("SQL Server Profiler executable was not found.");
 			}
-
-			Process isqlProcess = new Process();
-			isqlProcess.StartInfo.FileName = profilerPath + this.sqlVersion.ProfilerExe;
-			isqlProcess.StartInfo.ErrorDialog = true;
-			string serverstr = "";
-			if( instanceName.Length != 0 )
-			{
-				serverstr = serverRealName + "\\" + instanceName;
-			}
-			else
-			{
-				serverstr = serverRealName;
-			}
-			if( isUseTrust == true )
-			{
-				if( dbName.Length != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture,"/S{0} /D{1} /E ",
-						serverstr,
-						dbName
-						);
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture,"/S{0} /E ",
-						serverstr
-						);
-				}
-			}
-			else
-			{
-				if( dbName.Length != 0 )
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} D{1} /U{2} /P{3} ",
-						serverstr,
-						dbName,
-						logOnUserId,
-						logOnPassword );
-				}
-				else
-				{
-					isqlProcess.StartInfo.Arguments = string.Format(System.Globalization.CultureInfo.CurrentCulture," /S{0} /U{1} /P{2} ",
-						serverstr,
-						logOnUserId,
-						logOnPassword );
-				}
-			}
-			isqlProcess.StartInfo.WindowStyle = ProcessWindowStyle.Maximized;
-			isqlProcess.Start();
 		}
 
-
 		/// <summary>
-		/// ƒIƒuƒWƒFƒNƒg‚É‘Î‚·‚éDROP •¶‚ğ¶¬‚·‚é
+		/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¯¾ã™ã‚‹DROP æ–‡ã‚’ç”Ÿæˆã™ã‚‹
 		/// </summary>
 		/// <param name="databaseObjectInfo"></param>
 		/// <returns></returns>
@@ -562,7 +487,7 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// ƒIƒuƒWƒFƒNƒg‚É‘Î‚·‚é Create •¶‚ğ¶¬‚·‚é
+		/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¯¾ã™ã‚‹ Create æ–‡ã‚’ç”Ÿæˆã™ã‚‹
 		/// </summary>
 		/// <param name="databaseObjectInfo"></param>
 		/// <param name="useParentheses"></param>
@@ -596,7 +521,7 @@ namespace quickDBExplorer
 						wr.Write(",{0}",wr.NewLine);
 					}
 					wr.Write("\t");
-					//ƒtƒB[ƒ‹ƒh–¼
+					//ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰å
 					if( useParentheses )
 					{
 						wr.Write(each.FormalName);
@@ -624,7 +549,7 @@ namespace quickDBExplorer
 				SqlDataAdapter	da = new SqlDataAdapter(strsql,this.pSqlConnect);
 				da.SelectCommand.CommandTimeout = this.QueryTimeout;
 				da.Fill(dt);
-				// ˜A‘±‚µ‚½‹ó”’s‚Í—}§‚·‚é‚æ‚¤‚É‚·‚é
+				// é€£ç¶šã—ãŸç©ºç™½è¡Œã¯æŠ‘åˆ¶ã™ã‚‹ã‚ˆã†ã«ã™ã‚‹
 				string pretext = "";
 				foreach(DataRow dr in dt.Rows)
 				{
@@ -644,26 +569,26 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// ƒIƒuƒWƒFƒNƒgî•ñ‚ğƒZƒbƒg‚·‚éDataTable‚ğ‰Šú‰»‚·‚é
+		/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹DataTableã‚’åˆæœŸåŒ–ã™ã‚‹
 		/// </summary>
-		/// <param name="objTable">‘ÎÛ‚Æ‚·‚éDataTable</param>
+		/// <param name="objTable">å¯¾è±¡ã¨ã™ã‚‹DataTable</param>
 		public void	InitObjTable(DataTable objTable)
 		{
 			if( objTable == null )
 			{
 				throw new ArgumentNullException("objTable");
 			}
-			objTable.Columns.Add("ƒIƒuƒWƒFƒNƒgID",typeof(int));
-			objTable.Columns.Add("ƒIƒuƒWƒFƒNƒg–¼");
-			objTable.Columns.Add("Š—LÒ");
-			objTable.Columns.Add("ƒIƒuƒWƒFƒNƒg‚ÌŒ^");
-			objTable.Columns.Add("ì¬“ú");
+			objTable.Columns.Add("ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆID",typeof(int));
+			objTable.Columns.Add("ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå");
+			objTable.Columns.Add("æ‰€æœ‰è€…");
+			objTable.Columns.Add("ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å‹");
+			objTable.Columns.Add("ä½œæˆæ—¥æ™‚");
 		}
 
 		/// <summary>
-		/// ƒIƒuƒWƒFƒNƒg‚Ìî•ñ‚ğADataTable ‚É’Ç‰Á‚·‚é
+		/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æƒ…å ±ã‚’ã€DataTable ã«è¿½åŠ ã™ã‚‹
 		/// </summary>
-		/// <param name="databaseObjectInfo">‘ÎÛ‚Æ‚È‚éƒIƒuƒWƒFƒNƒg</param>
+		/// <param name="databaseObjectInfo">å¯¾è±¡ã¨ãªã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
 		/// <param name="dt"></param>
 		public void	AddObjectInfo(DBObjectInfo databaseObjectInfo, DataTable dt)
 		{
@@ -697,59 +622,59 @@ namespace quickDBExplorer
 			switch( databaseObjectInfo.ObjType )
 			{
 				case	"C":
-					dr[3] = "CHECK §–ñ";
+					dr[3] = "CHECK åˆ¶ç´„";
 					break;
 				case	"D":
-					dr[3] = "Default ‚Ü‚½‚Í DEFAULT §–ñ";
+					dr[3] = "Default ã¾ãŸã¯ DEFAULT åˆ¶ç´„";
 					break;
 				case	"F":
-					dr[3] = "FOREIGN KEY §–ñ";
+					dr[3] = "FOREIGN KEY åˆ¶ç´„";
 					break;
 				case	"L":
-					dr[3] = "ƒƒO";
+					dr[3] = "ãƒ­ã‚°";
 					break;
 				case	"FN":
-					dr[3] = "ƒXƒJƒ‰ŠÖ”";
+					dr[3] = "ã‚¹ã‚«ãƒ©é–¢æ•°";
 					break;
 				case	"IF":
-					dr[3] = "ƒCƒ“ƒ‰ƒCƒ“ ƒe[ƒuƒ‹ŠÖ”";
+					dr[3] = "ã‚¤ãƒ³ãƒ©ã‚¤ãƒ³ ãƒ†ãƒ¼ãƒ–ãƒ«é–¢æ•°";
 					break;
 				case	"P":
-					dr[3] = "ƒXƒgƒAƒh ƒvƒƒV[ƒWƒƒ";
+					dr[3] = "ã‚¹ãƒˆã‚¢ãƒ‰ ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£";
 					break;
 				case	"PK":
-					dr[3] = "PRIMARY KEY §–ñ (ƒ^ƒCƒv K)";
+					dr[3] = "PRIMARY KEY åˆ¶ç´„ (ã‚¿ã‚¤ãƒ— K)";
 					break;
 				case	"RF":
-					dr[3] = "ƒŒƒvƒŠƒP[ƒVƒ‡ƒ“ ƒtƒBƒ‹ƒ^ ƒXƒgƒAƒh ƒvƒƒV[ƒWƒƒ";
+					dr[3] = "ãƒ¬ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ ãƒ•ã‚£ãƒ«ã‚¿ ã‚¹ãƒˆã‚¢ãƒ‰ ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£";
 					break;
 				case	"S":
-					dr[3] = "ƒVƒXƒeƒ€ ƒe[ƒuƒ‹";
+					dr[3] = "ã‚·ã‚¹ãƒ†ãƒ  ãƒ†ãƒ¼ãƒ–ãƒ«";
 					break;
 				case	"TF":
-					dr[3] = "ƒe[ƒuƒ‹ŠÖ”";
+					dr[3] = "ãƒ†ãƒ¼ãƒ–ãƒ«é–¢æ•°";
 					break;
 				case	"TR":
-					dr[3] = "ƒgƒŠƒK";
+					dr[3] = "ãƒˆãƒªã‚¬";
 					break;
 				case	"U":
-					dr[3] = "ƒ†[ƒU[ ƒe[ƒuƒ‹";
+					dr[3] = "ãƒ¦ãƒ¼ã‚¶ãƒ¼ ãƒ†ãƒ¼ãƒ–ãƒ«";
 					break;
 				case	"UQ":
-					dr[3] = "UNIQUE §–ñ (ƒ^ƒCƒv K)";
+					dr[3] = "UNIQUE åˆ¶ç´„ (ã‚¿ã‚¤ãƒ— K)";
 					break;
 				case	"V":
-					dr[3] = "ƒrƒ…[";
+					dr[3] = "ãƒ“ãƒ¥ãƒ¼";
 					break;
 				case	"X":
-					dr[3] = "Šg’£ƒXƒgƒAƒh ƒvƒƒV[ƒWƒƒ";
+					dr[3] = "æ‹¡å¼µã‚¹ãƒˆã‚¢ãƒ‰ ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£";
 					break;
 			}
 			dt.Rows.Add(dr);
 		}
 
 		/// <summary>
-		/// ƒIƒuƒWƒFƒNƒg‚ÌÚ×î•ñ‚ğƒZƒbƒg‚·‚éƒCƒxƒ“ƒgƒnƒ“ƒhƒ‰‚ğ•Ô‚·
+		/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è©³ç´°æƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã‚¤ãƒ™ãƒ³ãƒˆãƒãƒ³ãƒ‰ãƒ©ã‚’è¿”ã™
 		/// </summary>
 		/// <returns></returns>
 		public DataGetEventHandler ObjectDetailSet()
@@ -758,11 +683,11 @@ namespace quickDBExplorer
 		}
 
 		/// <summary>
-		/// w’è‚³‚ê‚½ƒIƒuƒWƒFƒNƒg‚ÌÚ×î•ñ‚ğæ“¾‚·‚é
-		/// sender ‚É ‘ÎÛƒIƒuƒWƒFƒNƒg‚ª DBObjectInfo Œ^‚Æ‚µ‚ÄƒZƒbƒg‚³‚ê‚Ä‚¢‚é‚±‚Æ‚ª‘O’ñ
+		/// æŒ‡å®šã•ã‚ŒãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®è©³ç´°æƒ…å ±ã‚’å–å¾—ã™ã‚‹
+		/// sender ã« å¯¾è±¡ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãŒ DBObjectInfo å‹ã¨ã—ã¦ã‚»ãƒƒãƒˆã•ã‚Œã¦ã„ã‚‹ã“ã¨ãŒå‰æ
 		/// </summary>
-		/// <param name="sender">‘ÎÛ‚ÌƒIƒuƒWƒFƒNƒg</param>
-		/// <param name="e">ƒ_ƒ~[</param>
+		/// <param name="sender">å¯¾è±¡ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+		/// <param name="e">ãƒ€ãƒŸãƒ¼</param>
         private void DatabaseObjSet(DBObjectInfo sender, System.EventArgs e)
 		{
 			DBObjectInfo	databaseObjectInfo = (DBObjectInfo)sender;
@@ -771,16 +696,16 @@ namespace quickDBExplorer
 			ds.Locale = System.Globalization.CultureInfo.CurrentCulture;
 
 
-			// ‚Ü‚¸‚Í•K—v‚Èî•ñ‚ğ‘S‚ÄûW‚·‚é
+			// ã¾ãšã¯å¿…è¦ãªæƒ…å ±ã‚’å…¨ã¦åé›†ã™ã‚‹
 
-			// FillSchema ‚Å‚Ìî•ñûW
+			// FillSchema ã§ã®æƒ…å ±åé›†
 			string strsql = string.Format(System.Globalization.CultureInfo.CurrentCulture,"select * from {0} where 0=1",
 				databaseObjectInfo.FormalName );
 			SqlDataAdapter da = new SqlDataAdapter(strsql,this.pSqlConnect);
 			DataTable []dt = da.FillSchema(ds,SchemaType.Mapped,"schema");
             databaseObjectInfo.SetSchemaInfo(dt[0]);
 
-			// ÀÛ‚Ì×‚©‚¢î•ñ‚ğ’¼Úæ“¾‚·‚é
+			// å®Ÿéš›ã®ç´°ã‹ã„æƒ…å ±ã‚’ç›´æ¥å–å¾—ã™ã‚‹
 			SqlDataAdapter tableda = new SqlDataAdapter(
 				string.Format(System.Globalization.CultureInfo.CurrentCulture,
 				@"select 
@@ -880,7 +805,7 @@ order by syscolumns.colorder",
                 addInfo.IncStep = (decimal)fdr["incr"];
             }
 
-            // ƒvƒ‰ƒCƒ}ƒŠƒL[‚©‚Ç‚¤‚©‚ğƒ`ƒFƒbƒN
+            // ãƒ—ãƒ©ã‚¤ãƒãƒªã‚­ãƒ¼ã‹ã©ã†ã‹ã‚’ãƒã‚§ãƒƒã‚¯
             for (int i = 0; i < ds.Tables["schema"].PrimaryKey.Length; i++)
             {
                 if (addInfo.Col.ColumnName == ds.Tables["schema"].PrimaryKey[i].ColumnName)
@@ -893,12 +818,12 @@ order by syscolumns.colorder",
         }
 
 		/// <summary>
-		/// ƒtƒB[ƒ‹ƒh–¼‚ğŒŸõ‚·‚é SQL•¶‚ğ¶¬‚·‚é
+		/// ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰åã‚’æ¤œç´¢ã™ã‚‹ SQLæ–‡ã‚’ç”Ÿæˆã™ã‚‹
 		/// </summary>
-		/// <param name="searchCondition">ŒŸõ‘ÎÛ‚Ì•¶š</param>
-		/// <param name="searchType">ŒŸõ•û–@</param>
-		/// <param name="limitSchema">ƒXƒL[ƒ}‚Ìi‚İ‘ÎÛ</param>
-        /// <param name="condition">ŒŸõğŒ</param>
+		/// <param name="searchCondition">æ¤œç´¢å¯¾è±¡ã®æ–‡å­—</param>
+		/// <param name="searchType">æ¤œç´¢æ–¹æ³•</param>
+		/// <param name="limitSchema">ã‚¹ã‚­ãƒ¼ãƒã®çµè¾¼ã¿å¯¾è±¡</param>
+        /// <param name="condition">æ¤œç´¢æ¡ä»¶</param>
 		/// <returns></returns>
 		public string	GetSearchFieldSql(
 			string searchCondition, 
@@ -958,7 +883,7 @@ order by syscolumns.colorder",
             string excludeFieldCondition = string.Empty;
             if (!string.IsNullOrEmpty(condition.ExcludeField))
             {
-                string[] exf = condition.ExcludeField.Split(" @".ToCharArray());
+                string[] exf = condition.ExcludeField.Split(" ã€€".ToCharArray());
                 int st = 4;
                 foreach (string f in exf)
                 {
@@ -982,7 +907,7 @@ order by syscolumns.colorder",
             string excludeFieldNameCondition = string.Empty;
             if (!string.IsNullOrEmpty(condition.ExcludeFieldName))
             {
-                string[] exf = condition.ExcludeFieldName.Split(" @".ToCharArray());
+                string[] exf = condition.ExcludeFieldName.Split(" ã€€".ToCharArray());
                 int st = 4;
                 foreach (string f in exf)
                 {
@@ -1005,7 +930,7 @@ order by syscolumns.colorder",
             string excludeObjNameCondition = string.Empty;
             if (!string.IsNullOrEmpty(condition.ExcludeObjName))
             {
-                string[] exf = condition.ExcludeObjName.Split(" @".ToCharArray());
+                string[] exf = condition.ExcludeObjName.Split(" ã€€".ToCharArray());
                 foreach (string f in exf)
                 {
                     if (condition.IsCaseSensitive == true)
@@ -1067,12 +992,12 @@ where
 		}
 
 		/// <summary>
-		/// ƒIƒuƒWƒFƒNƒg–¼‚ğŒŸõ‚·‚é SQL•¶‚ğ¶¬‚·‚é
+		/// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåã‚’æ¤œç´¢ã™ã‚‹ SQLæ–‡ã‚’ç”Ÿæˆã™ã‚‹
 		/// </summary>
-		/// <param name="searchCondition">ŒŸõ‘ÎÛ‚Ì•¶š</param>
-		/// <param name="searchType">ŒŸõ•û–@</param>
-		/// <param name="limitSchema">ƒXƒL[ƒ}‚Ìi‚İ‘ÎÛ</param>
-        /// <param name="condition">ŒŸõğŒ</param>
+		/// <param name="searchCondition">æ¤œç´¢å¯¾è±¡ã®æ–‡å­—</param>
+		/// <param name="searchType">æ¤œç´¢æ–¹æ³•</param>
+		/// <param name="limitSchema">ã‚¹ã‚­ãƒ¼ãƒã®çµè¾¼ã¿å¯¾è±¡</param>
+        /// <param name="condition">æ¤œç´¢æ¡ä»¶</param>
 		/// <returns></returns>
 		public string	GetSearchObjectSql(
 			string searchCondition, 
@@ -1196,12 +1121,12 @@ where
 		#endregion
 
         /// <summary>
-        /// SQL Versionî•ñ
+        /// SQL Versionæƒ…å ±
         /// </summary>
         protected SqlVersion sqlVersion { get; set; }
 
         /// <summary>
-        /// SQL Versionî•ñ‚ğƒZƒbƒg‚·‚é
+        /// SQL Versionæƒ…å ±ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
         /// </summary>
         /// <param name="version"></param>
         public void SetupVersion(SqlVersion version)
@@ -1211,7 +1136,7 @@ where
 
 
         /// <summary>
-        /// ƒRƒlƒNƒVƒ‡ƒ“‚ªØ‚ê‚½‚Ìˆ×‚ÉÄÚ‘±‚·‚é
+        /// ã‚³ãƒã‚¯ã‚·ãƒ§ãƒ³ãŒåˆ‡ã‚ŒãŸæ™‚ã®ç‚ºã«å†æ¥ç¶šã™ã‚‹
         /// </summary>
         public void ReConnect()
         {

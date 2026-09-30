@@ -19,27 +19,65 @@ using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 namespace quickDBExplorer.Utils
 {
 
-
+    /// <summary>
+    /// 認証タイプ
+    /// </summary>
     public enum CRED_TYPE
     {
+        /// <summary>
+        /// 
+        /// </summary>
         GENERIC = 1,
+        /// <summary>
+        /// 
+        /// </summary>
         DOMAIN_PASSWORD,
+        /// <summary>
+        /// 
+        /// </summary>
         DOMAIN_CERTIFICATE,
+        /// <summary>
+        /// 
+        /// </summary>
         DOMAIN_VISIBLE_PASSWORD,
+        /// <summary>
+        /// 
+        /// </summary>
         DOMAIN_EXTENDED
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Flags]
     public enum CRED_FLAGS
     {
+        /// <summary>
+        /// 
+        /// </summary>
         PROMPT_NOW = 0x2,
+        /// <summary>
+        /// 
+        /// </summary>
         USERNAME_TARGET = 0x4
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public enum CRED_PERSIST
     {
+        /// <summary>
+        /// 
+        /// </summary>
         SESSION = 1,
+        /// <summary>
+        /// 
+        /// </summary>
         LOCAL_MACHINE,
+        /// <summary>
+        /// 
+        /// </summary>
         ENTERPRISE
     }
     #region internal use
@@ -82,14 +120,31 @@ namespace quickDBExplorer.Utils
 
     #endregion
 
+    /// <summary>
+    /// 
+    /// </summary>
     public static class CredManager
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public struct Credential
         {
+            /// <summary>
+            /// 
+            /// </summary>
             public string UserName;
+            /// <summary>
+            /// 
+            /// </summary>
             public string Password;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetname"></param>
+        /// <returns></returns>
         public static Credential Read(string targetname)
         {
             IntPtr handle = IntPtr.Zero;
@@ -135,6 +190,11 @@ namespace quickDBExplorer.Utils
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="targetname"></param>
+        /// <param name="c"></param>
         public static void Write(string targetname, Credential c)
         {
             try
@@ -165,12 +225,22 @@ namespace quickDBExplorer.Utils
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static string Encrypt(string s)
         {
             var bytes = Encoding.Unicode.GetBytes(s);
             var b = ProtectedData.Protect(bytes, null, DataProtectionScope.CurrentUser);
             return Convert.ToBase64String(b);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static string Decrypt(string s)
         {
             try
